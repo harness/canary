@@ -1,5 +1,5 @@
 import { spawnSync } from 'node:child_process'
-import { mkdirSync, mkdtempSync, rmSync, writeFileSync } from 'node:fs'
+import { mkdirSync, mkdtempSync, readdirSync, readFileSync, rmSync, writeFileSync } from 'node:fs'
 import { tmpdir } from 'node:os'
 import { dirname, join } from 'node:path'
 import { fileURLToPath } from 'node:url'
@@ -11,6 +11,17 @@ function writeJson(root, relativePath, value) {
   mkdirSync(dirname(filePath), { recursive: true })
   writeFileSync(filePath, `${JSON.stringify(value, null, 2)}\n`)
   return filePath
+}
+
+function collectProductionComponents(directory) {
+  return readdirSync(directory, { withFileTypes: true }).flatMap(entry => {
+    const entryPath = join(directory, entry.name)
+    if (entry.isDirectory()) {
+      return entry.name === '__tests__' ? [] : collectProductionComponents(entryPath)
+    }
+
+    return entry.isFile() && /\.(jsx|tsx)$/.test(entry.name) && !entry.name.includes('.figma.') ? [entryPath] : []
+  })
 }
 
 function completeDraftContract() {
@@ -247,6 +258,33 @@ test('validates the checked-in component contract catalog', async () => {
       }
     ]
   })
+})
+
+test('prevents new production usage of the deprecated rounded Button treatment', () => {
+  const packageRoot = join(dirname(fileURLToPath(import.meta.url)), '..')
+  const sourceRoots = [
+    { directory: join(packageRoot, 'src'), label: 'packages/ui/src' },
+    { directory: join(packageRoot, '../views/src'), label: 'packages/views/src' }
+  ]
+  const compatibilityAdapters = new Set(['packages/ui/src/components/toggle.tsx'])
+  const roundedButtonPattern = /<Button\b[^>]*\brounded(?:\s|=|\/?>)/gs
+
+  const violations = sourceRoots.flatMap(({ directory, label }) =>
+    collectProductionComponents(directory).flatMap(filePath => {
+      const repositoryPath = join(label, filePath.slice(directory.length + 1))
+      if (compatibilityAdapters.has(repositoryPath)) {
+        return []
+      }
+
+      const source = readFileSync(filePath, 'utf8')
+      return [...source.matchAll(roundedButtonPattern)].map(match => {
+        const line = source.slice(0, match.index).split('\n').length
+        return `${repositoryPath}:${line}`
+      })
+    })
+  )
+
+  expect(violations).toEqual([])
 })
 
 test('provides a successful command-line contract check', () => {

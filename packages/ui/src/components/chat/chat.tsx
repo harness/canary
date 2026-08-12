@@ -191,7 +191,6 @@ const InputField: FC<InputFieldProps> = ({
       />
       <Button
         className="bottom-cn-xs right-cn-xs absolute z-10 size-7"
-        rounded
         onClick={onSend}
         disabled={disabled}
         aria-label="Send message"

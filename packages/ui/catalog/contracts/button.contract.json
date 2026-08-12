@@ -9,10 +9,11 @@
     "description": "Triggers an immediate user action and communicates its emphasis, context, and availability.",
     "useWhen": [
       "The user needs to submit, confirm, create, delete, or otherwise trigger an immediate action.",
-      "The interface needs a clearly prioritized action with a visible interaction state."
+      "The interface needs a clearly prioritized action with a visible interaction state.",
+      "The control starts or advances an onboarding flow, wizard, or other workflow without navigating to a destination."
     ],
     "avoidWhen": [
-      "The interaction only navigates to another location; use Link unless an approved asChild composition requires button styling.",
+      "The interaction navigates to a route, URL, file, or other destination; use Link. Canary does not currently provide an approved button-styled Link pattern.",
       "The action cannot be described with a concise label or an icon with an accessible name."
     ]
   },
@@ -103,7 +104,7 @@
         "type": "enum",
         "values": ["primary", "secondary", "outline", "ai", "ghost", "link", "transparent"],
         "default": "primary",
-        "description": "Sets the visual emphasis and treatment. Code accepts every listed value, while individual Figma component sets expose a subset based on size, content, and shape.",
+        "description": "Sets the visual emphasis and treatment. The link value creates a link-style action but does not provide navigation semantics. Code accepts every listed value, while individual Figma component sets expose a subset based on size, content, and shape.",
         "figmaProperty": "variant",
         "mapsTo": "ButtonProps.variant"
       },
@@ -366,11 +367,15 @@
     "do": [
       "Use primary for the single highest-priority action in a local context.",
       "Use concise verb-led labels that make the result of activation predictable.",
+      "Use Button for action collections and toolbars, including controls that schedule, group, stop, or otherwise change a resource.",
+      "Use Button when a control such as Get Started begins or advances an onboarding flow in place.",
       "Use loading for pending actions and allow Promise-returning onClick handlers to manage it automatically.",
       "Use IconV2 children for contract-compatible icon composition."
     ],
     "dont": [
       "Use Button as a visual container for non-interactive content.",
+      "Use Button, its link variant, or asChild for ordinary navigation; use Link for destinations.",
+      "Recreate a button-styled Link locally; propose the pattern to the design system if a destination requires primary Button prominence.",
       "Use iconOnly without an accessible name and a clear explanation of the action.",
       "Use the deprecated rounded prop or a Rounded Figma component for new work; migrate to the equivalent standard-shape Button.",
       "Add local color, size, padding, typography, or radius overrides that recreate an unsupported variant.",
@@ -415,6 +420,11 @@
       "id": "deprecated-rounded",
       "description": "Rounded Button treatments are retained only for migration.",
       "rule": "Do not create new rounded Buttons. Replace rounded text and rounded icon-only Buttons with the equivalent standard-shape Button while preserving variant, theme, size, accessible name, and tooltip behavior."
+    },
+    {
+      "id": "action-not-navigation",
+      "description": "Button performs actions; Link navigates to destinations.",
+      "rule": "Use Button when activation changes state, submits data, opens an interface, or begins or advances a workflow in place. Use Link for routes, URLs, files, and other destinations. The Button link variant changes appearance only, and asChild does not create an approved navigation exception."
     }
   ],
   "evidence": {
@@ -444,12 +454,11 @@
         "path": "https://www.figma.com/design/AIgjIyUzcuZzuVnuoOyhQE/HDS-%7C-Components-3.0?node-id=28553-15461"
       }
     ],
-    "provisionalFields": ["properties.shared.variant", "properties.shared.size", "states.focus", "overview.avoidWhen"],
+    "provisionalFields": ["properties.shared.variant", "properties.shared.size", "states.focus"],
     "openQuestions": [
       "Decide whether code-only 2xs and 3xs sizes should be added to Figma or documented as an intentional surface difference.",
       "Define the supported non-rounded variant matrix. Code still permits deprecated rounded combinations during migration, while Figma omits link from xs and all rounded or icon-only sets and exposes transparent inconsistently.",
-      "Decide whether Figma needs a focus preview. Every published set exposes default, hover, active, loading, and disabled, while focus is implemented only in code.",
-      "Resolve the portal documentation statement that Button supports navigation against the preferred semantic Link guidance."
+      "Decide whether Figma needs a focus preview. Every published set exposes default, hover, active, loading, and disabled, while focus is implemented only in code."
     ]
   }
 }

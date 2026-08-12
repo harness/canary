@@ -236,3 +236,61 @@ export function deriveStepperModel(
     }
   })
 }
+
+export interface DerivedFlatStep {
+  stepId: string
+  title: string
+  description?: string
+  state: 'completed' | 'active' | 'error' | 'upcoming'
+  visualCompleted: boolean
+}
+
+/**
+ * Flat-mode counterpart to `deriveStepperModel`: derives one `DerivedFlatStep` per VISITED
+ * step (cardHistory order) instead of one `DerivedStep` per step group. Each step is its own
+ * bucket with exactly one cardHistory entry, so this reuses `deriveBucketState` directly rather
+ * than aggregating multiple entries per step group. Appends one `DerivedFlatStep` per step on
+ * `deriveFullPredictedPath`'s remaining static path as 'upcoming' placeholders, mirroring the
+ * way `deriveStepperModel` surfaces `predicted` steps within the active step group — flows with
+ * no static `next` anywhere (e.g. CDv2's dynamic-choice steps) simply produce no placeholders.
+ * Consumed by `FlowStepperRail` (Task 5) for `flow.stepGroups`-less (flat) `FlowConfig`s.
+ */
+export function deriveFlatStepperModel(
+  flow: FlowConfig,
+  cardHistory: CardEntry[],
+  activeStepId: string
+): DerivedFlatStep[] {
+  const isFlowComplete = !cardHistory.some(e => e.status === 'active')
+  const visualCompletedFor = (stepId: string): boolean => Boolean(flow.steps[stepId]?.visualCompleted)
+
+  const visited: DerivedFlatStep[] = cardHistory.map(entry => {
+    const stepConfig = flow.steps[entry.stepId]
+    const isActive = entry.stepId === activeStepId
+    const state = deriveBucketState({
+      entries: [entry],
+      isActiveBucket: isActive,
+      activeStepId,
+      isFlowComplete,
+      visualCompletedFor
+    })
+
+    return {
+      stepId: entry.stepId,
+      title: stepConfig?.title ?? entry.stepId,
+      description: stepConfig?.description,
+      state,
+      visualCompleted: visualCompletedFor(entry.stepId)
+    }
+  })
+
+  const { path } = deriveFullPredictedPath(flow, cardHistory, activeStepId)
+  const upcoming: DerivedFlatStep[] = path.map(stepId => ({
+    stepId,
+    title: flow.steps[stepId]?.title ?? stepId,
+    description: flow.steps[stepId]?.description,
+    state: 'upcoming',
+    visualCompleted: false
+  }))
+
+  return [...visited, ...upcoming]
+}

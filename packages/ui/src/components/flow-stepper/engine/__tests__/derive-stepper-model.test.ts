@@ -1,6 +1,6 @@
 import { describe, expect, test } from 'vitest'
 
-import { deriveFullPredictedPath, deriveStepperModel } from '../derive-stepper-model'
+import { deriveFlatStepperModel, deriveFullPredictedPath, deriveStepperModel } from '../derive-stepper-model'
 import type { CardEntry, FlowConfig } from '../engine-types'
 
 const flow: FlowConfig = {
@@ -313,5 +313,112 @@ describe('deriveFullPredictedPath', () => {
     const result = deriveFullPredictedPath(cyclicFlow, history, 'start')
     expect(result.path).toEqual(['a', 'b'])
     expect(result.reachedKnownEnd).toBe(true)
+  })
+})
+
+describe('deriveFlatStepperModel', () => {
+  const flatFlow: FlowConfig = {
+    steps: {
+      a: { title: 'A', component: () => null, next: 'b' },
+      b: { title: 'B', component: () => null, next: 'c' },
+      c: { title: 'C', component: () => null }
+    },
+    initialStep: 'a'
+  }
+
+  test('visited step shows completed; active step shows active; unreached steps on static path show upcoming', () => {
+    const history: CardEntry[] = [
+      { stepId: 'a', status: 'completed', stateSnapshot: {} },
+      { stepId: 'b', status: 'active', stateSnapshot: {} }
+    ]
+    const result = deriveFlatStepperModel(flatFlow, history, 'b')
+    expect(result).toEqual([
+      { stepId: 'a', title: 'A', description: undefined, state: 'completed', visualCompleted: false },
+      { stepId: 'b', title: 'B', description: undefined, state: 'active', visualCompleted: false },
+      { stepId: 'c', title: 'C', description: undefined, state: 'upcoming', visualCompleted: false }
+    ])
+  })
+
+  test('error status on active step marks it error', () => {
+    const history: CardEntry[] = [{ stepId: 'a', status: 'error', stateSnapshot: {} }]
+    const result = deriveFlatStepperModel(flatFlow, history, 'a')
+    expect(result[0]).toEqual({
+      stepId: 'a',
+      title: 'A',
+      description: undefined,
+      state: 'error',
+      visualCompleted: false
+    })
+  })
+
+  test('flow complete: all steps completed marks visited step completed, not active', () => {
+    const history: CardEntry[] = [
+      { stepId: 'a', status: 'completed', stateSnapshot: {} },
+      { stepId: 'b', status: 'completed', stateSnapshot: {} },
+      { stepId: 'c', status: 'completed', stateSnapshot: {} }
+    ]
+    const result = deriveFlatStepperModel(flatFlow, history, 'c')
+    expect(result).toEqual([
+      { stepId: 'a', title: 'A', description: undefined, state: 'completed', visualCompleted: false },
+      { stepId: 'b', title: 'B', description: undefined, state: 'completed', visualCompleted: false },
+      { stepId: 'c', title: 'C', description: undefined, state: 'completed', visualCompleted: false }
+    ])
+  })
+
+  test('terminal + visualCompleted step renders completed, not active, despite always-active cardHistory status', () => {
+    const terminalFlow: FlowConfig = {
+      steps: {
+        x: { title: 'X', component: () => null, next: 'y' },
+        y: { title: 'Y', component: () => null, terminal: true, visualCompleted: true }
+      },
+      initialStep: 'x'
+    }
+    const history: CardEntry[] = [
+      { stepId: 'x', status: 'completed', stateSnapshot: {} },
+      { stepId: 'y', status: 'active', stateSnapshot: {} }
+    ]
+    const result = deriveFlatStepperModel(terminalFlow, history, 'y')
+    expect(result).toEqual([
+      { stepId: 'x', title: 'X', description: undefined, state: 'completed', visualCompleted: false },
+      { stepId: 'y', title: 'Y', description: undefined, state: 'completed', visualCompleted: true }
+    ])
+  })
+
+  test('active step without visualCompleted stays active (no regression on the terminal case above)', () => {
+    const terminalFlow: FlowConfig = {
+      steps: {
+        x: { title: 'X', component: () => null, next: 'y' },
+        y: { title: 'Y', component: () => null, terminal: true }
+      },
+      initialStep: 'x'
+    }
+    const history: CardEntry[] = [
+      { stepId: 'x', status: 'completed', stateSnapshot: {} },
+      { stepId: 'y', status: 'active', stateSnapshot: {} }
+    ]
+    const result = deriveFlatStepperModel(terminalFlow, history, 'y')
+    expect(result[1]).toEqual({
+      stepId: 'y',
+      title: 'Y',
+      description: undefined,
+      state: 'active',
+      visualCompleted: false
+    })
+  })
+
+  test('CDv2-shaped single dynamic-choice step renders active with no visualCompleted', () => {
+    const cdv2ShapedFlow: FlowConfig = {
+      steps: {
+        pick: { title: 'Pick', component: () => null },
+        'landing-a': { title: 'Landing A', component: () => null },
+        'landing-b': { title: 'Landing B', component: () => null }
+      },
+      initialStep: 'pick'
+    }
+    const history: CardEntry[] = [{ stepId: 'pick', status: 'active', stateSnapshot: {} }]
+    const result = deriveFlatStepperModel(cdv2ShapedFlow, history, 'pick')
+    expect(result).toEqual([
+      { stepId: 'pick', title: 'Pick', description: undefined, state: 'active', visualCompleted: false }
+    ])
   })
 })

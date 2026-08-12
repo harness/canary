@@ -1,6 +1,6 @@
 {
   "schemaVersion": "0.2.0",
-  "contractVersion": "0.1.0",
+  "contractVersion": "0.2.0",
   "id": "canary.button",
   "status": "draft",
   "surfaces": ["figma", "code"],
@@ -26,7 +26,7 @@
   "figma": {
     "library": "HDS | Components 3.0",
     "fileKey": "AIgjIyUzcuZzuVnuoOyhQE",
-    "name": "❖Button/{Md|Sm|Xs}/{Text|IconOnly}[Rounded]",
+    "name": "Button/{Md|Sm|Xs}/{Text|IconOnly|IconOnlyRounded}; ❌Button/{Md|Sm|Xs}/TextRounded",
     "exampleNodeId": "28553:15461",
     "mappingStatus": "verified",
     "componentKeys": [
@@ -129,7 +129,8 @@
         "name": "rounded",
         "type": "boolean",
         "default": false,
-        "description": "Deprecated. Rounded Buttons are unsupported for new work, including rounded text and rounded icon-only treatments. The code prop and published Figma sets remain temporarily for migration.",
+        "description": "Rounded icon-only Buttons are supported in md, sm, and xs. Rounded text Buttons are deprecated and retained temporarily for migration.",
+        "when": "Supported when iconOnly is true; deprecated when iconOnly is false.",
         "mapsTo": "ButtonProps.rounded"
       },
       {
@@ -316,7 +317,8 @@
     },
     {
       "designProperty": "rounded variant",
-      "codeProperty": "rounded"
+      "codeProperty": "rounded",
+      "transform": "Map IconOnlyRounded sets to rounded=true and iconOnly=true. TextRounded sets are deprecated and remain mapped only for migration."
     },
     {
       "designProperty": "👁️ disabled",
@@ -359,7 +361,7 @@
       },
       {
         "category": "shape",
-        "rule": "Use the standard Button shape. The rounded prop and Rounded Figma sets are deprecated, and local border-radius overrides are unsupported."
+        "rule": "Use the standard shape for text Buttons. Use rounded only for supported icon-only Buttons in md, sm, or xs; local border-radius overrides are unsupported."
       }
     ]
   },
@@ -377,7 +379,7 @@
       "Use Button, its link variant, or asChild for ordinary navigation; use Link for destinations.",
       "Recreate a button-styled Link locally; propose the pattern to the design system if a destination requires primary Button prominence.",
       "Use iconOnly without an accessible name and a clear explanation of the action.",
-      "Use the deprecated rounded prop or a Rounded Figma component for new work; migrate to the equivalent standard-shape Button.",
+      "Use rounded on a text Button; migrate deprecated TextRounded Buttons to the equivalent standard-shape Button.",
       "Add local color, size, padding, typography, or radius overrides that recreate an unsupported variant.",
       "Use disabled styling as the only explanation for why an action is unavailable."
     ],
@@ -417,9 +419,9 @@
       "rule": "Do not place visible text in 2xs or 3xs because code filters non-IconV2 children."
     },
     {
-      "id": "deprecated-rounded",
-      "description": "Rounded Button treatments are retained only for migration.",
-      "rule": "Do not create new rounded Buttons. Replace rounded text and rounded icon-only Buttons with the equivalent standard-shape Button while preserving variant, theme, size, accessible name, and tooltip behavior."
+      "id": "rounded-icon-only",
+      "description": "Rounded is a supported shape for icon-only Buttons and deprecated for text Buttons.",
+      "rule": "Use rounded only with iconOnly in md, sm, or xs. Replace rounded text Buttons with the equivalent standard-shape Button while preserving variant, theme, size, accessible name, and behavior."
     },
     {
       "id": "action-not-navigation",
@@ -457,7 +459,7 @@
     "provisionalFields": ["properties.shared.variant", "properties.shared.size", "states.focus"],
     "openQuestions": [
       "Decide whether code-only 2xs and 3xs sizes should be added to Figma or documented as an intentional surface difference.",
-      "Define the supported non-rounded variant matrix. Code still permits deprecated rounded combinations during migration, while Figma omits link from xs and all rounded or icon-only sets and exposes transparent inconsistently.",
+      "Define the supported variant matrix. Code still permits deprecated rounded text combinations during migration, while Figma omits link from xs and all rounded or icon-only sets and exposes transparent inconsistently.",
       "Decide whether Figma needs a focus preview. Every published set exposes default, hover, active, loading, and disabled, while focus is implemented only in code."
     ]
   }

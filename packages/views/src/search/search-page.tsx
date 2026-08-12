@@ -136,7 +136,6 @@ export const SearchPageView: FC<SearchPageViewProps> = ({
                     selected={semanticEnabled}
                     onChange={setSemanticEnabled}
                     prefixIcon="sparks"
-                    rounded
                     text="AI Search"
                     size="xs"
                     tooltipProps={{ content: 'Toggle AI Semantic Search' }}

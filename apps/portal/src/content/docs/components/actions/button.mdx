@@ -544,17 +544,31 @@ If you need to skip showing the tooltip, you should set `ignoreIconOnlyTooltip`.
 </div>`}
 />
 
-## Deprecated: Rounded Buttons
+## Rounded icon-only Buttons
 
-The `rounded` prop and all rounded Button treatments are deprecated. Do not use rounded Buttons for new work. Rounded text Buttons are not supported.
+The `rounded` prop is supported for icon-only Buttons in `md`, `sm`, and `xs`. Use it with `iconOnly`, an accessible name, and the required tooltip or explicit tooltip override.
+
+```tsx
+<Button
+  iconOnly
+  rounded
+  aria-label="Add node"
+  tooltipProps={{ content: "Add node" }}
+>
+  <IconV2 name="plus" />
+</Button>
+```
+
+### Deprecated: Rounded text Buttons
+
+Rounded text Buttons are deprecated. Do not use them for new work.
 
 For existing usage:
 
 - Replace `<Button rounded>Label</Button>` with the equivalent standard text Button, such as `<Button>Label</Button>`.
-- Replace rounded icon-only Buttons with the equivalent standard `iconOnly` Button.
-- Preserve the Button's variant, theme, size, accessible name, and tooltip while removing `rounded`.
+- Preserve the Button's variant, theme, size, accessible name, and behavior while removing `rounded`.
 
-The `rounded` prop remains available temporarily so teams can migrate existing usage. Its presence in the API does not indicate support for new designs.
+The text combination remains available temporarily so teams can migrate existing usage. The `rounded` prop itself remains supported for icon-only Buttons.
 
 ## Usage
 
@@ -654,7 +668,7 @@ This ensures type safety and provides proper development-time feedback on invali
     {
       name: "rounded",
       description:
-        "Deprecated. Do not use for new work. Remove rounded to migrate text and icon-only Buttons to the supported standard shape.",
+        "Supported with iconOnly in md, sm, and xs. Rounded text Buttons are deprecated; remove rounded to migrate them to the standard shape.",
       required: false,
       value: "boolean",
       defaultValue: "false",

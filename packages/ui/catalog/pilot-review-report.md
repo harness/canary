@@ -118,7 +118,7 @@ The contract remains intentionally `draft` because the audit found decisions rat
 - Figma has no 2xs or 3xs Button sets, although code supports both.
 - Figma has no focus preview, although code implements `:focus-visible` styling.
 - The supported variant matrix differs by Figma size, content type, and shape, while code accepts every combination.
-- The ❌ prefix is confirmed to mean deprecated. All Rounded Button treatments are deprecated, rounded text is unsupported, and the Figma sets and code prop remain temporarily for migration.
+- The ❌ prefix is confirmed to mean deprecated. TextRounded Button treatments are deprecated and remain temporarily for migration. IconOnlyRounded remains supported in md, sm, and xs because it is used by Pipeline Studio.
 - Code Connect maps a `-` theme option in every Button mapping, while Figma exposes it only on md and sm Text.
 - Navigation semantics are approved: Button performs actions, including starting or advancing onboarding in place; Link navigates to destinations. The Button link variant changes appearance only, and Canary has no approved button-styled Link pattern.
 - A stable Figma-governed contract must have a verified mapping and at least one confirmed component key.
@@ -143,6 +143,6 @@ The implementation is complete when all of the following remain true:
 2. Confirm the FormSeparator migration decision.
 3. Retrieve the published Figma component keys for the remaining pilots.
 4. Advance each verified pilot from `classified` to `mapped`.
-5. Resolve Button's size, non-rounded variant-matrix, and focus-preview decisions; plan migration of deprecated Rounded usage.
+5. Resolve Button's size, variant-matrix, and focus-preview decisions; plan migration of deprecated TextRounded usage.
 6. Write the shared form-field contract.
 7. Use the mapped Button contract as the first evaluator and plugin-result vertical slice.

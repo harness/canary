@@ -66,10 +66,14 @@ export function StageNode(props: StageNodeProps) {
 
       {!collapsed && isEmpty && (
         <Button
+          iconOnly
+          rounded
           className="p-cn-sm self-center"
           variant="outline"
+          aria-label="Add node"
           onMouseDown={e => e.stopPropagation()}
           onClick={onAddInClick}
+          tooltipProps={{ content: 'Add node' }}
         >
           <IconV2 name="plus" />
         </Button>

@@ -151,8 +151,13 @@ describe('Button', () => {
     expect(button).toHaveClass('cn-button-danger')
   })
 
-  test('should apply rounded class when rounded prop is true', () => {
-    renderComponent({ rounded: true })
+  test('should apply rounded class to an icon-only Button', () => {
+    renderComponent({
+      iconOnly: true,
+      rounded: true,
+      'aria-label': 'Rounded icon Button',
+      tooltipProps: { content: 'Rounded icon Button' }
+    })
 
     const button = screen.getByRole('button')
     expect(button).toHaveClass('cn-button-rounded')
@@ -295,7 +300,10 @@ describe('Button', () => {
       variant: 'outline',
       size: 'sm',
       theme: 'danger',
-      rounded: true
+      rounded: true,
+      iconOnly: true,
+      'aria-label': 'Rounded icon Button',
+      tooltipProps: { content: 'Rounded icon Button' }
     })
 
     const button = screen.getByRole('button')
@@ -781,7 +789,7 @@ describe('Button', () => {
       })
     })
 
-    test('should handle rounded with all variants', () => {
+    test('should handle rounded icon-only Buttons with all variants', () => {
       const variants: Array<'primary' | 'secondary' | 'outline' | 'ghost' | 'link'> = [
         'primary',
         'secondary',
@@ -793,7 +801,7 @@ describe('Button', () => {
       variants.forEach(variant => {
         render(
           <TestWrapper>
-            <Button variant={variant} rounded>
+            <Button variant={variant} iconOnly rounded aria-label={`Rounded ${variant}`} ignoreIconOnlyTooltip>
               Rounded {variant}
             </Button>
           </TestWrapper>

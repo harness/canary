@@ -167,19 +167,29 @@ const SearchInput = forwardRef<HTMLInputElement, SearchInputProps>(
           size="xs"
           variant="ghost"
           iconOnly
+          rounded
           onClick={handlePrev}
           aria-label="Previous match"
           ignoreIconOnlyTooltip
         >
           <IconV2 name="nav-arrow-up" size="xs" />
         </Button>
-        <Button size="xs" variant="ghost" iconOnly onClick={handleNext} aria-label="Next match" ignoreIconOnlyTooltip>
+        <Button
+          size="xs"
+          variant="ghost"
+          iconOnly
+          rounded
+          onClick={handleNext}
+          aria-label="Next match"
+          ignoreIconOnlyTooltip
+        >
           <IconV2 name="nav-arrow-down" size="xs" />
         </Button>
         <Button
           size="xs"
           variant="ghost"
           iconOnly
+          rounded
           onClick={handleClear}
           aria-label="Clear search"
           ignoreIconOnlyTooltip

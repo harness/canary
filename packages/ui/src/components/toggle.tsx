@@ -41,7 +41,7 @@ type ToggleVariant = VariantProps<typeof toggleVariants>['variant']
 type TypeSelectedVariant = 'primary' | 'secondary'
 
 type TogglePropsBase = Pick<ButtonProps, 'disabled' | 'className'> & {
-  /** @deprecated Rounded Toggle treatments rely on deprecated rounded Button styling. Remove this prop. */
+  /** Applies the supported rounded shape to icon-only Toggles. Rounded text Toggles are deprecated. */
   rounded?: boolean
   variant?: ToggleVariant
   selectedVariant?: TypeSelectedVariant

@@ -35,8 +35,7 @@ function SinglePaneStepperContent({
   reactivationPrompt,
   className,
   style,
-  showStepBadge,
-  flat
+  showStepBadge
 }: Omit<SinglePaneStepperRootProps, 'flow' | 'onComplete'>) {
   const { drawerState, closeDrawer, pendingReactivation, confirmReactivation, cancelReactivation } = useEngineContext()
 
@@ -76,7 +75,6 @@ function SinglePaneStepperContent({
           contentTitle={contentTitle}
           contentSubtitle={contentSubtitle}
           showStepBadge={showStepBadge}
-          flat={flat}
         />
       </Layout.Vertical>
 

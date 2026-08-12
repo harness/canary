@@ -173,7 +173,11 @@ export function StepperGroup({
   const derivedState = state || ctx.getStepState(value)
   const stepDisabled = ctx.isStepDisabled(value)
   const stepIndex = ctx.orderedSteps.indexOf(value)
-  const stepNumber = stepNumberOverride ?? stepIndex + 1
+  // Only apply the override when the badge is actually shown — otherwise a consumer that never
+  // opts into showStepBadge would silently get different indicator-circle numbers/aria-labels than
+  // before this override existed, breaking this component's own "opt-in, no rendering change"
+  // contract for showStepBadge.
+  const stepNumber = showStepBadge ? (stepNumberOverride ?? stepIndex + 1) : stepIndex + 1
   // ctx.orderedSteps only contains groups that have mounted so far under progressive disclosure —
   // totalStepsOverride lets a non-flat-mode consumer (e.g. SinglePaneStepperCardStack) supply the
   // flow's real step-group count instead of that currently-registered count (mirrors

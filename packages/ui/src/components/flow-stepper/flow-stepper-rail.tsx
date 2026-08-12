@@ -97,6 +97,13 @@ export function FlowStepperRail({
         const activeStepGroupId = flow.steps[activeStepId]?.step
         const isActiveStepGroup = activeStepGroupId === derivedStep.stepGroupId
         const showSteps = derivedStep.visited.length > 0 || isActiveStepGroup
+        // A group absent from stepNumberOverrides is a genuinely off-path mutually-exclusive
+        // sibling (never walked on this run) — showing ANY "Step n/m" claim for it is misleading
+        // (it can duplicate or exceed an on-path group's number), so suppress the badge for that
+        // row specifically rather than falling back to a meaningless raw index. When no map was
+        // supplied at all (flat mode, or a future caller that doesn't use this feature), don't
+        // suppress anything — only suppress when a map exists AND this group isn't in it.
+        const stepGroupHasNumber = !stepNumberOverrides || stepNumberOverrides.has(derivedStep.stepGroupId)
 
         return (
           <Stepper.StepGroup
@@ -106,7 +113,7 @@ export function FlowStepperRail({
             description={derivedStep.description}
             state={derivedStep.state}
             hasNestedSteps={derivedStep.showIndeterminate}
-            showStepBadge={showStepBadge}
+            showStepBadge={showStepBadge && stepGroupHasNumber}
             totalStepsOverride={totalOverride}
             stepNumberOverride={stepNumberOverrides?.get(derivedStep.stepGroupId)}
           >

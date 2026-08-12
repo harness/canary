@@ -85,29 +85,13 @@ export function SinglePaneStepperCardStack({
     return Math.max(walkedTotal, Object.keys(flow.steps).length)
   }, [cardHistory.length, fullPredictedPath.length, reachedKnownEnd, flow.steps])
 
-  // Grouped-mode denominator: same fallback-rather-than-undercount rule, one level up (distinct
-  // step GROUPS on the run's path, not steps).
-  const totalStepGroupsCount = useMemo(() => {
-    const stepGroupIds = new Set<string>()
-    for (const entry of cardHistory) {
-      const stepGroupId = flow.steps[entry.stepId]?.step
-      if (stepGroupId) stepGroupIds.add(stepGroupId)
-    }
-    for (const stepId of fullPredictedPath) {
-      const stepGroupId = flow.steps[stepId]?.step
-      if (stepGroupId) stepGroupIds.add(stepGroupId)
-    }
-    const walkedTotal = stepGroupIds.size
-    if (reachedKnownEnd) return walkedTotal
-    return Math.max(walkedTotal, Object.keys(flow.stepGroups ?? {}).length)
-  }, [cardHistory, fullPredictedPath, reachedKnownEnd, flow.steps, flow.stepGroups])
-
-  // Per-group numerator badge: each group's 1-based position in the ORDER the run
+  // Per-group numerator for the badge: each group's 1-based position in the ORDER the run
   // actually encounters it (cardHistory first, then the predicted remainder) — not the raw
   // rendering index, which would also count off-path mutually-exclusive sibling groups. Groups
-  // never encountered on the run's path (truly off-path siblings) are absent from the map;
-  // StepperGroup falls back to its own raw registration index for those, which is fine since its
-  // own badge number is inherently not meaningful for a path they're not actually on.
+  // never encountered on the run's path (truly off-path siblings) are absent from this map;
+  // FlowStepperRail suppresses that group's badge entirely rather than showing a fallback number,
+  // since a badge for a path this run never walks would be inherently misleading (see
+  // flow-stepper-rail.tsx's stepGroupHasNumber check).
   const stepNumberOverrides = useMemo(() => {
     const seen = new Set<string>()
     const orderedIds: string[] = []
@@ -127,6 +111,16 @@ export function SinglePaneStepperCardStack({
     }
     return new Map(orderedIds.map((id, index) => [id, index + 1]))
   }, [cardHistory, fullPredictedPath, flow.steps])
+
+  // Grouped-mode denominator: same fallback-rather-than-undercount rule as totalStepsCount above,
+  // one level up (distinct step GROUPS on the run's path, not steps). Derived from
+  // stepNumberOverrides.size — not a separate walk — so the numerator (each group's entry in that
+  // map) and this denominator can never drift out of sync with each other again.
+  const totalStepGroupsCount = useMemo(() => {
+    const walkedTotal = stepNumberOverrides.size
+    if (reachedKnownEnd) return walkedTotal
+    return Math.max(walkedTotal, Object.keys(flow.stepGroups ?? {}).length)
+  }, [stepNumberOverrides, reachedKnownEnd, flow.stepGroups])
 
   const totalOverride = flow.stepGroups ? totalStepGroupsCount : totalStepsCount
 

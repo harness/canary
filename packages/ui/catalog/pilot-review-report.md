@@ -6,7 +6,7 @@ Date: August 11, 2026
 
 This codebase-first review classified 17 of the 19 exports in the pilot review batch. Caption and FormSeparator remain unreviewed because the codebase shows overlapping old and new implementations but does not establish an approved deprecation path.
 
-The review used public APIs, implementation structure, composition, tests, Portal documentation, repository usage, and Code Connect metadata. Figma component keys were not assigned because they require confirmation against the published Canary library.
+The review used public APIs, implementation structure, composition, tests, Portal documentation, repository usage, Code Connect metadata, and a published-library audit for Button. Other Figma component keys remain unassigned until their published identities are confirmed.
 
 ## Reviewed classifications
 
@@ -30,7 +30,7 @@ The review used public APIs, implementation structure, composition, tests, Porta
 | Message            | form-primitives | message         | contract       | —                 | code        | catalog/contracts/message.contract.json      |
 | MessageTheme       | form-primitives | message         | part-of-family | canary.message    | code        | catalog/contracts/message.contract.json      |
 
-Every reviewed entry now has `status: classified`. Figma-connected entries remain classified rather than mapped until their persistent published component keys are confirmed.
+Every reviewed entry is classified. Button has advanced to `mapped` after its 12 persistent published component-set keys were confirmed; other Figma-connected entries remain classified until their identities are verified.
 
 ## Shared form-field contract
 
@@ -102,6 +102,29 @@ Legend renders a `section` rather than an HTML `legend`. Fieldset also hardcodes
 
 The Fieldset contract should specify correct semantics before its status advances to contracted. The contract must describe the intended accessible behavior rather than copying the current implementation defects.
 
+## Button contract vertical slice
+
+Button now has the first complete draft contract and validator. The draft combines the React API, Portal documentation, tests, Code Connect, the earlier contract PoC, and a direct audit of the published Figma library into one structured evaluation target.
+
+The Figma identity is verified:
+
+- Twelve PoC keys resolve to the current md, sm, and xs Text, IconOnly, and Rounded component sets.
+- Four legacy PoC keys return 404 and were removed.
+- The inventory entry is `mapped`, and the contract's Figma mapping is `verified`.
+- All published Button components use horizontal Auto Layout, have variable bindings, and expose disabled and loading states.
+
+The contract remains intentionally `draft` because the audit found decisions rather than identity uncertainty:
+
+- Figma has no 2xs or 3xs Button sets, although code supports both.
+- Figma has no focus preview, although code implements `:focus-visible` styling.
+- The supported variant matrix differs by Figma size, content type, and shape, while code accepts every combination.
+- The ❌ prefix is confirmed to mean deprecated. All Rounded Button treatments are deprecated, rounded text is unsupported, and the Figma sets and code prop remain temporarily for migration.
+- Code Connect maps a `-` theme option in every Button mapping, while Figma exposes it only on md and sm Text.
+- Navigation semantics still need an explicit decision.
+- A stable Figma-governed contract must have a verified mapping and at least one confirmed component key.
+
+See `catalog/contracts/README.md` for the review checklist and `catalog/contracts/button.contract.json` for the evidence-backed draft.
+
 ## Verification
 
 The implementation is complete when all of the following remain true:
@@ -110,7 +133,7 @@ The implementation is complete when all of the following remain true:
 - Code Connect evidence is matched using declared component metadata.
 - The 17 reviewed entries remain classified after regeneration.
 - Caption and FormSeparator remain explicitly unreviewed.
-- Figma keys remain empty until verified against the published library.
+- Button retains its 12 verified Figma component-set keys through regeneration.
 - Focused inventory-generator tests pass.
 - The generated inventory and report pass repository formatting.
 
@@ -118,7 +141,8 @@ The implementation is complete when all of the following remain true:
 
 1. Confirm the Caption migration decision.
 2. Confirm the FormSeparator migration decision.
-3. Retrieve the published Figma component keys for the five pilots.
-4. Advance mapped pilots from `classified` to `mapped`.
-5. Write the shared form-field contract.
-6. Build the Button contract as the first complete evaluator and plugin-result vertical slice.
+3. Retrieve the published Figma component keys for the remaining pilots.
+4. Advance each verified pilot from `classified` to `mapped`.
+5. Resolve Button's size, rounded, variant-matrix, focus-preview, and navigation decisions.
+6. Write the shared form-field contract.
+7. Use the mapped Button contract as the first evaluator and plugin-result vertical slice.

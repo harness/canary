@@ -98,11 +98,12 @@ export function FlowStepperRail({
         const isActiveStepGroup = activeStepGroupId === derivedStep.stepGroupId
         const showSteps = derivedStep.visited.length > 0 || isActiveStepGroup
         // A group absent from stepNumberOverrides is a genuinely off-path mutually-exclusive
-        // sibling (never walked on this run) — showing ANY "Step n/m" claim for it is misleading
-        // (it can duplicate or exceed an on-path group's number), so suppress the badge for that
-        // row specifically rather than falling back to a meaningless raw index. When no map was
-        // supplied at all (flat mode, or a future caller that doesn't use this feature), don't
-        // suppress anything — only suppress when a map exists AND this group isn't in it.
+        // sibling (never walked on this run) — it has no meaningful step-number identity, so
+        // StepperGroup suppresses its badge/circle-number/aria-label claim entirely (see
+        // hideStepNumber) rather than falling back to a raw index that can collide with or exceed
+        // an on-path group's real number. When no map was supplied at all (flat mode, or a future
+        // caller that doesn't use this feature), nothing is hidden — only relevant when a map
+        // exists AND this specific group isn't in it.
         const stepGroupHasNumber = !stepNumberOverrides || stepNumberOverrides.has(derivedStep.stepGroupId)
 
         return (
@@ -113,9 +114,10 @@ export function FlowStepperRail({
             description={derivedStep.description}
             state={derivedStep.state}
             hasNestedSteps={derivedStep.showIndeterminate}
-            showStepBadge={showStepBadge && stepGroupHasNumber}
+            showStepBadge={showStepBadge}
             totalStepsOverride={totalOverride}
             stepNumberOverride={stepNumberOverrides?.get(derivedStep.stepGroupId)}
+            hideStepNumber={!stepGroupHasNumber}
           >
             {showSteps &&
               !derivedStep.isTerminalStepGroup &&

@@ -804,6 +804,15 @@ describe('SinglePaneStepper', () => {
 
       // 'provider-b' itself renders (Task 6 always renders every group), just with no badge.
       expect(screen.getByText('Provider B')).toBeInTheDocument()
+
+      // The off-path row's indicator circle and accessible name must ALSO not claim a step
+      // number that could collide with or exceed an on-path group's real number — round 2 only
+      // fixed the badge pill; this locks in that the circle number and aria-label got the same
+      // treatment.
+      const providerBRow = screen.getByText('Provider B').closest('.cn-stepper-step')
+      expect(providerBRow).not.toBeNull()
+      expect(providerBRow?.querySelector('.cn-stepper-indicator-number')).not.toBeInTheDocument()
+      expect(providerBRow).toHaveAttribute('aria-label', 'Provider B')
     })
 
     test('linear flow (no branching): total unchanged in either grouped or flat mode', () => {

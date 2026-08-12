@@ -148,10 +148,23 @@
         "src/components/button-xs-text.figma.ts",
         "src/components/button.figma.ts"
       ],
-      "figmaComponentKeys": [],
+      "figmaComponentKeys": [
+        "188019ff5a5c45f3009b963213c98e95dc1c780f",
+        "0a05a53168a6327345bd183cd29238b2db657579",
+        "fe7df94f86409f83ac4c42fd051f2c9c7f5f0f90",
+        "38424d4a70f687acdd18ae209b1912a47728b7df",
+        "00a54e29d534d6590b2f1e64f3015be7c64abc43",
+        "5b0bb1315873b3bf9406662e04d9baba9f4fa655",
+        "936dcee9aeae242eb23e0adde4894b51baf22454",
+        "b42eabf894db6a9e5206577f628d99ba91a5d44c",
+        "5909cc7e6f8636ef2415e5a7f91b48b9cea01ffb",
+        "9052baae0763a61994327ddba399aabb74a3bba6",
+        "a36349ebb31bd76e6d97a35fb8d9b811f2e7668e",
+        "34a39d10a4fda2c11cd8d5269dceb6c32718a1e0"
+      ],
       "contractPath": "catalog/contracts/button.contract.json",
       "surfaces": ["figma", "code"],
-      "status": "classified",
+      "status": "mapped",
       "recommendedDisposition": "contract",
       "priority": "pilot"
     },

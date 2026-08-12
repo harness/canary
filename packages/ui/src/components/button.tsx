@@ -51,6 +51,7 @@ type CommonButtonProps = Omit<ButtonHTMLAttributes<HTMLButtonElement>, 'onClick'
   VariantProps<typeof buttonVariants> & {
     asChild?: boolean
     loading?: boolean
+    /** @deprecated Rounded Buttons are unsupported for new work. Remove this prop to use the standard Button shape. */
     rounded?: boolean
     onClick?: (event: React.MouseEvent<HTMLButtonElement>) => void | Promise<unknown>
   }

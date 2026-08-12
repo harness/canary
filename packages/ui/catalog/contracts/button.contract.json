@@ -1,0 +1,455 @@
+{
+  "schemaVersion": "0.2.0",
+  "contractVersion": "0.1.0",
+  "id": "canary.button",
+  "status": "draft",
+  "surfaces": ["figma", "code"],
+  "overview": {
+    "name": "Button",
+    "description": "Triggers an immediate user action and communicates its emphasis, context, and availability.",
+    "useWhen": [
+      "The user needs to submit, confirm, create, delete, or otherwise trigger an immediate action.",
+      "The interface needs a clearly prioritized action with a visible interaction state."
+    ],
+    "avoidWhen": [
+      "The interaction only navigates to another location; use Link unless an approved asChild composition requires button styling.",
+      "The action cannot be described with a concise label or an icon with an accessible name."
+    ]
+  },
+  "code": {
+    "package": "@harnessio/ui",
+    "export": "Button",
+    "import": "import { Button } from \"@harnessio/ui/components\"",
+    "path": "src/components/button.tsx"
+  },
+  "figma": {
+    "library": "HDS | Components 3.0",
+    "fileKey": "AIgjIyUzcuZzuVnuoOyhQE",
+    "name": "❖Button/{Md|Sm|Xs}/{Text|IconOnly}[Rounded]",
+    "exampleNodeId": "28553:15461",
+    "mappingStatus": "verified",
+    "componentKeys": [
+      "188019ff5a5c45f3009b963213c98e95dc1c780f",
+      "0a05a53168a6327345bd183cd29238b2db657579",
+      "fe7df94f86409f83ac4c42fd051f2c9c7f5f0f90",
+      "38424d4a70f687acdd18ae209b1912a47728b7df",
+      "00a54e29d534d6590b2f1e64f3015be7c64abc43",
+      "5b0bb1315873b3bf9406662e04d9baba9f4fa655",
+      "936dcee9aeae242eb23e0adde4894b51baf22454",
+      "b42eabf894db6a9e5206577f628d99ba91a5d44c",
+      "5909cc7e6f8636ef2415e5a7f91b48b9cea01ffb",
+      "9052baae0763a61994327ddba399aabb74a3bba6",
+      "a36349ebb31bd76e6d97a35fb8d9b811f2e7668e",
+      "34a39d10a4fda2c11cd8d5269dceb6c32718a1e0"
+    ],
+    "candidateComponentKeys": [],
+    "codeConnect": [
+      "src/components/button-md-icon-only-rounded.figma.ts",
+      "src/components/button-md-icon-only.figma.ts",
+      "src/components/button-md-text-rounded.figma.ts",
+      "src/components/button-md-text.figma.ts",
+      "src/components/button-sm-icon-only-rounded.figma.ts",
+      "src/components/button-sm-icon-only.figma.ts",
+      "src/components/button-sm-text-rounded.figma.ts",
+      "src/components/button-xs-icon-only-rounded.figma.ts",
+      "src/components/button-xs-icon-only.figma.ts",
+      "src/components/button-xs-text-rounded.figma.ts",
+      "src/components/button-xs-text.figma.ts",
+      "src/components/button.figma.ts"
+    ]
+  },
+  "anatomy": [
+    {
+      "id": "root",
+      "name": "Root",
+      "required": true,
+      "description": "Interactive container that owns variant, theme, size, shape, and state styling."
+    },
+    {
+      "id": "label-or-icon",
+      "name": "Label or icon",
+      "required": true,
+      "description": "Primary content that communicates the action; micro sizes and icon-only buttons retain only an IconV2 child."
+    },
+    {
+      "id": "leading-icon",
+      "name": "Leading icon",
+      "required": false,
+      "description": "Optional IconV2 before the text label."
+    },
+    {
+      "id": "trailing-icon",
+      "name": "Trailing icon",
+      "required": false,
+      "description": "Optional IconV2 after the text label."
+    },
+    {
+      "id": "loading-indicator",
+      "name": "Loading indicator",
+      "required": false,
+      "description": "Spinner icon shown while the explicit loading prop or an asynchronous onClick result is pending."
+    },
+    {
+      "id": "tooltip",
+      "name": "Tooltip",
+      "required": false,
+      "description": "Context wrapper supported by tooltipProps and required by the TypeScript API for icon-only use unless explicitly bypassed."
+    }
+  ],
+  "properties": {
+    "shared": [
+      {
+        "name": "variant",
+        "type": "enum",
+        "values": ["primary", "secondary", "outline", "ai", "ghost", "link", "transparent"],
+        "default": "primary",
+        "description": "Sets the visual emphasis and treatment. Code accepts every listed value, while individual Figma component sets expose a subset based on size, content, and shape.",
+        "figmaProperty": "variant",
+        "mapsTo": "ButtonProps.variant"
+      },
+      {
+        "name": "size",
+        "type": "enum",
+        "values": ["md", "sm", "xs", "2xs", "3xs"],
+        "default": "md",
+        "description": "Sets the component dimensions. Figma currently publishes md, sm, and xs component sets; 2xs and 3xs are code-only and force icon-only rendering.",
+        "mapsTo": "ButtonProps.size"
+      },
+      {
+        "name": "theme",
+        "type": "enum",
+        "values": ["default", "success", "danger"],
+        "default": "default",
+        "description": "Sets the semantic color context.",
+        "figmaProperty": "theme",
+        "mapsTo": "ButtonProps.theme"
+      },
+      {
+        "name": "rounded",
+        "type": "boolean",
+        "default": false,
+        "description": "Deprecated. Rounded Buttons are unsupported for new work, including rounded text and rounded icon-only treatments. The code prop and published Figma sets remain temporarily for migration.",
+        "mapsTo": "ButtonProps.rounded"
+      },
+      {
+        "name": "disabled",
+        "type": "boolean",
+        "default": false,
+        "description": "Prevents activation and applies the disabled state.",
+        "figmaProperty": "👁️ disabled",
+        "mapsTo": "ButtonProps.disabled"
+      },
+      {
+        "name": "iconOnly",
+        "type": "boolean",
+        "default": false,
+        "description": "Renders only the first IconV2 child; 2xs and 3xs imply this behavior.",
+        "mapsTo": "ButtonProps.iconOnly"
+      },
+      {
+        "name": "children",
+        "type": "react-node",
+        "required": true,
+        "description": "Provides the visible action label and optional IconV2 children.",
+        "figmaProperty": "button text#1567:0",
+        "mapsTo": "ButtonProps.children"
+      }
+    ],
+    "designOnly": [
+      {
+        "name": "leadingIcon",
+        "type": "boolean",
+        "default": false,
+        "description": "Shows the nested leading icon instance.",
+        "figmaProperty": "icon#1567:1",
+        "mapsTo": "An IconV2 child before the text label"
+      },
+      {
+        "name": "trailingIcon",
+        "type": "boolean",
+        "default": false,
+        "description": "Shows the nested trailing icon instance.",
+        "figmaProperty": "suffix icon#1687:61",
+        "mapsTo": "An IconV2 child after the text label"
+      },
+      {
+        "name": "previewState",
+        "type": "enum",
+        "values": ["default", "hover", "active", "loading"],
+        "default": "default",
+        "description": "Selects an interaction-state preview in Figma; only loading maps to a public code prop.",
+        "figmaProperty": "state",
+        "mapsTo": "ButtonProps.loading when value is loading"
+      }
+    ],
+    "codeOnly": [
+      {
+        "name": "loading",
+        "type": "boolean",
+        "default": false,
+        "description": "Shows a spinner and disables the button while true."
+      },
+      {
+        "name": "onClick",
+        "type": "function",
+        "description": "Runs the action; a returned Promise automatically activates loading until it settles."
+      },
+      {
+        "name": "asChild",
+        "type": "boolean",
+        "default": false,
+        "description": "Merges Button behavior and styling into its child through Radix Slot."
+      },
+      {
+        "name": "tooltipProps",
+        "type": "object",
+        "description": "Wraps the button in Tooltip and supplies title, content, side, align, or controlled open state."
+      },
+      {
+        "name": "ignoreIconOnlyTooltip",
+        "type": "boolean",
+        "default": false,
+        "description": "Explicitly bypasses the TypeScript requirement for icon-only tooltipProps."
+      },
+      {
+        "name": "className",
+        "type": "string",
+        "description": "Adds consumer classes after the contract-governed Button classes."
+      },
+      {
+        "name": "type",
+        "type": "enum",
+        "values": ["button", "submit", "reset"],
+        "default": "button",
+        "description": "Sets the native button type."
+      }
+    ]
+  },
+  "states": [
+    {
+      "name": "default",
+      "required": true,
+      "surfaces": ["figma", "code"],
+      "description": "Resting state with the selected variant, theme, size, and shape."
+    },
+    {
+      "name": "hover",
+      "required": true,
+      "surfaces": ["figma", "code"],
+      "description": "Pointer-hover feedback without changing the action meaning."
+    },
+    {
+      "name": "focus",
+      "required": true,
+      "surfaces": ["code"],
+      "description": "Visible keyboard focus indicator."
+    },
+    {
+      "name": "active",
+      "required": true,
+      "surfaces": ["figma", "code"],
+      "description": "Pressed feedback during activation."
+    },
+    {
+      "name": "disabled",
+      "required": true,
+      "surfaces": ["figma", "code"],
+      "description": "Unavailable state that prevents native button activation."
+    },
+    {
+      "name": "loading",
+      "required": true,
+      "surfaces": ["figma", "code"],
+      "description": "Pending state that shows a spinner, preserves non-icon-only content, and disables activation."
+    }
+  ],
+  "behavior": [
+    {
+      "id": "activate",
+      "description": "Invokes onClick once for an enabled activation."
+    },
+    {
+      "id": "async-loading",
+      "description": "If onClick returns a Promise, enter loading immediately and leave it after the Promise settles."
+    },
+    {
+      "id": "loading-disables",
+      "description": "Explicit or Promise-derived loading disables the rendered button and sets data-loading."
+    },
+    {
+      "id": "micro-size",
+      "description": "Sizes 2xs and 3xs force icon-only rendering and retain only the first IconV2 child."
+    },
+    {
+      "id": "icon-only",
+      "description": "iconOnly retains only the first IconV2 child and applies the cn-button-icon-only class."
+    },
+    {
+      "id": "as-child",
+      "description": "asChild replaces the native button element with Radix Slot while retaining Button styling and handlers."
+    }
+  ],
+  "accessibility": {
+    "requirements": [
+      "Every Button has an accessible name; visible text is preferred and icon-only use requires an equivalent programmatic name.",
+      "Keyboard focus remains visible for every variant, theme, and size.",
+      "Use the default type=button unless submit or reset behavior is intentional.",
+      "Disabled and loading states prevent repeat activation and remain programmatically determinable.",
+      "Do not rely on color alone to communicate success, danger, disabled, or loading meaning."
+    ]
+  },
+  "bindings": [
+    {
+      "designProperty": "variant",
+      "codeProperty": "variant"
+    },
+    {
+      "designProperty": "theme",
+      "codeProperty": "theme",
+      "transform": "Remove the Figma emoji prefix and map to default, success, or danger. Map the '-' option on md and sm Text sets to an omitted code prop."
+    },
+    {
+      "designProperty": "component size variant",
+      "codeProperty": "size",
+      "transform": "Select the matching md, sm, or xs code value. Code-only 2xs and 3xs have no current published Figma component set."
+    },
+    {
+      "designProperty": "rounded variant",
+      "codeProperty": "rounded"
+    },
+    {
+      "designProperty": "👁️ disabled",
+      "codeProperty": "disabled"
+    },
+    {
+      "designProperty": "button text#1567:0",
+      "codeProperty": "children"
+    },
+    {
+      "designProperty": "icon#1567:1",
+      "codeProperty": "children",
+      "transform": "Render the selected IconV2 before the label when enabled."
+    },
+    {
+      "designProperty": "suffix icon#1687:61",
+      "codeProperty": "children",
+      "transform": "Render the selected IconV2 after the label when enabled."
+    },
+    {
+      "designProperty": "state",
+      "codeProperty": "loading",
+      "transform": "Map loading to true; default, hover, and active are design previews rather than public code props."
+    }
+  ],
+  "tokens": {
+    "rootClass": "cn-button",
+    "rules": [
+      {
+        "category": "variant",
+        "rule": "Use one of the contract-owned cn-button-primary, secondary, outline, ai, ghost, link, or transparent treatments."
+      },
+      {
+        "category": "size",
+        "rule": "Use the Button size API and corresponding cn-button size classes instead of local height, padding, or typography overrides."
+      },
+      {
+        "category": "theme",
+        "rule": "Use default, success, or danger through the theme API instead of local semantic color overrides."
+      },
+      {
+        "category": "shape",
+        "rule": "Use the standard Button shape. The rounded prop and Rounded Figma sets are deprecated, and local border-radius overrides are unsupported."
+      }
+    ]
+  },
+  "usage": {
+    "do": [
+      "Use primary for the single highest-priority action in a local context.",
+      "Use concise verb-led labels that make the result of activation predictable.",
+      "Use loading for pending actions and allow Promise-returning onClick handlers to manage it automatically.",
+      "Use IconV2 children for contract-compatible icon composition."
+    ],
+    "dont": [
+      "Use Button as a visual container for non-interactive content.",
+      "Use iconOnly without an accessible name and a clear explanation of the action.",
+      "Use the deprecated rounded prop or a Rounded Figma component for new work; migrate to the equivalent standard-shape Button.",
+      "Add local color, size, padding, typography, or radius overrides that recreate an unsupported variant.",
+      "Use disabled styling as the only explanation for why an action is unavailable."
+    ],
+    "relatedComponents": ["Link", "ButtonGroup", "SplitButton", "Toggle"]
+  },
+  "readiness": {
+    "structure": {
+      "autoLayoutRequired": true,
+      "requiredSlots": ["root", "label-or-icon"],
+      "optionalSlots": ["leading-icon", "trailing-icon", "loading-indicator", "tooltip"]
+    },
+    "states": {
+      "required": ["default", "hover", "focus", "active", "disabled", "loading"]
+    },
+    "documentation": {
+      "descriptionRequired": true,
+      "codeConnectRequired": true
+    },
+    "accessibility": {
+      "iconOnlyRequiresAccessibleName": true
+    }
+  },
+  "patterns": [
+    {
+      "id": "async-action",
+      "description": "Button manages pending feedback for asynchronous actions.",
+      "rule": "Return the action Promise from onClick or control loading explicitly; do not create a second local spinner state."
+    },
+    {
+      "id": "icon-only-action",
+      "description": "A compact action represented by a single icon.",
+      "rule": "Use iconOnly with one IconV2 child and provide an accessible name; tooltipProps is required unless the explicit override is justified."
+    },
+    {
+      "id": "micro-action",
+      "description": "The 2xs and 3xs sizes are intentionally icon-only.",
+      "rule": "Do not place visible text in 2xs or 3xs because code filters non-IconV2 children."
+    },
+    {
+      "id": "deprecated-rounded",
+      "description": "Rounded Button treatments are retained only for migration.",
+      "rule": "Do not create new rounded Buttons. Replace rounded text and rounded icon-only Buttons with the equivalent standard-shape Button while preserving variant, theme, size, accessible name, and tooltip behavior."
+    }
+  ],
+  "evidence": {
+    "sources": [
+      {
+        "type": "source",
+        "path": "src/components/button.tsx"
+      },
+      {
+        "type": "docs",
+        "path": "../../apps/portal/src/content/docs/components/actions/button.mdx"
+      },
+      {
+        "type": "tests",
+        "path": "src/components/__tests__/button.test.tsx"
+      },
+      {
+        "type": "code-connect",
+        "path": "src/components/button.figma.ts"
+      },
+      {
+        "type": "poc-contract",
+        "path": "../../../canary-ds-contracts/figma-plugin/catalogs/canary/button.catalog.json"
+      },
+      {
+        "type": "figma",
+        "path": "https://www.figma.com/design/AIgjIyUzcuZzuVnuoOyhQE/HDS-%7C-Components-3.0?node-id=28553-15461"
+      }
+    ],
+    "provisionalFields": ["properties.shared.variant", "properties.shared.size", "states.focus", "overview.avoidWhen"],
+    "openQuestions": [
+      "Decide whether code-only 2xs and 3xs sizes should be added to Figma or documented as an intentional surface difference.",
+      "Define the supported non-rounded variant matrix. Code still permits deprecated rounded combinations during migration, while Figma omits link from xs and all rounded or icon-only sets and exposes transparent inconsistently.",
+      "Decide whether Figma needs a focus preview. Every published set exposes default, hover, active, loading, and disabled, while focus is implemented only in code.",
+      "Resolve the portal documentation statement that Button supports navigation against the preferred semantic Link guidance."
+    ]
+  }
+}

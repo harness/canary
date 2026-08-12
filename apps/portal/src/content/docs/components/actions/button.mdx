@@ -539,19 +539,20 @@ If you need to skip showing the tooltip, you should set `ignoreIconOnlyTooltip`.
     <IconV2 name="xmark" skipSize />
   </Button>
 </div>
-
-<hr />
-
-<h4>Rounded Buttons</h4>
-
-<div className="flex gap-cn-sm">
-  <Button rounded>Rounded Button</Button>
-  <Button rounded variant="outline">
-    Rounded Outline
-  </Button>
-</div>
 </div>`}
 />
+
+## Deprecated: Rounded Buttons
+
+The `rounded` prop and all rounded Button treatments are deprecated. Do not use rounded Buttons for new work. Rounded text Buttons are not supported.
+
+For existing usage:
+
+- Replace `<Button rounded>Label</Button>` with the equivalent standard text Button, such as `<Button>Label</Button>`.
+- Replace rounded icon-only Buttons with the equivalent standard `iconOnly` Button.
+- Preserve the Button's variant, theme, size, accessible name, and tooltip while removing `rounded`.
+
+The `rounded` prop remains available temporarily so teams can migrate existing usage. Its presence in the API does not indicate support for new designs.
 
 ## Usage
 
@@ -590,9 +591,6 @@ import { Button } from '@harnessio/ui/components'
 <Button>Medium Size Button (default)</Button>
 <Button size="sm">Small Button</Button>
 <Button size="xs">Extra Small Button</Button>
-
-// Rounded button
-<Button rounded>Rounded Button</Button>
 
 // Icon only button
 <Button iconOnly tooltipProps={{ content: 'Add' }}>
@@ -653,7 +651,8 @@ This ensures type safety and provides proper development-time feedback on invali
     },
     {
       name: "rounded",
-      description: "Applies rounded corners to the button.",
+      description:
+        "Deprecated. Do not use for new work. Remove rounded to migrate text and icon-only Buttons to the supported standard shape.",
       required: false,
       value: "boolean",
       defaultValue: "false",

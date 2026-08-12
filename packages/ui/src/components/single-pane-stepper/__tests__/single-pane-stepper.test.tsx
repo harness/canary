@@ -104,6 +104,15 @@ const testFlow: FlowConfig = {
   initialStep: 'card-a'
 }
 
+const flatTestFlow: FlowConfig = {
+  steps: {
+    'card-a': { title: 'Card A', description: 'First card', component: TestCardA, next: 'card-b' },
+    'card-b': { title: 'Card B', description: 'Second card', component: TestCardB, next: 'card-c' },
+    'card-c': { title: 'Card C', description: 'Third card', component: TestCardC }
+  },
+  initialStep: 'card-a'
+}
+
 const testFlowWithSkip: FlowConfig = {
   stepGroups: {
     'step-1': { title: 'First Step' },
@@ -225,14 +234,17 @@ describe('SinglePaneStepper', () => {
       expect(container.querySelector('.cn-stepper-header')).not.toBeInTheDocument()
     })
 
-    test('renders stepper with visited steps only; future steps appear when active', () => {
-      render(<SinglePaneStepper.Root flow={testFlow} />)
-      // Only the active step is rendered initially
+    test('renders full step-group skeleton up front; unreached groups show as upcoming placeholders', () => {
+      const { container } = render(<SinglePaneStepper.Root flow={testFlow} />)
+      // All three step groups render immediately, not just the active one.
       expect(screen.getByText('First Step')).toBeInTheDocument()
-      expect(screen.queryByText('Second Step')).not.toBeInTheDocument()
-      expect(screen.queryByText('Third Step')).not.toBeInTheDocument()
-      // Initial card content is visible
+      expect(screen.getByText('Second Step')).toBeInTheDocument()
+      expect(screen.getByText('Third Step')).toBeInTheDocument()
+      // Initial card content is visible.
       expect(screen.getAllByText('Card A').length).toBeGreaterThanOrEqual(1)
+      // The unreached groups render as upcoming (no visited/active card content inside them yet).
+      const upcomingGroups = container.querySelectorAll('.cn-stepper-step-upcoming')
+      expect(upcomingGroups.length).toBeGreaterThanOrEqual(2)
     })
   })
 
@@ -343,10 +355,10 @@ describe('SinglePaneStepper', () => {
   describe('Stepper Integration', () => {
     test('steps and cards accumulate as user progresses', async () => {
       render(<SinglePaneStepper.Root flow={testFlow} />)
-      // Only the first step group is rendered initially
+      // All step groups render immediately (unreached ones as upcoming placeholders).
       expect(screen.getByText('First Step')).toBeInTheDocument()
-      expect(screen.queryByText('Second Step')).not.toBeInTheDocument()
-      expect(screen.queryByText('Third Step')).not.toBeInTheDocument()
+      expect(screen.getByText('Second Step')).toBeInTheDocument()
+      expect(screen.getByText('Third Step')).toBeInTheDocument()
 
       // Initially only first step's card is visible
       expect(screen.getAllByText('Card A').length).toBeGreaterThanOrEqual(1)
@@ -424,6 +436,32 @@ describe('SinglePaneStepper', () => {
       const connector = activeStepItem?.querySelector('.cn-stepper-connector')
 
       expect(connector).toHaveClass('cn-stepper-connector-active-partial')
+    })
+
+    test('renders predicted upcoming steps within the active step group, matching dual-pane behavior', async () => {
+      function TestCardChained() {
+        const { complete } = useFlowCard()
+        return (
+          <SinglePaneStepper.Card title="Chained">
+            <button onClick={() => complete({}, 'card-next')}>Go</button>
+          </SinglePaneStepper.Card>
+        )
+      }
+
+      const chainedFlow: FlowConfig = {
+        stepGroups: { 'step-1': { title: 'Group' } },
+        steps: {
+          'card-chained': { step: 'step-1', title: 'Chained', component: TestCardChained, next: 'card-next' },
+          'card-next': { step: 'step-1', title: 'Next Card', component: TestCardB }
+        },
+        initialStep: 'card-chained'
+      }
+
+      const { container } = render(<SinglePaneStepper.Root flow={chainedFlow} />)
+
+      const upcomingSteps = container.querySelectorAll('.cn-stepper-nested-step-upcoming')
+      expect(upcomingSteps.length).toBeGreaterThanOrEqual(1)
+      expect(screen.getByText('Next Card')).toBeInTheDocument()
     })
 
     test('completed nested steps default collapsed and toggle via chevron', async () => {
@@ -646,14 +684,14 @@ describe('SinglePaneStepper', () => {
   })
 
   describe('Flat Mode', () => {
-    test('renders steps as top-level Stepper.Step items, not nested inside a StepGroup', async () => {
-      const { container } = render(<SinglePaneStepper.Root flow={testFlow} flat />)
+    test('renders steps as top-level Stepper.Step items when stepGroups is absent, not nested inside a StepGroup', async () => {
+      const { container } = render(<SinglePaneStepper.Root flow={flatTestFlow} />)
 
-      // No StepGroup wrapper: steps must NOT get the nested branch-connector class.
+      // No StepGroup wrapper: steps must NOT have the nested branch-connector class.
       expect(container.querySelector('.cn-stepper-nested-step-item')).not.toBeInTheDocument()
 
-      // Each visited step instead renders with the top-level (straight-connector) class, the
-      // same one StepGroup itself uses for its own <li> — proving the step registered directly
+      // Each visited step instead renders with the top-level (straight-connector) class, the same
+      // one a StepGroup itself uses on its own <li> — proving the step is registered directly
       // into ctx.orderedSteps via TopLevelStep, with no ParentStepProvider involved.
       expect(container.querySelectorAll('.cn-stepper-step-item').length).toBeGreaterThanOrEqual(1)
       expect(screen.getAllByText('Card A').length).toBeGreaterThanOrEqual(1)
@@ -661,24 +699,24 @@ describe('SinglePaneStepper', () => {
       await userEvent.click(screen.getByText('Next'))
       await waitFor(() => {
         expect(screen.getAllByText('Card B').length).toBeGreaterThanOrEqual(1)
-      })
 
-      // Still flat after navigating: two top-level items, still no nested-step-item nesting.
-      expect(container.querySelector('.cn-stepper-nested-step-item')).not.toBeInTheDocument()
-      expect(container.querySelectorAll('.cn-stepper-step-item').length).toBe(2)
+        // Still top-level, still no nested-step-item.
+        expect(container.querySelector('.cn-stepper-nested-step-item')).not.toBeInTheDocument()
+        expect(container.querySelectorAll('.cn-stepper-step-item').length).toBe(3)
+      })
     })
 
     test('showStepBadge renders the "Step n/total" badge on the flat top-level step', () => {
-      const { container } = render(<SinglePaneStepper.Root flow={testFlow} flat showStepBadge />)
+      const { container } = render(<SinglePaneStepper.Root flow={flatTestFlow} showStepBadge />)
 
       const badge = container.querySelector('.cn-stepper-step-badge')
       expect(badge).toBeInTheDocument()
-      // testFlow has 3 total steps; totalStepsOverride reports the flow's real count, not just
+      // flatTestFlow has 3 total steps; totalStepsOverride reports the flow's real count, not just
       // the 1 step mounted so far under progressive disclosure.
       expect(badge).toHaveTextContent('Step 1/3')
     })
 
-    test('default (non-flat) mode keeps steps nested inside a StepGroup', () => {
+    test('grouped mode (stepGroups present) keeps steps nested inside StepGroup', () => {
       const { container } = render(<SinglePaneStepper.Root flow={testFlow} />)
 
       expect(container.querySelector('.cn-stepper-nested-step-item')).toBeInTheDocument()
@@ -693,19 +731,18 @@ describe('SinglePaneStepper', () => {
     // 'github-auth' -> 'connect-repo') is only 3 steps — the two unchosen sibling auth steps must
     // NOT inflate the badge's denominator.
     const branchingStepsFlow: FlowConfig = {
-      stepGroups: { start: { title: 'Start' }, auth: { title: 'Auth' }, connect: { title: 'Connect' } },
       steps: {
-        start: { step: 'start', title: 'Start', component: () => null, next: 'github-auth' },
-        'github-auth': { step: 'auth', title: 'GitHub', component: () => null, next: 'connect-repo' },
-        'gitlab-auth': { step: 'auth', title: 'GitLab', component: () => null, next: 'connect-repo' },
-        'bitbucket-auth': { step: 'auth', title: 'Bitbucket', component: () => null, next: 'connect-repo' },
-        'connect-repo': { step: 'connect', title: 'Connect', component: () => null }
+        start: { title: 'Start', component: () => null, next: 'github-auth' },
+        'github-auth': { title: 'GitHub', component: () => null, next: 'connect-repo' },
+        'gitlab-auth': { title: 'GitLab', component: () => null, next: 'connect-repo' },
+        'bitbucket-auth': { title: 'Bitbucket', component: () => null, next: 'connect-repo' },
+        'connect-repo': { title: 'Connect', component: () => null }
       },
       initialStep: 'start'
     }
 
     test("flat mode: badge total counts only the active path's steps, not every mutually-exclusive sibling step", () => {
-      const { container } = render(<SinglePaneStepper.Root flow={branchingStepsFlow} flat showStepBadge />)
+      const { container } = render(<SinglePaneStepper.Root flow={branchingStepsFlow} showStepBadge />)
 
       const badge = container.querySelector('.cn-stepper-step-badge')
       expect(badge).toBeInTheDocument()
@@ -749,15 +786,14 @@ describe('SinglePaneStepper', () => {
       expect(badge).toHaveTextContent('Step 1/4')
     })
 
-    test('linear flow (no branching): total is unchanged — same count as before the fix', () => {
-      // testFlow (defined at module scope) is a simple 3-step linear flow, same fixture as the
-      // existing Flat Mode badge test above. Asserting it here too, alongside the non-flat mode,
-      // proves no regression on the common (non-branching) case in BOTH render modes.
-      const { container: flatContainer } = render(<SinglePaneStepper.Root flow={testFlow} flat showStepBadge />)
+    test('linear flow (no branching): total unchanged in either grouped or flat mode', () => {
+      // flatTestFlow and testFlow are the same 3-card linear shape, one flat one grouped. Asserting
+      // both proves no regression on the common (non-branching) case in either render mode.
+      const { container: flatContainer } = render(<SinglePaneStepper.Root flow={flatTestFlow} showStepBadge />)
       expect(flatContainer.querySelector('.cn-stepper-step-badge')).toHaveTextContent('Step 1/3')
 
-      const { container: nonFlatContainer } = render(<SinglePaneStepper.Root flow={testFlow} showStepBadge />)
-      expect(nonFlatContainer.querySelector('.cn-stepper-step-badge')).toHaveTextContent('Step 1/3')
+      const { container: groupedContainer } = render(<SinglePaneStepper.Root flow={testFlow} showStepBadge />)
+      expect(groupedContainer.querySelector('.cn-stepper-step-badge')).toHaveTextContent('Step 1/3')
     })
 
     // Mirrors the real portal-demo bug: a step like 'choose-provider' or 'choose-infra' declares NO
@@ -775,12 +811,21 @@ describe('SinglePaneStepper', () => {
       initialStep: 'pick'
     }
 
+    const dynamicChoiceFlatFlow: FlowConfig = {
+      steps: {
+        pick: { title: 'Pick', component: () => null }, // no static next — dynamic
+        'landing-a': { title: 'Landing A', component: () => null },
+        'landing-b': { title: 'Landing B', component: () => null }
+      },
+      initialStep: 'pick'
+    }
+
     test('flat mode: badge total falls back to the full flow.steps count (not collapsed to 1) when the active step has no static next', () => {
-      const { container } = render(<SinglePaneStepper.Root flow={dynamicChoiceFlow} flat showStepBadge />)
+      const { container } = render(<SinglePaneStepper.Root flow={dynamicChoiceFlatFlow} showStepBadge />)
 
       const badge = container.querySelector('.cn-stepper-step-badge')
       expect(badge).toBeInTheDocument()
-      // Object.keys(dynamicChoiceFlow.steps).length === 3 ('pick', 'landing-a', 'landing-b'). The
+      // Object.keys(dynamicChoiceFlatFlow.steps).length === 3 ('pick', 'landing-a', 'landing-b'). The
       // pre-fix behavior would show "Step 1/1" (cardHistory.length + empty fullPredictedPath).
       expect(badge).toHaveTextContent('Step 1/3')
     })

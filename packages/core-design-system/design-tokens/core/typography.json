@@ -205,6 +205,31 @@
         "$value": "1.75"
       }
     },
+    "12": {
+      "$type": "lineHeights",
+      "$value": "0.75rem",
+      "$description": "12px"
+    },
+    "16": {
+      "$type": "lineHeights",
+      "$value": "1rem",
+      "$description": "16px"
+    },
+    "20": {
+      "$type": "lineHeights",
+      "$value": "1.25rem",
+      "$description": "20px"
+    },
+    "28": {
+      "$type": "lineHeights",
+      "$value": "1.75rem",
+      "$description": "28px"
+    },
+    "36": {
+      "$type": "lineHeights",
+      "$value": "2.25rem",
+      "$description": "36px"
+    },
     "1": {
       "none": {
         "$type": "lineHeights",

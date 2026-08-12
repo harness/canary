@@ -4,6 +4,7 @@ import { tmpdir } from 'node:os'
 import { dirname, join } from 'node:path'
 import { fileURLToPath } from 'node:url'
 
+import ts from 'typescript'
 import { expect, test } from 'vitest'
 
 function writeJson(root, relativePath, value) {
@@ -22,6 +23,33 @@ function collectProductionComponents(directory) {
 
     return entry.isFile() && /\.(jsx|tsx)$/.test(entry.name) && !entry.name.includes('.figma.') ? [entryPath] : []
   })
+}
+
+function findRoundedNonIconOnlyControls(source, filePath) {
+  const sourceFile = ts.createSourceFile(filePath, source, ts.ScriptTarget.Latest, true, ts.ScriptKind.TSX)
+  const lines = []
+
+  const visit = node => {
+    const openingElement = ts.isJsxElement(node)
+      ? node.openingElement
+      : ts.isJsxSelfClosingElement(node)
+        ? node
+        : undefined
+    if (openingElement && ['Button', 'Toggle'].includes(openingElement.tagName.getText(sourceFile))) {
+      const attributes = openingElement.attributes.properties.filter(ts.isJsxAttribute)
+      const hasRounded = attributes.some(attribute => attribute.name.getText(sourceFile) === 'rounded')
+      const hasIconOnly = attributes.some(attribute => attribute.name.getText(sourceFile) === 'iconOnly')
+
+      if (hasRounded && !hasIconOnly) {
+        lines.push(sourceFile.getLineAndCharacterOfPosition(openingElement.getStart(sourceFile)).line + 1)
+      }
+    }
+
+    ts.forEachChild(node, visit)
+  }
+
+  visit(sourceFile)
+  return lines
 }
 
 function completeDraftContract() {
@@ -260,27 +288,44 @@ test('validates the checked-in component contract catalog', async () => {
   })
 })
 
-test('prevents new production usage of the deprecated rounded Button treatment', () => {
+test('defines rounded as supported for icon-only Buttons and deprecated for text Buttons', () => {
+  const packageRoot = join(dirname(fileURLToPath(import.meta.url)), '..')
+  const contract = JSON.parse(readFileSync(join(packageRoot, 'catalog/contracts/button.contract.json'), 'utf8'))
+  const roundedProperty = contract.properties.shared.find(property => property.name === 'rounded')
+  const roundedPattern = contract.patterns.find(pattern => pattern.id === 'rounded-icon-only')
+
+  expect(roundedProperty).toMatchObject({
+    when: 'Supported when iconOnly is true; deprecated when iconOnly is false.'
+  })
+  expect(roundedProperty.description).toContain('Rounded icon-only Buttons are supported')
+  expect(roundedPattern.rule).toContain('Use rounded only with iconOnly')
+})
+
+test('detects rounded text Button and Toggle usage while allowing rounded icon-only controls', () => {
+  const source = `
+    const Example = () => <>
+      <Button rounded>Deprecated Button</Button>
+      <Toggle rounded text="Deprecated Toggle" />
+      <Button iconOnly rounded aria-label="Supported Button" />
+      <Toggle iconOnly rounded text="Supported Toggle" />
+    </>
+  `
+
+  expect(findRoundedNonIconOnlyControls(source, 'example.tsx')).toEqual([3, 4])
+})
+
+test('prevents new rounded non-icon-only Button and Toggle usage in production', () => {
   const packageRoot = join(dirname(fileURLToPath(import.meta.url)), '..')
   const sourceRoots = [
     { directory: join(packageRoot, 'src'), label: 'packages/ui/src' },
-    { directory: join(packageRoot, '../views/src'), label: 'packages/views/src' }
+    { directory: join(packageRoot, '../views/src'), label: 'packages/views/src' },
+    { directory: join(packageRoot, '../../apps'), label: 'apps' }
   ]
-  const compatibilityAdapters = new Set(['packages/ui/src/components/toggle.tsx'])
-  const roundedButtonPattern = /<Button\b[^>]*\brounded(?:\s|=|\/?>)/gs
-
   const violations = sourceRoots.flatMap(({ directory, label }) =>
     collectProductionComponents(directory).flatMap(filePath => {
       const repositoryPath = join(label, filePath.slice(directory.length + 1))
-      if (compatibilityAdapters.has(repositoryPath)) {
-        return []
-      }
-
       const source = readFileSync(filePath, 'utf8')
-      return [...source.matchAll(roundedButtonPattern)].map(match => {
-        const line = source.slice(0, match.index).split('\n').length
-        return `${repositoryPath}:${line}`
-      })
+      return findRoundedNonIconOnlyControls(source, filePath).map(line => `${repositoryPath}:${line}`)
     })
   )
 

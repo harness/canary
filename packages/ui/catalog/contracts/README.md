@@ -49,15 +49,15 @@ The published Button family currently contains 12 component sets:
 - Every component uses horizontal Auto Layout and has variable bindings.
 - Every set exposes default, hover, active, loading, and disabled states.
 - Figma does not publish 2xs or 3xs sets and does not expose a focus preview.
-- Variant availability is not a full matrix: link appears only in md and sm Text; transparent is absent from most Rounded sets and all IconOnlyRounded sets.
-- The ❌ prefix denotes a deprecated component. All Rounded Button treatments are deprecated; rounded text is unsupported, and the Figma sets and code prop remain temporarily for migration.
+- Variant availability is not a full matrix: link appears only in md and sm Text; transparent is absent from most TextRounded sets and all IconOnlyRounded sets.
+- The ❌ prefix denotes a deprecated component. TextRounded Button treatments are deprecated and remain temporarily for migration. IconOnlyRounded remains supported in md, sm, and xs because it is used by Pipeline Studio.
 - Code Connect includes a `-` theme mapping in every Button file, while Figma currently exposes that option only on md and sm Text.
 - Button is approved for actions, including action toolbars and controls that start or advance onboarding in place. Link is required for routes, URLs, files, and other destinations. Canary does not currently provide an approved button-styled Link pattern.
 
 The inventory entry is now `mapped`. The Button draft still needs three manual design-system decisions before it should leave `draft`:
 
 1. Decide whether 2xs and 3xs should be added to Figma or remain an intentional code-only capability.
-2. Approve a variant-by-size-by-shape support matrix, treating every Rounded combination as deprecated.
+2. Approve the remaining variant-by-size support matrix; shape is resolved as standard for text and standard or rounded for icon-only Buttons.
 3. Decide whether Figma needs a focus preview.
 
 Do not advance the contract to `piloting` or `stable` until the remaining policy decisions are recorded. The verified identity is sufficient for the inventory's `mapped` status, but it does not make every current Figma/code difference compliant.

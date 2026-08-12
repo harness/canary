@@ -268,8 +268,14 @@ describe('Toggle', () => {
   })
 
   describe('Rounded Prop', () => {
-    test('should apply rounded style when rounded is true', () => {
-      const { container } = renderComponent({ rounded: true })
+    test('should apply rounded style to an icon-only Toggle', () => {
+      const { container } = renderComponent({
+        iconOnly: true,
+        rounded: true,
+        prefixIcon: 'star',
+        text: 'Favorite',
+        tooltipProps: { content: 'Favorite' }
+      })
 
       const button = container.querySelector('.cn-button-rounded')
       expect(button).toBeInTheDocument()
@@ -308,7 +314,6 @@ describe('Toggle', () => {
         selectedVariant: 'primary',
         variant: 'outline',
         size: 'sm',
-        rounded: true,
         onChange: handleChange,
         className: 'custom-class'
       })
@@ -316,7 +321,6 @@ describe('Toggle', () => {
       expect(screen.getByRole('button', { name: 'Complete Toggle' })).toBeInTheDocument()
       expect(container.querySelector('.custom-class')).toBeInTheDocument()
       expect(container.querySelector('.cn-toggle-sm')).toBeInTheDocument()
-      expect(container.querySelector('.cn-button-rounded')).toBeInTheDocument()
     })
 
     test('should render icon-only with tooltip', () => {

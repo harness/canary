@@ -55,12 +55,14 @@ export function FloatingAddButton(props: FloatingAddButtonProp) {
     <div className="group absolute flex size-full items-center justify-center" style={style}>
       <Button
         iconOnly
+        rounded
         className="hidden self-center p-0 group-hover:flex"
         style={{
           alignSelf: 'center',
           marginTop: `${buttonMarginTopValue}px`
         }}
         variant="outline"
+        aria-label="Add node"
         onMouseDown={e => e.stopPropagation()}
         onClick={e => {
           e.stopPropagation()

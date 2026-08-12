@@ -190,10 +190,13 @@ const InputField: FC<InputFieldProps> = ({
         aria-label="Chat input"
       />
       <Button
+        iconOnly
+        rounded
         className="bottom-cn-xs right-cn-xs absolute z-10 size-7"
         onClick={onSend}
         disabled={disabled}
         aria-label="Send message"
+        ignoreIconOnlyTooltip
       >
         {sendIcon}
       </Button>

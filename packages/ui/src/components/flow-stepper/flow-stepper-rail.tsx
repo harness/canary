@@ -17,6 +17,12 @@ export interface FlowStepperRailProps {
   /** Badge denominator override — the caller computes this (it needs cardHistory + the full
    * predicted-path walk, which live in the caller's own bookkeeping, not here). */
   totalOverride?: number
+  /** Grouped-mode only: per-group numerator override for the "Step {n}/{total}" badge, keyed by
+   * step-group id. The caller computes each group's real path-order position here, the same way
+   * it already computes totalOverride's path-scoped denominator, so an off-path
+   * mutually-exclusive sibling group rendering ahead of an on-path group doesn't inflate that
+   * group's own numerator (e.g. off-path sibling registered before an active StepperGroup). */
+  stepNumberOverrides?: Map<string, number>
   /** Forwarded to `Stepper.Root`. SinglePaneStepperCardStack's current `<Stepper.Root>` always sets
    * this; DualPaneStepper's current `<Stepper.Root>` never does — `collapsibleNestedSteps` changes
    * real rendering behavior (caps the active trunk and hides the indeterminate placeholder), so it
@@ -38,6 +44,7 @@ export function FlowStepperRail({
   showStepperHeader,
   showStepBadge,
   totalOverride,
+  stepNumberOverrides,
   collapsibleNestedSteps,
   renderStepContent
 }: FlowStepperRailProps) {
@@ -101,6 +108,7 @@ export function FlowStepperRail({
             hasNestedSteps={derivedStep.showIndeterminate}
             showStepBadge={showStepBadge}
             totalStepsOverride={totalOverride}
+            stepNumberOverride={stepNumberOverrides?.get(derivedStep.stepGroupId)}
           >
             {showSteps &&
               !derivedStep.isTerminalStepGroup &&

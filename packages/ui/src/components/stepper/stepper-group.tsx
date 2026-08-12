@@ -152,6 +152,7 @@ export function StepperGroup({
   disabled,
   showStepBadge,
   totalStepsOverride,
+  stepNumberOverride,
   className,
   children
 }: StepperGroupProps) {
@@ -172,7 +173,7 @@ export function StepperGroup({
   const derivedState = state || ctx.getStepState(value)
   const stepDisabled = ctx.isStepDisabled(value)
   const stepIndex = ctx.orderedSteps.indexOf(value)
-  const stepNumber = stepIndex + 1
+  const stepNumber = stepNumberOverride ?? stepIndex + 1
   // ctx.orderedSteps only contains groups that have mounted so far under progressive disclosure —
   // totalStepsOverride lets a non-flat-mode consumer (e.g. SinglePaneStepperCardStack) supply the
   // flow's real step-group count instead of that currently-registered count (mirrors

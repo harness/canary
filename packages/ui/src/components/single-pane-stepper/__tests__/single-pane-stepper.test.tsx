@@ -786,6 +786,27 @@ describe('SinglePaneStepper', () => {
       expect(badge).toHaveTextContent('Step 1/4')
     })
 
+    test("non-flat mode: a group's own badge numerator reflects its path-order position, not its raw rendering index among mutually-exclusive siblings", () => {
+      const { container } = render(<SinglePaneStepper.Root flow={branchingGroupsFlow} showStepBadge />)
+
+      // DOM render order (Object.entries(flow.stepGroups), see deriveStepperModel) is: start,
+      // provider-a, provider-b, connect, done. 'provider-b' is never on the run's path, so the
+      // PATH-order position for 'connect' is 3 (start, provider-a, connect) and for 'done' is 4 —
+      // not the raw rendering index of 4 and 5, which is what the pre-fix code showed ("Step
+      // 4/4" and "Step 5/4"). This asserts the specific LATER badges by index, unlike the test above
+      // which only checks the first badge ('start') — 'start' is position 1 under both the buggy and
+      // fixed logic, so it can't distinguish them.
+      const badges = container.querySelectorAll('.cn-stepper-step-badge')
+      expect(badges[0]).toHaveTextContent('Step 1/4') // start: DOM 1, path-order 1
+      expect(badges[1]).toHaveTextContent('Step 2/4') // provider-a: DOM 2, path-order 2
+      expect(badges[3]).toHaveTextContent('Step 3/4') // connect: DOM 4, path-order 3
+      expect(badges[4]).toHaveTextContent('Step 4/4') // done: DOM 5, path-order 4
+
+      // Deliberately not asserting badges[2] (the off-path 'provider-b' group) — it's off-path,
+      // and asserting a specific number for it would just be pinning an implementation detail, not
+      // a real contract.
+    })
+
     test('linear flow (no branching): total unchanged in either grouped or flat mode', () => {
       // flatTestFlow and testFlow are the same 3-card linear shape, one flat one grouped. Asserting
       // both proves no regression on the common (non-branching) case in either render mode.

@@ -102,6 +102,32 @@ export function SinglePaneStepperCardStack({
     return Math.max(walkedTotal, Object.keys(flow.stepGroups ?? {}).length)
   }, [cardHistory, fullPredictedPath, reachedKnownEnd, flow.steps, flow.stepGroups])
 
+  // Per-group numerator badge: each group's 1-based position in the ORDER the run
+  // actually encounters it (cardHistory first, then the predicted remainder) — not the raw
+  // rendering index, which would also count off-path mutually-exclusive sibling groups. Groups
+  // never encountered on the run's path (truly off-path siblings) are absent from the map;
+  // StepperGroup falls back to its own raw registration index for those, which is fine since its
+  // own badge number is inherently not meaningful for a path they're not actually on.
+  const stepNumberOverrides = useMemo(() => {
+    const seen = new Set<string>()
+    const orderedIds: string[] = []
+    for (const entry of cardHistory) {
+      const stepGroupId = flow.steps[entry.stepId]?.step
+      if (stepGroupId && !seen.has(stepGroupId)) {
+        seen.add(stepGroupId)
+        orderedIds.push(stepGroupId)
+      }
+    }
+    for (const stepId of fullPredictedPath) {
+      const stepGroupId = flow.steps[stepId]?.step
+      if (stepGroupId && !seen.has(stepGroupId)) {
+        seen.add(stepGroupId)
+        orderedIds.push(stepGroupId)
+      }
+    }
+    return new Map(orderedIds.map((id, index) => [id, index + 1]))
+  }, [cardHistory, fullPredictedPath, flow.steps])
+
   const totalOverride = flow.stepGroups ? totalStepGroupsCount : totalStepsCount
 
   const handleStepperClick = (value: string) => {
@@ -145,6 +171,7 @@ export function SinglePaneStepperCardStack({
           showStepperHeader={showStepperHeader}
           showStepBadge={showStepBadge}
           totalOverride={totalOverride}
+          stepNumberOverrides={stepNumberOverrides}
           collapsibleNestedSteps
           renderStepContent={(stepId, status) => {
             const CardComponent = flow.steps[stepId]?.component

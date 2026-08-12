@@ -31,6 +31,12 @@ export interface StepperGroupProps {
   /** Lets a non-flat-mode consumer supply the flow's real step-group count instead of the
    *  currently-registered count (see StepperStepProps.totalStepsOverride for the flat-mode analog). */
   totalStepsOverride?: number
+  /** Overrides the "Step {n}/{total}" badge numerator (ctx.orderedSteps.indexOf(value) + 1) for
+   *  non-flat-mode groups. THIS group's raw registration index also counts off-path
+   *  mutually-exclusive sibling groups registered before it, inflating the numerator past its
+   *  real path-order position once an off-path sibling renders ahead of an on-path
+   *  active group (e.g. "Step 5/4"). Omit to fall back to the raw registration index. */
+  stepNumberOverride?: number
   className?: string
   children?: ReactNode
 }

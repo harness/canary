@@ -17,6 +17,9 @@ describe("parseCatalogEntry", () => {
     expect(entry.shared.find((p) => p.name === "variant")?.values).toContain(
       "primary",
     );
+    expect(entry.supportMatrix?.find((rule) => rule.id === "legacy-micro-sizes")?.status).toBe(
+      "unsupported",
+    );
   });
 
   it("parses the Badge engine fixture", () => {

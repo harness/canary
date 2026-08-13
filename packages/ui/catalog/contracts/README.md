@@ -34,6 +34,15 @@ pnpm --filter @harnessio/ui catalog:validate
 
 The validator checks each contract's structure and its link to `component-inventory.json`. It also prevents a Figma-governed contract from becoming `stable` without a verified mapping and at least one confirmed component key.
 
+When support depends on a combination of properties, add `supportMatrix`. Each rule declares:
+
+- A unique `id` and one of `supported`, `deprecated`, or `unsupported`.
+- The governed `surfaces`.
+- `conditions` whose keys reference declared contract properties and whose arrays form the rule's allowed Cartesian product.
+- A plain-language `description` and, for deprecated or unsupported legacy behavior, an optional `migration`.
+
+Rules should cover every declared combination exactly once. Contract validation rejects unknown property names and values; component-specific tests should also verify exhaustive, non-overlapping coverage.
+
 ## Status meaning
 
 - `draft`: Codebase evidence is captured, but one or more mappings or decisions remain provisional.
@@ -53,20 +62,19 @@ The published Button family currently contains 12 component sets:
 - The ❌ prefix denotes a deprecated component. TextRounded Button treatments are deprecated and remain temporarily for migration. IconOnlyRounded remains supported in md, sm, and xs because it is used by Pipeline Studio.
 - Code Connect includes a `-` theme mapping in every Button file, while Figma currently exposes that option only on md and sm Text.
 - Button is approved for actions, including action toolbars and controls that start or advance onboarding in place. Link is required for routes, URLs, files, and other destinations. Canary does not currently provide an approved button-styled Link pattern.
+- The approved support matrix is encoded in `button.contract.json` and compiled into the Figma plugin catalog. It supports md, sm, and xs; supports rounded only for icon-only Buttons; limits the link visual variant to default-theme md/sm text actions; deprecates TextRounded; and marks 2xs/3xs unsupported for new use.
 
-The inventory entry is now `mapped`. The Button draft still needs three manual design-system decisions before it should leave `draft`:
+The inventory entry is now `mapped`. Size, shape, variant, and theme policy are approved. The Button draft still needs one manual design-system decision before it should leave `draft`:
 
-1. Decide whether 2xs and 3xs should be added to Figma or remain an intentional code-only capability.
-2. Approve the remaining variant-by-size support matrix; shape is resolved as standard for text and standard or rounded for icon-only Buttons.
-3. Decide whether Figma needs a focus preview.
+1. Decide whether Figma needs a focus preview.
 
-Do not advance the contract to `piloting` or `stable` until the remaining policy decisions are recorded. The verified identity is sufficient for the inventory's `mapped` status, but it does not make every current Figma/code difference compliant.
+Do not advance the contract to `piloting` or `stable` until the remaining focus-preview decision is recorded and the approved matrix has been reconciled with Figma and code. The verified identity is sufficient for the inventory's `mapped` status, but it does not make every current Figma/code difference compliant.
 
 ## Adding the next contract
 
 1. Confirm the governing inventory entry and contract path.
 2. Gather implementation, docs, tests, Code Connect, and Figma evidence.
-3. Write the contract using Button as the structural example, marking uncertain values in `evidence.provisionalFields` and `evidence.openQuestions`.
+3. Write the contract using Button as the structural example. Add an exhaustive `supportMatrix` when availability depends on property combinations, and mark uncertain values in `evidence.provisionalFields` and `evidence.openQuestions`.
 4. Run `catalog:validate`.
 5. Compile the Figma plugin pack (`pnpm --filter @harnessio/figma-plugin catalogs:pack`) so Check uses the new contract.
 6. Review the component in Figma before changing its mapping or lifecycle status.

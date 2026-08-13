@@ -216,4 +216,29 @@ describe('DualPaneStepper', () => {
       })
     })
   })
+
+  describe('Flat Mode', () => {
+    const flatTestFlow: FlowConfig = {
+      steps: {
+        'card-a': { title: 'Card A', component: TestCardA, next: 'card-b' },
+        'card-b': { title: 'Card B', component: TestCardB, next: 'card-c' },
+        'card-c': { title: 'Card C', component: TestCardC }
+      },
+      initialStep: 'card-a'
+    }
+
+    test('renders steps as top-level Stepper.Step items when stepGroups is absent', async () => {
+      const { container } = render(<DualPaneStepper.Root flow={flatTestFlow} title="Test Flow" />)
+      expect(container.querySelector('.cn-stepper-nested-step-item')).not.toBeInTheDocument()
+      expect(container.querySelectorAll('.cn-stepper-step-item').length).toBeGreaterThanOrEqual(1)
+      expect(screen.getAllByText('Card A').length).toBeGreaterThanOrEqual(1)
+
+      await userEvent.click(screen.getByText('Next'))
+      await waitFor(() => {
+        expect(screen.getAllByText('Card B').length).toBeGreaterThanOrEqual(1)
+      })
+
+      expect(container.querySelector('.cn-stepper-nested-step-item')).not.toBeInTheDocument()
+    })
+  })
 })

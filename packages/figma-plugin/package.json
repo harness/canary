@@ -1,0 +1,35 @@
+{
+  "name": "@harnessio/figma-plugin",
+  "private": true,
+  "version": "0.2.0",
+  "type": "module",
+  "description": "Figma plugin that checks designs against Canary component contracts",
+  "scripts": {
+    "test": "pnpm catalogs:pack && vitest run",
+    "typecheck": "pnpm catalogs:pack && tsc --noEmit",
+    "build": "pnpm catalogs:pack && FIGMA_BUILD=ui vite build && FIGMA_BUILD=main vite build",
+    "dev": "echo \"Run pnpm dev:ui and pnpm dev:main in two terminals\" && exit 1",
+    "dev:ui": "pnpm catalogs:pack && FIGMA_BUILD=ui vite build --watch",
+    "dev:main": "pnpm catalogs:pack && FIGMA_BUILD=main vite build --watch",
+    "catalogs:validate": "pnpm catalogs:pack && node bin/validate-catalogs.mjs",
+    "catalogs:pack": "node bin/compile-contracts.mjs"
+  },
+  "engines": {
+    "node": ">=18.17.1"
+  },
+  "license": "Apache-2.0",
+  "dependencies": {
+    "preact": "^10.29.8",
+    "zod": "^4.0.0"
+  },
+  "devDependencies": {
+    "@figma/plugin-typings": "^1.132.0",
+    "@preact/preset-vite": "^2.10.6",
+    "@types/node": "^22.9.0",
+    "jsdom": "^25.0.1",
+    "typescript": "^5.9.2",
+    "vite": "^6.1.1",
+    "vite-plugin-singlefile": "^2.3.3",
+    "vitest": "^3.0.6"
+  }
+}

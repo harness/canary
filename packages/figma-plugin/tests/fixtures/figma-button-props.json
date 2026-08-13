@@ -1,0 +1,58 @@
+{
+  "_meta": {
+    "source": "Derived from trial/button.catalog.json figmaNotes + documented Canary ❖Button enum decorations. Live instance dump deferred until Figma Desktop Bridge is connected.",
+    "componentName": "❖Button",
+    "capturedAt": null
+  },
+  "propertyDefinitions": [
+    { "name": "variant", "type": "VARIANT" },
+    { "name": "size", "type": "VARIANT" },
+    { "name": "theme", "type": "VARIANT" },
+    { "name": "rounded", "type": "BOOLEAN" },
+    { "name": "👁️ disabled", "type": "BOOLEAN" },
+    { "name": "iconOnly", "type": "BOOLEAN" },
+    { "name": "icon#1567:1", "type": "BOOLEAN" },
+    { "name": "suffix icon#1687:61", "type": "BOOLEAN" },
+    { "name": "button text#1567:0", "type": "TEXT" }
+  ],
+  "sampleInstances": [
+    {
+      "label": "legal primary sm",
+      "properties": {
+        "variant": "primary",
+        "size": "sm",
+        "theme": "⚫ default",
+        "rounded": false,
+        "👁️ disabled": false,
+        "iconOnly": false,
+        "icon#1567:1": false,
+        "suffix icon#1687:61": false,
+        "button text#1567:0": "Save"
+      }
+    },
+    {
+      "label": "emoji theme success",
+      "properties": {
+        "variant": "primary",
+        "size": "md",
+        "theme": "⚫ success",
+        "rounded": false
+      }
+    },
+    {
+      "label": "illegal subtle variant",
+      "properties": {
+        "variant": "subtle",
+        "size": "md",
+        "theme": "⚫ default"
+      }
+    }
+  ],
+  "enumDecorations": [
+    { "raw": "⚫ default", "canonical": "default" },
+    { "raw": "⚫ success", "canonical": "success" },
+    { "raw": "⚫ danger", "canonical": "danger" },
+    { "raw": "primary", "canonical": "primary" },
+    { "raw": "  ghost  ", "canonical": "ghost" }
+  ]
+}

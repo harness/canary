@@ -428,6 +428,22 @@ test('maps the omitted Figma theme only for md and sm text Buttons', () => {
   expect(filesWithOmittedTheme).toEqual(['button-md-text.figma.ts', 'button.figma.ts'])
 })
 
+test('uses public Figma property names in Button Code Connect templates', () => {
+  const packageRoot = join(dirname(fileURLToPath(import.meta.url)), '..')
+  const componentRoot = join(packageRoot, 'src/components')
+  const buttonCodeConnectFiles = readdirSync(componentRoot)
+    .filter(file => /^button(?:-.+)?\.figma\.ts$/.test(file))
+    .filter(file => !file.startsWith('button-group') && !file.startsWith('button-layout'))
+    .sort()
+  const filesWithInternalPropertyIds = buttonCodeConnectFiles.filter(file =>
+    /instance\.get(?:Boolean|Enum|InstanceSwap|String)\('[^']+#\d+:\d+'\)/.test(
+      readFileSync(join(componentRoot, file), 'utf8')
+    )
+  )
+
+  expect(filesWithInternalPropertyIds).toEqual([])
+})
+
 test('defines an exhaustive approved Button support matrix', () => {
   const packageRoot = join(dirname(fileURLToPath(import.meta.url)), '..')
   const contract = JSON.parse(readFileSync(join(packageRoot, 'catalog/contracts/button.contract.json'), 'utf8'))

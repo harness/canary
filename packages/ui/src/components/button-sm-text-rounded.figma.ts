@@ -6,7 +6,7 @@ import figma from 'figma'
 
 const instance = figma.selectedInstance
 
-const label = instance.getString('button text#1567:0')
+const label = instance.getString('button text')
 
 const variant = instance.getEnum('variant', {
   primary: 'primary',
@@ -34,15 +34,15 @@ const loading = instance.getEnum('state', {
   loading: true
 })
 
-const hasIcon = instance.getBoolean('icon#1567:1')
-const icon = hasIcon ? instance.getInstanceSwap('↳ icon#1567:2') : null
+const hasIcon = instance.getBoolean('icon')
+const icon = hasIcon ? instance.getInstanceSwap('↳ icon') : null
 let iconCode
 if (icon && icon.type === 'INSTANCE') {
   iconCode = icon.executeTemplate().example
 }
 
-const hasSuffixIcon = instance.getBoolean('suffix icon#1687:61')
-const suffixIcon = hasSuffixIcon ? instance.getInstanceSwap('↳ suffix#2114:51') : null
+const hasSuffixIcon = instance.getBoolean('suffix icon')
+const suffixIcon = hasSuffixIcon ? instance.getInstanceSwap('↳ suffix') : null
 let suffixIconCode
 if (suffixIcon && suffixIcon.type === 'INSTANCE') {
   suffixIconCode = suffixIcon.executeTemplate().example

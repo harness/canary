@@ -57,6 +57,8 @@ describe('compiled Button catalog', () => {
     expect(button.figma.componentKeys).toEqual(buttonContract.figma.componentKeys)
     expect(button.figma.componentKeys).toHaveLength(12)
     expect(button.designOnly.map(prop => prop.name)).toContain('leadingIcon')
+    expect(button.designOnly.find(prop => prop.name === 'trailingIcon')?.figmaPropertyAliases).toContain('↳ suffix')
+    expect(button.shared.find(prop => prop.name === 'theme')?.figmaValueAliases).toEqual({ '-': 'default' })
     expect(button.shared.map(prop => prop.name)).toContain('variant')
     expect(button.supportMatrix).toEqual(buttonContract.supportMatrix)
     expect(button.supportMatrix).toEqual(

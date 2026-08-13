@@ -20,6 +20,8 @@ export type CheckOptions = {
   unmappedNamePrefixes?: string[];
 };
 
+type IdentityMatch = "componentKey" | "componentSetKey" | "name";
+
 export type InstanceResult = {
   snapshot: InstanceSnapshot;
   catalogId?: string;
@@ -56,7 +58,11 @@ function findProp(
 ): CatalogProp | undefined {
   const norm = normalizePropName(figmaName);
   return list.find((p) => {
-    const candidates = [p.name, (p as CatalogProp & { figmaProperty?: string }).figmaProperty]
+    const candidates = [
+      p.name,
+      p.figmaProperty,
+      ...(p.figmaPropertyAliases ?? []),
+    ]
       .filter(Boolean)
       .map((n) => normalizePropName(String(n)));
     return candidates.includes(norm);
@@ -94,8 +100,10 @@ export function checkInstance(
   snapshot: InstanceSnapshot,
   entry: CatalogEntry | null,
   opts: CheckOptions = DEFAULT_OPTS,
+  identityMatch?: IdentityMatch,
 ): InstanceResult {
   const findings: Finding[] = [];
+  const reportedDesignOnly = new Set<string>();
 
   if (!entry) {
     return {
@@ -106,7 +114,10 @@ export function checkInstance(
     };
   }
 
-  if (snapshot.isFromLibrary === false) {
+  const hasVerifiedKeyIdentity =
+    identityMatch === "componentKey" || identityMatch === "componentSetKey";
+
+  if (snapshot.isFromLibrary === false && !hasVerifiedKeyIdentity) {
     findings.push({
       code: "FAIL_DETACHED",
       severity: "fail",
@@ -131,6 +142,8 @@ export function checkInstance(
   for (const [rawName, rawValue] of Object.entries(snapshot.properties)) {
     const designOnly = findProp(entry.designOnly, rawName);
     if (designOnly) {
+      if (reportedDesignOnly.has(designOnly.name)) continue;
+      reportedDesignOnly.add(designOnly.name);
       const hint =
         designOnly.mapsTo ??
         entry.bindings?.[`figma.${designOnly.name}`] ??
@@ -321,7 +334,7 @@ export function checkInstances(
     }
 
     mappedCount += 1;
-    const result = checkInstance(snapshot, match.entry, opts);
+    const result = checkInstance(snapshot, match.entry, opts, match.via);
     instances.push(result);
     allFindings.push(...result.findings);
     reported.add(snapshot.nodeId);

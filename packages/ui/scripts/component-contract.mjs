@@ -61,6 +61,8 @@ const propertySchema = z
     required: z.boolean().optional(),
     description: nonEmptyString,
     figmaProperty: nonEmptyString.optional(),
+    figmaPropertyAliases: z.array(nonEmptyString).min(1).optional(),
+    figmaValueAliases: z.record(nonEmptyString, nonEmptyString).optional(),
     mapsTo: nonEmptyString.optional(),
     when: nonEmptyString.optional()
   })

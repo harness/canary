@@ -39,6 +39,15 @@ describe("normalizeFigmaValue", () => {
     expect(normalizeFigmaValue("⚫ success", themeProp)).toBe("success");
   });
 
+  it("maps Figma-only enum values to their canonical contract value", () => {
+    const prop = {
+      ...themeProp,
+      figmaValueAliases: { "-": "default" },
+    } as CatalogProp;
+
+    expect(normalizeFigmaValue("-", prop)).toBe("default");
+  });
+
   it("returns booleans as booleans", () => {
     const disabled: CatalogProp = { name: "disabled", type: "boolean" };
     expect(normalizeFigmaValue(true, disabled)).toBe(true);

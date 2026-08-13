@@ -37,6 +37,23 @@ describe("checkInstance", () => {
     expect(result.ok).toBe(true);
   });
 
+  it("accepts the Figma dash theme as the default for a link Button", () => {
+    const result = checkInstance(
+      snap({
+        properties: {
+          variant: "link",
+          size: "md",
+          theme: "-",
+        },
+      }),
+      entry,
+      { treatMissingLibraryFlagAs: "ignore" },
+    );
+
+    expect(result.findings.filter((f) => f.severity === "fail")).toEqual([]);
+    expect(result.ok).toBe(true);
+  });
+
   it("fails illegal subtle variant with proposeDefaults", () => {
     const result = checkInstance(
       snap({
@@ -79,6 +96,30 @@ describe("checkInstance", () => {
     expect(designOnly.length).toBeGreaterThanOrEqual(1);
     expect(designOnly.some((f) => f.propName === "leadingIcon")).toBe(true);
     expect(designOnly[0]?.bindingHint).toBeTruthy();
+    expect(result.ok).toBe(true);
+  });
+
+  it("treats the exposed nested suffix control as trailingIcon once", () => {
+    const result = checkInstance(
+      snap({
+        properties: {
+          variant: "ai",
+          size: "md",
+          theme: "default",
+          "suffix icon#1687:61": true,
+          "↳ suffix#1955:0": "IconV2/bolt",
+        },
+      }),
+      entry,
+      { treatMissingLibraryFlagAs: "ignore" },
+    );
+
+    expect(result.findings.filter((f) => f.severity === "fail")).toEqual([]);
+    expect(
+      result.findings.filter(
+        (f) => f.code === "DESIGN_ONLY_OK" && f.propName === "trailingIcon",
+      ),
+    ).toHaveLength(1);
     expect(result.ok).toBe(true);
   });
 

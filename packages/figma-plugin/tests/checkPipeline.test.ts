@@ -214,4 +214,40 @@ describe("genuine library instance", () => {
     expect(report.findings.map((f) => f.code)).toEqual(["FAIL_SHARED_VALUE"]);
     expect(report.summary.fail).toBe(1);
   });
+
+  it("accepts a local source-library instance matched by its published set key", async () => {
+    const componentSet = {
+      type: "COMPONENT_SET",
+      name: "❖Button/Md/Text",
+      key: "188019ff5a5c45f3009b963213c98e95dc1c780f",
+    };
+    const sourceLibraryButton: CollectableNode = {
+      id: "30044:12148",
+      name: "❖Button/Md/Text",
+      type: "INSTANCE",
+      componentProperties: {
+        variant: { value: "ai", type: "VARIANT" },
+        size: { value: "md", type: "VARIANT" },
+        theme: { value: "⚫ default", type: "VARIANT" },
+      },
+      getMainComponentAsync: async () => ({
+        name: "variant=ai, state=default, theme=⚫ default",
+        key: "source-variant-key",
+        remote: false,
+        parent: componentSet,
+      }),
+    };
+
+    const report = await check([sourceLibraryButton]);
+
+    expect(
+      report.findings.some((finding) => finding.code === "FAIL_DETACHED"),
+    ).toBe(false);
+    expect(report.summary).toMatchObject({
+      pass: 1,
+      fail: 0,
+      unmapped: 0,
+      mappedCount: 1,
+    });
+  });
 });

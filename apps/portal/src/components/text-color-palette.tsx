@@ -93,9 +93,7 @@ const SemanticColors: React.FC = () => {
           <Layout.Grid
             key={item.color}
             gap="sm"
-            columns={
-              item.hasDefault ? "120px 1fr 1fr 1fr 1fr" : "120px 1fr 1fr 1fr"
-            }
+            columns={item.hasDefault ? "120px 1fr 1fr 1fr" : "120px 1fr 1fr"}
             align="center"
           >
             <Text variant="body-normal" className="font-medium">
@@ -152,23 +150,6 @@ const SemanticColors: React.FC = () => {
                 className="text-cn-size-2 font-mono"
               >
                 Secondary
-              </Text>
-            </Layout.Flex>
-            <Layout.Flex
-              className={cn(
-                getTextClassName("outline"),
-                "bg-cn-2 rounded-2 h-12 !mt-0",
-              )}
-              align="center"
-              justify="center"
-              title={`.text-cn-${item.color}-outline`}
-            >
-              <Text
-                variant="caption-normal"
-                color="inherit"
-                className="text-cn-size-2 font-mono"
-              >
-                Outline
               </Text>
             </Layout.Flex>
           </Layout.Grid>

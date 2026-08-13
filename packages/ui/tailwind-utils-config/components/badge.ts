@@ -30,14 +30,23 @@ function createBadgeVariantStyles() {
          * "ghost" variant has no background and border.
          * It displays text color as same as surface variant.
          */
-        style[`color`] = `var(--cn-set-${themeStyle}-outline-text)`
+        style[`color`] = `var(--cn-set-${themeStyle}-secondary-text)`
         combinationStyles[`&:where(.cn-badge-${variant}.cn-badge-${theme})`] = style
       } else if (variant !== 'status') {
         /**
          * Status variant don't need background, color and border
          */
+        /**
+         * The outline variant has no dedicated text token — it shares the secondary
+         * text color (same as the ghost variant above).
+         */
+        const textToken =
+          variant === 'outline'
+            ? `--cn-set-${themeStyle}-secondary-text`
+            : `--cn-set-${themeStyle}-${variant}-text`
+
         style[`backgroundColor`] = `var(--cn-set-${themeStyle}-${variant}-bg)`
-        style[`color`] = `var(--cn-set-${themeStyle}-${variant}-text)`
+        style[`color`] = `var(${textToken})`
         style[`borderColor`] =
           `var(--cn-set-${themeStyle}-${variant}-border, var(--cn-set-${themeStyle}-${variant}-bg))`
 
@@ -94,7 +103,7 @@ export default {
     },
 
     '&:where(.cn-badge-counter)': {
-      color: 'var(--cn-set-gray-outline-text)',
+      color: 'var(--cn-set-gray-secondary-text)',
       borderRadius: 'var(--cn-badge-counter-radius)',
       borderColor: 'var(--cn-set-gray-outline-border)',
       backgroundColor: 'var(--cn-set-gray-outline-bg)',

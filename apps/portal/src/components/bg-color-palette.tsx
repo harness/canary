@@ -142,7 +142,9 @@ const SemanticColors: React.FC = () => {
     <Layout.Grid className="mt-cn-md" gap="sm">
       {colors.map((item) => {
         const getBGClassName = (variant: string, withBorder?: boolean) => {
-          return `bg-cn-${item.color}-${variant} text-cn-${item.color}-${variant} ${withBorder ? `border border-cn-${item.color}-outline` : ""}`;
+          // Outline surfaces use the secondary text color (no dedicated outline text color).
+          const textVariant = variant === "outline" ? "secondary" : variant;
+          return `bg-cn-${item.color}-${variant} text-cn-${item.color}-${textVariant} ${withBorder ? `border border-cn-${item.color}-outline` : ""}`;
         };
         return (
           <Layout.Grid

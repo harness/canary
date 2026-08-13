@@ -86,7 +86,7 @@ const tailwindDesignSystem: TailwindConfig = {
        * Example:
        * ✅ .text-cn-success-primary + .bg-cn-success-primary
        * ✅ .text-cn-success-secondary + .bg-cn-success-secondary
-       * ✅ .text-cn-success-outline + .bg-cn-success-outline + .border-cn-success-outline
+       * ✅ .text-cn-success-secondary + .bg-cn-success-outline + .border-cn-success-outline (outline surface uses secondary text)
        *
        * ❌ .text-cn-success-primary + .bg-cn-success-secondary
        * ❌ .text-cn-success-primary + .bg-cn-success-outline
@@ -221,7 +221,7 @@ const tailwindDesignSystem: TailwindConfig = {
        * Example:
        * ✅ .text-cn-success-primary + .bg-cn-success-primary
        * ✅ .text-cn-success-secondary + .bg-cn-success-secondary
-       * ✅ .text-cn-success-outline + .bg-cn-success-outline + .border-cn-success-outline
+       * ✅ .text-cn-success-secondary + .bg-cn-success-outline + .border-cn-success-outline (outline surface uses secondary text)
        *
        * ❌ .text-cn-success-primary + .bg-cn-success-secondary
        * ❌ .text-cn-success-primary + .bg-cn-success-outline
@@ -229,75 +229,61 @@ const tailwindDesignSystem: TailwindConfig = {
       'cn-success': {
         DEFAULT: 'var(--cn-text-success)',
         primary: 'var(--cn-set-success-primary-text)',
-        secondary: 'var(--cn-set-success-secondary-text)',
-        outline: 'var(--cn-set-success-outline-text)'
+        secondary: 'var(--cn-set-success-secondary-text)'
       },
       'cn-gray': {
         primary: 'var(--cn-set-gray-primary-text)',
-        secondary: 'var(--cn-set-gray-secondary-text)',
-        outline: 'var(--cn-set-gray-outline-text)'
+        secondary: 'var(--cn-set-gray-secondary-text)'
       },
       'cn-danger': {
         DEFAULT: 'var(--cn-text-danger)',
         primary: 'var(--cn-set-danger-primary-text)',
-        secondary: 'var(--cn-set-danger-secondary-text)',
-        outline: 'var(--cn-set-danger-outline-text)'
+        secondary: 'var(--cn-set-danger-secondary-text)'
       },
       'cn-warning': {
         DEFAULT: 'var(--cn-text-warning)',
         primary: 'var(--cn-set-warning-primary-text)',
-        secondary: 'var(--cn-set-warning-secondary-text)',
-        outline: 'var(--cn-set-warning-outline-text)'
+        secondary: 'var(--cn-set-warning-secondary-text)'
       },
       'cn-blue': {
         primary: 'var(--cn-set-blue-primary-text)',
-        secondary: 'var(--cn-set-blue-secondary-text)',
-        outline: 'var(--cn-set-blue-outline-text)'
+        secondary: 'var(--cn-set-blue-secondary-text)'
       },
       'cn-purple': {
         primary: 'var(--cn-set-purple-primary-text)',
-        secondary: 'var(--cn-set-purple-secondary-text)',
-        outline: 'var(--cn-set-purple-outline-text)'
+        secondary: 'var(--cn-set-purple-secondary-text)'
       },
       'cn-brown': {
         primary: 'var(--cn-set-brown-primary-text)',
-        secondary: 'var(--cn-set-brown-secondary-text)',
-        outline: 'var(--cn-set-brown-outline-text)'
+        secondary: 'var(--cn-set-brown-secondary-text)'
       },
       'cn-cyan': {
         primary: 'var(--cn-set-cyan-primary-text)',
-        secondary: 'var(--cn-set-cyan-secondary-text)',
-        outline: 'var(--cn-set-cyan-outline-text)'
+        secondary: 'var(--cn-set-cyan-secondary-text)'
       },
       'cn-indigo': {
         primary: 'var(--cn-set-indigo-primary-text)',
-        secondary: 'var(--cn-set-indigo-secondary-text)',
-        outline: 'var(--cn-set-indigo-outline-text)'
+        secondary: 'var(--cn-set-indigo-secondary-text)'
       },
       'cn-mint': {
         primary: 'var(--cn-set-mint-primary-text)',
-        secondary: 'var(--cn-set-mint-secondary-text)',
-        outline: 'var(--cn-set-mint-outline-text)'
+        secondary: 'var(--cn-set-mint-secondary-text)'
       },
       'cn-orange': {
         primary: 'var(--cn-set-orange-primary-text)',
-        secondary: 'var(--cn-set-orange-secondary-text)',
-        outline: 'var(--cn-set-orange-outline-text)'
+        secondary: 'var(--cn-set-orange-secondary-text)'
       },
       'cn-pink': {
         primary: 'var(--cn-set-pink-primary-text)',
-        secondary: 'var(--cn-set-pink-secondary-text)',
-        outline: 'var(--cn-set-pink-outline-text)'
+        secondary: 'var(--cn-set-pink-secondary-text)'
       },
       'cn-violet': {
         primary: 'var(--cn-set-violet-primary-text)',
-        secondary: 'var(--cn-set-violet-secondary-text)',
-        outline: 'var(--cn-set-violet-outline-text)'
+        secondary: 'var(--cn-set-violet-secondary-text)'
       },
       'cn-forest': {
         primary: 'var(--cn-set-forest-green-primary-text)',
-        secondary: 'var(--cn-set-forest-green-secondary-text)',
-        outline: 'var(--cn-set-forest-green-outline-text)'
+        secondary: 'var(--cn-set-forest-green-secondary-text)'
       },
       transparent: 'transparent',
       inherit: 'inherit',
@@ -322,9 +308,9 @@ const tailwindDesignSystem: TailwindConfig = {
        * These colors should be used along with their text and bg outline pairs
        *
        * Example:
-       * ✅ .text-cn-success-outline + .bg-cn-success-outline + .border-cn-success-outline
+       * ✅ .text-cn-success-secondary + .bg-cn-success-outline + .border-cn-success-outline (outline surface uses secondary text)
        *
-       * ❌ .text-cn-success-outline + .bg-cn-success-outline + .border-cn-danger-outline
+       * ❌ .text-cn-success-secondary + .bg-cn-success-outline + .border-cn-danger-outline
        */
       'cn-success': {
         DEFAULT: 'var(--cn-border-success)',

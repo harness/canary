@@ -157,8 +157,8 @@ export default {
 
   '.cn-stepper-step-completed .cn-stepper-indicator': {
     background: 'var(--cn-set-success-outline-bg)',
-    borderColor: 'var(--cn-set-success-outline-text)',
-    color: 'var(--cn-set-success-outline-text)'
+    borderColor: 'var(--cn-set-success-secondary-text)',
+    color: 'var(--cn-set-success-secondary-text)'
   },
 
   '.cn-stepper-step-active .cn-stepper-indicator': {
@@ -179,7 +179,7 @@ export default {
 
   '.cn-stepper-step-error .cn-stepper-indicator': {
     borderColor: 'var(--cn-icon-danger)',
-    color: 'var(--cn-set-danger-outline-text)'
+    color: 'var(--cn-set-danger-secondary-text)'
   },
 
   '.cn-stepper-step-loading.cn-stepper-step-active .cn-stepper-indicator': {
@@ -590,8 +590,8 @@ export default {
 
   '.cn-stepper-nested-step-completed .cn-stepper-nested-step-indicator': {
     background: 'var(--cn-set-success-outline-bg)',
-    borderColor: 'var(--cn-set-success-outline-text)',
-    color: 'var(--cn-set-success-outline-text)'
+    borderColor: 'var(--cn-set-success-secondary-text)',
+    color: 'var(--cn-set-success-secondary-text)'
   },
 
   '.cn-stepper-nested-step-active .cn-stepper-nested-step-indicator': {
@@ -601,7 +601,7 @@ export default {
 
   '.cn-stepper-nested-step-error .cn-stepper-nested-step-indicator': {
     borderColor: 'var(--cn-icon-danger)',
-    color: 'var(--cn-set-danger-outline-text)'
+    color: 'var(--cn-set-danger-secondary-text)'
   },
 
   '.cn-stepper-nested-step-upcoming .cn-stepper-nested-step-indicator': {

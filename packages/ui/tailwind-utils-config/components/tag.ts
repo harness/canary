@@ -36,7 +36,7 @@ function createTagVariantStyles(variant: 'outline' | 'secondary'): CSSRuleObject
     const theme = themeColorMapper[_theme as 'green' | 'red' | 'yellow'] ?? _theme
     const isOutline = variant === 'outline'
     const style: CSSRuleObject = {
-      color: `var(--cn-set-${theme}-${isOutline ? 'outline-text' : 'secondary-text'})`,
+      color: `var(--cn-set-${theme}-secondary-text)`,
       backgroundColor: `var(--cn-set-${theme}-${isOutline ? 'outline-bg' : 'secondary-bg'})`,
       borderColor: `var(--cn-set-${theme}-${isOutline ? 'outline-border' : 'secondary-bg'})`,
 
@@ -60,7 +60,7 @@ function createTagVariantStyles(variant: 'outline' | 'secondary'): CSSRuleObject
 
       // ICON STYLES
       '.cn-tag-icon': {
-        color: `var(--cn-set-${theme}-${isOutline ? 'outline-text' : 'secondary-text'}) !important`
+        color: `var(--cn-set-${theme}-secondary-text) !important`
       }
     }
 

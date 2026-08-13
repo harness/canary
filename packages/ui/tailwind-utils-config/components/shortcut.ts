@@ -8,7 +8,7 @@ export default {
       padding: '0 var(--cn-spacing-1)',
       borderRadius: 'var(--cn-rounded-1)',
       border: '1px solid var(--cn-set-gray-outline-border)',
-      color: 'var(--cn-set-gray-outline-text)',
+      color: 'var(--cn-set-gray-secondary-text)',
       userSelect: 'none'
     }
   }

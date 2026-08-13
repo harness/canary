@@ -1,5 +1,7 @@
 import { FC, useCallback, useMemo } from 'react'
 
+import { getChecksState, getPrState } from '@views/repo/pull-request/utils'
+
 import {
   ActionData,
   AvatarWithTooltip,
@@ -19,7 +21,6 @@ import {
 } from '@harnessio/ui/components'
 import { useCustomDialogTrigger, useTranslation } from '@harnessio/ui/context'
 import { cn, createPaginationLinks } from '@harnessio/ui/utils'
-import { getChecksState, getPrState } from '@views/repo/pull-request/utils'
 
 import { BranchListPageProps } from '../types'
 import { DivergenceGauge } from './divergence-gauge'
@@ -149,7 +150,7 @@ export const BranchesList: FC<BranchListPageProps> = ({
                       size="2xs"
                     />
 
-                    <Text variant="body-single-line-strong" className="text-cn-gray-outline">
+                    <Text variant="body-single-line-strong" className="text-cn-gray-secondary">
                       <span>{branch?.checks?.done || 0}</span>
                       <span>/</span>
                       <span>{branch?.checks?.total || 0}</span>

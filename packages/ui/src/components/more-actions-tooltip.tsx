@@ -77,7 +77,7 @@ export const MoreActionsTooltip = forwardRef<HTMLButtonElement, MoreActionsToolt
         <DropdownMenu.Trigger ref={ref} disabled={disabled} asChild>
           <Button
             theme={theme}
-            className="text-cn-gray-outline"
+            className="text-cn-gray-secondary"
             variant={buttonVariant}
             iconOnly
             size={buttonSize}

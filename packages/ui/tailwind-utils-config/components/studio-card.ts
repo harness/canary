@@ -285,7 +285,7 @@ export default {
   '.cn-studio-card-tag': {
     '@apply flex gap-cn-3xs p-cn-2xs border rounded-t-cn-4 top-[-28px] right-0 absolute select-none': '',
     maxWidth: StudioCardTagMaxWidth,
-    color: 'var(--cn-set-purple-outline-text)',
+    color: 'var(--cn-set-purple-secondary-text)',
     'background-color': 'var(--cn-set-purple-outline-bg)',
     'border-color': 'var(--cn-set-purple-outline-border)',
 

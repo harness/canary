@@ -44,22 +44,22 @@
     },
     "success": {
       "$type": "color",
-      "$value": "{set.success.outline.text}",
+      "$value": "{set.success.secondary.text}",
       "$description": "Primary color for text and icons in success content. Communicates positive outcomes and completion states.\n\nCommon uses: Success message text, completion text, positive indicators."
     },
     "danger": {
       "$type": "color",
-      "$value": "{set.danger.outline.text}",
+      "$value": "{set.danger.secondary.text}",
       "$description": "Primary color for text and icons in error content. Communicates problems, warnings, and destructive actions.\n\nCommon uses: Error message text, validation text, destructive action labels."
     },
     "warning": {
       "$type": "color",
-      "$value": "{set.warning.outline.text}",
+      "$value": "{set.warning.secondary.text}",
       "$description": "Primary color for text and icons in warning content. Communicates caution and potential issues requiring attention.\n\nCommon uses: Warning message text, alert text, important notifications."
     },
     "merged": {
       "$type": "color",
-      "$value": "{set.purple.outline.text}",
+      "$value": "{set.purple.secondary.text}",
       "$description": "Text color for merged content and pull request states. Provides distinct visual identity for merge-related information and completed integration states.\n\nCommon uses: Merge commit messages, pull request merged status, integration completion indicators, merged branch labels."
     },
     "brand": {
@@ -196,11 +196,6 @@
         }
       },
       "outline": {
-        "text": {
-          "$type": "color",
-          "$value": "{blue.800}",
-          "$description": "Text and icon color for primary brand elements with minimum contrast."
-        },
         "bg": {
           "$type": "color",
           "$value": "{blue.25}",
@@ -293,11 +288,6 @@
         }
       },
       "outline": {
-        "text": {
-          "$type": "color",
-          "$value": "{text.2}",
-          "$description": "Standard text color for gray surfaces with balanced readability."
-        },
         "bg": {
           "$type": "color",
           "$value": "{bg.2}",
@@ -366,11 +356,6 @@
         }
       },
       "outline": {
-        "text": {
-          "$type": "color",
-          "$value": "{indigo.800}",
-          "$description": "Standard text color for success surfaces with balanced readability."
-        },
         "bg": {
           "$type": "color",
           "$value": "{indigo.25}",
@@ -439,11 +424,6 @@
         }
       },
       "outline": {
-        "text": {
-          "$type": "color",
-          "$value": "{yellow.800}",
-          "$description": "Standard text color for danger surfaces with balanced readability."
-        },
         "bg": {
           "$type": "color",
           "$value": "{yellow.25}",
@@ -512,11 +492,6 @@
         }
       },
       "outline": {
-        "text": {
-          "$type": "color",
-          "$value": "{orange.800}",
-          "$description": "Standard text color for warning surfaces with balanced readability."
-        },
         "bg": {
           "$type": "color",
           "$value": "{orange.25}",
@@ -585,11 +560,6 @@
         }
       },
       "outline": {
-        "text": {
-          "$type": "color",
-          "$value": "{blue.800}",
-          "$description": "Standard text color for blue surfaces with balanced readability."
-        },
         "bg": {
           "$type": "color",
           "$value": "{blue.25}",
@@ -658,11 +628,6 @@
         }
       },
       "outline": {
-        "text": {
-          "$type": "color",
-          "$value": "{purple.800}",
-          "$description": "Standard text color for purple surfaces with balanced readability."
-        },
         "bg": {
           "$type": "color",
           "$value": "{purple.25}",
@@ -721,11 +686,6 @@
         }
       },
       "outline": {
-        "text": {
-          "$type": "color",
-          "$value": "{brown.800}",
-          "$description": "Standard text color for brown surfaces with balanced readability."
-        },
         "bg": {
           "$type": "color",
           "$value": "{brown.25}",
@@ -779,11 +739,6 @@
         }
       },
       "outline": {
-        "text": {
-          "$type": "color",
-          "$value": "{cyan.800}",
-          "$description": "Standard text color for cyan surfaces with balanced readability."
-        },
         "bg": {
           "$type": "color",
           "$value": "{cyan.25}",
@@ -847,11 +802,6 @@
         }
       },
       "outline": {
-        "text": {
-          "$type": "color",
-          "$value": "{indigo.800}",
-          "$description": "Standard text color for indigo surfaces with balanced readability."
-        },
         "bg": {
           "$type": "color",
           "$value": "{indigo.25}",
@@ -910,11 +860,6 @@
         }
       },
       "outline": {
-        "text": {
-          "$type": "color",
-          "$value": "{blue.800}",
-          "$description": "Standard text color for forest-green surfaces with balanced readability."
-        },
         "bg": {
           "$type": "color",
           "$value": "{blue.25}",
@@ -978,11 +923,6 @@
         }
       },
       "outline": {
-        "text": {
-          "$type": "color",
-          "$value": "{indigo.800}",
-          "$description": "Standard text color for mint surfaces with balanced readability."
-        },
         "bg": {
           "$type": "color",
           "$value": "{indigo.25}",
@@ -1041,11 +981,6 @@
         }
       },
       "outline": {
-        "text": {
-          "$type": "color",
-          "$value": "{brown.800}",
-          "$description": "Standard text color for orange surfaces with balanced readability."
-        },
         "bg": {
           "$type": "color",
           "$value": "{brown.25}",
@@ -1109,11 +1044,6 @@
         }
       },
       "outline": {
-        "text": {
-          "$type": "color",
-          "$value": "{purple.800}",
-          "$description": "Standard text color for pink surfaces with balanced readability."
-        },
         "bg": {
           "$type": "color",
           "$value": "{purple.25}",
@@ -1182,11 +1112,6 @@
         }
       },
       "outline": {
-        "text": {
-          "$type": "color",
-          "$value": "{violet.850}",
-          "$description": "Standard text color for violet surfaces with balanced readability."
-        },
         "bg": {
           "$type": "color",
           "$value": "{violet.25}",
@@ -1461,37 +1386,37 @@
       },
       "hljs-keyword": {
         "$type": "color",
-        "$value": "{set.purple.outline.text}",
+        "$value": "{set.purple.secondary.text}",
         "$description": "Color for programming language keywords in syntax highlighting. Emphasizes reserved words and language constructs."
       },
       "hljs-title-class": {
         "$type": "color",
-        "$value": "{set.warning.outline.text}",
+        "$value": "{set.warning.secondary.text}",
         "$description": "Color for class names and type definitions in syntax highlighting. Highlights object-oriented programming constructs and custom types."
       },
       "hljs-string": {
         "$type": "color",
-        "$value": "{set.success.outline.text}",
+        "$value": "{set.success.secondary.text}",
         "$description": "Color for string literals in syntax highlighting. Distinguishes text content and string values from other code elements."
       },
       "hljs-title-function": {
         "$type": "color",
-        "$value": "{set.blue.outline.text}",
+        "$value": "{set.blue.secondary.text}",
         "$description": "Color for function names and method definitions in syntax highlighting. Emphasizes callable code blocks and procedures."
       },
       "hljs-name": {
         "$type": "color",
-        "$value": "{set.danger.outline.text}",
+        "$value": "{set.danger.secondary.text}",
         "$description": "Color for element names and identifiers in syntax highlighting. Highlights variable names, element tags, and custom identifiers."
       },
       "hljs-literal": {
         "$type": "color",
-        "$value": "{set.cyan.outline.text}",
+        "$value": "{set.cyan.secondary.text}",
         "$description": "Color for literal values in syntax highlighting. Highlights numbers, boolean values, and other constant expressions."
       },
       "hljs-attr": {
         "$type": "color",
-        "$value": "{set.orange.outline.text}",
+        "$value": "{set.orange.secondary.text}",
         "$description": "Color for attributes and properties in syntax highlighting. Highlights HTML attributes, object properties, and configuration keys."
       }
     },
@@ -2950,7 +2875,7 @@
       },
       "constant": {
         "$type": "color",
-        "$value": "{set.orange.outline.text}",
+        "$value": "{set.orange.secondary.text}",
         "$description": "Color for constants and other static values."
       },
       "invalid-bg": {
@@ -2960,7 +2885,7 @@
       },
       "invalid-text": {
         "$type": "color",
-        "$value": "{set.warning.outline.text}",
+        "$value": "{set.warning.secondary.text}",
         "$description": "Text color for invalid or error tokens."
       },
       "diff-inserted": {

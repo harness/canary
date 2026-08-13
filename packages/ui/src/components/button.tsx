@@ -24,9 +24,7 @@ const buttonVariants = cva('cn-button', {
     size: {
       md: '',
       sm: 'cn-button-sm',
-      xs: 'cn-button-xs',
-      '2xs': 'cn-button-2xs',
-      '3xs': 'cn-button-3xs'
+      xs: 'cn-button-xs'
     },
     rounded: {
       true: 'cn-button-rounded'
@@ -102,8 +100,7 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(
     const [isPromiseLoading, setIsPromiseLoading] = useState(false)
 
     const Comp = asChild ? Slot : 'button'
-    const microSize = size === '2xs' || size === '3xs'
-    const iconOnly = iconOnlyProp || microSize
+    const iconOnly = iconOnlyProp
 
     // Handle onClick that might return a promise
     const handleClick = useCallback(

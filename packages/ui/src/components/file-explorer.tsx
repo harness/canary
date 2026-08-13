@@ -61,7 +61,7 @@ const InteractiveItem = forwardRef<HTMLDivElement, ItemProps>(
           {actionButtons?.map((buttonProps, index) => {
             const { title, iconOnly = true, iconName, iconProps, ...rest } = buttonProps
             return (
-              <Button key={index} size="2xs" variant="ghost" iconOnly={iconOnly} {...rest}>
+              <Button key={index} size="xs" variant="ghost" iconOnly={iconOnly} {...rest}>
                 {iconName && <IconV2 name={iconName} {...iconProps} />}
                 {title}
               </Button>

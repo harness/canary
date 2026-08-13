@@ -14,12 +14,6 @@ const variant = instance.getEnum('variant', {
   ai: 'ai'
 })
 
-const theme = instance.getEnum('theme', {
-  '⚫ default': 'default',
-  '🟢 success': 'success',
-  '🔴 danger': 'danger'
-})
-
 const disabled = instance.getEnum('👁️ disabled', {
   off: false,
   on: true
@@ -48,7 +42,6 @@ export default {
       size="sm"
       rounded
       iconOnly
-      ${theme ? figma.code`theme="${theme}"` : ''}
       ${disabled ? 'disabled' : ''}
       ${loading ? 'loading' : ''}
       ${hasTooltip ? figma.code`tooltipProps={{ content: "${tooltipContent}" }}` : 'ignoreIconOnlyTooltip'}

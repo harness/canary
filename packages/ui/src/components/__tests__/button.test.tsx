@@ -123,20 +123,6 @@ describe('Button', () => {
     expect(button).toHaveClass('cn-button-xs')
   })
 
-  test('should apply 2xs size class', () => {
-    renderComponent({ size: '2xs' })
-
-    const button = screen.getByRole('button')
-    expect(button).toHaveClass('cn-button-2xs')
-  })
-
-  test('should apply 3xs size class', () => {
-    renderComponent({ size: '3xs' })
-
-    const button = screen.getByRole('button')
-    expect(button).toHaveClass('cn-button-3xs')
-  })
-
   test('should apply success theme class', () => {
     renderComponent({ theme: 'success' })
 
@@ -352,24 +338,6 @@ describe('Button', () => {
 
       const button = screen.getByRole('button')
       expect(button).toHaveClass('cn-button-transparent')
-    })
-  })
-
-  describe('Micro Sizes (2xs, 3xs)', () => {
-    test('should automatically set iconOnly for 2xs size', () => {
-      renderComponent({ size: '2xs' })
-
-      const button = screen.getByRole('button')
-      expect(button).toHaveClass('cn-button-2xs')
-      expect(button).toHaveClass('cn-button-icon-only')
-    })
-
-    test('should automatically set iconOnly for 3xs size', () => {
-      renderComponent({ size: '3xs' })
-
-      const button = screen.getByRole('button')
-      expect(button).toHaveClass('cn-button-3xs')
-      expect(button).toHaveClass('cn-button-icon-only')
     })
   })
 
@@ -741,17 +709,16 @@ describe('Button', () => {
       expect(spinner).toBeInTheDocument()
     })
 
-    test('should handle all variants with all sizes', () => {
-      const variants: Array<'primary' | 'secondary' | 'outline' | 'ghost' | 'link' | 'ai' | 'transparent'> = [
+    test('should handle supported non-link variants with all sizes', () => {
+      const variants: Array<'primary' | 'secondary' | 'outline' | 'ghost' | 'ai' | 'transparent'> = [
         'primary',
         'secondary',
         'outline',
         'ghost',
-        'link',
         'ai',
         'transparent'
       ]
-      const sizes: Array<'md' | 'sm' | 'xs' | '2xs' | '3xs'> = ['md', 'sm', 'xs', '2xs', '3xs']
+      const sizes: Array<'md' | 'sm' | 'xs'> = ['md', 'sm', 'xs']
 
       variants.forEach(variant => {
         sizes.forEach(size => {
@@ -767,6 +734,18 @@ describe('Button', () => {
           expect(button).toBeInTheDocument()
         })
       })
+    })
+
+    test.each(['md', 'sm'] as const)('should handle the link variant at %s', size => {
+      render(
+        <TestWrapper>
+          <Button variant="link" size={size}>
+            Button
+          </Button>
+        </TestWrapper>
+      )
+
+      expect(screen.getByRole('button')).toHaveClass('cn-button-link')
     })
 
     test('should handle all themes with all variants', () => {

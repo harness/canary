@@ -4,7 +4,7 @@ Component contracts are the shared, machine-readable definition of what a Canary
 
 ## Current vertical slice
 
-`button.contract.json` is the first end-to-end draft. It consolidates evidence from:
+`button.contract.json` is the first end-to-end contract in piloting. It consolidates evidence from:
 
 - The public React implementation and types.
 - Portal documentation.
@@ -12,7 +12,7 @@ Component contracts are the shared, machine-readable definition of what a Canary
 - The 12 current Code Connect files that declare `component=Button`.
 - The in-repo Figma plugin (`packages/figma-plugin`), which compiles this contract into the bundled check pack.
 
-The Button Figma identity has been audited against the published library. Twelve PoC keys resolve to the current md, sm, and xs Text, IconOnly, and Rounded component sets and are now stored as confirmed `componentKeys`. The other four PoC keys return 404 as both component and component-set identities and have been removed. The mapping is verified, but the contract remains `draft` while product decisions about surface differences are unresolved.
+The Button Figma identity has been audited against the library and live source. Twelve PoC keys resolve to the current md, sm, and xs Text, IconOnly, and Rounded component sets and are stored as confirmed `componentKeys`. The other four PoC keys return 404 as both component and component-set identities and have been removed. The mapping is verified, the approved matrix is reconciled across the live Figma source and code, and the contract is now `piloting`.
 
 ## Schema and validation
 
@@ -52,21 +52,21 @@ Rules should cover every declared combination exactly once. Contract validation 
 
 ## Button audit result
 
-The published Button family currently contains 12 component sets:
+The Button family contains 12 component sets. The live source was re-audited on August 13, 2026 after the approved matrix was applied:
 
 - Text, IconOnly, and Rounded treatments at md, sm, and xs.
 - Every component uses horizontal Auto Layout and has variable bindings.
 - Every set exposes default, hover, active, loading, and disabled states.
 - Figma does not publish 2xs or 3xs sets. Focus is intentionally code-only and is documented with a detached representative Figma specification instead of a published state variant.
-- Variant availability is not a full matrix: link appears only in md and sm Text; transparent is absent from most TextRounded sets and all IconOnlyRounded sets.
+- The corrected matrix keeps AI, transparent, link, and every icon-only Button on the default theme. Primary, secondary, outline, and ghost text Buttons may use default, success, or danger. Each icon-only set now contains 30 variants: six visual variants, one default theme, and five state/disabled combinations. Rounded icon-only sets include transparent/default and use the rounded radius token.
 - The ❌ prefix denotes a deprecated component. TextRounded Button treatments are deprecated and remain temporarily for migration. IconOnlyRounded remains supported in md, sm, and xs because it is used by Pipeline Studio.
 - Code Connect includes the `-` theme mapping only for md and sm Text, matching the Figma sets that expose it.
 - Button is approved for actions, including action toolbars and controls that start or advance onboarding in place. Link is required for routes, URLs, files, and other destinations. Canary does not currently provide an approved button-styled Link pattern.
-- The approved support matrix is encoded in `button.contract.json` and compiled into the Figma plugin catalog. It supports md, sm, and xs; supports rounded only for icon-only Buttons; limits the link visual variant to default-theme md/sm text actions; deprecates TextRounded; and marks 2xs/3xs unsupported for new use.
+- The approved support matrix is encoded in `button.contract.json` and compiled into the Figma plugin catalog. It supports md, sm, and xs; supports rounded only for icon-only Buttons; limits AI, transparent, link, and icon-only Buttons to the default theme; limits link to md/sm text actions; deprecates TextRounded; and excludes 2xs/3xs from the public API.
 
 The inventory entry is now `mapped`. Size, shape, variant, theme, and focus policy are approved, and the contract has no provisional fields or open policy questions. Focus remains a required code state and an accessibility requirement, but the absence of a published Figma focus variant is compliant by design.
 
-The Button contract remains `draft` until the approved support matrix has been reconciled with Figma and code. The verified identity and completed policy decisions are sufficient for the inventory's `mapped` status, but they do not make every current Figma/code difference compliant.
+The Button contract is now `piloting`. The approved support matrix is reconciled with the live Figma source, the public Button API, production usage, Portal guidance, Code Connect, and evaluator fixtures. Publishing the updated Figma library remains a manual step before consumers receive the new matrix; piloting will test the contract against real designs and auditor results before it can become `stable`.
 
 ## Adding the next contract
 

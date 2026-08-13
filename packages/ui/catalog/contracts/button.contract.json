@@ -1,8 +1,8 @@
 {
   "schemaVersion": "0.3.0",
-  "contractVersion": "0.5.0",
+  "contractVersion": "0.6.0",
   "id": "canary.button",
-  "status": "draft",
+  "status": "piloting",
   "surfaces": ["figma", "code"],
   "overview": {
     "name": "Button",
@@ -70,7 +70,7 @@
       "id": "label-or-icon",
       "name": "Label or icon",
       "required": true,
-      "description": "Primary content that communicates the action; micro sizes and icon-only buttons retain only an IconV2 child."
+      "description": "Primary content that communicates the action; icon-only Buttons retain only the first IconV2 child."
     },
     {
       "id": "leading-icon",
@@ -104,16 +104,16 @@
         "type": "enum",
         "values": ["primary", "secondary", "outline", "ai", "ghost", "link", "transparent"],
         "default": "primary",
-        "description": "Sets the visual emphasis and treatment. The link value creates a link-style action but does not provide navigation semantics. Code accepts every listed value, while individual Figma component sets expose a subset based on size, content, and shape.",
+        "description": "Sets the visual emphasis and treatment. The link value creates a link-style action but does not provide navigation semantics. The support matrix defines its allowed size, content, shape, and theme combinations.",
         "figmaProperty": "variant",
         "mapsTo": "ButtonProps.variant"
       },
       {
         "name": "size",
         "type": "enum",
-        "values": ["md", "sm", "xs", "2xs", "3xs"],
+        "values": ["md", "sm", "xs"],
         "default": "md",
-        "description": "Sets the component dimensions. The approved sizes are md, sm, and xs. The legacy code API still accepts 2xs and 3xs, but the support matrix marks them unsupported for new use.",
+        "description": "Sets the component dimensions. Button supports md, sm, and xs; 2xs and 3xs are unsupported.",
         "mapsTo": "ButtonProps.size"
       },
       {
@@ -121,7 +121,7 @@
         "type": "enum",
         "values": ["default", "success", "danger"],
         "default": "default",
-        "description": "Sets the semantic color context.",
+        "description": "Sets the semantic color context. Success and danger apply only to primary, secondary, outline, and ghost text Buttons; all other supported combinations use default.",
         "figmaProperty": "theme",
         "mapsTo": "ButtonProps.theme"
       },
@@ -145,7 +145,7 @@
         "name": "iconOnly",
         "type": "boolean",
         "default": false,
-        "description": "Renders only the first IconV2 child. The legacy 2xs and 3xs implementation also forces this behavior while those unsupported sizes await migration.",
+        "description": "Renders only the first IconV2 child and requires an accessible name and tooltip unless the explicit tooltip override is justified.",
         "mapsTo": "ButtonProps.iconOnly"
       },
       {
@@ -279,10 +279,6 @@
       "description": "Explicit or Promise-derived loading disables the rendered button and sets data-loading."
     },
     {
-      "id": "micro-size",
-      "description": "Sizes 2xs and 3xs force icon-only rendering and retain only the first IconV2 child."
-    },
-    {
       "id": "icon-only",
       "description": "iconOnly retains only the first IconV2 child and applies the cn-button-icon-only class."
     },
@@ -302,17 +298,30 @@
   },
   "supportMatrix": [
     {
-      "id": "text-standard-md-sm",
+      "id": "text-standard-md-sm-semantic",
       "status": "supported",
       "surfaces": ["figma", "code"],
       "conditions": {
-        "variant": ["primary", "secondary", "outline", "ai", "ghost", "transparent"],
+        "variant": ["primary", "secondary", "outline", "ghost"],
         "size": ["md", "sm"],
         "theme": ["default", "success", "danger"],
         "rounded": [false],
         "iconOnly": [false]
       },
-      "description": "Standard text Buttons are supported at md and sm for every non-link variant and theme."
+      "description": "Primary, secondary, outline, and ghost text Buttons support every theme at md and sm."
+    },
+    {
+      "id": "text-standard-md-sm-default-theme",
+      "status": "supported",
+      "surfaces": ["figma", "code"],
+      "conditions": {
+        "variant": ["ai", "transparent"],
+        "size": ["md", "sm"],
+        "theme": ["default"],
+        "rounded": [false],
+        "iconOnly": [false]
+      },
+      "description": "AI and transparent text Buttons use only the default theme at md and sm."
     },
     {
       "id": "text-standard-md-sm-link",
@@ -328,17 +337,30 @@
       "description": "The link visual variant is supported only for default-theme text actions at md and sm; it does not provide navigation semantics."
     },
     {
-      "id": "text-standard-xs",
+      "id": "text-standard-xs-semantic",
       "status": "supported",
       "surfaces": ["figma", "code"],
       "conditions": {
-        "variant": ["primary", "secondary", "outline", "ai", "ghost", "transparent"],
+        "variant": ["primary", "secondary", "outline", "ghost"],
         "size": ["xs"],
         "theme": ["default", "success", "danger"],
         "rounded": [false],
         "iconOnly": [false]
       },
-      "description": "Standard text Buttons are supported at xs for every non-link variant and theme."
+      "description": "Primary, secondary, outline, and ghost text Buttons support every theme at xs."
+    },
+    {
+      "id": "text-standard-xs-default-theme",
+      "status": "supported",
+      "surfaces": ["figma", "code"],
+      "conditions": {
+        "variant": ["ai", "transparent"],
+        "size": ["xs"],
+        "theme": ["default"],
+        "rounded": [false],
+        "iconOnly": [false]
+      },
+      "description": "AI and transparent text Buttons use only the default theme at xs."
     },
     {
       "id": "icon-standard-md-sm-xs",
@@ -347,11 +369,11 @@
       "conditions": {
         "variant": ["primary", "secondary", "outline", "ai", "ghost", "transparent"],
         "size": ["md", "sm", "xs"],
-        "theme": ["default", "success", "danger"],
+        "theme": ["default"],
         "rounded": [false],
         "iconOnly": [true]
       },
-      "description": "Standard icon-only Buttons are supported at md, sm, and xs for every non-link variant and theme."
+      "description": "Standard icon-only Buttons are supported at md, sm, and xs with the default theme."
     },
     {
       "id": "icon-rounded-md-sm-xs",
@@ -360,11 +382,11 @@
       "conditions": {
         "variant": ["primary", "secondary", "outline", "ai", "ghost", "transparent"],
         "size": ["md", "sm", "xs"],
-        "theme": ["default", "success", "danger"],
+        "theme": ["default"],
         "rounded": [true],
         "iconOnly": [true]
       },
-      "description": "Rounded icon-only Buttons are supported at md, sm, and xs for every non-link variant and theme."
+      "description": "Rounded icon-only Buttons are supported at md, sm, and xs with the default theme."
     },
     {
       "id": "text-rounded-md-sm-xs",
@@ -379,6 +401,19 @@
       },
       "description": "Rounded text Buttons remain temporarily available only for migration.",
       "migration": "Use the equivalent standard-shape Button while preserving variant, theme, size, accessible name, and behavior."
+    },
+    {
+      "id": "text-ai-transparent-semantic-theme",
+      "status": "unsupported",
+      "surfaces": ["figma", "code"],
+      "conditions": {
+        "variant": ["ai", "transparent"],
+        "size": ["md", "sm", "xs"],
+        "theme": ["success", "danger"],
+        "rounded": [false],
+        "iconOnly": [false]
+      },
+      "description": "AI and transparent text Buttons do not support success or danger themes."
     },
     {
       "id": "text-standard-md-sm-link-semantic-theme",
@@ -407,6 +442,19 @@
       "description": "The link visual variant is not supported at xs."
     },
     {
+      "id": "icon-semantic-theme-md-sm-xs",
+      "status": "unsupported",
+      "surfaces": ["figma", "code"],
+      "conditions": {
+        "variant": ["primary", "secondary", "outline", "ai", "ghost", "transparent"],
+        "size": ["md", "sm", "xs"],
+        "theme": ["success", "danger"],
+        "rounded": [false, true],
+        "iconOnly": [true]
+      },
+      "description": "Icon-only Buttons use only the default theme."
+    },
+    {
       "id": "icon-link-md-sm-xs",
       "status": "unsupported",
       "surfaces": ["figma", "code"],
@@ -418,20 +466,6 @@
         "iconOnly": [true]
       },
       "description": "The link visual variant is not supported for icon-only Buttons."
-    },
-    {
-      "id": "legacy-micro-sizes",
-      "status": "unsupported",
-      "surfaces": ["figma", "code"],
-      "conditions": {
-        "variant": ["primary", "secondary", "outline", "ai", "ghost", "link", "transparent"],
-        "size": ["2xs", "3xs"],
-        "theme": ["default", "success", "danger"],
-        "rounded": [false, true],
-        "iconOnly": [false, true]
-      },
-      "description": "The legacy code API accepts 2xs and 3xs, but these sizes are outside the approved cross-surface Button matrix.",
-      "migration": "Use an xs icon-only Button and preserve the accessible name and action behavior."
     }
   ],
   "bindings": [
@@ -447,7 +481,7 @@
     {
       "designProperty": "component size variant",
       "codeProperty": "size",
-      "transform": "Select the matching md, sm, or xs code value. Code-only 2xs and 3xs have no current published Figma component set."
+      "transform": "Select the matching md, sm, or xs code value."
     },
     {
       "designProperty": "rounded variant",
@@ -491,7 +525,7 @@
       },
       {
         "category": "theme",
-        "rule": "Use default, success, or danger through the theme API instead of local semantic color overrides."
+        "rule": "Use success or danger only with primary, secondary, outline, or ghost text Buttons. AI, transparent, link, and every icon-only Button use default."
       },
       {
         "category": "shape",
@@ -517,6 +551,7 @@
       "Use Button, its link variant, or asChild for ordinary navigation; use Link for destinations.",
       "Recreate a button-styled Link locally; propose the pattern to the design system if a destination requires primary Button prominence.",
       "Use iconOnly without an accessible name and a clear explanation of the action.",
+      "Use success or danger themes on AI, transparent, link, or icon-only Buttons.",
       "Use rounded on a text Button; migrate deprecated TextRounded Buttons to the equivalent standard-shape Button.",
       "Add local color, size, padding, typography, or radius overrides that recreate an unsupported variant.",
       "Use disabled styling as the only explanation for why an action is unavailable."
@@ -550,11 +585,6 @@
       "id": "icon-only-action",
       "description": "A compact action represented by a single icon.",
       "rule": "Use iconOnly with one IconV2 child and provide an accessible name; tooltipProps is required unless the explicit override is justified."
-    },
-    {
-      "id": "legacy-micro-action",
-      "description": "The legacy code implementation forces 2xs and 3xs Buttons to icon-only, but these sizes are unsupported by the approved matrix.",
-      "rule": "Do not create new 2xs or 3xs Buttons. Migrate existing usage to an xs icon-only Button; until migration, code filters non-IconV2 children from the legacy sizes."
     },
     {
       "id": "rounded-icon-only",

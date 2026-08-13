@@ -54,6 +54,59 @@ function findRoundedNonIconOnlyControls(source, filePath) {
   return lines
 }
 
+function getLiteralJsxAttribute(attributes, sourceFile, name) {
+  const attribute = attributes.find(item => item.name.getText(sourceFile) === name)
+  if (!attribute) return undefined
+  if (!attribute.initializer) return true
+  if (ts.isStringLiteral(attribute.initializer)) return attribute.initializer.text
+  if (!ts.isJsxExpression(attribute.initializer) || !attribute.initializer.expression) return undefined
+
+  const expression = attribute.initializer.expression
+  if (ts.isStringLiteral(expression)) return expression.text
+  if (expression.kind === ts.SyntaxKind.TrueKeyword) return true
+  if (expression.kind === ts.SyntaxKind.FalseKeyword) return false
+  return undefined
+}
+
+function findUnsupportedButtonCombinations(source, filePath) {
+  const sourceFile = ts.createSourceFile(filePath, source, ts.ScriptTarget.Latest, true, ts.ScriptKind.TSX)
+  const violations = []
+
+  const visit = node => {
+    const openingElement = ts.isJsxElement(node)
+      ? node.openingElement
+      : ts.isJsxSelfClosingElement(node)
+        ? node
+        : undefined
+    if (openingElement?.tagName.getText(sourceFile) === 'Button') {
+      const attributes = openingElement.attributes.properties.filter(ts.isJsxAttribute)
+      const variant = getLiteralJsxAttribute(attributes, sourceFile, 'variant') ?? 'primary'
+      const size = getLiteralJsxAttribute(attributes, sourceFile, 'size') ?? 'md'
+      const theme = getLiteralJsxAttribute(attributes, sourceFile, 'theme') ?? 'default'
+      const iconOnly = getLiteralJsxAttribute(attributes, sourceFile, 'iconOnly') === true
+      const line = sourceFile.getLineAndCharacterOfPosition(openingElement.getStart(sourceFile)).line + 1
+
+      if (size === '2xs' || size === '3xs') {
+        violations.push({ line, reason: `unsupported size ${size}` })
+      }
+      if (
+        (theme === 'success' || theme === 'danger') &&
+        (iconOnly || ['ai', 'transparent', 'link'].includes(variant))
+      ) {
+        violations.push({ line, reason: `${String(variant)} ${String(theme)} theme` })
+      }
+      if (variant === 'link' && (size === 'xs' || iconOnly)) {
+        violations.push({ line, reason: `link ${iconOnly ? 'icon-only' : 'xs'} combination` })
+      }
+    }
+
+    ts.forEachChild(node, visit)
+  }
+
+  visit(sourceFile)
+  return violations
+}
+
 function completeDraftContract() {
   return {
     schemaVersion: '0.3.0',
@@ -370,7 +423,7 @@ test('validates the checked-in component contract catalog', async () => {
       {
         id: 'canary.button',
         path: 'catalog/contracts/button.contract.json',
-        status: 'draft'
+        status: 'piloting'
       }
     ]
   })
@@ -428,6 +481,20 @@ test('maps the omitted Figma theme only for md and sm text Buttons', () => {
   expect(filesWithOmittedTheme).toEqual(['button-md-text.figma.ts', 'button.figma.ts'])
 })
 
+test('omits theme mapping from default-theme-only icon Button templates', () => {
+  const packageRoot = join(dirname(fileURLToPath(import.meta.url)), '..')
+  const componentRoot = join(packageRoot, 'src/components')
+  const iconButtonFiles = readdirSync(componentRoot)
+    .filter(file => /^button-(?:md|sm|xs)-icon-only(?:-rounded)?\.figma\.ts$/.test(file))
+    .sort()
+  const filesWithThemeMapping = iconButtonFiles.filter(file =>
+    readFileSync(join(componentRoot, file), 'utf8').includes("getEnum('theme'")
+  )
+
+  expect(iconButtonFiles).toHaveLength(6)
+  expect(filesWithThemeMapping).toEqual([])
+})
+
 test('uses public Figma property names in Button Code Connect templates', () => {
   const packageRoot = join(dirname(fileURLToPath(import.meta.url)), '..')
   const componentRoot = join(packageRoot, 'src/components')
@@ -476,13 +543,17 @@ test('defines an exhaustive approved Button support matrix', () => {
   ).toBe('unsupported')
   expect(
     matchingRules({ variant: 'primary', size: 'xs', theme: 'danger', rounded: true, iconOnly: true })[0].status
+  ).toBe('unsupported')
+  expect(
+    matchingRules({ variant: 'primary', size: 'xs', theme: 'default', rounded: true, iconOnly: true })[0].status
   ).toBe('supported')
+  expect(
+    matchingRules({ variant: 'ai', size: 'md', theme: 'success', rounded: false, iconOnly: false })[0].status
+  ).toBe('unsupported')
   expect(
     matchingRules({ variant: 'primary', size: 'xs', theme: 'danger', rounded: true, iconOnly: false })[0].status
   ).toBe('deprecated')
-  expect(
-    matchingRules({ variant: 'primary', size: '2xs', theme: 'default', rounded: false, iconOnly: true })[0].status
-  ).toBe('unsupported')
+  expect(properties.size.values).toEqual(['md', 'sm', 'xs'])
 })
 
 test('detects rounded text Button and Toggle usage while allowing rounded icon-only controls', () => {
@@ -516,6 +587,48 @@ test('prevents new rounded non-icon-only Button and Toggle usage in production',
   expect(violations).toEqual([])
 })
 
+test('detects unsupported literal Button combinations', () => {
+  const source = `
+    const Example = () => <>
+      <Button size="2xs" iconOnly />
+      <Button variant="ai" theme="success" />
+      <Button variant="transparent" theme="danger" />
+      <Button variant="primary" theme="success" iconOnly />
+      <Button variant="link" size="xs" />
+      <Button variant="primary" theme="danger" />
+      <Button variant="ai" />
+    </>
+  `
+
+  expect(findUnsupportedButtonCombinations(source, 'example.tsx')).toEqual([
+    { line: 3, reason: 'unsupported size 2xs' },
+    { line: 4, reason: 'ai success theme' },
+    { line: 5, reason: 'transparent danger theme' },
+    { line: 6, reason: 'primary success theme' },
+    { line: 7, reason: 'link xs combination' }
+  ])
+})
+
+test('prevents unsupported literal Button combinations in production', () => {
+  const packageRoot = join(dirname(fileURLToPath(import.meta.url)), '..')
+  const sourceRoots = [
+    { directory: join(packageRoot, 'src'), label: 'packages/ui/src' },
+    { directory: join(packageRoot, '../views/src'), label: 'packages/views/src' },
+    { directory: join(packageRoot, '../../apps'), label: 'apps' }
+  ]
+  const violations = sourceRoots.flatMap(({ directory, label }) =>
+    collectProductionComponents(directory).flatMap(filePath => {
+      const repositoryPath = join(label, filePath.slice(directory.length + 1))
+      const source = readFileSync(filePath, 'utf8')
+      return findUnsupportedButtonCombinations(source, filePath).map(
+        ({ line, reason }) => `${repositoryPath}:${line} ${reason}`
+      )
+    })
+  )
+
+  expect(violations).toEqual([])
+})
+
 test('provides a successful command-line contract check', () => {
   const packageRoot = join(dirname(fileURLToPath(import.meta.url)), '..')
   const result = spawnSync(process.execPath, ['scripts/validate-component-contracts.mjs'], {
@@ -525,5 +638,5 @@ test('provides a successful command-line contract check', () => {
 
   expect(result.status).toBe(0)
   expect(result.stderr).toBe('')
-  expect(result.stdout).toBe('Validated 1 component contract: canary.button (draft)\n')
+  expect(result.stdout).toBe('Validated 1 component contract: canary.button (piloting)\n')
 })

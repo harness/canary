@@ -508,6 +508,8 @@ When the `onClick` prop returns a promise, the button automatically shows a load
 
 When the `iconOnly` prop is used, you must also provide `tooltipProps` to display content in the tooltip.
 
+Icon-only Buttons use the `default` theme. Do not apply `success` or `danger`; communicate semantic meaning through the accessible name, surrounding context, and feedback after activation.
+
 If you need to skip showing the tooltip, you should set `ignoreIconOnlyTooltip`.
 
 <DocsPage.ComponentExample
@@ -527,18 +529,6 @@ If you need to skip showing the tooltip, you should set `ignoreIconOnlyTooltip`.
   </Button>
   <Button variant="outline" size="xs" iconOnly ignoreIconOnlyTooltip>
     <IconV2 name="check" skipSize />
-  </Button>
-  <Button variant="outline" size="2xs" iconOnly ignoreIconOnlyTooltip>
-    <IconV2 name="check" skipSize />
-  </Button>
-  <Button variant="outline" size="3xs" iconOnly ignoreIconOnlyTooltip>
-    <IconV2 name="check" skipSize />
-  </Button>
-  <Button variant="outline" size="2xs" iconOnly ignoreIconOnlyTooltip>
-    <IconV2 name="xmark" skipSize />
-  </Button>
-  <Button variant="outline" size="3xs" iconOnly ignoreIconOnlyTooltip>
-    <IconV2 name="xmark" skipSize />
   </Button>
 </div>
 </div>`}
@@ -586,16 +576,16 @@ The code treatment uses:
 
 Create one detached reference example near the Button component documentation. This example communicates the runtime behavior for review and handoff; it is not a published Button variant.
 
-| Attribute | Specification |
-| --- | --- |
-| Label | Focus specification |
-| Base Button | Enabled `md`, `primary`, default-theme text Button |
-| Trigger | Keyboard focus matching `:focus-visible`; do not show for pointer-only focus |
-| Outer indicator | 2px solid `border.brand` focus outline |
-| Inner contrast | 2px inset `gray.25` ring |
-| Offset | -2px for the representative non-link Button |
-| Shape and content | Preserve the base Button radius, label, and layout |
-| Publication | Detached documentation example only; do not add a `focus` state variant |
+| Attribute         | Specification                                                                |
+| ----------------- | ---------------------------------------------------------------------------- |
+| Label             | Focus specification                                                          |
+| Base Button       | Enabled `md`, `primary`, default-theme text Button                           |
+| Trigger           | Keyboard focus matching `:focus-visible`; do not show for pointer-only focus |
+| Outer indicator   | 2px solid `border.brand` focus outline                                       |
+| Inner contrast    | 2px inset `gray.25` ring                                                     |
+| Offset            | -2px for the representative non-link Button                                  |
+| Shape and content | Preserve the base Button radius, label, and layout                           |
+| Publication       | Detached documentation example only; do not add a `focus` state variant      |
 
 ## Usage
 
@@ -647,15 +637,16 @@ import { Button } from '@harnessio/ui/components'
 <Button disabled>Disabled Button</Button>
 ```
 
-## Type Constraints
+## Supported combinations
 
-The Button component implements a discriminated union pattern with conditional prop requirements:
+- Primary, secondary, outline, and ghost text Buttons support default, success, and danger.
+- AI and transparent text Buttons use the default theme only.
+- Link-style Buttons use the default theme at md and sm only.
+- All icon-only Buttons use the default theme only.
+- Button sizes are md, sm, and xs.
+- Rounded is supported for icon-only Buttons; rounded text Buttons are deprecated.
 
-- When variant is "ghost" or "link", no theme is allowed
-- When variant is "ai", no theme is needed
-- When variant is "solid", themes "success" and "danger" are not allowed
-
-This ensures type safety and provides proper development-time feedback on invalid component usage.
+The Button contract and repository checks enforce these combinations for new source usage.
 
 ## Props
 
@@ -666,7 +657,7 @@ This ensures type safety and provides proper development-time feedback on invali
       description: "Visual style of the button.",
       required: false,
       value:
-        "'primary' | 'secondary' | 'outline' | 'ghost' | 'link' | 'transparent'",
+        "'primary' | 'secondary' | 'outline' | 'ghost' | 'ai' | 'link' | 'transparent'",
       defaultValue: "'primary'",
     },
     {
@@ -679,7 +670,7 @@ This ensures type safety and provides proper development-time feedback on invali
     {
       name: "theme",
       description:
-        "Color theme of the button. Note: not all variants support themes.",
+        "Success and danger are supported only by primary, secondary, outline, and ghost text Buttons. AI, transparent, link, and all icon-only Buttons use default.",
       required: false,
       value: "'default' | 'success' | 'danger'",
       defaultValue: "'default'",
@@ -687,9 +678,9 @@ This ensures type safety and provides proper development-time feedback on invali
     {
       name: "size",
       description:
-        "Size of the button. '2xs' and '3xs' set iconOnly props to true.",
+        "Supported Button sizes. Use xs icon-only Buttons for the most compact action.",
       required: false,
-      value: "'md' | 'sm' | 'xs' | '2xs' | '3xs'",
+      value: "'md' | 'sm' | 'xs'",
       defaultValue: "'md'",
     },
     {

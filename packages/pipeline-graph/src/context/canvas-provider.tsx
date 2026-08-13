@@ -2,6 +2,7 @@ import { createContext, useCallback, useContext, useRef } from 'react'
 
 import { calculateTransform } from '../components/canvas/canvas-utils'
 import { useDebouncedState } from '../hooks/useDebouncedState'
+import { getGraphContentRect } from '../utils/graph-position-utils'
 import { useMultiCanvasContext } from './multi-canvas-provider'
 
 interface CanvasConfig {
@@ -156,36 +157,34 @@ export const CanvasProvider = ({ children, config: configFromProps, id = '' }: C
       | HTMLDivElement
       | undefined
 
-    if (!parentEl || !nodesContainerEl) return
+    if (!targetEl || !parentEl || !nodesContainerEl) return
 
     const { width: parentWidth, height: parentHeight } = parentEl.getBoundingClientRect()
-    const { width: graphWidth, height: graphHeight } = nodesContainerEl.getBoundingClientRect()
+    const targetElRect = targetEl.getBoundingClientRect()
+    const contentRect = getGraphContentRect(nodesContainerEl)
 
-    let scaleH = ((parentHeight - config.paddingForFit * 2) / graphHeight) * canvasTransformRef.current.scale
-    let scaleW = ((parentWidth - config.paddingForFit * 2) / graphWidth) * canvasTransformRef.current.scale
-    scaleH = Math.max(scaleH, config.minScale)
-    scaleW = Math.max(scaleW, config.minScale)
+    const currentScale = canvasTransformRef.current.scale
 
-    const translate = {
-      scale: 1,
-      translateX: config.paddingForFit,
-      translateY: config.paddingForFit
-    }
+    // graph size and its offset within the target element, at scale 1
+    const graphWidth = contentRect.width / currentScale
+    const graphHeight = contentRect.height / currentScale
+    const offsetX = (contentRect.left - targetElRect.left) / currentScale
+    const offsetY = (contentRect.top - targetElRect.top) / currentScale
 
-    if (scaleW < scaleH) {
-      translate.translateY =
-        config.paddingForFit + ((scaleH - scaleW) * graphHeight) / canvasTransformRef.current.scale / 2
-      translate.scale = scaleW
-    } else {
-      translate.translateX =
-        config.paddingForFit + ((scaleW - scaleH) * graphWidth) / canvasTransformRef.current.scale / 2
-      translate.scale = scaleH
-    }
+    if (!graphWidth || !graphHeight) return
 
+    let scale = Math.min(
+      (parentWidth - config.paddingForFit * 2) / graphWidth,
+      (parentHeight - config.paddingForFit * 2) / graphHeight
+    )
+    scale = Math.min(Math.max(scale, config.minScale), config.maxScale)
+
+    // center the graph on both axes - when it cannot fully fit (scale clamped
+    // to minScale) the overflow is spread evenly, keeping the graph centered
     setCanvasTransform({
-      scale: translate.scale,
-      translateX: translate.translateX,
-      translateY: translate.translateY
+      scale,
+      translateX: (parentWidth - graphWidth * scale) / 2 - offsetX * scale,
+      translateY: (parentHeight - graphHeight * scale) / 2 - offsetY * scale
     })
   }, [])
 

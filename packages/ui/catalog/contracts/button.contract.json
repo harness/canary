@@ -1,6 +1,6 @@
 {
   "schemaVersion": "0.3.0",
-  "contractVersion": "0.6.0",
+  "contractVersion": "0.6.2",
   "id": "canary.button",
   "status": "piloting",
   "surfaces": ["figma", "code"],
@@ -123,6 +123,7 @@
         "default": "default",
         "description": "Sets the semantic color context. Success and danger apply only to primary, secondary, outline, and ghost text Buttons; all other supported combinations use default.",
         "figmaProperty": "theme",
+        "figmaValueAliases": { "-": "default" },
         "mapsTo": "ButtonProps.theme"
       },
       {
@@ -172,6 +173,7 @@
         "default": false,
         "description": "Shows the nested trailing icon instance.",
         "figmaProperty": "suffix icon#1687:61",
+        "figmaPropertyAliases": ["↳ suffix"],
         "mapsTo": "An IconV2 child after the text label"
       },
       {

@@ -37,6 +37,8 @@ const CatalogPropSchema = z.object({
   when: z.string().optional(),
   figmaNote: z.string().optional(),
   figmaProperty: z.string().optional(),
+  figmaPropertyAliases: z.array(z.string().min(1)).optional(),
+  figmaValueAliases: z.record(z.string().min(1), z.string().min(1)).optional(),
   figmaCaseInsensitive: z.boolean().optional(),
 });
 
@@ -123,6 +125,12 @@ function compileProp(property) {
   if (property.mapsTo) compiled.mapsTo = property.mapsTo;
   if (property.when) compiled.when = property.when;
   if (property.figmaProperty) compiled.figmaProperty = property.figmaProperty;
+  if (property.figmaPropertyAliases) {
+    compiled.figmaPropertyAliases = property.figmaPropertyAliases;
+  }
+  if (property.figmaValueAliases) {
+    compiled.figmaValueAliases = property.figmaValueAliases;
+  }
   if (property.description) compiled.figmaNote = property.description;
   return compiled;
 }

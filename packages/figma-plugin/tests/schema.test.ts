@@ -15,7 +15,7 @@ describe('parseCatalogEntry', () => {
     expect(entry.id).toBe('canary.button')
     expect(entry.status).toBe('piloting')
     expect(entry.source?.contractPath).toBe('packages/ui/catalog/contracts/button.contract.json')
-    expect(entry.source?.contractVersion).toBe('0.6.0')
+    expect(entry.source?.contractVersion).toBe('0.6.2')
     expect(entry.source?.sha256).toMatch(/^[a-f0-9]{64}$/)
     expect(entry.shared.find(p => p.name === 'variant')?.values).toContain('primary')
     expect(entry.shared.find(p => p.name === 'size')?.values).toEqual(['md', 'sm', 'xs'])

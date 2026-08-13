@@ -50,6 +50,8 @@ export function normalizeFigmaValue(
 
   let value = stripFigmaDecorators(raw);
 
+  value = prop.figmaValueAliases?.[value] ?? value;
+
   if (prop.figmaCaseInsensitive) {
     value = value.toLowerCase();
     // Prefer catalog canonical casing when a case-insensitive match exists

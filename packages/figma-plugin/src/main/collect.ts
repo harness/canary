@@ -27,6 +27,8 @@ export type CollectOptions = {
    * instances, so a detached copy of a library component goes unnoticed.
    */
   catalogNames?: readonly string[];
+  /** Published component or component-set keys in the loaded catalog. */
+  catalogKeys?: readonly string[];
 };
 
 type ComponentSetLike = {
@@ -51,6 +53,9 @@ export type CollectableNode = {
   id: string;
   name: string;
   type: string;
+  key?: string;
+  parent?: ComponentSetLike | null;
+  variantProperties?: Record<string, string> | null;
   children?: readonly CollectableNode[];
   componentProperties?: Record<
     string,
@@ -130,6 +135,31 @@ async function snapshotFromInstance(
   });
 }
 
+function snapshotFromCatalogComponent(
+  component: CollectableNode,
+  componentSet: ComponentSetLike | null,
+): ReturnType<typeof toInstanceSnapshot> {
+  const variantProperties = component.variantProperties ?? {};
+  const propertyDefinitions = Object.keys(variantProperties).map((name) => ({
+    name,
+    type: "VARIANT",
+  }));
+
+  return toInstanceSnapshot({
+    nodeId: component.id,
+    nodeName: component.name,
+    mainComponentName: component.name,
+    componentKey: component.key ?? null,
+    componentSetName: componentSet?.name ?? null,
+    componentSetKey: componentSet?.key ?? null,
+    isFromLibrary: true,
+    componentProperties: variantProperties,
+    propertyDefinitions,
+    nodeType: component.type,
+    parentNodeId: null,
+  });
+}
+
 function yieldTick(): Promise<void> {
   return new Promise((resolve) => setTimeout(resolve, 0));
 }
@@ -142,6 +172,7 @@ export async function collectFromNodes(
 ): Promise<CollectResult> {
   const snapshots: CollectResult["snapshots"] = [];
   const catalogNames = normalizeCatalogNames(opts.catalogNames ?? []);
+  const catalogKeys = new Set(opts.catalogKeys ?? []);
   let scanned = 0;
   let truncated = false;
   let sinceYield = 0;
@@ -174,6 +205,29 @@ export async function collectFromNodes(
           snapshots.push(await snapshotFromInstance(child, node.id));
           await maybeYield();
         }
+      }
+      return;
+    }
+    if (node.type === "COMPONENT") {
+      const componentSet =
+        node.parent?.type === "COMPONENT_SET" ? node.parent : null;
+      if (
+        (node.key && catalogKeys.has(node.key)) ||
+        (componentSet?.key && catalogKeys.has(componentSet.key))
+      ) {
+        scanned += 1;
+        snapshots.push(snapshotFromCatalogComponent(node, componentSet));
+        await maybeYield();
+        return;
+      }
+    }
+    if (node.type === "COMPONENT_SET" && node.key && catalogKeys.has(node.key)) {
+      for (const child of node.children ?? []) {
+        if (snapshots.length >= cap) {
+          truncated = true;
+          break;
+        }
+        await visit(child);
       }
       return;
     }

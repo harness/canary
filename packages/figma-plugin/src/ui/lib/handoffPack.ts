@@ -41,7 +41,7 @@ export function buildHandoffPack(input: HandoffInput): string {
         ];
 
   return [
-    "## Standards Check (DS Contracts)",
+    "## Standards Check (Canary Copilot)",
     `- File: ${input.fileName || "—"}`,
     `- Page: ${input.pageName || "—"}`,
     `- Catalog: ${input.catalogLabel}`,

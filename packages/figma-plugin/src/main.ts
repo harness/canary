@@ -24,6 +24,7 @@ function describeError(err: unknown): string {
 async function handleCheck(
   scope: "selection" | "page",
   catalogNames: string[] = [],
+  catalogKeys: string[] = [],
 ): Promise<void> {
   try {
     if (scope === "selection" && figma.currentPage.selection.length === 0) {
@@ -39,8 +40,14 @@ async function handleCheck(
     };
     const result =
       scope === "selection"
-        ? await collectFromSelection(undefined, onProgress, { catalogNames })
-        : await collectFromPage(undefined, onProgress, { catalogNames });
+        ? await collectFromSelection(undefined, onProgress, {
+            catalogNames,
+            catalogKeys,
+          })
+        : await collectFromPage(undefined, onProgress, {
+            catalogNames,
+            catalogKeys,
+          });
     const ctx = getFileContext();
     postToUi({
       type: "CHECK_RAW",
@@ -60,7 +67,7 @@ async function handleCheck(
       detail: describeError(err),
     });
     // Keep original in console for dogfood debugging
-    console.error(`[DS Contracts] check ${scope} failed:`, err);
+    console.error(`[Canary Copilot] check ${scope} failed:`, err);
   }
 }
 
@@ -81,10 +88,10 @@ async function handleMessage(msg: UiRequest): Promise<void> {
       figma.closePlugin();
       break;
     case "CHECK_SELECTION":
-      await handleCheck("selection", msg.catalogNames);
+      await handleCheck("selection", msg.catalogNames, msg.catalogKeys);
       break;
     case "CHECK_PAGE":
-      await handleCheck("page", msg.catalogNames);
+      await handleCheck("page", msg.catalogNames, msg.catalogKeys);
       break;
     case "SELECT_NODE": {
       const ok = await selectNodeById(msg.nodeId);
@@ -192,7 +199,7 @@ figma.ui.onmessage = async (msg: UiRequest) => {
   try {
     await handleMessage(msg);
   } catch (err) {
-    console.error(`[DS Contracts] handling ${msg?.type} failed:`, err);
+    console.error(`[Canary Copilot] handling ${msg?.type} failed:`, err);
     postToUi({
       type: "ERROR",
       code: "UNKNOWN",

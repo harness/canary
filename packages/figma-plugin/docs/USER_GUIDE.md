@@ -1,8 +1,8 @@
-# DS Contracts — User guide
+# Canary Copilot — User guide
 
 Check Figma work against the Canary catalog. Flag illegal shared values, explain designOnly controls, and draft a proposal when something is missing.
 
-**Audience:** Product designers using Figma Desktop with the **DS Contracts** plugin (Canary / Harness).  
+**Audience:** Product designers using Figma Desktop with the **Canary Copilot** plugin (Canary / Harness).
 **Plugin folder:** `packages/figma-plugin/` in the Canary repo.
 
 ## What each tab is for
@@ -12,7 +12,7 @@ Check Figma work against the Canary catalog. Flag illegal shared values, explain
 | **Check** | Scan the **selection** or **current page**. Finds illegal shared values, unknown props, and detached or local copies of library components. designOnly controls show as info. |
 | **Propose** | Draft a Path P proposal from a Check failure, or start blank. Copy markdown or open an issue link. |
 | **Catalog** | Browse legal **shared**, **designOnly**, and **codeOnly** for packed contracts (currently Button). |
-| **Settings** | Catalog source, GitHub/Harness issue destinations, author defaults, strict `❖` unmapped mode, reset onboarding. |
+| **Settings** | Catalog source, GitHub issue destination, author defaults, strict `❖` unmapped mode, reset onboarding. |
 
 ## Shared vs designOnly
 
@@ -23,7 +23,7 @@ Check Figma work against the Canary catalog. Flag illegal shared values, explain
 ## How to Check
 
 1. Select Canary library instances (or leave selection empty and use **Check page**).
-2. Open **DS Contracts** → **Check selection** or **Check page**.
+2. Open **Canary Copilot** → **Check selection** or **Check page**.
 3. Read summary chips (Pass / Fail / Warn / Info / Not in catalog).
 4. **Select** jumps to the layer; **Propose** opens Path P with defaults.
 5. **Copy handoff** pastes a markdown Standards Check summary for tickets/PRs.
@@ -41,8 +41,8 @@ Large pages yield progress every ~50 instances (see `scripts/gen-stress-notes.md
 
 1. From a failure, click **Propose**, or open the Propose tab blank.
 2. Fill **Title**, **Type**, **Problem**, **Attempted workaround**, **Requested change** (required).
-3. **Copy markdown** — always works; paste into GitHub / Harness / `PROPOSAL.md`.
-4. Optional: **Open GitHub issue** / **Open Harness issue** if Settings are configured.
+3. **Copy markdown** — always works; paste into GitHub, a Harness ticket, or `PROPOSAL.md`.
+4. Optional: **Open GitHub issue** if a repository is configured in Settings.
 
 ### Maintainer responses (plugin does not auto-merge)
 
@@ -55,7 +55,7 @@ Large pages yield progress every ~50 instances (see `scripts/gen-stress-notes.md
 
 ## Network behavior
 
-- **Default:** no network. The bundled catalog is compiled from `packages/ui/catalog/contracts` at plugin build time.
+- **Default checks:** no network. The bundled catalog is resolved from `packages/ui/catalog/component-inventory.json` and compiled from mapped contracts at plugin build time.
 - **Optional remote:** Settings → Custom manifest URL. Requires updating `manifest.json` `networkAccess.allowedDomains` first. On failure, the plugin falls back to bundled Canary with a clear message.
 - **No analytics SDK** in v1.
 

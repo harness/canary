@@ -4,6 +4,7 @@
  * Contracts in packages/ui/catalog/contracts remain the source of truth;
  * catalogs/ is generated and must not be authored by hand.
  */
+import { createHash } from "node:crypto";
 import {
   existsSync,
   mkdirSync,
@@ -17,7 +18,10 @@ import { fileURLToPath } from "node:url";
 import { z } from "zod";
 
 const pluginRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
-const contractsDir = path.resolve(pluginRoot, "../ui/catalog/contracts");
+const repositoryRoot = path.resolve(pluginRoot, "../..");
+const uiRoot = path.resolve(pluginRoot, "../ui");
+const inventoryPath = path.join(uiRoot, "catalog", "component-inventory.json");
+const contractsDir = path.join(uiRoot, "catalog", "contracts");
 const catalogsRoot = path.join(pluginRoot, "catalogs");
 const publicRoot = path.join(pluginRoot, "public", "catalogs");
 const SYSTEM_ID = "canary";
@@ -48,6 +52,14 @@ const SupportMatrixRuleSchema = z.object({
 const CatalogEntrySchema = z.object({
   id: z.string().min(1),
   status: z.enum(["draft", "piloting", "stable", "deprecated"]),
+  source: z
+    .object({
+      contractPath: z.string().min(1),
+      schemaVersion: z.string().min(1),
+      contractVersion: z.string().min(1),
+      sha256: z.string().regex(/^[a-f0-9]{64}$/),
+    })
+    .optional(),
   code: z.object({
     package: z.string(),
     export: z.string(),
@@ -75,6 +87,14 @@ const CatalogEntrySchema = z.object({
 
 function readJson(filePath) {
   return JSON.parse(readFileSync(filePath, "utf8"));
+}
+
+function repositoryPath(filePath) {
+  return path.relative(repositoryRoot, filePath).split(path.sep).join("/");
+}
+
+function contractFingerprint(filePath) {
+  return createHash("sha256").update(readFileSync(filePath)).digest("hex");
 }
 
 function catalogType(type) {
@@ -160,7 +180,7 @@ function compilePatterns(patterns) {
   return patterns.map((pattern) => pattern.id).filter(Boolean);
 }
 
-export function compileContract(contract) {
+export function compileContract(contract, source) {
   if (!contract?.figma || !contract.code) {
     throw new Error(`${contract?.id ?? "unknown"}: Figma-governed contracts must include code and figma metadata`);
   }
@@ -191,6 +211,15 @@ export function compileContract(contract) {
     codeOnly: (contract.properties?.codeOnly ?? []).map(compileProp),
   };
 
+  if (source) {
+    entry.source = {
+      contractPath: repositoryPath(source.filePath),
+      schemaVersion: contract.schemaVersion,
+      contractVersion: contract.contractVersion,
+      sha256: contractFingerprint(source.filePath),
+    };
+  }
+
   if (contract.supportMatrix) entry.supportMatrix = contract.supportMatrix;
 
   const bindings = compileBindings(contract.bindings);
@@ -203,29 +232,69 @@ export function compileContract(contract) {
   return CatalogEntrySchema.parse(entry);
 }
 
-function loadFigmaContracts() {
+function loadFigmaContractSources() {
+  if (!existsSync(inventoryPath)) {
+    throw new Error(`Component inventory missing: ${inventoryPath}`);
+  }
   if (!existsSync(contractsDir)) {
     throw new Error(`Contracts directory missing: ${contractsDir}`);
   }
 
-  const files = readdirSync(contractsDir)
-    .filter((file) => file.endsWith(".contract.json"))
-    .sort();
+  const inventory = readJson(inventoryPath);
+  const inventoryComponents = Array.isArray(inventory.components) ? inventory.components : [];
+  const mappedFigmaComponents = inventoryComponents.filter(
+    (component) => component?.status === "mapped" && component.surfaces?.includes("figma"),
+  );
+  if (mappedFigmaComponents.length === 0) {
+    throw new Error(`${repositoryPath(inventoryPath)} has no mapped Figma contracts`);
+  }
 
-  const contracts = [];
-  for (const file of files) {
-    const contract = readJson(path.join(contractsDir, file));
-    if (!Array.isArray(contract.surfaces) || !contract.surfaces.includes("figma")) {
+  const sources = [];
+  const loadedPaths = new Set();
+  for (const component of mappedFigmaComponents) {
+    if (!component.contractPath) {
+      throw new Error(`${component.id}: mapped Figma inventory entry has no contractPath`);
+    }
+
+    const filePath = path.resolve(uiRoot, component.contractPath);
+    const contractsPrefix = `${contractsDir}${path.sep}`;
+    if (!filePath.startsWith(contractsPrefix) || !filePath.endsWith(".contract.json")) {
+      throw new Error(`${component.id}: contractPath must point to catalog/contracts/*.contract.json`);
+    }
+    if (!existsSync(filePath)) {
+      throw new Error(`${component.id}: contractPath does not exist: ${repositoryPath(filePath)}`);
+    }
+    if (loadedPaths.has(filePath)) {
       continue;
     }
-    contracts.push(contract);
+
+    const contract = readJson(filePath);
+    if (!Array.isArray(contract.surfaces) || !contract.surfaces.includes("figma")) {
+      throw new Error(`${component.id}: mapped contract does not govern Figma`);
+    }
+    if (!mappedFigmaComponents.some((candidate) => candidate.id === contract.id && candidate.contractPath === component.contractPath)) {
+      throw new Error(`${component.id}: ${repositoryPath(filePath)} identifies itself as ${contract.id}`);
+    }
+    loadedPaths.add(filePath);
+    sources.push({ contract, filePath });
   }
 
-  if (contracts.length === 0) {
-    throw new Error(`No Figma-governed contracts found in ${contractsDir}`);
+  const unreferencedFigmaContracts = readdirSync(contractsDir)
+    .filter((file) => file.endsWith(".contract.json"))
+    .map((file) => path.join(contractsDir, file))
+    .filter((filePath) => {
+      const contract = readJson(filePath);
+      return contract.surfaces?.includes("figma") && !loadedPaths.has(filePath);
+    });
+  if (unreferencedFigmaContracts.length > 0) {
+    throw new Error(
+      `Figma contracts are not mapped in component-inventory.json: ${unreferencedFigmaContracts
+        .map(repositoryPath)
+        .join(", ")}`,
+    );
   }
 
-  return contracts;
+  return sources;
 }
 
 function writeJson(filePath, value) {
@@ -235,10 +304,10 @@ function writeJson(filePath, value) {
 
 export function compileCanaryPack({ packedAt = new Date().toISOString() } = {}) {
   const pluginPackage = readJson(path.join(pluginRoot, "package.json"));
-  const contracts = loadFigmaContracts();
-  const entries = contracts.map(compileContract);
+  const sources = loadFigmaContractSources();
+  const entries = sources.map(({ contract, filePath }) => compileContract(contract, { filePath }));
   const components = entries.map((entry, index) => {
-    const contract = contracts[index];
+    const contract = sources[index].contract;
     const slug = entry.id.replace(/^canary\./, "");
     return {
       id: entry.id,

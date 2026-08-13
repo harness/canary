@@ -1,4 +1,4 @@
-# Support — DS Contracts (internal)
+# Support — Canary Copilot (internal)
 
 Internal plugin for Harness / Canary designers. **Not** a Figma Community listing.
 

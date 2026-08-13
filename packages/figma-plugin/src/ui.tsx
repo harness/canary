@@ -164,7 +164,7 @@ function App() {
       if (ev.type === "ERROR") {
         // Humanized copy for the UI, raw cause for the console.
         console.error(
-          `[DS Contracts] ${ev.code ?? "ERROR"}:`,
+          `[Canary Copilot] ${ev.code ?? "ERROR"}:`,
           ev.detail ?? ev.message,
         );
         const code = ev.code ?? null;
@@ -338,6 +338,7 @@ function App() {
     postToMain({
       type: scope === "selection" ? "CHECK_SELECTION" : "CHECK_PAGE",
       catalogNames: catalogFigmaNames(indexRef.current),
+      catalogKeys: [...indexRef.current.byComponentKey.keys()],
     });
   };
 
@@ -430,7 +431,7 @@ function App() {
       <header class="app-header">
         <div class="brand">
           <HarnessMark class="brand-mark" size={16} />
-          <h1>DS Contracts</h1>
+          <h1>Canary Copilot</h1>
         </div>
         <span
           class={`status-pill ${
@@ -471,8 +472,8 @@ function App() {
       >
         {status === "error" ? (
           <Banner tone="fail">
-            Figma didn’t answer the plugin. Close and reopen DS Contracts — if it
-            keeps happening, check the plugin console for details.
+            Figma didn’t answer the plugin. Close and reopen Canary Copilot — if
+            it keeps happening, check the plugin console for details.
           </Banner>
         ) : null}
 

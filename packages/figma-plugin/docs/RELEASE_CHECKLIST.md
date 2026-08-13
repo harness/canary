@@ -1,10 +1,11 @@
-# Internal release checklist — DS Contracts
+# Internal release checklist — Canary Copilot
 
 **Not** a Figma Community marketplace submission. Org/private plugin for Harness designers.
 
-## Pre-dogfood (current: `0.1.0` → bump when ready)
+## Pre-dogfood (current: `0.2.0` → bump when ready)
 
-- [x] Manifest name `DS Contracts`, locked id, `networkAccess` documented (`none` until CDN allow-listed)
+- [x] One canonical `manifest.json`: name `Canary Copilot`, locked id, Figma Design + Dev Mode, dynamic page access
+- [x] `networkAccess` and default bundled-catalog behavior documented
 - [x] Privacy + Support docs present (`PRIVACY.md`, `SUPPORT.md`)
 - [x] Fresh install path: bundled Canary only (`pnpm build` → import `manifest.json`)
 - [x] Button catalog compiled from the in-repo Button contract (`componentKeys` from HDS Components 3.0)
@@ -34,7 +35,7 @@
 |-------|-------|
 | Current package | `0.2.0` (Tasks 0–20 complete; ready for internal dogfood) |
 | Recommended next | `1.0.0` after false-positive bar + demo |
-| Catalog pack | Canary `0.1.0` |
+| Catalog pack | Canary `0.2.0` (generated from the plugin package version) |
 | Blockers to 1.0 | Live dogfood (≥3 designers), demo recording, optional remote CDN allow-list |
 
 ## Assets

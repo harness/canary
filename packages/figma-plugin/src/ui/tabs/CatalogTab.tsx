@@ -88,6 +88,13 @@ export function CatalogTab({ index, onCheckSelection }: Props) {
           <p class="ds-finding-meta">
             {entry.id} · Figma: {entry.figma.name} · {entry.code.package}
           </p>
+          {entry.source ? (
+            <p class="ds-finding-meta">
+              Contract: <span class="ds-code">{entry.source.contractPath}</span>
+              {" "}· v{entry.source.contractVersion} ·{" "}
+              <span class="ds-code">{entry.source.sha256.slice(0, 12)}</span>
+            </p>
+          ) : null}
 
           <h3 class="ds-group-title">Shared</h3>
           <table class="ds-table">

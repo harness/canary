@@ -13,10 +13,14 @@ export function Onboarding({ onDone }: Props) {
   const last = index === ONBOARDING_SLIDES.length - 1;
 
   return (
-    <div class="ds-onboarding" role="dialog" aria-label="Welcome to DS Contracts">
+    <div
+      class="ds-onboarding"
+      role="dialog"
+      aria-label="Welcome to Canary Copilot"
+    >
       <HarnessMark class="brand-mark ds-onboarding-mark" size={28} />
       <p class="subtitle" style={{ marginTop: 14 }}>
-        DS Contracts
+        Canary Copilot
       </p>
       <h2>{slide.title}</h2>
       <p>{slide.body}</p>

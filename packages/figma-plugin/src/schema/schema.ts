@@ -28,6 +28,14 @@ export const SupportMatrixRuleSchema = z.object({
 export const CatalogEntrySchema = z.object({
   id: z.string().min(1),
   status: z.enum(["draft", "piloting", "stable", "deprecated"]),
+  source: z
+    .object({
+      contractPath: z.string().min(1),
+      schemaVersion: z.string().min(1),
+      contractVersion: z.string().min(1),
+      sha256: z.string().regex(/^[a-f0-9]{64}$/),
+    })
+    .optional(),
   code: z.object({
     package: z.string(),
     export: z.string(),

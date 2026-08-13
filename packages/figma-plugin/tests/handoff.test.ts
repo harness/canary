@@ -38,7 +38,7 @@ describe("buildHandoffPack", () => {
       report,
       openProposalTitles: ['Add variant "subtle"'],
     });
-    expect(md).toContain("## Standards Check (DS Contracts)");
+    expect(md).toContain("## Standards Check (Canary Copilot)");
     expect(md).toContain("FAIL (2) / PASS (8)");
     expect(md).toContain("canary.button");
     expect(md).toContain('Add variant "subtle"');

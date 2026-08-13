@@ -3,9 +3,13 @@ import type { InstanceSnapshot } from "../core/types.js";
 /** UI → main thread */
 export type UiRequest =
   | { type: "UI_READY" }
-  /** `catalogNames` lets the scan spot detached copies by layer name. */
-  | { type: "CHECK_SELECTION"; catalogNames?: string[] }
-  | { type: "CHECK_PAGE"; catalogNames?: string[] }
+  /** Catalog identity lets the scan recognize instances, source definitions, and detached copies. */
+  | {
+      type: "CHECK_SELECTION";
+      catalogNames?: string[];
+      catalogKeys?: string[];
+    }
+  | { type: "CHECK_PAGE"; catalogNames?: string[]; catalogKeys?: string[] }
   | { type: "SELECT_NODE"; nodeId: string }
   | { type: "GET_FILE_CONTEXT" }
   | { type: "CLOSE" }

@@ -54,7 +54,7 @@ function findRoundedNonIconOnlyControls(source, filePath) {
 
 function completeDraftContract() {
   return {
-    schemaVersion: '0.2.0',
+    schemaVersion: '0.3.0',
     contractVersion: '0.1.0',
     id: 'canary.button',
     status: 'draft',
@@ -181,6 +181,92 @@ test('accepts a complete draft contract without confirmed Figma keys', async () 
   })
 })
 
+test('accepts a machine-readable support matrix', async () => {
+  const { validateComponentContract } = await import('./component-contract.mjs')
+  const contract = completeDraftContract()
+  contract.supportMatrix = [
+    {
+      id: 'standard-primary',
+      status: 'supported',
+      surfaces: ['figma', 'code'],
+      conditions: {
+        variant: ['primary'],
+        size: ['md'],
+        iconOnly: [false]
+      },
+      description: 'Primary medium text Buttons are supported.'
+    }
+  ]
+  contract.properties.shared.push(
+    {
+      name: 'size',
+      type: 'enum',
+      values: ['md', 'sm'],
+      default: 'md',
+      description: 'Component size.'
+    },
+    {
+      name: 'iconOnly',
+      type: 'boolean',
+      default: false,
+      description: 'Renders only an icon.'
+    }
+  )
+
+  expect(validateComponentContract(contract)).toEqual({
+    success: true,
+    errors: []
+  })
+})
+
+test('rejects support-matrix conditions that are not declared contract properties', async () => {
+  const { validateComponentContract } = await import('./component-contract.mjs')
+  const contract = completeDraftContract()
+  contract.supportMatrix = [
+    {
+      id: 'unknown-condition',
+      status: 'unsupported',
+      surfaces: ['figma', 'code'],
+      conditions: {
+        shape: ['rounded']
+      },
+      description: 'Unknown dimensions cannot be evaluated reliably.'
+    }
+  ]
+
+  const result = validateComponentContract(contract)
+
+  expect(result.success).toBe(false)
+  expect(result.errors).toContain('supportMatrix.0.conditions.shape: unknown property shape')
+})
+
+test('rejects support-matrix values with the wrong property type', async () => {
+  const { validateComponentContract } = await import('./component-contract.mjs')
+  const contract = completeDraftContract()
+  contract.properties.shared.push({
+    name: 'iconOnly',
+    type: 'boolean',
+    default: false,
+    description: 'Renders only an icon.'
+  })
+  contract.supportMatrix = [
+    {
+      id: 'invalid-boolean',
+      status: 'supported',
+      surfaces: ['figma', 'code'],
+      conditions: {
+        iconOnly: ['false']
+      },
+      description: 'String booleans cannot be matched to Boolean properties.'
+    }
+  ]
+
+  const result = validateComponentContract(contract)
+
+  expect(result.success).toBe(false)
+  expect(result.errors).toContain('supportMatrix.0.conditions.iconOnly: values must match the boolean property type')
+})
+
 test('rejects property names duplicated across contract surfaces', async () => {
   const { validateComponentContract } = await import('./component-contract.mjs')
   const contract = completeDraftContract()
@@ -299,6 +385,47 @@ test('defines rounded as supported for icon-only Buttons and deprecated for text
   })
   expect(roundedProperty.description).toContain('Rounded icon-only Buttons are supported')
   expect(roundedPattern.rule).toContain('Use rounded only with iconOnly')
+})
+
+test('defines an exhaustive approved Button support matrix', () => {
+  const packageRoot = join(dirname(fileURLToPath(import.meta.url)), '..')
+  const contract = JSON.parse(readFileSync(join(packageRoot, 'catalog/contracts/button.contract.json'), 'utf8'))
+  const properties = Object.fromEntries(contract.properties.shared.map(property => [property.name, property]))
+  const valuesByDimension = {
+    variant: properties.variant.values,
+    size: properties.size.values,
+    theme: properties.theme.values,
+    rounded: [false, true],
+    iconOnly: [false, true]
+  }
+  const combinations = Object.entries(valuesByDimension).reduce(
+    (rows, [propertyName, values]) => rows.flatMap(row => values.map(value => ({ ...row, [propertyName]: value }))),
+    [{}]
+  )
+  const matchingRules = combination =>
+    contract.supportMatrix.filter(rule =>
+      Object.entries(rule.conditions).every(([propertyName, values]) => values.includes(combination[propertyName]))
+    )
+
+  for (const combination of combinations) {
+    expect(matchingRules(combination), JSON.stringify(combination)).toHaveLength(1)
+  }
+
+  expect(
+    matchingRules({ variant: 'link', size: 'md', theme: 'default', rounded: false, iconOnly: false })[0].status
+  ).toBe('supported')
+  expect(
+    matchingRules({ variant: 'link', size: 'md', theme: 'success', rounded: false, iconOnly: false })[0].status
+  ).toBe('unsupported')
+  expect(
+    matchingRules({ variant: 'primary', size: 'xs', theme: 'danger', rounded: true, iconOnly: true })[0].status
+  ).toBe('supported')
+  expect(
+    matchingRules({ variant: 'primary', size: 'xs', theme: 'danger', rounded: true, iconOnly: false })[0].status
+  ).toBe('deprecated')
+  expect(
+    matchingRules({ variant: 'primary', size: '2xs', theme: 'default', rounded: false, iconOnly: true })[0].status
+  ).toBe('unsupported')
 })
 
 test('detects rounded text Button and Toggle usage while allowing rounded icon-only controls', () => {

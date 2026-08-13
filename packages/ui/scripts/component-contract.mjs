@@ -6,6 +6,11 @@ import { z } from 'zod'
 const nonEmptyString = z.string().trim().min(1)
 const surfaceSchema = z.enum(['figma', 'code'])
 const propertyValueSchema = z.union([z.string(), z.number(), z.boolean(), z.null()])
+const scalarPropertyValueTypes = {
+  boolean: 'boolean',
+  number: 'number',
+  string: 'string'
+}
 
 const overviewSchema = z
   .object({
@@ -124,9 +129,22 @@ const evidenceSourceSchema = z
   })
   .strict()
 
+const supportMatrixRuleSchema = z
+  .object({
+    id: nonEmptyString,
+    status: z.enum(['supported', 'deprecated', 'unsupported']),
+    surfaces: z.array(surfaceSchema).min(1),
+    conditions: z
+      .record(nonEmptyString, z.array(propertyValueSchema).min(1))
+      .refine(conditions => Object.keys(conditions).length > 0, 'at least one condition is required'),
+    description: nonEmptyString,
+    migration: nonEmptyString.optional()
+  })
+  .strict()
+
 export const componentContractSchema = z
   .object({
-    schemaVersion: z.literal('0.2.0'),
+    schemaVersion: z.literal('0.3.0'),
     contractVersion: nonEmptyString,
     id: z.string().regex(/^canary\.[a-z0-9-]+$/),
     status: z.enum(['draft', 'piloting', 'stable', 'deprecated']),
@@ -149,6 +167,7 @@ export const componentContractSchema = z
         requirements: z.array(nonEmptyString).min(1)
       })
       .strict(),
+    supportMatrix: z.array(supportMatrixRuleSchema).min(1).optional(),
     bindings: z.array(bindingSchema).optional(),
     tokens: z
       .object({
@@ -239,6 +258,85 @@ export const componentContractSchema = z
         path: ['properties'],
         message: 'property names must be unique across shared, designOnly, and codeOnly'
       })
+    }
+
+    const propertiesByName = new Map(allProperties.map(property => [property.name, property]))
+    const matrixRuleIds = contract.supportMatrix?.map(rule => rule.id) ?? []
+    if (new Set(matrixRuleIds).size !== matrixRuleIds.length) {
+      context.addIssue({
+        code: 'custom',
+        path: ['supportMatrix'],
+        message: 'rule ids must be unique'
+      })
+    }
+
+    for (const [ruleIndex, rule] of (contract.supportMatrix ?? []).entries()) {
+      const ruleSurfaces = new Set(rule.surfaces)
+      if (ruleSurfaces.size !== rule.surfaces.length) {
+        context.addIssue({
+          code: 'custom',
+          path: ['supportMatrix', ruleIndex, 'surfaces'],
+          message: 'surface names must be unique'
+        })
+      }
+
+      for (const ruleSurface of ruleSurfaces) {
+        if (!surfaceSet.has(ruleSurface)) {
+          context.addIssue({
+            code: 'custom',
+            path: ['supportMatrix', ruleIndex, 'surfaces'],
+            message: `surface ${ruleSurface} is not governed by this contract`
+          })
+        }
+      }
+
+      for (const [propertyName, values] of Object.entries(rule.conditions)) {
+        const property = propertiesByName.get(propertyName)
+        if (!property) {
+          context.addIssue({
+            code: 'custom',
+            path: ['supportMatrix', ruleIndex, 'conditions', propertyName],
+            message: `unknown property ${propertyName}`
+          })
+          continue
+        }
+
+        if (new Set(values).size !== values.length) {
+          context.addIssue({
+            code: 'custom',
+            path: ['supportMatrix', ruleIndex, 'conditions', propertyName],
+            message: 'condition values must be unique'
+          })
+        }
+
+        const expectedValueType = scalarPropertyValueTypes[property.type]
+        if (expectedValueType && values.some(value => typeof value !== expectedValueType)) {
+          context.addIssue({
+            code: 'custom',
+            path: ['supportMatrix', ruleIndex, 'conditions', propertyName],
+            message: `values must match the ${property.type} property type`
+          })
+        }
+
+        if (!['boolean', 'enum', 'number', 'string'].includes(property.type)) {
+          context.addIssue({
+            code: 'custom',
+            path: ['supportMatrix', ruleIndex, 'conditions', propertyName],
+            message: `property type ${property.type} cannot be used as a support-matrix condition`
+          })
+        }
+
+        if (property.values) {
+          const unknownValues = values.filter(value => !property.values.includes(value))
+          if (unknownValues.length > 0) {
+            context.addIssue({
+              code: 'custom',
+              path: ['supportMatrix', ruleIndex, 'conditions', propertyName],
+              message: `values are not declared by ${propertyName}: ${unknownValues.join(', ')}`
+            })
+          }
+        }
+      }
     }
 
     const anatomyIds = new Set(contract.anatomy.map(item => item.id))

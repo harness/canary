@@ -16,6 +16,15 @@ export const CatalogPropSchema = z.object({
   figmaCaseInsensitive: z.boolean().optional(),
 });
 
+export const SupportMatrixRuleSchema = z.object({
+  id: z.string().min(1),
+  status: z.enum(["supported", "deprecated", "unsupported"]),
+  surfaces: z.array(z.enum(["figma", "code"])).min(1),
+  conditions: z.record(z.string().min(1), z.array(z.union([z.string(), z.number(), z.boolean(), z.null()])).min(1)),
+  description: z.string().min(1),
+  migration: z.string().min(1).optional(),
+});
+
 export const CatalogEntrySchema = z.object({
   id: z.string().min(1),
   status: z.enum(["draft", "piloting", "stable", "deprecated"]),
@@ -37,6 +46,7 @@ export const CatalogEntrySchema = z.object({
   shared: z.array(CatalogPropSchema),
   designOnly: z.array(CatalogPropSchema),
   codeOnly: z.array(CatalogPropSchema),
+  supportMatrix: z.array(SupportMatrixRuleSchema).min(1).optional(),
   bindings: z.record(z.string(), z.string()).optional(),
   tokens: z.record(z.string(), z.string()).optional(),
   approximation: z.string().optional(),
@@ -69,6 +79,7 @@ export const CatalogPackSchema = z.object({
 });
 
 export type CatalogProp = z.infer<typeof CatalogPropSchema>;
+export type SupportMatrixRule = z.infer<typeof SupportMatrixRuleSchema>;
 export type CatalogEntry = z.infer<typeof CatalogEntrySchema>;
 export type CatalogManifest = z.infer<typeof CatalogManifestSchema>;
 export type CatalogPack = z.infer<typeof CatalogPackSchema>;

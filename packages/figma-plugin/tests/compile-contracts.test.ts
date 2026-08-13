@@ -16,6 +16,7 @@ const buttonContract = JSON.parse(
   id: string;
   figma: { componentKeys: string[]; exampleNodeId: string };
   properties: { designOnly: Array<{ name: string }>; shared: Array<{ name: string }> };
+  supportMatrix: Array<{ id: string; status: string }>;
 };
 
 const REMOVED_POC_KEYS = [
@@ -34,6 +35,19 @@ describe("compiled Button catalog", () => {
     expect(button.figma.componentKeys).toHaveLength(12);
     expect(button.designOnly.map((prop) => prop.name)).toContain("leadingIcon");
     expect(button.shared.map((prop) => prop.name)).toContain("variant");
+    expect(button.supportMatrix).toEqual(buttonContract.supportMatrix);
+    expect(button.supportMatrix).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({
+          id: "text-standard-md-sm-link",
+          status: "supported",
+        }),
+        expect.objectContaining({
+          id: "legacy-micro-sizes",
+          status: "unsupported",
+        }),
+      ]),
+    );
     for (const key of REMOVED_POC_KEYS) {
       expect(button.figma.componentKeys).not.toContain(key);
     }

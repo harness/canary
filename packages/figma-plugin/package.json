@@ -5,9 +5,10 @@
   "type": "module",
   "description": "Figma plugin that checks designs against Canary component contracts",
   "scripts": {
+    "manifest:validate": "vitest run tests/manifest.test.ts",
     "test": "pnpm catalogs:pack && vitest run",
     "typecheck": "pnpm catalogs:pack && tsc --noEmit",
-    "build": "pnpm catalogs:pack && FIGMA_BUILD=ui vite build && FIGMA_BUILD=main vite build",
+    "build": "pnpm manifest:validate && pnpm catalogs:pack && FIGMA_BUILD=ui vite build && FIGMA_BUILD=main vite build",
     "dev": "echo \"Run pnpm dev:ui and pnpm dev:main in two terminals\" && exit 1",
     "dev:ui": "pnpm catalogs:pack && FIGMA_BUILD=ui vite build --watch",
     "dev:main": "pnpm catalogs:pack && FIGMA_BUILD=main vite build --watch",

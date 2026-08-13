@@ -5,6 +5,8 @@ How to extend the packs the plugin reads. The plugin is **never** a second sourc
 ## Source of truth
 
 ```text
+packages/ui/catalog/component-inventory.json (contractPath)
+        ↓
 packages/ui/catalog/contracts/*.contract.json
         ↓  pnpm catalogs:pack
 packages/figma-plugin/catalogs/canary/
@@ -15,7 +17,7 @@ packages/figma-plugin/catalogs/canary/
 
 `catalogs/` is gitignored. `pnpm build` / `pnpm test` run `catalogs:pack` first so the bundled import stays in sync.
 
-Only contracts whose `surfaces` include `figma` are packed. Add the next component by writing its contract next to Button; do not hand-edit plugin catalog JSON.
+Only inventory entries with `status: "mapped"`, a `figma` surface, and a valid `contractPath` are packed. Missing paths, ID mismatches, non-Figma contracts, and unreferenced Figma contract files fail compilation instead of silently becoming plugin policy. Each compiled entry includes the canonical repository path, schema version, contract version, and SHA-256 fingerprint shown in the Catalog tab. Add the next component by assigning its `contractPath`, advancing the inventory entry to `mapped`, and writing that contract next to Button; do not hand-edit plugin catalog JSON.
 
 Validate and build the pack:
 

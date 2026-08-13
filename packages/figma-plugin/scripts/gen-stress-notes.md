@@ -1,4 +1,4 @@
-# Manual stress harness — DS Contracts plugin
+# Manual stress harness — Canary Copilot plugin
 
 Use this to validate UI interactivity on large frames (Task 16).
 
@@ -14,7 +14,7 @@ Use this to validate UI interactivity on large frames (Task 16).
 2. Place one library `❖Button` instance.
 3. Duplicate until you have ~500 instances (select → duplicate in a grid; avoid nesting deeply).
 4. Optional: mix in ~50 `❖Badge` / Tag instances.
-5. `pnpm --filter @harnessio/figma-plugin build`, then run **DS Contracts** from Development plugins.
+5. `pnpm --filter @harnessio/figma-plugin build`, then run **Canary Copilot** from Development plugins.
 
 ## Run
 

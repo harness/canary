@@ -6,6 +6,7 @@ import { pilotIndex } from "./helpers/pilotCatalog";
 
 const index = pilotIndex();
 const catalogNames = catalogFigmaNames(index);
+const catalogKeys = [...index.byComponentKey.keys()];
 const opts = { treatMissingLibraryFlagAs: "ignore" } as const;
 
 function iconInstance(
@@ -42,9 +43,105 @@ function buttonParts(): CollectableNode[] {
 async function check(roots: CollectableNode[]) {
   const collected = await collectFromNodes(roots, undefined, undefined, {
     catalogNames,
+    catalogKeys,
   });
   return checkInstances(collected.snapshots, index, opts);
 }
+
+describe("Button definition selected in the source library", () => {
+  it("checks the Button variant once and folds its icon slots into it", async () => {
+    const componentSet = {
+      type: "COMPONENT_SET",
+      name: "Button/Md/Text",
+      key: "188019ff5a5c45f3009b963213c98e95dc1c780f",
+    };
+    const sourceVariant = {
+      id: "28553:15462",
+      name: "variant=primary, 👁 disabled=off, state=default, theme=⚫ default",
+      type: "COMPONENT",
+      key: "source-variant-key",
+      parent: componentSet,
+      variantProperties: {
+        variant: "primary",
+        "👁 disabled": "off",
+        state: "default",
+        theme: "⚫ default",
+      },
+      children: [
+        iconInstance("28553:15463", "prefix"),
+        iconInstance("28553:15465", "suffix"),
+      ],
+    } as CollectableNode;
+
+    const report = await check([sourceVariant]);
+
+    expect(report.instances).toHaveLength(1);
+    expect(report.instances[0]?.snapshot).toMatchObject({
+      nodeId: "28553:15462",
+      componentSetName: "Button/Md/Text",
+      componentSetKey: "188019ff5a5c45f3009b963213c98e95dc1c780f",
+      properties: {
+        variant: "primary",
+        "👁 disabled": "off",
+        state: "default",
+        theme: "⚫ default",
+      },
+    });
+    expect(report.instances[0]?.status).toBe("checked");
+    expect(
+      report.instances.map((instance) => instance.snapshot.nodeName),
+    ).not.toEqual(expect.arrayContaining(["prefix", "suffix"]));
+    expect(report.summary).toMatchObject({
+      pass: 1,
+      fail: 0,
+      unmapped: 0,
+      mappedCount: 1,
+    });
+  });
+
+  it("audits variants inside a selected cataloged component set", async () => {
+    const componentSet = {
+      id: "28553:15461",
+      name: "❖Button/Md/Text",
+      type: "COMPONENT_SET",
+      key: "188019ff5a5c45f3009b963213c98e95dc1c780f",
+    };
+    const variants = ["primary", "secondary"].map((variant, index) => ({
+      id: `28553:${15462 + index}`,
+      name: `variant=${variant}, 👁 disabled=off, state=default, theme=⚫ default`,
+      type: "COMPONENT",
+      key: `source-variant-key-${index}`,
+      parent: componentSet,
+      variantProperties: {
+        variant,
+        "👁 disabled": "off",
+        state: "default",
+        theme: "⚫ default",
+      },
+      children: [iconInstance(`28553:${15563 + index}`, "prefix")],
+    })) as CollectableNode[];
+    const sourceSet = { ...componentSet, children: variants } as CollectableNode;
+
+    const report = await check([sourceSet]);
+
+    expect(report.instances).toHaveLength(2);
+    expect(
+      report.instances.every((instance) => instance.status === "checked"),
+    ).toBe(true);
+    expect(
+      report.instances.map((instance) => instance.snapshot.nodeName),
+    ).not.toContain("prefix");
+    expect(
+      report.findings.some((finding) => finding.code === "FAIL_DETACHED"),
+    ).toBe(false);
+    expect(report.summary).toMatchObject({
+      pass: 2,
+      fail: 0,
+      unmapped: 0,
+      mappedCount: 2,
+    });
+  });
+});
 
 describe("detach → make component → Check selection", () => {
   it("returns one failure about the button, not its icon parts", async () => {

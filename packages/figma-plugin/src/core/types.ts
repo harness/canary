@@ -1,5 +1,5 @@
 /**
- * Core types for the DS Contracts check / proposal engine.
+ * Core types for the Canary Copilot check / proposal engine.
  * Authoritative shapes from the implementation plan.
  */
 

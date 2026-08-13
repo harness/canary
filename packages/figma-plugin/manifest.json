@@ -1,10 +1,10 @@
 {
-  "name": "DS Contracts",
+  "name": "Canary Copilot",
   "id": "1667522450076109215",
   "api": "1.0.0",
   "main": "dist/main.js",
   "ui": "dist/ui.html",
-  "editorType": ["figma"],
+  "editorType": ["figma", "dev"],
   "documentAccess": "dynamic-page",
   "networkAccess": {
     "allowedDomains": [

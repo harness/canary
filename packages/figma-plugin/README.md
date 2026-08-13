@@ -1,8 +1,8 @@
-# DS Contracts — Figma plugin
+# Canary Copilot — Figma plugin
 
 Figma plugin that checks work against Canary component contracts (shared / designOnly / codeOnly) and drafts Path P proposals for gaps.
 
-This package is private, Preact-based, and not published with `@harnessio/ui`. It consumes contracts from `packages/ui/catalog/contracts` at pack time — it is not a second source of truth.
+This package is private, Preact-based, and not published with `@harnessio/ui`. At pack time, `packages/ui/catalog/component-inventory.json` routes each `mapped` Figma component to its canonical `contractPath` under `packages/ui/catalog/contracts`. The generated catalog records that source path, contract version, and SHA-256 fingerprint so the loaded Button rules can be verified; the plugin is not a second source of truth.
 
 Internal tool — not a Figma Community marketplace submission.
 
@@ -34,8 +34,13 @@ pnpm build
 
 1. `pnpm --filter @harnessio/figma-plugin build`
 2. Open Figma Desktop → **Plugins → Development → Import plugin from manifest…**
-3. Select `packages/figma-plugin/manifest.json`
-4. Run **DS Contracts** from Development plugins
+3. If **Canary Copilot** is already listed from another checkout, remove that development plugin first.
+4. Select `packages/figma-plugin/manifest.json`
+5. Run **Canary Copilot** from Development plugins in Figma Design or Dev Mode.
+
+`manifest.json` is the only plugin manifest. Do not create checkout-specific identities: duplicate registrations with the same plugin ID can make Figma resolve an older manifest.
+
+This is a normal custom-UI plugin that can be launched in Design or Dev Mode. It is not an Inspect-panel/codegen plugin, so the manifest intentionally does not request `inspect` or `codegen` capabilities.
 
 ### Golden-path smoke (Button)
 
@@ -54,7 +59,7 @@ pnpm dev:ui    # terminal 1
 pnpm dev:main  # terminal 2
 ```
 
-Then use **Plugins → Development → DS Contracts** and re-run after rebuilds.
+Then use **Plugins → Development → Canary Copilot** and re-run after rebuilds.
 
 ### `documentAccess: "dynamic-page"` constraints
 
@@ -87,7 +92,7 @@ pnpm catalogs:pack   # compiles contracts → catalogs/canary/*.json
 
 ## Privacy / network
 
-v1 **allowedDomains** are GitHub and Harness issue hosts. Catalogs ship compiled from in-repo contracts. Remote manifest fetch is deferred until an explicit allow-listed host is configured in Settings.
+`allowedDomains` permits GitHub issue links plus optional remote catalogs hosted on GitHub or Harness domains. Ordinary checks use the bundled catalog and make no network request. Any other remote catalog host must be explicitly added to `manifest.json` before use.
 
 ## Layout
 
@@ -97,7 +102,7 @@ v1 **allowedDomains** are GitHub and Harness issue hosts. Catalogs ship compiled
 | `src/schema/` | Zod catalog schema (compiled-pack shape) |
 | `src/main.ts` | Figma sandbox thread |
 | `src/ui.tsx` | Preact UI |
-| `bin/compile-contracts.mjs` | Compiles `packages/ui/catalog/contracts` into the bundled pack |
+| `bin/compile-contracts.mjs` | Resolves inventory `contractPath` entries and compiles the canonical contracts into the bundled pack |
 | `catalogs/canary/` | Generated pack — do not edit |
 | `docs/` | USER_GUIDE, CATALOG_AUTHORING, RELEASE_CHECKLIST |
 | `assets/` | Harness plugin icon (`icon.png` / `icon.svg`, `harness-mark.*`) + empty-state SVG |

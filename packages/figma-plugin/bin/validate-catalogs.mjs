@@ -23,9 +23,26 @@ const CatalogPropSchema = z.object({
   figmaCaseInsensitive: z.boolean().optional(),
 });
 
+const SupportMatrixRuleSchema = z.object({
+  id: z.string().min(1),
+  status: z.enum(["supported", "deprecated", "unsupported"]),
+  surfaces: z.array(z.enum(["figma", "code"])).min(1),
+  conditions: z.record(z.string().min(1), z.array(z.union([z.string(), z.number(), z.boolean(), z.null()])).min(1)),
+  description: z.string().min(1),
+  migration: z.string().min(1).optional(),
+});
+
 const CatalogEntrySchema = z.object({
   id: z.string().min(1),
   status: z.enum(["draft", "piloting", "stable", "deprecated"]),
+  source: z
+    .object({
+      contractPath: z.string().min(1),
+      schemaVersion: z.string().min(1),
+      contractVersion: z.string().min(1),
+      sha256: z.string().regex(/^[a-f0-9]{64}$/),
+    })
+    .optional(),
   code: z.object({
     package: z.string(),
     export: z.string(),
@@ -44,6 +61,7 @@ const CatalogEntrySchema = z.object({
   shared: z.array(CatalogPropSchema),
   designOnly: z.array(CatalogPropSchema),
   codeOnly: z.array(CatalogPropSchema),
+  supportMatrix: z.array(SupportMatrixRuleSchema).min(1).optional(),
   bindings: z.record(z.string(), z.string()).optional(),
   tokens: z.record(z.string(), z.string()).optional(),
   approximation: z.string().optional(),

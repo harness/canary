@@ -1,4 +1,4 @@
-# Privacy — DS Contracts
+# Privacy — Canary Copilot
 
 ## What the plugin accesses
 
@@ -7,8 +7,9 @@
 
 ## Network
 
-- **v1 default:** `networkAccess.allowedDomains: ["none"]`. No outbound requests. Catalogs are **bundled**.
-- **Optional:** If you configure a custom catalog manifest URL **and** allow-list that host in `manifest.json`, the plugin fetches only that manifest and its referenced catalog JSON files (10s timeout). No analytics, telemetry, or third-party SDKs in v1.
+- **Default behavior:** Catalogs are bundled, so ordinary checks make no outbound requests.
+- **Allow-listed hosts:** `manifest.json` permits GitHub for issue links and optional remote catalogs, plus Harness domains for optional remote catalogs.
+- **Optional remote catalog:** If you configure a custom catalog manifest URL on an allow-listed host, the plugin fetches only that manifest and its referenced catalog JSON files (10s timeout). No analytics, telemetry, or third-party SDKs in v1.
 
 ## What we do not do
 
@@ -20,8 +21,8 @@
 
 Only when **you** choose:
 
-- **Copy markdown / handoff** → your clipboard  
-- **Open GitHub / Harness issue** → browser with title/body you authored  
+- **Copy markdown / handoff** → your clipboard
+- **Open GitHub issue** → browser with title/body you authored
 
 ## Questions
 

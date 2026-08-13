@@ -119,7 +119,7 @@ const patternSchema = z
 
 const evidenceSourceSchema = z
   .object({
-    type: z.enum(['source', 'docs', 'tests', 'code-connect', 'poc-contract', 'figma']),
+    type: z.enum(['source', 'docs', 'tests', 'code-connect', 'plugin', 'figma']),
     path: nonEmptyString
   })
   .strict()

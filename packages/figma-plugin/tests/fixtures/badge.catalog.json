@@ -1,0 +1,73 @@
+{
+  "id": "canary.badge",
+  "status": "draft",
+  "code": {
+    "package": "@harnessio/ui",
+    "export": "StatusBadge",
+    "import": "import { StatusBadge } from \"@harnessio/ui/components\"",
+    "path": "packages/ui/src/components/status-badge/status-badge.tsx"
+  },
+  "figma": {
+    "library": "HDS | Components 3.0",
+    "fileKey": "AIgjIyUzcuZzuVnuoOyhQE",
+    "name": "❖StatusBadge",
+    "exampleNodeId": "1293:5995",
+    "componentKeys": [
+      "b115d5f844f94a65ee1ab379e75cd382baea256c",
+      "17d795819658061a41552552288db80dc65f763f",
+      "126b1c9df2653ee657e4c251fa1d32d97cd290a5",
+      "51de6d791c6f5c65ff7f957fcfdbbb39caa46f85",
+      "8817553ad395f9653d1b1566e826ef2309d67f41"
+    ]
+  },
+  "shared": [
+    {
+      "name": "variant",
+      "type": "enum",
+      "values": ["primary", "secondary", "outline", "ghost", "status"],
+      "default": "primary"
+    },
+    {
+      "name": "size",
+      "type": "enum",
+      "values": ["md", "sm"],
+      "default": "md"
+    },
+    {
+      "name": "theme",
+      "type": "enum",
+      "values": ["muted", "success", "warning", "danger", "info", "merged", "risk"],
+      "default": "muted"
+    }
+  ],
+  "designOnly": [],
+  "codeOnly": [
+    {
+      "name": "pulse",
+      "type": "boolean",
+      "when": "variant === \"status\"",
+      "figmaNote": "Runtime-only pulse on status indicator"
+    },
+    {
+      "name": "icon",
+      "type": "string",
+      "figmaNote": "IconV2 name key — composition in Figma; not confirmed as a shared Figma prop yet"
+    },
+    {
+      "name": "className",
+      "type": "string"
+    },
+    {
+      "name": "children",
+      "type": "string",
+      "figmaNote": "Badge label text"
+    }
+  ],
+  "bindings": {
+    "figma.variant": "code.variant (1:1 when names align)",
+    "figma.theme": "code.theme (1:1 when names align)",
+    "figma.size": "code.size (1:1)"
+  },
+  "approximation": "Cataloged from StatusBadge in @harnessio/ui. Figma published sets: ❖StatusBadge (+ Split), plus provisional Tag/CounterBadge keys for name/key matching until canary.tag / canary.counter-badge exist. Tag shared enums differ (outline|secondary; theme gray|blue|…). componentKeys sourced 2026-08-06 from HDS | Components 3.0 (AIgjIyUzcuZzuVnuoOyhQE) via Figma list_file_components_for_code_connect assetKey fields — not invented.",
+  "patterns": ["patterns/gaps-and-proposals.md"]
+}

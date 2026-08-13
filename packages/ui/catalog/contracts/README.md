@@ -10,7 +10,7 @@ Component contracts are the shared, machine-readable definition of what a Canary
 - Portal documentation.
 - Component tests.
 - The 12 current Code Connect files that declare `component=Button`.
-- The earlier `canary-ds-contracts` proof of concept.
+- The in-repo Figma plugin (`packages/figma-plugin`), which compiles this contract into the bundled check pack.
 
 The Button Figma identity has been audited against the published library. Twelve PoC keys resolve to the current md, sm, and xs Text, IconOnly, and Rounded component sets and are now stored as confirmed `componentKeys`. The other four PoC keys return 404 as both component and component-set identities and have been removed. The mapping is verified, but the contract remains `draft` while product decisions about surface differences are unresolved.
 
@@ -68,4 +68,5 @@ Do not advance the contract to `piloting` or `stable` until the remaining policy
 2. Gather implementation, docs, tests, Code Connect, and Figma evidence.
 3. Write the contract using Button as the structural example, marking uncertain values in `evidence.provisionalFields` and `evidence.openQuestions`.
 4. Run `catalog:validate`.
-5. Review the component in Figma before changing its mapping or lifecycle status.
+5. Compile the Figma plugin pack (`pnpm --filter @harnessio/figma-plugin catalogs:pack`) so Check uses the new contract.
+6. Review the component in Figma before changing its mapping or lifecycle status.

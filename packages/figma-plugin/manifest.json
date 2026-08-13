@@ -1,0 +1,18 @@
+{
+  "name": "DS Contracts",
+  "id": "1667522450076109215",
+  "api": "1.0.0",
+  "main": "dist/main.js",
+  "ui": "dist/ui.html",
+  "editorType": ["figma"],
+  "documentAccess": "dynamic-page",
+  "networkAccess": {
+    "allowedDomains": [
+      "https://github.com",
+      "https://*.github.com",
+      "https://harness.io",
+      "https://*.harness.io"
+    ],
+    "reasoning": "Open GitHub issue links from Propose, and any catalogs or APIs hosted on github.com / harness.io. No analytics. Bundled Canary still works offline."
+  }
+}

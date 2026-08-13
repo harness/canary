@@ -266,7 +266,7 @@ export default {
     // Focus
     '&:where(:focus-visible)': {
       outline: 'var(--cn-focus)',
-      boxShadow: 'inset 0 0 0 2px var(--cn-chrome-25)',
+      boxShadow: 'inset 0 0 0 2px var(--cn-gray-25)',
 
       // This is to prevent focus outline from being hidden by dropdown
       position: 'relative',

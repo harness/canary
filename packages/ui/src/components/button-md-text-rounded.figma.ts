@@ -19,8 +19,7 @@ const variant = instance.getEnum('variant', {
 const theme = instance.getEnum('theme', {
   '⚫ default': 'default',
   '🟢 success': 'success',
-  '🔴 danger': 'danger',
-  '-': undefined
+  '🔴 danger': 'danger'
 })
 
 const disabled = instance.getEnum('👁️ disabled', {

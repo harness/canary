@@ -1,6 +1,6 @@
 {
   "schemaVersion": "0.3.0",
-  "contractVersion": "0.3.0",
+  "contractVersion": "0.5.0",
   "id": "canary.button",
   "status": "draft",
   "surfaces": ["figma", "code"],
@@ -179,7 +179,7 @@
         "type": "enum",
         "values": ["default", "hover", "active", "loading"],
         "default": "default",
-        "description": "Selects an interaction-state preview in Figma; only loading maps to a public code prop.",
+        "description": "Selects an interaction-state preview in Figma; only loading maps to a public code prop. Keyboard focus is intentionally excluded because it is a code-only runtime state documented through a detached Figma reference specification.",
         "figmaProperty": "state",
         "mapsTo": "ButtonProps.loading when value is loading"
       }
@@ -244,7 +244,7 @@
       "name": "focus",
       "required": true,
       "surfaces": ["code"],
-      "description": "Visible keyboard focus indicator."
+      "description": "Intentional code-only runtime state activated by :focus-visible. It applies the semantic 2px brand focus outline, a 2px inset gray.25 contrast ring, a -2px outline offset for non-link variants, and a raised stacking context so adjacent controls do not cover the indicator. Figma documents one detached representative reference rather than publishing a focus variant."
     },
     {
       "name": "active",
@@ -294,7 +294,7 @@
   "accessibility": {
     "requirements": [
       "Every Button has an accessible name; visible text is preferred and icon-only use requires an equivalent programmatic name.",
-      "Keyboard focus remains visible for every variant, theme, and size.",
+      "Keyboard focus remains visible for every supported variant, theme, and size through :focus-visible; pointer focus does not force the indicator.",
       "Use the default type=button unless submit or reset behavior is intentional.",
       "Disabled and loading states prevent repeat activation and remain programmatically determinable.",
       "Do not rely on color alone to communicate success, danger, disabled, or loading meaning."
@@ -496,6 +496,10 @@
       {
         "category": "shape",
         "rule": "Use the standard shape for text Buttons. Use rounded only for supported icon-only Buttons in md, sm, or xs; local border-radius overrides are unsupported."
+      },
+      {
+        "category": "focus",
+        "rule": "Use the code-owned :focus-visible treatment: --cn-focus for the 2px brand outline, a 2px inset gray.25 contrast ring, and the cn-tight -2px outline offset for non-link variants. Do not recreate focus with a new Button variant."
       }
     ]
   },
@@ -561,6 +565,11 @@
       "id": "action-not-navigation",
       "description": "Button performs actions; Link navigates to destinations.",
       "rule": "Use Button when activation changes state, submits data, opens an interface, or begins or advances a workflow in place. Use Link for routes, URLs, files, and other destinations. The Button link variant changes appearance only, and asChild does not create an approved navigation exception."
+    },
+    {
+      "id": "keyboard-focus-reference",
+      "description": "Figma documents keyboard focus with one detached representative Button rather than a published component variant.",
+      "rule": "Use an enabled md primary default-theme text Button as the representative reference. Apply the 2px border.brand focus outline, 2px inset gray.25 contrast ring, and -2px offset used by non-link code variants; preserve the Button's normal radius and content. Label the example Focus specification. Do not add focus to the published Figma state property or Code Connect mappings."
     }
   ],
   "evidence": {
@@ -568,6 +577,10 @@
       {
         "type": "source",
         "path": "src/components/button.tsx"
+      },
+      {
+        "type": "source",
+        "path": "tailwind-utils-config/components/button.ts"
       },
       {
         "type": "docs",
@@ -582,6 +595,10 @@
         "path": "src/components/button.figma.ts"
       },
       {
+        "type": "code-connect",
+        "path": "src/components/button-*.figma.ts"
+      },
+      {
         "type": "plugin",
         "path": "../../../packages/figma-plugin"
       },
@@ -590,9 +607,7 @@
         "path": "https://www.figma.com/design/AIgjIyUzcuZzuVnuoOyhQE/HDS-%7C-Components-3.0?node-id=28553-15461"
       }
     ],
-    "provisionalFields": ["states.focus"],
-    "openQuestions": [
-      "Decide whether Figma needs a focus preview. Every published set exposes default, hover, active, loading, and disabled, while focus is implemented only in code."
-    ]
+    "provisionalFields": [],
+    "openQuestions": []
   }
 }

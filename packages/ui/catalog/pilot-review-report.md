@@ -116,10 +116,10 @@ The Figma identity is verified:
 The contract remains intentionally `draft` because the approved policy is not yet fully reconciled across Figma and code:
 
 - The approved matrix marks 2xs and 3xs unsupported for new use, although the legacy code API still accepts both.
-- Figma has no focus preview, although code implements `:focus-visible` styling.
+- Focus is intentionally code-only. Code implements the required `:focus-visible` treatment, while design documentation provides one detached representative Figma specification rather than a published state variant.
 - The approved variant, size, theme, content, and shape matrix is now machine-readable in the Button contract; Figma and code still expose combinations outside or short of that policy.
 - The ❌ prefix is confirmed to mean deprecated. TextRounded Button treatments are deprecated and remain temporarily for migration. IconOnlyRounded remains supported in md, sm, and xs because it is used by Pipeline Studio.
-- Code Connect maps a `-` theme option in every Button mapping, while Figma exposes it only on md and sm Text.
+- Code Connect now maps the `-` theme option only for md and sm Text, matching the Figma property definitions.
 - Navigation semantics are approved: Button performs actions, including starting or advancing onboarding in place; Link navigates to destinations. The Button link variant changes appearance only, and Canary has no approved button-styled Link pattern.
 - A stable Figma-governed contract must have a verified mapping and at least one confirmed component key.
 
@@ -143,6 +143,6 @@ The implementation is complete when all of the following remain true:
 2. Confirm the FormSeparator migration decision.
 3. Retrieve the published Figma component keys for the remaining pilots.
 4. Advance each verified pilot from `classified` to `mapped`.
-5. Reconcile Figma and code with Button's approved support matrix, migrate deprecated TextRounded and unsupported micro-size usage, and resolve the focus-preview decision.
+5. Reconcile Figma and code with Button's approved support matrix and migrate deprecated TextRounded and unsupported micro-size usage.
 6. Write the shared form-field contract.
 7. Use the mapped Button contract as the first evaluator and plugin-result vertical slice.

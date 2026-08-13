@@ -7,6 +7,8 @@ import { fileURLToPath } from 'node:url'
 import ts from 'typescript'
 import { expect, test } from 'vitest'
 
+import buttonStyles from '../tailwind-utils-config/components/button.ts'
+
 function writeJson(root, relativePath, value) {
   const filePath = join(root, relativePath)
   mkdirSync(dirname(filePath), { recursive: true })
@@ -385,6 +387,45 @@ test('defines rounded as supported for icon-only Buttons and deprecated for text
   })
   expect(roundedProperty.description).toContain('Rounded icon-only Buttons are supported')
   expect(roundedPattern.rule).toContain('Use rounded only with iconOnly')
+})
+
+test('records keyboard focus as an intentional code-only state matching the Button styles', () => {
+  const packageRoot = join(dirname(fileURLToPath(import.meta.url)), '..')
+  const contract = JSON.parse(readFileSync(join(packageRoot, 'catalog/contracts/button.contract.json'), 'utf8'))
+  const focusState = contract.states.find(state => state.name === 'focus')
+  const focusPattern = contract.patterns.find(pattern => pattern.id === 'keyboard-focus-reference')
+  const focusStyles = buttonStyles['.cn-button']['&:where(:focus-visible)']
+
+  expect(focusState).toMatchObject({
+    surfaces: ['code'],
+    description: expect.stringContaining('Intentional code-only runtime state')
+  })
+  expect(focusPattern.rule).toContain('Do not add focus to the published Figma state property')
+  expect(contract.evidence.provisionalFields).not.toContain('states.focus')
+  expect(contract.evidence.openQuestions.some(question => question.toLowerCase().includes('focus'))).toBe(false)
+  expect(focusStyles).toMatchObject({
+    outline: 'var(--cn-focus)',
+    boxShadow: 'inset 0 0 0 2px var(--cn-gray-25)',
+    position: 'relative',
+    zIndex: '1'
+  })
+  expect(focusStyles['&:not(.cn-button-link)']).toEqual({
+    '@apply outline-offset-cn-tight': ''
+  })
+})
+
+test('maps the omitted Figma theme only for md and sm text Buttons', () => {
+  const packageRoot = join(dirname(fileURLToPath(import.meta.url)), '..')
+  const componentRoot = join(packageRoot, 'src/components')
+  const buttonCodeConnectFiles = readdirSync(componentRoot)
+    .filter(file => /^button(?:-.+)?\.figma\.ts$/.test(file))
+    .filter(file => !file.startsWith('button-group') && !file.startsWith('button-layout'))
+    .sort()
+  const filesWithOmittedTheme = buttonCodeConnectFiles.filter(file =>
+    readFileSync(join(componentRoot, file), 'utf8').includes("'-': undefined")
+  )
+
+  expect(filesWithOmittedTheme).toEqual(['button-md-text.figma.ts', 'button.figma.ts'])
 })
 
 test('defines an exhaustive approved Button support matrix', () => {

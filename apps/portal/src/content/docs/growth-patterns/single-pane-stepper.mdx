@@ -114,10 +114,19 @@ function MyCard() {
 The `FlowConfig` object defines the structure of your flow:
 
 ```typescript
-interface FlowConfig {
-  stepGroups?: Record<string, StepGroupConfig>; // Timeline step groups
-  steps: Record<string, StepConfig>; // Card definitions
+type FlowConfig = GroupedFlowConfig | FlatFlowConfig;
+
+interface GroupedFlowConfig {
+  stepGroups: Record<string, StepGroupConfig>; // Timeline step groups
+  steps: Record<string, GroupedStepConfig>; // Card definitions, one group per step
   initialStep: string; // First card to show
+}
+
+interface FlatFlowConfig {
+  // Omit stepGroups entirely for a flat timeline — no top-level grouping, each step renders
+  // directly under the timeline root.
+  steps: Record<string, FlatStepConfig>;
+  initialStep: string;
 }
 
 interface StepGroupConfig {
@@ -125,7 +134,7 @@ interface StepGroupConfig {
   description?: string;
 }
 
-interface StepConfig {
+interface GroupedStepConfig {
   step: string; // Which step group this step belongs to
   title: string; // Shown in the timeline
   description?: string; // Shown in the timeline
@@ -133,13 +142,25 @@ interface StepConfig {
   next?: string; // Next step ID (for routing)
   terminal?: boolean; // Auto-complete on entry (for summary cards)
 }
+
+interface FlatStepConfig {
+  // No `step` field — a flat step belongs to no group.
+  title: string;
+  description?: string;
+  component: ComponentType;
+  next?: string;
+  terminal?: boolean;
+}
 ```
 
 <Aside type="note">
-  Each step must be associated with a step group via `step: 'group-id'`.
-  Multiple steps can belong to the same step group. The `next` field defines the
-  default routing — cards advance automatically unless an explicit destination
-  is passed to `complete()` or `skip()`.
+  Each step in a grouped flow must be associated with a step group via `step:
+  'group-id'`. Multiple steps can belong to the same step group. The `next`
+  field defines the default routing — cards advance automatically unless an
+  explicit destination is passed to `complete()` or `skip()`. Omit `stepGroups`
+  entirely for a flat flow, where steps render as a plain top-level list with no
+  grouping — same shape as `DualPaneStepper`'s [Flat
+  Timelines](/growth-patterns/dual-pane-stepper#flat-timelines).
 </Aside>
 
 ## Cards
@@ -421,14 +442,6 @@ The root component that sets up the flow engine, renders the single-column layou
       name: "showStepBadge",
       description:
         "Renders a 'Step {n}/{total}' pill badge next to each step's title",
-      required: false,
-      value: "boolean",
-      defaultValue: "false",
-    },
-    {
-      name: "flat",
-      description:
-        "Renders each step group's steps as flat top-level Stepper.Step items (plain straight connector, no branch/StepGroup nesting) instead of the default nested/branch-connector layout",
       required: false,
       value: "boolean",
       defaultValue: "false",

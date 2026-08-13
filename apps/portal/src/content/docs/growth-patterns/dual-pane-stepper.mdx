@@ -93,10 +93,19 @@ function MyCard() {
 The `FlowConfig` object defines the structure of your flow:
 
 ```typescript
-interface FlowConfig {
-  stepGroups?: Record<string, StepGroupConfig>; // Stepper step groups (left pane)
-  steps: Record<string, StepConfig>; // Card definitions (right pane)
+type FlowConfig = GroupedFlowConfig | FlatFlowConfig;
+
+interface GroupedFlowConfig {
+  stepGroups: Record<string, StepGroupConfig>; // Stepper step groups (left pane)
+  steps: Record<string, GroupedStepConfig>; // Card definitions (right pane), one group per step
   initialStep: string; // First card to show
+}
+
+interface FlatFlowConfig {
+  // Omit stepGroups entirely for a flat left pane — no top-level grouping, each step
+  // renders directly under the stepper root.
+  steps: Record<string, FlatStepConfig>;
+  initialStep: string;
 }
 
 interface StepGroupConfig {
@@ -104,21 +113,33 @@ interface StepGroupConfig {
   description?: string;
 }
 
-interface StepConfig {
+interface GroupedStepConfig {
   step: string; // Which step group this step belongs to
   title: string; // Shown in the stepper
   description?: string; // Shown in the stepper
   component: ComponentType; // React component to render as a card
   next?: string; // Next step ID (for routing)
+  terminal?: boolean; // Auto-complete on entry (for summary cards)
+}
+
+interface FlatStepConfig {
+  // No `step` field — a flat step belongs to no group.
+  title: string;
+  description?: string;
+  component: ComponentType;
+  next?: string;
+  terminal?: boolean;
 }
 ```
 
 <Aside type="note">
-  Each step must be associated with a step group via `step: 'group-id'`.
-  Multiple steps can belong to the same step group (e.g., for multi-card
-  analysis sequences). The `next` field defines the default routing — cards
-  advance automatically unless an explicit destination is passed to `complete()`
-  or `skip()`.
+  Each step in a grouped flow must be associated with a step group via `step:
+  'group-id'`. Multiple steps can belong to the same step group (e.g., for
+  multi-card analysis sequences). The `next` field defines the default routing —
+  cards advance automatically unless an explicit destination is passed to
+  `complete()` or `skip()`. Omit `stepGroups` entirely for a flat flow, where
+  the left pane renders a plain top-level list with no grouping — see the [Flat
+  Timelines](#flat-timelines) section below.
 </Aside>
 
 ## Cards
@@ -244,6 +265,28 @@ When `detect` is active, the stepper shows `deps` and `tests` as predicted upcom
 <Aside type="tip">
   The predicted path only extends within the current step group. Steps in future
   step groups remain hidden until reached.
+</Aside>
+
+## Flat Timelines
+
+Omit `stepGroups` entirely and the left pane renders a flat top-level list instead — one `Stepper.Step` per step, in `cardHistory` order, with no branch connector or step-group nesting. This is the same flat mode `SinglePaneStepper` supports; the only difference is which pane the timeline lives in.
+
+```typescript
+const flow: FlatFlowConfig = {
+  steps: {
+    detect: { title: "Detect Languages", component: DetectCard, next: "deps" },
+    deps: { title: "Scan Dependencies", component: DepsCard, next: "tests" },
+    tests: { title: "Test Framework", component: TestsCard, next: "review" },
+    review: { title: "Review & Confirm", component: ReviewCard },
+  },
+  initialStep: "detect",
+};
+```
+
+<Aside type="tip">
+  Flat steps still support the same predicted-path behavior as grouped steps —
+  upcoming steps reachable via `next` are shown as placeholders ahead of the
+  active step.
 </Aside>
 
 ## Drawer Integration

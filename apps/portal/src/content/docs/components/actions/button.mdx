@@ -570,6 +570,33 @@ For existing usage:
 
 The text combination remains available temporarily so teams can migrate existing usage. The `rounded` prop itself remains supported for icon-only Buttons.
 
+## Keyboard focus
+
+Button displays keyboard focus through the browser's `:focus-visible` state. This is an intentional code-only runtime state: Figma component sets should not add `focus` to their published state property or Code Connect mappings.
+
+The code treatment uses:
+
+- A 2px `focus` outline using `border.brand`.
+- A 2px inset `gray.25` contrast ring.
+- A -2px outline offset for every non-link variant; the link-style action keeps the browser's default outline offset.
+- The Button's existing radius, content, variant, and theme.
+- A raised stacking context so neighboring controls do not cover the indicator.
+
+### Representative Figma focus specification
+
+Create one detached reference example near the Button component documentation. This example communicates the runtime behavior for review and handoff; it is not a published Button variant.
+
+| Attribute | Specification |
+| --- | --- |
+| Label | Focus specification |
+| Base Button | Enabled `md`, `primary`, default-theme text Button |
+| Trigger | Keyboard focus matching `:focus-visible`; do not show for pointer-only focus |
+| Outer indicator | 2px solid `border.brand` focus outline |
+| Inner contrast | 2px inset `gray.25` ring |
+| Offset | -2px for the representative non-link Button |
+| Shape and content | Preserve the base Button radius, label, and layout |
+| Publication | Detached documentation example only; do not add a `focus` state variant |
+
 ## Usage
 
 ```tsx

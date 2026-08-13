@@ -143,7 +143,7 @@ const Tag = forwardRef<HTMLDivElement, TagProps>(
             disabled={disabled}
             className="cn-tag-action-icon-button"
             variant="transparent"
-            size={size === 'sm' ? '3xs' : '2xs'}
+            size="xs"
             onClick={e => {
               e.stopPropagation()
               e.preventDefault()

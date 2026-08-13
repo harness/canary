@@ -234,7 +234,7 @@ const SidebarItemTrigger = forwardRef<HTMLButtonElement | HTMLAnchorElement, Sid
             return (
               <Button
                 key={index}
-                size="2xs"
+                size="xs"
                 variant="ghost"
                 iconOnly={iconOnly}
                 onClick={e => {

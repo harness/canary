@@ -104,7 +104,7 @@ The Fieldset contract should specify correct semantics before its status advance
 
 ## Button contract vertical slice
 
-Button now has the first complete draft contract and validator. The draft combines the React API, Portal documentation, tests, Code Connect, the earlier contract PoC, and a direct audit of the published Figma library into one structured evaluation target.
+Button now has the first complete piloting contract and validator. It combines the React API, Portal documentation, tests, Code Connect, the earlier contract PoC, and direct Figma audits into one structured evaluation target.
 
 The Figma identity is verified:
 
@@ -113,17 +113,19 @@ The Figma identity is verified:
 - The inventory entry is `mapped`, and the contract's Figma mapping is `verified`.
 - All published Button components use horizontal Auto Layout, have variable bindings, and expose disabled and loading states.
 
-The contract remains intentionally `draft` because the approved policy is not yet fully reconciled across Figma and code:
+The approved policy is reconciled across the live Figma source and code, so the contract has advanced to `piloting`:
 
-- The approved matrix marks 2xs and 3xs unsupported for new use, although the legacy code API still accepts both.
+- The approved matrix excludes 2xs and 3xs. Production usages and the public Button API now use md, sm, and xs.
 - Focus is intentionally code-only. Code implements the required `:focus-visible` treatment, while design documentation provides one detached representative Figma specification rather than a published state variant.
-- The approved variant, size, theme, content, and shape matrix is now machine-readable in the Button contract; Figma and code still expose combinations outside or short of that policy.
+- The corrected matrix limits AI, transparent, link, and every icon-only Button to the default theme. The six live Figma icon-only sets now expose only the default theme, and IconOnlyRounded includes transparent/default with the rounded radius token.
 - The ❌ prefix is confirmed to mean deprecated. TextRounded Button treatments are deprecated and remain temporarily for migration. IconOnlyRounded remains supported in md, sm, and xs because it is used by Pipeline Studio.
 - Code Connect now maps the `-` theme option only for md and sm Text, matching the Figma property definitions.
 - Navigation semantics are approved: Button performs actions, including starting or advancing onboarding in place; Link navigates to destinations. The Button link variant changes appearance only, and Canary has no approved button-styled Link pattern.
 - A stable Figma-governed contract must have a verified mapping and at least one confirmed component key.
 
-See `catalog/contracts/README.md` for the review checklist and `catalog/contracts/button.contract.json` for the evidence-backed draft.
+The live Figma source was re-audited on August 13, 2026. Publishing the library remains a manual step before downstream Figma consumers receive the corrected matrix.
+
+See `catalog/contracts/README.md` for the review checklist and `catalog/contracts/button.contract.json` for the evidence-backed piloting contract.
 
 ## Verification
 

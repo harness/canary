@@ -391,13 +391,13 @@ export function StepperGroup({
           ) : isLoading ? (
             <IconV2 name="loader" size="xs" className="animate-spin" />
           ) : showNumberPlaceholder ? (
-            <IconV2 name="more-horizontal" size="xs" color="neutral" />
+            <IconV2 name="empty-circle" size="xs" color="neutral" />
           ) : (
             <span className="cn-stepper-indicator-number">{stepNumber}</span>
           )}
         </span>
         <span className="cn-stepper-step-content">
-          {showStepBadge && !hideStepNumber ? (
+          {showStepBadge && !showNumberPlaceholder ? (
             // Grid auto-placement (see .cn-stepper-step gridTemplateColumns) puts each direct child
             // of this display:contents wrapper in its own cell — a plain sibling badge would land in
             // the NEXT row, not beside the title. Wrapping title + badge in a flex row keeps them as

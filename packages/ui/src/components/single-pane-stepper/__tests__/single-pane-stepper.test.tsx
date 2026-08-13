@@ -815,6 +815,52 @@ describe('SinglePaneStepper', () => {
       expect(providerBRow).toHaveAttribute('aria-label', 'Provider B')
     })
 
+    // Mirrors a flow where the ACTIVE step has no static `next` — its real destination is decided
+    // dynamically at runtime (e.g. a choice made on the step's own card), exactly how platformUI's
+    // CDv2 deployment-pipeline-v2 flow behaves. deriveFullPredictedPath can't walk past a step like
+    // this, so it reports reachedKnownEnd: false and stops predicting. StepGroups structurally
+    // beyond the active one are absent from stepNumberOverrides for that reason — nothing to do
+    // with being an off-path sibling — just because the walk hasn't reached them yet. This is the
+    // real-world case round 4 fixes: those groups must still show their real sequential number, not
+    // the off-path placeholder.
+    const dynamicNextFlow: FlowConfig = {
+      stepGroups: {
+        'group-one': { title: 'Group One' },
+        'group-two': { title: 'Group Two' },
+        'group-three': { title: 'Group Three' }
+      },
+      steps: {
+        'step-one': { step: 'group-one', title: 'Step One', component: () => null },
+        'step-two': { step: 'group-two', title: 'Step Two', component: () => null, next: 'step-three' },
+        'step-three': { step: 'group-three', title: 'Step Three', component: () => null }
+      },
+      initialStep: 'step-one'
+    }
+
+    test('non-flat mode: groups beyond an unresolved dynamic-next step keep their real number, not the off-path placeholder', () => {
+      render(<SinglePaneStepper.Root flow={dynamicNextFlow} showStepBadge />)
+
+      // 'step-one' (the active step) has no static `next`, so reachedKnownEnd is false and the
+      // predicted-path walk never runs past it — stepNumberOverrides only contains 'group-one'.
+      // 'group-two' and 'group-three' are absent from the map for reasons that have nothing to do
+      // with being off-path siblings (this flow has none), so they must still render a real,
+      // sequential circle-number badge — not the empty-circle "no identity" placeholder a
+      // genuinely off-path group gets.
+      const groupOneRow = screen.getByText('Group One').closest('.cn-stepper-step')
+      const groupTwoRow = screen.getByText('Group Two').closest('.cn-stepper-step')
+      const groupThreeRow = screen.getByText('Group Three').closest('.cn-stepper-step')
+
+      expect(groupOneRow?.querySelector('.cn-stepper-indicator-number')).toHaveTextContent('1')
+      expect(groupTwoRow?.querySelector('.cn-stepper-indicator-number')).toHaveTextContent('2')
+      expect(groupThreeRow?.querySelector('.cn-stepper-indicator-number')).toHaveTextContent('3')
+
+      expect(groupOneRow?.querySelector('.cn-stepper-step-badge')).toHaveTextContent('Step 1/3')
+      expect(groupTwoRow?.querySelector('.cn-stepper-step-badge')).toHaveTextContent('Step 2/3')
+      expect(groupThreeRow?.querySelector('.cn-stepper-step-badge')).toHaveTextContent('Step 3/3')
+
+      expect(groupOneRow).toHaveAttribute('aria-label', 'Step 1 of 3: Group One')
+    })
+
     test('linear flow (no branching): total unchanged in either grouped or flat mode', () => {
       // flatTestFlow and testFlow are the same 3-card linear shape, one flat one grouped. Asserting
       // both proves no regression on the common (non-branching) case in either render mode.

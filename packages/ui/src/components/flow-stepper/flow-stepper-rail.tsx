@@ -23,6 +23,13 @@ export interface FlowStepperRailProps {
    * mutually-exclusive sibling group rendering ahead of an on-path group doesn't inflate that
    * group's own numerator (e.g. off-path sibling registered before an active StepperGroup). */
   stepNumberOverrides?: Map<string, number>
+  /** Grouped-mode only: true when stepNumberOverrides reflects the run's FULL path certainty (the
+   * caller's predicted-path walk reached a known terminal, i.e. every step along the way had a
+   * static `next`). False when the walk stopped early because the active step's own destination is
+   * decided dynamically at runtime — in that case, groups absent from stepNumberOverrides might just
+   * be beyond the unresolved point, not genuinely off-path, so their step number must not be
+   * hidden. */
+  stepNumberOverridesComplete?: boolean
   /** Forwarded to `Stepper.Root`. SinglePaneStepperCardStack's current `<Stepper.Root>` always sets
    * this; DualPaneStepper's current `<Stepper.Root>` never does — `collapsibleNestedSteps` changes
    * real rendering behavior (caps the active trunk and hides the indeterminate placeholder), so it
@@ -45,6 +52,7 @@ export function FlowStepperRail({
   showStepBadge,
   totalOverride,
   stepNumberOverrides,
+  stepNumberOverridesComplete,
   collapsibleNestedSteps,
   renderStepContent
 }: FlowStepperRailProps) {
@@ -97,14 +105,16 @@ export function FlowStepperRail({
         const activeStepGroupId = flow.steps[activeStepId]?.step
         const isActiveStepGroup = activeStepGroupId === derivedStep.stepGroupId
         const showSteps = derivedStep.visited.length > 0 || isActiveStepGroup
-        // A group absent from stepNumberOverrides is a genuinely off-path mutually-exclusive
-        // sibling (never walked on this run) — it has no meaningful step-number identity, so
-        // StepperGroup suppresses its badge/circle-number/aria-label claim entirely (see
-        // hideStepNumber) rather than falling back to a raw index that can collide with or exceed
-        // an on-path group's real number. When no map was supplied at all (flat mode, or a future
-        // caller that doesn't use this feature), nothing is hidden — only relevant when a map
-        // exists AND this specific group isn't in it.
-        const stepGroupHasNumber = !stepNumberOverrides || stepNumberOverrides.has(derivedStep.stepGroupId)
+        // A group absent from stepNumberOverrides is only genuinely off-path (a mutually-exclusive
+        // sibling never walked on this run) if the map itself is COMPLETE — i.e.
+        // stepNumberOverridesComplete is true. When the walk stopped early because the active
+        // step's own destination is decided dynamically at runtime (a real shape, e.g. CDv2's
+        // deployment-pipeline-v2 flow), groups beyond that point are simply not yet known, not
+        // off-path, and hiding their number would strip legitimate step numbers from a flow that
+        // was never actually off-path. Only suppress the number when a map exists AND is confirmed
+        // complete AND this specific group isn't in it.
+        const stepGroupHasNumber =
+          !stepNumberOverrides || !stepNumberOverridesComplete || stepNumberOverrides.has(derivedStep.stepGroupId)
 
         return (
           <Stepper.StepGroup

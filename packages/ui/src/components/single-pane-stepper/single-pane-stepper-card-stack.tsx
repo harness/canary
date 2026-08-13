@@ -166,6 +166,7 @@ export function SinglePaneStepperCardStack({
           showStepBadge={showStepBadge}
           totalOverride={totalOverride}
           stepNumberOverrides={stepNumberOverrides}
+          stepNumberOverridesComplete={reachedKnownEnd}
           collapsibleNestedSteps
           renderStepContent={(stepId, status) => {
             const CardComponent = flow.steps[stepId]?.component

@@ -15,6 +15,8 @@ export type HealthDimension = {
 
 export type ComponentHealth = {
   catalogId: string
+  scoreLabel: string
+  profileStatus: 'pilot' | 'stable'
   score: number
   status: HealthStatus
   blocked: boolean
@@ -25,6 +27,8 @@ export type ComponentHealth = {
 }
 
 type EvaluationProfile = {
+  displayName?: string
+  status?: 'pilot' | 'stable'
   dimensions: Record<string, number>
   severityWeights: Record<string, number>
   thresholds: {
@@ -65,6 +69,8 @@ export function scoreComponentHealth(entry: CatalogEntry, findings: Finding[]): 
   if (!profile || !receipt) {
     return {
       catalogId: entry.id,
+      scoreLabel: 'Evidence score',
+      profileStatus: 'pilot',
       score: 0,
       status: 'atRisk',
       blocked: false,
@@ -123,6 +129,8 @@ export function scoreComponentHealth(entry: CatalogEntry, findings: Finding[]): 
 
   return {
     catalogId: entry.id,
+    scoreLabel: profile.displayName ?? 'Evidence score',
+    profileStatus: profile.status ?? 'pilot',
     score,
     status: statusFor(score, blocked, profile),
     blocked,

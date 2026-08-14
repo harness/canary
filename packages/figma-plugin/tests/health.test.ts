@@ -8,15 +8,15 @@ describe('scoreComponentHealth', () => {
   it('scores Button from its baseline evidence and exposes coverage', () => {
     const health = scoreComponentHealth(buttonEntry, [])
 
-    expect(health.score).toBe(92)
+    expect(health.score).toBe(100)
     expect(health.status).toBe('healthy')
     expect(health.blocked).toBe(false)
-    expect(health.evaluationCoverage).toBe(87)
+    expect(health.evaluationCoverage).toBe(100)
     expect(health.automationCoverage).toBe(80)
     expect(health.dimensions).toEqual(
       expect.arrayContaining([
         expect.objectContaining({ id: 'figmaImplementation', score: 100 }),
-        expect.objectContaining({ id: 'codeImplementation', score: 67 })
+        expect.objectContaining({ id: 'codeImplementation', score: 100 })
       ])
     )
   })
@@ -36,7 +36,7 @@ describe('scoreComponentHealth', () => {
     expect(health.blocked).toBe(true)
     expect(health.status).toBe('blocked')
     expect(health.blockers).toEqual(['button.supported-combination'])
-    expect(health.score).toBeLessThan(92)
+    expect(health.score).toBeLessThan(100)
   })
 
   it('uses the worst live result when several instances share a requirement', () => {

@@ -13,33 +13,35 @@ export type RequirementSeverity = 'critical' | 'major' | 'minor' | 'informationa
 export type EnforcementMode = 'automated' | 'manual' | 'advisory'
 
 export type ComponentContract = {
-  schemaVersion: '0.4.0'
+  schemaVersion: '0.5.0'
   contractVersion: string
   identity: Record<string, unknown>
   semantics: Record<string, unknown>
-  lifecycle: { status: ContractStatus; publishedAt?: string; replacementId?: string }
+  lifecycle: { status: ContractStatus; replacementId?: string }
   ownership: { team: string; contacts: string[] }
   surfaces: Partial<Record<ContractSurface, Record<string, unknown>>>
   anatomy: Array<Record<string, unknown>>
   properties: Array<Record<string, unknown>>
+  slots: Array<Record<string, unknown>>
   states: Array<Record<string, unknown>>
   constraints: {
     exhaustive: boolean
     dimensions: string[]
-    rules: Array<{
+    combinations: Array<{
       id: string
       status: ConstraintStatus
       surfaces: ContractSurface[]
       conditions: Record<string, ContractScalar[]>
       description: string
       migrationId?: string
-      requirementId?: string
+      ruleId?: string
     }>
   }
   tokens: Array<Record<string, unknown>>
-  accessibility: Array<Record<string, unknown>>
+  presentation: Record<string, unknown>
   usage: Record<string, unknown>
-  requirements: Array<{
+  examples: Array<Record<string, unknown>>
+  evaluations: Array<{
     id: string
     dimension: HealthDimension
     severity: RequirementSeverity
@@ -50,5 +52,5 @@ export type ComponentContract = {
     maxAgeDays?: number
   }>
   migrations: Array<Record<string, unknown>>
-  evidence: Record<string, unknown>
+  evidenceReferences: { sources: Array<Record<string, unknown>> }
 }

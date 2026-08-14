@@ -27,7 +27,7 @@ type StateDefinition = {
 const anatomyControlCache = new WeakMap<CatalogEntry, Map<string, AnatomyPart>>()
 
 function requirementId(entry: CatalogEntry, evaluator: string): string | undefined {
-  const requirement = (entry.requirements ?? []).find(candidate => candidate.evaluator === evaluator)
+  const requirement = (entry.evaluations ?? []).find(candidate => candidate.evaluator === evaluator)
   return typeof requirement?.id === 'string' ? requirement.id : undefined
 }
 

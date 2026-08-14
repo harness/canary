@@ -1,5 +1,7 @@
 # Generation-Ready Canary Component Contracts
 
+> Superseded by schema 0.5.0 and ADR 0001. This document records the schema 0.4.0 design decision; current authoring guidance lives in `packages/ui/catalog/contracts/README.md`.
+
 **Date:** 2026-08-14  
 **Status:** Approved design, pending implementation plan  
 **Initial pilot:** Button  

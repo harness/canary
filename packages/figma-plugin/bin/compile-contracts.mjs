@@ -99,19 +99,22 @@ const CatalogEntrySchema = z.object({
   designOnly: z.array(CatalogPropSchema),
   codeOnly: z.array(CatalogPropSchema),
   anatomy: z.array(z.record(z.string(), z.unknown())),
+  slots: z.array(z.record(z.string(), z.unknown())),
   states: z.array(z.record(z.string(), z.unknown())),
   constraints: z.object({
     exhaustive: z.boolean(),
     dimensions: z.array(z.string().min(1)).min(1),
-    rules: z.array(ConstraintRuleSchema).min(1)
+    combinations: z.array(ConstraintRuleSchema).min(1)
   }),
-  requirements: z.array(z.record(z.string(), z.unknown())).min(1),
+  evaluations: z.array(z.record(z.string(), z.unknown())).min(1),
   tokenBindings: z.array(z.record(z.string(), z.unknown())),
   accessibility: z.array(z.record(z.string(), z.unknown())).min(1),
+  presentation: z.record(z.string(), z.unknown()),
+  examples: z.array(z.record(z.string(), z.unknown())).min(1),
   usage: z.record(z.string(), z.unknown()),
   semantics: z.record(z.string(), z.unknown()),
   migrations: z.array(z.record(z.string(), z.unknown())),
-  evidence: z.record(z.string(), z.unknown()),
+  evidenceReferences: z.record(z.string(), z.unknown()),
   evaluationProfile: z.record(z.string(), z.unknown()),
   baselineReceipt: z.record(z.string(), z.unknown()),
   bindings: z.record(z.string(), z.string()).optional(),
@@ -166,6 +169,10 @@ function compileProp(property) {
   }
   if (property.description) compiled.figmaNote = property.description
   return compiled
+}
+
+function compileExtension(extension) {
+  return compileProp({ ...extension, bindings: { react: extension.binding } })
 }
 
 function figmaDisplayName(contract) {
@@ -239,7 +246,10 @@ export function compileContract(contract, source) {
   const properties = contract.properties ?? []
   const shared = properties.filter(property => property.bindings?.figma && property.bindings?.react)
   const designOnly = properties.filter(property => property.bindings?.figma && !property.bindings?.react)
-  const codeOnly = properties.filter(property => !property.bindings?.figma && property.bindings?.react)
+  const codeOnly = [
+    ...properties.filter(property => !property.bindings?.figma && property.bindings?.react).map(compileProp),
+    ...(code.extensions ?? []).map(compileExtension)
+  ]
   const evaluationProfile = readJson(evaluationProfilePath)
   const baselineReceipt = readJson(buttonReceiptPath)
 
@@ -262,17 +272,26 @@ export function compileContract(contract, source) {
     },
     shared: shared.map(compileProp),
     designOnly: designOnly.map(compileProp),
-    codeOnly: codeOnly.map(compileProp),
+    codeOnly,
     anatomy: contract.anatomy,
+    slots: contract.slots,
     states: contract.states,
-    constraints: contract.constraints,
-    requirements: contract.requirements,
+    constraints: {
+      ...contract.constraints,
+      combinations: contract.constraints.combinations.map(({ ruleId, ...rule }) => ({
+        ...rule,
+        ...(ruleId ? { requirementId: ruleId } : {})
+      }))
+    },
+    evaluations: contract.evaluations,
     tokenBindings: contract.tokens,
-    accessibility: contract.accessibility,
+    accessibility: contract.evaluations.filter(evaluation => evaluation.category === 'accessibility'),
+    presentation: contract.presentation,
+    examples: contract.examples,
     usage: contract.usage,
     semantics: contract.semantics,
     migrations: contract.migrations,
-    evidence: contract.evidence,
+    evidenceReferences: contract.evidenceReferences,
     evaluationProfile,
     baselineReceipt
   }

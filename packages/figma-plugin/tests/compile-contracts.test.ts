@@ -32,9 +32,11 @@ const buttonContract = JSON.parse(buttonContractSource) as {
   surfaces: { figma: { componentKeys: string[]; exampleNodeId: string } }
   properties: Array<{ id: string; bindings: { figma?: unknown; react?: unknown } }>
   anatomy: Array<{ id: string }>
+  slots: Array<{ id: string }>
   states: Array<{ id: string; fidelity: { figma?: string } }>
-  constraints: { rules: Array<{ id: string; status: string }> }
-  requirements: Array<{ id: string }>
+  constraints: { combinations: Array<{ id: string; status: string; ruleId?: string }> }
+  evaluations: Array<{ id: string; category: string }>
+  examples: Array<{ id: string }>
 }
 
 const REMOVED_POC_KEYS = [
@@ -60,14 +62,21 @@ describe('compiled Button catalog', () => {
     expect(button.figma.componentKeys).toEqual(buttonContract.surfaces.figma.componentKeys)
     expect(button.figma.componentKeys).toHaveLength(12)
     expect(button.anatomy.map(part => part.id)).toContain('label-or-icon')
+    expect(button.slots.map(slot => slot.id)).toContain('content')
+    expect(button.examples.map(example => example.id)).toContain('primary-action')
     expect(button.states.find(state => state.id === 'focus-visible')?.fidelity).toMatchObject({
       figma: 'specification'
     })
     expect(button.shared.find(prop => prop.name === 'theme')?.figmaValueAliases).toEqual({ '-': 'default' })
     expect(button.shared.map(prop => prop.name)).toContain('variant')
     expect(button.codeOnly.map(prop => prop.name)).toContain('onClick')
-    expect(button.constraints.rules).toEqual(buttonContract.constraints.rules)
-    expect(button.constraints.rules).toEqual(
+    expect(button.constraints.combinations).toEqual(
+      buttonContract.constraints.combinations.map(({ ruleId, ...rule }) => ({
+        ...rule,
+        ...(ruleId ? { requirementId: ruleId } : {})
+      }))
+    )
+    expect(button.constraints.combinations).toEqual(
       expect.arrayContaining([
         expect.objectContaining({
           id: 'text-standard-md-sm-link',
@@ -79,15 +88,15 @@ describe('compiled Button catalog', () => {
         })
       ])
     )
-    expect(button.requirements.map(rule => rule.id)).toContain('button.supported-combination')
+    expect(button.evaluations.map(evaluation => evaluation.id)).toContain('button.supported-combination')
     expect(button.tokenBindings.map(binding => binding.id)).toContain('focus-outline')
-    expect(button.accessibility.map(rule => rule.id)).toContain('accessible-name')
+    expect(button.accessibility.map(rule => rule.id)).toContain('button.accessible-name')
     expect(button.usage.dont.map(rule => rule.id)).toContain('dont-2')
     expect(button.evaluationProfile.version).toBe('1.0.0')
     expect(button.baselineReceipt).toMatchObject({
       componentId: 'canary.button',
-      schemaVersion: '0.4.0',
-      contractVersion: '0.7.0',
+      schemaVersion: '0.5.0',
+      contractVersion: '0.8.2',
       evaluationProfileVersion: '1.0.0'
     })
     for (const key of REMOVED_POC_KEYS) {

@@ -1,5 +1,7 @@
 # Generation-Ready Component Contracts Implementation Plan
 
+> Completed and superseded by schema 0.5.0 and ADR 0001. This file remains a historical implementation plan, not current authoring guidance.
+
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
 **Goal:** Migrate Button to contract schema 0.4.0 and make Canary Copilot execute its constraints and report transparent component-health scores while generating stable schema, type, documentation, and audit artifacts.

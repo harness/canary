@@ -473,9 +473,9 @@ describe('checkInstances', () => {
     expect(report.summary.pass).toBe(1)
     expect(report.instances[0]?.ok).toBe(true)
     expect(report.healthByCatalog['canary.button']).toMatchObject({
-      score: 92,
+      score: 100,
       status: 'healthy',
-      evaluationCoverage: 87,
+      evaluationCoverage: 100,
       automationCoverage: 80
     })
   })

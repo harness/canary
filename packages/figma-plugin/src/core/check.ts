@@ -52,7 +52,7 @@ const DEFAULT_OPTS: CheckOptions = {
 const propIndexCache = new WeakMap<CatalogProp[], Map<string, CatalogProp>>()
 
 function requirementId(entry: CatalogEntry, evaluator: string): string | undefined {
-  const requirement = (entry.requirements ?? []).find(candidate => candidate.evaluator === evaluator)
+  const requirement = (entry.evaluations ?? []).find(candidate => candidate.evaluator === evaluator)
   return typeof requirement?.id === 'string' ? requirement.id : undefined
 }
 

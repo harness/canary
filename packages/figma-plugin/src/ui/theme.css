@@ -44,9 +44,8 @@
   --info: #0059bf;
 
   /* —— Type —— */
-  --font: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Inter", system-ui,
-    sans-serif;
-  --font-mono: ui-monospace, SFMono-Regular, "SF Mono", Menlo, monospace;
+  --font: -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Inter', system-ui, sans-serif;
+  --font-mono: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, monospace;
   --fs-body: 13px;
   --fs-meta: 12px;
   --fs-micro: 11px;
@@ -166,7 +165,7 @@ textarea {
   color: inherit;
 }
 
-input[type="checkbox"] {
+input[type='checkbox'] {
   accent-color: var(--accent);
   width: 13px;
   height: 13px;
@@ -262,7 +261,7 @@ a {
 }
 
 .status-pill::before {
-  content: "";
+  content: '';
   width: 6px;
   height: 6px;
   border-radius: 50%;
@@ -405,7 +404,7 @@ a {
   color: var(--text);
 }
 
-.ds-tab[aria-selected="true"] {
+.ds-tab[aria-selected='true'] {
   background: var(--raised);
   color: var(--text);
   font-weight: var(--fw-strong);
@@ -864,28 +863,125 @@ a {
   font-size: var(--fs-meta);
 }
 
-.ds-health-score strong {
+.ds-health-breakdown {
+  position: relative;
+}
+
+.ds-health-trigger {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--sp-2);
+  margin: -2px;
+  padding: 2px;
+  border: 0;
+  border-radius: var(--radius-sm);
+  background: transparent;
+  cursor: help;
+}
+
+.ds-health-trigger:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 2px;
+}
+
+.ds-health-trigger strong {
   font-size: var(--fs-body);
   font-variant-numeric: tabular-nums;
 }
 
-.ds-health-healthy .ds-health-score strong {
+.ds-health-info {
+  display: inline-grid;
+  width: 14px;
+  height: 14px;
+  place-items: center;
+  border: 1px solid currentColor;
+  border-radius: var(--radius-pill);
+  font-size: 9px;
+  font-weight: var(--fw-strong);
+  line-height: 1;
+  opacity: 0.72;
+}
+
+.ds-health-tooltip {
+  position: absolute;
+  z-index: 10;
+  top: calc(100% + var(--sp-2));
+  left: 0;
+  width: min(300px, calc(100vw - 72px));
+  padding: var(--sp-3);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--raised);
+  box-shadow: 0 8px 24px rgb(0 0 0 / 16%);
+  color: var(--text);
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-2px);
+  transition:
+    opacity 100ms ease,
+    transform 100ms ease,
+    visibility 100ms ease;
+}
+
+.ds-health-breakdown:hover .ds-health-tooltip,
+.ds-health-breakdown:focus-within .ds-health-tooltip {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+.ds-health-tooltip-title {
+  display: block;
+  margin-bottom: var(--sp-2);
+  font-size: var(--fs-meta);
+  font-weight: var(--fw-strong);
+}
+
+.ds-health-tooltip ul {
+  display: grid;
+  gap: var(--sp-2);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.ds-health-tooltip li {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--sp-4);
+}
+
+.ds-health-tooltip li > span {
+  display: grid;
+}
+
+.ds-health-tooltip small {
+  color: var(--text-tertiary);
+  font-size: var(--fs-micro);
+}
+
+.ds-health-tooltip li > strong {
+  font-size: var(--fs-meta);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.ds-health-healthy .ds-health-trigger strong {
   color: var(--ok);
 }
 
-.ds-health-blocked .ds-health-score strong,
-.ds-health-atRisk .ds-health-score strong {
+.ds-health-blocked .ds-health-trigger strong,
+.ds-health-atRisk .ds-health-trigger strong {
   color: var(--fail);
 }
 
-.ds-health-needsAttention .ds-health-score strong {
+.ds-health-needsAttention .ds-health-trigger strong {
   color: var(--warn);
 }
 
-.ds-health-coverage {
-  margin-top: 2px;
+.ds-health-status {
   color: var(--text-secondary);
-  font-size: var(--fs-meta);
 }
 
 .ds-summary-counts {
@@ -906,7 +1002,7 @@ a {
 }
 
 .ds-count::before {
-  content: "";
+  content: '';
   width: 6px;
   height: 6px;
   border-radius: 50%;
@@ -1054,7 +1150,7 @@ fieldset.ds-field {
   grid-column: 2;
 }
 
-.ds-field input:not([type="checkbox"]),
+.ds-field input:not([type='checkbox']),
 .ds-field select,
 .ds-field textarea {
   border: 0;
@@ -1086,7 +1182,7 @@ html.figma-dark .ds-field select {
   color: var(--text-tertiary);
 }
 
-.ds-field input:not([type="checkbox"]):hover,
+.ds-field input:not([type='checkbox']):hover,
 .ds-field select:hover,
 .ds-field textarea:hover {
   background: var(--fill-hover);

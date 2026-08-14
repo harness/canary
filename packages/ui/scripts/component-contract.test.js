@@ -1,6 +1,5 @@
 import { spawnSync } from 'node:child_process'
-import { mkdirSync, mkdtempSync, readdirSync, readFileSync, rmSync, writeFileSync } from 'node:fs'
-import { tmpdir } from 'node:os'
+import { readdirSync, readFileSync } from 'node:fs'
 import { dirname, join } from 'node:path'
 import { fileURLToPath } from 'node:url'
 
@@ -8,13 +7,6 @@ import ts from 'typescript'
 import { expect, test } from 'vitest'
 
 import buttonStyles from '../tailwind-utils-config/components/button.ts'
-
-function writeJson(root, relativePath, value) {
-  const filePath = join(root, relativePath)
-  mkdirSync(dirname(filePath), { recursive: true })
-  writeFileSync(filePath, `${JSON.stringify(value, null, 2)}\n`)
-  return filePath
-}
 
 function collectProductionComponents(directory) {
   return readdirSync(directory, { withFileTypes: true }).flatMap(entry => {
@@ -412,15 +404,6 @@ function completePilotContract() {
   }
 }
 
-test('accepts a complete schema 0.4.0 pilot contract', async () => {
-  const { validateComponentContract } = await import('./component-contract.mjs')
-
-  expect(validateComponentContract(completePilotContract())).toEqual({
-    success: true,
-    errors: []
-  })
-})
-
 test('derives shared, design-only, and code-only classifications from surface bindings', async () => {
   const { classifyPropertySurface } = await import('./component-contract.mjs')
   const [shared, codeOnly] = completePilotContract().properties
@@ -465,197 +448,6 @@ test('validates the centrally controlled component-health profile', async () => 
   expect(evaluationProfileSchema?.safeParse(profile).success).toBe(true)
 })
 
-test('accepts a complete draft contract without confirmed Figma keys', async () => {
-  let contractModule
-  try {
-    contractModule = await import('./component-contract.mjs')
-  } catch {
-    contractModule = undefined
-  }
-
-  expect(typeof contractModule?.validateComponentContract).toBe('function')
-  expect(contractModule.validateComponentContract(completeDraftContract())).toEqual({
-    success: true,
-    errors: []
-  })
-})
-
-test('accepts a machine-readable support matrix', async () => {
-  const { validateComponentContract } = await import('./component-contract.mjs')
-  const contract = completeDraftContract()
-  contract.supportMatrix = [
-    {
-      id: 'standard-primary',
-      status: 'supported',
-      surfaces: ['figma', 'code'],
-      conditions: {
-        variant: ['primary'],
-        size: ['md'],
-        iconOnly: [false]
-      },
-      description: 'Primary medium text Buttons are supported.'
-    }
-  ]
-  contract.properties.shared.push(
-    {
-      name: 'size',
-      type: 'enum',
-      values: ['md', 'sm'],
-      default: 'md',
-      description: 'Component size.'
-    },
-    {
-      name: 'iconOnly',
-      type: 'boolean',
-      default: false,
-      description: 'Renders only an icon.'
-    }
-  )
-
-  expect(validateComponentContract(contract)).toEqual({
-    success: true,
-    errors: []
-  })
-})
-
-test('rejects support-matrix conditions that are not declared contract properties', async () => {
-  const { validateComponentContract } = await import('./component-contract.mjs')
-  const contract = completeDraftContract()
-  contract.supportMatrix = [
-    {
-      id: 'unknown-condition',
-      status: 'unsupported',
-      surfaces: ['figma', 'code'],
-      conditions: {
-        shape: ['rounded']
-      },
-      description: 'Unknown dimensions cannot be evaluated reliably.'
-    }
-  ]
-
-  const result = validateComponentContract(contract)
-
-  expect(result.success).toBe(false)
-  expect(result.errors).toContain('supportMatrix.0.conditions.shape: unknown property shape')
-})
-
-test('rejects support-matrix values with the wrong property type', async () => {
-  const { validateComponentContract } = await import('./component-contract.mjs')
-  const contract = completeDraftContract()
-  contract.properties.shared.push({
-    name: 'iconOnly',
-    type: 'boolean',
-    default: false,
-    description: 'Renders only an icon.'
-  })
-  contract.supportMatrix = [
-    {
-      id: 'invalid-boolean',
-      status: 'supported',
-      surfaces: ['figma', 'code'],
-      conditions: {
-        iconOnly: ['false']
-      },
-      description: 'String booleans cannot be matched to Boolean properties.'
-    }
-  ]
-
-  const result = validateComponentContract(contract)
-
-  expect(result.success).toBe(false)
-  expect(result.errors).toContain('supportMatrix.0.conditions.iconOnly: values must match the boolean property type')
-})
-
-test('rejects property names duplicated across contract surfaces', async () => {
-  const { validateComponentContract } = await import('./component-contract.mjs')
-  const contract = completeDraftContract()
-  contract.properties.codeOnly.push({
-    name: 'variant',
-    type: 'string',
-    description: 'Duplicate semantic property.'
-  })
-
-  const result = validateComponentContract(contract)
-
-  expect(result.success).toBe(false)
-  expect(result.errors).toContain('properties: property names must be unique across shared, designOnly, and codeOnly')
-})
-
-test('requires verified Figma component keys before a contract can be stable', async () => {
-  const { validateComponentContract } = await import('./component-contract.mjs')
-  const contract = completeDraftContract()
-  contract.status = 'stable'
-
-  const result = validateComponentContract(contract)
-
-  expect(result.success).toBe(false)
-  expect(result.errors).toContain('figma.mappingStatus: stable contracts must use verified Figma mappings')
-  expect(result.errors).toContain(
-    'figma.componentKeys: stable contracts must include at least one confirmed component key'
-  )
-})
-
-test('validates contract files against their component inventory entries', async () => {
-  const packageRoot = mkdtempSync(join(tmpdir(), 'canary-contracts-'))
-
-  try {
-    writeJson(packageRoot, 'catalog/component-inventory.json', {
-      schemaVersion: 1,
-      components: [
-        {
-          id: 'canary.button',
-          contractPath: 'catalog/contracts/button.contract.json'
-        }
-      ]
-    })
-    writeJson(packageRoot, 'catalog/contracts/button.contract.json', completeDraftContract())
-
-    const contractModule = await import('./component-contract.mjs')
-    expect(typeof contractModule.validateContractCatalog).toBe('function')
-
-    expect(contractModule.validateContractCatalog({ packageRoot })).toEqual({
-      success: true,
-      errors: [],
-      contracts: [
-        {
-          id: 'canary.button',
-          path: 'catalog/contracts/button.contract.json',
-          status: 'draft'
-        }
-      ]
-    })
-  } finally {
-    rmSync(packageRoot, { recursive: true, force: true })
-  }
-})
-
-test('rejects a contract whose inventory entry points somewhere else', async () => {
-  const packageRoot = mkdtempSync(join(tmpdir(), 'canary-contracts-'))
-
-  try {
-    writeJson(packageRoot, 'catalog/component-inventory.json', {
-      schemaVersion: 1,
-      components: [
-        {
-          id: 'canary.button',
-          contractPath: 'catalog/contracts/not-button.contract.json'
-        }
-      ]
-    })
-    writeJson(packageRoot, 'catalog/contracts/button.contract.json', completeDraftContract())
-
-    const { validateContractCatalog } = await import('./component-contract.mjs')
-    const result = validateContractCatalog({ packageRoot })
-
-    expect(result.success).toBe(false)
-    expect(result.errors).toContain(
-      'catalog/contracts/button.contract.json: inventory contractPath is catalog/contracts/not-button.contract.json'
-    )
-  } finally {
-    rmSync(packageRoot, { recursive: true, force: true })
-  }
-})
-
 test('validates the checked-in component contract catalog', async () => {
   const packageRoot = join(dirname(fileURLToPath(import.meta.url)), '..')
   const { validateContractCatalog } = await import('./component-contract.mjs')
@@ -673,19 +465,105 @@ test('validates the checked-in component contract catalog', async () => {
   })
 })
 
-test('uses schema 0.4.0 for the checked-in Button contract', () => {
+test('uses normalized schema 0.5.0 for the checked-in Button contract', () => {
   const packageRoot = join(dirname(fileURLToPath(import.meta.url)), '..')
   const contract = JSON.parse(readFileSync(join(packageRoot, 'catalog/contracts/button.contract.json'), 'utf8'))
 
-  expect(contract.schemaVersion).toBe('0.4.0')
-  expect(contract.contractVersion).toBe('0.7.0')
+  expect(contract.schemaVersion).toBe('0.5.0')
+  expect(contract.contractVersion).toBe('0.8.2')
   expect(contract.identity.id).toBe('canary.button')
   expect(contract.lifecycle.status).toBe('piloting')
   expect(contract.properties.map(property => property.id)).toContain('variant')
+  expect(contract.properties.map(property => property.id)).toContain('content')
+  expect(contract.properties.map(property => property.id)).not.toContain('children')
+  expect(contract.surfaces.react.extensions.map(extension => extension.id)).toEqual(
+    expect.arrayContaining(['onClick', 'asChild', 'className'])
+  )
+  expect(contract.slots.map(slot => slot.id)).toEqual(
+    expect.arrayContaining(['content', 'leading-icon', 'trailing-icon'])
+  )
+  expect(contract.examples.length).toBeGreaterThan(0)
+  expect(contract.presentation.parts.length).toBeGreaterThan(0)
   expect(contract.constraints.exhaustive).toBe(true)
-  expect(contract.constraints.rules).toHaveLength(13)
-  expect(contract.evidence).not.toHaveProperty('provisionalFields')
-  expect(contract.evidence).not.toHaveProperty('openQuestions')
+  expect(contract.constraints.combinations).toHaveLength(13)
+  expect(contract.evaluations.map(evaluation => evaluation.id)).toContain('button.supported-combination')
+  expect(contract.evidenceReferences.sources.length).toBeGreaterThan(0)
+  expect(contract).not.toHaveProperty('rules')
+  expect(contract).not.toHaveProperty('evidence')
+  expect(contract.surfaces.figma).not.toHaveProperty('candidateComponentKeys')
+  expect(contract).not.toHaveProperty('accessibility')
+  expect(contract).not.toHaveProperty('requirements')
+})
+
+test('defaults optional authoring collections instead of requiring empty arrays', async () => {
+  const packageRoot = join(dirname(fileURLToPath(import.meta.url)), '..')
+  const contract = JSON.parse(readFileSync(join(packageRoot, 'catalog/contracts/button.contract.json'), 'utf8'))
+  const { componentContractSchemaV05 } = await import('./component-contract-schema.mjs')
+
+  delete contract.identity.aliases
+  delete contract.surfaces.react.extensions
+  delete contract.surfaces.figma.componentKeys
+  delete contract.surfaces.figma.codeConnect
+  delete contract.presentation.variants
+  delete contract.tokens
+  delete contract.usage.relatedComponents
+  delete contract.examples
+  delete contract.migrations
+
+  const parsed = componentContractSchemaV05.parse(contract)
+
+  expect(parsed.identity.aliases).toEqual([])
+  expect(parsed.surfaces.react.extensions).toEqual([])
+  expect(parsed.surfaces.figma.componentKeys).toEqual([])
+  expect(parsed.surfaces.figma.codeConnect).toEqual([])
+  expect(parsed.presentation.variants).toEqual([])
+  expect(parsed.tokens).toEqual([])
+  expect(parsed.usage.relatedComponents).toEqual([])
+  expect(parsed.examples).toEqual([])
+  expect(parsed.migrations).toEqual([])
+})
+
+test('rejects surface-specific CSS display mechanisms from canonical presentation', async () => {
+  const packageRoot = join(dirname(fileURLToPath(import.meta.url)), '..')
+  const contract = JSON.parse(readFileSync(join(packageRoot, 'catalog/contracts/button.contract.json'), 'utf8'))
+  const { validateComponentContract } = await import('./component-contract.mjs')
+
+  contract.presentation.parts[0].layout.display = 'inline-flex'
+
+  expect(validateComponentContract(contract)).toMatchObject({
+    success: false,
+    errors: expect.arrayContaining([expect.stringContaining('presentation.parts.0.layout')])
+  })
+})
+
+test('keeps verification results outside the normative Button contract', async () => {
+  const packageRoot = join(dirname(fileURLToPath(import.meta.url)), '..')
+  const contract = JSON.parse(readFileSync(join(packageRoot, 'catalog/contracts/button.contract.json'), 'utf8'))
+  const verification = JSON.parse(readFileSync(join(packageRoot, 'catalog/evidence/button.verification.json'), 'utf8'))
+  const { validateComponentVerification } = await import('./component-contract.mjs')
+
+  expect(verification.componentId).toBe(contract.identity.id)
+  expect(verification.contractVersion).toBe(contract.contractVersion)
+  expect(validateComponentVerification(verification, contract)).toEqual({ success: true, errors: [] })
+})
+
+test('resolves every Button token reference through the token registry', async () => {
+  const packageRoot = join(dirname(fileURLToPath(import.meta.url)), '..')
+  const contract = JSON.parse(readFileSync(join(packageRoot, 'catalog/contracts/button.contract.json'), 'utf8'))
+  const registry = JSON.parse(readFileSync(join(packageRoot, 'catalog/token-registry.json'), 'utf8'))
+  const tokenIds = new Set(registry.tokens.map(token => token.id))
+
+  for (const binding of contract.tokens) expect(tokenIds.has(binding.tokenId)).toBe(true)
+  for (const part of contract.presentation.parts) {
+    for (const tokenId of Object.values(part.tokens ?? {})) expect(tokenIds.has(tokenId)).toBe(true)
+  }
+})
+
+test('rejects legacy component contract schemas', async () => {
+  const { validateComponentContract } = await import('./component-contract.mjs')
+
+  expect(validateComponentContract(completeDraftContract()).success).toBe(false)
+  expect(validateComponentContract(completePilotContract()).success).toBe(false)
 })
 
 test('generates deterministic schema, type, reference, and Button receipt artifacts', async () => {
@@ -709,15 +587,29 @@ test('generates deterministic schema, type, reference, and Button receipt artifa
   ])
   expect([...first.artifacts.entries()]).toEqual([...second.artifacts.entries()])
   expect(JSON.parse(first.artifacts.get('catalog/generated/component-contract.schema.json')).$id).toBe(
-    'https://canary.harness.io/contracts/component-contract-0.4.0.schema.json'
+    'https://canary.harness.io/contracts/component-contract-0.5.0.schema.json'
   )
   expect(
     JSON.parse(first.artifacts.get('catalog/generated/component-contract.reference.json')).rows.length
   ).toBeGreaterThan(40)
+  const reference = JSON.parse(first.artifacts.get('catalog/generated/component-contract.reference.json'))
+  expect(reference.formatVersion).toBe(2)
+  expect(reference.sections.find(section => section.path === 'evidenceReferences')).toMatchObject({
+    owner: 'Design system governance'
+  })
+  expect(reference.rows.filter(row => row.path === 'anatomy[].parentId')).toEqual([
+    expect.objectContaining({ type: 'string', required: false })
+  ])
+  expect(reference.rows.find(row => row.path === 'tokens')).toMatchObject({
+    required: false,
+    default: []
+  })
+  expect(reference.rows[0]).not.toHaveProperty('owner')
+  expect(reference.rows[0]).not.toHaveProperty('consumers')
   expect(JSON.parse(first.artifacts.get('catalog/generated/button.audit-receipt.json'))).toMatchObject({
     componentId: 'canary.button',
-    schemaVersion: '0.4.0',
-    contractVersion: '0.7.0',
+    schemaVersion: '0.5.0',
+    contractVersion: '0.8.2',
     evaluationProfileVersion: '1.0.0'
   })
 })
@@ -829,7 +721,7 @@ test('defines an exhaustive approved Button support matrix', () => {
     [{}]
   )
   const matchingRules = combination =>
-    contract.constraints.rules.filter(rule =>
+    contract.constraints.combinations.filter(rule =>
       Object.entries(rule.conditions).every(([propertyName, values]) => values.includes(combination[propertyName]))
     )
 

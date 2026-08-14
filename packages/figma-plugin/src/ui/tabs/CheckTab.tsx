@@ -509,6 +509,22 @@ function healthStatusLabel(status: HealthStatus): string {
   return status.charAt(0).toUpperCase() + status.slice(1);
 }
 
+const healthDimensionLabels: Record<string, string> = {
+  contractDefinition: "Contract definition",
+  figmaImplementation: "Figma implementation",
+  codeImplementation: "Code implementation",
+  designCodeParity: "Design–code parity",
+  governanceEvidence: "Governance evidence",
+};
+
+function healthDimensionLabel(id: string): string {
+  return healthDimensionLabels[id] ?? id;
+}
+
+function healthTooltipId(catalogId: string): string {
+  return `health-breakdown-${catalogId.replace(/[^a-zA-Z0-9_-]/g, "-")}`;
+}
+
 export function HealthSummary({
   healthByCatalog,
 }: {
@@ -525,12 +541,40 @@ export function HealthSummary({
           class={`ds-health ds-health-${health.status}`}
         >
           <div class="ds-health-score">
-            <strong>{health.score}/100</strong>
-            <span>{healthStatusLabel(health.status)}</span>
-          </div>
-          <div class="ds-health-coverage">
-            {health.evaluationCoverage}% evidence · {health.automationCoverage}%
-            automated
+            <div class="ds-health-breakdown">
+              <button
+                type="button"
+                class="ds-health-trigger"
+                aria-label={`Score breakdown for ${health.catalogId}: ${health.score} out of 100`}
+                aria-describedby={healthTooltipId(health.catalogId)}
+              >
+                <strong>Health score: {health.score}/100</strong>
+                <span class="ds-health-info" aria-hidden="true">
+                  i
+                </span>
+              </button>
+              <div
+                id={healthTooltipId(health.catalogId)}
+                class="ds-health-tooltip"
+                role="tooltip"
+              >
+                <strong class="ds-health-tooltip-title">Score breakdown</strong>
+                <ul>
+                  {health.dimensions.map((dimension) => (
+                    <li key={dimension.id}>
+                      <span>
+                        {healthDimensionLabel(dimension.id)}
+                        <small>{dimension.weight}% weight</small>
+                      </span>
+                      <strong>{dimension.score}/100</strong>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+            <span class="ds-health-status">
+              {healthStatusLabel(health.status)} · {health.profileStatus}
+            </span>
           </div>
         </div>
       ))}

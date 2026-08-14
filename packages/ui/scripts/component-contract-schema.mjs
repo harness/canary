@@ -17,6 +17,7 @@ const contractId = z.string().regex(/^canary\.[a-z0-9-]+$/)
 const isoDate = z.string().date()
 const scalar = z.union([z.string(), z.number(), z.boolean(), z.null()])
 const surfaceName = z.enum(['figma', 'react'])
+const propertyType = z.enum(['boolean', 'enum', 'number', 'string', 'slot', 'function', 'object'])
 
 const figmaPropertyBinding = z
   .object({
@@ -31,16 +32,7 @@ const figmaComponentNameBinding = z
   .object({
     kind: z.literal('componentName'),
     source: z.enum(['componentSetName', 'mainComponentName']),
-    matches: z
-      .array(
-        z
-          .object({
-            contains: nonEmptyString,
-            value: scalar
-          })
-          .strict()
-      )
-      .min(1),
+    matches: z.array(z.object({ contains: nonEmptyString, value: scalar }).strict()).min(1),
     fallback: scalar.optional()
   })
   .strict()
@@ -68,15 +60,28 @@ export const reactPropertySurfaceBindingSchema = z
     }
   })
 
+const propertyFields = {
+  id: idString,
+  name: nonEmptyString,
+  description: nonEmptyString,
+  type: propertyType,
+  values: z.array(scalar).min(1).optional(),
+  default: scalar.optional(),
+  required: z.boolean().optional()
+}
+
+function validateProperty(property, context) {
+  if (property.type === 'enum' && !property.values) {
+    context.addIssue({ code: 'custom', path: ['values'], message: 'enum properties must declare allowed values' })
+  }
+  if (property.values && property.default !== undefined && !property.values.includes(property.default)) {
+    context.addIssue({ code: 'custom', path: ['default'], message: 'default must be one of the allowed values' })
+  }
+}
+
 const canonicalPropertySchema = z
   .object({
-    id: idString,
-    name: nonEmptyString,
-    description: nonEmptyString,
-    type: z.enum(['boolean', 'enum', 'number', 'string', 'node', 'function', 'object']),
-    values: z.array(scalar).min(1).optional(),
-    default: scalar.optional(),
-    required: z.boolean().optional(),
+    ...propertyFields,
     bindings: z
       .object({
         figma: figmaPropertySurfaceBindingSchema.optional(),
@@ -86,14 +91,12 @@ const canonicalPropertySchema = z
       .refine(value => Boolean(value.figma || value.react), 'at least one surface binding is required')
   })
   .strict()
-  .superRefine((property, context) => {
-    if (property.type === 'enum' && !property.values) {
-      context.addIssue({ code: 'custom', path: ['values'], message: 'enum properties must declare allowed values' })
-    }
-    if (property.values && property.default !== undefined && !property.values.includes(property.default)) {
-      context.addIssue({ code: 'custom', path: ['default'], message: 'default must be one of the allowed values' })
-    }
-  })
+  .superRefine(validateProperty)
+
+const surfaceExtensionSchema = z
+  .object({ ...propertyFields, binding: reactPropertySurfaceBindingSchema })
+  .strict()
+  .superRefine(validateProperty)
 
 const anatomyBindingSchema = z
   .object({
@@ -116,12 +119,24 @@ const anatomyPartSchema = z
     parentId: idString.optional(),
     content: z.array(nonEmptyString).min(1).optional(),
     bindings: z
-      .object({
-        figma: anatomyBindingSchema.optional(),
-        react: anatomyBindingSchema.optional()
-      })
+      .object({ figma: anatomyBindingSchema.optional(), react: anatomyBindingSchema.optional() })
       .strict()
       .optional()
+  })
+  .strict()
+
+const slotSchema = z
+  .object({
+    id: idString,
+    name: nonEmptyString,
+    description: nonEmptyString,
+    partId: idString,
+    presence: z.enum(['required', 'optional', 'conditional', 'repeatable']),
+    minItems: z.number().int().nonnegative(),
+    maxItems: z.number().int().positive().optional(),
+    allowedContent: z.array(nonEmptyString).min(1),
+    defaultExampleId: idString.optional(),
+    bindings: z.object({ figma: anatomyBindingSchema.optional(), react: anatomyBindingSchema.optional() }).strict()
   })
   .strict()
 
@@ -142,10 +157,7 @@ const stateSchema = z
     description: nonEmptyString,
     required: z.boolean(),
     bindings: z
-      .object({
-        figma: stateSurfaceBindingSchema.optional(),
-        react: stateSurfaceBindingSchema.optional()
-      })
+      .object({ figma: stateSurfaceBindingSchema.optional(), react: stateSurfaceBindingSchema.optional() })
       .strict(),
     fidelity: z
       .object({
@@ -164,7 +176,7 @@ const constraintRuleSchema = z
     conditions: z.record(nonEmptyString, z.array(scalar).min(1)),
     description: nonEmptyString,
     migrationId: idString.optional(),
-    requirementId: idString.optional()
+    ruleId: idString.optional()
   })
   .strict()
 
@@ -173,37 +185,32 @@ const tokenBindingSchema = z
     id: idString,
     partId: idString,
     channel: nonEmptyString,
-    token: nonEmptyString,
+    tokenId: idString,
     stateId: idString.optional(),
     conditions: z.record(nonEmptyString, z.array(scalar).min(1)).optional(),
-    bindings: z
+    bindings: z.object({ figma: nonEmptyString.optional(), react: nonEmptyString.optional() }).strict().optional()
+  })
+  .strict()
+
+const presentationPartSchema = z
+  .object({
+    partId: idString,
+    layout: z
       .object({
-        figma: nonEmptyString.optional(),
-        react: nonEmptyString.optional()
+        direction: z.enum(['block', 'inline', 'block-reverse', 'inline-reverse']).optional(),
+        align: z.enum(['start', 'center', 'end', 'stretch']).optional(),
+        justify: z.enum(['start', 'center', 'end', 'between']).optional()
       })
       .strict()
-      .optional()
+      .optional(),
+    tokens: z.record(nonEmptyString, idString).optional()
   })
   .strict()
 
-const accessibilityRuleSchema = z
+const ruleSchema = z
   .object({
     id: idString,
-    statement: nonEmptyString,
-    requirementId: idString.optional()
-  })
-  .strict()
-
-const usageRuleSchema = z
-  .object({
-    id: idString,
-    statement: nonEmptyString
-  })
-  .strict()
-
-const requirementSchema = z
-  .object({
-    id: idString,
+    category: z.enum(['semantics', 'structure', 'accessibility', 'api', 'parity', 'governance']),
     dimension: z.enum(HEALTH_DIMENSIONS),
     severity: z.enum(REQUIREMENT_SEVERITIES),
     enforcement: z.enum(ENFORCEMENT_MODES),
@@ -226,6 +233,7 @@ const requirementSchema = z
   })
   .strict()
 
+const usageRuleSchema = z.object({ id: idString, statement: nonEmptyString }).strict()
 const migrationSchema = z
   .object({
     id: idString,
@@ -245,14 +253,22 @@ const evidenceSourceSchema = z
   })
   .strict()
 
-const verificationSchema = z
+const exampleSchema = z
   .object({
     id: idString,
-    requirementId: idString,
-    result: z.enum(['pass', 'fail', 'unavailable']),
-    verifiedAt: isoDate,
-    sourceIds: z.array(idString).min(1),
-    notes: nonEmptyString.optional()
+    name: nonEmptyString,
+    purpose: nonEmptyString,
+    status: z.enum(['recommended', 'illustrative']),
+    properties: z.record(idString, scalar),
+    slots: z.record(idString, z.array(nonEmptyString)),
+    references: z
+      .object({
+        figmaNodeId: nonEmptyString.optional(),
+        code: nonEmptyString.optional(),
+        docs: nonEmptyString.optional()
+      })
+      .strict()
+      .optional()
   })
   .strict()
 
@@ -263,9 +279,8 @@ const figmaSurfaceSchema = z
     names: z.array(nonEmptyString).min(1),
     exampleNodeId: nonEmptyString,
     mappingStatus: z.enum(['unverified', 'verified']),
-    componentKeys: z.array(nonEmptyString),
-    candidateComponentKeys: z.array(nonEmptyString),
-    codeConnect: z.array(nonEmptyString)
+    componentKeys: z.array(nonEmptyString).default([]),
+    codeConnect: z.array(nonEmptyString).default([])
   })
   .strict()
 
@@ -274,83 +289,125 @@ const reactSurfaceSchema = z
     package: nonEmptyString,
     export: nonEmptyString,
     import: nonEmptyString,
-    path: nonEmptyString
+    path: nonEmptyString,
+    extensions: z.array(surfaceExtensionSchema).default([])
   })
   .strict()
 
-export const componentContractSchemaV04 = z
+export const componentContractSchemaV05 = z
   .object({
-    schemaVersion: z.literal('0.4.0'),
+    schemaVersion: z.literal('0.5.0'),
     contractVersion: nonEmptyString,
     identity: z
       .object({
         id: contractId,
         name: nonEmptyString,
         summary: nonEmptyString,
-        aliases: z.array(nonEmptyString)
+        aliases: z.array(nonEmptyString).default([])
       })
       .strict(),
     semantics: z
       .object({
-        purpose: nonEmptyString,
         useWhen: z.array(nonEmptyString).min(1),
         avoidWhen: z.array(nonEmptyString).min(1),
         roles: z.array(nonEmptyString).min(1)
       })
       .strict(),
     lifecycle: z
-      .object({
-        status: z.enum(['draft', 'piloting', 'stable', 'deprecated']),
-        publishedAt: isoDate.optional(),
-        replacementId: contractId.optional()
-      })
+      .object({ status: z.enum(['draft', 'piloting', 'stable', 'deprecated']), replacementId: contractId.optional() })
       .strict(),
-    ownership: z
-      .object({
-        team: nonEmptyString,
-        contacts: z.array(nonEmptyString).min(1)
-      })
-      .strict(),
+    ownership: z.object({ team: nonEmptyString, contacts: z.array(nonEmptyString).min(1) }).strict(),
     surfaces: z
-      .object({
-        figma: figmaSurfaceSchema.optional(),
-        react: reactSurfaceSchema.optional()
-      })
+      .object({ figma: figmaSurfaceSchema.optional(), react: reactSurfaceSchema.optional() })
       .strict()
       .refine(value => Boolean(value.figma || value.react), 'at least one governed surface is required'),
     anatomy: z.array(anatomyPartSchema).min(1),
     properties: z.array(canonicalPropertySchema).min(1),
+    slots: z.array(slotSchema).min(1),
     states: z.array(stateSchema).min(1),
     constraints: z
       .object({
         exhaustive: z.boolean(),
         dimensions: z.array(idString).min(1),
-        rules: z.array(constraintRuleSchema).min(1)
+        combinations: z.array(constraintRuleSchema).default([])
       })
       .strict(),
-    tokens: z.array(tokenBindingSchema),
-    accessibility: z.array(accessibilityRuleSchema).min(1),
+    presentation: z
+      .object({
+        parts: z.array(presentationPartSchema).min(1),
+        variants: z
+          .array(
+            z
+              .object({
+                id: idString,
+                stateId: idString.optional(),
+                conditions: z.record(idString, z.array(scalar).min(1)).optional(),
+                parts: z.array(presentationPartSchema).min(1)
+              })
+              .strict()
+          )
+          .default([])
+      })
+      .strict(),
+    tokens: z.array(tokenBindingSchema).default([]),
     usage: z
       .object({
         do: z.array(usageRuleSchema).min(1),
         dont: z.array(usageRuleSchema).min(1),
-        relatedComponents: z.array(nonEmptyString)
+        relatedComponents: z.array(nonEmptyString).default([])
       })
       .strict(),
-    requirements: z.array(requirementSchema).min(1),
-    migrations: z.array(migrationSchema),
-    evidence: z
-      .object({
-        sources: z.array(evidenceSourceSchema).min(1),
-        verifications: z.array(verificationSchema)
-      })
-      .strict()
+    examples: z.array(exampleSchema).default([]),
+    evaluations: z.array(ruleSchema).default([]),
+    migrations: z.array(migrationSchema).default([]),
+    evidenceReferences: z.object({ sources: z.array(evidenceSourceSchema).default([]) }).strict()
+  })
+  .strict()
+
+const verificationSchema = z
+  .object({
+    id: idString,
+    ruleId: idString,
+    result: z.enum(['pass', 'fail', 'unavailable']),
+    verifiedAt: isoDate,
+    sourceIds: z.array(idString).min(1),
+    notes: nonEmptyString.optional()
+  })
+  .strict()
+
+export const componentVerificationSchema = z
+  .object({
+    formatVersion: z.literal('1.0.0'),
+    componentId: contractId,
+    contractVersion: nonEmptyString,
+    publishedAt: isoDate.optional(),
+    verifications: z.array(verificationSchema)
+  })
+  .strict()
+
+export const tokenRegistrySchema = z
+  .object({
+    version: nonEmptyString,
+    tokens: z
+      .array(
+        z
+          .object({
+            id: idString,
+            kind: z.enum(['component', 'semantic']),
+            description: nonEmptyString,
+            source: nonEmptyString
+          })
+          .strict()
+      )
+      .min(1)
   })
   .strict()
 
 export const evaluationProfileSchema = z
   .object({
     version: nonEmptyString,
+    displayName: nonEmptyString.optional(),
+    status: z.enum(['pilot', 'stable']).optional(),
     dimensions: z.record(z.enum(HEALTH_DIMENSIONS), z.number().positive()),
     severityWeights: z
       .object({

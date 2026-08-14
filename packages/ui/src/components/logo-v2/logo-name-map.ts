@@ -14,6 +14,9 @@ import Argo from './logos/argo.svg'
 import ArmoreCode from './logos/armore-code.svg'
 import Artifactory from './logos/artifactory.svg'
 import AutoScaler from './logos/auto-scaler.svg'
+import AwsEc2 from './logos/aws-ec2.svg'
+import AwsElasticache from './logos/aws-elasticache.svg'
+import AwsRds from './logos/aws-rds.svg'
 import Aws from './logos/aws.svg'
 import Azure from './logos/azure.svg'
 import Background from './logos/background.svg'
@@ -41,6 +44,7 @@ import DataDog from './logos/data-dog.svg'
 import DatabaseApplySchema from './logos/database-apply-schema.svg'
 import DatabaseCheck from './logos/database-check.svg'
 import DatabaseRollback from './logos/database-rollback.svg'
+import Databricks from './logos/databricks.svg'
 import DefaultSecretManager from './logos/default-secret-manager.svg'
 import Docker from './logos/docker.svg'
 import Dynatrace from './logos/dynatrace.svg'
@@ -84,6 +88,7 @@ import Mend from './logos/mend.svg'
 import Metasploit from './logos/metasploit.svg'
 import Microsoft from './logos/microsoft.svg'
 import Modelscan from './logos/modelscan.svg'
+import Mongodb from './logos/mongodb.svg'
 import MsTeams from './logos/ms-teams.svg'
 import NewRelic from './logos/new-relic.svg'
 import Nexus from './logos/nexus.svg'
@@ -119,6 +124,7 @@ import Serverless from './logos/serverless.svg'
 import Servicenow from './logos/servicenow.svg'
 import Sfx from './logos/sfx.svg'
 import Slack from './logos/slack.svg'
+import Snowflake from './logos/snowflake.svg'
 import Snyk from './logos/snyk.svg'
 import Sonarqube from './logos/sonarqube.svg'
 import Splunk from './logos/splunk.svg'
@@ -156,6 +162,9 @@ export const LogoNameMapV2 = {
   'armore-code': ArmoreCode,
   artifactory: Artifactory,
   'auto-scaler': AutoScaler,
+  'aws-ec2': AwsEc2,
+  'aws-elasticache': AwsElasticache,
+  'aws-rds': AwsRds,
   aws: Aws,
   azure: Azure,
   background: Background,
@@ -183,6 +192,7 @@ export const LogoNameMapV2 = {
   'database-apply-schema': DatabaseApplySchema,
   'database-check': DatabaseCheck,
   'database-rollback': DatabaseRollback,
+  databricks: Databricks,
   'default-secret-manager': DefaultSecretManager,
   docker: Docker,
   dynatrace: Dynatrace,
@@ -226,6 +236,7 @@ export const LogoNameMapV2 = {
   metasploit: Metasploit,
   microsoft: Microsoft,
   modelscan: Modelscan,
+  mongodb: Mongodb,
   'ms-teams': MsTeams,
   'new-relic': NewRelic,
   nexus: Nexus,
@@ -261,6 +272,7 @@ export const LogoNameMapV2 = {
   servicenow: Servicenow,
   sfx: Sfx,
   slack: Slack,
+  snowflake: Snowflake,
   snyk: Snyk,
   sonarqube: Sonarqube,
   splunk: Splunk,

@@ -101,6 +101,7 @@ const anatomyBindingSchema = z
     target: nonEmptyString.optional(),
     names: z.array(nonEmptyString).min(1).optional(),
     property: nonEmptyString.optional(),
+    aliases: z.array(nonEmptyString).min(1).optional(),
     visibleWhen: z.record(nonEmptyString, scalar).optional()
   })
   .strict()

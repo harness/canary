@@ -733,6 +733,18 @@ test('defines rounded as supported for icon-only Buttons and deprecated for text
   expect(roundedMigration.instructions).toContain('equivalent standard-shape Button')
 })
 
+test('records alternate Figma anatomy property names in the contract', () => {
+  const packageRoot = join(dirname(fileURLToPath(import.meta.url)), '..')
+  const contract = JSON.parse(readFileSync(join(packageRoot, 'catalog/contracts/button.contract.json'), 'utf8'))
+  const trailingIcon = contract.anatomy.find(part => part.id === 'trailing-icon')
+
+  expect(trailingIcon.bindings.figma).toMatchObject({
+    kind: 'property',
+    property: 'suffix icon#1687:61',
+    aliases: ['↳ suffix']
+  })
+})
+
 test('records keyboard focus as an intentional code-only state matching the Button styles', () => {
   const packageRoot = join(dirname(fileURLToPath(import.meta.url)), '..')
   const contract = JSON.parse(readFileSync(join(packageRoot, 'catalog/contracts/button.contract.json'), 'utf8'))

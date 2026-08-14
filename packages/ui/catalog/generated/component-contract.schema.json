@@ -627,6 +627,13 @@
             }
           ]
         },
+        "aliases": {
+          "minItems": 1,
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/__schema0"
+          }
+        },
         "visibleWhen": {
           "type": "object",
           "propertyNames": {

@@ -135,7 +135,8 @@
       "bindings": {
         "figma": {
           "kind": "property",
-          "property": "suffix icon#1687:61"
+          "property": "suffix icon#1687:61",
+          "aliases": ["↳ suffix"]
         },
         "react": {
           "kind": "composition",

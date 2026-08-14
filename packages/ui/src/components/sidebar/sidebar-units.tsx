@@ -89,6 +89,7 @@ export const SidebarTrigger = forwardRef<ElementRef<typeof Button>, SidebarTrigg
           content: t('component:sidebar.toggle', 'Toggle sidebar')
         }}
         {...props}
+        aria-label={props['aria-label'] ?? t('component:sidebar.toggle', 'Toggle sidebar')}
       >
         <IconV2 name="sidebar" />
         <span className="sr-only">{t('component:sidebar.toggle', 'Toggle sidebar')}</span>
@@ -207,8 +208,10 @@ export const SidebarGroup = forwardRef<HTMLDivElement, SidebarGroupProps>(
               className="cn-sidebar-group-header-action-button"
               size="xs"
               iconOnly
+              aria-label={`${label} actions`}
               onClick={onActionClick}
               variant="ghost"
+              tooltipProps={{ content: `${label} actions` }}
             >
               <IconV2 size="xs" name={actionIcon} />
             </Button>

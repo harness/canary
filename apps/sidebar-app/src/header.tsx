@@ -17,6 +17,7 @@ export const Header: FC = () => {
           variant="ghost"
           size="sm"
           iconOnly
+          aria-label={isLight ? 'Switch to dark mode' : 'Switch to light mode'}
           ignoreIconOnlyTooltip
           type="button"
           onClick={() => setTheme(isLight ? DARK_THEME : LIGHT_THEME)}

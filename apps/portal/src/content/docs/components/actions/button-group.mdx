@@ -16,10 +16,11 @@ import { DocsPage } from "@/components/docs-page";
       iconOnly
       size="sm"
       buttonsProps={[
-        { children: <IconV2 name="info-circle" />, onClick: () => { console.log('Button icon') } },
-        { children: <IconV2 name="key-back" />, tooltipProps: { title: 'Title', content: <p>This is a tooltip</p> }, onClick: () => { console.log('Button with tooltip') } },
+        { children: <IconV2 name="info-circle" />, 'aria-label': 'Show information', onClick: () => { console.log('Button icon') } },
+        { children: <IconV2 name="key-back" />, 'aria-label': 'Go back', tooltipProps: { title: 'Title', content: <p>This is a tooltip</p> }, onClick: () => { console.log('Button with tooltip') } },
         { children:
           <IconV2 name="more-vert" />,
+          'aria-label': 'Open more options',
           dropdownProps: {
             content: (
               <>
@@ -48,10 +49,11 @@ return (
       iconOnly
       size="sm"
       buttonsProps={[
-        { children: <IconV2 name="info-circle" />, onClick: () => { console.log('Button icon') } },
-        { children: <IconV2 name="key-back" />, tooltipProps: { title: 'Title', content: <p>This is a tooltip</p> }, onClick: () => { console.log('Button with tooltip') } },
+        { children: <IconV2 name="info-circle" />, 'aria-label': 'Show information', onClick: () => { console.log('Button icon') } },
+        { children: <IconV2 name="key-back" />, 'aria-label': 'Go back', tooltipProps: { title: 'Title', content: <p>This is a tooltip</p> }, onClick: () => { console.log('Button with tooltip') } },
         {
             children: <IconV2 name="more-vert" />,
+            'aria-label': 'Open more options',
             dropdownProps: {
               content: (
                 <>
@@ -141,7 +143,7 @@ The `ButtonGroup` component accepts a `size` prop to control its overall dimensi
 
 ## Icon only
 
-The `ButtonGroup` component accepts a `iconOnly` prop. When this prop is set, the `Bitton` is styled to fit the dimensions of an icon, making it suitable for icon-only buttons.
+The `ButtonGroup` component accepts an `iconOnly` prop. Each item still needs an accessible name through `aria-label` or `aria-labelledby`.
 
 <DocsPage.ComponentExample
   client:only
@@ -149,9 +151,9 @@ The `ButtonGroup` component accepts a `iconOnly` prop. When this prop is set, th
     <ButtonGroup
       iconOnly
       buttonsProps={[
-        { children: <IconV2 name="info-circle" />, onClick: () => { console.log('Button icon 1') } },
-        { children: <IconV2 name="key-back" />, onClick: () => { console.log('Button icon 2') } },
-        { children: <IconV2 name="more-vert" />, onClick: () => { console.log('Button icon 3') } }
+        { children: <IconV2 name="info-circle" />, 'aria-label': 'Show information', onClick: () => { console.log('Button icon 1') } },
+        { children: <IconV2 name="key-back" />, 'aria-label': 'Go back', onClick: () => { console.log('Button icon 2') } },
+        { children: <IconV2 name="more-vert" />, 'aria-label': 'Open more options', onClick: () => { console.log('Button icon 3') } }
       ]}
     />
   `}
@@ -167,9 +169,9 @@ Within `buttonsProps`, you can provide `tooltipProps` to define tooltip data for
     <ButtonGroup
       iconOnly
       buttonsProps={[
-        { children: <IconV2 name="info-circle" />, onClick: () => { console.log('Button icon 1') }, tooltipProps: { title: 'Title', content: <p>This is a tooltip</p> } },
-        { children: <IconV2 name="key-back" />, onClick: () => { console.log('Button icon 2') }, tooltipProps: { title: 'Title', content: <p>This is a tooltip</p> } },
-        { children: <IconV2 name="more-vert" />, onClick: () => { console.log('Button icon 3') }, tooltipProps: { title: 'Title', content: <p>This is a tooltip</p> } }
+        { children: <IconV2 name="info-circle" />, 'aria-label': 'Show information', onClick: () => { console.log('Button icon 1') }, tooltipProps: { title: 'Title', content: <p>This is a tooltip</p> } },
+        { children: <IconV2 name="key-back" />, 'aria-label': 'Go back', onClick: () => { console.log('Button icon 2') }, tooltipProps: { title: 'Title', content: <p>This is a tooltip</p> } },
+        { children: <IconV2 name="more-vert" />, 'aria-label': 'Open more options', onClick: () => { console.log('Button icon 3') }, tooltipProps: { title: 'Title', content: <p>This is a tooltip</p> } }
       ]}
     />
   `}

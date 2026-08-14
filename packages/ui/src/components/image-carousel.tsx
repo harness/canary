@@ -50,6 +50,7 @@ export const ImageCarousel: FC<ImageCarouselProps> = ({ isOpen, setIsOpen, imgEv
             variant="outline"
             size="sm"
             iconOnly
+            aria-label="Zoom out"
             data-testid="zoomOutButton"
             onClick={() => {
               if (Number(zoomLevel.toFixed(1)) > 0.3) {
@@ -67,6 +68,7 @@ export const ImageCarousel: FC<ImageCarouselProps> = ({ isOpen, setIsOpen, imgEv
             variant="outline"
             size="sm"
             iconOnly
+            aria-label="Zoom in"
             data-testid="zoomInButton"
             onClick={() => {
               if (Number(zoomLevel.toFixed(1)) < 2) {

@@ -65,7 +65,13 @@ export const DrawerHeaderV2: FC<DrawerHeaderV2Props> = ({
         />
         {!hideClose && (
           <DrawerPrimitive.Close asChild>
-            <Button className="cn-drawer-close-button" variant="ghost" iconOnly ignoreIconOnlyTooltip>
+            <Button
+              className="cn-drawer-close-button"
+              variant="ghost"
+              iconOnly
+              aria-label="Close drawer"
+              ignoreIconOnlyTooltip
+            >
               <IconV2 className="cn-drawer-close-button-icon" name="xmark" skipSize />
             </Button>
           </DrawerPrimitive.Close>

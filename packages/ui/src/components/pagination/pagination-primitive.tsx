@@ -52,10 +52,33 @@ const PaginationPrimitiveLink = ({
   }
 
   if (onClick) {
+    if (iconOnly) {
+      return (
+        <Button
+          ignoreIconOnlyTooltip
+          iconOnly
+          ref={ref as React.Ref<HTMLButtonElement>}
+          variant="outline"
+          disabled={disabled}
+          onClick={onClick}
+          size={size}
+          className={cn(
+            {
+              'cn-button-active': isActive,
+              'cn-button-disabled': disabled
+            },
+            className
+          )}
+          {...props}
+          aria-label={props['aria-label'] ?? 'Pagination control'}
+        >
+          {children}
+        </Button>
+      )
+    }
+
     return (
       <Button
-        ignoreIconOnlyTooltip
-        iconOnly={iconOnly}
         ref={ref as React.Ref<HTMLButtonElement>}
         variant="outline"
         disabled={disabled}

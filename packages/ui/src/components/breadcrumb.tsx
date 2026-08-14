@@ -187,6 +187,7 @@ const BreadcrumbEllipsis = forwardRef<HTMLButtonElement, BreadcrumbEllipsisProps
             ignoreIconOnlyTooltip
             className={cn('cn-breadcrumb-ellipsis', className)}
             {...props}
+            aria-label={props['aria-label'] ?? 'Show hidden breadcrumb items'}
           >
             <IconV2 name="more-horizontal" />
           </Button>

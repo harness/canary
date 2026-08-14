@@ -31,6 +31,11 @@ export const SidebarToggleMenuButton = ({ onClick }: SidebarToggleMenuButtonProp
       variant="transparent"
       size="sm"
       iconOnly
+      aria-label={
+        collapsed
+          ? t('component:sidebar.sidebarToggle.expand', 'Expand')
+          : t('component:sidebar.sidebarToggle.collapse', 'Collapse')
+      }
       tooltipProps={{
         content: collapsed
           ? t('component:sidebar.sidebarToggle.expand', 'Expand')

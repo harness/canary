@@ -145,7 +145,14 @@ export const PullRequestCommentReactions: FC<PullRequestCommentReactionsProps> =
       {onReactionToggle && (
         <Popover.Root open={pickerOpen} onOpenChange={setPickerOpen}>
           <Popover.Trigger asChild>
-            <Button iconOnly variant="outline" size="sm" className="group" tooltipProps={{ content: 'Add reaction' }}>
+            <Button
+              iconOnly
+              aria-label="Add reaction"
+              variant="outline"
+              size="sm"
+              className="group"
+              tooltipProps={{ content: 'Add reaction' }}
+            >
               <IconV2
                 name="plus-circle"
                 size="sm"

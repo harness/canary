@@ -236,6 +236,7 @@ export const getRepoListColumns = ({
           <Button
             variant="ghost"
             iconOnly
+            aria-label={t('views:repos.cancelImport', 'Cancel import')}
             tooltipProps={{ content: t('views:repos.cancelImport', 'Cancel import') }}
             onClick={e => {
               e.stopPropagation()

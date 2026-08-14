@@ -162,6 +162,7 @@ function ListFormInputInternal(props: ListFormInputProps): JSX.Element {
                     {!inputConfig?.hideDelete && (
                       <Button
                         iconOnly
+                        aria-label={`Remove item ${idx + 1}`}
                         onClick={() => {
                           remove(idx)
                         }}

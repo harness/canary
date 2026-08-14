@@ -53,6 +53,7 @@ const ViewSettings: FC<ViewSettingsProps> = ({ routes }) => {
         variant="transparent"
         size="sm"
         iconOnly
+        aria-label={showSettings ? 'Hide view settings' : 'Show view settings'}
         onClick={() => setShowSettings(current => !current)}
         className={css.showHideButton}
         title={showSettings ? 'Hide view settings' : 'Show view settings'}

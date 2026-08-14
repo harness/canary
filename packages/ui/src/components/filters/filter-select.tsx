@@ -48,6 +48,7 @@ const FilterSelect = <FilterKey extends string, CustomValue = Record<string, unk
                 variant="transparent"
                 size="xs"
                 iconOnly
+                aria-label="Clear search"
                 onClick={() => {
                   setSearchQuery('')
                 }}

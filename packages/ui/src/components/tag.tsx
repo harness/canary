@@ -139,6 +139,7 @@ const Tag = forwardRef<HTMLDivElement, TagProps>(
         {actionIcon && (
           <Button
             iconOnly
+            aria-label={`Remove ${value || label}`}
             rounded={rounded}
             disabled={disabled}
             className="cn-tag-action-icon-button"

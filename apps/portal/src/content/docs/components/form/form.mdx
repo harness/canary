@@ -237,7 +237,12 @@ function FormWithZodAndReactHookForm() {
   return (
     <Dialog.Root>
       <Dialog.Trigger>
-        <Button iconOnly onClick={() => setOpen(true)}>
+        <Button
+          iconOnly
+          aria-label="Open form"
+          tooltipProps={{ content: "Open form" }}
+          onClick={() => setOpen(true)}
+        >
           <IconV2 name="theme" />
         </Button>
       </Dialog.Trigger>

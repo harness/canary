@@ -13,6 +13,8 @@ const Favorite: FC<FavoriteIconProps> = ({ isFavorite = false, onFavoriteToggle,
   <Toggle
     className={cn('hover:bg-cn-hover', className)}
     iconOnly
+    aria-label={isFavorite ? 'Unpin' : 'Pin'}
+    text={isFavorite ? 'Unpin' : 'Pin'}
     size="sm"
     variant="transparent"
     selectedVariant="primary"

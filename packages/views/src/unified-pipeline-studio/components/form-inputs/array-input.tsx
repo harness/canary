@@ -72,6 +72,7 @@ function ArrayFormInputInternal(props: ArrayFormInputProps): JSX.Element {
                   <div>
                     <Button
                       iconOnly
+                      aria-label={`Remove item ${idx + 1}`}
                       className="mt-cn-xs"
                       onClick={() => {
                         remove(idx)

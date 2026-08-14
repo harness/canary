@@ -3,16 +3,16 @@ import { render, RenderResult, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { vi } from 'vitest'
 
-import { Toggle } from '../toggle'
+import { Toggle, type ToggleProps } from '../toggle'
 
 const TestWrapper = ({ children }: { children: React.ReactNode }) => (
   <TooltipPrimitive.Provider>{children}</TooltipPrimitive.Provider>
 )
 
-const renderComponent = (props: Partial<React.ComponentProps<typeof Toggle>> = {}): RenderResult => {
+const renderComponent = (props: ToggleProps = {}): RenderResult => {
   return render(
     <TestWrapper>
-      <Toggle text="Toggle" {...props} />
+      <Toggle {...props} text={props.text ?? 'Toggle'} />
     </TestWrapper>
   )
 }

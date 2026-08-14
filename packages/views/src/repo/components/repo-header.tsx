@@ -104,6 +104,11 @@ export const RepoHeader = ({
                 variant="ghost"
                 size="sm"
                 iconOnly
+                aria-label={
+                  isSyncing
+                    ? t('views:repos.link.syncing', 'Syncing…')
+                    : t('views:repos.link.sync', 'Sync now')
+                }
                 tooltipProps={{
                   content: isSyncing
                     ? t('views:repos.link.syncing', 'Syncing…')

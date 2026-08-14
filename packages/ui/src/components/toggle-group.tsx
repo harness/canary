@@ -162,6 +162,9 @@ const ToggleGroupItem = forwardRef<
     {
       value,
       tooltipProps,
+      ignoreIconOnlyTooltip,
+      'aria-label': ariaLabel,
+      'aria-labelledby': ariaLabelledBy,
       disabled: itemDisabled,
       iconOnly,
       prefixIcon,
@@ -207,21 +210,51 @@ const ToggleGroupItem = forwardRef<
       )
     }
 
-    const accessibilityProps = iconOnly && text ? { 'aria-label': text } : {}
-
-    return (
-      <ToggleGroupPrimitive.Item ref={ref} asChild value={value} disabled={finalDisabled} {...props}>
+    const button = iconOnly ? (
+      ignoreIconOnlyTooltip ? (
         <Button
           className={toggleVariants({ size, variant, iconOnly })}
           variant={buttonVariant}
           size={size}
           disabled={finalDisabled}
-          {...accessibilityProps}
-          iconOnly={iconOnly}
-          tooltipProps={tooltipProps}
+          aria-label={ariaLabel ?? text}
+          aria-labelledby={ariaLabelledBy}
+          iconOnly
+          ignoreIconOnlyTooltip
         >
           {renderContent()}
         </Button>
+      ) : (
+        <Button
+          className={toggleVariants({ size, variant, iconOnly })}
+          variant={buttonVariant}
+          size={size}
+          disabled={finalDisabled}
+          aria-label={ariaLabel ?? text}
+          aria-labelledby={ariaLabelledBy}
+          iconOnly
+          tooltipProps={tooltipProps ?? { content: text }}
+        >
+          {renderContent()}
+        </Button>
+      )
+    ) : (
+      <Button
+        className={toggleVariants({ size, variant, iconOnly })}
+        variant={buttonVariant}
+        size={size}
+        disabled={finalDisabled}
+        aria-label={ariaLabel}
+        aria-labelledby={ariaLabelledBy}
+        tooltipProps={tooltipProps}
+      >
+        {renderContent()}
+      </Button>
+    )
+
+    return (
+      <ToggleGroupPrimitive.Item ref={ref} asChild value={value} disabled={finalDisabled} {...props}>
+        {button}
       </ToggleGroupPrimitive.Item>
     )
   }

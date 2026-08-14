@@ -93,7 +93,13 @@ const Content = forwardRef<HTMLDivElement, ContentProps>(
             <div className="cn-modal-dialog-container">
               {!hideClose && (
                 <DialogPrimitive.Close asChild>
-                  <Button className="cn-modal-dialog-close" variant="transparent" iconOnly ignoreIconOnlyTooltip>
+                  <Button
+                    className="cn-modal-dialog-close"
+                    variant="transparent"
+                    iconOnly
+                    aria-label="Close dialog"
+                    ignoreIconOnlyTooltip
+                  >
                     <IconV2 name="xmark" />
                   </Button>
                 </DialogPrimitive.Close>

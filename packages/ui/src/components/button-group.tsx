@@ -66,22 +66,56 @@ export const ButtonGroup = forwardRef<HTMLDivElement, ButtonGroupProps>(
                 side: orientation === 'vertical' ? 'right' : ('top' as TooltipProps['side'])
               }
             : undefined
+          const accessibleLabel =
+            buttonProps['aria-label'] ??
+            (typeof buttonProps.children === 'string' ? buttonProps.children : undefined) ??
+            (typeof tooltipProps?.content === 'string' ? tooltipProps.content : undefined) ??
+            'Button action'
 
-          return (
-            <Wrapper key={index} dropdownProps={dropdownProps} orientation={orientation}>
+          const buttonClassName = cn(
+            className,
+            { 'cn-button-group-first': !index },
+            { 'cn-button-group-last': index === buttonsProps.length - 1 }
+          )
+
+          const button = iconOnly ? (
+            mergedTooltip ? (
               <Button
                 ref={buttonRef}
-                className={cn(
-                  className,
-                  { 'cn-button-group-first': !index },
-                  { 'cn-button-group-last': index === buttonsProps.length - 1 }
-                )}
+                className={buttonClassName}
                 variant={variant ?? 'outline'}
                 size={size}
                 {...omit(restButtonProps, ['tooltipProps', 'dropdownProps'])}
-                iconOnly={iconOnly}
+                iconOnly
+                aria-label={accessibleLabel}
                 tooltipProps={mergedTooltip}
               />
+            ) : (
+              <Button
+                ref={buttonRef}
+                className={buttonClassName}
+                variant={variant ?? 'outline'}
+                size={size}
+                {...omit(restButtonProps, ['tooltipProps', 'dropdownProps'])}
+                iconOnly
+                aria-label={accessibleLabel}
+                ignoreIconOnlyTooltip
+              />
+            )
+          ) : (
+            <Button
+              ref={buttonRef}
+              className={buttonClassName}
+              variant={variant ?? 'outline'}
+              size={size}
+              {...omit(restButtonProps, ['tooltipProps', 'dropdownProps'])}
+              tooltipProps={mergedTooltip}
+            />
+          )
+
+          return (
+            <Wrapper key={index} dropdownProps={dropdownProps} orientation={orientation}>
+              {button}
             </Wrapper>
           )
         })}

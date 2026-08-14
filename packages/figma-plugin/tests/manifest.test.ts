@@ -49,6 +49,7 @@ describe("plugin manifest", () => {
 
   it("declares and explains every host the plugin can fetch", () => {
     expect(manifest.networkAccess?.allowedDomains).toEqual([
+      "https://harness.atlassian.net",
       "https://github.com",
       "https://*.github.com",
       "https://harness.io",

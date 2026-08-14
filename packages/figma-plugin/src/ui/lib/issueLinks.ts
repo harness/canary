@@ -1,29 +1,34 @@
 /**
- * Build GitHub issue deep-links for Path P proposals.
+ * Build Jira issue deep-links for Path P proposals.
  */
 
 const MAX_URL = 6000;
 
-export function buildGitHubIssueUrl(opts: {
-  repo: string; // org/repo
-  title: string;
-  body: string;
+export function buildJiraIssueUrl(opts: {
+  siteUrl: string;
+  projectId: string;
+  issueTypeId: string;
+  summary: string;
+  description: string;
   labels?: string;
-}): { url: string; bodyTruncated: boolean } {
-  const repo = opts.repo
-    .replace(/^https?:\/\/github\.com\//, "")
-    .replace(/\.git$/, "")
-    .replace(/\/$/, "");
-  const base = `https://github.com/${repo}/issues/new`;
+}): { url: string; descriptionTruncated: boolean } {
+  const siteUrl = opts.siteUrl.trim().replace(/\/+$/u, "");
+  const base = `${siteUrl}/secure/CreateIssueDetails!init.jspa`;
   const params = new URLSearchParams();
-  params.set("title", opts.title);
-  if (opts.labels?.trim()) params.set("labels", opts.labels.trim());
-
-  const withBody = `${base}?${params.toString()}&body=${encodeURIComponent(opts.body)}`;
-  if (withBody.length <= MAX_URL) {
-    return { url: withBody, bodyTruncated: false };
+  params.set("pid", opts.projectId.trim());
+  params.set("issuetype", opts.issueTypeId.trim());
+  params.set("summary", opts.summary);
+  for (const label of opts.labels?.split(",").map((value) => value.trim()) ?? []) {
+    if (label) params.append("labels", label);
   }
 
-  // Fall back: open issue without body (caller should copy markdown)
-  return { url: `${base}?${params.toString()}`, bodyTruncated: true };
+  const withDescription = `${base}?${params.toString()}&description=${encodeURIComponent(opts.description)}`;
+  if (withDescription.length <= MAX_URL) {
+    return { url: withDescription, descriptionTruncated: false };
+  }
+
+  return {
+    url: `${base}?${params.toString()}`,
+    descriptionTruncated: true,
+  };
 }

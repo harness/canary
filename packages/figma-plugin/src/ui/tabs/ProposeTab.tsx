@@ -6,9 +6,7 @@ import { Button } from "../components/Button";
 import { ManualCopyField } from "../components/ManualCopy";
 import { copyText, copyToast, type CopyOutcome } from "../lib/clipboard";
 import { okToast, warnToast, type Toast } from "../lib/toast";
-import {
-  buildGitHubIssueUrl,
-} from "../lib/issueLinks";
+import { buildJiraIssueUrl } from "../lib/issueLinks";
 import { openExternalUrl } from "../lib/openExternal";
 import type { SettingsState } from "../../catalog/clientStorage";
 
@@ -76,7 +74,6 @@ export function blankProposal(settings: SettingsState): ProposalDraft {
     requestedChange: "",
     surfaces: ["Catalog (legal API & bindings)", "Figma library"],
     authorName: settings.authorName || "",
-    authorPersona: settings.authorPersona || "Figma designer",
   };
 }
 
@@ -130,28 +127,38 @@ export function ProposeTab({
     else setToast(toastForCopyFail(outcome));
   };
 
-  const openGitHub = async () => {
-    if (!settings.githubRepo.trim()) {
-      setToast(warnToast("Set a GitHub repo in Settings first (org/repo)."));
+  const openJira = async () => {
+    if (
+      !settings.jiraBaseUrl.trim() ||
+      !settings.jiraProjectId.trim() ||
+      !settings.jiraIssueTypeId.trim()
+    ) {
+      setToast(
+        warnToast(
+          "Set the Jira site, project ID, and issue type ID in Settings first.",
+        ),
+      );
       return;
     }
-    const { url, bodyTruncated } = buildGitHubIssueUrl({
-      repo: settings.githubRepo,
-      title: draft.title,
-      body: markdown,
-      labels: settings.githubLabels,
+    const { url, descriptionTruncated } = buildJiraIssueUrl({
+      siteUrl: settings.jiraBaseUrl,
+      projectId: settings.jiraProjectId,
+      issueTypeId: settings.jiraIssueTypeId,
+      summary: draft.title,
+      description: markdown,
+      labels: settings.jiraLabels,
     });
-    if (bodyTruncated) {
+    if (descriptionTruncated) {
       const outcome = await copyText(markdown);
       if (outcome.ok) {
         setToast(
           okToast(
-            "Issue body too long for URL — markdown copied; paste into the blank issue.",
+            "Jira description too long for the link — markdown copied; paste it into the issue.",
           ),
         );
       } else {
         setToast(
-          toastForCopyFail(outcome, "Issue body too long for URL."),
+          toastForCopyFail(outcome, "Jira description too long for the link."),
         );
       }
     }
@@ -310,8 +317,8 @@ export function ProposeTab({
 
       <div class="ds-propose-actions">
         <div class="ds-row">
-          <Button variant="primary" disabled={!valid} onClick={openGitHub}>
-            Open GitHub issue
+          <Button variant="primary" disabled={!valid} onClick={openJira}>
+            Open Jira issue
           </Button>
           <Button
             variant="secondary"

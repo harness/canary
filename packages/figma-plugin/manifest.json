@@ -8,11 +8,12 @@
   "documentAccess": "dynamic-page",
   "networkAccess": {
     "allowedDomains": [
+      "https://harness.atlassian.net",
       "https://github.com",
       "https://*.github.com",
       "https://harness.io",
       "https://*.harness.io"
     ],
-    "reasoning": "Open GitHub issue links from Propose, and any catalogs or APIs hosted on github.com / harness.io. No analytics. Bundled Canary still works offline."
+    "reasoning": "Open Jira issue links from Propose, and load optional catalogs or APIs hosted on github.com / harness.io. No analytics. Bundled Canary still works offline."
   }
 }

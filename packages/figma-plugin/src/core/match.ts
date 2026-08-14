@@ -22,6 +22,7 @@ export function normalizeComponentName(name: string): string {
   return name
     .trim()
     .replace(/^[❖◇◆●■□]\s*/u, "")
+    .replace(/\s*\/\s*/gu, "/")
     .trim()
     .toLowerCase();
 }

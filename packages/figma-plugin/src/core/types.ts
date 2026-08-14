@@ -67,7 +67,6 @@ export type ProposalDraft = {
   designOnlyNote?: string;
   acceptanceSuggestion?: string;
   authorName: string;
-  authorPersona: string;
   figmaFileKey?: string;
   figmaNodeId?: string;
   figmaUrl?: string;

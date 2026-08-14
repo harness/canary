@@ -123,6 +123,34 @@ describe("checkInstance", () => {
     expect(result.ok).toBe(true);
   });
 
+  it("accepts the icon-only tooltip control as design-only composition", () => {
+    const result = checkInstance(
+      snap({
+        properties: {
+          variant: "primary",
+          size: "xs",
+          theme: "default",
+          "tooltip#7883:174": true,
+        },
+      }),
+      entry,
+      { treatMissingLibraryFlagAs: "ignore" },
+    );
+
+    expect(result.findings.filter((f) => f.severity === "fail")).toEqual([]);
+    expect(result.findings).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({
+          code: "DESIGN_ONLY_OK",
+          propName: "tooltip",
+          bindingHint:
+            "ButtonProps.tooltipProps when true; ButtonProps.ignoreIconOnlyTooltip when false",
+        }),
+      ]),
+    );
+    expect(result.ok).toBe(true);
+  });
+
   it("fails detached instances", () => {
     const result = checkInstance(
       snap({ isFromLibrary: false }),

@@ -736,7 +736,10 @@ describe('SinglePaneStepper', () => {
         'github-auth': { title: 'GitHub', component: () => null, next: 'connect-repo' },
         'gitlab-auth': { title: 'GitLab', component: () => null, next: 'connect-repo' },
         'bitbucket-auth': { title: 'Bitbucket', component: () => null, next: 'connect-repo' },
-        'connect-repo': { title: 'Connect', component: () => null }
+        // Flagged terminal: this flow's genuine, designed end — required for reachedKnownEnd to
+        // correctly report true once the walk reaches it (a step with no `next` that isn't flagged
+        // terminal is ambiguous — its real continuation may be decided dynamically at runtime).
+        'connect-repo': { title: 'Connect', component: () => null, terminal: true }
       },
       initialStep: 'start'
     }
@@ -769,7 +772,10 @@ describe('SinglePaneStepper', () => {
         'a-step': { step: 'provider-a', title: 'A Step', component: () => null, next: 'connect-repo' },
         'b-step': { step: 'provider-b', title: 'B Step', component: () => null, next: 'connect-repo' },
         'connect-repo': { step: 'connect', title: 'Connect', component: () => null, next: 'finish' },
-        finish: { step: 'done', title: 'Finish', component: () => null }
+        // Flagged terminal: this flow's genuine, designed end — required for reachedKnownEnd to
+        // correctly report true once the walk reaches it (a step with no `next` that isn't flagged
+        // terminal is ambiguous — its real continuation may be decided dynamically at runtime).
+        finish: { step: 'done', title: 'Finish', component: () => null, terminal: true }
       },
       initialStep: 'start'
     }
@@ -859,6 +865,51 @@ describe('SinglePaneStepper', () => {
       expect(groupThreeRow?.querySelector('.cn-stepper-step-badge')).toHaveTextContent('Step 3/3')
 
       expect(groupOneRow).toHaveAttribute('aria-label', 'Step 1 of 3: Group One')
+    })
+
+    // Same root cause as dynamicNextFlow above, but the unresolved dynamic-next step is ONE HOP
+    // DOWNSTREAM of the active step instead of being the active step itself. 'step-one' (active)
+    // DOES have a static `next` ('step-two'), so a predicate that only checks the active step's own
+    // `next` (the pre-fix bug) would wrongly conclude reachedKnownEnd: true — even though the walk
+    // actually stops at 'step-two' (no static `next`, not terminal) and never confirms 'group-three'
+    // is really on the path. reachedKnownEnd must reflect where the WHOLE walk stopped, not just
+    // whether the active step's own first hop was static, so 'group-three' must keep its real
+    // number here exactly like 'group-two'/'group-three' do in dynamicNextFlow above.
+    const downstreamDynamicNextFlow: FlowConfig = {
+      stepGroups: {
+        'group-one': { title: 'Group One' },
+        'group-two': { title: 'Group Two' },
+        'group-three': { title: 'Group Three' }
+      },
+      steps: {
+        'step-one': { step: 'group-one', title: 'Step One', component: () => null, next: 'step-two' },
+        'step-two': { step: 'group-two', title: 'Step Two', component: () => null },
+        'step-three': { step: 'group-three', title: 'Step Three', component: () => null }
+      },
+      initialStep: 'step-one'
+    }
+
+    test('non-flat mode: a downstream (not active) unresolved dynamic-next step also keeps later groups’ real numbers', () => {
+      render(<SinglePaneStepper.Root flow={downstreamDynamicNextFlow} showStepBadge />)
+
+      // 'step-one' (active) has a static next into 'step-two', which itself has no static next —
+      // the walk advances one hop then stops there. stepNumberOverrides only contains
+      // 'group-one'/'group-two'; 'group-three' is absent for the same "not yet known" reason as
+      // dynamicNextFlow's groups, not because it's a genuinely off-path sibling (this flow has
+      // none), so it must still render its real, sequential circle-number badge.
+      const groupOneRow = screen.getByText('Group One').closest('.cn-stepper-step')
+      const groupTwoRow = screen.getByText('Group Two').closest('.cn-stepper-step')
+      const groupThreeRow = screen.getByText('Group Three').closest('.cn-stepper-step')
+
+      expect(groupOneRow?.querySelector('.cn-stepper-indicator-number')).toHaveTextContent('1')
+      expect(groupTwoRow?.querySelector('.cn-stepper-indicator-number')).toHaveTextContent('2')
+      expect(groupThreeRow?.querySelector('.cn-stepper-indicator-number')).toHaveTextContent('3')
+
+      expect(groupOneRow?.querySelector('.cn-stepper-step-badge')).toHaveTextContent('Step 1/3')
+      expect(groupTwoRow?.querySelector('.cn-stepper-step-badge')).toHaveTextContent('Step 2/3')
+      expect(groupThreeRow?.querySelector('.cn-stepper-step-badge')).toHaveTextContent('Step 3/3')
+
+      expect(groupThreeRow).toHaveAttribute('aria-label', 'Step 3 of 3: Group Three')
     })
 
     test('linear flow (no branching): total unchanged in either grouped or flat mode', () => {

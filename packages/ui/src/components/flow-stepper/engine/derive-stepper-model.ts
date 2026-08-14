@@ -19,16 +19,21 @@ import type { CardEntry, FlowConfig } from './engine-types'
  */
 export interface FullPredictedPathResult {
   path: string[]
-  /** True when the walk can be trusted as the complete remaining path for this run — it either
-   *  advanced past the active step via at least one static `next` pointer, stopped at the cycle
-   *  guard (a bounded, already-accounted-for loop), or the active step is explicitly flagged
-   *  `terminal` (a confirmed, designed end of the flow). False only when the walk never advanced
-   *  at all — the active step itself has no static `next` and isn't flagged terminal — meaning its
-   *  real continuation may be decided dynamically at runtime by `complete(statePatch, nextStepId)`
-   *  (see the module doc comment above and engine-context.tsx's `complete`), so more steps may
-   *  genuinely follow that we cannot see statically. Callers computing a badge denominator should
-   *  fall back to a flow-wide count instead of trusting `path.length` when this is false, so the
-   *  total never undercounts. */
+  /** True when the WHOLE walk (not just its first hop off the active step) can be trusted as
+   *  having reached a genuinely known end — the last step it actually reached (the active step
+   *  itself, if the walk never advanced) is explicitly flagged `terminal` (a confirmed, designed
+   *  end of the flow), or the walk looped back into already-visited history (a bounded,
+   *  already-accounted-for cycle via the cycle guard). False whenever the walk stops merely
+   *  because SOME step along the way — the active step itself, or one further downstream in the
+   *  predicted path — has no static `next` and isn't flagged terminal. That step's real
+   *  continuation may be decided dynamically at runtime by `complete(statePatch, nextStepId)` (see
+   *  the module doc comment above and engine-context.tsx's `complete`), so more steps may
+   *  genuinely follow that we cannot see statically — even if an earlier hop in the SAME walk did
+   *  have a static `next`. (A step's own static `next` only proves the walk advanced one hop; it
+   *  says nothing about whether a LATER hop in that same walk also resolved statically — that's
+   *  the distinction this flag must capture, not just the active step's own first hop.) Callers
+   *  computing a badge denominator should fall back to a flow-wide count instead of trusting
+   *  `path.length` when this is false, so the total never undercounts. */
   reachedKnownEnd: boolean
 }
 
@@ -39,14 +44,22 @@ export function deriveFullPredictedPath(
 ): FullPredictedPathResult {
   const predicted: string[] = []
   const visited = new Set(cardHistory.map(e => e.stepId))
+  // Tracks the last step the walk actually reached — the active step itself if the walk never
+  // advanced — so reachedKnownEnd below can be judged against where the walk truly stopped,
+  // rather than re-derived solely from the active step's own `next` field.
+  let lastStepId = activeStepId
   let current = flow.steps[activeStepId]?.next
-  const hasStaticNext = Boolean(current)
   while (current && flow.steps[current] && !visited.has(current)) {
     predicted.push(current)
     visited.add(current)
+    lastStepId = current
     current = flow.steps[current].next
   }
-  const reachedKnownEnd = hasStaticNext || Boolean(flow.steps[activeStepId]?.terminal)
+  // Known end iff: the step the walk actually stopped on is flagged terminal, OR the walk stopped
+  // because `current` pointed at a step already in `visited` (a confirmed loop-back, not an
+  // unresolved dynamic branch). Anything else — including "some earlier hop had a static `next`"
+  // — is not sufficient; that was the bug (see derive-stepper-model.test.ts + the JSDoc above).
+  const reachedKnownEnd = Boolean(flow.steps[lastStepId]?.terminal) || (current !== undefined && visited.has(current))
   return { path: predicted, reachedKnownEnd }
 }
 

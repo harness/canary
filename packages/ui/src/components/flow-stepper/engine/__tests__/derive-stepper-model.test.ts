@@ -161,12 +161,18 @@ describe('deriveStepperModel', () => {
 })
 
 describe('deriveFullPredictedPath', () => {
-  test('linear flow: walks every remaining step to the end, same as a single-branch flow would', () => {
-    // No branching here — the full remaining path is just b then c.
+  test('linear flow: walks every remaining step, but reachedKnownEnd stays false when the last step reached is not flagged terminal', () => {
+    // No branching here — the full remaining path is just b then c. But `flow`'s 'c' has no static
+    // `next` and isn't flagged `terminal` (see the dedicated ambiguous-ending test below, which
+    // relies on this same fixture's 'c' being exactly that) — so even though every hop UP TO 'c' was
+    // statically known, the walk still stops on an unresolved, non-terminal step. reachedKnownEnd
+    // must reflect where the WHOLE walk stopped, not just whether the active step's own first hop
+    // was static — treating "some earlier hop resolved statically" as sufficient was the root-cause
+    // bug (a step's own `next` only proves the walk advanced one hop, not that it reached the end).
     const history: CardEntry[] = [{ stepId: 'a', status: 'active', stateSnapshot: {} }]
     const result = deriveFullPredictedPath(flow, history, 'a')
     expect(result.path).toEqual(['b', 'c'])
-    expect(result.reachedKnownEnd).toBe(true)
+    expect(result.reachedKnownEnd).toBe(false)
   })
 
   test('branching flow: only walks the ACTIVE branch, not every mutually-exclusive sibling step', () => {
@@ -181,7 +187,10 @@ describe('deriveFullPredictedPath', () => {
         'gitlab-auth': { step: 'auth', title: 'GitLab', component: () => null, next: 'connect-repo' },
         'bitbucket-auth': { step: 'auth', title: 'Bitbucket', component: () => null, next: 'connect-repo' },
         'connect-repo': { step: 'connect', title: 'Connect', component: () => null, next: 'finish' },
-        finish: { step: 'done', title: 'Finish', component: () => null }
+        // Flagged terminal: 'finish' is this flow's genuine, designed end (not a step whose real
+        // continuation is decided dynamically at runtime) — required for reachedKnownEnd to
+        // correctly report true once the walk reaches it.
+        finish: { step: 'done', title: 'Finish', component: () => null, terminal: true }
       },
       initialStep: 'github-auth'
     }
@@ -202,7 +211,9 @@ describe('deriveFullPredictedPath', () => {
       steps: {
         'github-auth': { step: 'auth', title: 'GitHub', component: () => null, next: 'connect-repo' },
         'connect-repo': { step: 'connect', title: 'Connect', component: () => null, next: 'finish' },
-        finish: { step: 'done', title: 'Finish', component: () => null }
+        // Flagged terminal: 'finish' is this flow's genuine, designed end — required for
+        // reachedKnownEnd to correctly report true once the walk reaches it.
+        finish: { step: 'done', title: 'Finish', component: () => null, terminal: true }
       },
       initialStep: 'github-auth'
     }

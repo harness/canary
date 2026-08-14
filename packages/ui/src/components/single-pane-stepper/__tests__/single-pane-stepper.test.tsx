@@ -1089,6 +1089,36 @@ describe('SinglePaneStepper', () => {
       )
       expect(new Set(numerators).size).toBe(4)
     })
+
+    // Round 6 follow-up regression: a step can carry BOTH a static `next` (so the walk doesn't stop
+    // there) AND `dynamicNext: true`. The old `pathWalkComplete` check only looked at the
+    // STOPPED-AT step's own `dynamicNext` flag — here that's 'step-two', a dead end (no `next`, not
+    // `terminal`) that lacks the flag — and silently walked straight past 'step-one's flag via its
+    // static `next`, as if 'step-one's continuation were fully known. The fix must check
+    // `dynamicNext` along the WHOLE walked-plus-predicted path (`[activeStepId, ...fullPredictedPath]`),
+    // not just the final stopped-at step, so 'step-one's flag isn't silently ignored.
+    const dynamicNextEarlierInPathFlow: FlowConfig = {
+      steps: {
+        'step-one': { title: 'Step One', component: () => null, next: 'step-two', dynamicNext: true },
+        'step-two': { title: 'Step Two', component: () => null }, // dead end: no next, not terminal
+        'step-three': { title: 'Step Three', component: () => null } // never reached on this run's path
+      },
+      initialStep: 'step-one'
+    }
+
+    test('flat mode: a static-next step earlier in the path that is ALSO flagged dynamicNext still forces the flow-wide fallback, not the tight walked total', () => {
+      const { container } = render(<SinglePaneStepper.Root flow={dynamicNextEarlierInPathFlow} showStepBadge />)
+
+      const badge = container.querySelector('.cn-stepper-step-badge')
+      expect(badge).toBeInTheDocument()
+      // Walked total: cardHistory (0, nothing completed yet) + fullPredictedPath (['step-two'], the
+      // one static hop off 'step-one') = 1. The pre-fix code would report "Step 1/1" here — it only
+      // checks 'step-two' (the stopped-at step, which has no dynamicNext), silently ignoring
+      // 'step-one's flag because the walk continued past it via a static `next`. The fix must fall
+      // back to Object.keys(flow.steps).length = 3 instead, proving the flag is honored wherever it
+      // appears on the path, not only at the final stop.
+      expect(badge).toHaveTextContent('Step 1/3')
+    })
   })
 
   describe('Blocked Message', () => {

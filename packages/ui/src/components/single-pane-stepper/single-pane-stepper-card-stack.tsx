@@ -76,18 +76,21 @@ export function SinglePaneStepperCardStack({
 
   // `reachedKnownEnd` (from the engine) only trusts a `terminal`-flagged step or a confirmed
   // cycle-back — by design it can't tell "the walk hit a genuine dead end the flow author simply
-  // forgot to flag terminal" apart from "the walk stopped at a step whose real continuation is
-  // decided dynamically at runtime" (e.g. CDv2's deployment-pipeline-v2, where a card picks its own
-  // next step). Only the SECOND case might genuinely have more steps we can't see statically.
-  // `dynamicNext` is the flow author's explicit opt-in for that case, declared on whichever step the
-  // walk actually stopped on (the active step itself, or however many hops downstream
-  // `fullPredictedPath` reached) — not something this caller infers. Absent that flag, treat a
-  // non-terminal dead end as a real, designed end: trust the walked total instead of inflating it to
-  // every configured step/group. This intentionally does NOT change `deriveFullPredictedPath`'s own
-  // `reachedKnownEnd` computation (derive-stepper-model.ts) — it's computed here, from data that
-  // function already returns, so grouped-mode's stepNumberOverridesComplete (below) can share it.
-  const stoppedAtStepId = fullPredictedPath[fullPredictedPath.length - 1] ?? activeStepId
-  const pathWalkComplete = reachedKnownEnd || !flow.steps[stoppedAtStepId]?.dynamicNext
+  // forgot to flag terminal" apart from "the walk stopped at (or passed through) a step whose real
+  // continuation is decided dynamically at runtime" (e.g. CDv2's deployment-pipeline-v2, where a
+  // card picks its own next step). Only the SECOND case might genuinely have more steps we can't
+  // see statically. `dynamicNext` is the flow author's explicit opt-in for that case. It must be
+  // checked along the WHOLE walked-plus-predicted path, not just the step the walk stopped on: a
+  // step can carry both a static `next` (so the walk doesn't stop there) AND `dynamicNext: true` —
+  // that step's flag would otherwise be silently skipped as the walk continues past it via its
+  // static `next`, even though the flag says that continuation isn't the true, final one. Absent
+  // the flag anywhere on the path, treat a non-terminal dead end as a real, designed end: trust the
+  // walked total instead of inflating it to every configured step/group. This intentionally does
+  // NOT change `deriveFullPredictedPath`'s own `reachedKnownEnd` computation
+  // (derive-stepper-model.ts) — it's computed here, from data that function already returns, so
+  // grouped-mode's stepNumberOverridesComplete (below) can share it.
+  const hasDynamicNextOnPath = [activeStepId, ...fullPredictedPath].some(stepId => flow.steps[stepId]?.dynamicNext)
+  const pathWalkComplete = reachedKnownEnd || !hasDynamicNextOnPath
 
   // Flat mode's badge denominator: individual steps already visited plus individual steps still
   // ahead on the run's actual path. When the walk stopped at a step flagged `dynamicNext` (its real

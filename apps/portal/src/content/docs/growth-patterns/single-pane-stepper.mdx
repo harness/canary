@@ -141,6 +141,7 @@ interface GroupedStepConfig {
   component: ComponentType; // React component to render as a card
   next?: string; // Next step ID (for routing)
   terminal?: boolean; // Auto-complete on entry (for summary cards)
+  dynamicNext?: true; // This step's real continuation is decided at runtime, not statically — see showStepBadge below
 }
 
 interface FlatStepConfig {
@@ -150,6 +151,7 @@ interface FlatStepConfig {
   component: ComponentType;
   next?: string;
   terminal?: boolean;
+  dynamicNext?: true;
 }
 ```
 
@@ -441,7 +443,7 @@ The root component that sets up the flow engine, renders the single-column layou
     {
       name: "showStepBadge",
       description:
-        "Renders a 'Step {n}/{total}' pill badge next to each step's title",
+        "Renders a 'Step {n}/{total}' pill badge next to each step's title. The badge's total reflects only the path this run actually walks, not every step/group configured in the flow — so a designed end (a step with no `next`, whether or not it's flagged `terminal`) makes the total match the run's real length. Only a step flagged `dynamicNext` (its real continuation is decided at runtime, not statically) makes the total fall back to a flow-wide count instead, since more steps may genuinely follow that can't be predicted from the config.",
       required: false,
       value: "boolean",
       defaultValue: "false",

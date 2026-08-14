@@ -74,16 +74,31 @@ export function SinglePaneStepperCardStack({
     [flow, cardHistory, activeStepId]
   )
 
+  // `reachedKnownEnd` (from the engine) only trusts a `terminal`-flagged step or a confirmed
+  // cycle-back — by design it can't tell "the walk hit a genuine dead end the flow author simply
+  // forgot to flag terminal" apart from "the walk stopped at a step whose real continuation is
+  // decided dynamically at runtime" (e.g. CDv2's deployment-pipeline-v2, where a card picks its own
+  // next step). Only the SECOND case might genuinely have more steps we can't see statically.
+  // `dynamicNext` is the flow author's explicit opt-in for that case, declared on whichever step the
+  // walk actually stopped on (the active step itself, or however many hops downstream
+  // `fullPredictedPath` reached) — not something this caller infers. Absent that flag, treat a
+  // non-terminal dead end as a real, designed end: trust the walked total instead of inflating it to
+  // every configured step/group. This intentionally does NOT change `deriveFullPredictedPath`'s own
+  // `reachedKnownEnd` computation (derive-stepper-model.ts) — it's computed here, from data that
+  // function already returns, so grouped-mode's stepNumberOverridesComplete (below) can share it.
+  const stoppedAtStepId = fullPredictedPath[fullPredictedPath.length - 1] ?? activeStepId
+  const pathWalkComplete = reachedKnownEnd || !flow.steps[stoppedAtStepId]?.dynamicNext
+
   // Flat mode's badge denominator: individual steps already visited plus individual steps still
-  // ahead on the run's actual path. When the walk couldn't confirm the true end of the run's path
-  // (the active step's real destination is decided dynamically at runtime — see
-  // deriveFullPredictedPath's doc comment), never let the denominator collapse below what's already
-  // known; fall back to the flow-wide step count instead of undercounting.
+  // ahead on the run's actual path. When the walk stopped at a step flagged `dynamicNext` (its real
+  // continuation is decided at runtime, so more steps may genuinely follow that we can't see
+  // statically), never let the denominator collapse below what's already known; fall back to the
+  // flow-wide step count instead of undercounting.
   const totalStepsCount = useMemo(() => {
     const walkedTotal = cardHistory.length + fullPredictedPath.length
-    if (reachedKnownEnd) return walkedTotal
+    if (pathWalkComplete) return walkedTotal
     return Math.max(walkedTotal, Object.keys(flow.steps).length)
-  }, [cardHistory.length, fullPredictedPath.length, reachedKnownEnd, flow.steps])
+  }, [cardHistory.length, fullPredictedPath.length, pathWalkComplete, flow.steps])
 
   // Per-group numerator for the badge: each group's 1-based position in the ORDER the run
   // actually encounters it (cardHistory first, then the predicted remainder) — not the raw
@@ -115,12 +130,14 @@ export function SinglePaneStepperCardStack({
   // Grouped-mode denominator: same fallback-rather-than-undercount rule as totalStepsCount above,
   // one level up (distinct step GROUPS on the run's path, not steps). Derived from
   // stepNumberOverrides.size — not a separate walk — so the numerator (each group's entry in that
-  // map) and this denominator can never drift out of sync with each other again.
+  // map) and this denominator can never drift out of sync with each other again. Uses
+  // pathWalkComplete (not raw reachedKnownEnd) for the same dynamicNext-aware reason as
+  // totalStepsCount above.
   const totalStepGroupsCount = useMemo(() => {
     const walkedTotal = stepNumberOverrides.size
-    if (reachedKnownEnd) return walkedTotal
+    if (pathWalkComplete) return walkedTotal
     return Math.max(walkedTotal, Object.keys(flow.stepGroups ?? {}).length)
-  }, [stepNumberOverrides, reachedKnownEnd, flow.stepGroups])
+  }, [stepNumberOverrides, pathWalkComplete, flow.stepGroups])
 
   const totalOverride = flow.stepGroups ? totalStepGroupsCount : totalStepsCount
 
@@ -166,7 +183,7 @@ export function SinglePaneStepperCardStack({
           showStepBadge={showStepBadge}
           totalOverride={totalOverride}
           stepNumberOverrides={stepNumberOverrides}
-          stepNumberOverridesComplete={reachedKnownEnd}
+          stepNumberOverridesComplete={pathWalkComplete}
           collapsibleNestedSteps
           renderStepContent={(stepId, status) => {
             const CardComponent = flow.steps[stepId]?.component

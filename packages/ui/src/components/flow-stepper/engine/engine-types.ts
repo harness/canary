@@ -14,6 +14,17 @@ interface BaseStepConfig {
   // the first call (re-entry guard only). Does NOT affect the step's initial rendered status —
   // it always enters 'active' like any other step.
   terminal?: boolean
+  // Explicit opt-in: this step's real continuation is decided dynamically at runtime (e.g. a card
+  // calls `complete(statePatch, nextStepId)` with a step id chosen from its own logic, not a static
+  // `next`) and cannot be predicted just by reading the flow config. Badge-total fallbacks
+  // (single-pane-stepper-card-stack.tsx's totalStepsCount/totalStepGroupsCount) use this to tell
+  // "the walk stopped here because it's a genuine, designed end of the flow the author simply
+  // forgot to flag `terminal`" (leave unset — trust the walked total, don't inflate it) apart from
+  // "the walk stopped here only because we can't see further statically" (set this — more steps may
+  // genuinely follow, so fall back to a flow-wide count instead of undercounting). Leave unset for
+  // an ordinary designed end; this flag exists precisely so that case no longer needs the inflated
+  // fallback.
+  dynamicNext?: true
   // Presentation-only hint: always render this step as finished/success (icon + color),
   // regardless of actual cardHistory status. Does not affect the state machine, does not
   // affect re-entry (pair with `terminal` for that), does not affect accordion-open

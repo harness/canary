@@ -23,12 +23,16 @@ export interface FlowStepperRailProps {
    * mutually-exclusive sibling group rendering ahead of an on-path group doesn't inflate that
    * group's own numerator (e.g. off-path sibling registered before an active StepperGroup). */
   stepNumberOverrides?: Map<string, number>
-  /** Grouped-mode only: true when stepNumberOverrides reflects the run's FULL path certainty (the
-   * caller's predicted-path walk reached a known terminal, i.e. every step along the way had a
-   * static `next`). False when the walk stopped early because the active step's own destination is
-   * decided dynamically at runtime — in that case, groups absent from stepNumberOverrides might just
-   * be beyond the unresolved point, not genuinely off-path, so their step number must not be
-   * hidden. */
+  /** Grouped-mode only: true when stepNumberOverrides reflects the run's FULL path certainty — the
+   * caller's predicted-path walk reached a genuinely known end (its last step, wherever the walk
+   * actually stopped — the active step itself, or several hops downstream — is flagged `terminal`,
+   * or the walk cycled back into its own visited history). False whenever any step along that walk
+   * lacks a static `next` and isn't `terminal`; that step's real continuation may be decided
+   * dynamically at runtime, so groups absent from stepNumberOverrides might just be beyond that
+   * unresolved point, not genuinely off-path, and their step number must not be hidden — see
+   * stepGroupHasNumber below. (The caller narrows this further with the `dynamicNext` step-config
+   * flag — an unflagged dead end counts as a genuinely known end too — see
+   * single-pane-stepper-card-stack.tsx's pathWalkComplete.) */
   stepNumberOverridesComplete?: boolean
   /** Forwarded to `Stepper.Root`. SinglePaneStepperCardStack's current `<Stepper.Root>` always sets
    * this; DualPaneStepper's current `<Stepper.Root>` never does — `collapsibleNestedSteps` changes
@@ -94,6 +98,25 @@ export function FlowStepperRail({
 
   const derivedSteps = deriveStepperModel(flow, cardHistory, predictedPath, activeStepId)
 
+  // A group absent from stepNumberOverrides still needs its OWN number whenever the map is
+  // incomplete (see stepGroupHasNumber below) — but it must not fall back to its raw stepIndex
+  // (position among ALL rendered groups): an off-path sibling can render between two on-path
+  // groups, so its stepIndex can coincide with a real override assigned to a group after it (round 6
+  // bug — e.g. an off-path "provider-b" rendering before a real "connect" step numbered 3 would also
+  // land on 3 via stepIndex+1). Instead, synthesize numbers strictly above every REAL override in the
+  // map — computed once, not per-group, so they can never collide with one — continuing in render
+  // order for every group that needs one.
+  const highestOverrideNumber =
+    stepNumberOverrides && stepNumberOverrides.size > 0 ? Math.max(...stepNumberOverrides.values()) : 0
+  let nextFallbackStepNumber = highestOverrideNumber
+  const fallbackStepNumbers = new Map<string, number>()
+  for (const derivedStep of derivedSteps) {
+    if (stepNumberOverrides?.has(derivedStep.stepGroupId)) continue
+    if (!stepNumberOverrides || stepNumberOverridesComplete) continue // no synthesis needed — stepper-group.tsx's own stepIndex+1 fallback is safe here (no real overrides to collide with, or the map is already complete)
+    nextFallbackStepNumber += 1
+    fallbackStepNumbers.set(derivedStep.stepGroupId, nextFallbackStepNumber)
+  }
+
   return (
     <Stepper.Root
       value={value}
@@ -107,9 +130,10 @@ export function FlowStepperRail({
         const showSteps = derivedStep.visited.length > 0 || isActiveStepGroup
         // A group absent from stepNumberOverrides is only genuinely off-path (a mutually-exclusive
         // sibling never walked on this run) if the map itself is COMPLETE — i.e.
-        // stepNumberOverridesComplete is true. When the walk stopped early because the active
-        // step's own destination is decided dynamically at runtime (a real shape, e.g. CDv2's
-        // deployment-pipeline-v2 flow), groups beyond that point are simply not yet known, not
+        // stepNumberOverridesComplete is true. When the walk stopped early because SOME step along
+        // it — the active step itself, or several hops downstream — has no static `next` and isn't
+        // `terminal` (a real shape, e.g. CDv2's deployment-pipeline-v2 flow, where a card picks its
+        // own next step dynamically), groups beyond that point are simply not yet known, not
         // off-path, and hiding their number would strip legitimate step numbers from a flow that
         // was never actually off-path. Only suppress the number when a map exists AND is confirmed
         // complete AND this specific group isn't in it.
@@ -126,7 +150,9 @@ export function FlowStepperRail({
             hasNestedSteps={derivedStep.showIndeterminate}
             showStepBadge={showStepBadge}
             totalStepsOverride={totalOverride}
-            stepNumberOverride={stepNumberOverrides?.get(derivedStep.stepGroupId)}
+            stepNumberOverride={
+              stepNumberOverrides?.get(derivedStep.stepGroupId) ?? fallbackStepNumbers.get(derivedStep.stepGroupId)
+            }
             hideStepNumber={!stepGroupHasNumber}
           >
             {showSteps &&

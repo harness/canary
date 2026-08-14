@@ -4,7 +4,7 @@ Component contracts are the shared, machine-readable definition of what a Canary
 
 ## Current vertical slice
 
-`button.contract.json` is the first end-to-end contract in piloting. It consolidates evidence from:
+`button.contract.json` is the first stable end-to-end contract. It consolidates evidence from:
 
 - The public React implementation and types.
 - Portal documentation.
@@ -12,7 +12,7 @@ Component contracts are the shared, machine-readable definition of what a Canary
 - The 12 current Code Connect files that declare `component=Button`.
 - The in-repo Figma plugin (`packages/figma-plugin`), which compiles this contract into the bundled check pack.
 
-The Button Figma identity has been audited against the library and live source. Twelve PoC keys resolve to the current md, sm, and xs Text, IconOnly, and Rounded component sets and are stored as confirmed `componentKeys`. The other four PoC keys return 404 as both component and component-set identities and have been removed. The mapping is verified, the approved matrix is reconciled across the live Figma source and code, and the contract is now `piloting`.
+The Button Figma identity has been audited against the library and live source. Twelve PoC keys resolve to the current md, sm, and xs Text, IconOnly, and Rounded component sets and are stored as confirmed `componentKeys`. The other four PoC keys return 404 as both component and component-set identities and have been removed. The mapping is verified, the approved matrix is reconciled across the live Figma source and code, and the contract is now `stable`.
 
 ## Schema and validation
 
@@ -77,7 +77,7 @@ The Button family contains 12 component sets. The live source was re-audited on 
 
 The inventory entry is now `mapped`. Size, shape, variant, theme, and focus policy are approved, and the contract has no provisional fields or open policy questions. Focus remains a required code state and an accessibility requirement, but the absence of a published Figma focus variant is compliant by design.
 
-The Button contract is now `piloting`. The approved support matrix is reconciled with the live Figma source, the public Button API, production usage, Portal guidance, Code Connect, and evaluator fixtures. The icon-only theme correction requires no Figma library change because all six published sets already expose the three themes. Piloting will continue testing the contract against real designs and auditor results before it can become `stable`.
+The Button contract is now `stable`. The approved support matrix is reconciled with the live Figma source, the public Button API, production usage, Portal guidance, Code Connect, and evaluator fixtures. All six icon-only Code Connect mappings are published, and Canary Copilot mapped and passed the six-component Button page audit with no failures or warnings and a 100/100 health score.
 
 ## Adding the next contract
 

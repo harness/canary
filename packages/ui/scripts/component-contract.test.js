@@ -456,7 +456,7 @@ test('validates the checked-in component contract catalog', async () => {
       {
         id: 'canary.button',
         path: 'catalog/contracts/button.contract.json',
-        status: 'piloting'
+        status: 'stable'
       }
     ]
   })
@@ -467,9 +467,9 @@ test('uses normalized schema 0.5.0 for the checked-in Button contract', () => {
   const contract = JSON.parse(readFileSync(join(packageRoot, 'catalog/contracts/button.contract.json'), 'utf8'))
 
   expect(contract.schemaVersion).toBe('0.5.0')
-  expect(contract.contractVersion).toBe('0.8.3')
+  expect(contract.contractVersion).toBe('0.9.0')
   expect(contract.identity.id).toBe('canary.button')
-  expect(contract.lifecycle.status).toBe('piloting')
+  expect(contract.lifecycle.status).toBe('stable')
   expect(contract.properties.map(property => property.id)).toContain('variant')
   expect(contract.properties.map(property => property.id)).toContain('content')
   expect(contract.properties.map(property => property.id)).not.toContain('children')
@@ -606,7 +606,7 @@ test('generates deterministic schema, type, reference, and Button receipt artifa
   expect(JSON.parse(first.artifacts.get('catalog/generated/button.audit-receipt.json'))).toMatchObject({
     componentId: 'canary.button',
     schemaVersion: '0.5.0',
-    contractVersion: '0.8.3',
+    contractVersion: '0.9.0',
     evaluationProfileVersion: '1.0.0'
   })
 })
@@ -834,5 +834,5 @@ test('provides a successful command-line contract check', () => {
 
   expect(result.status).toBe(0)
   expect(result.stderr).toBe('')
-  expect(result.stdout).toBe('Validated 1 component contract: canary.button (piloting)\n')
+  expect(result.stdout).toBe('Validated 1 component contract: canary.button (stable)\n')
 })

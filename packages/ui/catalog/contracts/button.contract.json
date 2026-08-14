@@ -1,6 +1,6 @@
 {
   "schemaVersion": "0.5.0",
-  "contractVersion": "0.8.3",
+  "contractVersion": "0.9.0",
   "identity": {
     "id": "canary.button",
     "name": "Button",
@@ -20,7 +20,7 @@
     "roles": ["button", "action"]
   },
   "lifecycle": {
-    "status": "piloting"
+    "status": "stable"
   },
   "ownership": {
     "team": "Canary Design System",

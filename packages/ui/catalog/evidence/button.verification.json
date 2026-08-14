@@ -1,8 +1,8 @@
 {
   "formatVersion": "1.0.0",
   "componentId": "canary.button",
-  "contractVersion": "0.8.3",
-  "publishedAt": "2026-08-13",
+  "contractVersion": "0.9.0",
+  "publishedAt": "2026-08-14",
   "verifications": [
     {
       "id": "contract-validated",
@@ -31,7 +31,7 @@
       "result": "pass",
       "verifiedAt": "2026-08-14",
       "sourceIds": ["button-figma", "button-tests", "canary-copilot"],
-      "notes": "Reviewed the standard and rounded IconOnly component sets at md, sm, and xs. All six expose default, success, and danger themes. The approved matrix permits semantic themes for primary, secondary, outline, and ghost while AI and transparent remain default-only."
+      "notes": "Reviewed the standard and rounded IconOnly component sets at md, sm, and xs. All six expose default, success, and danger themes. The approved matrix permits semantic themes for primary, secondary, outline, and ghost while AI and transparent remain default-only. Canary Copilot Check page mapped all six tested Button components with 0 failures, 0 warnings, 6 passes, and a 100/100 health score."
     },
     {
       "id": "figma-content-verified",
@@ -88,8 +88,9 @@
       "id": "binding-parity-verified",
       "ruleId": "button.binding-parity",
       "result": "pass",
-      "verifiedAt": "2026-08-13",
-      "sourceIds": ["button-code-connect", "button-figma", "button-source"]
+      "verifiedAt": "2026-08-14",
+      "sourceIds": ["button-code-connect", "button-figma", "button-source"],
+      "notes": "Published all six standard and rounded icon-only Code Connect mappings. A parsed xs icon-only mapping verified that the generated Button snippet includes the selected theme and maps default, success, and danger."
     },
     {
       "id": "differences-verified",
@@ -109,9 +110,9 @@
       "id": "publication-verified",
       "ruleId": "button.publication-current",
       "result": "pass",
-      "verifiedAt": "2026-08-13",
-      "sourceIds": ["button-figma"],
-      "notes": "Published HDS | Components 3.0 library re-audited after the approved matrix update."
+      "verifiedAt": "2026-08-14",
+      "sourceIds": ["button-figma", "button-code-connect", "canary-copilot"],
+      "notes": "The published HDS | Components 3.0 library matches the approved matrix. All six icon-only Code Connect mappings were validated and uploaded to Figma, and Canary Copilot completed the Button page audit without failures or warnings."
     }
   ]
 }

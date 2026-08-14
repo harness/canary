@@ -2,11 +2,11 @@
   "formatVersion": 1,
   "componentId": "canary.button",
   "schemaVersion": "0.5.0",
-  "contractVersion": "0.8.3",
+  "contractVersion": "0.9.0",
   "evaluationProfileVersion": "1.0.0",
   "evaluatedAt": "2026-08-14",
-  "sourceSha256": "da95ef26837e415d3f3040dd5d0d3b4794b830775e0999bd3289b3f3f3d39762",
-  "verificationSourceSha256": "1c332288dc74cb6a493eeafd6fc00c0f4b81c5f39fc91fbbdacf75188f82b693",
+  "sourceSha256": "3d4f5d6fbfede4f21106969a0a9ce1ef193614f33be88d55f344f07e8fca0008",
+  "verificationSourceSha256": "fd6bc2ac19a05b89fed598c5b3c4eb3cffc1cff78a804b19265b6ae89d5faa4a",
   "evaluations": [
     {
       "requirementId": "button.contract-complete",
@@ -158,7 +158,7 @@
       "severity": "critical",
       "enforcement": "automated",
       "result": "pass",
-      "verifiedAt": "2026-08-13",
+      "verifiedAt": "2026-08-14",
       "fresh": true,
       "sourceIds": [
         "button-code-connect",
@@ -200,10 +200,12 @@
       "severity": "minor",
       "enforcement": "manual",
       "result": "pass",
-      "verifiedAt": "2026-08-13",
+      "verifiedAt": "2026-08-14",
       "fresh": true,
       "sourceIds": [
-        "button-figma"
+        "button-figma",
+        "button-code-connect",
+        "canary-copilot"
       ]
     }
   ]

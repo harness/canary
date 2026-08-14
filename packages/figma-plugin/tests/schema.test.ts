@@ -13,9 +13,9 @@ describe('parseCatalogEntry', () => {
   it('parses canary button', () => {
     const entry = parseCatalogEntry(button)
     expect(entry.id).toBe('canary.button')
-    expect(entry.status).toBe('piloting')
+    expect(entry.status).toBe('stable')
     expect(entry.source?.contractPath).toBe('packages/ui/catalog/contracts/button.contract.json')
-    expect(entry.source?.contractVersion).toBe('0.8.3')
+    expect(entry.source?.contractVersion).toBe('0.9.0')
     expect(entry.source?.sha256).toMatch(/^[a-f0-9]{64}$/)
     expect(entry.shared.find(p => p.name === 'variant')?.values).toContain('primary')
     expect(entry.shared.find(p => p.name === 'size')?.values).toEqual(['md', 'sm', 'xs'])

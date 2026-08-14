@@ -16,15 +16,13 @@ The Button Figma identity has been audited against the library and live source. 
 
 ## Schema and validation
 
-The runtime schema is defined in `scripts/component-contract.mjs`. It requires every contract to include:
+The structural schema is defined in `scripts/component-contract-schema.mjs`; `scripts/component-contract.mjs` adds semantic and inventory validation. Schema 0.4 separates:
 
-- Overview and usage boundaries.
-- Figma and/or code identity for the governed surfaces.
-- Anatomy and property classifications.
-- Required states and behavior.
-- Accessibility requirements.
-- Explicit AI-readiness expectations.
-- Evidence, provisional fields, and open questions.
+- A canonical component model: identity, semantics, anatomy, properties, states, constraints, tokens, accessibility, and usage.
+- Figma and React surface bindings: component identities, properties, props, slots, composition, state representation, aliases, and intentional fidelity limits.
+- Governance: lifecycle, ownership, requirements, migrations, and dated evidence.
+
+Properties are authored once. The compiler derives `shared`, `designOnly`, and `codeOnly` from binding presence. Unresolved proposals remain in Jira, Confluence, or architecture decisions until approved; they are not effective contract rules.
 
 Run validation from the repository root:
 
@@ -32,16 +30,24 @@ Run validation from the repository root:
 pnpm --filter @harnessio/ui catalog:validate
 ```
 
-The validator checks each contract's structure and its link to `component-inventory.json`. It also prevents a Figma-governed contract from becoming `stable` without a verified mapping and at least one confirmed component key.
+The validator checks each contract's structure, cross-references, constraint coverage, generated-artifact freshness, and link to `component-inventory.json`. It also prevents a Figma-governed contract from becoming `stable` without a verified mapping and at least one confirmed component key.
 
-When support depends on a combination of properties, add `supportMatrix`. Each rule declares:
+When support depends on a combination of properties, add `constraints`. Each rule declares:
 
 - A unique `id` and one of `supported`, `deprecated`, or `unsupported`.
-- The governed `surfaces`.
+- The governed `figma` and/or `react` surfaces.
 - `conditions` whose keys reference declared contract properties and whose arrays form the rule's allowed Cartesian product.
-- A plain-language `description` and, for deprecated or unsupported legacy behavior, an optional `migration`.
+- A plain-language `description`, auditable requirement, and optional migration reference.
 
-Rules should cover every declared combination exactly once. Contract validation rejects unknown property names and values; component-specific tests should also verify exhaustive, non-overlapping coverage.
+When `constraints.exhaustive` is true, every declared combination must match exactly one rule. Contract validation rejects gaps, overlaps, unknown properties, and unknown values.
+
+Generate the machine-readable JSON Schema, TypeScript types, Confluence field-reference data, and audit receipts after authoring:
+
+```sh
+pnpm --filter @harnessio/ui catalog:generate
+```
+
+The generated files under `catalog/generated/` are checked in and must not be edited by hand.
 
 ## Status meaning
 
@@ -72,7 +78,9 @@ The Button contract is now `piloting`. The approved support matrix is reconciled
 
 1. Confirm the governing inventory entry and contract path.
 2. Gather implementation, docs, tests, Code Connect, and Figma evidence.
-3. Write the contract using Button as the structural example. Add an exhaustive `supportMatrix` when availability depends on property combinations, and mark uncertain values in `evidence.provisionalFields` and `evidence.openQuestions`.
-4. Run `catalog:validate`.
-5. Compile the Figma plugin pack (`pnpm --filter @harnessio/figma-plugin catalogs:pack`) so Check uses the new contract.
-6. Review the component in Figma before changing its mapping or lifecycle status.
+3. Write canonical properties once and bind them explicitly to Figma and/or React. Add exhaustive `constraints` when availability depends on combinations.
+4. Keep unresolved decisions outside the effective contract until approved.
+5. Add auditable requirements and dated evidence; declare automated, manual, and advisory enforcement honestly.
+6. Run `catalog:generate` and `catalog:validate`.
+7. Compile the Figma plugin pack (`pnpm --filter @harnessio/figma-plugin catalogs:pack`) so Check uses the new contract.
+8. Review the component in Figma before changing its mapping or lifecycle status.

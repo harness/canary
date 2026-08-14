@@ -673,33 +673,79 @@ test('validates the checked-in component contract catalog', async () => {
   })
 })
 
+test('uses schema 0.4.0 for the checked-in Button contract', () => {
+  const packageRoot = join(dirname(fileURLToPath(import.meta.url)), '..')
+  const contract = JSON.parse(readFileSync(join(packageRoot, 'catalog/contracts/button.contract.json'), 'utf8'))
+
+  expect(contract.schemaVersion).toBe('0.4.0')
+  expect(contract.contractVersion).toBe('0.7.0')
+  expect(contract.identity.id).toBe('canary.button')
+  expect(contract.lifecycle.status).toBe('piloting')
+  expect(contract.properties.map(property => property.id)).toContain('variant')
+  expect(contract.constraints.exhaustive).toBe(true)
+  expect(contract.constraints.rules).toHaveLength(13)
+  expect(contract.evidence).not.toHaveProperty('provisionalFields')
+  expect(contract.evidence).not.toHaveProperty('openQuestions')
+})
+
+test('generates deterministic schema, type, reference, and Button receipt artifacts', async () => {
+  let artifactModule
+  try {
+    artifactModule = await import('./component-contract-artifacts.mjs')
+  } catch {
+    artifactModule = undefined
+  }
+
+  expect(typeof artifactModule?.generateContractArtifacts).toBe('function')
+  const packageRoot = join(dirname(fileURLToPath(import.meta.url)), '..')
+  const first = artifactModule.generateContractArtifacts({ packageRoot, write: false })
+  const second = artifactModule.generateContractArtifacts({ packageRoot, write: false })
+
+  expect([...first.artifacts.keys()]).toEqual([
+    'catalog/generated/component-contract.schema.json',
+    'catalog/generated/component-contract.types.ts',
+    'catalog/generated/component-contract.reference.json',
+    'catalog/generated/button.audit-receipt.json'
+  ])
+  expect([...first.artifacts.entries()]).toEqual([...second.artifacts.entries()])
+  expect(JSON.parse(first.artifacts.get('catalog/generated/component-contract.schema.json')).$id).toBe(
+    'https://canary.harness.io/contracts/component-contract-0.4.0.schema.json'
+  )
+  expect(
+    JSON.parse(first.artifacts.get('catalog/generated/component-contract.reference.json')).rows.length
+  ).toBeGreaterThan(40)
+  expect(JSON.parse(first.artifacts.get('catalog/generated/button.audit-receipt.json'))).toMatchObject({
+    componentId: 'canary.button',
+    schemaVersion: '0.4.0',
+    contractVersion: '0.7.0',
+    evaluationProfileVersion: '1.0.0'
+  })
+})
+
 test('defines rounded as supported for icon-only Buttons and deprecated for text Buttons', () => {
   const packageRoot = join(dirname(fileURLToPath(import.meta.url)), '..')
   const contract = JSON.parse(readFileSync(join(packageRoot, 'catalog/contracts/button.contract.json'), 'utf8'))
-  const roundedProperty = contract.properties.shared.find(property => property.name === 'rounded')
-  const roundedPattern = contract.patterns.find(pattern => pattern.id === 'rounded-icon-only')
+  const roundedProperty = contract.properties.find(property => property.id === 'rounded')
+  const roundedMigration = contract.migrations.find(migration => migration.id === 'rounded-text-to-standard')
 
-  expect(roundedProperty).toMatchObject({
-    when: 'Supported when iconOnly is true; deprecated when iconOnly is false.'
-  })
   expect(roundedProperty.description).toContain('Rounded icon-only Buttons are supported')
-  expect(roundedPattern.rule).toContain('Use rounded only with iconOnly')
+  expect(roundedProperty.bindings.figma).toMatchObject({ kind: 'componentName', fallback: false })
+  expect(roundedMigration.instructions).toContain('equivalent standard-shape Button')
 })
 
 test('records keyboard focus as an intentional code-only state matching the Button styles', () => {
   const packageRoot = join(dirname(fileURLToPath(import.meta.url)), '..')
   const contract = JSON.parse(readFileSync(join(packageRoot, 'catalog/contracts/button.contract.json'), 'utf8'))
-  const focusState = contract.states.find(state => state.name === 'focus')
-  const focusPattern = contract.patterns.find(pattern => pattern.id === 'keyboard-focus-reference')
+  const focusState = contract.states.find(state => state.id === 'focus-visible')
   const focusStyles = buttonStyles['.cn-button']['&:where(:focus-visible)']
 
   expect(focusState).toMatchObject({
-    surfaces: ['code'],
-    description: expect.stringContaining('Intentional code-only runtime state')
+    fidelity: { figma: 'specification', react: 'exact' },
+    bindings: {
+      figma: { kind: 'specification' },
+      react: { kind: 'pseudoClass', target: ':focus-visible' }
+    }
   })
-  expect(focusPattern.rule).toContain('Do not add focus to the published Figma state property')
-  expect(contract.evidence.provisionalFields).not.toContain('states.focus')
-  expect(contract.evidence.openQuestions.some(question => question.toLowerCase().includes('focus'))).toBe(false)
   expect(focusStyles).toMatchObject({
     outline: 'var(--cn-focus)',
     boxShadow: 'inset 0 0 0 2px var(--cn-gray-25)',
@@ -758,7 +804,7 @@ test('uses public Figma property names in Button Code Connect templates', () => 
 test('defines an exhaustive approved Button support matrix', () => {
   const packageRoot = join(dirname(fileURLToPath(import.meta.url)), '..')
   const contract = JSON.parse(readFileSync(join(packageRoot, 'catalog/contracts/button.contract.json'), 'utf8'))
-  const properties = Object.fromEntries(contract.properties.shared.map(property => [property.name, property]))
+  const properties = Object.fromEntries(contract.properties.map(property => [property.id, property]))
   const valuesByDimension = {
     variant: properties.variant.values,
     size: properties.size.values,
@@ -771,7 +817,7 @@ test('defines an exhaustive approved Button support matrix', () => {
     [{}]
   )
   const matchingRules = combination =>
-    contract.supportMatrix.filter(rule =>
+    contract.constraints.rules.filter(rule =>
       Object.entries(rule.conditions).every(([propertyName, values]) => values.includes(combination[propertyName]))
     )
 

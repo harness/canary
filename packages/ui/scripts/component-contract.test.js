@@ -221,6 +221,250 @@ function completeDraftContract() {
   }
 }
 
+function completePilotContract() {
+  return {
+    schemaVersion: '0.4.0',
+    contractVersion: '0.1.0',
+    identity: {
+      id: 'canary.button',
+      name: 'Button',
+      summary: 'Triggers an immediate action.',
+      aliases: []
+    },
+    semantics: {
+      purpose: 'Trigger an immediate user action.',
+      useWhen: ['The user needs to submit or confirm an action.'],
+      avoidWhen: ['The user needs to navigate to another location.'],
+      roles: ['button']
+    },
+    lifecycle: {
+      status: 'piloting'
+    },
+    ownership: {
+      team: 'Canary Design System',
+      contacts: ['design-systems']
+    },
+    surfaces: {
+      figma: {
+        library: 'HDS | Components 3.0',
+        fileKey: 'figma-file-key',
+        names: ['Button/Md/Text'],
+        exampleNodeId: '1:2',
+        mappingStatus: 'verified',
+        componentKeys: ['component-key'],
+        candidateComponentKeys: [],
+        codeConnect: ['src/components/button.figma.ts']
+      },
+      react: {
+        package: '@harnessio/ui',
+        export: 'Button',
+        import: 'import { Button } from "@harnessio/ui/components"',
+        path: 'src/components/button.tsx'
+      }
+    },
+    anatomy: [
+      {
+        id: 'root',
+        name: 'Root',
+        description: 'Interactive button container.',
+        presence: 'required',
+        role: 'button',
+        bindings: {
+          figma: { kind: 'root' },
+          react: { kind: 'root', target: 'Button' }
+        }
+      }
+    ],
+    properties: [
+      {
+        id: 'variant',
+        name: 'Variant',
+        description: 'Visual emphasis.',
+        type: 'enum',
+        values: ['primary', 'secondary'],
+        default: 'primary',
+        bindings: {
+          figma: { kind: 'property', property: 'variant' },
+          react: { kind: 'prop', name: 'variant', type: "ButtonProps['variant']" }
+        }
+      },
+      {
+        id: 'loading',
+        name: 'Loading',
+        description: 'Shows pending progress.',
+        type: 'boolean',
+        default: false,
+        bindings: {
+          react: { kind: 'prop', name: 'loading', type: 'boolean' }
+        }
+      }
+    ],
+    states: [
+      {
+        id: 'default',
+        name: 'Default',
+        description: 'Resting state.',
+        required: true,
+        bindings: {
+          figma: { kind: 'property', property: 'state', value: 'default' },
+          react: { kind: 'behavior', target: 'resting state' }
+        },
+        fidelity: { figma: 'exact', react: 'exact' }
+      }
+    ],
+    constraints: {
+      exhaustive: false,
+      dimensions: ['variant'],
+      rules: [
+        {
+          id: 'primary',
+          status: 'supported',
+          surfaces: ['figma', 'react'],
+          conditions: { variant: ['primary'] },
+          description: 'Primary is supported.',
+          requirementId: 'button.supported-combination'
+        }
+      ]
+    },
+    tokens: [
+      {
+        id: 'root-background',
+        partId: 'root',
+        channel: 'background',
+        token: 'color.background.primary'
+      }
+    ],
+    accessibility: [
+      {
+        id: 'accessible-name',
+        statement: 'Every Button has an accessible name.',
+        requirementId: 'button.accessible-name'
+      }
+    ],
+    usage: {
+      do: [{ id: 'use-for-actions', statement: 'Use Button for actions.' }],
+      dont: [{ id: 'avoid-navigation', statement: 'Do not use Button for destinations.' }],
+      relatedComponents: ['Link']
+    },
+    requirements: [
+      {
+        id: 'button.contract-complete',
+        dimension: 'contractDefinition',
+        severity: 'major',
+        enforcement: 'automated',
+        statement: 'The contract validates.'
+      },
+      {
+        id: 'button.supported-combination',
+        dimension: 'figmaImplementation',
+        severity: 'critical',
+        enforcement: 'automated',
+        statement: 'Figma instances use supported combinations.'
+      },
+      {
+        id: 'button.code-api',
+        dimension: 'codeImplementation',
+        severity: 'major',
+        enforcement: 'automated',
+        statement: 'The React API matches the contract.'
+      },
+      {
+        id: 'button.parity',
+        dimension: 'designCodeParity',
+        severity: 'major',
+        enforcement: 'automated',
+        statement: 'Figma and React bindings agree.'
+      },
+      {
+        id: 'button.evidence-current',
+        dimension: 'governanceEvidence',
+        severity: 'minor',
+        enforcement: 'manual',
+        statement: 'Evidence is current.'
+      },
+      {
+        id: 'button.accessible-name',
+        dimension: 'codeImplementation',
+        severity: 'critical',
+        enforcement: 'manual',
+        statement: 'Every Button has an accessible name.'
+      }
+    ],
+    migrations: [],
+    evidence: {
+      sources: [
+        {
+          id: 'button-source',
+          type: 'source',
+          path: 'src/components/button.tsx'
+        }
+      ],
+      verifications: [
+        {
+          id: 'button-code-api-verified',
+          requirementId: 'button.code-api',
+          result: 'pass',
+          verifiedAt: '2026-08-13',
+          sourceIds: ['button-source']
+        }
+      ]
+    }
+  }
+}
+
+test('accepts a complete schema 0.4.0 pilot contract', async () => {
+  const { validateComponentContract } = await import('./component-contract.mjs')
+
+  expect(validateComponentContract(completePilotContract())).toEqual({
+    success: true,
+    errors: []
+  })
+})
+
+test('derives shared, design-only, and code-only classifications from surface bindings', async () => {
+  const { classifyPropertySurface } = await import('./component-contract.mjs')
+  const [shared, codeOnly] = completePilotContract().properties
+
+  expect(classifyPropertySurface(shared)).toBe('shared')
+  expect(
+    classifyPropertySurface({
+      ...shared,
+      bindings: { figma: shared.bindings.figma }
+    })
+  ).toBe('designOnly')
+  expect(classifyPropertySurface(codeOnly)).toBe('codeOnly')
+})
+
+test('validates the centrally controlled component-health profile', async () => {
+  const { evaluationProfileSchema } = await import('./component-contract-schema.mjs')
+  const profile = {
+    version: '1.0.0',
+    dimensions: {
+      contractDefinition: 20,
+      figmaImplementation: 25,
+      codeImplementation: 25,
+      designCodeParity: 20,
+      governanceEvidence: 10
+    },
+    severityWeights: {
+      critical: 8,
+      major: 3,
+      minor: 1,
+      informational: 0
+    },
+    thresholds: {
+      healthy: 90,
+      needsAttention: 70,
+      atRisk: 0
+    },
+    blockedOnCritical: true,
+    defaultEvidenceMaxAgeDays: 180
+  }
+
+  expect(typeof evaluationProfileSchema?.safeParse).toBe('function')
+  expect(evaluationProfileSchema?.safeParse(profile).success).toBe(true)
+})
+
 test('accepts a complete draft contract without confirmed Figma keys', async () => {
   let contractModule
   try {

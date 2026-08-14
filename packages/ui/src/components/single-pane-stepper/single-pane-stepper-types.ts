@@ -10,6 +10,8 @@ export type {
   StepGroupConfig,
   StepConfig,
   FlowConfig,
+  GroupedFlowConfig,
+  FlatFlowConfig,
   CardStatus,
   CardEntry,
   DrawerResult,

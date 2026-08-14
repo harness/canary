@@ -25,13 +25,16 @@ const mappedFigmaComponents = inventory.components.filter(
 )
 const inventoryButton = mappedFigmaComponents.find(component => component.id === 'canary.button')
 const buttonContract = JSON.parse(buttonContractSource) as {
-  id: string
-  status: string
   schemaVersion: string
   contractVersion: string
-  figma: { componentKeys: string[]; exampleNodeId: string }
-  properties: { designOnly: Array<{ name: string }>; shared: Array<{ name: string }> }
-  supportMatrix: Array<{ id: string; status: string }>
+  identity: { id: string }
+  lifecycle: { status: string }
+  surfaces: { figma: { componentKeys: string[]; exampleNodeId: string } }
+  properties: Array<{ id: string; bindings: { figma?: unknown; react?: unknown } }>
+  anatomy: Array<{ id: string }>
+  states: Array<{ id: string; fidelity: { figma?: string } }>
+  constraints: { rules: Array<{ id: string; status: string }> }
+  requirements: Array<{ id: string }>
 }
 
 const REMOVED_POC_KEYS = [
@@ -44,8 +47,8 @@ const REMOVED_POC_KEYS = [
 describe('compiled Button catalog', () => {
   it('matches the in-repo Button contract', () => {
     expect(inventoryButton?.contractPath).toBe('catalog/contracts/button.contract.json')
-    expect(button.id).toBe(buttonContract.id)
-    expect(button.status).toBe(buttonContract.status)
+    expect(button.id).toBe(buttonContract.identity.id)
+    expect(button.status).toBe(buttonContract.lifecycle.status)
     expect(button.source).toEqual({
       contractPath: `packages/ui/${inventoryButton?.contractPath}`,
       schemaVersion: buttonContract.schemaVersion,
@@ -53,15 +56,18 @@ describe('compiled Button catalog', () => {
       sha256: createHash('sha256').update(buttonContractSource).digest('hex')
     })
     expect(button.figma.name).toBe('❖Button')
-    expect(button.figma.exampleNodeId).toBe(buttonContract.figma.exampleNodeId)
-    expect(button.figma.componentKeys).toEqual(buttonContract.figma.componentKeys)
+    expect(button.figma.exampleNodeId).toBe(buttonContract.surfaces.figma.exampleNodeId)
+    expect(button.figma.componentKeys).toEqual(buttonContract.surfaces.figma.componentKeys)
     expect(button.figma.componentKeys).toHaveLength(12)
-    expect(button.designOnly.map(prop => prop.name)).toContain('leadingIcon')
-    expect(button.designOnly.find(prop => prop.name === 'trailingIcon')?.figmaPropertyAliases).toContain('↳ suffix')
+    expect(button.anatomy.map(part => part.id)).toContain('label-or-icon')
+    expect(button.states.find(state => state.id === 'focus-visible')?.fidelity).toMatchObject({
+      figma: 'specification'
+    })
     expect(button.shared.find(prop => prop.name === 'theme')?.figmaValueAliases).toEqual({ '-': 'default' })
     expect(button.shared.map(prop => prop.name)).toContain('variant')
-    expect(button.supportMatrix).toEqual(buttonContract.supportMatrix)
-    expect(button.supportMatrix).toEqual(
+    expect(button.codeOnly.map(prop => prop.name)).toContain('onClick')
+    expect(button.constraints.rules).toEqual(buttonContract.constraints.rules)
+    expect(button.constraints.rules).toEqual(
       expect.arrayContaining([
         expect.objectContaining({
           id: 'text-standard-md-sm-link',
@@ -73,6 +79,17 @@ describe('compiled Button catalog', () => {
         })
       ])
     )
+    expect(button.requirements.map(rule => rule.id)).toContain('button.supported-combination')
+    expect(button.tokenBindings.map(binding => binding.id)).toContain('focus-outline')
+    expect(button.accessibility.map(rule => rule.id)).toContain('accessible-name')
+    expect(button.usage.dont.map(rule => rule.id)).toContain('dont-2')
+    expect(button.evaluationProfile.version).toBe('1.0.0')
+    expect(button.baselineReceipt).toMatchObject({
+      componentId: 'canary.button',
+      schemaVersion: '0.4.0',
+      contractVersion: '0.7.0',
+      evaluationProfileVersion: '1.0.0'
+    })
     for (const key of REMOVED_POC_KEYS) {
       expect(button.figma.componentKeys).not.toContain(key)
     }

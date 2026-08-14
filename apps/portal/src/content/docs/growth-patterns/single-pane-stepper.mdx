@@ -141,6 +141,7 @@ interface GroupedStepConfig {
   component: ComponentType; // React component to render as a card
   next?: string; // Next step ID (for routing)
   terminal?: boolean; // Auto-complete on entry (for summary cards)
+  visualCompleted?: boolean; // Always render step as finished, regardless of actual status — presentation-only hint
   dynamicNext?: true; // This step's real continuation is decided at runtime, not statically — see showStepBadge below
 }
 
@@ -151,6 +152,7 @@ interface FlatStepConfig {
   component: ComponentType;
   next?: string;
   terminal?: boolean;
+  visualCompleted?: boolean;
   dynamicNext?: true;
 }
 ```
@@ -239,11 +241,11 @@ function MyCard() {
   type your state for better autocomplete.
 </Aside>
 
-## Steps and Progressive Disclosure
+## Steps and Status Progression
 
-The stepper timeline reveals content progressively. Top-level step groups only appear once reached — completed, active, and error states are visible; upcoming step groups stay hidden until the flow advances to them.
+All declared step groups and their steps render up front in the stepper timeline. As the flow advances, each step's status updates to reflect its current state (active, completed, error, or skipped) — visibility is not gated on reaching the step.
 
-Within each step group, only visited steps appear in the timeline. Cards render inline beneath their step as the user progresses. Unvisited steps do not show as upcoming placeholders — each step and its card appear only after the user reaches it. The `next` field in your flow config still drives default routing when cards complete, but does not preview future steps in the timeline.
+The `next` field in your flow config drives default routing when cards complete, but does not preview future steps in the timeline beyond their rendered structure.
 
 ## Drawer Integration
 

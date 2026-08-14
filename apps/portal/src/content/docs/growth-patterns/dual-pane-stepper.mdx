@@ -120,6 +120,7 @@ interface GroupedStepConfig {
   component: ComponentType; // React component to render as a card
   next?: string; // Next step ID (for routing)
   terminal?: boolean; // Auto-complete on entry (for summary cards)
+  visualCompleted?: boolean; // Always render step as finished, regardless of actual status — presentation-only hint
 }
 
 interface FlatStepConfig {
@@ -129,6 +130,7 @@ interface FlatStepConfig {
   component: ComponentType;
   next?: string;
   terminal?: boolean;
+  visualCompleted?: boolean; // Always render step as finished, regardless of actual status — presentation-only hint
 }
 ```
 

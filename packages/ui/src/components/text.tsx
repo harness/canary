@@ -1,4 +1,4 @@
-import { ComponentProps, ElementType, forwardRef, ReactElement, Ref, useCallback, useState } from 'react'
+import { ComponentProps, ElementType, forwardRef, ReactElement, Ref, useEffect, useRef, useState } from 'react'
 
 import { useMergeRefs, wrapConditionalObjectElement } from '@/utils'
 import { Slot } from '@radix-ui/react-slot'
@@ -182,21 +182,19 @@ const TextWithRef = forwardRef<HTMLElement, TextProps>(
     ref
   ) => {
     const [titleText, setTitleText] = useState('')
+    const elementRef = useRef<HTMLElement | null>(null)
 
     const Comp = getTextNode({ as, variant, asChild })
     const isHeading = !as && !!variant?.startsWith('heading')
     const color = _color ?? textVariantToElement[variant ?? 'body-normal'].color
 
-    const getTitleFromRef = useCallback(
-      (element: HTMLElement | null) => {
-        if (element && (truncate || lineClamp)) {
-          setTitleText(element.innerText || '')
-        }
-      },
-      [truncate, lineClamp]
-    )
+    useEffect(() => {
+      if (elementRef.current && (truncate || lineClamp)) {
+        setTitleText(elementRef.current.innerText || '')
+      }
+    }, [children, truncate, lineClamp])
 
-    const compRef = useMergeRefs<HTMLElement>([getTitleFromRef, ref])
+    const compRef = useMergeRefs<HTMLElement>([elementRef, ref])
 
     const isTruncated = lineClamp ? false : truncate
 

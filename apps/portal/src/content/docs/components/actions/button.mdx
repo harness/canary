@@ -16,7 +16,7 @@ Button follows [WCAG 2.2 Success Criterion 1.4.1, Use of Color](https://www.w3.o
 
 - Use an action-specific label such as “Confirm changes,” “Delete project,” or “Bypass rules and create branch.” The action must remain understandable if all Buttons are shown in the same color.
 - When Button temporarily communicates a completed state, use explicit text such as “Saved” or “Updated.” A check icon can reinforce that message.
-- Icon-only Buttons use the `default` theme. Their accessible name and surrounding context communicate the action.
+- Primary, secondary, outline, and ghost icon-only Buttons may use `success` or `danger` to reinforce meaning. Their accessible name and surrounding context must still communicate the action without color.
 - Loading and disabled Buttons retain their action label and expose their state programmatically; do not rely on a color change alone.
 
 ## Default Button
@@ -518,7 +518,7 @@ When the `onClick` prop returns a promise, the button automatically shows a load
 
 When the `iconOnly` prop is used, you must provide an accessible name with `aria-label` or `aria-labelledby`. A tooltip is visual help only; it does not provide an accessible name. Also provide `tooltipProps` to display the action for sighted users.
 
-Icon-only Buttons use the `default` theme. Do not apply `success` or `danger`; communicate semantic meaning through the accessible name, surrounding context, and feedback after activation.
+Primary, secondary, outline, and ghost icon-only Buttons support `default`, `success`, and `danger`. AI and transparent icon-only Buttons use `default` only. In every case, communicate semantic meaning through the accessible name, surrounding context, and feedback after activation rather than color alone.
 
 If you need to skip showing the tooltip, set `ignoreIconOnlyTooltip`. This override suppresses the tooltip requirement only; it does not bypass the accessible-name requirement.
 
@@ -652,7 +652,8 @@ import { Button } from '@harnessio/ui/components'
 - Primary, secondary, outline, and ghost text Buttons support default, success, and danger.
 - AI and transparent text Buttons use the default theme only.
 - Link-style Buttons use the default theme at md and sm only.
-- All icon-only Buttons use the default theme only.
+- Primary, secondary, outline, and ghost icon-only Buttons support default, success, and danger.
+- AI and transparent icon-only Buttons use the default theme only.
 - Button sizes are md, sm, and xs.
 - Rounded is supported for icon-only Buttons; rounded text Buttons are deprecated.
 
@@ -680,7 +681,7 @@ The Button contract and repository checks enforce these combinations for new sou
     {
       name: "theme",
       description:
-        "Success and danger are supported only by primary, secondary, outline, and ghost text Buttons. AI, transparent, link, and all icon-only Buttons use default.",
+        "Success and danger are supported by primary, secondary, outline, and ghost Buttons with text or icon-only content. AI, transparent, and link Buttons use default.",
       required: false,
       value: "'default' | 'success' | 'danger'",
       defaultValue: "'default'",

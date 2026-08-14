@@ -2,11 +2,11 @@
   "formatVersion": 1,
   "componentId": "canary.button",
   "schemaVersion": "0.5.0",
-  "contractVersion": "0.8.2",
+  "contractVersion": "0.8.3",
   "evaluationProfileVersion": "1.0.0",
   "evaluatedAt": "2026-08-14",
-  "sourceSha256": "f7a51d7ed54b0a999377a1a4c1904bb6d363fc973f91099b525afe9eecb0af98",
-  "verificationSourceSha256": "ef8ab22aadc184ce550335d297813c0026b5d4314921aebac861a929489a0097",
+  "sourceSha256": "da95ef26837e415d3f3040dd5d0d3b4794b830775e0999bd3289b3f3f3d39762",
+  "verificationSourceSha256": "1c332288dc74cb6a493eeafd6fc00c0f4b81c5f39fc91fbbdacf75188f82b693",
   "evaluations": [
     {
       "requirementId": "button.contract-complete",
@@ -51,11 +51,12 @@
       "severity": "critical",
       "enforcement": "automated",
       "result": "pass",
-      "verifiedAt": "2026-08-13",
+      "verifiedAt": "2026-08-14",
       "fresh": true,
       "sourceIds": [
         "button-figma",
-        "button-tests"
+        "button-tests",
+        "canary-copilot"
       ]
     },
     {

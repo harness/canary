@@ -81,10 +81,7 @@ function findUnsupportedButtonCombinations(source, filePath) {
       if (size === '2xs' || size === '3xs') {
         violations.push({ line, reason: `unsupported size ${size}` })
       }
-      if (
-        (theme === 'success' || theme === 'danger') &&
-        (iconOnly || ['ai', 'transparent', 'link'].includes(variant))
-      ) {
+      if ((theme === 'success' || theme === 'danger') && ['ai', 'transparent', 'link'].includes(variant)) {
         violations.push({ line, reason: `${String(variant)} ${String(theme)} theme` })
       }
       if (variant === 'link' && (size === 'xs' || iconOnly)) {
@@ -470,7 +467,7 @@ test('uses normalized schema 0.5.0 for the checked-in Button contract', () => {
   const contract = JSON.parse(readFileSync(join(packageRoot, 'catalog/contracts/button.contract.json'), 'utf8'))
 
   expect(contract.schemaVersion).toBe('0.5.0')
-  expect(contract.contractVersion).toBe('0.8.2')
+  expect(contract.contractVersion).toBe('0.8.3')
   expect(contract.identity.id).toBe('canary.button')
   expect(contract.lifecycle.status).toBe('piloting')
   expect(contract.properties.map(property => property.id)).toContain('variant')
@@ -485,7 +482,7 @@ test('uses normalized schema 0.5.0 for the checked-in Button contract', () => {
   expect(contract.examples.length).toBeGreaterThan(0)
   expect(contract.presentation.parts.length).toBeGreaterThan(0)
   expect(contract.constraints.exhaustive).toBe(true)
-  expect(contract.constraints.combinations).toHaveLength(13)
+  expect(contract.constraints.combinations).toHaveLength(14)
   expect(contract.evaluations.map(evaluation => evaluation.id)).toContain('button.supported-combination')
   expect(contract.evidenceReferences.sources.length).toBeGreaterThan(0)
   expect(contract).not.toHaveProperty('rules')
@@ -609,7 +606,7 @@ test('generates deterministic schema, type, reference, and Button receipt artifa
   expect(JSON.parse(first.artifacts.get('catalog/generated/button.audit-receipt.json'))).toMatchObject({
     componentId: 'canary.button',
     schemaVersion: '0.5.0',
-    contractVersion: '0.8.2',
+    contractVersion: '0.8.3',
     evaluationProfileVersion: '1.0.0'
   })
 })
@@ -675,18 +672,21 @@ test('maps the omitted Figma theme only for md and sm text Buttons', () => {
   expect(filesWithOmittedTheme).toEqual(['button-md-text.figma.ts', 'button.figma.ts'])
 })
 
-test('omits theme mapping from default-theme-only icon Button templates', () => {
+test('maps all Figma themes from every icon-only Button template', () => {
   const packageRoot = join(dirname(fileURLToPath(import.meta.url)), '..')
   const componentRoot = join(packageRoot, 'src/components')
   const iconButtonFiles = readdirSync(componentRoot)
     .filter(file => /^button-(?:md|sm|xs)-icon-only(?:-rounded)?\.figma\.ts$/.test(file))
     .sort()
-  const filesWithThemeMapping = iconButtonFiles.filter(file =>
-    readFileSync(join(componentRoot, file), 'utf8').includes("getEnum('theme'")
-  )
-
   expect(iconButtonFiles).toHaveLength(6)
-  expect(filesWithThemeMapping).toEqual([])
+  for (const file of iconButtonFiles) {
+    const source = readFileSync(join(componentRoot, file), 'utf8')
+    expect(source).toContain("const theme = instance.getEnum('theme'")
+    expect(source).toContain("'⚫ default': 'default'")
+    expect(source).toContain("'🟢 success': 'success'")
+    expect(source).toContain("'🔴 danger': 'danger'")
+    expect(source).toContain('theme="${theme}"')
+  }
 })
 
 test('uses public Figma property names in Button Code Connect templates', () => {
@@ -737,13 +737,16 @@ test('defines an exhaustive approved Button support matrix', () => {
   ).toBe('unsupported')
   expect(
     matchingRules({ variant: 'primary', size: 'xs', theme: 'danger', rounded: true, iconOnly: true })[0].status
-  ).toBe('unsupported')
+  ).toBe('supported')
   expect(
     matchingRules({ variant: 'primary', size: 'xs', theme: 'default', rounded: true, iconOnly: true })[0].status
   ).toBe('supported')
   expect(
     matchingRules({ variant: 'ai', size: 'md', theme: 'success', rounded: false, iconOnly: false })[0].status
   ).toBe('unsupported')
+  expect(matchingRules({ variant: 'ai', size: 'md', theme: 'success', rounded: false, iconOnly: true })[0].status).toBe(
+    'unsupported'
+  )
   expect(
     matchingRules({ variant: 'primary', size: 'xs', theme: 'danger', rounded: true, iconOnly: false })[0].status
   ).toBe('deprecated')
@@ -798,7 +801,6 @@ test('detects unsupported literal Button combinations', () => {
     { line: 3, reason: 'unsupported size 2xs' },
     { line: 4, reason: 'ai success theme' },
     { line: 5, reason: 'transparent danger theme' },
-    { line: 6, reason: 'primary success theme' },
     { line: 7, reason: 'link xs combination' }
   ])
 })

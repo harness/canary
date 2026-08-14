@@ -15,6 +15,12 @@ const variant = instance.getEnum('variant', {
   ai: 'ai'
 })
 
+const theme = instance.getEnum('theme', {
+  '⚫ default': 'default',
+  '🟢 success': 'success',
+  '🔴 danger': 'danger'
+})
+
 const disabled = instance.getEnum('👁️ disabled', {
   off: false,
   on: true
@@ -41,6 +47,7 @@ export default {
     <Button
       variant="${variant}"
       size="sm"
+      theme="${theme}"
       iconOnly
       ${disabled ? 'disabled' : ''}
       ${loading ? 'loading' : ''}

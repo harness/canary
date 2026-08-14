@@ -148,7 +148,12 @@ The `TextInput` component supports `prefix` and `suffix` props, which allow addi
 
       <TextInput
         suffix={
-          <Button variant="outline" iconOnly>
+          <Button
+            variant="outline"
+            iconOnly
+            aria-label="Continue"
+            tooltipProps={{ content: "Continue" }}
+          >
             <IconV2 name="nav-arrow-right" size="xs" />
           </Button>
         }

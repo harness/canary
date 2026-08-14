@@ -3,8 +3,7 @@ import { ElementRef, forwardRef, MouseEvent, PropsWithoutRef, useCallback, useSt
 import {
   Button,
   ButtonProps,
-  ButtonPropsIconOnlyRequired,
-  ButtonPropsRegular,
+  ButtonTooltipProps,
   IconPropsV2,
   IconV2,
   IconV2NamesType
@@ -54,16 +53,27 @@ type TogglePropsBase = Pick<ButtonProps, 'disabled' | 'className'> & {
   defaultValue?: boolean
 }
 
-type TogglePropsIconOnly = ButtonPropsIconOnlyRequired & {
+type TogglePropsIconOnly = {
+  iconOnly: true
   prefixIcon: IconV2NamesType
   prefixIconProps?: PropsWithoutRef<Omit<IconPropsV2, 'name'>>
   suffixIcon?: never
   suffixIconProps?: never
+  text: string
+  tooltipProps?: ButtonTooltipProps
+  ignoreIconOnlyTooltip?: boolean
+  'aria-label'?: string
+  'aria-labelledby'?: string
 }
 
-type TogglePropsNotIconOnly = ButtonPropsRegular & {
+type TogglePropsNotIconOnly = {
+  iconOnly?: false
   prefixIcon?: IconV2NamesType
   prefixIconProps?: PropsWithoutRef<Omit<IconPropsV2, 'name'>>
+  tooltipProps?: ButtonTooltipProps
+  ignoreIconOnlyTooltip?: never
+  'aria-label'?: string
+  'aria-labelledby'?: string
 }
 
 export type ToggleProps = TogglePropsBase & (TogglePropsIconOnly | TogglePropsNotIconOnly)
@@ -86,7 +96,10 @@ const Toggle = forwardRef<ElementRef<typeof TogglePrimitive.Root>, ToggleProps>(
       onChange,
       tooltipProps,
       defaultValue,
-      selected: selectedProp
+      selected: selectedProp,
+      ignoreIconOnlyTooltip,
+      'aria-label': ariaLabel,
+      'aria-labelledby': ariaLabelledBy
     },
     ref
   ) => {
@@ -111,8 +124,6 @@ const Toggle = forwardRef<ElementRef<typeof TogglePrimitive.Root>, ToggleProps>(
       handleChange(!selected)
     }
 
-    const accessibilityProps = iconOnly && text ? { 'aria-label': text } : {}
-
     const renderContent = () => {
       if (iconOnly) {
         return <IconV2 {...prefixIconProps} name={prefixIcon} fallback={prefixIconProps?.fallback ?? 'stop'} />
@@ -131,20 +142,53 @@ const Toggle = forwardRef<ElementRef<typeof TogglePrimitive.Root>, ToggleProps>(
       )
     }
 
-    return (
-      <TogglePrimitive.Root ref={ref} asChild pressed={selected} onClick={handleClick} disabled={disabled}>
+    const button = iconOnly ? (
+      ignoreIconOnlyTooltip ? (
         <Button
           className={cn(className, toggleVariants({ size, variant, iconOnly }))}
           variant={selected ? selectedVariant : variant}
           disabled={disabled}
           size={size}
           rounded={rounded}
-          {...accessibilityProps}
-          iconOnly={iconOnly}
-          tooltipProps={tooltipProps}
+          aria-label={ariaLabel ?? text}
+          aria-labelledby={ariaLabelledBy}
+          iconOnly
+          ignoreIconOnlyTooltip
         >
           {renderContent()}
         </Button>
+      ) : (
+        <Button
+          className={cn(className, toggleVariants({ size, variant, iconOnly }))}
+          variant={selected ? selectedVariant : variant}
+          disabled={disabled}
+          size={size}
+          rounded={rounded}
+          aria-label={ariaLabel ?? text}
+          aria-labelledby={ariaLabelledBy}
+          iconOnly
+          tooltipProps={tooltipProps ?? { content: text }}
+        >
+          {renderContent()}
+        </Button>
+      )
+    ) : (
+      <Button
+        className={cn(className, toggleVariants({ size, variant, iconOnly }))}
+        variant={selected ? selectedVariant : variant}
+        disabled={disabled}
+        size={size}
+        aria-label={ariaLabel}
+        aria-labelledby={ariaLabelledBy}
+        tooltipProps={tooltipProps}
+      >
+        {renderContent()}
+      </Button>
+    )
+
+    return (
+      <TogglePrimitive.Root ref={ref} asChild pressed={selected} onClick={handleClick} disabled={disabled}>
+        {button}
       </TogglePrimitive.Root>
     )
   }

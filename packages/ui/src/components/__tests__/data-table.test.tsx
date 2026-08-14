@@ -1580,7 +1580,7 @@ describe('DataTable', () => {
         </TestWrapper>
       )
 
-      const expander = screen.getAllByLabelText('Toggle Row Expanded')[0]
+      const expander = screen.getAllByLabelText('Expand row')[0]
       await userEvent.click(expander)
 
       expect(handleExpandedChange).toHaveBeenCalled()
@@ -1600,7 +1600,7 @@ describe('DataTable', () => {
         </TestWrapper>
       )
 
-      const expanders = screen.getAllByLabelText('Toggle Row Expanded')
+      const expanders = screen.getAllByRole('button', { name: /^(Expand|Collapse) row$/ })
       // Parent A (has children) and Child A1 (has children) get expanders.
       // Child A2 and Parent B do not (leaf / no children).
       expect(expanders).toHaveLength(2)

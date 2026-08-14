@@ -755,6 +755,7 @@ export const PullRequestCommentBox = ({
                           size="sm"
                           variant={item.variant ?? 'ghost'}
                           iconOnly
+                          aria-label={item.title}
                           disabled={showAiLoader}
                           onClick={() => handleActionClick(item.action)}
                           tooltipProps={{

@@ -12,6 +12,7 @@ export const CollapseButton = ({ collapsed, onCollapseChange }: CollapseButtonPr
       size="sm"
       variant="secondary"
       iconOnly
+      aria-label={collapsed ? 'Expand' : 'Collapse'}
       onMouseDown={e => e.stopPropagation()}
       onClick={() => onCollapseChange(!collapsed)}
       tooltipProps={{

@@ -144,6 +144,7 @@ export const LabelsListView: FC<LabelsListViewProps> = ({
                     variant="ghost"
                     size="xs"
                     iconOnly
+                    aria-label={isExpanded ? `Collapse ${label.key} details` : `Expand ${label.key} details`}
                     onClick={e => toggleRow(label.key, e)}
                     className="mt-cn-2xs"
                     tooltipProps={{

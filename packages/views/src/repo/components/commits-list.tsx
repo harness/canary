@@ -111,6 +111,7 @@ export const CommitsList: FC<CommitProps> = ({
                               variant="outline"
                               size="sm"
                               iconOnly
+                              aria-label="View repository at this point of history"
                               tooltipProps={{
                                 content: 'View repository at this point of history'
                               }}

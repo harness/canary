@@ -88,7 +88,15 @@ function MultiTypeSelectBase(props: StyledMultiTypeSelectProps): React.JSX.Eleme
   return (
     <DropdownMenu.Root>
       <DropdownMenu.Trigger className={className}>
-        <Button variant={variant} size={size} style={style} iconOnly className={buttonClassName}>
+        <Button
+          variant={variant}
+          size={size}
+          style={style}
+          iconOnly
+          aria-label="Select input value type"
+          tooltipProps={{ content: 'Select input value type' }}
+          className={buttonClassName}
+        >
           {getButtonIcon(inputValueType)}
         </Button>
       </DropdownMenu.Trigger>

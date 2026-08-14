@@ -525,7 +525,7 @@ const components: ComponentEntry[] = [
     href: "/components/overlays/tooltip",
     preview: (
       <Tooltip content="Helpful information">
-        <Button variant="ghost" size="sm" iconOnly>
+        <Button variant="ghost" size="sm" iconOnly aria-label="View tooltip information" ignoreIconOnlyTooltip>
           <IconV2 name="info-circle" />
         </Button>
       </Tooltip>

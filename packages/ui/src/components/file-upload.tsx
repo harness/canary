@@ -96,7 +96,13 @@ export function FileUpload({ selectedFile, onFileChange, error, accept }: FileUp
                   </Text>
                 </Layout.Vertical>
               </Layout.Flex>
-              <Button variant="ghost" iconOnly onClick={e => removeFile(e)} ignoreIconOnlyTooltip>
+              <Button
+                variant="ghost"
+                iconOnly
+                aria-label="Remove file"
+                onClick={e => removeFile(e)}
+                ignoreIconOnlyTooltip
+              >
                 <IconV2 name="xmark" size="md" />
               </Button>
             </Layout.Flex>

@@ -1,6 +1,6 @@
 import { ChangeEvent, ComponentProps, HTMLAttributes, KeyboardEventHandler } from 'react'
 
-import { Button } from '@components/button'
+import { Button, ButtonTooltipProps } from '@components/button'
 import { Textarea } from '@components/form-primitives'
 import { IconV2, IconV2NamesType } from '@components/icon-v2'
 import { Tag } from '@components/tag'
@@ -90,24 +90,67 @@ export const PromptInputTools = ({ className, ...props }: PromptInputToolsProps)
   <div className={cn('flex items-center gap-cn-xs', className)} {...props} />
 )
 
-export type PromptInputSubmitProps = ComponentProps<typeof Button> & {
+export type PromptInputSubmitProps = Omit<
+  ComponentProps<typeof Button>,
+  'iconOnly' | 'tooltipProps' | 'ignoreIconOnlyTooltip' | 'aria-label' | 'aria-labelledby'
+> & {
   status?: 'streaming'
+  tooltipProps?: ButtonTooltipProps
+  ignoreIconOnlyTooltip?: boolean
+  'aria-label'?: string
+  'aria-labelledby'?: string
 }
 
-export const PromptInputSubmit = ({ status, children, ...props }: PromptInputSubmitProps) => {
+export const PromptInputSubmit = ({
+  status,
+  children,
+  tooltipProps,
+  ignoreIconOnlyTooltip,
+  'aria-label': ariaLabel,
+  'aria-labelledby': ariaLabelledBy,
+  ...props
+}: PromptInputSubmitProps) => {
   let Icon = <IconV2 name="arrow-up" />
+  const accessibleLabel = ariaLabel ?? (status === 'streaming' ? 'Stop response' : 'Send message')
 
   if (status === 'streaming') {
     Icon = <IconV2 name="stop-solid" />
   }
+
+  if (ignoreIconOnlyTooltip) {
+    return (
+      <Button
+        iconOnly
+        rounded
+        type="submit"
+        size="xs"
+        aria-label={accessibleLabel}
+        aria-labelledby={ariaLabelledBy}
+        ignoreIconOnlyTooltip
+        {...props}
+      >
+        {children ?? Icon}
+      </Button>
+    )
+  }
+
   return (
-    <Button iconOnly rounded type="submit" size="xs" {...props}>
+    <Button
+      iconOnly
+      rounded
+      type="submit"
+      size="xs"
+      aria-label={accessibleLabel}
+      aria-labelledby={ariaLabelledBy}
+      tooltipProps={tooltipProps ?? { content: accessibleLabel }}
+      {...props}
+    >
       {children ?? Icon}
     </Button>
   )
 }
 
-export type PromptInputButtonProps = ToggleProps
+export type PromptInputButtonProps = Omit<Extract<ToggleProps, { iconOnly: true }>, 'iconOnly'>
 export const PromptInputButton = ({ variant = 'outline', size = 'xs', ...props }: PromptInputButtonProps) => {
   return <Toggle {...props} variant={variant} size={size} iconOnly />
 }

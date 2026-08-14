@@ -54,19 +54,23 @@ type CommonButtonProps = Omit<ButtonHTMLAttributes<HTMLButtonElement>, 'onClick'
     onClick?: (event: React.MouseEvent<HTMLButtonElement>) => void | Promise<unknown>
   }
 
-type ButtonPropsIconOnlyRequired = {
+type ButtonAccessibleName =
+  | { 'aria-label': string; 'aria-labelledby'?: string }
+  | { 'aria-label'?: string; 'aria-labelledby': string }
+
+type ButtonPropsIconOnlyRequired = ButtonAccessibleName & {
   iconOnly: true
   tooltipProps: ButtonTooltipProps
 }
 
-type ButtonPropsIconOnlyIgnored = {
+type ButtonPropsIconOnlyIgnored = ButtonAccessibleName & {
   iconOnly: true
   ignoreIconOnlyTooltip: true
   tooltipProps?: never
 }
 
 type ButtonPropsRegular = {
-  iconOnly?: boolean
+  iconOnly?: false
   tooltipProps?: ButtonTooltipProps
 }
 

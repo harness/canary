@@ -28,7 +28,14 @@ const Text = ({ filter, onUpdateFilter, handleEnter }: TextFilterProps) => {
       onEnter={handleEnter}
       prefix={false}
       suffix={
-        <Button iconOnly size="sm" variant="transparent" onClick={handleClear} ignoreIconOnlyTooltip>
+        <Button
+          iconOnly
+          aria-label="Clear value"
+          size="sm"
+          variant="transparent"
+          onClick={handleClear}
+          ignoreIconOnlyTooltip
+        >
           <IconV2 name="xmark" size="2xs" />
         </Button>
       }

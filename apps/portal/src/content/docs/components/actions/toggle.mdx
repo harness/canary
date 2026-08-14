@@ -138,7 +138,7 @@ The `rounded` prop is supported when `iconOnly` is enabled. Rounded text Toggles
 ## Icon only
 
 The `Toggle` component accepts a `iconOnly` prop. When this prop is set, the `Toggle` is styled to fit the dimensions of an icon, making it suitable for icon-only buttons.
-Note that when `iconOnly` is set, the `text` prop will be used for the `area-label`, and the `prefixIcon` prop will be used as the only icon displayed.
+When `iconOnly` is set, `text` is required and becomes the underlying Button's `aria-label`. The `prefixIcon` prop is the only visible content.
 
 <DocsPage.ComponentExample
   client:only

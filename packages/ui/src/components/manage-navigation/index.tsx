@@ -162,6 +162,7 @@ export const ManageNavigation = ({
                               </Button>
                               <Button
                                 iconOnly
+                                aria-label="Unpin"
                                 size="sm"
                                 variant="transparent"
                                 onClick={() => {
@@ -210,11 +211,12 @@ export const ManageNavigation = ({
 
                     <Button
                       iconOnly
+                      aria-label="Pin item"
                       size="sm"
                       variant="transparent"
                       onClick={() => addToPinnedItems(item)}
                       tooltipProps={{
-                        content: 'Toggle pin'
+                        content: 'Pin item'
                       }}
                     >
                       <IconV2 name="pin" size="xs" />

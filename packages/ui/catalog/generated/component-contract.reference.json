@@ -1,0 +1,2547 @@
+{
+  "formatVersion": 1,
+  "schemaVersion": "0.4.0",
+  "rows": [
+    {
+      "path": "accessibility",
+      "type": "array",
+      "required": true,
+      "allowedValues": null,
+      "default": null,
+      "owner": "Design system design and engineering",
+      "consumers": [
+        "Engineers",
+        "Designers",
+        "Agents",
+        "Documentation"
+      ],
+      "description": "Contract field accessibility."
+    },
+    {
+      "path": "accessibility[]",
+      "type": "object",
+      "required": true,
+      "allowedValues": null,
+      "default": null,
+      "owner": "Schema maintainers",
+      "consumers": [
+        "Engineers",
+        "Designers",
+        "Agents",
+        "Documentation"
+      ],
+      "description": "Contract field accessibility[]."
+    },
+    {
+      "path": "accessibility[].id",
+      "type": "string",
+      "required": true,
+      "allowedValues": null,
+      "default": null,
+      "owner": "Schema maintainers",
+      "consumers": [
+        "Engineers",
+        "Designers",
+        "Agents",
+        "Documentation"
+      ],
+      "description": "Contract field accessibility[].id."
+    },
+    {
+      "path": "accessibility[].requirementId",
+      "type": "object",
+      "required": false,
+      "allowedValues": null,
+      "default": null,
+      "owner": "Schema maintainers",
+      "consumers": [
+        "Engineers",
+        "Designers",
+        "Agents",
+        "Documentation"
+      ],
+      "description": "Contract field accessibility[].requirementId."
+    },
+    {
+      "path": "accessibility[].statement",
+      "type": "string",
+      "required": true,
+      "allowedValues": null,
+      "default": null,
+      "owner": "Schema maintainers",
+      "consumers": [
+        "Engineers",
+        "Designers",
+        "Agents",
+        "Documentation"
+      ],
+      "description": "Contract field accessibility[].statement."
+    },
+    {
+      "path": "anatomy",
+      "type": "array",
+      "required": true,
+      "allowedValues": null,
+      "default": null,
+      "owner": "Design system design and engineering",
+      "consumers": [
+        "Canary Copilot",
+        "CI",
+        "Documentation",
+        "Future generators"
+      ],
+      "description": "Contract field anatomy."
+    },
+    {
+      "path": "anatomy[]",
+      "type": "object",
+      "required": true,
+      "allowedValues": null,
+      "default": null,
+      "owner": "Schema maintainers",
+      "consumers": [
+        "Engineers",
+        "Designers",
+        "Agents",
+        "Documentation"
+      ],
+      "description": "Contract field anatomy[]."
+    },
+    {
+      "path": "anatomy[].bindings",
+      "type": "object",
+      "required": false,
+      "allowedValues": null,
+      "default": null,
+      "owner": "Schema maintainers",
+      "consumers": [
+        "Engineers",
+        "Designers",
+        "Agents",
+        "Documentation"
+      ],
+      "description": "Contract field anatomy[].bindings."
+    },
+    {
+      "path": "anatomy[].bindings.figma",
+      "type": "object",
+      "required": false,
+      "allowedValues": null,
+      "default": null,
+      "owner": "Schema maintainers",
+      "consumers": [
+        "Engineers",
+        "Designers",
+        "Agents",
+        "Documentation"
+      ],
+      "description": "Contract field anatomy[].bindings.figma."
+    },
+    {
+      "path": "anatomy[].bindings.react",
+      "type": "object",
+      "required": false,
+      "allowedValues": null,
+      "default": null,
+      "owner": "Schema maintainers",
+      "consumers": [
+        "Engineers",
+        "Designers",
+        "Agents",
+        "Documentation"
+      ],
+      "description": "Contract field anatomy[].bindings.react."
+    },
+    {
+      "path": "anatomy[].content",
+      "type": "array",
+      "required": false,
+      "allowedValues": null,
+      "default": null,
+      "owner": "Schema maintainers",
+      "consumers": [
+        "Engineers",
+        "Designers",
+        "Agents",
+        "Documentation"
+      ],
+      "description": "Contract field anatomy[].content."
+    },
+    {
+      "path": "anatomy[].content[]",
+      "type": "string",
+      "required": true,
+      "allowedValues": null,
+      "default": null,
+      "owner": "Schema maintainers",
+      "consumers": [
+        "Engineers",
+        "Designers",
+        "Agents",
+        "Documentation"
+      ],
+      "description": "Contract field anatomy[].content[]."
+    },
+    {
+      "path": "anatomy[].description",
+      "type": "string",
+      "required": true,
+      "allowedValues": null,
+      "default": null,
+      "owner": "Schema maintainers",
+      "consumers": [
+        "Engineers",
+        "Designers",
+        "Agents",
+        "Documentation"
+      ],
+      "description": "Contract field anatomy[].description."
+    },
+    {
+      "path": "anatomy[].id",
+      "type": "string",
+      "required": true,
+      "allowedValues": null,
+      "default": null,
+      "owner": "Schema maintainers",
+      "consumers": [
+        "Engineers",
+        "Designers",
+        "Agents",
+        "Documentation"
+      ],
+      "description": "Contract field anatomy[].id."
+    },
+    {
+      "path": "anatomy[].name",
+      "type": "string",
+      "required": true,
+      "allowedValues": null,
+      "default": null,
+      "owner": "Schema maintainers",
+      "consumers": [
+        "Engineers",
+        "Designers",
+        "Agents",
+        "Documentation"
+      ],
+      "description": "Contract field anatomy[].name."
+    },
+    {
+      "path": "anatomy[].parentId",
+      "type": "object",
+      "required": false,
+      "allowedValues": null,
+      "default": null,
+      "owner": "Schema maintainers",
+      "consumers": [
+        "Engineers",
+        "Designers",
+        "Agents",
+        "Documentation"
+      ],
+      "description": "Contract field anatomy[].parentId."
+    },
+    {
+      "path": "anatomy[].presence",
+      "type": "string",
+      "required": true,
+      "allowedValues": [
+        "required",
+        "optional",
+        "conditional",
+        "repeatable"
+      ],
+      "default": null,
+      "owner": "Schema maintainers",
+      "consumers": [
+        "Engineers",
+        "Designers",
+        "Agents",
+        "Documentation"
+      ],
+      "description": "Contract field anatomy[].presence."
+    },
+    {
+      "path": "anatomy[].role",
+      "type": "object",
+      "required": false,
+      "allowedValues": null,
+      "default": null,
+      "owner": "Schema maintainers",
+      "consumers": [
+        "Engineers",
+        "Designers",
+        "Agents",
+        "Documentation"
+      ],
+      "description": "Contract field anatomy[].role."
+    },
+    {
+      "path": "constraints",
+      "type": "object",
+      "required": true,
+      "allowedValues": null,
+      "default": null,
+      "owner": "Design system engineering with design review",
+      "consumers": [
+        "Canary Copilot",
+        "CI",
+        "Documentation",
+        "Future generators"
+      ],
+      "description": "Contract field constraints."
+    },
+    {
+      "path": "constraints.dimensions",
+      "type": "array",
+      "required": true,
+      "allowedValues": null,
+      "default": null,
+      "owner": "Design system engineering with design review",
+      "consumers": [
+        "Canary Copilot",
+        "CI",
+        "Documentation",
+        "Future generators"
+      ],
+      "description": "Contract field constraints.dimensions."
+    },
+    {
+      "path": "constraints.dimensions[]",
+      "type": "string",
+      "required": true,
+      "allowedValues": null,
+      "default": null,
+      "owner": "Design system engineering with design review",
+      "consumers": [
+        "Canary Copilot",
+        "CI",
+        "Documentation",
+        "Future generators"
+      ],
+      "description": "Contract field constraints.dimensions[]."
+    },
+    {
+      "path": "constraints.exhaustive",
+      "type": "boolean",
+      "required": true,
+      "allowedValues": null,
+      "default": null,
+      "owner": "Design system engineering with design review",
+      "consumers": [
+        "Canary Copilot",
+        "CI",
+        "Documentation",
+        "Future generators"
+      ],
+      "description": "Contract field constraints.exhaustive."
+    },
+    {
+      "path": "constraints.rules",
+      "type": "array",
+      "required": true,
+      "allowedValues": null,
+      "default": null,
+      "owner": "Design system engineering with design review",
+      "consumers": [
+        "Canary Copilot",
+        "CI",
+        "Documentation",
+        "Future generators"
+      ],
+      "description": "Contract field constraints.rules."
+    },
+    {
+      "path": "constraints.rules[]",
+      "type": "object",
+      "required": true,
+      "allowedValues": null,
+      "default": null,
+      "owner": "Design system engineering with design review",
+      "consumers": [
+        "Canary Copilot",
+        "CI",
+        "Documentation",
+        "Future generators"
+      ],
+      "description": "Contract field constraints.rules[]."
+    },
+    {
+      "path": "constraints.rules[].conditions",
+      "type": "object",
+      "required": true,
+      "allowedValues": null,
+      "default": null,
+      "owner": "Design system engineering with design review",
+      "consumers": [
+        "Canary Copilot",
+        "CI",
+        "Documentation",
+        "Future generators"
+      ],
+      "description": "Contract field constraints.rules[].conditions."
+    },
+    {
+      "path": "constraints.rules[].conditions.*",
+      "type": "array",
+      "required": false,
+      "allowedValues": null,
+      "default": null,
+      "owner": "Design system engineering with design review",
+      "consumers": [
+        "Canary Copilot",
+        "CI",
+        "Documentation",
+        "Future generators"
+      ],
+      "description": "Contract field constraints.rules[].conditions.*."
+    },
+    {
+      "path": "constraints.rules[].conditions.*[]",
+      "type": "string | number | boolean | null",
+      "required": true,
+      "allowedValues": null,
+      "default": null,
+      "owner": "Design system engineering with design review",
+      "consumers": [
+        "Canary Copilot",
+        "CI",
+        "Documentation",
+        "Future generators"
+      ],
+      "description": "Contract field constraints.rules[].conditions.*[]."
+    },
+    {
+      "path": "constraints.rules[].description",
+      "type": "string",
+      "required": true,
+      "allowedValues": null,
+      "default": null,
+      "owner": "Design system engineering with design review",
+      "consumers": [
+        "Canary Copilot",
+        "CI",
+        "Documentation",
+        "Future generators"
+      ],
+      "description": "Contract field constraints.rules[].description."
+    },
+    {
+      "path": "constraints.rules[].id",
+      "type": "string",
+      "required": true,
+      "allowedValues": null,
+      "default": null,
+      "owner": "Design system engineering with design review",
+      "consumers": [
+        "Canary Copilot",
+        "CI",
+        "Documentation",
+        "Future generators"
+      ],
+      "description": "Contract field constraints.rules[].id."
+    },
+    {
+      "path": "constraints.rules[].migrationId",
+      "type": "object",
+      "required": false,
+      "allowedValues": null,
+      "default": null,
+      "owner": "Design system engineering with design review",
+      "consumers": [
+        "Canary Copilot",
+        "CI",
+        "Documentation",
+        "Future generators"
+      ],
+      "description": "Contract field constraints.rules[].migrationId."
+    },
+    {
+      "path": "constraints.rules[].requirementId",
+      "type": "object",
+      "required": false,
+      "allowedValues": null,
+      "default": null,
+      "owner": "Design system engineering with design review",
+      "consumers": [
+        "Canary Copilot",
+        "CI",
+        "Documentation",
+        "Future generators"
+      ],
+      "description": "Contract field constraints.rules[].requirementId."
+    },
+    {
+      "path": "constraints.rules[].status",
+      "type": "string",
+      "required": true,
+      "allowedValues": [
+        "supported",
+        "deprecated",
+        "unsupported"
+      ],
+      "default": null,
+      "owner": "Design system engineering with design review",
+      "consumers": [
+        "Canary Copilot",
+        "CI",
+        "Documentation",
+        "Future generators"
+      ],
+      "description": "Contract field constraints.rules[].status."
+    },
+    {
+      "path": "constraints.rules[].surfaces",
+      "type": "array",
+      "required": true,
+      "allowedValues": null,
+      "default": null,
+      "owner": "Design system engineering with design review",
+      "consumers": [
+        "Canary Copilot",
+        "CI",
+        "Documentation",
+        "Future generators"
+      ],
+      "description": "Contract field constraints.rules[].surfaces."
+    },
+    {
+      "path": "constraints.rules[].surfaces[]",
+      "type": "string",
+      "required": true,
+      "allowedValues": [
+        "figma",
+        "react"
+      ],
+      "default": null,
+      "owner": "Design system engineering with design review",
+      "consumers": [
+        "Canary Copilot",
+        "CI",
+        "Documentation",
+        "Future generators"
+      ],
+      "description": "Contract field constraints.rules[].surfaces[]."
+    },
+    {
+      "path": "contractVersion",
+      "type": "string",
+      "required": true,
+      "allowedValues": null,
+      "default": null,
+      "owner": "Schema maintainers",
+      "consumers": [
+        "Engineers",
+        "Designers",
+        "Agents",
+        "Documentation"
+      ],
+      "description": "Contract field contractVersion."
+    },
+    {
+      "path": "evidence",
+      "type": "object",
+      "required": true,
+      "allowedValues": null,
+      "default": null,
+      "owner": "Design system governance",
+      "consumers": [
+        "Health scoring",
+        "CI",
+        "Governance",
+        "Documentation"
+      ],
+      "description": "Contract field evidence."
+    },
+    {
+      "path": "evidence.sources",
+      "type": "array",
+      "required": true,
+      "allowedValues": null,
+      "default": null,
+      "owner": "Design system governance",
+      "consumers": [
+        "Health scoring",
+        "CI",
+        "Governance",
+        "Documentation"
+      ],
+      "description": "Contract field evidence.sources."
+    },
+    {
+      "path": "evidence.sources[]",
+      "type": "object",
+      "required": true,
+      "allowedValues": null,
+      "default": null,
+      "owner": "Design system governance",
+      "consumers": [
+        "Health scoring",
+        "CI",
+        "Governance",
+        "Documentation"
+      ],
+      "description": "Contract field evidence.sources[]."
+    },
+    {
+      "path": "evidence.sources[].id",
+      "type": "string",
+      "required": true,
+      "allowedValues": null,
+      "default": null,
+      "owner": "Design system governance",
+      "consumers": [
+        "Health scoring",
+        "CI",
+        "Governance",
+        "Documentation"
+      ],
+      "description": "Contract field evidence.sources[].id."
+    },
+    {
+      "path": "evidence.sources[].path",
+      "type": "string",
+      "required": true,
+      "allowedValues": null,
+      "default": null,
+      "owner": "Design system governance",
+      "consumers": [
+        "Health scoring",
+        "CI",
+        "Governance",
+        "Documentation"
+      ],
+      "description": "Contract field evidence.sources[].path."
+    },
+    {
+      "path": "evidence.sources[].type",
+      "type": "string",
+      "required": true,
+      "allowedValues": [
+        "source",
+        "docs",
+        "tests",
+        "code-connect",
+        "plugin",
+        "figma",
+        "decision"
+      ],
+      "default": null,
+      "owner": "Design system governance",
+      "consumers": [
+        "Health scoring",
+        "CI",
+        "Governance",
+        "Documentation"
+      ],
+      "description": "Contract field evidence.sources[].type."
+    },
+    {
+      "path": "evidence.verifications",
+      "type": "array",
+      "required": true,
+      "allowedValues": null,
+      "default": null,
+      "owner": "Design system governance",
+      "consumers": [
+        "Health scoring",
+        "CI",
+        "Governance",
+        "Documentation"
+      ],
+      "description": "Contract field evidence.verifications."
+    },
+    {
+      "path": "evidence.verifications[]",
+      "type": "object",
+      "required": true,
+      "allowedValues": null,
+      "default": null,
+      "owner": "Design system governance",
+      "consumers": [
+        "Health scoring",
+        "CI",
+        "Governance",
+        "Documentation"
+      ],
+      "description": "Contract field evidence.verifications[]."
+    },
+    {
+      "path": "evidence.verifications[].id",
+      "type": "string",
+      "required": true,
+      "allowedValues": null,
+      "default": null,
+      "owner": "Design system governance",
+      "consumers": [
+        "Health scoring",
+        "CI",
+        "Governance",
+        "Documentation"
+      ],
+      "description": "Contract field evidence.verifications[].id."
+    },
+    {
+      "path": "evidence.verifications[].notes",
+      "type": "object",
+      "required": false,
+      "allowedValues": null,
+      "default": null,
+      "owner": "Design system governance",
+      "consumers": [
+        "Health scoring",
+        "CI",
+        "Governance",
+        "Documentation"
+      ],
+      "description": "Contract field evidence.verifications[].notes."
+    },
+    {
+      "path": "evidence.verifications[].requirementId",
+      "type": "string",
+      "required": true,
+      "allowedValues": null,
+      "default": null,
+      "owner": "Design system governance",
+      "consumers": [
+        "Health scoring",
+        "CI",
+        "Governance",
+        "Documentation"
+      ],
+      "description": "Contract field evidence.verifications[].requirementId."
+    },
+    {
+      "path": "evidence.verifications[].result",
+      "type": "string",
+      "required": true,
+      "allowedValues": [
+        "pass",
+        "fail",
+        "unavailable"
+      ],
+      "default": null,
+      "owner": "Design system governance",
+      "consumers": [
+        "Health scoring",
+        "CI",
+        "Governance",
+        "Documentation"
+      ],
+      "description": "Contract field evidence.verifications[].result."
+    },
+    {
+      "path": "evidence.verifications[].sourceIds",
+      "type": "array",
+      "required": true,
+      "allowedValues": null,
+      "default": null,
+      "owner": "Design system governance",
+      "consumers": [
+        "Health scoring",
+        "CI",
+        "Governance",
+        "Documentation"
+      ],
+      "description": "Contract field evidence.verifications[].sourceIds."
+    },
+    {
+      "path": "evidence.verifications[].sourceIds[]",
+      "type": "string",
+      "required": true,
+      "allowedValues": null,
+      "default": null,
+      "owner": "Design system governance",
+      "consumers": [
+        "Health scoring",
+        "CI",
+        "Governance",
+        "Documentation"
+      ],
+      "description": "Contract field evidence.verifications[].sourceIds[]."
+    },
+    {
+      "path": "evidence.verifications[].verifiedAt",
+      "type": "string",
+      "required": true,
+      "allowedValues": null,
+      "default": null,
+      "owner": "Design system governance",
+      "consumers": [
+        "Health scoring",
+        "CI",
+        "Governance",
+        "Documentation"
+      ],
+      "description": "Contract field evidence.verifications[].verifiedAt."
+    },
+    {
+      "path": "identity",
+      "type": "object",
+      "required": true,
+      "allowedValues": null,
+      "default": null,
+      "owner": "Design system design and engineering",
+      "consumers": [
+        "Engineers",
+        "Designers",
+        "Agents",
+        "Documentation"
+      ],
+      "description": "Contract field identity."
+    },
+    {
+      "path": "identity.aliases",
+      "type": "array",
+      "required": true,
+      "allowedValues": null,
+      "default": null,
+      "owner": "Design system design and engineering",
+      "consumers": [
+        "Engineers",
+        "Designers",
+        "Agents",
+        "Documentation"
+      ],
+      "description": "Contract field identity.aliases."
+    },
+    {
+      "path": "identity.aliases[]",
+      "type": "string",
+      "required": true,
+      "allowedValues": null,
+      "default": null,
+      "owner": "Design system design and engineering",
+      "consumers": [
+        "Engineers",
+        "Designers",
+        "Agents",
+        "Documentation"
+      ],
+      "description": "Contract field identity.aliases[]."
+    },
+    {
+      "path": "identity.id",
+      "type": "string",
+      "required": true,
+      "allowedValues": null,
+      "default": null,
+      "owner": "Design system design and engineering",
+      "consumers": [
+        "Engineers",
+        "Designers",
+        "Agents",
+        "Documentation"
+      ],
+      "description": "Contract field identity.id."
+    },
+    {
+      "path": "identity.name",
+      "type": "string",
+      "required": true,
+      "allowedValues": null,
+      "default": null,
+      "owner": "Design system design and engineering",
+      "consumers": [
+        "Engineers",
+        "Designers",
+        "Agents",
+        "Documentation"
+      ],
+      "description": "Contract field identity.name."
+    },
+    {
+      "path": "identity.summary",
+      "type": "string",
+      "required": true,
+      "allowedValues": null,
+      "default": null,
+      "owner": "Design system design and engineering",
+      "consumers": [
+        "Engineers",
+        "Designers",
+        "Agents",
+        "Documentation"
+      ],
+      "description": "Contract field identity.summary."
+    },
+    {
+      "path": "lifecycle",
+      "type": "object",
+      "required": true,
+      "allowedValues": null,
+      "default": null,
+      "owner": "Design system governance",
+      "consumers": [
+        "Engineers",
+        "Designers",
+        "Agents",
+        "Documentation"
+      ],
+      "description": "Contract field lifecycle."
+    },
+    {
+      "path": "lifecycle.publishedAt",
+      "type": "object",
+      "required": false,
+      "allowedValues": null,
+      "default": null,
+      "owner": "Design system governance",
+      "consumers": [
+        "Engineers",
+        "Designers",
+        "Agents",
+        "Documentation"
+      ],
+      "description": "Contract field lifecycle.publishedAt."
+    },
+    {
+      "path": "lifecycle.replacementId",
+      "type": "object",
+      "required": false,
+      "allowedValues": null,
+      "default": null,
+      "owner": "Design system governance",
+      "consumers": [
+        "Engineers",
+        "Designers",
+        "Agents",
+        "Documentation"
+      ],
+      "description": "Contract field lifecycle.replacementId."
+    },
+    {
+      "path": "lifecycle.status",
+      "type": "string",
+      "required": true,
+      "allowedValues": [
+        "draft",
+        "piloting",
+        "stable",
+        "deprecated"
+      ],
+      "default": null,
+      "owner": "Design system governance",
+      "consumers": [
+        "Engineers",
+        "Designers",
+        "Agents",
+        "Documentation"
+      ],
+      "description": "Contract field lifecycle.status."
+    },
+    {
+      "path": "migrations",
+      "type": "array",
+      "required": true,
+      "allowedValues": null,
+      "default": null,
+      "owner": "Design system governance",
+      "consumers": [
+        "Engineers",
+        "Designers",
+        "Agents",
+        "Documentation"
+      ],
+      "description": "Contract field migrations."
+    },
+    {
+      "path": "migrations[]",
+      "type": "object",
+      "required": true,
+      "allowedValues": null,
+      "default": null,
+      "owner": "Schema maintainers",
+      "consumers": [
+        "Engineers",
+        "Designers",
+        "Agents",
+        "Documentation"
+      ],
+      "description": "Contract field migrations[]."
+    },
+    {
+      "path": "migrations[].from",
+      "type": "string",
+      "required": true,
+      "allowedValues": null,
+      "default": null,
+      "owner": "Schema maintainers",
+      "consumers": [
+        "Engineers",
+        "Designers",
+        "Agents",
+        "Documentation"
+      ],
+      "description": "Contract field migrations[].from."
+    },
+    {
+      "path": "migrations[].id",
+      "type": "string",
+      "required": true,
+      "allowedValues": null,
+      "default": null,
+      "owner": "Schema maintainers",
+      "consumers": [
+        "Engineers",
+        "Designers",
+        "Agents",
+        "Documentation"
+      ],
+      "description": "Contract field migrations[].id."
+    },
+    {
+      "path": "migrations[].instructions",
+      "type": "string",
+      "required": true,
+      "allowedValues": null,
+      "default": null,
+      "owner": "Schema maintainers",
+      "consumers": [
+        "Engineers",
+        "Designers",
+        "Agents",
+        "Documentation"
+      ],
+      "description": "Contract field migrations[].instructions."
+    },
+    {
+      "path": "migrations[].owner",
+      "type": "object",
+      "required": false,
+      "allowedValues": null,
+      "default": null,
+      "owner": "Schema maintainers",
+      "consumers": [
+        "Engineers",
+        "Designers",
+        "Agents",
+        "Documentation"
+      ],
+      "description": "Contract field migrations[].owner."
+    },
+    {
+      "path": "migrations[].target",
+      "type": "object",
+      "required": false,
+      "allowedValues": null,
+      "default": null,
+      "owner": "Schema maintainers",
+      "consumers": [
+        "Engineers",
+        "Designers",
+        "Agents",
+        "Documentation"
+      ],
+      "description": "Contract field migrations[].target."
+    },
+    {
+      "path": "migrations[].to",
+      "type": "string",
+      "required": true,
+      "allowedValues": null,
+      "default": null,
+      "owner": "Schema maintainers",
+      "consumers": [
+        "Engineers",
+        "Designers",
+        "Agents",
+        "Documentation"
+      ],
+      "description": "Contract field migrations[].to."
+    },
+    {
+      "path": "ownership",
+      "type": "object",
+      "required": true,
+      "allowedValues": null,
+      "default": null,
+      "owner": "Design system governance",
+      "consumers": [
+        "Engineers",
+        "Designers",
+        "Agents",
+        "Documentation"
+      ],
+      "description": "Contract field ownership."
+    },
+    {
+      "path": "ownership.contacts",
+      "type": "array",
+      "required": true,
+      "allowedValues": null,
+      "default": null,
+      "owner": "Design system governance",
+      "consumers": [
+        "Engineers",
+        "Designers",
+        "Agents",
+        "Documentation"
+      ],
+      "description": "Contract field ownership.contacts."
+    },
+    {
+      "path": "ownership.contacts[]",
+      "type": "string",
+      "required": true,
+      "allowedValues": null,
+      "default": null,
+      "owner": "Design system governance",
+      "consumers": [
+        "Engineers",
+        "Designers",
+        "Agents",
+        "Documentation"
+      ],
+      "description": "Contract field ownership.contacts[]."
+    },
+    {
+      "path": "ownership.team",
+      "type": "string",
+      "required": true,
+      "allowedValues": null,
+      "default": null,
+      "owner": "Design system governance",
+      "consumers": [
+        "Engineers",
+        "Designers",
+        "Agents",
+        "Documentation"
+      ],
+      "description": "Contract field ownership.team."
+    },
+    {
+      "path": "properties",
+      "type": "array",
+      "required": true,
+      "allowedValues": null,
+      "default": null,
+      "owner": "Design system engineering with design review",
+      "consumers": [
+        "Canary Copilot",
+        "CI",
+        "Documentation",
+        "Future generators"
+      ],
+      "description": "Contract field properties."
+    },
+    {
+      "path": "properties[]",
+      "type": "object",
+      "required": true,
+      "allowedValues": null,
+      "default": null,
+      "owner": "Schema maintainers",
+      "consumers": [
+        "Engineers",
+        "Designers",
+        "Agents",
+        "Documentation"
+      ],
+      "description": "Contract field properties[]."
+    },
+    {
+      "path": "properties[].bindings",
+      "type": "object",
+      "required": true,
+      "allowedValues": null,
+      "default": null,
+      "owner": "Schema maintainers",
+      "consumers": [
+        "Engineers",
+        "Designers",
+        "Agents",
+        "Documentation"
+      ],
+      "description": "Contract field properties[].bindings."
+    },
+    {
+      "path": "properties[].bindings.figma",
+      "type": "object",
+      "required": false,
+      "allowedValues": null,
+      "default": null,
+      "owner": "Schema maintainers",
+      "consumers": [
+        "Engineers",
+        "Designers",
+        "Agents",
+        "Documentation"
+      ],
+      "description": "Contract field properties[].bindings.figma."
+    },
+    {
+      "path": "properties[].bindings.react",
+      "type": "object",
+      "required": false,
+      "allowedValues": null,
+      "default": null,
+      "owner": "Schema maintainers",
+      "consumers": [
+        "Engineers",
+        "Designers",
+        "Agents",
+        "Documentation"
+      ],
+      "description": "Contract field properties[].bindings.react."
+    },
+    {
+      "path": "properties[].bindings.react.kind",
+      "type": "string",
+      "required": true,
+      "allowedValues": [
+        "prop",
+        "slot",
+        "composition",
+        "pseudoClass",
+        "behavior"
+      ],
+      "default": null,
+      "owner": "Schema maintainers",
+      "consumers": [
+        "Engineers",
+        "Designers",
+        "Agents",
+        "Documentation"
+      ],
+      "description": "Contract field properties[].bindings.react.kind."
+    },
+    {
+      "path": "properties[].bindings.react.name",
+      "type": "object",
+      "required": false,
+      "allowedValues": null,
+      "default": null,
+      "owner": "Schema maintainers",
+      "consumers": [
+        "Engineers",
+        "Designers",
+        "Agents",
+        "Documentation"
+      ],
+      "description": "Contract field properties[].bindings.react.name."
+    },
+    {
+      "path": "properties[].bindings.react.target",
+      "type": "object",
+      "required": false,
+      "allowedValues": null,
+      "default": null,
+      "owner": "Schema maintainers",
+      "consumers": [
+        "Engineers",
+        "Designers",
+        "Agents",
+        "Documentation"
+      ],
+      "description": "Contract field properties[].bindings.react.target."
+    },
+    {
+      "path": "properties[].bindings.react.transform",
+      "type": "object",
+      "required": false,
+      "allowedValues": null,
+      "default": null,
+      "owner": "Schema maintainers",
+      "consumers": [
+        "Engineers",
+        "Designers",
+        "Agents",
+        "Documentation"
+      ],
+      "description": "Contract field properties[].bindings.react.transform."
+    },
+    {
+      "path": "properties[].bindings.react.type",
+      "type": "object",
+      "required": false,
+      "allowedValues": null,
+      "default": null,
+      "owner": "Schema maintainers",
+      "consumers": [
+        "Engineers",
+        "Designers",
+        "Agents",
+        "Documentation"
+      ],
+      "description": "Contract field properties[].bindings.react.type."
+    },
+    {
+      "path": "properties[].default",
+      "type": "object",
+      "required": false,
+      "allowedValues": null,
+      "default": null,
+      "owner": "Schema maintainers",
+      "consumers": [
+        "Engineers",
+        "Designers",
+        "Agents",
+        "Documentation"
+      ],
+      "description": "Contract field properties[].default."
+    },
+    {
+      "path": "properties[].description",
+      "type": "string",
+      "required": true,
+      "allowedValues": null,
+      "default": null,
+      "owner": "Schema maintainers",
+      "consumers": [
+        "Engineers",
+        "Designers",
+        "Agents",
+        "Documentation"
+      ],
+      "description": "Contract field properties[].description."
+    },
+    {
+      "path": "properties[].id",
+      "type": "string",
+      "required": true,
+      "allowedValues": null,
+      "default": null,
+      "owner": "Schema maintainers",
+      "consumers": [
+        "Engineers",
+        "Designers",
+        "Agents",
+        "Documentation"
+      ],
+      "description": "Contract field properties[].id."
+    },
+    {
+      "path": "properties[].name",
+      "type": "string",
+      "required": true,
+      "allowedValues": null,
+      "default": null,
+      "owner": "Schema maintainers",
+      "consumers": [
+        "Engineers",
+        "Designers",
+        "Agents",
+        "Documentation"
+      ],
+      "description": "Contract field properties[].name."
+    },
+    {
+      "path": "properties[].required",
+      "type": "boolean",
+      "required": false,
+      "allowedValues": null,
+      "default": null,
+      "owner": "Schema maintainers",
+      "consumers": [
+        "Engineers",
+        "Designers",
+        "Agents",
+        "Documentation"
+      ],
+      "description": "Contract field properties[].required."
+    },
+    {
+      "path": "properties[].type",
+      "type": "string",
+      "required": true,
+      "allowedValues": [
+        "boolean",
+        "enum",
+        "number",
+        "string",
+        "node",
+        "function",
+        "object"
+      ],
+      "default": null,
+      "owner": "Schema maintainers",
+      "consumers": [
+        "Engineers",
+        "Designers",
+        "Agents",
+        "Documentation"
+      ],
+      "description": "Contract field properties[].type."
+    },
+    {
+      "path": "properties[].values",
+      "type": "array",
+      "required": false,
+      "allowedValues": null,
+      "default": null,
+      "owner": "Schema maintainers",
+      "consumers": [
+        "Engineers",
+        "Designers",
+        "Agents",
+        "Documentation"
+      ],
+      "description": "Contract field properties[].values."
+    },
+    {
+      "path": "properties[].values[]",
+      "type": "string | number | boolean | null",
+      "required": true,
+      "allowedValues": null,
+      "default": null,
+      "owner": "Schema maintainers",
+      "consumers": [
+        "Engineers",
+        "Designers",
+        "Agents",
+        "Documentation"
+      ],
+      "description": "Contract field properties[].values[]."
+    },
+    {
+      "path": "requirements",
+      "type": "array",
+      "required": true,
+      "allowedValues": null,
+      "default": null,
+      "owner": "Design system governance",
+      "consumers": [
+        "Health scoring",
+        "CI",
+        "Governance",
+        "Documentation"
+      ],
+      "description": "Contract field requirements."
+    },
+    {
+      "path": "requirements[]",
+      "type": "object",
+      "required": true,
+      "allowedValues": null,
+      "default": null,
+      "owner": "Schema maintainers",
+      "consumers": [
+        "Engineers",
+        "Designers",
+        "Agents",
+        "Documentation"
+      ],
+      "description": "Contract field requirements[]."
+    },
+    {
+      "path": "requirements[].dimension",
+      "type": "string",
+      "required": true,
+      "allowedValues": [
+        "contractDefinition",
+        "figmaImplementation",
+        "codeImplementation",
+        "designCodeParity",
+        "governanceEvidence"
+      ],
+      "default": null,
+      "owner": "Schema maintainers",
+      "consumers": [
+        "Engineers",
+        "Designers",
+        "Agents",
+        "Documentation"
+      ],
+      "description": "Contract field requirements[].dimension."
+    },
+    {
+      "path": "requirements[].enforcement",
+      "type": "string",
+      "required": true,
+      "allowedValues": [
+        "automated",
+        "manual",
+        "advisory"
+      ],
+      "default": null,
+      "owner": "Schema maintainers",
+      "consumers": [
+        "Engineers",
+        "Designers",
+        "Agents",
+        "Documentation"
+      ],
+      "description": "Contract field requirements[].enforcement."
+    },
+    {
+      "path": "requirements[].evaluator",
+      "type": "string",
+      "required": false,
+      "allowedValues": [
+        "schema",
+        "libraryIdentity",
+        "propertyValues",
+        "constraint",
+        "anatomy",
+        "source",
+        "parity",
+        "evidence",
+        "manual"
+      ],
+      "default": null,
+      "owner": "Schema maintainers",
+      "consumers": [
+        "Engineers",
+        "Designers",
+        "Agents",
+        "Documentation"
+      ],
+      "description": "Contract field requirements[].evaluator."
+    },
+    {
+      "path": "requirements[].id",
+      "type": "string",
+      "required": true,
+      "allowedValues": null,
+      "default": null,
+      "owner": "Schema maintainers",
+      "consumers": [
+        "Engineers",
+        "Designers",
+        "Agents",
+        "Documentation"
+      ],
+      "description": "Contract field requirements[].id."
+    },
+    {
+      "path": "requirements[].maxAgeDays",
+      "type": "integer",
+      "required": false,
+      "allowedValues": null,
+      "default": null,
+      "owner": "Schema maintainers",
+      "consumers": [
+        "Engineers",
+        "Designers",
+        "Agents",
+        "Documentation"
+      ],
+      "description": "Contract field requirements[].maxAgeDays."
+    },
+    {
+      "path": "requirements[].remediation",
+      "type": "object",
+      "required": false,
+      "allowedValues": null,
+      "default": null,
+      "owner": "Schema maintainers",
+      "consumers": [
+        "Engineers",
+        "Designers",
+        "Agents",
+        "Documentation"
+      ],
+      "description": "Contract field requirements[].remediation."
+    },
+    {
+      "path": "requirements[].severity",
+      "type": "string",
+      "required": true,
+      "allowedValues": [
+        "critical",
+        "major",
+        "minor",
+        "informational"
+      ],
+      "default": null,
+      "owner": "Schema maintainers",
+      "consumers": [
+        "Engineers",
+        "Designers",
+        "Agents",
+        "Documentation"
+      ],
+      "description": "Contract field requirements[].severity."
+    },
+    {
+      "path": "requirements[].statement",
+      "type": "string",
+      "required": true,
+      "allowedValues": null,
+      "default": null,
+      "owner": "Schema maintainers",
+      "consumers": [
+        "Engineers",
+        "Designers",
+        "Agents",
+        "Documentation"
+      ],
+      "description": "Contract field requirements[].statement."
+    },
+    {
+      "path": "schemaVersion",
+      "type": "string",
+      "required": true,
+      "allowedValues": "0.4.0",
+      "default": null,
+      "owner": "Schema maintainers",
+      "consumers": [
+        "Engineers",
+        "Designers",
+        "Agents",
+        "Documentation"
+      ],
+      "description": "Contract field schemaVersion."
+    },
+    {
+      "path": "semantics",
+      "type": "object",
+      "required": true,
+      "allowedValues": null,
+      "default": null,
+      "owner": "Design system design and engineering",
+      "consumers": [
+        "Engineers",
+        "Designers",
+        "Agents",
+        "Documentation"
+      ],
+      "description": "Contract field semantics."
+    },
+    {
+      "path": "semantics.avoidWhen",
+      "type": "array",
+      "required": true,
+      "allowedValues": null,
+      "default": null,
+      "owner": "Design system design and engineering",
+      "consumers": [
+        "Engineers",
+        "Designers",
+        "Agents",
+        "Documentation"
+      ],
+      "description": "Contract field semantics.avoidWhen."
+    },
+    {
+      "path": "semantics.avoidWhen[]",
+      "type": "string",
+      "required": true,
+      "allowedValues": null,
+      "default": null,
+      "owner": "Design system design and engineering",
+      "consumers": [
+        "Engineers",
+        "Designers",
+        "Agents",
+        "Documentation"
+      ],
+      "description": "Contract field semantics.avoidWhen[]."
+    },
+    {
+      "path": "semantics.purpose",
+      "type": "string",
+      "required": true,
+      "allowedValues": null,
+      "default": null,
+      "owner": "Design system design and engineering",
+      "consumers": [
+        "Engineers",
+        "Designers",
+        "Agents",
+        "Documentation"
+      ],
+      "description": "Contract field semantics.purpose."
+    },
+    {
+      "path": "semantics.roles",
+      "type": "array",
+      "required": true,
+      "allowedValues": null,
+      "default": null,
+      "owner": "Design system design and engineering",
+      "consumers": [
+        "Engineers",
+        "Designers",
+        "Agents",
+        "Documentation"
+      ],
+      "description": "Contract field semantics.roles."
+    },
+    {
+      "path": "semantics.roles[]",
+      "type": "string",
+      "required": true,
+      "allowedValues": null,
+      "default": null,
+      "owner": "Design system design and engineering",
+      "consumers": [
+        "Engineers",
+        "Designers",
+        "Agents",
+        "Documentation"
+      ],
+      "description": "Contract field semantics.roles[]."
+    },
+    {
+      "path": "semantics.useWhen",
+      "type": "array",
+      "required": true,
+      "allowedValues": null,
+      "default": null,
+      "owner": "Design system design and engineering",
+      "consumers": [
+        "Engineers",
+        "Designers",
+        "Agents",
+        "Documentation"
+      ],
+      "description": "Contract field semantics.useWhen."
+    },
+    {
+      "path": "semantics.useWhen[]",
+      "type": "string",
+      "required": true,
+      "allowedValues": null,
+      "default": null,
+      "owner": "Design system design and engineering",
+      "consumers": [
+        "Engineers",
+        "Designers",
+        "Agents",
+        "Documentation"
+      ],
+      "description": "Contract field semantics.useWhen[]."
+    },
+    {
+      "path": "states",
+      "type": "array",
+      "required": true,
+      "allowedValues": null,
+      "default": null,
+      "owner": "Design system design and engineering",
+      "consumers": [
+        "Canary Copilot",
+        "CI",
+        "Documentation",
+        "Future generators"
+      ],
+      "description": "Contract field states."
+    },
+    {
+      "path": "states[]",
+      "type": "object",
+      "required": true,
+      "allowedValues": null,
+      "default": null,
+      "owner": "Schema maintainers",
+      "consumers": [
+        "Engineers",
+        "Designers",
+        "Agents",
+        "Documentation"
+      ],
+      "description": "Contract field states[]."
+    },
+    {
+      "path": "states[].bindings",
+      "type": "object",
+      "required": true,
+      "allowedValues": null,
+      "default": null,
+      "owner": "Schema maintainers",
+      "consumers": [
+        "Engineers",
+        "Designers",
+        "Agents",
+        "Documentation"
+      ],
+      "description": "Contract field states[].bindings."
+    },
+    {
+      "path": "states[].bindings.figma",
+      "type": "object",
+      "required": false,
+      "allowedValues": null,
+      "default": null,
+      "owner": "Schema maintainers",
+      "consumers": [
+        "Engineers",
+        "Designers",
+        "Agents",
+        "Documentation"
+      ],
+      "description": "Contract field states[].bindings.figma."
+    },
+    {
+      "path": "states[].bindings.react",
+      "type": "object",
+      "required": false,
+      "allowedValues": null,
+      "default": null,
+      "owner": "Schema maintainers",
+      "consumers": [
+        "Engineers",
+        "Designers",
+        "Agents",
+        "Documentation"
+      ],
+      "description": "Contract field states[].bindings.react."
+    },
+    {
+      "path": "states[].description",
+      "type": "string",
+      "required": true,
+      "allowedValues": null,
+      "default": null,
+      "owner": "Schema maintainers",
+      "consumers": [
+        "Engineers",
+        "Designers",
+        "Agents",
+        "Documentation"
+      ],
+      "description": "Contract field states[].description."
+    },
+    {
+      "path": "states[].fidelity",
+      "type": "object",
+      "required": true,
+      "allowedValues": null,
+      "default": null,
+      "owner": "Schema maintainers",
+      "consumers": [
+        "Engineers",
+        "Designers",
+        "Agents",
+        "Documentation"
+      ],
+      "description": "Contract field states[].fidelity."
+    },
+    {
+      "path": "states[].fidelity.figma",
+      "type": "string",
+      "required": false,
+      "allowedValues": [
+        "exact",
+        "approximate",
+        "specification",
+        "unsupported"
+      ],
+      "default": null,
+      "owner": "Schema maintainers",
+      "consumers": [
+        "Engineers",
+        "Designers",
+        "Agents",
+        "Documentation"
+      ],
+      "description": "Contract field states[].fidelity.figma."
+    },
+    {
+      "path": "states[].fidelity.react",
+      "type": "string",
+      "required": false,
+      "allowedValues": [
+        "exact",
+        "approximate",
+        "specification",
+        "unsupported"
+      ],
+      "default": null,
+      "owner": "Schema maintainers",
+      "consumers": [
+        "Engineers",
+        "Designers",
+        "Agents",
+        "Documentation"
+      ],
+      "description": "Contract field states[].fidelity.react."
+    },
+    {
+      "path": "states[].id",
+      "type": "string",
+      "required": true,
+      "allowedValues": null,
+      "default": null,
+      "owner": "Schema maintainers",
+      "consumers": [
+        "Engineers",
+        "Designers",
+        "Agents",
+        "Documentation"
+      ],
+      "description": "Contract field states[].id."
+    },
+    {
+      "path": "states[].name",
+      "type": "string",
+      "required": true,
+      "allowedValues": null,
+      "default": null,
+      "owner": "Schema maintainers",
+      "consumers": [
+        "Engineers",
+        "Designers",
+        "Agents",
+        "Documentation"
+      ],
+      "description": "Contract field states[].name."
+    },
+    {
+      "path": "states[].required",
+      "type": "boolean",
+      "required": true,
+      "allowedValues": null,
+      "default": null,
+      "owner": "Schema maintainers",
+      "consumers": [
+        "Engineers",
+        "Designers",
+        "Agents",
+        "Documentation"
+      ],
+      "description": "Contract field states[].required."
+    },
+    {
+      "path": "surfaces",
+      "type": "object",
+      "required": true,
+      "allowedValues": null,
+      "default": null,
+      "owner": "Design system engineering with design review",
+      "consumers": [
+        "Compiler",
+        "Canary Copilot",
+        "CI",
+        "Future generators"
+      ],
+      "description": "Contract field surfaces."
+    },
+    {
+      "path": "surfaces.figma",
+      "type": "object",
+      "required": false,
+      "allowedValues": null,
+      "default": null,
+      "owner": "Design system engineering with design review",
+      "consumers": [
+        "Compiler",
+        "Canary Copilot",
+        "CI",
+        "Future generators"
+      ],
+      "description": "Contract field surfaces.figma."
+    },
+    {
+      "path": "surfaces.figma.candidateComponentKeys",
+      "type": "array",
+      "required": true,
+      "allowedValues": null,
+      "default": null,
+      "owner": "Design system engineering with design review",
+      "consumers": [
+        "Compiler",
+        "Canary Copilot",
+        "CI",
+        "Future generators"
+      ],
+      "description": "Contract field surfaces.figma.candidateComponentKeys."
+    },
+    {
+      "path": "surfaces.figma.candidateComponentKeys[]",
+      "type": "string",
+      "required": true,
+      "allowedValues": null,
+      "default": null,
+      "owner": "Design system engineering with design review",
+      "consumers": [
+        "Compiler",
+        "Canary Copilot",
+        "CI",
+        "Future generators"
+      ],
+      "description": "Contract field surfaces.figma.candidateComponentKeys[]."
+    },
+    {
+      "path": "surfaces.figma.codeConnect",
+      "type": "array",
+      "required": true,
+      "allowedValues": null,
+      "default": null,
+      "owner": "Design system engineering with design review",
+      "consumers": [
+        "Compiler",
+        "Canary Copilot",
+        "CI",
+        "Future generators"
+      ],
+      "description": "Contract field surfaces.figma.codeConnect."
+    },
+    {
+      "path": "surfaces.figma.codeConnect[]",
+      "type": "string",
+      "required": true,
+      "allowedValues": null,
+      "default": null,
+      "owner": "Design system engineering with design review",
+      "consumers": [
+        "Compiler",
+        "Canary Copilot",
+        "CI",
+        "Future generators"
+      ],
+      "description": "Contract field surfaces.figma.codeConnect[]."
+    },
+    {
+      "path": "surfaces.figma.componentKeys",
+      "type": "array",
+      "required": true,
+      "allowedValues": null,
+      "default": null,
+      "owner": "Design system engineering with design review",
+      "consumers": [
+        "Compiler",
+        "Canary Copilot",
+        "CI",
+        "Future generators"
+      ],
+      "description": "Contract field surfaces.figma.componentKeys."
+    },
+    {
+      "path": "surfaces.figma.componentKeys[]",
+      "type": "string",
+      "required": true,
+      "allowedValues": null,
+      "default": null,
+      "owner": "Design system engineering with design review",
+      "consumers": [
+        "Compiler",
+        "Canary Copilot",
+        "CI",
+        "Future generators"
+      ],
+      "description": "Contract field surfaces.figma.componentKeys[]."
+    },
+    {
+      "path": "surfaces.figma.exampleNodeId",
+      "type": "string",
+      "required": true,
+      "allowedValues": null,
+      "default": null,
+      "owner": "Design system engineering with design review",
+      "consumers": [
+        "Compiler",
+        "Canary Copilot",
+        "CI",
+        "Future generators"
+      ],
+      "description": "Contract field surfaces.figma.exampleNodeId."
+    },
+    {
+      "path": "surfaces.figma.fileKey",
+      "type": "string",
+      "required": true,
+      "allowedValues": null,
+      "default": null,
+      "owner": "Design system engineering with design review",
+      "consumers": [
+        "Compiler",
+        "Canary Copilot",
+        "CI",
+        "Future generators"
+      ],
+      "description": "Contract field surfaces.figma.fileKey."
+    },
+    {
+      "path": "surfaces.figma.library",
+      "type": "string",
+      "required": true,
+      "allowedValues": null,
+      "default": null,
+      "owner": "Design system engineering with design review",
+      "consumers": [
+        "Compiler",
+        "Canary Copilot",
+        "CI",
+        "Future generators"
+      ],
+      "description": "Contract field surfaces.figma.library."
+    },
+    {
+      "path": "surfaces.figma.mappingStatus",
+      "type": "string",
+      "required": true,
+      "allowedValues": [
+        "unverified",
+        "verified"
+      ],
+      "default": null,
+      "owner": "Design system engineering with design review",
+      "consumers": [
+        "Compiler",
+        "Canary Copilot",
+        "CI",
+        "Future generators"
+      ],
+      "description": "Contract field surfaces.figma.mappingStatus."
+    },
+    {
+      "path": "surfaces.figma.names",
+      "type": "array",
+      "required": true,
+      "allowedValues": null,
+      "default": null,
+      "owner": "Design system engineering with design review",
+      "consumers": [
+        "Compiler",
+        "Canary Copilot",
+        "CI",
+        "Future generators"
+      ],
+      "description": "Contract field surfaces.figma.names."
+    },
+    {
+      "path": "surfaces.figma.names[]",
+      "type": "string",
+      "required": true,
+      "allowedValues": null,
+      "default": null,
+      "owner": "Design system engineering with design review",
+      "consumers": [
+        "Compiler",
+        "Canary Copilot",
+        "CI",
+        "Future generators"
+      ],
+      "description": "Contract field surfaces.figma.names[]."
+    },
+    {
+      "path": "surfaces.react",
+      "type": "object",
+      "required": false,
+      "allowedValues": null,
+      "default": null,
+      "owner": "Design system engineering with design review",
+      "consumers": [
+        "Compiler",
+        "Canary Copilot",
+        "CI",
+        "Future generators"
+      ],
+      "description": "Contract field surfaces.react."
+    },
+    {
+      "path": "surfaces.react.export",
+      "type": "string",
+      "required": true,
+      "allowedValues": null,
+      "default": null,
+      "owner": "Design system engineering with design review",
+      "consumers": [
+        "Compiler",
+        "Canary Copilot",
+        "CI",
+        "Future generators"
+      ],
+      "description": "Contract field surfaces.react.export."
+    },
+    {
+      "path": "surfaces.react.import",
+      "type": "string",
+      "required": true,
+      "allowedValues": null,
+      "default": null,
+      "owner": "Design system engineering with design review",
+      "consumers": [
+        "Compiler",
+        "Canary Copilot",
+        "CI",
+        "Future generators"
+      ],
+      "description": "Contract field surfaces.react.import."
+    },
+    {
+      "path": "surfaces.react.package",
+      "type": "string",
+      "required": true,
+      "allowedValues": null,
+      "default": null,
+      "owner": "Design system engineering with design review",
+      "consumers": [
+        "Compiler",
+        "Canary Copilot",
+        "CI",
+        "Future generators"
+      ],
+      "description": "Contract field surfaces.react.package."
+    },
+    {
+      "path": "surfaces.react.path",
+      "type": "string",
+      "required": true,
+      "allowedValues": null,
+      "default": null,
+      "owner": "Design system engineering with design review",
+      "consumers": [
+        "Compiler",
+        "Canary Copilot",
+        "CI",
+        "Future generators"
+      ],
+      "description": "Contract field surfaces.react.path."
+    },
+    {
+      "path": "tokens",
+      "type": "array",
+      "required": true,
+      "allowedValues": null,
+      "default": null,
+      "owner": "Design system design and engineering",
+      "consumers": [
+        "Engineers",
+        "Designers",
+        "Agents",
+        "Documentation"
+      ],
+      "description": "Contract field tokens."
+    },
+    {
+      "path": "tokens[]",
+      "type": "object",
+      "required": true,
+      "allowedValues": null,
+      "default": null,
+      "owner": "Schema maintainers",
+      "consumers": [
+        "Engineers",
+        "Designers",
+        "Agents",
+        "Documentation"
+      ],
+      "description": "Contract field tokens[]."
+    },
+    {
+      "path": "tokens[].bindings",
+      "type": "object",
+      "required": false,
+      "allowedValues": null,
+      "default": null,
+      "owner": "Schema maintainers",
+      "consumers": [
+        "Engineers",
+        "Designers",
+        "Agents",
+        "Documentation"
+      ],
+      "description": "Contract field tokens[].bindings."
+    },
+    {
+      "path": "tokens[].bindings.figma",
+      "type": "object",
+      "required": false,
+      "allowedValues": null,
+      "default": null,
+      "owner": "Schema maintainers",
+      "consumers": [
+        "Engineers",
+        "Designers",
+        "Agents",
+        "Documentation"
+      ],
+      "description": "Contract field tokens[].bindings.figma."
+    },
+    {
+      "path": "tokens[].bindings.react",
+      "type": "object",
+      "required": false,
+      "allowedValues": null,
+      "default": null,
+      "owner": "Schema maintainers",
+      "consumers": [
+        "Engineers",
+        "Designers",
+        "Agents",
+        "Documentation"
+      ],
+      "description": "Contract field tokens[].bindings.react."
+    },
+    {
+      "path": "tokens[].channel",
+      "type": "string",
+      "required": true,
+      "allowedValues": null,
+      "default": null,
+      "owner": "Schema maintainers",
+      "consumers": [
+        "Engineers",
+        "Designers",
+        "Agents",
+        "Documentation"
+      ],
+      "description": "Contract field tokens[].channel."
+    },
+    {
+      "path": "tokens[].conditions",
+      "type": "object",
+      "required": false,
+      "allowedValues": null,
+      "default": null,
+      "owner": "Schema maintainers",
+      "consumers": [
+        "Engineers",
+        "Designers",
+        "Agents",
+        "Documentation"
+      ],
+      "description": "Contract field tokens[].conditions."
+    },
+    {
+      "path": "tokens[].conditions.*",
+      "type": "array",
+      "required": false,
+      "allowedValues": null,
+      "default": null,
+      "owner": "Schema maintainers",
+      "consumers": [
+        "Engineers",
+        "Designers",
+        "Agents",
+        "Documentation"
+      ],
+      "description": "Contract field tokens[].conditions.*."
+    },
+    {
+      "path": "tokens[].conditions.*[]",
+      "type": "string | number | boolean | null",
+      "required": true,
+      "allowedValues": null,
+      "default": null,
+      "owner": "Schema maintainers",
+      "consumers": [
+        "Engineers",
+        "Designers",
+        "Agents",
+        "Documentation"
+      ],
+      "description": "Contract field tokens[].conditions.*[]."
+    },
+    {
+      "path": "tokens[].id",
+      "type": "string",
+      "required": true,
+      "allowedValues": null,
+      "default": null,
+      "owner": "Schema maintainers",
+      "consumers": [
+        "Engineers",
+        "Designers",
+        "Agents",
+        "Documentation"
+      ],
+      "description": "Contract field tokens[].id."
+    },
+    {
+      "path": "tokens[].partId",
+      "type": "string",
+      "required": true,
+      "allowedValues": null,
+      "default": null,
+      "owner": "Schema maintainers",
+      "consumers": [
+        "Engineers",
+        "Designers",
+        "Agents",
+        "Documentation"
+      ],
+      "description": "Contract field tokens[].partId."
+    },
+    {
+      "path": "tokens[].stateId",
+      "type": "object",
+      "required": false,
+      "allowedValues": null,
+      "default": null,
+      "owner": "Schema maintainers",
+      "consumers": [
+        "Engineers",
+        "Designers",
+        "Agents",
+        "Documentation"
+      ],
+      "description": "Contract field tokens[].stateId."
+    },
+    {
+      "path": "tokens[].token",
+      "type": "string",
+      "required": true,
+      "allowedValues": null,
+      "default": null,
+      "owner": "Schema maintainers",
+      "consumers": [
+        "Engineers",
+        "Designers",
+        "Agents",
+        "Documentation"
+      ],
+      "description": "Contract field tokens[].token."
+    },
+    {
+      "path": "usage",
+      "type": "object",
+      "required": true,
+      "allowedValues": null,
+      "default": null,
+      "owner": "Design system design and engineering",
+      "consumers": [
+        "Engineers",
+        "Designers",
+        "Agents",
+        "Documentation"
+      ],
+      "description": "Contract field usage."
+    },
+    {
+      "path": "usage.do",
+      "type": "array",
+      "required": true,
+      "allowedValues": null,
+      "default": null,
+      "owner": "Design system design and engineering",
+      "consumers": [
+        "Engineers",
+        "Designers",
+        "Agents",
+        "Documentation"
+      ],
+      "description": "Contract field usage.do."
+    },
+    {
+      "path": "usage.do[]",
+      "type": "object",
+      "required": true,
+      "allowedValues": null,
+      "default": null,
+      "owner": "Design system design and engineering",
+      "consumers": [
+        "Engineers",
+        "Designers",
+        "Agents",
+        "Documentation"
+      ],
+      "description": "Contract field usage.do[]."
+    },
+    {
+      "path": "usage.do[].id",
+      "type": "string",
+      "required": true,
+      "allowedValues": null,
+      "default": null,
+      "owner": "Design system design and engineering",
+      "consumers": [
+        "Engineers",
+        "Designers",
+        "Agents",
+        "Documentation"
+      ],
+      "description": "Contract field usage.do[].id."
+    },
+    {
+      "path": "usage.do[].statement",
+      "type": "string",
+      "required": true,
+      "allowedValues": null,
+      "default": null,
+      "owner": "Design system design and engineering",
+      "consumers": [
+        "Engineers",
+        "Designers",
+        "Agents",
+        "Documentation"
+      ],
+      "description": "Contract field usage.do[].statement."
+    },
+    {
+      "path": "usage.dont",
+      "type": "array",
+      "required": true,
+      "allowedValues": null,
+      "default": null,
+      "owner": "Design system design and engineering",
+      "consumers": [
+        "Engineers",
+        "Designers",
+        "Agents",
+        "Documentation"
+      ],
+      "description": "Contract field usage.dont."
+    },
+    {
+      "path": "usage.dont[]",
+      "type": "object",
+      "required": true,
+      "allowedValues": null,
+      "default": null,
+      "owner": "Design system design and engineering",
+      "consumers": [
+        "Engineers",
+        "Designers",
+        "Agents",
+        "Documentation"
+      ],
+      "description": "Contract field usage.dont[]."
+    },
+    {
+      "path": "usage.dont[].id",
+      "type": "string",
+      "required": true,
+      "allowedValues": null,
+      "default": null,
+      "owner": "Design system design and engineering",
+      "consumers": [
+        "Engineers",
+        "Designers",
+        "Agents",
+        "Documentation"
+      ],
+      "description": "Contract field usage.dont[].id."
+    },
+    {
+      "path": "usage.dont[].statement",
+      "type": "string",
+      "required": true,
+      "allowedValues": null,
+      "default": null,
+      "owner": "Design system design and engineering",
+      "consumers": [
+        "Engineers",
+        "Designers",
+        "Agents",
+        "Documentation"
+      ],
+      "description": "Contract field usage.dont[].statement."
+    },
+    {
+      "path": "usage.relatedComponents",
+      "type": "array",
+      "required": true,
+      "allowedValues": null,
+      "default": null,
+      "owner": "Design system design and engineering",
+      "consumers": [
+        "Engineers",
+        "Designers",
+        "Agents",
+        "Documentation"
+      ],
+      "description": "Contract field usage.relatedComponents."
+    },
+    {
+      "path": "usage.relatedComponents[]",
+      "type": "string",
+      "required": true,
+      "allowedValues": null,
+      "default": null,
+      "owner": "Design system design and engineering",
+      "consumers": [
+        "Engineers",
+        "Designers",
+        "Agents",
+        "Documentation"
+      ],
+      "description": "Contract field usage.relatedComponents[]."
+    }
+  ]
+}

@@ -12,7 +12,7 @@ export const REQUIREMENT_SEVERITIES = ['critical', 'major', 'minor', 'informatio
 export const ENFORCEMENT_MODES = ['automated', 'manual', 'advisory']
 
 const nonEmptyString = z.string().trim().min(1)
-const idString = z.string().regex(/^[a-z0-9]+(?:[.-][a-z0-9]+)*$/)
+const idString = z.string().regex(/^[A-Za-z][A-Za-z0-9]*(?:[.-][A-Za-z0-9]+)*$/)
 const contractId = z.string().regex(/^canary\.[a-z0-9-]+$/)
 const isoDate = z.string().date()
 const scalar = z.union([z.string(), z.number(), z.boolean(), z.null()])

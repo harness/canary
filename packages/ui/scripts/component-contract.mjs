@@ -652,23 +652,26 @@ export function validateContractCatalog({
       continue
     }
 
-    if (seenIds.has(contract.id)) {
-      errors.push(`${contractPath}: duplicate contract id ${contract.id}`)
+    const contractId = contract.schemaVersion === '0.4.0' ? contract.identity.id : contract.id
+    const contractStatus = contract.schemaVersion === '0.4.0' ? contract.lifecycle.status : contract.status
+
+    if (seenIds.has(contractId)) {
+      errors.push(`${contractPath}: duplicate contract id ${contractId}`)
       continue
     }
-    seenIds.add(contract.id)
+    seenIds.add(contractId)
 
-    const inventoryEntry = inventoryComponents.find(component => component.id === contract.id)
+    const inventoryEntry = inventoryComponents.find(component => component.id === contractId)
     if (!inventoryEntry) {
-      errors.push(`${contractPath}: no component inventory entry for ${contract.id}`)
+      errors.push(`${contractPath}: no component inventory entry for ${contractId}`)
     } else if (inventoryEntry.contractPath !== contractPath) {
       errors.push(`${contractPath}: inventory contractPath is ${inventoryEntry.contractPath ?? 'missing'}`)
     }
 
     contracts.push({
-      id: contract.id,
+      id: contractId,
       path: contractPath,
-      status: contract.status
+      status: contractStatus
     })
   }
 

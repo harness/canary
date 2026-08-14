@@ -4,6 +4,7 @@
  */
 
 import AiVerify from './logos/ai-verify.svg'
+import Alpine from './logos/alpine.svg'
 import Anchore from './logos/anchore.svg'
 import Android from './logos/android.svg'
 import AppDynamics from './logos/app-dynamics.svg'
@@ -28,23 +29,30 @@ import Blackduck from './logos/blackduck.svg'
 import Brakeman from './logos/brakeman.svg'
 import BuildKite from './logos/build-kite.svg'
 import Burb from './logos/burb.svg'
+import Chainguard from './logos/chainguard.svg'
 import ChatGpt from './logos/chat-gpt.svg'
 import Checkmarx from './logos/checkmarx.svg'
 import Checkov from './logos/checkov.svg'
 import Claude from './logos/claude.svg'
 import Codecov from './logos/codecov.svg'
+import Composer from './logos/composer.svg'
+import Conan from './logos/conan.svg'
+import Conda from './logos/conda.svg'
 import Confluence from './logos/confluence.svg'
 import Connector from './logos/connector.svg'
+import Cran from './logos/cran.svg'
 import Cursor from './logos/cursor.svg'
 import CustomDeployment from './logos/custom-deployment.svg'
 import CustomIngest from './logos/custom-ingest.svg'
 import CustomScan from './logos/custom-scan.svg'
 import CustomSecretManager from './logos/custom-secret-manager.svg'
+import Dart from './logos/dart.svg'
 import DataDog from './logos/data-dog.svg'
 import DatabaseApplySchema from './logos/database-apply-schema.svg'
 import DatabaseCheck from './logos/database-check.svg'
 import DatabaseRollback from './logos/database-rollback.svg'
 import Databricks from './logos/databricks.svg'
+import Debian from './logos/debian.svg'
 import DefaultSecretManager from './logos/default-secret-manager.svg'
 import Docker from './logos/docker.svg'
 import Dynatrace from './logos/dynatrace.svg'
@@ -71,6 +79,7 @@ import Harness from './logos/harness.svg'
 import Hashicorp from './logos/hashicorp.svg'
 import Helm from './logos/helm.svg'
 import Hubspot from './logos/hubspot.svg'
+import Huggingface from './logos/huggingface.svg'
 import Java from './logos/java.svg'
 import JenkinsX from './logos/jenkins-x.svg'
 import Jenkins from './logos/jenkins.svg'
@@ -82,6 +91,7 @@ import Kustomize from './logos/kustomize.svg'
 import Linux from './logos/linux.svg'
 import Liquibase from './logos/liquibase.svg'
 import Local from './logos/local.svg'
+import Maven from './logos/maven.svg'
 import McpConnector from './logos/mcp-connector.svg'
 import Mcp from './logos/mcp.svg'
 import Mend from './logos/mend.svg'
@@ -96,6 +106,7 @@ import Nikto from './logos/nikto.svg'
 import Nmap from './logos/nmap.svg'
 import NodeJs from './logos/node-js.svg'
 import Npm from './logos/npm.svg'
+import Nuget from './logos/nuget.svg'
 import Oci from './logos/oci.svg'
 import OpenShift from './logos/open-shift.svg'
 import OpenTofu from './logos/open-tofu.svg'
@@ -108,14 +119,18 @@ import Playwright from './logos/playwright.svg'
 import PrismaCloud from './logos/prisma-cloud.svg'
 import Prometheus from './logos/prometheus.svg'
 import Prowler from './logos/prowler.svg'
+import Puppet from './logos/puppet.svg'
 import Python from './logos/python.svg'
 import Qtest from './logos/qtest.svg'
 import Qualys from './logos/qualys.svg'
 import Queue from './logos/queue.svg'
 import Qwiet from './logos/qwiet.svg'
 import Rancher from './logos/rancher.svg'
+import Redhat from './logos/redhat.svg'
+import Ruby from './logos/ruby.svg'
 import RunTest from './logos/run-test.svg'
 import Run from './logos/run.svg'
+import Rust from './logos/rust.svg'
 import Salesforce from './logos/salesforce.svg'
 import SecretSsh from './logos/secret-ssh.svg'
 import SecureShell from './logos/secure-shell.svg'
@@ -133,6 +148,7 @@ import SqlRollback from './logos/sql-rollback.svg'
 import Sql from './logos/sql.svg'
 import SscaOrchestrate from './logos/ssca-orchestrate.svg'
 import SumoLogic from './logos/sumo-logic.svg'
+import Swift from './logos/swift.svg'
 import Sysdig from './logos/sysdig.svg'
 import Tanzu from './logos/tanzu.svg'
 import TasVars from './logos/tas-vars.svg'
@@ -152,6 +168,7 @@ import Zoom from './logos/zoom.svg'
 
 export const LogoNameMapV2 = {
   'ai-verify': AiVerify,
+  alpine: Alpine,
   anchore: Anchore,
   android: Android,
   'app-dynamics': AppDynamics,
@@ -176,23 +193,30 @@ export const LogoNameMapV2 = {
   brakeman: Brakeman,
   'build-kite': BuildKite,
   burb: Burb,
+  chainguard: Chainguard,
   'chat-gpt': ChatGpt,
   checkmarx: Checkmarx,
   checkov: Checkov,
   claude: Claude,
   codecov: Codecov,
+  composer: Composer,
+  conan: Conan,
+  conda: Conda,
   confluence: Confluence,
   connector: Connector,
+  cran: Cran,
   cursor: Cursor,
   'custom-deployment': CustomDeployment,
   'custom-ingest': CustomIngest,
   'custom-scan': CustomScan,
   'custom-secret-manager': CustomSecretManager,
+  dart: Dart,
   'data-dog': DataDog,
   'database-apply-schema': DatabaseApplySchema,
   'database-check': DatabaseCheck,
   'database-rollback': DatabaseRollback,
   databricks: Databricks,
+  debian: Debian,
   'default-secret-manager': DefaultSecretManager,
   docker: Docker,
   dynatrace: Dynatrace,
@@ -219,6 +243,7 @@ export const LogoNameMapV2 = {
   hashicorp: Hashicorp,
   helm: Helm,
   hubspot: Hubspot,
+  huggingface: Huggingface,
   java: Java,
   'jenkins-x': JenkinsX,
   jenkins: Jenkins,
@@ -230,6 +255,7 @@ export const LogoNameMapV2 = {
   linux: Linux,
   liquibase: Liquibase,
   local: Local,
+  maven: Maven,
   'mcp-connector': McpConnector,
   mcp: Mcp,
   mend: Mend,
@@ -244,6 +270,7 @@ export const LogoNameMapV2 = {
   nmap: Nmap,
   'node-js': NodeJs,
   npm: Npm,
+  nuget: Nuget,
   oci: Oci,
   'open-shift': OpenShift,
   'open-tofu': OpenTofu,
@@ -256,14 +283,18 @@ export const LogoNameMapV2 = {
   'prisma-cloud': PrismaCloud,
   prometheus: Prometheus,
   prowler: Prowler,
+  puppet: Puppet,
   python: Python,
   qtest: Qtest,
   qualys: Qualys,
   queue: Queue,
   qwiet: Qwiet,
   rancher: Rancher,
+  redhat: Redhat,
+  ruby: Ruby,
   'run-test': RunTest,
   run: Run,
+  rust: Rust,
   salesforce: Salesforce,
   'secret-ssh': SecretSsh,
   'secure-shell': SecureShell,
@@ -281,6 +312,7 @@ export const LogoNameMapV2 = {
   sql: Sql,
   'ssca-orchestrate': SscaOrchestrate,
   'sumo-logic': SumoLogic,
+  swift: Swift,
   sysdig: Sysdig,
   tanzu: Tanzu,
   'tas-vars': TasVars,

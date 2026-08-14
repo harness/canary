@@ -72,6 +72,45 @@ describe('evaluateConstraints', () => {
     )
   })
 
+  it('supports a semantic theme on a rounded icon-only Button', () => {
+    const result = evaluateConstraints(
+      canonical({
+        variant: 'primary',
+        size: 'xs',
+        theme: 'success',
+        rounded: true,
+        iconOnly: true
+      }),
+      buttonEntry
+    )
+
+    expect(result.status).toBe('supported')
+    expect(result.findings).toEqual([])
+  })
+
+  it('keeps AI icon-only Buttons on the default theme', () => {
+    const result = evaluateConstraints(
+      canonical({
+        variant: 'ai',
+        size: 'md',
+        theme: 'danger',
+        rounded: false,
+        iconOnly: true
+      }),
+      buttonEntry
+    )
+
+    expect(result.status).toBe('unsupported')
+    expect(result.findings).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({
+          code: 'FAIL_UNSUPPORTED_COMBINATION',
+          severity: 'fail'
+        })
+      ])
+    )
+  })
+
   it('fails closed when an exhaustive dimension cannot be resolved', () => {
     const result = evaluateConstraints(
       canonical({

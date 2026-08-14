@@ -117,13 +117,13 @@ The approved policy is reconciled across the live Figma source and code, so the 
 
 - The approved matrix excludes 2xs and 3xs. Production usages and the public Button API now use md, sm, and xs.
 - Focus is intentionally code-only. Code implements the required `:focus-visible` treatment, while design documentation provides one detached representative Figma specification rather than a published state variant.
-- The corrected matrix limits AI, transparent, link, and every icon-only Button to the default theme. The six live Figma icon-only sets now expose only the default theme, and IconOnlyRounded includes transparent/default with the rounded radius token.
+- The corrected matrix limits AI, transparent, and link Buttons to the default theme. Primary, secondary, outline, and ghost Buttons support default, success, and danger with text or icon-only content. The six live Figma icon-only sets expose all three themes, and IconOnlyRounded includes transparent/default with the rounded radius token.
 - The ❌ prefix is confirmed to mean deprecated. TextRounded Button treatments are deprecated and remain temporarily for migration. IconOnlyRounded remains supported in md, sm, and xs because it is used by Pipeline Studio.
 - Code Connect now maps the `-` theme option only for md and sm Text, matching the Figma property definitions.
 - Navigation semantics are approved: Button performs actions, including starting or advancing onboarding in place; Link navigates to destinations. The Button link variant changes appearance only, and Canary has no approved button-styled Link pattern.
 - A stable Figma-governed contract must have a verified mapping and at least one confirmed component key.
 
-The live Figma source was re-audited on August 13, 2026. Publishing the library remains a manual step before downstream Figma consumers receive the corrected matrix.
+The live Figma source was re-audited on August 14, 2026. The icon-only theme correction requires no Figma library change because all six published sets already expose default, success, and danger.
 
 See `catalog/contracts/README.md` for the review checklist and `catalog/contracts/button.contract.json` for the evidence-backed piloting contract.
 

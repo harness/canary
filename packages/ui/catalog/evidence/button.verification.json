@@ -1,7 +1,7 @@
 {
   "formatVersion": "1.0.0",
   "componentId": "canary.button",
-  "contractVersion": "0.8.2",
+  "contractVersion": "0.8.3",
   "publishedAt": "2026-08-13",
   "verifications": [
     {
@@ -29,8 +29,9 @@
       "id": "figma-matrix-verified",
       "ruleId": "button.supported-combination",
       "result": "pass",
-      "verifiedAt": "2026-08-13",
-      "sourceIds": ["button-figma", "button-tests"]
+      "verifiedAt": "2026-08-14",
+      "sourceIds": ["button-figma", "button-tests", "canary-copilot"],
+      "notes": "Reviewed the standard and rounded IconOnly component sets at md, sm, and xs. All six expose default, success, and danger themes. The approved matrix permits semantic themes for primary, secondary, outline, and ghost while AI and transparent remain default-only."
     },
     {
       "id": "figma-content-verified",
@@ -81,7 +82,7 @@
       "result": "pass",
       "verifiedAt": "2026-08-14",
       "sourceIds": ["button-docs", "button-ui-usages", "button-product-usages", "button-app-usages"],
-      "notes": "Reviewed production success and danger Button usages against WCAG 2.2 SC 1.4.1. Destructive and bypass actions use explicit labels; merge and confirmation actions remain understandable without color; completed states use text such as Saved or Updated and a check icon; and icon-only Buttons are limited to the default theme."
+      "notes": "Reviewed production success and danger Button usages against WCAG 2.2 SC 1.4.1. Destructive and bypass actions use explicit labels; merge and confirmation actions remain understandable without color; and completed states use text such as Saved or Updated and a check icon. Icon-only Buttons require an accessible name and context that communicates the action without relying on theme color."
     },
     {
       "id": "binding-parity-verified",

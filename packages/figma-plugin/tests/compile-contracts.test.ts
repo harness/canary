@@ -84,7 +84,7 @@ describe('compiled Button catalog', () => {
         }),
         expect.objectContaining({
           id: 'icon-semantic-theme-md-sm-xs',
-          status: 'unsupported'
+          status: 'supported'
         })
       ])
     )
@@ -96,7 +96,7 @@ describe('compiled Button catalog', () => {
     expect(button.baselineReceipt).toMatchObject({
       componentId: 'canary.button',
       schemaVersion: '0.5.0',
-      contractVersion: '0.8.2',
+      contractVersion: '0.8.3',
       evaluationProfileVersion: '1.0.0'
     })
     for (const key of REMOVED_POC_KEYS) {

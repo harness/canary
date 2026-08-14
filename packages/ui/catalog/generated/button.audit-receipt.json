@@ -5,7 +5,7 @@
   "contractVersion": "0.7.0",
   "evaluationProfileVersion": "1.0.0",
   "evaluatedAt": "2026-08-14",
-  "sourceSha256": "e584c1f7bb2bc5e7d9face227cd9bf4d25e23f1bf4ac7ce9c40971b496544161",
+  "sourceSha256": "d8775b96796abebaeaacb319c0153419ffc162aba5ca869075a4fb79a7166643",
   "evaluations": [
     {
       "requirementId": "button.contract-complete",

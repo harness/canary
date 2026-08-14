@@ -5,38 +5,28 @@ export type {
   FindingSeverity,
   ProposalDraft,
   ProposalType,
-  PropKind,
-} from "./types.js";
+  PropKind
+} from './types.js'
+
+export { stripFigmaDecorators, normalizeFigmaValue, normalizePropName } from './normalize.js'
 
 export {
-  stripFigmaDecorators,
-  normalizeFigmaValue,
-  normalizePropName,
-} from "./normalize.js";
+  canonicalizeSnapshot,
+  type CanonicalSnapshot,
+  type CanonicalValue,
+  type CanonicalValueSource
+} from './canonical.js'
 
-export {
-  buildIndex,
-  matchComponent,
-  normalizeComponentName,
-  type CatalogIndex,
-  type MatchResult,
-} from "./match.js";
+export { evaluateAnatomy, findAnatomyControl } from './anatomy.js'
 
-export { loadCatalogIndex } from "./index-loader.js";
+export { evaluateConstraints, type ConstraintEvaluation, type ConstraintStatus } from './constraints.js'
 
-export {
-  checkInstance,
-  checkInstances,
-  type CheckOptions,
-  type CheckReport,
-  type InstanceResult,
-} from "./check.js";
+export { buildIndex, matchComponent, normalizeComponentName, type CatalogIndex, type MatchResult } from './match.js'
 
-export {
-  proposalToMarkdown,
-  findingToProposalDefaults,
-  buildFigmaUrl,
-  type ProposalContext,
-} from "./proposal.js";
+export { loadCatalogIndex } from './index-loader.js'
 
-export { suggestClosestValue, levenshtein } from "./suggest.js";
+export { checkInstance, checkInstances, type CheckOptions, type CheckReport, type InstanceResult } from './check.js'
+
+export { proposalToMarkdown, findingToProposalDefaults, buildFigmaUrl, type ProposalContext } from './proposal.js'
+
+export { suggestClosestValue, levenshtein } from './suggest.js'

@@ -114,8 +114,9 @@ export default {
       '&:not(:where([aria-disabled=true]))': {
         '&:where([data-highlighted]), &:where([data-state="open"])': {
           backgroundColor: 'var(--cn-state-hover)',
-          outline: 'none',
-          cursor: 'default'
+          outline: 'var(--cn-focus)',
+          cursor: 'default',
+          '@apply outline-offset-cn-tight': ''
         }
       },
 

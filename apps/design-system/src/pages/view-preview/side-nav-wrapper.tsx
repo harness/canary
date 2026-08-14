@@ -7,6 +7,6 @@ export const SideNavWrapper = ({ children }: { children: React.ReactNode }) => (
       chat={<ChatV2 />}
       mainContent={children}
     />
-    <Toaster position="top-right" duration={3000} />
+    <Toaster duration={3000} />
   </Sidebar.Provider>
 )

@@ -635,6 +635,14 @@ const tailwindDesignSystem: TailwindConfig = {
     'prose-code',
     ...Object.keys(fontSizeMap).map(key => `!text-${key}`),
 
+    // Neutral background tokens, !important variants — safelist patterns don't emit the
+    // !important modifier, so downstream consumers (no Tailwind of their own) can only get
+    // these if we force-generate them here. Lets consumers beat rules like .cn-sidebar-wrapper.
+    '!bg-cn-0',
+    '!bg-cn-1',
+    '!bg-cn-2',
+    '!bg-cn-3',
+
     /** New design system Variants  */
     { pattern: /-cn-/ },
     { pattern: /^cn-/ },

@@ -72,27 +72,31 @@ export default {
     // Selected state with theme-based borders
     '&[data-selected="true"]': {
       '&[data-theme="default"]': {
-        border: '1px solid var(--cn-border-brand)',
-        boxShadow: '0 0 0 3px color-mix(in srgb, var(--cn-border-brand) 20%, transparent)'
+        border: '1px solid var(--cn-border-brand) !important',
+        boxShadow: '0 0 0 3px color-mix(in srgb, var(--cn-border-brand) 20%, transparent) !important'
       },
       '&[data-theme="success"]': {
-        border: '1px solid var(--cn-border-success)',
-        boxShadow: '0 0 0 3px color-mix(in srgb, var(--cn-border-success) 20%, transparent)'
+        border: '1px solid var(--cn-border-success) !important',
+        boxShadow: '0 0 0 3px color-mix(in srgb, var(--cn-border-success) 20%, transparent) !important'
       },
       '&[data-theme="warning"]:not(:has(> [data-status="executing"]))': {
-        border: '1px solid var(--cn-border-warning)',
-        boxShadow: '0 0 0 3px color-mix(in srgb, var(--cn-border-warning) 20%, transparent)'
+        border: '1px solid var(--cn-border-warning) !important',
+        boxShadow: '0 0 0 3px color-mix(in srgb, var(--cn-border-warning) 20%, transparent) !important'
       },
       '&[data-theme="danger"]': {
-        border: '1px solid var(--cn-border-danger)',
-        boxShadow: '0 0 0 3px color-mix(in srgb, var(--cn-border-danger) 20%, transparent)'
+        border: '1px solid var(--cn-border-danger) !important',
+        boxShadow: '0 0 0 3px color-mix(in srgb, var(--cn-border-danger) 20%, transparent) !important'
       }
     },
 
     '&:has(.cn-studio-card-group:hover)': {
       backgroundColor: 'lch(from var(--cn-bg-3) l c h / 0.45) !important',
-      borderColor: 'lch(from var(--cn-border-2) l c h / 0.65) !important',
       ...DimmedShadow3Style,
+
+      // Selected cards keep their theme border — dimming it would hide the selection.
+      '&:not([data-selected="true"])': {
+        borderColor: 'lch(from var(--cn-border-2) l c h / 0.65) !important'
+      },
 
       '>': {
         ...StudioCardHelperItemsHoveredStyles
@@ -247,7 +251,7 @@ export default {
       '& .cn-studio-card:not(:hover)': {
         backgroundColor: 'lch(from var(--cn-bg-3) l c h / 0.45) !important',
 
-        '&:not(:has(> [data-status="executing"]))': {
+        '&:not(:has(> [data-status="executing"])):not([data-selected="true"])': {
           borderColor: 'lch(from var(--cn-border-2) l c h / 0.65) !important'
         },
         ...DimmedShadow3Style,
@@ -263,7 +267,7 @@ export default {
       '& .cn-studio-card-group:hover .cn-studio-card': {
         opacity: '1 !important',
 
-        '&:not(:has(> [data-status="executing"]))': {
+        '&:not(:has(> [data-status="executing"])):not([data-selected="true"])': {
           borderColor: 'var(--cn-border-2) !important'
           // borderColor: 'lch(from var(--cn-border-2) l c h / 0.65) !important',
         },

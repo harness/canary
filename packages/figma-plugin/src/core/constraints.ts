@@ -16,7 +16,7 @@ type Migration = {
 }
 
 function requirementId(entry: CatalogEntry): string | undefined {
-  const requirement = (entry.requirements ?? []).find(candidate => candidate.evaluator === 'constraint')
+  const requirement = (entry.evaluations ?? []).find(candidate => candidate.evaluator === 'constraint')
   return typeof requirement?.id === 'string' ? requirement.id : undefined
 }
 
@@ -52,7 +52,7 @@ export function evaluateConstraints(
     }
   }
 
-  const matches = constraints.rules.filter(rule => matchesRule(canonical.values, rule))
+  const matches = constraints.combinations.filter(rule => matchesRule(canonical.values, rule))
   if (matches.length !== 1) {
     return {
       status: 'invalid',

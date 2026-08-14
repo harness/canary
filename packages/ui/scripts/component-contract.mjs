@@ -1,227 +1,14 @@
-import { readdirSync, readFileSync } from 'node:fs'
-import { isAbsolute, join, relative, sep } from 'node:path'
+import { existsSync, readdirSync, readFileSync } from 'node:fs'
+import { basename, isAbsolute, join, relative, sep } from 'node:path'
 
-import { z } from 'zod'
+import {
+  componentContractSchemaV05,
+  componentVerificationSchema,
+  HEALTH_DIMENSIONS,
+  tokenRegistrySchema
+} from './component-contract-schema.mjs'
 
-import { componentContractSchemaV04, HEALTH_DIMENSIONS } from './component-contract-schema.mjs'
-
-const nonEmptyString = z.string().trim().min(1)
-const surfaceSchema = z.enum(['figma', 'code'])
-const propertyValueSchema = z.union([z.string(), z.number(), z.boolean(), z.null()])
-const scalarPropertyValueTypes = {
-  boolean: 'boolean',
-  number: 'number',
-  string: 'string'
-}
-
-const overviewSchema = z
-  .object({
-    name: nonEmptyString,
-    description: nonEmptyString,
-    useWhen: z.array(nonEmptyString).min(1),
-    avoidWhen: z.array(nonEmptyString).min(1)
-  })
-  .strict()
-
-const codeSchema = z
-  .object({
-    package: nonEmptyString,
-    export: nonEmptyString,
-    import: nonEmptyString,
-    path: nonEmptyString
-  })
-  .strict()
-
-const figmaSchema = z
-  .object({
-    library: nonEmptyString,
-    fileKey: nonEmptyString,
-    name: nonEmptyString,
-    exampleNodeId: nonEmptyString,
-    mappingStatus: z.enum(['unverified', 'verified']),
-    componentKeys: z.array(nonEmptyString),
-    candidateComponentKeys: z.array(nonEmptyString),
-    codeConnect: z.array(nonEmptyString)
-  })
-  .strict()
-
-const anatomyItemSchema = z
-  .object({
-    id: nonEmptyString,
-    name: nonEmptyString,
-    required: z.boolean(),
-    description: nonEmptyString
-  })
-  .strict()
-
-const propertySchema = z
-  .object({
-    name: nonEmptyString,
-    type: z.enum(['boolean', 'enum', 'number', 'react-node', 'string', 'function', 'object']),
-    values: z.array(propertyValueSchema).min(1).optional(),
-    default: propertyValueSchema.optional(),
-    required: z.boolean().optional(),
-    description: nonEmptyString,
-    figmaProperty: nonEmptyString.optional(),
-    figmaPropertyAliases: z.array(nonEmptyString).min(1).optional(),
-    figmaValueAliases: z.record(nonEmptyString, nonEmptyString).optional(),
-    mapsTo: nonEmptyString.optional(),
-    when: nonEmptyString.optional()
-  })
-  .strict()
-  .superRefine((property, context) => {
-    if (property.type === 'enum' && !property.values) {
-      context.addIssue({
-        code: 'custom',
-        path: ['values'],
-        message: 'enum properties must declare their allowed values'
-      })
-    }
-
-    if (property.values && property.default !== undefined && !property.values.includes(property.default)) {
-      context.addIssue({
-        code: 'custom',
-        path: ['default'],
-        message: 'default must be one of the allowed values'
-      })
-    }
-  })
-
-const stateSchema = z
-  .object({
-    name: nonEmptyString,
-    required: z.boolean(),
-    surfaces: z.array(surfaceSchema).min(1),
-    description: nonEmptyString
-  })
-  .strict()
-
-const behaviorSchema = z
-  .object({
-    id: nonEmptyString,
-    description: nonEmptyString
-  })
-  .strict()
-
-const bindingSchema = z
-  .object({
-    designProperty: nonEmptyString,
-    codeProperty: nonEmptyString,
-    transform: nonEmptyString.optional()
-  })
-  .strict()
-
-const tokenRuleSchema = z
-  .object({
-    category: nonEmptyString,
-    rule: nonEmptyString
-  })
-  .strict()
-
-const patternSchema = z
-  .object({
-    id: nonEmptyString,
-    description: nonEmptyString,
-    rule: nonEmptyString
-  })
-  .strict()
-
-const evidenceSourceSchema = z
-  .object({
-    type: z.enum(['source', 'docs', 'tests', 'code-connect', 'plugin', 'figma']),
-    path: nonEmptyString
-  })
-  .strict()
-
-const supportMatrixRuleSchema = z
-  .object({
-    id: nonEmptyString,
-    status: z.enum(['supported', 'deprecated', 'unsupported']),
-    surfaces: z.array(surfaceSchema).min(1),
-    conditions: z
-      .record(nonEmptyString, z.array(propertyValueSchema).min(1))
-      .refine(conditions => Object.keys(conditions).length > 0, 'at least one condition is required'),
-    description: nonEmptyString,
-    migration: nonEmptyString.optional()
-  })
-  .strict()
-
-const componentContractSchemaV03 = z.object({
-  schemaVersion: z.literal('0.3.0'),
-  contractVersion: nonEmptyString,
-  id: z.string().regex(/^canary\.[a-z0-9-]+$/),
-  status: z.enum(['draft', 'piloting', 'stable', 'deprecated']),
-  surfaces: z.array(surfaceSchema).min(1),
-  overview: overviewSchema,
-  code: codeSchema.optional(),
-  figma: figmaSchema.optional(),
-  anatomy: z.array(anatomyItemSchema).min(1),
-  properties: z
-    .object({
-      shared: z.array(propertySchema),
-      designOnly: z.array(propertySchema),
-      codeOnly: z.array(propertySchema)
-    })
-    .strict(),
-  states: z.array(stateSchema).min(1),
-  behavior: z.array(behaviorSchema).min(1),
-  accessibility: z
-    .object({
-      requirements: z.array(nonEmptyString).min(1)
-    })
-    .strict(),
-  supportMatrix: z.array(supportMatrixRuleSchema).min(1).optional(),
-  bindings: z.array(bindingSchema).optional(),
-  tokens: z
-    .object({
-      rootClass: nonEmptyString.optional(),
-      rules: z.array(tokenRuleSchema).min(1)
-    })
-    .strict()
-    .optional(),
-  usage: z
-    .object({
-      do: z.array(nonEmptyString).min(1),
-      dont: z.array(nonEmptyString).min(1),
-      relatedComponents: z.array(nonEmptyString)
-    })
-    .strict(),
-  readiness: z
-    .object({
-      structure: z
-        .object({
-          autoLayoutRequired: z.boolean(),
-          requiredSlots: z.array(nonEmptyString).min(1),
-          optionalSlots: z.array(nonEmptyString)
-        })
-        .strict(),
-      states: z
-        .object({
-          required: z.array(nonEmptyString).min(1)
-        })
-        .strict(),
-      documentation: z
-        .object({
-          descriptionRequired: z.boolean(),
-          codeConnectRequired: z.boolean()
-        })
-        .strict(),
-      accessibility: z
-        .object({
-          iconOnlyRequiresAccessibleName: z.boolean()
-        })
-        .strict()
-    })
-    .strict(),
-  patterns: z.array(patternSchema).optional(),
-  evidence: z
-    .object({
-      sources: z.array(evidenceSourceSchema).min(1),
-      provisionalFields: z.array(nonEmptyString),
-      openQuestions: z.array(nonEmptyString)
-    })
-    .strict()
-})
+export const componentContractSchema = componentContractSchemaV05
 
 export function classifyPropertySurface(property) {
   const hasFigma = Boolean(property?.bindings?.figma)
@@ -258,17 +45,25 @@ function ruleMatchesCombination(rule, combination) {
   return Object.entries(rule.conditions).every(([propertyId, values]) => values.includes(combination[propertyId]))
 }
 
-function validateV04Semantics(contract) {
+function formatIssue(issue) {
+  const path = issue.path.join('.')
+  return path ? `${path}: ${issue.message}` : issue.message
+}
+
+function validateContractSemantics(contract) {
   const errors = []
+  const reactExtensions = contract.surfaces.react?.extensions ?? []
   const collections = [
     ['properties', contract.properties],
+    ['surfaces.react.extensions', reactExtensions],
     ['anatomy', contract.anatomy],
+    ['slots', contract.slots],
     ['states', contract.states],
-    ['constraints.rules', contract.constraints.rules],
-    ['requirements', contract.requirements],
+    ['constraints.combinations', contract.constraints.combinations],
+    ['evaluations', contract.evaluations],
+    ['examples', contract.examples],
     ['migrations', contract.migrations],
-    ['evidence.sources', contract.evidence.sources],
-    ['evidence.verifications', contract.evidence.verifications]
+    ['evidenceReferences.sources', contract.evidenceReferences.sources]
   ]
 
   for (const [path, items] of collections) {
@@ -276,12 +71,23 @@ function validateV04Semantics(contract) {
     if (duplicates.length > 0) errors.push(`${path}: duplicate ids: ${duplicates.join(', ')}`)
   }
 
+  const canonicalIds = new Set(contract.properties.map(property => property.id))
+  const extensionDuplicates = reactExtensions
+    .filter(extension => canonicalIds.has(extension.id))
+    .map(extension => extension.id)
+  if (extensionDuplicates.length > 0) {
+    errors.push(
+      `surfaces.react.extensions: ids must not duplicate canonical properties: ${extensionDuplicates.join(', ')}`
+    )
+  }
+
   const propertiesById = new Map(contract.properties.map(property => [property.id, property]))
   const anatomyIds = new Set(contract.anatomy.map(part => part.id))
+  const slotIds = new Set(contract.slots.map(slot => slot.id))
   const stateIds = new Set(contract.states.map(state => state.id))
-  const requirementIds = new Set(contract.requirements.map(requirement => requirement.id))
+  const evaluationIds = new Set(contract.evaluations.map(evaluation => evaluation.id))
   const migrationIds = new Set(contract.migrations.map(migration => migration.id))
-  const sourceIds = new Set(contract.evidence.sources.map(source => source.id))
+  const exampleIds = new Set(contract.examples.map(example => example.id))
   const governedSurfaces = new Set(Object.keys(contract.surfaces))
 
   for (const [index, part] of contract.anatomy.entries()) {
@@ -290,77 +96,118 @@ function validateV04Semantics(contract) {
     }
   }
 
-  for (const [index, dimension] of contract.constraints.dimensions.entries()) {
-    if (!propertiesById.has(dimension)) {
-      errors.push(`constraints.dimensions.${index}: unknown property ${dimension}`)
+  for (const [index, slot] of contract.slots.entries()) {
+    if (!anatomyIds.has(slot.partId)) errors.push(`slots.${index}.partId: unknown anatomy part ${slot.partId}`)
+    if (slot.maxItems !== undefined && slot.maxItems < slot.minItems) {
+      errors.push(`slots.${index}.maxItems: must be greater than or equal to minItems`)
+    }
+    if (slot.defaultExampleId && !exampleIds.has(slot.defaultExampleId)) {
+      errors.push(`slots.${index}.defaultExampleId: unknown example ${slot.defaultExampleId}`)
     }
   }
 
-  for (const [ruleIndex, rule] of contract.constraints.rules.entries()) {
-    for (const surface of rule.surfaces) {
+  for (const [index, dimension] of contract.constraints.dimensions.entries()) {
+    if (!propertiesById.has(dimension)) errors.push(`constraints.dimensions.${index}: unknown property ${dimension}`)
+  }
+
+  for (const [combinationIndex, combination] of contract.constraints.combinations.entries()) {
+    for (const surface of combination.surfaces) {
       if (!governedSurfaces.has(surface)) {
-        errors.push(`constraints.rules.${ruleIndex}.surfaces: surface ${surface} is not governed by this contract`)
+        errors.push(
+          `constraints.combinations.${combinationIndex}.surfaces: surface ${surface} is not governed by this contract`
+        )
       }
     }
-
-    for (const [propertyId, values] of Object.entries(rule.conditions)) {
+    for (const [propertyId, values] of Object.entries(combination.conditions)) {
       const property = propertiesById.get(propertyId)
       if (!property) {
-        errors.push(`constraints.rules.${ruleIndex}.conditions.${propertyId}: unknown property ${propertyId}`)
+        errors.push(
+          `constraints.combinations.${combinationIndex}.conditions.${propertyId}: unknown property ${propertyId}`
+        )
         continue
       }
       const domain = scalarDomain(property)
-      if (domain) {
-        const unknownValues = values.filter(value => !domain.includes(value))
-        if (unknownValues.length > 0) {
-          errors.push(
-            `constraints.rules.${ruleIndex}.conditions.${propertyId}: undeclared values ${unknownValues.join(', ')}`
-          )
-        }
+      const unknownValues = domain ? values.filter(value => !domain.includes(value)) : []
+      if (unknownValues.length > 0) {
+        errors.push(
+          `constraints.combinations.${combinationIndex}.conditions.${propertyId}: undeclared values ${unknownValues.join(', ')}`
+        )
       }
     }
-
-    if (rule.requirementId && !requirementIds.has(rule.requirementId)) {
-      errors.push(`constraints.rules.${ruleIndex}.requirementId: unknown requirement ${rule.requirementId}`)
+    if (combination.ruleId && !evaluationIds.has(combination.ruleId)) {
+      errors.push(`constraints.combinations.${combinationIndex}.ruleId: unknown evaluation ${combination.ruleId}`)
     }
-    if (rule.migrationId && !migrationIds.has(rule.migrationId)) {
-      errors.push(`constraints.rules.${ruleIndex}.migrationId: unknown migration ${rule.migrationId}`)
+    if (combination.migrationId && !migrationIds.has(combination.migrationId)) {
+      errors.push(
+        `constraints.combinations.${combinationIndex}.migrationId: unknown migration ${combination.migrationId}`
+      )
     }
   }
 
   for (const [index, token] of contract.tokens.entries()) {
     if (!anatomyIds.has(token.partId)) errors.push(`tokens.${index}.partId: unknown anatomy part ${token.partId}`)
-    if (token.stateId && !stateIds.has(token.stateId)) {
+    if (token.stateId && !stateIds.has(token.stateId))
       errors.push(`tokens.${index}.stateId: unknown state ${token.stateId}`)
-    }
     for (const propertyId of Object.keys(token.conditions ?? {})) {
-      if (!propertiesById.has(propertyId)) {
+      if (!propertiesById.has(propertyId))
         errors.push(`tokens.${index}.conditions.${propertyId}: unknown property ${propertyId}`)
+    }
+  }
+
+  const presentationGroups = [
+    contract.presentation.parts,
+    ...(contract.presentation.variants ?? []).map(item => item.parts)
+  ]
+  for (const parts of presentationGroups) {
+    for (const part of parts) {
+      if (!anatomyIds.has(part.partId)) errors.push(`presentation.parts: unknown anatomy part ${part.partId}`)
+    }
+  }
+
+  for (const [variantIndex, variant] of (contract.presentation.variants ?? []).entries()) {
+    if (variant.stateId && !stateIds.has(variant.stateId)) {
+      errors.push(`presentation.variants.${variantIndex}.stateId: unknown state ${variant.stateId}`)
+    }
+    for (const propertyId of Object.keys(variant.conditions ?? {})) {
+      if (!propertiesById.has(propertyId)) {
+        errors.push(`presentation.variants.${variantIndex}.conditions.${propertyId}: unknown property ${propertyId}`)
       }
     }
   }
 
-  for (const [index, rule] of contract.accessibility.entries()) {
-    if (rule.requirementId && !requirementIds.has(rule.requirementId)) {
-      errors.push(`accessibility.${index}.requirementId: unknown requirement ${rule.requirementId}`)
+  for (const [exampleIndex, example] of contract.examples.entries()) {
+    for (const propertyId of Object.keys(example.properties)) {
+      if (!propertiesById.has(propertyId))
+        errors.push(`examples.${exampleIndex}.properties.${propertyId}: unknown property ${propertyId}`)
     }
-  }
-
-  for (const [index, verification] of contract.evidence.verifications.entries()) {
-    if (!requirementIds.has(verification.requirementId)) {
-      errors.push(`evidence.verifications.${index}.requirementId: unknown requirement ${verification.requirementId}`)
+    for (const slotId of Object.keys(example.slots)) {
+      if (!slotIds.has(slotId)) errors.push(`examples.${exampleIndex}.slots.${slotId}: unknown slot ${slotId}`)
     }
-    for (const sourceId of verification.sourceIds) {
-      if (!sourceIds.has(sourceId)) {
-        errors.push(`evidence.verifications.${index}.sourceIds: unknown evidence source ${sourceId}`)
+    if (example.status === 'recommended') {
+      const combination = Object.fromEntries(
+        contract.constraints.dimensions.map(propertyId => [
+          propertyId,
+          example.properties[propertyId] ?? propertiesById.get(propertyId)?.default
+        ])
+      )
+      const matches = contract.constraints.combinations.filter(rule => ruleMatchesCombination(rule, combination))
+      if (matches.length !== 1 || matches[0].status !== 'supported') {
+        errors.push(`examples.${exampleIndex}: recommended examples must resolve to exactly one supported combination`)
       }
     }
   }
 
   for (const dimension of HEALTH_DIMENSIONS) {
-    if (!contract.requirements.some(requirement => requirement.dimension === dimension)) {
-      errors.push(`requirements: missing health dimension ${dimension}`)
+    if (
+      contract.lifecycle.status !== 'draft' &&
+      !contract.evaluations.some(evaluation => evaluation.dimension === dimension)
+    ) {
+      errors.push(`evaluations: missing health dimension ${dimension}`)
     }
+  }
+
+  if (contract.lifecycle.status !== 'draft' && contract.evidenceReferences.sources.length === 0) {
+    errors.push('evidenceReferences.sources: piloting, stable, and deprecated contracts require evidence sources')
   }
 
   if (contract.lifecycle.status === 'stable' && contract.surfaces.figma) {
@@ -380,16 +227,14 @@ function validateV04Semantics(contract) {
     const missingDomains = dimensionDomains.filter(([, domain]) => !domain)
     if (missingDomains.length > 0) {
       errors.push(
-        `constraints.dimensions: exhaustive dimensions require finite values: ${missingDomains
-          .map(([dimension]) => dimension)
-          .join(', ')}`
+        `constraints.dimensions: exhaustive dimensions require finite values: ${missingDomains.map(([dimension]) => dimension).join(', ')}`
       )
     } else {
       for (const combination of cartesianCombinations(dimensionDomains)) {
-        const matches = contract.constraints.rules.filter(rule => ruleMatchesCombination(rule, combination))
+        const matches = contract.constraints.combinations.filter(rule => ruleMatchesCombination(rule, combination))
         if (matches.length !== 1) {
           errors.push(
-            `constraints.rules: ${JSON.stringify(combination)} matched ${matches.length} rules${
+            `constraints.combinations: ${JSON.stringify(combination)} matched ${matches.length} combinations${
               matches.length > 0 ? ` (${matches.map(rule => rule.id).join(', ')})` : ''
             }`
           )
@@ -401,195 +246,41 @@ function validateV04Semantics(contract) {
   return errors
 }
 
-const componentContractSchemaV03Refined = componentContractSchemaV03.strict().superRefine((contract, context) => {
-  const surfaceSet = new Set(contract.surfaces)
-  if (surfaceSet.size !== contract.surfaces.length) {
-    context.addIssue({
-      code: 'custom',
-      path: ['surfaces'],
-      message: 'surface names must be unique'
-    })
-  }
-
-  if (surfaceSet.has('code') && !contract.code) {
-    context.addIssue({
-      code: 'custom',
-      path: ['code'],
-      message: 'code metadata is required when the contract governs code'
-    })
-  }
-
-  if (surfaceSet.has('figma') && !contract.figma) {
-    context.addIssue({
-      code: 'custom',
-      path: ['figma'],
-      message: 'Figma metadata is required when the contract governs Figma'
-    })
-  }
-
-  const allProperties = [
-    ...contract.properties.shared,
-    ...contract.properties.designOnly,
-    ...contract.properties.codeOnly
-  ]
-  const propertyNames = allProperties.map(property => property.name)
-  if (new Set(propertyNames).size !== propertyNames.length) {
-    context.addIssue({
-      code: 'custom',
-      path: ['properties'],
-      message: 'property names must be unique across shared, designOnly, and codeOnly'
-    })
-  }
-
-  const propertiesByName = new Map(allProperties.map(property => [property.name, property]))
-  const matrixRuleIds = contract.supportMatrix?.map(rule => rule.id) ?? []
-  if (new Set(matrixRuleIds).size !== matrixRuleIds.length) {
-    context.addIssue({
-      code: 'custom',
-      path: ['supportMatrix'],
-      message: 'rule ids must be unique'
-    })
-  }
-
-  for (const [ruleIndex, rule] of (contract.supportMatrix ?? []).entries()) {
-    const ruleSurfaces = new Set(rule.surfaces)
-    if (ruleSurfaces.size !== rule.surfaces.length) {
-      context.addIssue({
-        code: 'custom',
-        path: ['supportMatrix', ruleIndex, 'surfaces'],
-        message: 'surface names must be unique'
-      })
-    }
-
-    for (const ruleSurface of ruleSurfaces) {
-      if (!surfaceSet.has(ruleSurface)) {
-        context.addIssue({
-          code: 'custom',
-          path: ['supportMatrix', ruleIndex, 'surfaces'],
-          message: `surface ${ruleSurface} is not governed by this contract`
-        })
-      }
-    }
-
-    for (const [propertyName, values] of Object.entries(rule.conditions)) {
-      const property = propertiesByName.get(propertyName)
-      if (!property) {
-        context.addIssue({
-          code: 'custom',
-          path: ['supportMatrix', ruleIndex, 'conditions', propertyName],
-          message: `unknown property ${propertyName}`
-        })
-        continue
-      }
-
-      if (new Set(values).size !== values.length) {
-        context.addIssue({
-          code: 'custom',
-          path: ['supportMatrix', ruleIndex, 'conditions', propertyName],
-          message: 'condition values must be unique'
-        })
-      }
-
-      const expectedValueType = scalarPropertyValueTypes[property.type]
-      if (expectedValueType && values.some(value => typeof value !== expectedValueType)) {
-        context.addIssue({
-          code: 'custom',
-          path: ['supportMatrix', ruleIndex, 'conditions', propertyName],
-          message: `values must match the ${property.type} property type`
-        })
-      }
-
-      if (!['boolean', 'enum', 'number', 'string'].includes(property.type)) {
-        context.addIssue({
-          code: 'custom',
-          path: ['supportMatrix', ruleIndex, 'conditions', propertyName],
-          message: `property type ${property.type} cannot be used as a support-matrix condition`
-        })
-      }
-
-      if (property.values) {
-        const unknownValues = values.filter(value => !property.values.includes(value))
-        if (unknownValues.length > 0) {
-          context.addIssue({
-            code: 'custom',
-            path: ['supportMatrix', ruleIndex, 'conditions', propertyName],
-            message: `values are not declared by ${propertyName}: ${unknownValues.join(', ')}`
-          })
-        }
-      }
-    }
-  }
-
-  const anatomyIds = new Set(contract.anatomy.map(item => item.id))
-  const missingRequiredSlots = contract.readiness.structure.requiredSlots.filter(slot => !anatomyIds.has(slot))
-  if (missingRequiredSlots.length > 0) {
-    context.addIssue({
-      code: 'custom',
-      path: ['readiness', 'structure', 'requiredSlots'],
-      message: `unknown anatomy slots: ${missingRequiredSlots.join(', ')}`
-    })
-  }
-
-  const stateNames = new Set(contract.states.map(state => state.name))
-  const missingRequiredStates = contract.readiness.states.required.filter(state => !stateNames.has(state))
-  if (missingRequiredStates.length > 0) {
-    context.addIssue({
-      code: 'custom',
-      path: ['readiness', 'states', 'required'],
-      message: `undeclared states: ${missingRequiredStates.join(', ')}`
-    })
-  }
-
-  if (contract.status === 'stable' && contract.figma) {
-    if (contract.figma.mappingStatus !== 'verified') {
-      context.addIssue({
-        code: 'custom',
-        path: ['figma', 'mappingStatus'],
-        message: 'stable contracts must use verified Figma mappings'
-      })
-    }
-
-    if (contract.figma.componentKeys.length === 0) {
-      context.addIssue({
-        code: 'custom',
-        path: ['figma', 'componentKeys'],
-        message: 'stable contracts must include at least one confirmed component key'
-      })
-    }
-  }
-})
-
-export const componentContractSchema = z.union([componentContractSchemaV03Refined, componentContractSchemaV04])
-
-function formatIssue(issue) {
-  const path = issue.path.join('.')
-  return path ? `${path}: ${issue.message}` : issue.message
-}
-
 export function validateComponentContract(contract) {
   const result = componentContractSchema.safeParse(contract)
-  if (!result.success) {
-    return {
-      success: false,
-      errors: result.error.issues.map(formatIssue)
+  if (!result.success) return { success: false, errors: result.error.issues.map(formatIssue) }
+  const errors = validateContractSemantics(result.data)
+  return { success: errors.length === 0, errors }
+}
+
+export function validateComponentVerification(verification, contract) {
+  const result = componentVerificationSchema.safeParse(verification)
+  if (!result.success) return { success: false, errors: result.error.issues.map(formatIssue) }
+
+  const errors = []
+  if (result.data.componentId !== contract.identity.id) errors.push('componentId: does not match contract identity')
+  if (result.data.contractVersion !== contract.contractVersion) errors.push('contractVersion: does not match contract')
+  const ruleIds = new Set(contract.evaluations.map(evaluation => evaluation.id))
+  const sourceIds = new Set(contract.evidenceReferences.sources.map(source => source.id))
+  const duplicates = duplicateIds(result.data.verifications)
+  if (duplicates.length > 0) errors.push(`verifications: duplicate ids: ${duplicates.join(', ')}`)
+  for (const [index, item] of result.data.verifications.entries()) {
+    if (!ruleIds.has(item.ruleId)) errors.push(`verifications.${index}.ruleId: unknown rule ${item.ruleId}`)
+    for (const sourceId of item.sourceIds) {
+      if (!sourceIds.has(sourceId)) errors.push(`verifications.${index}.sourceIds: unknown evidence source ${sourceId}`)
     }
   }
-
-  const semanticErrors = result.data.schemaVersion === '0.4.0' ? validateV04Semantics(result.data) : []
-  return {
-    success: semanticErrors.length === 0,
-    errors: semanticErrors
-  }
+  return { success: errors.length === 0, errors }
 }
 
 function collectContractFiles(directory) {
   return readdirSync(directory, { withFileTypes: true }).flatMap(entry => {
     const entryPath = join(directory, entry.name)
-    if (entry.isDirectory()) {
-      return collectContractFiles(entryPath)
-    }
-
-    return entry.isFile() && entry.name.endsWith('.contract.json') ? [entryPath] : []
+    return entry.isDirectory()
+      ? collectContractFiles(entryPath)
+      : entry.isFile() && entry.name.endsWith('.contract.json')
+        ? [entryPath]
+        : []
   })
 }
 
@@ -601,27 +292,43 @@ function resolvePackagePath(packageRoot, filePath) {
   return isAbsolute(filePath) ? filePath : join(packageRoot, filePath)
 }
 
+function referencedTokenIds(contract) {
+  const ids = (contract.tokens ?? []).map(token => token.tokenId)
+  const presentationParts = [
+    contract.presentation.parts,
+    ...(contract.presentation.variants ?? []).map(item => item.parts)
+  ].flat()
+  for (const part of presentationParts) ids.push(...Object.values(part.tokens ?? {}))
+  return ids
+}
+
 export function validateContractCatalog({
   packageRoot,
   inventoryPath = 'catalog/component-inventory.json',
-  contractsRoot = 'catalog/contracts'
+  contractsRoot = 'catalog/contracts',
+  tokenRegistryPath = 'catalog/token-registry.json',
+  evidenceRoot = 'catalog/evidence'
 }) {
   const resolvedInventoryPath = resolvePackagePath(packageRoot, inventoryPath)
   const resolvedContractsRoot = resolvePackagePath(packageRoot, contractsRoot)
+  const resolvedTokenRegistryPath = resolvePackagePath(packageRoot, tokenRegistryPath)
+  const resolvedEvidenceRoot = resolvePackagePath(packageRoot, evidenceRoot)
   const errors = []
   const contracts = []
 
   let inventory
+  let tokenRegistry
   try {
     inventory = JSON.parse(readFileSync(resolvedInventoryPath, 'utf8'))
+    tokenRegistry = tokenRegistrySchema.parse(JSON.parse(readFileSync(resolvedTokenRegistryPath, 'utf8')))
   } catch (error) {
-    return {
-      success: false,
-      errors: [`${packageRelativePath(packageRoot, resolvedInventoryPath)}: ${error.message}`],
-      contracts
-    }
+    return { success: false, errors: [error.message], contracts }
   }
 
+  const tokenIds = new Set(tokenRegistry.tokens.map(token => token.id))
+  const duplicateTokens = duplicateIds(tokenRegistry.tokens)
+  if (duplicateTokens.length > 0)
+    errors.push(`${tokenRegistryPath}: duplicate token ids: ${duplicateTokens.join(', ')}`)
   const inventoryComponents = Array.isArray(inventory.components) ? inventory.components : []
   const seenIds = new Set()
 
@@ -652,9 +359,11 @@ export function validateContractCatalog({
       continue
     }
 
-    const contractId = contract.schemaVersion === '0.4.0' ? contract.identity.id : contract.id
-    const contractStatus = contract.schemaVersion === '0.4.0' ? contract.lifecycle.status : contract.status
+    for (const tokenId of referencedTokenIds(contract)) {
+      if (!tokenIds.has(tokenId)) errors.push(`${contractPath}: unresolved token ${tokenId}`)
+    }
 
+    const contractId = contract.identity.id
     if (seenIds.has(contractId)) {
       errors.push(`${contractPath}: duplicate contract id ${contractId}`)
       continue
@@ -662,22 +371,29 @@ export function validateContractCatalog({
     seenIds.add(contractId)
 
     const inventoryEntry = inventoryComponents.find(component => component.id === contractId)
-    if (!inventoryEntry) {
-      errors.push(`${contractPath}: no component inventory entry for ${contractId}`)
-    } else if (inventoryEntry.contractPath !== contractPath) {
+    if (!inventoryEntry) errors.push(`${contractPath}: no component inventory entry for ${contractId}`)
+    else if (inventoryEntry.contractPath !== contractPath) {
       errors.push(`${contractPath}: inventory contractPath is ${inventoryEntry.contractPath ?? 'missing'}`)
     }
 
-    contracts.push({
-      id: contractId,
-      path: contractPath,
-      status: contractStatus
-    })
+    const verificationPath = join(
+      resolvedEvidenceRoot,
+      basename(contractFile).replace(/\.contract\.json$/, '.verification.json')
+    )
+    if (!existsSync(verificationPath)) {
+      errors.push(
+        `${contractPath}: missing verification evidence ${packageRelativePath(packageRoot, verificationPath)}`
+      )
+    } else {
+      const verification = JSON.parse(readFileSync(verificationPath, 'utf8'))
+      const verificationResult = validateComponentVerification(verification, contract)
+      errors.push(
+        ...verificationResult.errors.map(error => `${packageRelativePath(packageRoot, verificationPath)}: ${error}`)
+      )
+    }
+
+    contracts.push({ id: contractId, path: contractPath, status: contract.lifecycle.status })
   }
 
-  return {
-    success: errors.length === 0,
-    errors,
-    contracts
-  }
+  return { success: errors.length === 0, errors, contracts }
 }

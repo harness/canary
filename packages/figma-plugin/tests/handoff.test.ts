@@ -7,6 +7,8 @@ const report: CheckReport = {
   healthByCatalog: {
     "canary.button": {
       catalogId: "canary.button",
+      scoreLabel: "Pilot evidence score",
+      profileStatus: "pilot",
       score: 92,
       status: "healthy",
       blocked: false,
@@ -90,7 +92,6 @@ describe("buildHandoffPack", () => {
     expect(md).toContain("set key set-key");
   });
 });
-
 describe("issueLinks", () => {
   it("builds a prefilled Harness Jira issue URL", () => {
     const { url, descriptionTruncated } = buildJiraIssueUrl({

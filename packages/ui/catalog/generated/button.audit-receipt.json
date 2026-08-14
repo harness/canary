@@ -1,11 +1,12 @@
 {
   "formatVersion": 1,
   "componentId": "canary.button",
-  "schemaVersion": "0.4.0",
-  "contractVersion": "0.7.0",
+  "schemaVersion": "0.5.0",
+  "contractVersion": "0.8.2",
   "evaluationProfileVersion": "1.0.0",
   "evaluatedAt": "2026-08-14",
-  "sourceSha256": "d8775b96796abebaeaacb319c0153419ffc162aba5ca869075a4fb79a7166643",
+  "sourceSha256": "f7a51d7ed54b0a999377a1a4c1904bb6d363fc973f91099b525afe9eecb0af98",
+  "verificationSourceSha256": "ef8ab22aadc184ce550335d297813c0026b5d4314921aebac861a929489a0097",
   "evaluations": [
     {
       "requirementId": "button.contract-complete",
@@ -126,20 +127,29 @@
       "dimension": "codeImplementation",
       "severity": "critical",
       "enforcement": "manual",
-      "result": "unevaluated",
-      "verifiedAt": null,
-      "fresh": false,
-      "sourceIds": []
+      "result": "pass",
+      "verifiedAt": "2026-08-14",
+      "fresh": true,
+      "sourceIds": [
+        "button-source",
+        "button-tests",
+        "button-docs"
+      ]
     },
     {
       "requirementId": "button.not-color-only",
       "dimension": "codeImplementation",
       "severity": "major",
       "enforcement": "manual",
-      "result": "unevaluated",
-      "verifiedAt": null,
-      "fresh": false,
-      "sourceIds": []
+      "result": "pass",
+      "verifiedAt": "2026-08-14",
+      "fresh": true,
+      "sourceIds": [
+        "button-docs",
+        "button-ui-usages",
+        "button-product-usages",
+        "button-app-usages"
+      ]
     },
     {
       "requirementId": "button.binding-parity",

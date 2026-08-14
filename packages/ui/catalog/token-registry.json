@@ -1,0 +1,41 @@
+{
+  "version": "1.0.0",
+  "tokens": [
+    {
+      "id": "canary.component.button.background",
+      "kind": "component",
+      "description": "Variant and theme-aware Button background treatment.",
+      "source": "tailwind-utils-config/components/button.ts"
+    },
+    {
+      "id": "canary.component.button.foreground",
+      "kind": "component",
+      "description": "Variant and theme-aware Button foreground treatment.",
+      "source": "tailwind-utils-config/components/button.ts"
+    },
+    {
+      "id": "canary.component.button.size",
+      "kind": "component",
+      "description": "Button height, padding, icon, and typography treatment by size.",
+      "source": "tailwind-utils-config/components/button.ts"
+    },
+    {
+      "id": "canary.component.button.radius.standard",
+      "kind": "component",
+      "description": "Standard Button corner radius.",
+      "source": "tailwind-utils-config/components/button.ts"
+    },
+    {
+      "id": "canary.component.button.radius.rounded",
+      "kind": "component",
+      "description": "Supported rounded icon-only Button radius.",
+      "source": "tailwind-utils-config/components/button.ts"
+    },
+    {
+      "id": "canary.semantic.focus-ring",
+      "kind": "semantic",
+      "description": "Visible keyboard-focus ring and contrast treatment.",
+      "source": "tailwind-utils-config/components/button.ts"
+    }
+  ]
+}

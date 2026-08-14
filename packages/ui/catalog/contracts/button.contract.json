@@ -1,6 +1,6 @@
 {
-  "schemaVersion": "0.4.0",
-  "contractVersion": "0.7.0",
+  "schemaVersion": "0.5.0",
+  "contractVersion": "0.8.2",
   "identity": {
     "id": "canary.button",
     "name": "Button",
@@ -8,7 +8,6 @@
     "aliases": ["Action Button"]
   },
   "semantics": {
-    "purpose": "Triggers an immediate user action and communicates its emphasis, context, and availability.",
     "useWhen": [
       "The user needs to submit, confirm, create, delete, or otherwise trigger an immediate action.",
       "The interface needs a clearly prioritized action with a visible interaction state.",
@@ -21,8 +20,7 @@
     "roles": ["button", "action"]
   },
   "lifecycle": {
-    "status": "piloting",
-    "publishedAt": "2026-08-13"
+    "status": "piloting"
   },
   "ownership": {
     "team": "Canary Design System",
@@ -49,7 +47,6 @@
         "a36349ebb31bd76e6d97a35fb8d9b811f2e7668e",
         "34a39d10a4fda2c11cd8d5269dceb6c32718a1e0"
       ],
-      "candidateComponentKeys": [],
       "codeConnect": [
         "src/components/button-md-icon-only-rounded.figma.ts",
         "src/components/button-md-icon-only.figma.ts",
@@ -69,7 +66,69 @@
       "package": "@harnessio/ui",
       "export": "Button",
       "import": "import { Button } from \"@harnessio/ui/components\"",
-      "path": "src/components/button.tsx"
+      "path": "src/components/button.tsx",
+      "extensions": [
+        {
+          "id": "onClick",
+          "name": "onClick",
+          "description": "Runs the action; a returned Promise automatically activates loading until it settles.",
+          "type": "function",
+          "binding": { "kind": "prop", "name": "onClick", "type": "ButtonProps['onClick']" }
+        },
+        {
+          "id": "asChild",
+          "name": "asChild",
+          "description": "Merges Button behavior and styling into its child through Radix Slot.",
+          "type": "boolean",
+          "default": false,
+          "binding": { "kind": "prop", "name": "asChild", "type": "boolean" }
+        },
+        {
+          "id": "tooltipProps",
+          "name": "tooltipProps",
+          "description": "Wraps the button in Tooltip and supplies visual help through title, content, side, align, or controlled open state. Tooltip content does not provide an accessible name.",
+          "type": "object",
+          "binding": { "kind": "prop", "name": "tooltipProps", "type": "object" }
+        },
+        {
+          "id": "aria-label",
+          "name": "aria-label",
+          "description": "Provides an explicit accessible name. Required on icon-only Buttons unless aria-labelledby references visible labeling text.",
+          "type": "string",
+          "binding": { "kind": "prop", "name": "aria-label", "type": "string" }
+        },
+        {
+          "id": "aria-labelledby",
+          "name": "aria-labelledby",
+          "description": "References the element that provides the accessible name. Required on icon-only Buttons unless aria-label is set.",
+          "type": "string",
+          "binding": { "kind": "prop", "name": "aria-labelledby", "type": "string" }
+        },
+        {
+          "id": "ignoreIconOnlyTooltip",
+          "name": "ignoreIconOnlyTooltip",
+          "description": "Explicitly bypasses only the TypeScript requirement for icon-only tooltipProps. It never bypasses the aria-label or aria-labelledby requirement.",
+          "type": "boolean",
+          "default": false,
+          "binding": { "kind": "prop", "name": "ignoreIconOnlyTooltip", "type": "boolean" }
+        },
+        {
+          "id": "className",
+          "name": "className",
+          "description": "Adds consumer classes after the contract-governed Button classes.",
+          "type": "string",
+          "binding": { "kind": "prop", "name": "className", "type": "string" }
+        },
+        {
+          "id": "type",
+          "name": "type",
+          "description": "Sets the native button type.",
+          "type": "enum",
+          "values": ["button", "submit", "reset"],
+          "default": "button",
+          "binding": { "kind": "prop", "name": "type", "type": "string" }
+        }
+      ]
     }
   },
   "anatomy": [
@@ -302,7 +361,7 @@
     {
       "id": "iconOnly",
       "name": "iconOnly",
-      "description": "Renders only the first IconV2 child and requires an accessible name and tooltip unless the explicit tooltip override is justified.",
+      "description": "Renders only the first IconV2 child and requires aria-label or aria-labelledby. It also requires a tooltip unless the explicit tooltip override is justified; tooltip text alone is not an accessible name.",
       "type": "boolean",
       "default": false,
       "bindings": {
@@ -325,10 +384,10 @@
       }
     },
     {
-      "id": "children",
-      "name": "children",
+      "id": "content",
+      "name": "content",
       "description": "Provides the visible action label and optional IconV2 children.",
-      "type": "node",
+      "type": "slot",
       "required": true,
       "bindings": {
         "figma": {
@@ -354,87 +413,78 @@
           "type": "boolean"
         }
       }
-    },
+    }
+  ],
+  "slots": [
     {
-      "id": "onClick",
-      "name": "onClick",
-      "description": "Runs the action; a returned Promise automatically activates loading until it settles.",
-      "type": "function",
+      "id": "content",
+      "name": "Content",
+      "description": "The visible action label or the single icon used by an icon-only Button.",
+      "partId": "label-or-icon",
+      "presence": "required",
+      "minItems": 1,
+      "maxItems": 1,
+      "allowedContent": ["text", "IconV2"],
+      "defaultExampleId": "primary-action",
       "bindings": {
-        "react": {
-          "kind": "prop",
-          "name": "onClick",
-          "type": "ButtonProps['onClick']"
-        }
+        "figma": { "kind": "property", "property": "button text" },
+        "react": { "kind": "slot", "target": "children" }
       }
     },
     {
-      "id": "asChild",
-      "name": "asChild",
-      "description": "Merges Button behavior and styling into its child through Radix Slot.",
-      "type": "boolean",
-      "default": false,
+      "id": "leading-icon",
+      "name": "Leading icon",
+      "description": "An optional IconV2 before a text label.",
+      "partId": "leading-icon",
+      "presence": "optional",
+      "minItems": 0,
+      "maxItems": 1,
+      "allowedContent": ["IconV2"],
       "bindings": {
-        "react": {
-          "kind": "prop",
-          "name": "asChild",
-          "type": "boolean"
-        }
+        "figma": { "kind": "property", "property": "icon#1567:1" },
+        "react": { "kind": "composition", "target": "IconV2 child before the label" }
       }
     },
     {
-      "id": "tooltipProps",
-      "name": "tooltipProps",
-      "description": "Wraps the button in Tooltip and supplies title, content, side, align, or controlled open state.",
-      "type": "object",
+      "id": "trailing-icon",
+      "name": "Trailing icon",
+      "description": "An optional IconV2 after a text label.",
+      "partId": "trailing-icon",
+      "presence": "optional",
+      "minItems": 0,
+      "maxItems": 1,
+      "allowedContent": ["IconV2"],
       "bindings": {
-        "react": {
-          "kind": "prop",
-          "name": "tooltipProps",
-          "type": "object"
-        }
+        "figma": { "kind": "property", "property": "suffix icon#1687:61", "aliases": ["↳ suffix"] },
+        "react": { "kind": "composition", "target": "IconV2 child after the label" }
       }
     },
     {
-      "id": "ignoreIconOnlyTooltip",
-      "name": "ignoreIconOnlyTooltip",
-      "description": "Explicitly bypasses the TypeScript requirement for icon-only tooltipProps.",
-      "type": "boolean",
-      "default": false,
+      "id": "loading-indicator",
+      "name": "Loading indicator",
+      "description": "The system-owned Spinner rendered while loading.",
+      "partId": "loading-indicator",
+      "presence": "conditional",
+      "minItems": 0,
+      "maxItems": 1,
+      "allowedContent": ["Spinner"],
       "bindings": {
-        "react": {
-          "kind": "prop",
-          "name": "ignoreIconOnlyTooltip",
-          "type": "boolean"
-        }
+        "figma": { "kind": "property", "property": "state" },
+        "react": { "kind": "composition", "target": "Spinner when loading is true" }
       }
     },
     {
-      "id": "className",
-      "name": "className",
-      "description": "Adds consumer classes after the contract-governed Button classes.",
-      "type": "string",
+      "id": "tooltip",
+      "name": "Tooltip",
+      "description": "Supporting explanation required for icon-only use unless explicitly bypassed.",
+      "partId": "tooltip",
+      "presence": "conditional",
+      "minItems": 0,
+      "maxItems": 1,
+      "allowedContent": ["Tooltip"],
       "bindings": {
-        "react": {
-          "kind": "prop",
-          "name": "className",
-          "type": "string"
-        }
-      }
-    },
-    {
-      "id": "type",
-      "name": "type",
-      "description": "Sets the native button type.",
-      "type": "enum",
-      "values": ["button", "submit", "reset"],
-      "default": "button",
-      "bindings": {
-        "react": {
-          "kind": "prop",
-          "name": "type",
-          "type": "string"
-        }
+        "figma": { "kind": "property", "property": "tooltip" },
+        "react": { "kind": "composition", "target": "Tooltip through tooltipProps" }
       }
     }
   ],
@@ -568,7 +618,7 @@
   "constraints": {
     "exhaustive": true,
     "dimensions": ["variant", "size", "theme", "rounded", "iconOnly"],
-    "rules": [
+    "combinations": [
       {
         "id": "text-standard-md-sm-semantic",
         "status": "supported",
@@ -581,7 +631,7 @@
           "iconOnly": [false]
         },
         "description": "Primary, secondary, outline, and ghost text Buttons support every theme at md and sm.",
-        "requirementId": "button.supported-combination"
+        "ruleId": "button.supported-combination"
       },
       {
         "id": "text-standard-md-sm-default-theme",
@@ -595,7 +645,7 @@
           "iconOnly": [false]
         },
         "description": "AI and transparent text Buttons use only the default theme at md and sm.",
-        "requirementId": "button.supported-combination"
+        "ruleId": "button.supported-combination"
       },
       {
         "id": "text-standard-md-sm-link",
@@ -609,7 +659,7 @@
           "iconOnly": [false]
         },
         "description": "The link visual variant is supported only for default-theme text actions at md and sm; it does not provide navigation semantics.",
-        "requirementId": "button.supported-combination"
+        "ruleId": "button.supported-combination"
       },
       {
         "id": "text-standard-xs-semantic",
@@ -623,7 +673,7 @@
           "iconOnly": [false]
         },
         "description": "Primary, secondary, outline, and ghost text Buttons support every theme at xs.",
-        "requirementId": "button.supported-combination"
+        "ruleId": "button.supported-combination"
       },
       {
         "id": "text-standard-xs-default-theme",
@@ -637,7 +687,7 @@
           "iconOnly": [false]
         },
         "description": "AI and transparent text Buttons use only the default theme at xs.",
-        "requirementId": "button.supported-combination"
+        "ruleId": "button.supported-combination"
       },
       {
         "id": "icon-standard-md-sm-xs",
@@ -651,7 +701,7 @@
           "iconOnly": [true]
         },
         "description": "Standard icon-only Buttons are supported at md, sm, and xs with the default theme.",
-        "requirementId": "button.supported-combination"
+        "ruleId": "button.supported-combination"
       },
       {
         "id": "icon-rounded-md-sm-xs",
@@ -665,7 +715,7 @@
           "iconOnly": [true]
         },
         "description": "Rounded icon-only Buttons are supported at md, sm, and xs with the default theme.",
-        "requirementId": "button.supported-combination"
+        "ruleId": "button.supported-combination"
       },
       {
         "id": "text-rounded-md-sm-xs",
@@ -680,7 +730,7 @@
         },
         "description": "Rounded text Buttons remain temporarily available only for migration.",
         "migrationId": "rounded-text-to-standard",
-        "requirementId": "button.supported-combination"
+        "ruleId": "button.supported-combination"
       },
       {
         "id": "text-ai-transparent-semantic-theme",
@@ -694,7 +744,7 @@
           "iconOnly": [false]
         },
         "description": "AI and transparent text Buttons do not support success or danger themes.",
-        "requirementId": "button.supported-combination"
+        "ruleId": "button.supported-combination"
       },
       {
         "id": "text-standard-md-sm-link-semantic-theme",
@@ -708,7 +758,7 @@
           "iconOnly": [false]
         },
         "description": "The link visual variant does not support success or danger themes.",
-        "requirementId": "button.supported-combination"
+        "ruleId": "button.supported-combination"
       },
       {
         "id": "text-standard-xs-link",
@@ -722,7 +772,7 @@
           "iconOnly": [false]
         },
         "description": "The link visual variant is not supported at xs.",
-        "requirementId": "button.supported-combination"
+        "ruleId": "button.supported-combination"
       },
       {
         "id": "icon-semantic-theme-md-sm-xs",
@@ -736,7 +786,7 @@
           "iconOnly": [true]
         },
         "description": "Icon-only Buttons use only the default theme.",
-        "requirementId": "button.supported-combination"
+        "ruleId": "button.supported-combination"
       },
       {
         "id": "icon-link-md-sm-xs",
@@ -750,7 +800,7 @@
           "iconOnly": [true]
         },
         "description": "The link visual variant is not supported for icon-only Buttons.",
-        "requirementId": "button.supported-combination"
+        "ruleId": "button.supported-combination"
       }
     ]
   },
@@ -759,7 +809,7 @@
       "id": "root-background",
       "partId": "root",
       "channel": "background",
-      "token": "cn-button variant background",
+      "tokenId": "canary.component.button.background",
       "bindings": {
         "react": "cn-button variant classes"
       }
@@ -768,7 +818,7 @@
       "id": "root-foreground",
       "partId": "root",
       "channel": "foreground",
-      "token": "cn-button variant foreground",
+      "tokenId": "canary.component.button.foreground",
       "bindings": {
         "react": "cn-button variant classes"
       }
@@ -777,7 +827,7 @@
       "id": "root-size",
       "partId": "root",
       "channel": "size",
-      "token": "cn-button size",
+      "tokenId": "canary.component.button.size",
       "bindings": {
         "react": "cn-button size classes"
       }
@@ -786,7 +836,7 @@
       "id": "root-radius",
       "partId": "root",
       "channel": "radius",
-      "token": "cn-button radius",
+      "tokenId": "canary.component.button.radius.standard",
       "conditions": {
         "rounded": [false]
       },
@@ -798,7 +848,7 @@
       "id": "root-rounded-radius",
       "partId": "root",
       "channel": "radius",
-      "token": "cn-button rounded radius",
+      "tokenId": "canary.component.button.radius.rounded",
       "conditions": {
         "rounded": [true],
         "iconOnly": [true]
@@ -811,40 +861,39 @@
       "id": "focus-outline",
       "partId": "root",
       "channel": "focus-ring",
-      "token": "--cn-focus",
+      "tokenId": "canary.semantic.focus-ring",
       "stateId": "focus-visible",
       "bindings": {
         "react": "2px outline, 2px inset gray.25 contrast ring, and -2px non-link offset"
       }
     }
   ],
-  "accessibility": [
-    {
-      "id": "accessible-name",
-      "statement": "Every Button has an accessible name; visible text is preferred and icon-only use requires an equivalent programmatic name.",
-      "requirementId": "button.accessible-name"
-    },
-    {
-      "id": "visible-focus",
-      "statement": "Keyboard focus remains visible for every supported variant, theme, and size through :focus-visible; pointer focus does not force the indicator.",
-      "requirementId": "button.focus-visible"
-    },
-    {
-      "id": "native-type",
-      "statement": "Use the default type=button unless submit or reset behavior is intentional.",
-      "requirementId": "button.native-type"
-    },
-    {
-      "id": "pending-state",
-      "statement": "Disabled and loading states prevent repeat activation and remain programmatically determinable.",
-      "requirementId": "button.pending-state"
-    },
-    {
-      "id": "not-color-only",
-      "statement": "Do not rely on color alone to communicate success, danger, disabled, or loading meaning.",
-      "requirementId": "button.not-color-only"
-    }
-  ],
+  "presentation": {
+    "parts": [
+      {
+        "partId": "root",
+        "layout": { "direction": "inline", "align": "center", "justify": "center" },
+        "tokens": {
+          "background": "canary.component.button.background",
+          "foreground": "canary.component.button.foreground",
+          "size": "canary.component.button.size",
+          "radius": "canary.component.button.radius.standard"
+        }
+      }
+    ],
+    "variants": [
+      {
+        "id": "rounded-icon-only",
+        "conditions": { "rounded": [true], "iconOnly": [true] },
+        "parts": [{ "partId": "root", "tokens": { "radius": "canary.component.button.radius.rounded" } }]
+      },
+      {
+        "id": "focus-visible",
+        "stateId": "focus-visible",
+        "parts": [{ "partId": "root", "tokens": { "focus-ring": "canary.semantic.focus-ring" } }]
+      }
+    ]
+  },
   "usage": {
     "do": [
       {
@@ -908,9 +957,70 @@
     ],
     "relatedComponents": ["Link", "ButtonGroup", "SplitButton", "Toggle"]
   },
-  "requirements": [
+  "examples": [
+    {
+      "id": "primary-action",
+      "name": "Primary action",
+      "purpose": "Shows the default text Button used for the highest-priority local action.",
+      "status": "recommended",
+      "properties": {
+        "variant": "primary",
+        "size": "md",
+        "theme": "default",
+        "rounded": false,
+        "disabled": false,
+        "iconOnly": false,
+        "loading": false
+      },
+      "slots": { "content": ["Save changes"] },
+      "references": {
+        "figmaNodeId": "28553:15461",
+        "code": "<Button>Save changes</Button>",
+        "docs": "../../apps/portal/src/content/docs/components/actions/button.mdx"
+      }
+    },
+    {
+      "id": "icon-only-action",
+      "name": "Icon-only action",
+      "purpose": "Shows a compact action whose icon and tooltip communicate the same intent.",
+      "status": "recommended",
+      "properties": {
+        "variant": "primary",
+        "size": "md",
+        "theme": "default",
+        "rounded": false,
+        "disabled": false,
+        "iconOnly": true,
+        "loading": false
+      },
+      "slots": { "content": ["IconV2"], "tooltip": ["Tooltip"] },
+      "references": {
+        "figmaNodeId": "28553:15461",
+        "code": "<Button iconOnly aria-label='Add' tooltipProps={{ title: 'Add' }}><IconV2 icon='plus' /></Button>"
+      }
+    },
+    {
+      "id": "rounded-pipeline-action",
+      "name": "Rounded pipeline action",
+      "purpose": "Documents the supported rounded icon-only treatment used by Pipeline Studio.",
+      "status": "illustrative",
+      "properties": {
+        "variant": "primary",
+        "size": "md",
+        "theme": "default",
+        "rounded": true,
+        "disabled": false,
+        "iconOnly": true,
+        "loading": false
+      },
+      "slots": { "content": ["IconV2"], "tooltip": ["Tooltip"] },
+      "references": { "figmaNodeId": "28553:15461" }
+    }
+  ],
+  "evaluations": [
     {
       "id": "button.contract-complete",
+      "category": "governance",
       "dimension": "contractDefinition",
       "severity": "critical",
       "enforcement": "automated",
@@ -920,6 +1030,7 @@
     },
     {
       "id": "button.library-identity",
+      "category": "structure",
       "dimension": "figmaImplementation",
       "severity": "critical",
       "enforcement": "automated",
@@ -929,6 +1040,7 @@
     },
     {
       "id": "button.property-values",
+      "category": "api",
       "dimension": "figmaImplementation",
       "severity": "major",
       "enforcement": "automated",
@@ -938,6 +1050,7 @@
     },
     {
       "id": "button.supported-combination",
+      "category": "semantics",
       "dimension": "figmaImplementation",
       "severity": "critical",
       "enforcement": "automated",
@@ -947,6 +1060,7 @@
     },
     {
       "id": "button.required-content",
+      "category": "structure",
       "dimension": "figmaImplementation",
       "severity": "critical",
       "enforcement": "automated",
@@ -956,6 +1070,7 @@
     },
     {
       "id": "button.code-api",
+      "category": "api",
       "dimension": "codeImplementation",
       "severity": "critical",
       "enforcement": "automated",
@@ -965,6 +1080,7 @@
     },
     {
       "id": "button.focus-visible",
+      "category": "accessibility",
       "dimension": "codeImplementation",
       "severity": "critical",
       "enforcement": "automated",
@@ -974,6 +1090,7 @@
     },
     {
       "id": "button.native-type",
+      "category": "accessibility",
       "dimension": "codeImplementation",
       "severity": "major",
       "enforcement": "automated",
@@ -983,6 +1100,7 @@
     },
     {
       "id": "button.pending-state",
+      "category": "accessibility",
       "dimension": "codeImplementation",
       "severity": "major",
       "enforcement": "automated",
@@ -992,26 +1110,29 @@
     },
     {
       "id": "button.accessible-name",
+      "category": "accessibility",
       "dimension": "codeImplementation",
       "severity": "critical",
       "enforcement": "manual",
-      "statement": "Every rendered Button has an accessible name.",
-      "remediation": "Resolve every rendered Button has an accessible name.",
+      "statement": "Every rendered Button has an accessible name; icon-only Buttons set aria-label or aria-labelledby independently of tooltip content.",
+      "remediation": "Add aria-label or aria-labelledby to every icon-only Button. Do not treat tooltip content or ignoreIconOnlyTooltip as an accessible name.",
       "evaluator": "manual",
       "maxAgeDays": 90
     },
     {
       "id": "button.not-color-only",
+      "category": "accessibility",
       "dimension": "codeImplementation",
       "severity": "major",
       "enforcement": "manual",
-      "statement": "Semantic meaning is not communicated by color alone.",
-      "remediation": "Resolve semantic meaning is not communicated by color alone.",
+      "statement": "Success and danger colors only reinforce meaning; the visible label, icon, programmatic state, or surrounding context communicates the action without color.",
+      "remediation": "Give every themed Button an action-specific label or equivalent non-color cue. Use explicit text such as Delete, Confirm, Saved, or Updated; never rely on the success or danger theme alone.",
       "evaluator": "manual",
       "maxAgeDays": 90
     },
     {
       "id": "button.binding-parity",
+      "category": "parity",
       "dimension": "designCodeParity",
       "severity": "critical",
       "enforcement": "automated",
@@ -1021,6 +1142,7 @@
     },
     {
       "id": "button.intentional-differences",
+      "category": "parity",
       "dimension": "designCodeParity",
       "severity": "major",
       "enforcement": "automated",
@@ -1030,6 +1152,7 @@
     },
     {
       "id": "button.evidence-current",
+      "category": "governance",
       "dimension": "governanceEvidence",
       "severity": "major",
       "enforcement": "automated",
@@ -1040,6 +1163,7 @@
     },
     {
       "id": "button.publication-current",
+      "category": "governance",
       "dimension": "governanceEvidence",
       "severity": "minor",
       "enforcement": "manual",
@@ -1059,7 +1183,7 @@
       "target": "Remove remaining rounded text usage before removing the rounded text API path."
     }
   ],
-  "evidence": {
+  "evidenceReferences": {
     "sources": [
       {
         "id": "button-source",
@@ -1075,6 +1199,21 @@
         "id": "button-docs",
         "type": "docs",
         "path": "../../apps/portal/src/content/docs/components/actions/button.mdx"
+      },
+      {
+        "id": "button-product-usages",
+        "type": "source",
+        "path": "../../packages/views/src"
+      },
+      {
+        "id": "button-ui-usages",
+        "type": "source",
+        "path": "src/components"
+      },
+      {
+        "id": "button-app-usages",
+        "type": "source",
+        "path": "../../apps"
       },
       {
         "id": "button-tests",
@@ -1100,100 +1239,6 @@
         "id": "button-semantics-decision",
         "type": "decision",
         "path": "https://harness.atlassian.net/wiki/spaces/TCD/pages/24150048814/Button+Contract+Gap-Closure+Plan"
-      }
-    ],
-    "verifications": [
-      {
-        "id": "contract-validated",
-        "requirementId": "button.contract-complete",
-        "result": "pass",
-        "verifiedAt": "2026-08-14",
-        "sourceIds": ["button-tests"]
-      },
-      {
-        "id": "figma-identity-verified",
-        "requirementId": "button.library-identity",
-        "result": "pass",
-        "verifiedAt": "2026-08-13",
-        "sourceIds": ["button-figma"]
-      },
-      {
-        "id": "figma-values-verified",
-        "requirementId": "button.property-values",
-        "result": "pass",
-        "verifiedAt": "2026-08-13",
-        "sourceIds": ["button-figma", "canary-copilot"]
-      },
-      {
-        "id": "figma-matrix-verified",
-        "requirementId": "button.supported-combination",
-        "result": "pass",
-        "verifiedAt": "2026-08-13",
-        "sourceIds": ["button-figma", "button-tests"]
-      },
-      {
-        "id": "figma-content-verified",
-        "requirementId": "button.required-content",
-        "result": "pass",
-        "verifiedAt": "2026-08-13",
-        "sourceIds": ["button-figma"]
-      },
-      {
-        "id": "code-api-verified",
-        "requirementId": "button.code-api",
-        "result": "pass",
-        "verifiedAt": "2026-08-14",
-        "sourceIds": ["button-source", "button-tests"]
-      },
-      {
-        "id": "focus-verified",
-        "requirementId": "button.focus-visible",
-        "result": "pass",
-        "verifiedAt": "2026-08-13",
-        "sourceIds": ["button-styles", "button-tests"]
-      },
-      {
-        "id": "native-type-verified",
-        "requirementId": "button.native-type",
-        "result": "pass",
-        "verifiedAt": "2026-08-14",
-        "sourceIds": ["button-source", "button-tests"]
-      },
-      {
-        "id": "pending-state-verified",
-        "requirementId": "button.pending-state",
-        "result": "pass",
-        "verifiedAt": "2026-08-14",
-        "sourceIds": ["button-source", "button-tests"]
-      },
-      {
-        "id": "binding-parity-verified",
-        "requirementId": "button.binding-parity",
-        "result": "pass",
-        "verifiedAt": "2026-08-13",
-        "sourceIds": ["button-code-connect", "button-figma", "button-source"]
-      },
-      {
-        "id": "differences-verified",
-        "requirementId": "button.intentional-differences",
-        "result": "pass",
-        "verifiedAt": "2026-08-13",
-        "sourceIds": ["button-code-connect", "button-figma", "button-styles"]
-      },
-      {
-        "id": "evidence-verified",
-        "requirementId": "button.evidence-current",
-        "result": "pass",
-        "verifiedAt": "2026-08-14",
-        "sourceIds": ["button-source", "button-tests", "button-figma"]
-      },
-      {
-        "id": "publication-verified",
-        "requirementId": "button.publication-current",
-        "result": "pass",
-        "verifiedAt": "2026-08-13",
-        "sourceIds": ["button-figma"],
-        "notes": "Published HDS | Components 3.0 library re-audited after the approved matrix update."
       }
     ]
   }

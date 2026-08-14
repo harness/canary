@@ -5,9 +5,14 @@ import { fileURLToPath } from 'node:url'
 
 import { z } from 'zod'
 
-import { componentContractSchemaV04, evaluationProfileSchema } from './component-contract-schema.mjs'
+import {
+  componentContractSchemaV05,
+  componentVerificationSchema,
+  evaluationProfileSchema
+} from './component-contract-schema.mjs'
 
 export const artifactFormatVersion = 1
+export const referenceFormatVersion = 2
 
 const artifactPaths = [
   'catalog/generated/component-contract.schema.json',
@@ -34,11 +39,15 @@ function schemaType(node) {
 
 function fieldOwner(path) {
   const root = path.split('.')[0]
-  if (['identity', 'semantics', 'anatomy', 'states', 'tokens', 'usage', 'accessibility'].includes(root)) {
+  if (
+    ['identity', 'semantics', 'anatomy', 'slots', 'states', 'presentation', 'tokens', 'usage', 'examples'].includes(
+      root
+    )
+  ) {
     return 'Design system design and engineering'
   }
   if (['surfaces', 'properties', 'constraints'].includes(root)) return 'Design system engineering with design review'
-  if (['requirements', 'evidence', 'lifecycle', 'ownership', 'migrations'].includes(root)) {
+  if (['evaluations', 'evidenceReferences', 'lifecycle', 'ownership', 'migrations'].includes(root)) {
     return 'Design system governance'
   }
   return 'Schema maintainers'
@@ -47,10 +56,12 @@ function fieldOwner(path) {
 function fieldConsumers(path) {
   const root = path.split('.')[0]
   if (root === 'surfaces') return ['Compiler', 'Canary Copilot', 'CI', 'Future generators']
-  if (['properties', 'anatomy', 'states', 'constraints'].includes(root)) {
+  if (['properties', 'anatomy', 'slots', 'states', 'constraints', 'presentation', 'examples'].includes(root)) {
     return ['Canary Copilot', 'CI', 'Documentation', 'Future generators']
   }
-  if (['requirements', 'evidence'].includes(root)) return ['Health scoring', 'CI', 'Governance', 'Documentation']
+  if (['evaluations', 'evidenceReferences'].includes(root)) {
+    return ['Health scoring', 'CI', 'Governance', 'Documentation']
+  }
   return ['Engineers', 'Designers', 'Agents', 'Documentation']
 }
 
@@ -62,12 +73,18 @@ function resolveRef(root, node) {
     .reduce((value, segment) => value?.[segment.replaceAll('~1', '/').replaceAll('~0', '~')], root)
 }
 
+function resolveSchemaNode(root, node) {
+  const direct = resolveRef(root, node) ?? node
+  if (direct?.allOf?.length === 1) return resolveSchemaNode(root, direct.allOf[0])
+  return direct
+}
+
 function schemaReferenceRows(schema) {
   const rows = []
   const seen = new Set()
 
   const visit = (path, rawNode, required) => {
-    const node = resolveRef(schema, rawNode) ?? rawNode
+    const node = resolveSchemaNode(schema, rawNode)
     const key = `${path}|${node?.$ref ?? ''}`
     if (seen.has(key)) return
     seen.add(key)
@@ -79,8 +96,6 @@ function schemaReferenceRows(schema) {
         required,
         allowedValues: node.enum ?? node.const ?? null,
         default: node.default ?? null,
-        owner: fieldOwner(path),
-        consumers: fieldConsumers(path),
         description: node.description ?? `Contract field ${path}.`
       })
     }
@@ -89,7 +104,9 @@ function schemaReferenceRows(schema) {
 
     const requiredNames = new Set(node.required ?? [])
     for (const [name, child] of Object.entries(node.properties ?? {})) {
-      visit(path ? `${path}.${name}` : name, child, requiredNames.has(name))
+      const childNode = resolveSchemaNode(schema, child)
+      const authorRequired = requiredNames.has(name) && childNode?.default === undefined
+      visit(path ? `${path}.${name}` : name, child, authorRequired)
     }
     if (node.items) visit(`${path}[]`, node.items, true)
     if (node.additionalProperties && typeof node.additionalProperties === 'object') {
@@ -99,6 +116,12 @@ function schemaReferenceRows(schema) {
 
   visit('', schema, true)
   return rows.sort((a, b) => a.path.localeCompare(b.path))
+}
+
+function fieldReferenceSections(rows) {
+  return [...new Set(rows.map(row => row.path.split('.')[0].replace(/\[\]$/u, '')))]
+    .sort()
+    .map(path => ({ path, owner: fieldOwner(path), consumers: fieldConsumers(path) }))
 }
 
 function generatedTypes() {
@@ -117,33 +140,35 @@ export type RequirementSeverity = 'critical' | 'major' | 'minor' | 'informationa
 export type EnforcementMode = 'automated' | 'manual' | 'advisory'
 
 export type ComponentContract = {
-  schemaVersion: '0.4.0'
+  schemaVersion: '0.5.0'
   contractVersion: string
   identity: Record<string, unknown>
   semantics: Record<string, unknown>
-  lifecycle: { status: ContractStatus; publishedAt?: string; replacementId?: string }
+  lifecycle: { status: ContractStatus; replacementId?: string }
   ownership: { team: string; contacts: string[] }
   surfaces: Partial<Record<ContractSurface, Record<string, unknown>>>
   anatomy: Array<Record<string, unknown>>
   properties: Array<Record<string, unknown>>
+  slots: Array<Record<string, unknown>>
   states: Array<Record<string, unknown>>
   constraints: {
     exhaustive: boolean
     dimensions: string[]
-    rules: Array<{
+    combinations: Array<{
       id: string
       status: ConstraintStatus
       surfaces: ContractSurface[]
       conditions: Record<string, ContractScalar[]>
       description: string
       migrationId?: string
-      requirementId?: string
+      ruleId?: string
     }>
   }
   tokens: Array<Record<string, unknown>>
-  accessibility: Array<Record<string, unknown>>
+  presentation: Record<string, unknown>
   usage: Record<string, unknown>
-  requirements: Array<{
+  examples: Array<Record<string, unknown>>
+  evaluations: Array<{
     id: string
     dimension: HealthDimension
     severity: RequirementSeverity
@@ -154,7 +179,7 @@ export type ComponentContract = {
     maxAgeDays?: number
   }>
   migrations: Array<Record<string, unknown>>
-  evidence: Record<string, unknown>
+  evidenceReferences: { sources: Array<Record<string, unknown>> }
 }
 `
 }
@@ -163,12 +188,12 @@ function daysBetween(from, to) {
   return Math.floor((Date.parse(to) - Date.parse(from)) / 86_400_000)
 }
 
-function buildReceipt(contract, profile) {
+function buildReceipt(contract, verificationSource, profile) {
   const verificationByRequirement = new Map()
-  for (const verification of contract.evidence.verifications) {
-    const current = verificationByRequirement.get(verification.requirementId)
+  for (const verification of verificationSource.verifications) {
+    const current = verificationByRequirement.get(verification.ruleId)
     if (!current || current.verifiedAt < verification.verifiedAt) {
-      verificationByRequirement.set(verification.requirementId, verification)
+      verificationByRequirement.set(verification.ruleId, verification)
     }
   }
   const evaluatedAt = [...verificationByRequirement.values()]
@@ -184,7 +209,8 @@ function buildReceipt(contract, profile) {
     evaluationProfileVersion: profile.version,
     evaluatedAt,
     sourceSha256: createHash('sha256').update(json(contract)).digest('hex'),
-    evaluations: contract.requirements.map(requirement => {
+    verificationSourceSha256: createHash('sha256').update(json(verificationSource)).digest('hex'),
+    evaluations: contract.evaluations.map(requirement => {
       const verification = verificationByRequirement.get(requirement.id)
       const maxAgeDays = requirement.maxAgeDays ?? profile.defaultEvidenceMaxAgeDays
       const fresh = verification ? daysBetween(verification.verifiedAt, evaluatedAt) <= maxAgeDays : false
@@ -203,16 +229,19 @@ function buildReceipt(contract, profile) {
 }
 
 export function generateContractArtifacts({ packageRoot, write = false }) {
-  const contract = componentContractSchemaV04.parse(
+  const contract = componentContractSchemaV05.parse(
     readJson(join(packageRoot, 'catalog/contracts/button.contract.json'))
   )
+  const verificationSource = componentVerificationSchema.parse(
+    readJson(join(packageRoot, 'catalog/evidence/button.verification.json'))
+  )
   const profile = evaluationProfileSchema.parse(readJson(join(packageRoot, 'catalog/evaluation-profile.json')))
-  const contractSchema = z.toJSONSchema(componentContractSchemaV04, {
+  const contractSchema = z.toJSONSchema(componentContractSchemaV05, {
     target: 'draft-7',
     reused: 'ref'
   })
-  contractSchema.$id = 'https://canary.harness.io/contracts/component-contract-0.4.0.schema.json'
-  contractSchema.title = 'Canary Component Contract 0.4.0'
+  contractSchema.$id = 'https://canary.harness.io/contracts/component-contract-0.5.0.schema.json'
+  contractSchema.title = 'Canary Component Contract 0.5.0'
 
   const artifacts = new Map([
     [artifactPaths[0], json(contractSchema)],
@@ -220,12 +249,13 @@ export function generateContractArtifacts({ packageRoot, write = false }) {
     [
       artifactPaths[2],
       json({
-        formatVersion: artifactFormatVersion,
-        schemaVersion: '0.4.0',
+        formatVersion: referenceFormatVersion,
+        schemaVersion: '0.5.0',
+        sections: fieldReferenceSections(schemaReferenceRows(contractSchema)),
         rows: schemaReferenceRows(contractSchema)
       })
     ],
-    [artifactPaths[3], json(buildReceipt(contract, profile))]
+    [artifactPaths[3], json(buildReceipt(contract, verificationSource, profile))]
   ])
 
   const stalePaths = []

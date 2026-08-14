@@ -77,21 +77,24 @@ export const CatalogEntrySchema = z.object({
   designOnly: z.array(CatalogPropSchema),
   codeOnly: z.array(CatalogPropSchema),
   anatomy: z.array(z.record(z.string(), z.unknown())).optional(),
+  slots: z.array(z.record(z.string(), z.unknown())).optional(),
   states: z.array(z.record(z.string(), z.unknown())).optional(),
   constraints: z
     .object({
       exhaustive: z.boolean(),
       dimensions: z.array(z.string().min(1)).min(1),
-      rules: z.array(ConstraintRuleSchema).min(1)
+      combinations: z.array(ConstraintRuleSchema).min(1)
     })
     .optional(),
-  requirements: z.array(z.record(z.string(), z.unknown())).min(1).optional(),
+  evaluations: z.array(z.record(z.string(), z.unknown())).min(1).optional(),
   tokenBindings: z.array(z.record(z.string(), z.unknown())).optional(),
   accessibility: z.array(z.record(z.string(), z.unknown())).min(1).optional(),
+  presentation: z.record(z.string(), z.unknown()).optional(),
+  examples: z.array(z.record(z.string(), z.unknown())).optional(),
   usage: z.record(z.string(), z.unknown()).optional(),
   semantics: z.record(z.string(), z.unknown()).optional(),
   migrations: z.array(z.record(z.string(), z.unknown())).optional(),
-  evidence: z.record(z.string(), z.unknown()).optional(),
+  evidenceReferences: z.record(z.string(), z.unknown()).optional(),
   evaluationProfile: z.record(z.string(), z.unknown()).optional(),
   baselineReceipt: z.record(z.string(), z.unknown()).optional(),
   bindings: z.record(z.string(), z.string()).optional(),

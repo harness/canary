@@ -1,5 +1,7 @@
 {
   "version": "1.0.0",
+  "displayName": "Pilot evidence score",
+  "status": "pilot",
   "dimensions": {
     "contractDefinition": 20,
     "figmaImplementation": 25,

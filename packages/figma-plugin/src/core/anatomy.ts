@@ -24,6 +24,11 @@ type StateDefinition = {
   bindings?: { figma?: { reference?: unknown } }
 }
 
+function requirementId(entry: CatalogEntry, evaluator: string): string | undefined {
+  const requirement = (entry.requirements ?? []).find(candidate => candidate.evaluator === evaluator)
+  return typeof requirement?.id === 'string' ? requirement.id : undefined
+}
+
 function hasTextContent(snapshot: InstanceSnapshot): boolean {
   return [...Object.keys(snapshot.properties), ...(snapshot.childNames ?? [])].some(name => {
     const normalized = normalizePropName(name)
@@ -66,6 +71,7 @@ export function evaluateAnatomy(
       severity: 'fail',
       nodeId: snapshot.nodeId,
       catalogId: entry.id,
+      requirementId: requirementId(entry, 'anatomy'),
       propName: 'label-or-icon',
       message: 'Button requires a visible text label unless it is an icon-only Button.'
     })
@@ -82,6 +88,7 @@ export function evaluateAnatomy(
       severity: 'info',
       nodeId: snapshot.nodeId,
       catalogId: entry.id,
+      requirementId: requirementId(entry, 'parity'),
       propName: stateId,
       message:
         typeof reference === 'string'

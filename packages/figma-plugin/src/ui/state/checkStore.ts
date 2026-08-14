@@ -182,6 +182,9 @@ export function reportForFocus(
   return {
     instances,
     findings,
+    healthByCatalog: report.healthByCatalog[focus.catalogId]
+      ? { [focus.catalogId]: report.healthByCatalog[focus.catalogId] }
+      : {},
     summary: summarizeInstances(instances),
   };
 }

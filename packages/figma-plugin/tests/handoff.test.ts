@@ -4,6 +4,18 @@ import { buildJiraIssueUrl } from "../src/ui/lib/issueLinks";
 import type { CheckReport } from "../src/core/check";
 
 const report: CheckReport = {
+  healthByCatalog: {
+    "canary.button": {
+      catalogId: "canary.button",
+      score: 92,
+      status: "healthy",
+      blocked: false,
+      blockers: [],
+      evaluationCoverage: 87,
+      automationCoverage: 80,
+      dimensions: [],
+    },
+  },
   findings: [
     {
       code: "FAIL_SHARED_VALUE",
@@ -41,6 +53,8 @@ describe("buildHandoffPack", () => {
     expect(md).toContain("canary.button");
     expect(md).toContain('Add variant "subtle"');
     expect(md).toContain("https://www.figma.com/design/ABC");
+    expect(md).toContain("canary.button: 92/100 healthy");
+    expect(md).toContain("evidence 87%, automated 80%");
   });
 
   it("lists keys for anything not in the catalog", () => {

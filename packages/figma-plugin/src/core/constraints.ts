@@ -15,6 +15,11 @@ type Migration = {
   instructions?: unknown
 }
 
+function requirementId(entry: CatalogEntry): string | undefined {
+  const requirement = (entry.requirements ?? []).find(candidate => candidate.evaluator === 'constraint')
+  return typeof requirement?.id === 'string' ? requirement.id : undefined
+}
+
 function matchesRule(values: Record<string, CanonicalValue>, rule: ConstraintRule): boolean {
   return Object.entries(rule.conditions).every(([dimension, allowed]) =>
     allowed.some(candidate => candidate === values[dimension])
@@ -39,6 +44,7 @@ export function evaluateConstraints(
           severity: 'fail',
           nodeId,
           catalogId: entry.id,
+          requirementId: requirementId(entry),
           expected: missing,
           message: `Cannot evaluate the approved combination because ${missing.join(', ')} could not be resolved from Figma.`
         }
@@ -56,6 +62,7 @@ export function evaluateConstraints(
           severity: 'fail',
           nodeId,
           catalogId: entry.id,
+          requirementId: requirementId(entry),
           message:
             matches.length === 0
               ? 'This combination is not covered by the exhaustive contract matrix.'
@@ -80,6 +87,7 @@ export function evaluateConstraints(
           severity: 'warn',
           nodeId,
           catalogId: entry.id,
+          requirementId: rule.requirementId ?? requirementId(entry),
           propName: rule.id,
           message: `${rule.description}${instructions}`
         }
@@ -96,6 +104,7 @@ export function evaluateConstraints(
         severity: 'fail',
         nodeId,
         catalogId: entry.id,
+        requirementId: rule.requirementId ?? requirementId(entry),
         propName: rule.id,
         message: rule.description
       }

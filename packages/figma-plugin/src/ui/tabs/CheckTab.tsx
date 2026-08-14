@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState } from "preact/hooks";
 import type { CheckReport, InstanceResult } from "../../core/check";
+import type { ComponentHealth, HealthStatus } from "../../core/health";
 import type { Finding } from "../../core/types";
 import {
   componentDisplayName,
@@ -483,6 +484,7 @@ function Summary({ report }: { report: CheckReport }) {
 
   return (
     <div class="ds-summary" aria-label="Check summary">
+      <HealthSummary healthByCatalog={report.healthByCatalog} />
       <ul class="ds-summary-counts">
         {counts.map((c) => (
           <li
@@ -497,6 +499,41 @@ function Summary({ report }: { report: CheckReport }) {
       <p class="ds-summary-meta">
         {s.unmapped} not in catalog · {s.mappedCount}/{s.instanceCount} mapped
       </p>
+    </div>
+  );
+}
+
+function healthStatusLabel(status: HealthStatus): string {
+  if (status === "needsAttention") return "Needs attention";
+  if (status === "atRisk") return "At risk";
+  return status.charAt(0).toUpperCase() + status.slice(1);
+}
+
+export function HealthSummary({
+  healthByCatalog,
+}: {
+  healthByCatalog: Record<string, ComponentHealth>;
+}) {
+  const healthEntries = Object.values(healthByCatalog);
+  if (healthEntries.length === 0) return null;
+
+  return (
+    <div class="ds-health-list" aria-label="Component health">
+      {healthEntries.map((health) => (
+        <div
+          key={health.catalogId}
+          class={`ds-health ds-health-${health.status}`}
+        >
+          <div class="ds-health-score">
+            <strong>{health.score}/100</strong>
+            <span>{healthStatusLabel(health.status)}</span>
+          </div>
+          <div class="ds-health-coverage">
+            {health.evaluationCoverage}% evidence · {health.automationCoverage}%
+            automated
+          </div>
+        </div>
+      ))}
     </div>
   );
 }

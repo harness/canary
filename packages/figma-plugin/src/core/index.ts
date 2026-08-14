@@ -21,6 +21,8 @@ export { evaluateAnatomy, findAnatomyControl } from './anatomy.js'
 
 export { evaluateConstraints, type ConstraintEvaluation, type ConstraintStatus } from './constraints.js'
 
+export { scoreComponentHealth, type ComponentHealth, type HealthDimension, type HealthStatus } from './health.js'
+
 export { buildIndex, matchComponent, normalizeComponentName, type CatalogIndex, type MatchResult } from './match.js'
 
 export { loadCatalogIndex } from './index-loader.js'

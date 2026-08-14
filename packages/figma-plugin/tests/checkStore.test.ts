@@ -156,6 +156,28 @@ describe("summaryLine", () => {
 
 describe("reportForFocus", () => {
   const mixed = {
+    healthByCatalog: {
+      "canary.badge": {
+        catalogId: "canary.badge",
+        score: 86,
+        status: "needsAttention",
+        blocked: false,
+        blockers: [],
+        evaluationCoverage: 75,
+        automationCoverage: 50,
+        dimensions: [],
+      },
+      "canary.button": {
+        catalogId: "canary.button",
+        score: 92,
+        status: "healthy",
+        blocked: false,
+        blockers: [],
+        evaluationCoverage: 87,
+        automationCoverage: 80,
+        dimensions: [],
+      },
+    },
     summary: {
       instanceCount: 2,
       mappedCount: 1,
@@ -207,6 +229,9 @@ describe("reportForFocus", () => {
       mappedCount: 1,
       unmapped: 0,
       pass: 1,
+    });
+    expect(focused.healthByCatalog).toEqual({
+      "canary.badge": mixed.healthByCatalog["canary.badge"],
     });
   });
 });

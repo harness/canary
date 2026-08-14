@@ -472,5 +472,34 @@ describe('checkInstances', () => {
     expect(report.summary.mappedCount).toBe(1)
     expect(report.summary.pass).toBe(1)
     expect(report.instances[0]?.ok).toBe(true)
+    expect(report.healthByCatalog['canary.button']).toMatchObject({
+      score: 92,
+      status: 'healthy',
+      evaluationCoverage: 87,
+      automationCoverage: 80
+    })
+  })
+
+  it('blocks component health when a live critical Button rule fails', () => {
+    const report = checkInstances(
+      [
+        snap({
+          componentSetName: '❖Button/Md/Text',
+          properties: {
+            variant: 'ai',
+            theme: 'danger',
+            'button text#37:10': 'Generate'
+          }
+        })
+      ],
+      index,
+      { treatMissingLibraryFlagAs: 'ignore' }
+    )
+
+    expect(report.healthByCatalog['canary.button']).toMatchObject({
+      status: 'blocked',
+      blocked: true,
+      blockers: ['button.supported-combination']
+    })
   })
 })

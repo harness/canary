@@ -2,6 +2,7 @@ import type { CatalogEntry, CatalogProp } from '../schema/schema.js'
 import { evaluateAnatomy, findAnatomyControl } from './anatomy.js'
 import { canonicalizeSnapshot } from './canonical.js'
 import { evaluateConstraints } from './constraints.js'
+import { scoreComponentHealth, type ComponentHealth } from './health.js'
 import { componentDisplayName, matchComponent, type CatalogIndex } from './match.js'
 import { normalizeFigmaValue, normalizePropName } from './normalize.js'
 import { suggestClosestValue } from './suggest.js'
@@ -29,6 +30,7 @@ export type InstanceResult = {
 export type CheckReport = {
   findings: Finding[]
   instances: InstanceResult[]
+  healthByCatalog: Record<string, ComponentHealth>
   summary: {
     pass: number
     fail: number
@@ -45,6 +47,11 @@ const DEFAULT_OPTS: CheckOptions = {
   treatMissingLibraryFlagAs: 'ignore',
   strictUnmapped: false,
   unmappedNamePrefixes: ['❖']
+}
+
+function requirementId(entry: CatalogEntry, evaluator: string): string | undefined {
+  const requirement = (entry.requirements ?? []).find(candidate => candidate.evaluator === evaluator)
+  return typeof requirement?.id === 'string' ? requirement.id : undefined
 }
 
 function findProp(list: CatalogProp[], figmaName: string): CatalogProp | undefined {
@@ -108,6 +115,7 @@ export function checkInstance(
       severity: 'fail',
       nodeId: snapshot.nodeId,
       catalogId: entry.id,
+      requirementId: requirementId(entry, 'libraryIdentity'),
       message: detachedMessage(snapshot, entry)
     })
   } else if (snapshot.isFromLibrary === null && opts.treatMissingLibraryFlagAs === 'warn') {
@@ -174,6 +182,7 @@ export function checkInstance(
             severity: 'fail',
             nodeId: snapshot.nodeId,
             catalogId: entry.id,
+            requirementId: requirementId(entry, 'propertyValues'),
             propName: shared.name,
             actual: actualString(normalized),
             expected: shared.values,
@@ -204,6 +213,7 @@ export function checkInstance(
         severity: 'info',
         nodeId: snapshot.nodeId,
         catalogId: entry.id,
+        requirementId: requirementId(entry, 'parity'),
         propName: anatomyId,
         actual: actualString(rawValue),
         message: `Figma anatomy control "${anatomyId}" maps to React composition, not a standalone prop.`,
@@ -220,6 +230,7 @@ export function checkInstance(
       severity: 'fail',
       nodeId: snapshot.nodeId,
       catalogId: entry.id,
+      requirementId: requirementId(entry, 'propertyValues'),
       propName: displayName,
       actual: actualString(rawValue),
       message: `Figma property "${rawName}" is not in shared or designOnly for ${entry.id}.`,
@@ -309,6 +320,7 @@ export function checkInstances(
   const instances: InstanceResult[] = []
   const allFindings: Finding[] = []
   const reported = new Set<string>()
+  const entriesByCatalog = new Map<string, CatalogEntry>()
   let mappedCount = 0
   let pass = 0
   let fail = 0
@@ -336,6 +348,7 @@ export function checkInstances(
     }
 
     mappedCount += 1
+    entriesByCatalog.set(match.entry.id, match.entry)
     const result = checkInstance(snapshot, match.entry, opts, match.via)
     instances.push(result)
     allFindings.push(...result.findings)
@@ -350,9 +363,20 @@ export function checkInstances(
     }
   }
 
+  const healthByCatalog = Object.fromEntries(
+    [...entriesByCatalog.entries()].map(([catalogId, entry]) => [
+      catalogId,
+      scoreComponentHealth(
+        entry,
+        allFindings.filter(finding => finding.catalogId === catalogId)
+      )
+    ])
+  )
+
   return {
     findings: allFindings,
     instances,
+    healthByCatalog,
     summary: {
       pass,
       fail,

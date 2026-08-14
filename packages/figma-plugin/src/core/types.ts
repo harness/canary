@@ -78,6 +78,7 @@ export type Finding = {
   propName?: string
   actual?: string
   expected?: string[]
+  requirementId?: string
   message: string
   bindingHint?: string
   proposeDefaults?: Partial<ProposalDraft>

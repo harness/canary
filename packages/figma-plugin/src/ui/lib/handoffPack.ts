@@ -27,6 +27,13 @@ export function buildHandoffPack(input: HandoffInput): string {
     input.openProposalTitles && input.openProposalTitles.length > 0
       ? input.openProposalTitles.map((t) => `- ${t}`)
       : ["- (none yet — use Propose on a failure)"];
+  const healthLines = Object.values(report.healthByCatalog).map((health) => {
+    const blockers =
+      health.blockers.length > 0
+        ? ` — blockers: ${health.blockers.join(", ")}`
+        : "";
+    return `- ${health.catalogId}: ${health.score}/100 ${health.status} — evidence ${health.evaluationCoverage}%, automated ${health.automationCoverage}%${blockers}`;
+  });
 
   // Keys and names of anything the catalog could not identify: the one piece of
   // live-file data a catalog maintainer needs to add the missing mapping.
@@ -48,6 +55,9 @@ export function buildHandoffPack(input: HandoffInput): string {
     `- Result: ${result}`,
     `- Instances: ${report.summary.instanceCount} (mapped ${report.summary.mappedCount}, not in catalog ${report.summary.unmapped})`,
     `- Figma: ${figmaUrl ?? "—"}`,
+    "",
+    "### Component health",
+    ...(healthLines.length > 0 ? healthLines : ["- (not available)"]),
     "",
     "### Failures",
     ...failureLines,

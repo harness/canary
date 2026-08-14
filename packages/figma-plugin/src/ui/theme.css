@@ -843,6 +843,51 @@ a {
   margin: 0 0 var(--sp-4);
 }
 
+.ds-health-list {
+  display: grid;
+  gap: var(--sp-2);
+  margin: 0 0 var(--sp-3);
+}
+
+.ds-health {
+  padding: var(--sp-3);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  background: var(--surface-subtle);
+}
+
+.ds-health-score {
+  display: flex;
+  align-items: baseline;
+  gap: var(--sp-2);
+  color: var(--text);
+  font-size: var(--fs-meta);
+}
+
+.ds-health-score strong {
+  font-size: var(--fs-body);
+  font-variant-numeric: tabular-nums;
+}
+
+.ds-health-healthy .ds-health-score strong {
+  color: var(--ok);
+}
+
+.ds-health-blocked .ds-health-score strong,
+.ds-health-atRisk .ds-health-score strong {
+  color: var(--fail);
+}
+
+.ds-health-needsAttention .ds-health-score strong {
+  color: var(--warn);
+}
+
+.ds-health-coverage {
+  margin-top: 2px;
+  color: var(--text-secondary);
+  font-size: var(--fs-meta);
+}
+
 .ds-summary-counts {
   display: flex;
   flex-wrap: wrap;

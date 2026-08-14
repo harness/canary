@@ -1,6 +1,6 @@
 {
   "schemaVersion": "0.3.0",
-  "contractVersion": "0.6.2",
+  "contractVersion": "0.6.3",
   "id": "canary.button",
   "status": "piloting",
   "surfaces": ["figma", "code"],
@@ -175,6 +175,14 @@
         "figmaProperty": "suffix icon#1687:61",
         "figmaPropertyAliases": ["↳ suffix"],
         "mapsTo": "An IconV2 child after the text label"
+      },
+      {
+        "name": "tooltip",
+        "type": "boolean",
+        "default": false,
+        "description": "Previews whether an icon-only Button includes its required tooltip composition. Figma does not author production tooltip content.",
+        "figmaProperty": "tooltip",
+        "mapsTo": "ButtonProps.tooltipProps when true; ButtonProps.ignoreIconOnlyTooltip when false"
       },
       {
         "name": "previewState",

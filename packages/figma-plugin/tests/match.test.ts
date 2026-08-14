@@ -163,6 +163,21 @@ describe("variant-set library instances", () => {
     }
   });
 
+  it("matches Figma hierarchy names with spaces around separators", () => {
+    const result = matchComponent(
+      variantInstance({
+        componentSetKey: "unpublished-key",
+        componentSetName: "❖ button / sm / text",
+      }),
+      index,
+    );
+    expect(result.status).toBe("matched");
+    if (result.status === "matched") {
+      expect(result.via).toBe("name");
+      expect(result.entry.id).toBe("canary.button");
+    }
+  });
+
   it("falls back to the layer name when the set is unreachable", () => {
     const result = matchComponent(
       variantInstance({ componentSetKey: null, componentSetName: null }),

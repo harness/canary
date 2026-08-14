@@ -22,7 +22,7 @@
 Only when **you** choose:
 
 - **Copy markdown / handoff** → your clipboard
-- **Open GitHub issue** → browser with title/body you authored
+- **Open Jira issue** → browser with the summary and description you authored
 
 ## Questions
 

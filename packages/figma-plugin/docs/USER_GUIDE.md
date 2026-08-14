@@ -12,7 +12,7 @@ Check Figma work against the Canary catalog. Flag illegal shared values, explain
 | **Check** | Scan the **selection** or **current page**. Finds illegal shared values, unknown props, and detached or local copies of library components. designOnly controls show as info. |
 | **Propose** | Draft a Path P proposal from a Check failure, or start blank. Copy markdown or open an issue link. |
 | **Catalog** | Browse legal **shared**, **designOnly**, and **codeOnly** for packed contracts (currently Button). |
-| **Settings** | Catalog source, GitHub issue destination, author defaults, strict `❖` unmapped mode, reset onboarding. |
+| **Settings** | Catalog source, Jira issue destination, author defaults, strict `❖` unmapped mode, reset onboarding. |
 
 ## Shared vs designOnly
 
@@ -41,8 +41,8 @@ Large pages yield progress every ~50 instances (see `scripts/gen-stress-notes.md
 
 1. From a failure, click **Propose**, or open the Propose tab blank.
 2. Fill **Title**, **Type**, **Problem**, **Attempted workaround**, **Requested change** (required).
-3. **Copy markdown** — always works; paste into GitHub, a Harness ticket, or `PROPOSAL.md`.
-4. Optional: **Open GitHub issue** if a repository is configured in Settings.
+3. **Copy markdown** — always works; paste into Jira or `PROPOSAL.md`.
+4. Optional: **Open Jira issue** using the destination configured in Settings.
 
 ### Maintainer responses (plugin does not auto-merge)
 

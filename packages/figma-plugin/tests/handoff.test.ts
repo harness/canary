@@ -1,8 +1,6 @@
 import { describe, it, expect } from "vitest";
 import { buildHandoffPack } from "../src/ui/lib/handoffPack";
-import {
-  buildGitHubIssueUrl,
-} from "../src/ui/lib/issueLinks";
+import { buildJiraIssueUrl } from "../src/ui/lib/issueLinks";
 import type { CheckReport } from "../src/core/check";
 
 const report: CheckReport = {
@@ -80,15 +78,26 @@ describe("buildHandoffPack", () => {
 });
 
 describe("issueLinks", () => {
-  it("builds GitHub issue URL", () => {
-    const { url, bodyTruncated } = buildGitHubIssueUrl({
-      repo: "harness/canary",
-      title: "Proposal",
-      body: "hello",
-      labels: "ds-contracts",
+  it("builds a prefilled Harness Jira issue URL", () => {
+    const { url, descriptionTruncated } = buildJiraIssueUrl({
+      siteUrl: "https://harness.atlassian.net/",
+      projectId: "11439",
+      issueTypeId: "10309",
+      summary: "Proposal",
+      description: "hello",
+      labels: "ds-contracts, proposal",
     });
-    expect(bodyTruncated).toBe(false);
-    expect(url).toContain("https://github.com/harness/canary/issues/new");
-    expect(url).toContain("title=Proposal");
+    expect(descriptionTruncated).toBe(false);
+    expect(url).toContain(
+      "https://harness.atlassian.net/secure/CreateIssueDetails!init.jspa",
+    );
+    expect(url).toContain("pid=11439");
+    expect(url).toContain("issuetype=10309");
+    expect(url).toContain("summary=Proposal");
+    expect(url).toContain("description=hello");
+    expect(new URL(url).searchParams.getAll("labels")).toEqual([
+      "ds-contracts",
+      "proposal",
+    ]);
   });
 });

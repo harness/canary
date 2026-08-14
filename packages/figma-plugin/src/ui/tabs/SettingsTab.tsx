@@ -1,5 +1,4 @@
 import type { SettingsState } from "../../catalog/clientStorage";
-import { AUTHOR_PERSONAS } from "../../catalog/clientStorage";
 import { Button } from "../components/Button";
 
 type CatalogStatus = {
@@ -80,21 +79,47 @@ export function SettingsTab({
 
       <h3 class="ds-group-title">Issues</h3>
       <div class="ds-field ds-field-row">
-        <label for="s-gh">GitHub repo (org/repo)</label>
+        <label for="s-jira-site">Jira site</label>
         <input
-          id="s-gh"
-          value={settings.githubRepo}
-          placeholder="harness/canary"
-          onInput={(e) => set("githubRepo", (e.target as HTMLInputElement).value)}
+          id="s-jira-site"
+          value={settings.jiraBaseUrl}
+          placeholder="https://harness.atlassian.net"
+          onInput={(e) =>
+            set("jiraBaseUrl", (e.target as HTMLInputElement).value)
+          }
         />
       </div>
       <div class="ds-field ds-field-row">
-        <label for="s-labels">GitHub labels</label>
+        <label for="s-jira-project">Jira project ID</label>
         <input
-          id="s-labels"
-          value={settings.githubLabels}
+          id="s-jira-project"
+          value={settings.jiraProjectId}
+          placeholder="11439"
           onInput={(e) =>
-            set("githubLabels", (e.target as HTMLInputElement).value)
+            set("jiraProjectId", (e.target as HTMLInputElement).value)
+          }
+        />
+        <span class="hint">Canary default: XD · Experience Design</span>
+      </div>
+      <div class="ds-field ds-field-row">
+        <label for="s-jira-type">Jira issue type ID</label>
+        <input
+          id="s-jira-type"
+          value={settings.jiraIssueTypeId}
+          placeholder="10309"
+          onInput={(e) =>
+            set("jiraIssueTypeId", (e.target as HTMLInputElement).value)
+          }
+        />
+        <span class="hint">Canary default: UX Design</span>
+      </div>
+      <div class="ds-field ds-field-row">
+        <label for="s-jira-labels">Jira labels</label>
+        <input
+          id="s-jira-labels"
+          value={settings.jiraLabels}
+          onInput={(e) =>
+            set("jiraLabels", (e.target as HTMLInputElement).value)
           }
         />
       </div>
@@ -107,22 +132,6 @@ export function SettingsTab({
           value={settings.authorName}
           onInput={(e) => set("authorName", (e.target as HTMLInputElement).value)}
         />
-      </div>
-      <div class="ds-field ds-field-row">
-        <label for="s-persona">Persona</label>
-        <select
-          id="s-persona"
-          value={settings.authorPersona}
-          onChange={(e) =>
-            set("authorPersona", (e.target as HTMLSelectElement).value)
-          }
-        >
-          {AUTHOR_PERSONAS.map((p) => (
-            <option key={p} value={p}>
-              {p}
-            </option>
-          ))}
-        </select>
       </div>
 
       <h3 class="ds-group-title">Strictness</h3>

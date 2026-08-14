@@ -25,7 +25,6 @@ describe("proposalToMarkdown", () => {
       acceptanceSuggestion:
         "Catalog shared.values includes subtle; Code Connect maps; Figma variant option ships.",
       authorName: "Alex Designer",
-      authorPersona: "Figma designer",
       figmaFileKey: "AIgjIyUzcuZzuVnuoOyhQE",
       figmaNodeId: "10:20",
       figmaUrl: "https://www.figma.com/design/AIgjIyUzcuZzuVnuoOyhQE?node-id=10-20",
@@ -67,7 +66,7 @@ describe("proposalToMarkdown", () => {
       Catalog shared.values includes subtle; Code Connect maps; Figma variant option ships.
 
       ## Author
-      Alex Designer / Figma designer
+      Alex Designer
       Link to branch / Figma frame
       https://www.figma.com/design/AIgjIyUzcuZzuVnuoOyhQE?node-id=10-20
       Catalog: canary.button
@@ -95,7 +94,6 @@ describe("findingToProposalDefaults", () => {
 
     const defaults = findingToProposalDefaults(finding, {
       authorName: "Alex",
-      authorPersona: "Figma designer",
       figmaFileKey: "FILEKEY",
       fileName: "HDS",
       pageName: "Page 1",

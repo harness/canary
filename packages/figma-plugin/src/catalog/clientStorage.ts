@@ -10,43 +10,21 @@ export const STORAGE_KEYS = {
 export type SettingsState = {
   catalogSource: "bundled" | "url";
   manifestUrl: string;
-  githubRepo: string;
-  githubLabels: string;
+  jiraBaseUrl: string;
+  jiraProjectId: string;
+  jiraIssueTypeId: string;
+  jiraLabels: string;
   authorName: string;
-  authorPersona: string;
   strictUnmapped: boolean;
 };
-
-/** Path P author personas — matches 05-contribution-and-standards-check.md §5. */
-export const AUTHOR_PERSONAS = [
-  "Figma designer",
-  "Cursor designer",
-  "PM",
-  "Marketing",
-  "Engineer",
-] as const;
-
-export type AuthorPersona = (typeof AUTHOR_PERSONAS)[number];
-
-const PERSONA_ALIASES: Record<string, AuthorPersona> = {
-  "marketing Track A": "Marketing",
-  eng: "Engineer",
-};
-
-export function normalizeAuthorPersona(value: string | undefined): AuthorPersona {
-  if (!value) return "Figma designer";
-  if ((AUTHOR_PERSONAS as readonly string[]).includes(value)) {
-    return value as AuthorPersona;
-  }
-  return PERSONA_ALIASES[value] ?? "Figma designer";
-}
 
 export const DEFAULT_SETTINGS: SettingsState = {
   catalogSource: "bundled",
   manifestUrl: "",
-  githubRepo: "harness/canary",
-  githubLabels: "ds-contracts,proposal",
+  jiraBaseUrl: "https://harness.atlassian.net",
+  jiraProjectId: "11439",
+  jiraIssueTypeId: "10309",
+  jiraLabels: "ds-contracts,proposal",
   authorName: "",
-  authorPersona: "Figma designer",
   strictUnmapped: false,
 };

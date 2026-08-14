@@ -22,8 +22,5 @@ export { loadBundledCatalog, loadCatalogPackSync } from "./bundled.js";
 export {
   STORAGE_KEYS,
   DEFAULT_SETTINGS,
-  AUTHOR_PERSONAS,
-  normalizeAuthorPersona,
   type SettingsState,
-  type AuthorPersona,
 } from "./clientStorage.js";

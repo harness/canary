@@ -92,7 +92,7 @@ pnpm catalogs:pack   # compiles contracts → catalogs/canary/*.json
 
 ## Privacy / network
 
-`allowedDomains` permits GitHub issue links plus optional remote catalogs hosted on GitHub or Harness domains. Ordinary checks use the bundled catalog and make no network request. Any other remote catalog host must be explicitly added to `manifest.json` before use.
+`allowedDomains` permits Jira issue links plus optional remote catalogs hosted on GitHub or Harness domains. Ordinary checks use the bundled catalog and make no network request. Any other remote catalog host must be explicitly added to `manifest.json` before use.
 
 ## Layout
 

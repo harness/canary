@@ -2,7 +2,6 @@ import type { Finding, ProposalDraft, ProposalType } from "./types.js";
 
 export type ProposalContext = {
   authorName: string;
-  authorPersona: string;
   figmaFileKey?: string;
   fileName?: string;
   pageName?: string;
@@ -68,7 +67,7 @@ export function proposalToMarkdown(draft: ProposalDraft): string {
   const acceptance = draft.acceptanceSuggestion?.trim() || "—";
 
   const authorLines = [
-    `${draft.authorName} / ${draft.authorPersona}`,
+    draft.authorName.trim() || "—",
     "Link to branch / Figma frame",
     draft.figmaUrl?.trim() || "—",
   ];
@@ -172,7 +171,6 @@ export function findingToProposalDefaults(
       "Figma library",
     ],
     authorName: ctx.authorName,
-    authorPersona: ctx.authorPersona,
     figmaFileKey: ctx.figmaFileKey,
     figmaNodeId: finding.nodeId,
     figmaUrl,

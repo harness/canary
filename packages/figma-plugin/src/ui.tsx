@@ -17,7 +17,6 @@ import { loadBundledCatalog } from "./catalog/bundled";
 import {
   DEFAULT_SETTINGS,
   STORAGE_KEYS,
-  normalizeAuthorPersona,
   type SettingsState,
 } from "./catalog/clientStorage";
 import {
@@ -208,12 +207,21 @@ function App() {
         setShowOnboarding(!done);
         const saved = await storageGet<SettingsState>(STORAGE_KEYS.settings);
         if (saved) {
+          const savedWithoutPersona = { ...saved } as Partial<SettingsState> & {
+            authorPersona?: string;
+          };
+          delete savedWithoutPersona.authorPersona;
           const merged = {
             ...DEFAULT_SETTINGS,
-            ...saved,
-            authorPersona: normalizeAuthorPersona(saved.authorPersona),
-            githubRepo:
-              saved.githubRepo?.trim() || DEFAULT_SETTINGS.githubRepo,
+            ...savedWithoutPersona,
+            jiraBaseUrl:
+              saved.jiraBaseUrl?.trim() || DEFAULT_SETTINGS.jiraBaseUrl,
+            jiraProjectId:
+              saved.jiraProjectId?.trim() || DEFAULT_SETTINGS.jiraProjectId,
+            jiraIssueTypeId:
+              saved.jiraIssueTypeId?.trim() || DEFAULT_SETTINGS.jiraIssueTypeId,
+            jiraLabels:
+              saved.jiraLabels?.trim() || DEFAULT_SETTINGS.jiraLabels,
           };
           setSettings(merged);
           setDraft(blankProposal(merged));
@@ -345,7 +353,6 @@ function App() {
   const proposeFromFinding = (finding: Finding) => {
     const ctx: ProposalContext = {
       authorName: settings.authorName || "Designer",
-      authorPersona: settings.authorPersona,
       figmaFileKey: check.fileKey ?? undefined,
       fileName: check.fileName,
       pageName: check.pageName,
@@ -365,7 +372,6 @@ function App() {
         "Figma library",
       ],
       authorName: defaults.authorName ?? settings.authorName,
-      authorPersona: defaults.authorPersona ?? settings.authorPersona,
     });
     setTab("propose");
   };

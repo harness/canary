@@ -24,6 +24,8 @@ type StateDefinition = {
   bindings?: { figma?: { reference?: unknown } }
 }
 
+const anatomyControlCache = new WeakMap<CatalogEntry, Map<string, AnatomyPart>>()
+
 function requirementId(entry: CatalogEntry, evaluator: string): string | undefined {
   const requirement = (entry.requirements ?? []).find(candidate => candidate.evaluator === evaluator)
   return typeof requirement?.id === 'string' ? requirement.id : undefined
@@ -37,20 +39,24 @@ function hasTextContent(snapshot: InstanceSnapshot): boolean {
 }
 
 export function findAnatomyControl(entry: CatalogEntry, rawName: string): AnatomyPart | undefined {
-  const normalizedName = normalizePropName(rawName)
-  return (entry.anatomy ?? [])
-    .map(part => part as AnatomyPart)
-    .find(part => {
+  let controls = anatomyControlCache.get(entry)
+  if (!controls) {
+    controls = new Map<string, AnatomyPart>()
+    for (const rawPart of entry.anatomy ?? []) {
+      const part = rawPart as AnatomyPart
       const figma = part.bindings?.figma
-      if (figma?.kind !== 'property') return false
+      if (figma?.kind !== 'property') continue
       const aliases = Array.isArray(figma.aliases)
         ? figma.aliases.filter((alias): alias is string => typeof alias === 'string')
         : []
       const candidates = [typeof figma.property === 'string' ? figma.property : undefined, ...aliases].filter(
         (candidate): candidate is string => Boolean(candidate)
       )
-      return candidates.some(candidate => normalizePropName(candidate) === normalizedName)
-    })
+      for (const candidate of candidates) controls.set(normalizePropName(candidate), part)
+    }
+    anatomyControlCache.set(entry, controls)
+  }
+  return controls.get(normalizePropName(rawName))
 }
 
 export function evaluateAnatomy(

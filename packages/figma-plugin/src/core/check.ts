@@ -49,19 +49,26 @@ const DEFAULT_OPTS: CheckOptions = {
   unmappedNamePrefixes: ['❖']
 }
 
+const propIndexCache = new WeakMap<CatalogProp[], Map<string, CatalogProp>>()
+
 function requirementId(entry: CatalogEntry, evaluator: string): string | undefined {
   const requirement = (entry.requirements ?? []).find(candidate => candidate.evaluator === evaluator)
   return typeof requirement?.id === 'string' ? requirement.id : undefined
 }
 
 function findProp(list: CatalogProp[], figmaName: string): CatalogProp | undefined {
+  let index = propIndexCache.get(list)
+  if (!index) {
+    index = new Map<string, CatalogProp>()
+    for (const prop of list) {
+      for (const candidate of [prop.name, prop.figmaProperty, ...(prop.figmaPropertyAliases ?? [])]) {
+        if (candidate) index.set(normalizePropName(candidate), prop)
+      }
+    }
+    propIndexCache.set(list, index)
+  }
   const norm = normalizePropName(figmaName)
-  return list.find(p => {
-    const candidates = [p.name, p.figmaProperty, ...(p.figmaPropertyAliases ?? [])]
-      .filter(Boolean)
-      .map(n => normalizePropName(String(n)))
-    return candidates.includes(norm)
-  })
+  return index.get(norm)
 }
 
 function actualString(value: string | boolean | number): string {

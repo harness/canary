@@ -10,20 +10,39 @@ export type CanonicalSnapshot = {
   sources: Record<string, CanonicalValueSource>
 }
 
-function findPropertyValue(snapshot: InstanceSnapshot, property: CatalogProp): string | boolean | number | undefined {
-  const binding = property.figmaBinding
-  const candidates = [
-    property.name,
-    binding?.kind === 'property' ? binding.property : undefined,
-    ...(binding?.kind === 'property' ? (binding.aliases ?? []) : []),
-    property.figmaProperty,
-    ...(property.figmaPropertyAliases ?? [])
-  ]
-    .filter((candidate): candidate is string => Boolean(candidate))
-    .map(normalizePropName)
+const propertyCandidateCache = new WeakMap<CatalogEntry, Map<string, string[]>>()
 
-  for (const [rawName, rawValue] of Object.entries(snapshot.properties)) {
-    if (candidates.includes(normalizePropName(rawName))) return rawValue
+function propertyCandidates(entry: CatalogEntry): Map<string, string[]> {
+  const cached = propertyCandidateCache.get(entry)
+  if (cached) return cached
+
+  const candidates = new Map<string, string[]>()
+  for (const property of entry.shared) {
+    const binding = property.figmaBinding
+    candidates.set(
+      property.name,
+      [
+        property.name,
+        binding?.kind === 'property' ? binding.property : undefined,
+        ...(binding?.kind === 'property' ? (binding.aliases ?? []) : []),
+        property.figmaProperty,
+        ...(property.figmaPropertyAliases ?? [])
+      ]
+        .filter((candidate): candidate is string => Boolean(candidate))
+        .map(normalizePropName)
+    )
+  }
+  propertyCandidateCache.set(entry, candidates)
+  return candidates
+}
+
+function findPropertyValue(
+  normalizedProperties: Map<string, string | boolean | number>,
+  candidates: string[]
+): string | boolean | number | undefined {
+  for (const candidate of candidates) {
+    const rawValue = normalizedProperties.get(candidate)
+    if (rawValue !== undefined) return rawValue
   }
   return undefined
 }
@@ -44,6 +63,10 @@ function componentNameValue(snapshot: InstanceSnapshot, property: CatalogProp): 
 export function canonicalizeSnapshot(snapshot: InstanceSnapshot, entry: CatalogEntry): CanonicalSnapshot {
   const values: Record<string, CanonicalValue> = {}
   const sources: Record<string, CanonicalValueSource> = {}
+  const candidatesByProperty = propertyCandidates(entry)
+  const normalizedProperties = new Map(
+    Object.entries(snapshot.properties).map(([name, value]) => [normalizePropName(name), value])
+  )
 
   for (const property of entry.shared) {
     const binding = property.figmaBinding
@@ -58,7 +81,7 @@ export function canonicalizeSnapshot(snapshot: InstanceSnapshot, entry: CatalogE
       }
     }
 
-    const rawValue = findPropertyValue(snapshot, property)
+    const rawValue = findPropertyValue(normalizedProperties, candidatesByProperty.get(property.name) ?? [])
     if (rawValue !== undefined) {
       values[property.name] = normalizeFigmaValue(rawValue, property)
       sources[property.name] = 'property'

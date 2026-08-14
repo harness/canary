@@ -104,7 +104,7 @@ The Fieldset contract should specify correct semantics before its status advance
 
 ## Button contract vertical slice
 
-Button now has the first complete piloting contract and validator. It combines the React API, Portal documentation, tests, Code Connect, the earlier contract PoC, and direct Figma audits into one structured evaluation target.
+Button now has the first complete stable contract and validator. It combines the React API, Portal documentation, tests, Code Connect, the earlier contract PoC, and direct Figma audits into one structured evaluation target.
 
 The Figma identity is verified:
 
@@ -113,7 +113,7 @@ The Figma identity is verified:
 - The inventory entry is `mapped`, and the contract's Figma mapping is `verified`.
 - All published Button components use horizontal Auto Layout, have variable bindings, and expose disabled and loading states.
 
-The approved policy is reconciled across the live Figma source and code, so the contract has advanced to `piloting`:
+The approved policy is reconciled across the live Figma source and code, so the contract has advanced to `stable`:
 
 - The approved matrix excludes 2xs and 3xs. Production usages and the public Button API now use md, sm, and xs.
 - Focus is intentionally code-only. Code implements the required `:focus-visible` treatment, while design documentation provides one detached representative Figma specification rather than a published state variant.
@@ -123,9 +123,9 @@ The approved policy is reconciled across the live Figma source and code, so the 
 - Navigation semantics are approved: Button performs actions, including starting or advancing onboarding in place; Link navigates to destinations. The Button link variant changes appearance only, and Canary has no approved button-styled Link pattern.
 - A stable Figma-governed contract must have a verified mapping and at least one confirmed component key.
 
-The live Figma source was re-audited on August 14, 2026. The icon-only theme correction requires no Figma library change because all six published sets already expose default, success, and danger.
+The live Figma source was re-audited on August 14, 2026. The icon-only theme correction requires no Figma library change because all six published sets already expose default, success, and danger. All six icon-only Code Connect mappings were published, and Canary Copilot passed the six-component page audit with no failures or warnings and a 100/100 health score.
 
-See `catalog/contracts/README.md` for the review checklist and `catalog/contracts/button.contract.json` for the evidence-backed piloting contract.
+See `catalog/contracts/README.md` for the review checklist and `catalog/contracts/button.contract.json` for the evidence-backed stable contract.
 
 ## Verification
 

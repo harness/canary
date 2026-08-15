@@ -10,6 +10,13 @@ export const SinglePaneStepper = {
 
 export { useFlowCard } from '../flow-stepper/engine/engine-context'
 
+export {
+  isGroupedFlowConfig,
+  isFlatFlowConfig,
+  isGroupedStepConfig,
+  isFlatStepConfig
+} from '../flow-stepper/engine/engine-types'
+
 export type {
   FlowConfig,
   GroupedFlowConfig,

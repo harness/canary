@@ -42,6 +42,14 @@ export interface FlatStepConfig extends BaseStepConfig {
 
 export type StepConfig = GroupedStepConfig | FlatStepConfig
 
+export function isGroupedStepConfig(step: StepConfig): step is GroupedStepConfig {
+  return step.step !== undefined
+}
+
+export function isFlatStepConfig(step: StepConfig): step is FlatStepConfig {
+  return step.step === undefined
+}
+
 export interface GroupedFlowConfig {
   stepGroups: Record<string, StepGroupConfig>
   steps: Record<string, GroupedStepConfig>
@@ -55,6 +63,14 @@ export interface FlatFlowConfig {
 }
 
 export type FlowConfig = GroupedFlowConfig | FlatFlowConfig
+
+export function isGroupedFlowConfig(flow: FlowConfig): flow is GroupedFlowConfig {
+  return flow.stepGroups !== undefined
+}
+
+export function isFlatFlowConfig(flow: FlowConfig): flow is FlatFlowConfig {
+  return flow.stepGroups === undefined
+}
 
 export type CardStatus = 'active' | 'completed' | 'error' | 'skipped'
 

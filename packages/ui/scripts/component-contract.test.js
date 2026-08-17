@@ -196,6 +196,37 @@ test('rejects property names duplicated across contract surfaces', async () => {
   expect(result.errors).toContain('properties: property names must be unique across shared, designOnly, and codeOnly')
 })
 
+test('requires enum value guidance to cover every allowed value', async () => {
+  const { validateComponentContract } = await import('./component-contract.mjs')
+  const contract = completeDraftContract()
+  contract.properties.shared[0].valueGuidance = [
+    {
+      value: 'primary',
+      useWhen: ['The action is the highest priority.'],
+      avoidWhen: ['Another primary action already exists nearby.']
+    }
+  ]
+
+  const result = validateComponentContract(contract)
+
+  expect(result.success).toBe(false)
+  expect(result.errors).toContain(
+    'properties.shared.0.valueGuidance: value guidance must cover every allowed enum value'
+  )
+})
+
+test('documents when to use and avoid every Button variant', () => {
+  const contractPath = join(dirname(fileURLToPath(import.meta.url)), '../catalog/contracts/button.contract.json')
+  const contract = JSON.parse(readFileSync(contractPath, 'utf8'))
+  const variant = contract.properties.shared.find(property => property.name === 'variant')
+
+  expect(variant.valueGuidance.map(guidance => guidance.value)).toEqual(variant.values)
+  for (const guidance of variant.valueGuidance) {
+    expect(guidance.useWhen.length).toBeGreaterThan(0)
+    expect(guidance.avoidWhen.length).toBeGreaterThan(0)
+  }
+})
+
 test('requires verified Figma component keys before a contract can be stable', async () => {
   const { validateComponentContract } = await import('./component-contract.mjs')
   const contract = completeDraftContract()

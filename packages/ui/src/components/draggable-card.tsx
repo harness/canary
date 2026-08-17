@@ -66,7 +66,7 @@ export const DraggableCard = ({
     <>
       <div className={cn('flex w-full min-w-0 items-center gap-cn-xs', description && 'border-b pb-cn-md')}>
         {gripPosition === 'inside' ? grip : null}
-        {title}
+        <div className="min-w-0 flex-1 text-cn-1">{title}</div>
       </div>
       {description && <div className="mt-cn-md">{description}</div>}
     </>

@@ -70,10 +70,6 @@ The design system maps specific shadow levels to component categories:
           </td>
         </tr>
         <tr className="cn-table-v2-row">
-          <td className="cn-table-v2-cell">`shadow-cn-nav-rail`</td>
-          <td className="cn-table-v2-cell">App shell navigation rail panel</td>
-        </tr>
-        <tr className="cn-table-v2-row">
           <td className="cn-table-v2-cell">`shadow-cn-chat-rail`</td>
           <td className="cn-table-v2-cell">
             App shell chat panel (left of main content)
@@ -114,7 +110,6 @@ var(--cn-shadow-6)      /* maximum */
 var(--cn-shadow-inner)  /* inset */
 
 /* App shell rail shadows (component tokens) */
-var(--cn-comp-shadow-nav-rail)
 var(--cn-comp-shadow-chat-rail)
 var(--cn-comp-shadow-chat-rail-mirror)
 var(--cn-comp-shadow-pipeline-studio-page-header)
@@ -273,22 +268,14 @@ Seven levels (0–6) plus an inner shadow provide a complete elevation vocabular
 
 ## App shell rail shadows
 
-Component shadows for the unified app shell navigation and chat panels. Values are theme-aware (light: subtle lift; dark: `0 7px 8px` on `#000000` at 80% alpha).
+Component inner shadows for the unified app shell chat panel. Values are theme-aware (light: `4px 0 6px rgba(72, 78, 92, 0.10) inset`; dark: `8px -1px 7px rgba(0, 0, 0, 0.30) inset`).
 
-Use `shadow-cn-nav-rail` on the nav column shell and `shadow-cn-chat-rail` / `shadow-cn-chat-rail-mirror` on the chat panel shell based on chat position. Do not apply to seam overlays or resize handles.
+Use `shadow-cn-chat-rail` / `shadow-cn-chat-rail-mirror` on the chat panel shell based on chat position. Do not apply to seam overlays or resize handles.
 
 <DocsPage.ComponentExample
   hideCode
   client:only
   code={`<Layout.Horizontal gap="lg" className="min-w-[560px] p-cn-xl bg-cn-0">
-  <Layout.Vertical
-    gap="xs"
-    className="bg-cn-1 h-48 w-16 shrink-0 shadow-cn-nav-rail"
-    justify="center"
-    align="center"
-  >
-    <Text variant="caption-normal" color="foreground-3">Nav</Text>
-  </Layout.Vertical>
   <Layout.Vertical
     gap="xs"
     className="bg-cn-1 h-48 w-40 shrink-0 shadow-cn-chat-rail"

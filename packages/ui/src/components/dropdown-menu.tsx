@@ -477,7 +477,7 @@ const DropdownMenuIconItem = forwardRef<ElementRef<typeof DropdownMenuPrimitive.
     <DropdownMenuItem
       ref={ref}
       {...props}
-      prefix={<IconV2 name={icon} className={iconClassName} size={iconSize} fallback="stop" />}
+      prefix={<IconV2 name={icon} className={cn('text-cn-1', iconClassName)} size={iconSize} fallback="stop" />}
     />
   )
 )

@@ -1,5 +1,5 @@
 const baseTreeItemStyles = {
-  '@apply text-cn-2 font-body-normal': '',
+  '@apply text-cn-1 font-body-normal': '',
   minHeight: 'var(--cn-tree-item-height)',
   padding: 'var(--cn-tree-item-py) var(--cn-tree-item-pr) var(--cn-tree-item-py)'
 }
@@ -30,6 +30,10 @@ export default {
               ''
           }
         }
+      },
+
+      '&:disabled, &[aria-disabled="true"]': {
+        '@apply text-cn-disabled': ''
       },
 
       '&-leaf': {

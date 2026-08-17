@@ -40,7 +40,7 @@ export default {
     },
 
     '.cn-card-content': {
-      color: 'var(--cn-text-2)',
+      color: 'var(--cn-text-1)',
       '@apply font-body-normal': ''
     },
 

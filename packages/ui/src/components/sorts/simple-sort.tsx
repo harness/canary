@@ -18,7 +18,9 @@ export default function SimpleSort(props: SimpleSortProps) {
       <DropdownMenu.Trigger asChild>
         <Button size="md" variant="outline">
           <IconV2 name="arrows-updown" size="sm" />
-          <Text truncate>{selectedOptionLabel || 'Sort'}</Text>
+          <Text truncate color="inherit">
+            {selectedOptionLabel || 'Sort'}
+          </Text>
           <IconV2 name="nav-arrow-down" size="sm" />
         </Button>
       </DropdownMenu.Trigger>

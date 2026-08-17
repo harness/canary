@@ -286,7 +286,7 @@ export default {
               height: '12px',
               width: '2px'
             },
-            '.cn-sidebar-item-content-right-element': strokeIcon('var(--cn-text-2)'),
+            '.cn-sidebar-item-content-right-element': strokeIcon('var(--cn-text-1)'),
             '&:hover, &:focus-within': {
               '.cn-sidebar-item-grip-handle': { opacity: '1' }
             }
@@ -311,8 +311,8 @@ export default {
         padding: 'var(--cn-sidebar-item-container)',
         borderRadius: 'var(--cn-sidebar-item-radius)',
         '@apply duration-150 transition-[padding,row-gap,column-gap] ease-linear': '',
-        // Icons use stroke currentColor; base row color keeps them visible on dark sidebars
-        color: 'var(--cn-text-2)',
+        // Icons use stroke currentColor; base row color matches the title (text-1)
+        color: 'var(--cn-text-1)',
 
         '&:hover, &:focus-within': {
           color: 'var(--cn-text-1)',
@@ -397,7 +397,7 @@ export default {
           width: 'var(--cn-size-6)',
           height: 'var(--cn-size-6)',
           justifyContent: 'flex-end',
-          ...strokeIcon('var(--cn-text-2)')
+          ...strokeIcon('var(--cn-text-1)')
         },
 
         '&-action-buttons': {
@@ -408,7 +408,8 @@ export default {
         '&-action-item-placeholder': {
           gridArea: 'elem',
           width: '20px',
-          height: '16px'
+          height: '16px',
+          color: 'var(--cn-text-1)'
         },
 
         '&-title, &-description, &-badge, &-right-element, &-action-item-placeholder': {
@@ -488,7 +489,7 @@ export default {
         padding: 'var(--cn-layout-2xs)',
         '&-title': {
           font: 'var(--cn-body-single-line-normal)',
-          color: 'var(--cn-comp-sidebar-item-text)'
+          color: 'var(--cn-text-1)'
         },
         '&-icon': { paddingLeft: '0', marginLeft: '0' }
       },
@@ -505,7 +506,7 @@ export default {
           border: '1px solid var(--cn-border-2)',
           backgroundColor: 'var(--cn-bg-1)',
           flexShrink: '0',
-          color: 'var(--cn-comp-sidebar-item-text)'
+          color: 'var(--cn-text-1)'
         },
 
       '&:hover, &:focus-within': {

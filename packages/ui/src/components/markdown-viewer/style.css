@@ -176,7 +176,7 @@
 
   &.wmde-markdown {
     font: var(--cn-comp-markdown-content-paragraph);
-    @apply text-cn-2 !max-w-full;
+    @apply text-cn-1 !max-w-full;
 
     &::-webkit-scrollbar-thumb {
       background-color: var(--cn-comp-scrollbar-thumb);
@@ -230,7 +230,7 @@
     }
 
     li {
-      @apply marker:text-cn-2 my-cn-2xs ps-0;
+      @apply marker:text-cn-1 my-cn-2xs ps-0;
     }
 
     ol {
@@ -269,7 +269,7 @@
 
     strong {
       font: var(--cn-comp-markdown-content-emphasized);
-      @apply text-cn-2;
+      @apply text-cn-1;
     }
 
     pre {
@@ -282,7 +282,7 @@
 
     blockquote {
       font: var(--cn-comp-markdown-content-paragraph);
-      @apply text-cn-3 my-cn-md before:bg-cn-separator before:rounded-cn-1 pl-cn-md relative border-0 pr-0 before:absolute before:inset-y-0 before:left-0 before:w-1;
+      @apply text-cn-1 my-cn-md before:bg-cn-separator before:rounded-cn-1 pl-cn-md relative border-0 pr-0 before:absolute before:inset-y-0 before:left-0 before:w-1;
     }
 
     /* GitHub-style Alerts */
@@ -297,7 +297,7 @@
       }
 
       p {
-        @apply my-cn-2xs text-cn-2;
+        @apply my-cn-2xs text-cn-1;
 
         &:first-of-type {
           @apply mt-0;

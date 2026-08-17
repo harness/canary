@@ -199,7 +199,7 @@ export const SidebarGroup = forwardRef<HTMLDivElement, SidebarGroupProps>(
     <div ref={ref} role="group" className={cn('cn-sidebar-group', className)} {...props}>
       {label && (
         <Layout.Horizontal className="cn-sidebar-group-header" align="center" justify="between">
-          <Text variant="caption-single-line-normal" as="h6" className="cn-sidebar-group-label" color="foreground-3">
+          <Text variant="caption-single-line-normal" as="h6" className="cn-sidebar-group-label" color="foreground-1">
             {label}
           </Text>
           {onActionClick && (

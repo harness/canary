@@ -293,12 +293,7 @@ const SidebarItemTrigger = forwardRef<HTMLButtonElement | HTMLAnchorElement, Sid
             className="cn-sidebar-item-content-icon"
           />
         )}
-        <Text
-          variant="body-single-line-normal"
-          color={withDescription ? 'foreground-1' : 'foreground-2'}
-          className="cn-sidebar-item-content-title"
-          truncate
-        >
+        <Text variant="body-single-line-normal" className="cn-sidebar-item-content-title" truncate>
           {title}
         </Text>
         {withDescription && (
@@ -606,12 +601,7 @@ export const SidebarMenuSubItem = forwardRef<HTMLAnchorElement, NavLinkProps & {
           <div className="relative left-cn-4xs top-[10px] h-3 w-0.5 cn-sidebar-submenu-item-active-indicator" />
         )}
         <NavLink className={cn('w-full cn-sidebar-submenu-item', className)} role="menuitem" {...props} ref={ref}>
-          <Text
-            className="cn-sidebar-submenu-item-content"
-            variant="body-single-line-normal"
-            color="foreground-2"
-            truncate
-          >
+          <Text className="cn-sidebar-submenu-item-content" variant="body-single-line-normal" truncate>
             {title}
           </Text>
         </NavLink>

@@ -119,7 +119,7 @@ export default {
       },
 
       '&-icon-color': {
-        color: 'var(--cn-text-2)'
+        color: 'var(--cn-text-1)'
       },
 
       '&-top': {

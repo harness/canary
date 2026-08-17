@@ -402,7 +402,7 @@ export default {
   },
 
   '.cn-studio-card-expand-button-top': {
-    '@apply flex items-center gap-cn-2xs p-cn-xs pl-cn-md flex-1 text-cn-1': ''
+    '@apply flex items-center gap-cn-2xs p-cn-xs pl-cn-md flex-1 min-w-0 overflow-hidden text-cn-1': ''
   },
 
   '.cn-studio-card-expand-button-bottom': {
@@ -414,6 +414,8 @@ export default {
   '.cn-studio-card-expand-button': {
     position: 'relative',
     width: '226px',
+    maxWidth: '100%',
+    minWidth: '0',
     height: 'var(--cn-size-22)',
     transition: 'transform 0.1s linear',
 
@@ -484,6 +486,8 @@ export default {
     // Minimal variant
     '&[data-variant="minimal"]': {
       width: 'auto',
+      maxWidth: '100%',
+      minWidth: '0',
       height: 'auto',
 
       '.cn-studio-card-expand-button-top': {

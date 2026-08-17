@@ -221,11 +221,12 @@ function ExpandButton({
           <Text
             color="inherit"
             variant={variant === 'minimal' ? 'caption-single-line-code' : 'body-strong'}
-            className="truncate"
+            className="min-w-0 flex-1"
+            truncate
           >
             {label}
           </Text>
-          {variant === 'minimal' && <IconV2 name="expand" size="xs" />}
+          {variant === 'minimal' && <IconV2 name="expand" size="xs" className="shrink-0" />}
         </div>
 
         {/* Count + expand icon */}

@@ -1,6 +1,6 @@
 {
   "schemaVersion": "0.2.0",
-  "contractVersion": "0.2.0",
+  "contractVersion": "0.2.1",
   "id": "canary.button",
   "status": "draft",
   "surfaces": ["figma", "code"],
@@ -103,6 +103,85 @@
         "name": "variant",
         "type": "enum",
         "values": ["primary", "secondary", "outline", "ai", "ghost", "link", "transparent"],
+        "valueGuidance": [
+          {
+            "value": "primary",
+            "useWhen": [
+              "The action is the single highest-priority action in a page, section, dialog, or workflow step.",
+              "The action needs the strongest visual emphasis to make the expected next step clear."
+            ],
+            "avoidWhen": [
+              "Another primary action already exists in the same local context.",
+              "The action is supporting, optional, or lower priority than a nearby action."
+            ]
+          },
+          {
+            "value": "secondary",
+            "useWhen": [
+              "The action supports a primary action and should remain visibly available without competing with it.",
+              "A group of actions needs moderate emphasis and a filled treatment."
+            ],
+            "avoidWhen": [
+              "The action is the single highest-priority next step.",
+              "The action is low priority enough that a quieter outline, ghost, link, or transparent treatment is more appropriate."
+            ]
+          },
+          {
+            "value": "outline",
+            "useWhen": [
+              "A lower-emphasis action still needs a persistent button boundary for discoverability.",
+              "A standalone supporting action needs more definition than ghost or transparent without using a filled treatment."
+            ],
+            "avoidWhen": [
+              "The action is the highest-priority next step.",
+              "Repeated borders would add unnecessary visual noise in a dense toolbar or action group."
+            ]
+          },
+          {
+            "value": "ai",
+            "useWhen": [
+              "The action invokes an AI or agent capability, such as generating, suggesting, summarizing, or transforming content.",
+              "The AI origin of the action is important for setting user expectations."
+            ],
+            "avoidWhen": [
+              "The action does not invoke AI or agent behavior.",
+              "The treatment is being used only to attract attention to an ordinary action."
+            ]
+          },
+          {
+            "value": "ghost",
+            "useWhen": [
+              "A low-emphasis contextual action appears in a toolbar, action group, or compact control area.",
+              "The surrounding layout already provides enough structure and a persistent button boundary would be excessive."
+            ],
+            "avoidWhen": [
+              "The action must be prominent or immediately discoverable as the primary next step.",
+              "The surrounding surface does not provide enough contrast to make the control understandable."
+            ]
+          },
+          {
+            "value": "link",
+            "useWhen": [
+              "An action should have the visual weight of inline text while retaining Button action semantics.",
+              "A low-emphasis action sits next to explanatory copy or form content."
+            ],
+            "avoidWhen": [
+              "Activation navigates to a route, URL, file, or other destination; use Link instead.",
+              "The action needs the prominence or affordance of a standard button treatment."
+            ]
+          },
+          {
+            "value": "transparent",
+            "useWhen": [
+              "A compact or embedded action needs minimal visual chrome inside a component, toolbar, filter, alert, or similar structured context.",
+              "The action should use neutral text or icon color and reveal emphasis through interaction states."
+            ],
+            "avoidWhen": [
+              "The action needs a visible container to establish its affordance or priority.",
+              "The action is placed without enough surrounding context to remain discoverable."
+            ]
+          }
+        ],
         "default": "primary",
         "description": "Sets the visual emphasis and treatment. The link value creates a link-style action but does not provide navigation semantics. Code accepts every listed value, while individual Figma component sets expose a subset based on size, content, and shape.",
         "figmaProperty": "variant",

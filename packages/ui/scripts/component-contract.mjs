@@ -7,6 +7,14 @@ const nonEmptyString = z.string().trim().min(1)
 const surfaceSchema = z.enum(['figma', 'code'])
 const propertyValueSchema = z.union([z.string(), z.number(), z.boolean(), z.null()])
 
+const propertyValueGuidanceSchema = z
+  .object({
+    value: propertyValueSchema,
+    useWhen: z.array(nonEmptyString).min(1),
+    avoidWhen: z.array(nonEmptyString).min(1)
+  })
+  .strict()
+
 const overviewSchema = z
   .object({
     name: nonEmptyString,
@@ -52,6 +60,7 @@ const propertySchema = z
     name: nonEmptyString,
     type: z.enum(['boolean', 'enum', 'number', 'react-node', 'string', 'function', 'object']),
     values: z.array(propertyValueSchema).min(1).optional(),
+    valueGuidance: z.array(propertyValueGuidanceSchema).min(1).optional(),
     default: propertyValueSchema.optional(),
     required: z.boolean().optional(),
     description: nonEmptyString,
@@ -75,6 +84,45 @@ const propertySchema = z
         path: ['default'],
         message: 'default must be one of the allowed values'
       })
+    }
+
+    if (property.valueGuidance) {
+      if (property.type !== 'enum' || !property.values) {
+        context.addIssue({
+          code: 'custom',
+          path: ['valueGuidance'],
+          message: 'value guidance is supported only for enum properties'
+        })
+        return
+      }
+
+      const guidedValues = property.valueGuidance.map(guidance => guidance.value)
+      const duplicateValues = guidedValues.filter((value, index) => guidedValues.indexOf(value) !== index)
+      if (duplicateValues.length > 0) {
+        context.addIssue({
+          code: 'custom',
+          path: ['valueGuidance'],
+          message: 'value guidance values must be unique'
+        })
+      }
+
+      const unknownValues = guidedValues.filter(value => !property.values.includes(value))
+      if (unknownValues.length > 0) {
+        context.addIssue({
+          code: 'custom',
+          path: ['valueGuidance'],
+          message: 'value guidance must reference allowed enum values'
+        })
+      }
+
+      const missingValues = property.values.filter(value => !guidedValues.includes(value))
+      if (missingValues.length > 0) {
+        context.addIssue({
+          code: 'custom',
+          path: ['valueGuidance'],
+          message: 'value guidance must cover every allowed enum value'
+        })
+      }
     }
   })
 

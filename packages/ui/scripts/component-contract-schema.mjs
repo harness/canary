@@ -19,6 +19,14 @@ const scalar = z.union([z.string(), z.number(), z.boolean(), z.null()])
 const surfaceName = z.enum(['figma', 'react'])
 const propertyType = z.enum(['boolean', 'enum', 'number', 'string', 'slot', 'function', 'object'])
 
+const propertyValueGuidanceSchema = z
+  .object({
+    value: scalar,
+    useWhen: z.array(nonEmptyString).min(1),
+    avoidWhen: z.array(nonEmptyString).min(1)
+  })
+  .strict()
+
 const figmaPropertyBinding = z
   .object({
     kind: z.literal('property'),
@@ -66,6 +74,7 @@ const propertyFields = {
   description: nonEmptyString,
   type: propertyType,
   values: z.array(scalar).min(1).optional(),
+  valueGuidance: z.array(propertyValueGuidanceSchema).min(1).optional(),
   default: scalar.optional(),
   required: z.boolean().optional()
 }
@@ -76,6 +85,35 @@ function validateProperty(property, context) {
   }
   if (property.values && property.default !== undefined && !property.values.includes(property.default)) {
     context.addIssue({ code: 'custom', path: ['default'], message: 'default must be one of the allowed values' })
+  }
+  if (property.valueGuidance) {
+    if (property.type !== 'enum' || !property.values) {
+      context.addIssue({
+        code: 'custom',
+        path: ['valueGuidance'],
+        message: 'value guidance is supported only for enum properties'
+      })
+      return
+    }
+
+    const guidedValues = property.valueGuidance.map(guidance => guidance.value)
+    if (new Set(guidedValues).size !== guidedValues.length) {
+      context.addIssue({ code: 'custom', path: ['valueGuidance'], message: 'value guidance values must be unique' })
+    }
+    if (guidedValues.some(value => !property.values.includes(value))) {
+      context.addIssue({
+        code: 'custom',
+        path: ['valueGuidance'],
+        message: 'value guidance must reference allowed enum values'
+      })
+    }
+    if (property.values.some(value => !guidedValues.includes(value))) {
+      context.addIssue({
+        code: 'custom',
+        path: ['valueGuidance'],
+        message: 'value guidance must cover every allowed enum value'
+      })
+    }
   }
 }
 

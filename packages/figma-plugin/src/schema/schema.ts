@@ -6,6 +6,15 @@ export const CatalogPropSchema = z.object({
   name: z.string().min(1),
   type: z.enum(['enum', 'boolean', 'string', 'number', 'function']).optional(),
   values: z.array(z.string()).optional(),
+  valueGuidance: z
+    .array(
+      z.object({
+        value: z.string().min(1),
+        useWhen: z.array(z.string().min(1)).min(1),
+        avoidWhen: z.array(z.string().min(1)).min(1)
+      })
+    )
+    .optional(),
   default: z.union([z.string(), z.boolean(), z.number()]).optional(),
   mapsTo: z.string().optional(),
   when: z.string().optional(),

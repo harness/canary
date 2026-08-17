@@ -2,11 +2,11 @@
   "formatVersion": 1,
   "componentId": "canary.button",
   "schemaVersion": "0.5.0",
-  "contractVersion": "0.9.0",
+  "contractVersion": "0.9.1",
   "evaluationProfileVersion": "1.0.0",
   "evaluatedAt": "2026-08-14",
-  "sourceSha256": "3d4f5d6fbfede4f21106969a0a9ce1ef193614f33be88d55f344f07e8fca0008",
-  "verificationSourceSha256": "fd6bc2ac19a05b89fed598c5b3c4eb3cffc1cff78a804b19265b6ae89d5faa4a",
+  "sourceSha256": "5cd955dc9f24b8b2a061a381c3cb8126fc8533502c21e0649a8941e6d58d995f",
+  "verificationSourceSha256": "4911ae58ffc385d2aae69a4699175408a5c074795d1b081fbfab6e31d92c5c77",
   "evaluations": [
     {
       "requirementId": "button.contract-complete",

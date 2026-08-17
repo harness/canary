@@ -1455,6 +1455,62 @@
       "description": "Contract field properties[].type."
     },
     {
+      "path": "properties[].valueGuidance",
+      "type": "array",
+      "required": false,
+      "allowedValues": null,
+      "default": null,
+      "description": "Contract field properties[].valueGuidance."
+    },
+    {
+      "path": "properties[].valueGuidance[]",
+      "type": "object",
+      "required": true,
+      "allowedValues": null,
+      "default": null,
+      "description": "Contract field properties[].valueGuidance[]."
+    },
+    {
+      "path": "properties[].valueGuidance[].avoidWhen",
+      "type": "array",
+      "required": true,
+      "allowedValues": null,
+      "default": null,
+      "description": "Contract field properties[].valueGuidance[].avoidWhen."
+    },
+    {
+      "path": "properties[].valueGuidance[].avoidWhen[]",
+      "type": "string",
+      "required": true,
+      "allowedValues": null,
+      "default": null,
+      "description": "Contract field properties[].valueGuidance[].avoidWhen[]."
+    },
+    {
+      "path": "properties[].valueGuidance[].useWhen",
+      "type": "array",
+      "required": true,
+      "allowedValues": null,
+      "default": null,
+      "description": "Contract field properties[].valueGuidance[].useWhen."
+    },
+    {
+      "path": "properties[].valueGuidance[].useWhen[]",
+      "type": "string",
+      "required": true,
+      "allowedValues": null,
+      "default": null,
+      "description": "Contract field properties[].valueGuidance[].useWhen[]."
+    },
+    {
+      "path": "properties[].valueGuidance[].value",
+      "type": "string | number | boolean | null",
+      "required": true,
+      "allowedValues": null,
+      "default": null,
+      "description": "Contract field properties[].valueGuidance[].value."
+    },
+    {
       "path": "properties[].values",
       "type": "array",
       "required": false,
@@ -2253,6 +2309,62 @@
       ],
       "default": null,
       "description": "Contract field surfaces.react.extensions[].type."
+    },
+    {
+      "path": "surfaces.react.extensions[].valueGuidance",
+      "type": "array",
+      "required": false,
+      "allowedValues": null,
+      "default": null,
+      "description": "Contract field surfaces.react.extensions[].valueGuidance."
+    },
+    {
+      "path": "surfaces.react.extensions[].valueGuidance[]",
+      "type": "object",
+      "required": true,
+      "allowedValues": null,
+      "default": null,
+      "description": "Contract field surfaces.react.extensions[].valueGuidance[]."
+    },
+    {
+      "path": "surfaces.react.extensions[].valueGuidance[].avoidWhen",
+      "type": "array",
+      "required": true,
+      "allowedValues": null,
+      "default": null,
+      "description": "Contract field surfaces.react.extensions[].valueGuidance[].avoidWhen."
+    },
+    {
+      "path": "surfaces.react.extensions[].valueGuidance[].avoidWhen[]",
+      "type": "string",
+      "required": true,
+      "allowedValues": null,
+      "default": null,
+      "description": "Contract field surfaces.react.extensions[].valueGuidance[].avoidWhen[]."
+    },
+    {
+      "path": "surfaces.react.extensions[].valueGuidance[].useWhen",
+      "type": "array",
+      "required": true,
+      "allowedValues": null,
+      "default": null,
+      "description": "Contract field surfaces.react.extensions[].valueGuidance[].useWhen."
+    },
+    {
+      "path": "surfaces.react.extensions[].valueGuidance[].useWhen[]",
+      "type": "string",
+      "required": true,
+      "allowedValues": null,
+      "default": null,
+      "description": "Contract field surfaces.react.extensions[].valueGuidance[].useWhen[]."
+    },
+    {
+      "path": "surfaces.react.extensions[].valueGuidance[].value",
+      "type": "string | number | boolean | null",
+      "required": true,
+      "allowedValues": null,
+      "default": null,
+      "description": "Contract field surfaces.react.extensions[].valueGuidance[].value."
     },
     {
       "path": "surfaces.react.extensions[].values",

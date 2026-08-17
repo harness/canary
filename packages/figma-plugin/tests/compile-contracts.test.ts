@@ -87,7 +87,7 @@ describe('compiled Button catalog', () => {
     expect(button.baselineReceipt).toMatchObject({
       componentId: 'canary.button',
       schemaVersion: '0.4.0',
-      contractVersion: '0.7.0',
+      contractVersion: '0.7.1',
       evaluationProfileVersion: '1.0.0'
     })
     for (const key of REMOVED_POC_KEYS) {

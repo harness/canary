@@ -8,6 +8,14 @@ import { componentContractSchemaV04, HEALTH_DIMENSIONS } from './component-contr
 const nonEmptyString = z.string().trim().min(1)
 const surfaceSchema = z.enum(['figma', 'code'])
 const propertyValueSchema = z.union([z.string(), z.number(), z.boolean(), z.null()])
+
+const propertyValueGuidanceSchema = z
+  .object({
+    value: propertyValueSchema,
+    useWhen: z.array(nonEmptyString).min(1),
+    avoidWhen: z.array(nonEmptyString).min(1)
+  })
+  .strict()
 const scalarPropertyValueTypes = {
   boolean: 'boolean',
   number: 'number',
@@ -59,6 +67,7 @@ const propertySchema = z
     name: nonEmptyString,
     type: z.enum(['boolean', 'enum', 'number', 'react-node', 'string', 'function', 'object']),
     values: z.array(propertyValueSchema).min(1).optional(),
+    valueGuidance: z.array(propertyValueGuidanceSchema).min(1).optional(),
     default: propertyValueSchema.optional(),
     required: z.boolean().optional(),
     description: nonEmptyString,
@@ -84,6 +93,36 @@ const propertySchema = z
         path: ['default'],
         message: 'default must be one of the allowed values'
       })
+    }
+
+    if (property.valueGuidance) {
+      if (property.type !== 'enum' || !property.values) {
+        context.addIssue({
+          code: 'custom',
+          path: ['valueGuidance'],
+          message: 'value guidance is supported only for enum properties'
+        })
+        return
+      }
+
+      const guidedValues = property.valueGuidance.map(guidance => guidance.value)
+      if (new Set(guidedValues).size !== guidedValues.length) {
+        context.addIssue({ code: 'custom', path: ['valueGuidance'], message: 'value guidance values must be unique' })
+      }
+      if (guidedValues.some(value => !property.values.includes(value))) {
+        context.addIssue({
+          code: 'custom',
+          path: ['valueGuidance'],
+          message: 'value guidance must reference allowed enum values'
+        })
+      }
+      if (property.values.some(value => !guidedValues.includes(value))) {
+        context.addIssue({
+          code: 'custom',
+          path: ['valueGuidance'],
+          message: 'value guidance must cover every allowed enum value'
+        })
+      }
     }
   })
 

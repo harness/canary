@@ -581,6 +581,25 @@ test('rejects property names duplicated across contract surfaces', async () => {
   expect(result.errors).toContain('properties: property names must be unique across shared, designOnly, and codeOnly')
 })
 
+test('requires enum value guidance to cover every allowed value', async () => {
+  const { validateComponentContract } = await import('./component-contract.mjs')
+  const contract = completeDraftContract()
+  contract.properties.shared[0].valueGuidance = [
+    {
+      value: 'primary',
+      useWhen: ['The action is the highest priority.'],
+      avoidWhen: ['Another primary action already exists nearby.']
+    }
+  ]
+
+  const result = validateComponentContract(contract)
+
+  expect(result.success).toBe(false)
+  expect(result.errors).toContain(
+    'properties.shared.0.valueGuidance: value guidance must cover every allowed enum value'
+  )
+})
+
 test('requires verified Figma component keys before a contract can be stable', async () => {
   const { validateComponentContract } = await import('./component-contract.mjs')
   const contract = completeDraftContract()
@@ -678,7 +697,7 @@ test('uses schema 0.4.0 for the checked-in Button contract', () => {
   const contract = JSON.parse(readFileSync(join(packageRoot, 'catalog/contracts/button.contract.json'), 'utf8'))
 
   expect(contract.schemaVersion).toBe('0.4.0')
-  expect(contract.contractVersion).toBe('0.7.0')
+  expect(contract.contractVersion).toBe('0.7.1')
   expect(contract.identity.id).toBe('canary.button')
   expect(contract.lifecycle.status).toBe('piloting')
   expect(contract.properties.map(property => property.id)).toContain('variant')
@@ -686,6 +705,18 @@ test('uses schema 0.4.0 for the checked-in Button contract', () => {
   expect(contract.constraints.rules).toHaveLength(13)
   expect(contract.evidence).not.toHaveProperty('provisionalFields')
   expect(contract.evidence).not.toHaveProperty('openQuestions')
+})
+
+test('documents when to use and avoid every Button variant', () => {
+  const packageRoot = join(dirname(fileURLToPath(import.meta.url)), '..')
+  const contract = JSON.parse(readFileSync(join(packageRoot, 'catalog/contracts/button.contract.json'), 'utf8'))
+  const variant = contract.properties.find(property => property.id === 'variant')
+
+  expect(variant.valueGuidance.map(guidance => guidance.value)).toEqual(variant.values)
+  for (const guidance of variant.valueGuidance) {
+    expect(guidance.useWhen.length).toBeGreaterThan(0)
+    expect(guidance.avoidWhen.length).toBeGreaterThan(0)
+  }
 })
 
 test('generates deterministic schema, type, reference, and Button receipt artifacts', async () => {
@@ -717,7 +748,7 @@ test('generates deterministic schema, type, reference, and Button receipt artifa
   expect(JSON.parse(first.artifacts.get('catalog/generated/button.audit-receipt.json'))).toMatchObject({
     componentId: 'canary.button',
     schemaVersion: '0.4.0',
-    contractVersion: '0.7.0',
+    contractVersion: '0.7.1',
     evaluationProfileVersion: '1.0.0'
   })
 })

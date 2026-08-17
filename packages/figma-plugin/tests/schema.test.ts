@@ -15,9 +15,14 @@ describe('parseCatalogEntry', () => {
     expect(entry.id).toBe('canary.button')
     expect(entry.status).toBe('piloting')
     expect(entry.source?.contractPath).toBe('packages/ui/catalog/contracts/button.contract.json')
-    expect(entry.source?.contractVersion).toBe('0.7.0')
+    expect(entry.source?.contractVersion).toBe('0.7.1')
     expect(entry.source?.sha256).toMatch(/^[a-f0-9]{64}$/)
-    expect(entry.shared.find(p => p.name === 'variant')?.values).toContain('primary')
+    const variant = entry.shared.find(p => p.name === 'variant')
+    expect(variant?.values).toContain('primary')
+    expect(variant?.valueGuidance).toHaveLength(7)
+    expect(variant?.valueGuidance?.find(guidance => guidance.value === 'link')?.avoidWhen).toContain(
+      'Activation navigates to a route, URL, file, or other destination; use Link instead.'
+    )
     expect(entry.shared.find(p => p.name === 'size')?.values).toEqual(['md', 'sm', 'xs'])
     expect(entry.constraints?.rules.find(rule => rule.id === 'icon-semantic-theme-md-sm-xs')?.status).toBe(
       'unsupported'

@@ -1366,6 +1366,111 @@
       "description": "Contract field properties[].type."
     },
     {
+      "path": "properties[].valueGuidance",
+      "type": "array",
+      "required": false,
+      "allowedValues": null,
+      "default": null,
+      "owner": "Schema maintainers",
+      "consumers": [
+        "Engineers",
+        "Designers",
+        "Agents",
+        "Documentation"
+      ],
+      "description": "Contract field properties[].valueGuidance."
+    },
+    {
+      "path": "properties[].valueGuidance[]",
+      "type": "object",
+      "required": true,
+      "allowedValues": null,
+      "default": null,
+      "owner": "Schema maintainers",
+      "consumers": [
+        "Engineers",
+        "Designers",
+        "Agents",
+        "Documentation"
+      ],
+      "description": "Contract field properties[].valueGuidance[]."
+    },
+    {
+      "path": "properties[].valueGuidance[].avoidWhen",
+      "type": "array",
+      "required": true,
+      "allowedValues": null,
+      "default": null,
+      "owner": "Schema maintainers",
+      "consumers": [
+        "Engineers",
+        "Designers",
+        "Agents",
+        "Documentation"
+      ],
+      "description": "Contract field properties[].valueGuidance[].avoidWhen."
+    },
+    {
+      "path": "properties[].valueGuidance[].avoidWhen[]",
+      "type": "string",
+      "required": true,
+      "allowedValues": null,
+      "default": null,
+      "owner": "Schema maintainers",
+      "consumers": [
+        "Engineers",
+        "Designers",
+        "Agents",
+        "Documentation"
+      ],
+      "description": "Contract field properties[].valueGuidance[].avoidWhen[]."
+    },
+    {
+      "path": "properties[].valueGuidance[].useWhen",
+      "type": "array",
+      "required": true,
+      "allowedValues": null,
+      "default": null,
+      "owner": "Schema maintainers",
+      "consumers": [
+        "Engineers",
+        "Designers",
+        "Agents",
+        "Documentation"
+      ],
+      "description": "Contract field properties[].valueGuidance[].useWhen."
+    },
+    {
+      "path": "properties[].valueGuidance[].useWhen[]",
+      "type": "string",
+      "required": true,
+      "allowedValues": null,
+      "default": null,
+      "owner": "Schema maintainers",
+      "consumers": [
+        "Engineers",
+        "Designers",
+        "Agents",
+        "Documentation"
+      ],
+      "description": "Contract field properties[].valueGuidance[].useWhen[]."
+    },
+    {
+      "path": "properties[].valueGuidance[].value",
+      "type": "string | number | boolean | null",
+      "required": true,
+      "allowedValues": null,
+      "default": null,
+      "owner": "Schema maintainers",
+      "consumers": [
+        "Engineers",
+        "Designers",
+        "Agents",
+        "Documentation"
+      ],
+      "description": "Contract field properties[].valueGuidance[].value."
+    },
+    {
       "path": "properties[].values",
       "type": "array",
       "required": false,

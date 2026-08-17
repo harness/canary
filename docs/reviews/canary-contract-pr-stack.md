@@ -59,14 +59,14 @@ NODE_OPTIONS=--localstorage-file=/tmp/canary-vitest-local-storage pnpm test
 
 ## Final acceptance evidence
 
-- Button contract version: `0.9.0`
+- Button contract version: `0.9.1`
 - Contract lifecycle: `stable`
 - Verified Figma component sets: 12
 - Published Code Connect mappings: 12
 - Exhaustive Button combination rules: 14
 - Canary Copilot Button page audit: 6/6 mapped, 6 pass, 0 fail, 0 warn
 - Button health score: 100/100
-- Contract tests: 22 passing
+- Contract tests: 24 passing
 - Canary Copilot tests: 172 passing across 26 files
 
 ## Merge procedure

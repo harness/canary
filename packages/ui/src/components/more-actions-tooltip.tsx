@@ -36,6 +36,8 @@ export interface MoreActionsTooltipProps {
   disabled?: boolean
   /** Accessible name and tooltip for the trigger button. Defaults to "Show more actions". */
   label?: string
+  /** Called when the menu opens or closes. Useful for deferred work like RBAC checks (UUI-2039). */
+  onOpenChange?: (open: boolean) => void
 }
 
 /**
@@ -53,7 +55,8 @@ export const MoreActionsTooltip = forwardRef<HTMLButtonElement, MoreActionsToolt
       buttonVariant = 'ghost',
       buttonSize = 'md',
       disabled = false,
-      label = 'Show more actions'
+      label = 'Show more actions',
+      onOpenChange
     },
     ref
   ) => {
@@ -61,12 +64,17 @@ export const MoreActionsTooltip = forwardRef<HTMLButtonElement, MoreActionsToolt
     const [suppressTooltip, setSuppressTooltip] = useState(false)
     const timeoutRef = useRef<ReturnType<typeof setTimeout>>()
 
-    const handleDropdownOpenChange = useCallback((open: boolean) => {
-      if (open) return
-      clearTimeout(timeoutRef.current)
-      setSuppressTooltip(true)
-      timeoutRef.current = setTimeout(() => setSuppressTooltip(false), TOOLTIP_SUPPRESS_AFTER_CLOSE_MS)
-    }, [])
+    const handleDropdownOpenChange = useCallback(
+      (open: boolean) => {
+        onOpenChange?.(open)
+
+        if (open) return
+        clearTimeout(timeoutRef.current)
+        setSuppressTooltip(true)
+        timeoutRef.current = setTimeout(() => setSuppressTooltip(false), TOOLTIP_SUPPRESS_AFTER_CLOSE_MS)
+      },
+      [onOpenChange]
+    )
 
     useEffect(() => () => clearTimeout(timeoutRef.current), [])
 

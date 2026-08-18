@@ -10,7 +10,9 @@ import { DocsPage } from "@/components/docs-page";
 
 <DocsPage.ComponentExample
   client:only
-  code={`
+  code={`<div className="space-y-cn-sm w-full">
+  <div className="flex items-center gap-cn-md">
+    <span className="text-cn-size-2 text-cn-3 w-32 shrink-0 font-mono">icon group</span>
     <ButtonGroup
       iconOnly
       size="sm"
@@ -34,7 +36,8 @@ import { DocsPage } from "@/components/docs-page";
         }
       ]}
     />
-`}
+  </div>
+</div>`}
 />
 
 ## Usage
@@ -75,28 +78,29 @@ The `ButtonGroup` component accepts an `orientation` prop, which defines the lay
 
 <DocsPage.ComponentExample
   client:only
-  contentClassName={"!block ![place-items:normal]"}
-  code={`
-    <Layout.Vertical className="items-center">
-      <ButtonGroup
-        buttonsProps={[
-          { children: 'Button', onClick: () => { console.log('Button 1') } },
-          { children: 'Button', onClick: () => { console.log('Button 2') } },
-          { children: 'Button', onClick: () => { console.log('Button 3') } }
-        ]}
-      />
-
-      <ButtonGroup
-        orientation="vertical"
-        buttonsProps={[
-          { children: 'Button', onClick: () => { console.log('Button 1') } },
-          { children: 'Button', onClick: () => { console.log('Button 2') } },
-          { children: 'Button', onClick: () => { console.log('Button 3') } }
-        ]}
-      />
-    </Layout.Vertical>
-
-`}
+  code={`<div className="space-y-cn-md w-full">
+  <div className="flex items-start gap-cn-md border-b border-cn-borders-3 pb-cn-md">
+    <span className="text-cn-size-2 text-cn-3 w-32 shrink-0 font-mono pt-cn-xs">horizontal</span>
+    <ButtonGroup
+      buttonsProps={[
+        { children: 'Button', onClick: () => { console.log('Button 1') } },
+        { children: 'Button', onClick: () => { console.log('Button 2') } },
+        { children: 'Button', onClick: () => { console.log('Button 3') } }
+      ]}
+    />
+  </div>
+  <div className="flex items-start gap-cn-md">
+    <span className="text-cn-size-2 text-cn-3 w-32 shrink-0 font-mono pt-cn-xs">vertical</span>
+    <ButtonGroup
+      orientation="vertical"
+      buttonsProps={[
+        { children: 'Button', onClick: () => { console.log('Button 1') } },
+        { children: 'Button', onClick: () => { console.log('Button 2') } },
+        { children: 'Button', onClick: () => { console.log('Button 3') } }
+      ]}
+    />
+  </div>
+</div>`}
 />
 
 ## Sizes
@@ -105,37 +109,40 @@ The `ButtonGroup` component accepts a `size` prop to control its overall dimensi
 
 <DocsPage.ComponentExample
   client:only
-  contentClassName={"!block ![place-items:normal]"}
-  code={`
-    <Layout.Vertical className="items-center">
-      <ButtonGroup
-        buttonsProps={[
-          { children: 'Button', onClick: () => { console.log('Button 1') } },
-          { children: 'Button', onClick: () => { console.log('Button 2') } },
-          { children: 'Button', onClick: () => { console.log('Button 3') } }
-        ]}
-      />
-
-      <ButtonGroup
-        size="sm"
-        buttonsProps={[
-          { children: 'Button', onClick: () => { console.log('Button 1') } },
-          { children: 'Button', onClick: () => { console.log('Button 2') } },
-          { children: 'Button', onClick: () => { console.log('Button 3') } }
-        ]}
-      />
-
-      <ButtonGroup
-        size="xs"
-        buttonsProps={[
-          { children: 'Button', onClick: () => { console.log('Button 1') } },
-          { children: 'Button', onClick: () => { console.log('Button 2') } },
-          { children: 'Button', onClick: () => { console.log('Button 3') } }
-        ]}
-      />
-    </Layout.Vertical>
-
-`}
+  code={`<div className="space-y-cn-sm w-full">
+  <div className="flex items-center gap-cn-md border-b border-cn-borders-3 pb-cn-sm">
+    <span className="text-cn-size-2 text-cn-3 w-32 shrink-0 font-mono">md</span>
+    <ButtonGroup
+      buttonsProps={[
+        { children: 'Button', onClick: () => { console.log('Button 1') } },
+        { children: 'Button', onClick: () => { console.log('Button 2') } },
+        { children: 'Button', onClick: () => { console.log('Button 3') } }
+      ]}
+    />
+  </div>
+  <div className="flex items-center gap-cn-md border-b border-cn-borders-3 pb-cn-sm">
+    <span className="text-cn-size-2 text-cn-3 w-32 shrink-0 font-mono">sm</span>
+    <ButtonGroup
+      size="sm"
+      buttonsProps={[
+        { children: 'Button', onClick: () => { console.log('Button 1') } },
+        { children: 'Button', onClick: () => { console.log('Button 2') } },
+        { children: 'Button', onClick: () => { console.log('Button 3') } }
+      ]}
+    />
+  </div>
+  <div className="flex items-center gap-cn-md">
+    <span className="text-cn-size-2 text-cn-3 w-32 shrink-0 font-mono">xs</span>
+    <ButtonGroup
+      size="xs"
+      buttonsProps={[
+        { children: 'Button', onClick: () => { console.log('Button 1') } },
+        { children: 'Button', onClick: () => { console.log('Button 2') } },
+        { children: 'Button', onClick: () => { console.log('Button 3') } }
+      ]}
+    />
+  </div>
+</div>`}
 />
 
 ## Icon only
@@ -144,7 +151,9 @@ The `ButtonGroup` component accepts a `iconOnly` prop. When this prop is set, th
 
 <DocsPage.ComponentExample
   client:only
-  code={`
+  code={`<div className="space-y-cn-sm w-full">
+  <div className="flex items-center gap-cn-md">
+    <span className="text-cn-size-2 text-cn-3 w-32 shrink-0 font-mono">icon-only</span>
     <ButtonGroup
       iconOnly
       buttonsProps={[
@@ -153,7 +162,8 @@ The `ButtonGroup` component accepts a `iconOnly` prop. When this prop is set, th
         { children: <IconV2 name="more-vert" />, onClick: () => { console.log('Button icon 3') } }
       ]}
     />
-  `}
+  </div>
+</div>`}
 />
 
 ## With tooltip
@@ -162,7 +172,9 @@ Within `buttonsProps`, you can provide `tooltipProps` to define tooltip data for
 
 <DocsPage.ComponentExample
   client:only
-  code={`
+  code={`<div className="space-y-cn-sm w-full">
+  <div className="flex items-center gap-cn-md">
+    <span className="text-cn-size-2 text-cn-3 w-32 shrink-0 font-mono">tooltip</span>
     <ButtonGroup
       iconOnly
       buttonsProps={[
@@ -171,7 +183,8 @@ Within `buttonsProps`, you can provide `tooltipProps` to define tooltip data for
         { children: <IconV2 name="more-vert" />, onClick: () => { console.log('Button icon 3') }, tooltipProps: { title: 'Title', content: <p>This is a tooltip</p> } }
       ]}
     />
-  `}
+  </div>
+</div>`}
 />
 
 ## With Dropdown
@@ -180,7 +193,9 @@ Within `buttonsProps`, you can provide a `dropdownProps` property to define the 
 
 <DocsPage.ComponentExample
   client:only
-  code={`
+  code={`<div className="space-y-cn-sm w-full">
+  <div className="flex items-center gap-cn-md">
+    <span className="text-cn-size-2 text-cn-3 w-32 shrink-0 font-mono">dropdown</span>
     <ButtonGroup
       buttonsProps={[
         {
@@ -215,7 +230,8 @@ Within `buttonsProps`, you can provide a `dropdownProps` property to define the 
         }
       ]}
     />
-  `}
+  </div>
+</div>`}
 />
 
 ## API Reference

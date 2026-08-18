@@ -9,79 +9,98 @@ import { DocsPage } from "@/components/docs-page";
 
 <DocsPage.ComponentExample
   client:only
-  code={`<div className="flex flex-col gap-cn-3xl">
-    <div>
-      <h6 className="font-semibold mb-cn-xs text-center">Image (Default)</h6>
-      <div className="flex items-center justify-center gap-cn-xl">
-        <Avatar name="John Doe" src="/avatar.png" size="xs" />
-        <Avatar name="John Doe" src="/avatar.png" size="sm" />
-        <Avatar name="John Doe" src="/avatar.png" size="md" />
-        <Avatar name="John Doe" src="/avatar.png" size="lg" />
-      </div>
+  code={`<div className="space-y-cn-sm w-full">
+  <div className="flex items-center gap-cn-md border-b border-cn-borders-3 pb-cn-sm">
+    <span className="text-cn-size-2 text-cn-3 w-40 shrink-0 font-mono">image</span>
+    <div className="flex items-center gap-cn-xl">
+      <Avatar name="John Doe" src="/avatar.png" size="xs" />
+      <Avatar name="John Doe" src="/avatar.png" size="sm" />
+      <Avatar name="John Doe" src="/avatar.png" size="md" />
+      <Avatar name="John Doe" src="/avatar.png" size="lg" />
     </div>
-    <div>
-      <h6 className="font-semibold mb-cn-xs text-center">Image (Rounded)</h6>
-      <div className="flex items-center justify-center gap-cn-xl">
-        <Avatar name="John Doe" src="/avatar.png" size="xs" rounded />
-        <Avatar name="John Doe" src="/avatar.png" size="sm" rounded />
-        <Avatar name="John Doe" src="/avatar.png" size="md" rounded />
-        <Avatar name="John Doe" src="/avatar.png" size="lg" rounded />
-      </div>
-    </div>
-    <div>
-      <h6 className="font-semibold mb-cn-xs text-center">Initials (Default)</h6>
-      <div className="flex items-center justify-center gap-cn-xl">
-        <Avatar name="John Doe" size="xs" />
-        <Avatar name="John Doe" size="sm" />
-        <Avatar name="John Doe" size="md" />
-        <Avatar name="John Doe" size="lg" />
-      </div>
-    </div>
-    <div>
-      <h6 className="font-semibold mb-cn-xs text-center">Initials (Rounded)</h6>
-      <div className="flex items-center justify-center gap-cn-xl">
-        <Avatar name="John Doe" size="xs" rounded />
-        <Avatar name="John Doe" size="sm" rounded />
-        <Avatar name="John Doe" size="md" rounded />
-        <Avatar name="John Doe" size="lg" rounded />
-      </div>
-    </div>
-    <div>
-      <h6 className="font-semibold mb-cn-xs text-center">Avatar Icon (Default)</h6>
-      <div className="flex items-center justify-center gap-cn-xl">
-        <Avatar size="xs" />
-        <Avatar size="sm" />
-        <Avatar size="md" />
-        <Avatar size="lg" />
-      </div>
-    </div>
-    <div>
-      <h6 className="font-semibold mb-cn-xs text-center">Avatar Icon (Rounded)</h6>
-      <div className="flex items-center justify-center gap-cn-xl">
-        <Avatar size="xs" rounded />
-        <Avatar size="sm" rounded />
-        <Avatar size="md" rounded />
-        <Avatar size="lg" rounded />
-      </div>
-    </div>
-    <div>
-      <h6 className="font-semibold mb-cn-xs text-center">Group Avatar Icon (Default)</h6>
-      <div className="flex items-center justify-center gap-cn-xl">
-        <Avatar size="xs" isGroup />
-        <Avatar size="sm" isGroup />
-        <Avatar size="md" isGroup />
-        <Avatar size="lg" isGroup />
-      </div>
-    </div>
-    <div>
-      <h6 className="font-semibold mb-cn-xs text-center">Group Avatar Icon (Rounded)</h6>
-      <div className="flex items-center justify-center gap-cn-xl">
-        <Avatar size="xs" rounded isGroup />
-        <Avatar size="sm" rounded isGroup />
-        <Avatar size="md" rounded isGroup />
-        <Avatar size="lg" rounded isGroup />
-      </div>
-    </div>
+  </div>
+
+<div className="flex items-center gap-cn-md border-b border-cn-borders-3 pb-cn-sm">
+  <span className="text-cn-size-2 text-cn-3 w-40 shrink-0 font-mono">
+    image rounded
+  </span>
+  <div className="flex items-center gap-cn-xl">
+    <Avatar name="John Doe" src="/avatar.png" size="xs" rounded />
+    <Avatar name="John Doe" src="/avatar.png" size="sm" rounded />
+    <Avatar name="John Doe" src="/avatar.png" size="md" rounded />
+    <Avatar name="John Doe" src="/avatar.png" size="lg" rounded />
+  </div>
+</div>
+
+<div className="flex items-center gap-cn-md border-b border-cn-borders-3 pb-cn-sm">
+  <span className="text-cn-size-2 text-cn-3 w-40 shrink-0 font-mono">
+    initials
+  </span>
+  <div className="flex items-center gap-cn-xl">
+    <Avatar name="John Doe" size="xs" />
+    <Avatar name="John Doe" size="sm" />
+    <Avatar name="John Doe" size="md" />
+    <Avatar name="John Doe" size="lg" />
+  </div>
+</div>
+
+<div className="flex items-center gap-cn-md border-b border-cn-borders-3 pb-cn-sm">
+  <span className="text-cn-size-2 text-cn-3 w-40 shrink-0 font-mono">
+    initials rounded
+  </span>
+  <div className="flex items-center gap-cn-xl">
+    <Avatar name="John Doe" size="xs" rounded />
+    <Avatar name="John Doe" size="sm" rounded />
+    <Avatar name="John Doe" size="md" rounded />
+    <Avatar name="John Doe" size="lg" rounded />
+  </div>
+</div>
+
+<div className="flex items-center gap-cn-md border-b border-cn-borders-3 pb-cn-sm">
+  <span className="text-cn-size-2 text-cn-3 w-40 shrink-0 font-mono">
+    avatar icon
+  </span>
+  <div className="flex items-center gap-cn-xl">
+    <Avatar size="xs" />
+    <Avatar size="sm" />
+    <Avatar size="md" />
+    <Avatar size="lg" />
+  </div>
+</div>
+
+<div className="flex items-center gap-cn-md border-b border-cn-borders-3 pb-cn-sm">
+  <span className="text-cn-size-2 text-cn-3 w-40 shrink-0 font-mono">
+    avatar icon rounded
+  </span>
+  <div className="flex items-center gap-cn-xl">
+    <Avatar size="xs" rounded />
+    <Avatar size="sm" rounded />
+    <Avatar size="md" rounded />
+    <Avatar size="lg" rounded />
+  </div>
+</div>
+
+<div className="flex items-center gap-cn-md border-b border-cn-borders-3 pb-cn-sm">
+  <span className="text-cn-size-2 text-cn-3 w-40 shrink-0 font-mono">
+    group
+  </span>
+  <div className="flex items-center gap-cn-xl">
+    <Avatar size="xs" isGroup />
+    <Avatar size="sm" isGroup />
+    <Avatar size="md" isGroup />
+    <Avatar size="lg" isGroup />
+  </div>
+</div>
+
+<div className="flex items-center gap-cn-md">
+  <span className="text-cn-size-2 text-cn-3 w-40 shrink-0 font-mono">group rounded</span>
+  <div className="flex items-center gap-cn-xl">
+    <Avatar size="xs" rounded isGroup />
+    <Avatar size="sm" rounded isGroup />
+    <Avatar size="md" rounded isGroup />
+    <Avatar size="lg" rounded isGroup />
+  </div>
+</div>
 </div>`}
 />
 
@@ -103,11 +122,23 @@ The `Avatar` component supports four sizes: `xs`, `sm`, `md`, and `lg`. The defa
 
 <DocsPage.ComponentExample
   client:only
-  code={`<div className="flex items-center gap-cn-xl">
+  code={`<div className="space-y-cn-sm w-full">
+  <div className="flex items-center gap-cn-md border-b border-cn-borders-3 pb-cn-sm">
+    <span className="text-cn-size-2 text-cn-3 w-32 shrink-0 font-mono">xs</span>
     <Avatar name="John Doe" src="/avatar.png" size="xs" />
+  </div>
+  <div className="flex items-center gap-cn-md border-b border-cn-borders-3 pb-cn-sm">
+    <span className="text-cn-size-2 text-cn-3 w-32 shrink-0 font-mono">sm</span>
     <Avatar name="John Doe" src="/avatar.png" size="sm" />
+  </div>
+  <div className="flex items-center gap-cn-md border-b border-cn-borders-3 pb-cn-sm">
+    <span className="text-cn-size-2 text-cn-3 w-32 shrink-0 font-mono">md</span>
     <Avatar name="John Doe" src="/avatar.png" size="md" />
+  </div>
+  <div className="flex items-center gap-cn-md">
+    <span className="text-cn-size-2 text-cn-3 w-32 shrink-0 font-mono">lg</span>
     <Avatar name="John Doe" src="/avatar.png" size="lg" />
+  </div>
 </div>`}
 />
 
@@ -117,9 +148,15 @@ The `Avatar` component supports two visual shapes: `md` and `rounded`.
 
 <DocsPage.ComponentExample
   client:only
-  code={`<div className="flex items-center gap-cn-xl">
+  code={`<div className="space-y-cn-sm w-full">
+  <div className="flex items-center gap-cn-md border-b border-cn-borders-3 pb-cn-sm">
+    <span className="text-cn-size-2 text-cn-3 w-32 shrink-0 font-mono">default</span>
     <Avatar name="John Doe" />
+  </div>
+  <div className="flex items-center gap-cn-md">
+    <span className="text-cn-size-2 text-cn-3 w-32 shrink-0 font-mono">rounded</span>
     <Avatar name="John Doe" rounded />
+  </div>
 </div>`}
 />
 
@@ -129,9 +166,15 @@ In case you want the fallback string to be without initials, pass the `noInitial
 
 <DocsPage.ComponentExample
   client:only
-  code={`<div className="flex items-center gap-cn-xl">
+  code={`<div className="space-y-cn-sm w-full">
+  <div className="flex items-center gap-cn-md border-b border-cn-borders-3 pb-cn-sm">
+    <span className="text-cn-size-2 text-cn-3 w-32 shrink-0 font-mono">+22</span>
     <Avatar noInitials name="+22" size="lg" rounded />
+  </div>
+  <div className="flex items-center gap-cn-md">
+    <span className="text-cn-size-2 text-cn-3 w-32 shrink-0 font-mono">+222</span>
     <Avatar noInitials name="+222" size="lg" rounded />
+  </div>
 </div>`}
 />
 
@@ -141,11 +184,23 @@ You can display a custom icon instead of initials or the default user icon using
 
 <DocsPage.ComponentExample
   client:only
-  code={`<div className="flex items-center gap-cn-xl">
+  code={`<div className="space-y-cn-sm w-full">
+  <div className="flex items-center gap-cn-md border-b border-cn-borders-3 pb-cn-sm">
+    <span className="text-cn-size-2 text-cn-3 w-32 shrink-0 font-mono">account</span>
     <Avatar icon="account" size="lg" rounded />
+  </div>
+  <div className="flex items-center gap-cn-md border-b border-cn-borders-3 pb-cn-sm">
+    <span className="text-cn-size-2 text-cn-3 w-32 shrink-0 font-mono">organizations</span>
     <Avatar icon="organizations" size="lg" rounded />
+  </div>
+  <div className="flex items-center gap-cn-md border-b border-cn-borders-3 pb-cn-sm">
+    <span className="text-cn-size-2 text-cn-3 w-32 shrink-0 font-mono">folder</span>
     <Avatar icon="folder" size="lg" rounded />
+  </div>
+  <div className="flex items-center gap-cn-md">
+    <span className="text-cn-size-2 text-cn-3 w-32 shrink-0 font-mono">git-branch</span>
     <Avatar icon="git-branch" size="lg" rounded />
+  </div>
 </div>`}
 />
 
@@ -155,15 +210,24 @@ Use `AvatarWithTooltip` to display a tooltip on hover.
 
 <DocsPage.ComponentExample
   client:only
-  code={`<div className="flex items-center gap-cn-xl">
+  code={`<div className="space-y-cn-sm w-full">
+  <div className="flex items-center gap-cn-md border-b border-cn-borders-3 pb-cn-sm">
+    <span className="text-cn-size-2 text-cn-3 w-32 shrink-0 font-mono">image</span>
     <AvatarWithTooltip name="John Doe" src="/avatar.png" size="lg" rounded />
+  </div>
+  <div className="flex items-center gap-cn-md border-b border-cn-borders-3 pb-cn-sm">
+    <span className="text-cn-size-2 text-cn-3 w-32 shrink-0 font-mono">initials</span>
     <AvatarWithTooltip name="Jane Smith" size="lg" rounded />
-    <AvatarWithTooltip 
-      icon="folder" 
-      size="lg" 
-      rounded 
-      tooltipProps={{ content: "Project folder" }} 
+  </div>
+  <div className="flex items-center gap-cn-md">
+    <span className="text-cn-size-2 text-cn-3 w-32 shrink-0 font-mono">custom icon</span>
+    <AvatarWithTooltip
+      icon="folder"
+      size="lg"
+      rounded
+      tooltipProps={{ content: "Project folder" }}
     />
+  </div>
 </div>`}
 />
 

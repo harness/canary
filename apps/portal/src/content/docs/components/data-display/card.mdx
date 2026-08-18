@@ -9,28 +9,43 @@ import { DocsPage } from "@/components/docs-page";
 
 <DocsPage.ComponentExample
   client:only
-  code={`<div className="flex flex-col gap-cn-2xl">
-
-    <Card.Root>
-      <Card.Image src="/card-image.png" />
-      <Card.Title>Complete Card</Card.Title>
-      <Card.Content>A card showcasing all elements: image, title, and content.</Card.Content>
-    </Card.Root>
-
-    <Card.Root>
-      <Card.Title>Title Only</Card.Title>
-    </Card.Root>
-
-    <Card.Root>
-      <Card.Content>A card with just content text, without any title or image.</Card.Content>
-    </Card.Root>
-
-    <Card.Root>
-      <Card.Title>Title and Content</Card.Title>
-      <Card.Content>The most common card type with both a title and content.</Card.Content>
-    </Card.Root>
-
-  </div>`}
+  code={`<div className="space-y-cn-md w-full">
+  <div className="flex items-start gap-cn-md border-b border-cn-borders-3 pb-cn-md">
+    <span className="text-cn-size-2 text-cn-3 w-40 shrink-0 font-mono pt-cn-xs">complete</span>
+    <div className="flex-1 min-w-0">
+      <Card.Root>
+        <Card.Image src="/card-image.png" />
+        <Card.Title>Complete Card</Card.Title>
+        <Card.Content>A card showcasing all elements: image, title, and content.</Card.Content>
+      </Card.Root>
+    </div>
+  </div>
+  <div className="flex items-start gap-cn-md border-b border-cn-borders-3 pb-cn-md">
+    <span className="text-cn-size-2 text-cn-3 w-40 shrink-0 font-mono pt-cn-xs">title only</span>
+    <div className="flex-1 min-w-0">
+      <Card.Root>
+        <Card.Title>Title Only</Card.Title>
+      </Card.Root>
+    </div>
+  </div>
+  <div className="flex items-start gap-cn-md border-b border-cn-borders-3 pb-cn-md">
+    <span className="text-cn-size-2 text-cn-3 w-40 shrink-0 font-mono pt-cn-xs">content only</span>
+    <div className="flex-1 min-w-0">
+      <Card.Root>
+        <Card.Content>A card with just content text, without any title or image.</Card.Content>
+      </Card.Root>
+    </div>
+  </div>
+  <div className="flex items-start gap-cn-md">
+    <span className="text-cn-size-2 text-cn-3 w-40 shrink-0 font-mono pt-cn-xs">title + content</span>
+    <div className="flex-1 min-w-0">
+      <Card.Root>
+        <Card.Title>Title and Content</Card.Title>
+        <Card.Content>The most common card type with both a title and content.</Card.Content>
+      </Card.Root>
+    </div>
+  </div>
+</div>`}
 />
 
 ## Usage
@@ -57,20 +72,35 @@ The `Card` component supports three sizes: `sm`, `md`, and `lg`. The size prop d
 
 <DocsPage.ComponentExample
   client:only
-  code={`<div className="flex flex-col gap-cn-md">
-    <Card.Root size="sm">
-      <Card.Title>Small Card</Card.Title>
-      <Card.Content>Compact size</Card.Content>
-    </Card.Root>
-    <Card.Root>
-      <Card.Title>Medium Card</Card.Title>
-      <Card.Content>Standard size</Card.Content>
-    </Card.Root>
-    <Card.Root size="lg">
-      <Card.Title>Large Card</Card.Title>
-      <Card.Content>Larger size</Card.Content>
-    </Card.Root>
-  </div>`}
+  code={`<div className="space-y-cn-md w-full">
+  <div className="flex items-start gap-cn-md border-b border-cn-borders-3 pb-cn-md">
+    <span className="text-cn-size-2 text-cn-3 w-40 shrink-0 font-mono pt-cn-xs">sm</span>
+    <div className="flex-1 min-w-0">
+      <Card.Root size="sm">
+        <Card.Title>Small Card</Card.Title>
+        <Card.Content>Compact size</Card.Content>
+      </Card.Root>
+    </div>
+  </div>
+  <div className="flex items-start gap-cn-md border-b border-cn-borders-3 pb-cn-md">
+    <span className="text-cn-size-2 text-cn-3 w-40 shrink-0 font-mono pt-cn-xs">md</span>
+    <div className="flex-1 min-w-0">
+      <Card.Root>
+        <Card.Title>Medium Card</Card.Title>
+        <Card.Content>Standard size</Card.Content>
+      </Card.Root>
+    </div>
+  </div>
+  <div className="flex items-start gap-cn-md">
+    <span className="text-cn-size-2 text-cn-3 w-40 shrink-0 font-mono pt-cn-xs">lg</span>
+    <div className="flex-1 min-w-0">
+      <Card.Root size="lg">
+        <Card.Title>Large Card</Card.Title>
+        <Card.Content>Larger size</Card.Content>
+      </Card.Root>
+    </div>
+  </div>
+</div>`}
 />
 
 ## Orientation
@@ -79,18 +109,28 @@ The `Card` component supports two orientations: `vertical` and `horizontal`. The
 
 <DocsPage.ComponentExample
   client:only
-  code={`<div className="flex flex-col gap-cn-md">
-    <Card.Root orientation="vertical">
-      <Card.Image src="/card-image.png" />
-      <Card.Title>Vertical Layout</Card.Title>
-      <Card.Content>Content stacks vertically below the image</Card.Content>
-    </Card.Root>
-    <Card.Root orientation="horizontal">
-      <Card.Image src="/card-image.png" />
-      <Card.Title>Horizontal Layout</Card.Title>
-      <Card.Content>Content appears side-by-side with the image</Card.Content>
-    </Card.Root>
-  </div>`}
+  code={`<div className="space-y-cn-md w-full">
+  <div className="flex items-start gap-cn-md border-b border-cn-borders-3 pb-cn-md">
+    <span className="text-cn-size-2 text-cn-3 w-40 shrink-0 font-mono pt-cn-xs">vertical</span>
+    <div className="flex-1 min-w-0">
+      <Card.Root orientation="vertical">
+        <Card.Image src="/card-image.png" />
+        <Card.Title>Vertical Layout</Card.Title>
+        <Card.Content>Content stacks vertically below the image</Card.Content>
+      </Card.Root>
+    </div>
+  </div>
+  <div className="flex items-start gap-cn-md">
+    <span className="text-cn-size-2 text-cn-3 w-40 shrink-0 font-mono pt-cn-xs">horizontal</span>
+    <div className="w-[440px] max-w-full">
+      <Card.Root orientation="horizontal">
+        <Card.Image src="/card-image.png" width={180} />
+        <Card.Title>Horizontal Layout</Card.Title>
+        <Card.Content>Content appears side-by-side with the image</Card.Content>
+      </Card.Root>
+    </div>
+  </div>
+</div>`}
 />
 
 ## Image Position
@@ -99,16 +139,26 @@ The `position` prop controls where the image is placed within the card layout. I
 
 <DocsPage.ComponentExample
   client:only
-  code={`<div className="flex flex-col gap-cn-md">
-    <Card.Root orientation="horizontal" position="start">
-      <Card.Image src="/card-image.png" />
-      <Card.Title>Image at Start</Card.Title>
-    </Card.Root>
-    <Card.Root orientation="horizontal" position="end">
-      <Card.Title>Image at End</Card.Title>
-      <Card.Image src="/card-image.png" />
-    </Card.Root>
-  </div>`}
+  code={`<div className="space-y-cn-md w-full">
+  <div className="flex items-start gap-cn-md border-b border-cn-borders-3 pb-cn-md">
+    <span className="text-cn-size-2 text-cn-3 w-40 shrink-0 font-mono pt-cn-xs">start</span>
+    <div className="w-[440px] max-w-full">
+      <Card.Root orientation="horizontal" position="start">
+        <Card.Image src="/card-image.png" width={180} />
+        <Card.Title>Image at Start</Card.Title>
+      </Card.Root>
+    </div>
+  </div>
+  <div className="flex items-start gap-cn-md">
+    <span className="text-cn-size-2 text-cn-3 w-40 shrink-0 font-mono pt-cn-xs">end</span>
+    <div className="w-[440px] max-w-full">
+      <Card.Root orientation="horizontal" position="end">
+        <Card.Title>Image at End</Card.Title>
+        <Card.Image src="/card-image.png" width={180} />
+      </Card.Root>
+    </div>
+  </div>
+</div>`}
 />
 
 ## States
@@ -117,20 +167,35 @@ The `Card` component supports `selected`, `disabled` and `interactive` states:
 
 <DocsPage.ComponentExample
   client:only
-  code={`<div className="flex gap-cn-md">
-    <Card.Root selected>
-      <Card.Title>Selected Card</Card.Title>
-      <Card.Content>Active state</Card.Content>
-    </Card.Root>
-    <Card.Root disabled>
-      <Card.Title>Disabled Card</Card.Title>
-      <Card.Content>Inactive state</Card.Content>
-    </Card.Root>
-    <Card.Root interactive={false}>
-      <Card.Title>Interactive Card</Card.Title>
-      <Card.Content>Not interactive state</Card.Content>
-    </Card.Root>
-  </div>`}
+  code={`<div className="space-y-cn-md w-full">
+  <div className="flex items-start gap-cn-md border-b border-cn-borders-3 pb-cn-md">
+    <span className="text-cn-size-2 text-cn-3 w-40 shrink-0 font-mono pt-cn-xs">selected</span>
+    <div className="flex-1 min-w-0">
+      <Card.Root selected>
+        <Card.Title>Selected Card</Card.Title>
+        <Card.Content>Active state</Card.Content>
+      </Card.Root>
+    </div>
+  </div>
+  <div className="flex items-start gap-cn-md border-b border-cn-borders-3 pb-cn-md">
+    <span className="text-cn-size-2 text-cn-3 w-40 shrink-0 font-mono pt-cn-xs">disabled</span>
+    <div className="flex-1 min-w-0">
+      <Card.Root disabled>
+        <Card.Title>Disabled Card</Card.Title>
+        <Card.Content>Inactive state</Card.Content>
+      </Card.Root>
+    </div>
+  </div>
+  <div className="flex items-start gap-cn-md">
+    <span className="text-cn-size-2 text-cn-3 w-40 shrink-0 font-mono pt-cn-xs">non-interactive</span>
+    <div className="flex-1 min-w-0">
+      <Card.Root interactive={false}>
+        <Card.Title>Interactive Card</Card.Title>
+        <Card.Content>Not interactive state</Card.Content>
+      </Card.Root>
+    </div>
+  </div>
+</div>`}
 />
 
 ## API Reference

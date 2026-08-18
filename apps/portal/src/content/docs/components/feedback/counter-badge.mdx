@@ -9,13 +9,17 @@ import { DocsPage } from "@/components/docs-page";
 
 <DocsPage.ComponentExample
   client:only
-  code={`<div className="flex gap-cn-lg">
-        <CounterBadge>1</CounterBadge>
-        <CounterBadge theme="info">42</CounterBadge>
-        <CounterBadge theme="success">+2345</CounterBadge>
-        <CounterBadge theme="danger">-123</CounterBadge>
+  code={`<div className="space-y-cn-sm w-full">
+  <div className="flex items-center gap-cn-md">
+    <span className="text-cn-size-2 text-cn-3 w-32 shrink-0 font-mono">themes</span>
+    <div className="flex gap-cn-lg">
+      <CounterBadge>1</CounterBadge>
+      <CounterBadge theme="info">42</CounterBadge>
+      <CounterBadge theme="success">+2345</CounterBadge>
+      <CounterBadge theme="danger">-123</CounterBadge>
     </div>
-`}
+  </div>
+</div>`}
 />
 
 ## Usage
@@ -48,13 +52,17 @@ The outline variant provides a subtle border-based appearance, ideal for seconda
 
 <DocsPage.ComponentExample
   client:only
-  code={`<div className="flex gap-cn-lg">
-        <CounterBadge variant="outline">1</CounterBadge>
-        <CounterBadge variant="outline" theme="info">42</CounterBadge>
-        <CounterBadge variant="outline" theme="success">+2345</CounterBadge>
-        <CounterBadge variant="outline" theme="danger">-123</CounterBadge>
+  code={`<div className="space-y-cn-sm w-full">
+  <div className="flex items-center gap-cn-md">
+    <span className="text-cn-size-2 text-cn-3 w-32 shrink-0 font-mono">outline</span>
+    <div className="flex gap-cn-lg">
+      <CounterBadge variant="outline">1</CounterBadge>
+      <CounterBadge variant="outline" theme="info">42</CounterBadge>
+      <CounterBadge variant="outline" theme="success">+2345</CounterBadge>
+      <CounterBadge variant="outline" theme="danger">-123</CounterBadge>
     </div>
-`}
+  </div>
+</div>`}
 />
 
 ### Secondary Variant
@@ -63,13 +71,17 @@ The secondary variant uses a soft background appearance for more prominent displ
 
 <DocsPage.ComponentExample
   client:only
-  code={`<div className="flex gap-cn-lg">
-        <CounterBadge variant="secondary">1</CounterBadge>
-        <CounterBadge variant="secondary" theme="info">42</CounterBadge>
-        <CounterBadge variant="secondary" theme="success">+2345</CounterBadge>
-        <CounterBadge variant="secondary" theme="danger">-123</CounterBadge>
+  code={`<div className="space-y-cn-sm w-full">
+  <div className="flex items-center gap-cn-md">
+    <span className="text-cn-size-2 text-cn-3 w-32 shrink-0 font-mono">secondary</span>
+    <div className="flex gap-cn-lg">
+      <CounterBadge variant="secondary">1</CounterBadge>
+      <CounterBadge variant="secondary" theme="info">42</CounterBadge>
+      <CounterBadge variant="secondary" theme="success">+2345</CounterBadge>
+      <CounterBadge variant="secondary" theme="danger">-123</CounterBadge>
     </div>
-`}
+  </div>
+</div>`}
 />
 
 ### Variant Comparison
@@ -78,27 +90,26 @@ Compare both variants side by side to see the visual differences:
 
 <DocsPage.ComponentExample
   client:only
-  code={`<div className="flex flex-col gap-cn-md">
+  code={`<div className="space-y-cn-sm w-full">
+  <div className="flex items-center gap-cn-md border-b border-cn-borders-3 pb-cn-sm">
+    <span className="text-cn-size-2 text-cn-3 w-32 shrink-0 font-mono">outline</span>
     <div className="flex gap-cn-sm">
-      <Text variant="heading-subsection" as="h4" className="min-w-[80px]">Outline:</Text>
-      <div className="flex gap-cn-sm">
-        <CounterBadge variant="outline">12</CounterBadge>
-        <CounterBadge variant="outline" theme="info">42</CounterBadge>
-        <CounterBadge variant="outline" theme="success">+99</CounterBadge>
-        <CounterBadge variant="outline" theme="danger">-5</CounterBadge>
-      </div>
-    </div>
-    <div className="flex gap-cn-sm">
-      <Text variant="heading-subsection" as="h4" className="min-w-[80px]">Secondary:</Text>
-      <div className="flex gap-cn-sm">
-        <CounterBadge variant="secondary">12</CounterBadge>
-        <CounterBadge variant="secondary" theme="info">42</CounterBadge>
-        <CounterBadge variant="secondary" theme="success">+99</CounterBadge>
-        <CounterBadge variant="secondary" theme="danger">-5</CounterBadge>
-      </div>
+      <CounterBadge variant="outline">12</CounterBadge>
+      <CounterBadge variant="outline" theme="info">42</CounterBadge>
+      <CounterBadge variant="outline" theme="success">+99</CounterBadge>
+      <CounterBadge variant="outline" theme="danger">-5</CounterBadge>
     </div>
   </div>
-`}
+  <div className="flex items-center gap-cn-md">
+    <span className="text-cn-size-2 text-cn-3 w-32 shrink-0 font-mono">secondary</span>
+    <div className="flex gap-cn-sm">
+      <CounterBadge variant="secondary">12</CounterBadge>
+      <CounterBadge variant="secondary" theme="info">42</CounterBadge>
+      <CounterBadge variant="secondary" theme="success">+99</CounterBadge>
+      <CounterBadge variant="secondary" theme="danger">-5</CounterBadge>
+    </div>
+  </div>
+</div>`}
 />
 
 ## Themes
@@ -113,12 +124,15 @@ Neutral indicators are used for displaying general counts or values that don't c
 
 <DocsPage.ComponentExample
   client:only
-  code={`
+  code={`<div className="space-y-cn-sm w-full">
+  <div className="flex items-center gap-cn-md">
+    <span className="text-cn-size-2 text-cn-3 w-32 shrink-0 font-mono">neutral</span>
     <div className="flex gap-cn-xs">
-        <CounterBadge>0</CounterBadge>
-        <CounterBadge theme="info">42</CounterBadge>
+      <CounterBadge>0</CounterBadge>
+      <CounterBadge theme="info">42</CounterBadge>
     </div>
-`}
+  </div>
+</div>`}
 />
 
 #### Status Indicators
@@ -127,12 +141,15 @@ Status indicators communicate the nature of the change or value - whether it rep
 
 <DocsPage.ComponentExample
   client:only
-  code={`
+  code={`<div className="space-y-cn-sm w-full">
+  <div className="flex items-center gap-cn-md">
+    <span className="text-cn-size-2 text-cn-3 w-32 shrink-0 font-mono">status</span>
     <div className="flex gap-cn-xs">
-        <CounterBadge theme="success">+2345</CounterBadge>
-        <CounterBadge theme="danger">-123</CounterBadge>
+      <CounterBadge theme="success">+2345</CounterBadge>
+      <CounterBadge theme="danger">-123</CounterBadge>
     </div>
-`}
+  </div>
+</div>`}
 />
 
 ## API Reference

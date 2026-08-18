@@ -19,83 +19,89 @@ import { DocsPage } from "@/components/docs-page";
     const [errorIndeterminate, setErrorIndeterminate] = React.useState<'indeterminate' | boolean>('indeterminate');
 
     return (
-      <div className="flex flex-col space-y-cn-2xl">
-        {/* Standard usage */}
-        <div className="space-y-cn-xs">
-          <Text variant="heading-subsection" as="h4">Standard usage</Text>
-          <Checkbox
-            id="checkbox-standard"
-            checked={checked}
-            onCheckedChange={setChecked}
-            label="Accept terms and conditions"
-            caption="You must accept terms and conditions to proceed."
-          />
-        </div>
-
-        {/* Indeterminate state */}
-        <div className="space-y-cn-xs">
-          <Text variant="heading-subsection" as="h4">Indeterminate state</Text>
-          <Checkbox
-            id="checkbox-indeterminate"
-            checked={checkedIndeterminate ? "indeterminate" : false}
-            onCheckedChange={() => setCheckedIndeterminate(!checkedIndeterminate)}
-            label="Select items"
-            caption="Indicates partial selection of items."
-          />
-        </div>
-
-        {/* Optional */}
-        <div className="space-y-cn-xs">
-          <Text variant="heading-subsection" as="h4">Optional</Text>
-          <Checkbox
-            id="checkbox-optional"
-            checked={optionalChecked}
-            onCheckedChange={setOptionalChecked}
-            label="Subscribe to newsletter"
-            caption="This field is optional."
-            optional
-          />
-        </div>
-
-        {/* Disabled */}
-        <div className="space-y-cn-xs">
-          <Text variant="heading-subsection" as="h4">Disabled</Text>
-          <Checkbox
-            id="checkbox-disabled"
-            checked={false}
-            onCheckedChange={() => {}}
-            disabled
-            label="Subscribe to newsletter"
-            caption="This option is currently unavailable."
-          />
-        </div>
-
-        {/* Without Label */}
-        <div className="space-y-cn-xs">
-          <Text variant="heading-subsection" as="h4">Without Label</Text>
-          <Checkbox
-            id="checkbox-no-label"
-            checked={checkedWOLabel}
-            onCheckedChange={setCheckedWOLabel}
-          />
-        </div>
-
-        {/* Error state */}
-        <div className="space-y-cn-xs">
-          <Text variant="heading-subsection" as="h4">Error state</Text>
-          <div className="flex items-center space-x-cn-2xl">
+      <div className="space-y-cn-md w-full">
+        <div className="flex items-start gap-cn-md border-b border-cn-borders-3 pb-cn-md">
+          <span className="text-cn-size-2 text-cn-3 w-40 shrink-0 font-mono pt-cn-xs">standard</span>
+          <div className="flex-1 min-w-0">
             <Checkbox
-              id="checkbox-error"
-              checked={errorChecked}
-              onCheckedChange={setErrorChecked}
-              error
+              id="checkbox-standard"
+              checked={checked}
+              onCheckedChange={setChecked}
+              label="Accept terms and conditions"
+              caption="You must accept terms and conditions to proceed."
             />
+          </div>
+        </div>
+
+        <div className="flex items-start gap-cn-md border-b border-cn-borders-3 pb-cn-md">
+          <span className="text-cn-size-2 text-cn-3 w-40 shrink-0 font-mono pt-cn-xs">indeterminate</span>
+          <div className="flex-1 min-w-0">
             <Checkbox
-              id="checkbox-error-indeterminate"
-              checked={errorIndeterminate ? "indeterminate" : false}
-              onCheckedChange={() => setErrorIndeterminate(!errorIndeterminate)}
-              error
+              id="checkbox-indeterminate"
+              checked={checkedIndeterminate ? "indeterminate" : false}
+              onCheckedChange={() => setCheckedIndeterminate(!checkedIndeterminate)}
+              label="Select items"
+              caption="Indicates partial selection of items."
             />
+          </div>
+        </div>
+
+        <div className="flex items-start gap-cn-md border-b border-cn-borders-3 pb-cn-md">
+          <span className="text-cn-size-2 text-cn-3 w-40 shrink-0 font-mono pt-cn-xs">optional</span>
+          <div className="flex-1 min-w-0">
+            <Checkbox
+              id="checkbox-optional"
+              checked={optionalChecked}
+              onCheckedChange={setOptionalChecked}
+              label="Subscribe to newsletter"
+              caption="This field is optional."
+              optional
+            />
+          </div>
+        </div>
+
+        <div className="flex items-start gap-cn-md border-b border-cn-borders-3 pb-cn-md">
+          <span className="text-cn-size-2 text-cn-3 w-40 shrink-0 font-mono pt-cn-xs">disabled</span>
+          <div className="flex-1 min-w-0">
+            <Checkbox
+              id="checkbox-disabled"
+              checked={false}
+              onCheckedChange={() => {}}
+              disabled
+              label="Subscribe to newsletter"
+              caption="This option is currently unavailable."
+            />
+          </div>
+        </div>
+
+        <div className="flex items-start gap-cn-md border-b border-cn-borders-3 pb-cn-md">
+          <span className="text-cn-size-2 text-cn-3 w-40 shrink-0 font-mono pt-cn-xs">no label</span>
+          <div className="flex-1 min-w-0">
+            <Checkbox
+              id="checkbox-no-label"
+              checked={checkedWOLabel}
+              onCheckedChange={setCheckedWOLabel}
+            />
+          </div>
+        </div>
+
+        <div className="flex items-start gap-cn-md">
+          <span className="text-cn-size-2 text-cn-3 w-40 shrink-0 font-mono pt-cn-xs">error</span>
+          <div className="flex-1 min-w-0">
+            <div className="flex items-center space-x-cn-2xl">
+              <Checkbox
+                id="checkbox-error"
+                checked={errorChecked}
+                onCheckedChange={setErrorChecked}
+                error
+              />
+              <Checkbox
+                id="checkbox-error-indeterminate"
+                checked={errorIndeterminate ? "indeterminate" : false}
+                onCheckedChange={() => setErrorIndeterminate(!errorIndeterminate)}
+                error
+              />
+            </div>
           </div>
         </div>
       </div>

@@ -9,27 +9,34 @@ import { DocsPage } from "@/components/docs-page";
 
 <DocsPage.ComponentExample
   client:only
-  code={`
-  <div className="flex flex-col space-y-cn-2xl">
-    <CardSelect.Root type="single" layout="horizontal" onValueChange={console.log}>
-      <CardSelect.Item value="option-1">
-        <CardSelect.Title>Option 1</CardSelect.Title>
-      </CardSelect.Item>
-      <CardSelect.Item value="option-2">
-        <CardSelect.Title>Option 2</CardSelect.Title>
-      </CardSelect.Item>
-    </CardSelect.Root>
-
-    <CardSelect.Root type="multiple" defaultValue={["one"]} onValueChange={console.log}>
-      <CardSelect.Item value="one">
-        <CardSelect.Title>Option A</CardSelect.Title>
-      </CardSelect.Item>
-      <CardSelect.Item value="two">
-        <CardSelect.Title>Option B</CardSelect.Title>
-      </CardSelect.Item>
-    </CardSelect.Root>
-
-  </div>`}
+  code={`<div className="space-y-cn-md w-full">
+  <div className="flex items-start gap-cn-md border-b border-cn-borders-3 pb-cn-md">
+    <span className="text-cn-size-2 text-cn-3 w-40 shrink-0 font-mono pt-cn-xs">single</span>
+    <div className="flex-1 min-w-0">
+      <CardSelect.Root type="single" layout="horizontal" onValueChange={console.log}>
+        <CardSelect.Item value="option-1">
+          <CardSelect.Title>Option 1</CardSelect.Title>
+        </CardSelect.Item>
+        <CardSelect.Item value="option-2">
+          <CardSelect.Title>Option 2</CardSelect.Title>
+        </CardSelect.Item>
+      </CardSelect.Root>
+    </div>
+  </div>
+  <div className="flex items-start gap-cn-md">
+    <span className="text-cn-size-2 text-cn-3 w-40 shrink-0 font-mono pt-cn-xs">multiple</span>
+    <div className="flex-1 min-w-0">
+      <CardSelect.Root type="multiple" defaultValue={["one"]} onValueChange={console.log}>
+        <CardSelect.Item value="one">
+          <CardSelect.Title>Option A</CardSelect.Title>
+        </CardSelect.Item>
+        <CardSelect.Item value="two">
+          <CardSelect.Title>Option B</CardSelect.Title>
+        </CardSelect.Item>
+      </CardSelect.Root>
+    </div>
+  </div>
+</div>`}
 />
 
 ## Usage
@@ -60,33 +67,36 @@ The `CardSelect` supports two selection types:
 
 <DocsPage.ComponentExample
   client:only
-  code={`<div className="flex flex-col space-y-cn-2xl">
-  <div className="flex flex-col space-y-cn-xs">
-    <Text variant="heading-subsection" as="h4">Single Selection</Text>
-    <CardSelect.Root type="single" defaultValue="single-1">
-      <CardSelect.Item value="single-1" logo="gitlab">
-        <CardSelect.Title>Option 1</CardSelect.Title>
-        <CardSelect.Description>Behaves like a radio group</CardSelect.Description>
-      </CardSelect.Item>
-      <CardSelect.Item value="single-2" logo="bitbucket">
-        <CardSelect.Title>Option 2</CardSelect.Title>
-        <CardSelect.Description>Behaves like a radio group</CardSelect.Description>
-      </CardSelect.Item>
-    </CardSelect.Root>
+  code={`<div className="space-y-cn-md w-full">
+  <div className="flex items-start gap-cn-md border-b border-cn-borders-3 pb-cn-md">
+    <span className="text-cn-size-2 text-cn-3 w-40 shrink-0 font-mono pt-cn-xs">single</span>
+    <div className="flex-1 min-w-0">
+      <CardSelect.Root type="single" defaultValue="single-1">
+        <CardSelect.Item value="single-1" logo="gitlab">
+          <CardSelect.Title>Option 1</CardSelect.Title>
+          <CardSelect.Description>Behaves like a radio group</CardSelect.Description>
+        </CardSelect.Item>
+        <CardSelect.Item value="single-2" logo="bitbucket">
+          <CardSelect.Title>Option 2</CardSelect.Title>
+          <CardSelect.Description>Behaves like a radio group</CardSelect.Description>
+        </CardSelect.Item>
+      </CardSelect.Root>
+    </div>
   </div>
-
-  <div className="flex flex-col space-y-cn-xs">
-    <Text variant="heading-subsection" as="h4">Multiple Selection</Text>
-    <CardSelect.Root type="multiple" defaultValue={["multi-1", "multi-2"]}>
-      <CardSelect.Item value="multi-1" icon="git-pull-request-draft">
-        <CardSelect.Title>Option A</CardSelect.Title>
-        <CardSelect.Description>Behaves like a checkbox</CardSelect.Description>
-      </CardSelect.Item>
-      <CardSelect.Item value="multi-2" icon="git-merge">
-        <CardSelect.Title>Option B</CardSelect.Title>
-        <CardSelect.Description>Behaves like a checkbox</CardSelect.Description>
-      </CardSelect.Item>
-    </CardSelect.Root>
+  <div className="flex items-start gap-cn-md">
+    <span className="text-cn-size-2 text-cn-3 w-40 shrink-0 font-mono pt-cn-xs">multiple</span>
+    <div className="flex-1 min-w-0">
+      <CardSelect.Root type="multiple" defaultValue={["multi-1", "multi-2"]}>
+        <CardSelect.Item value="multi-1" icon="git-pull-request-draft">
+          <CardSelect.Title>Option A</CardSelect.Title>
+          <CardSelect.Description>Behaves like a checkbox</CardSelect.Description>
+        </CardSelect.Item>
+        <CardSelect.Item value="multi-2" icon="git-merge">
+          <CardSelect.Title>Option B</CardSelect.Title>
+          <CardSelect.Description>Behaves like a checkbox</CardSelect.Description>
+        </CardSelect.Item>
+      </CardSelect.Root>
+    </div>
   </div>
 </div>`}
 />
@@ -97,9 +107,10 @@ Cards can be arranged horizontally, vertically, or in a grid:
 
 <DocsPage.ComponentExample
   client:only
-  code={`<div className="flex flex-col space-y-cn-2xl">
-    <div className="flex flex-col space-y-cn-xs">
-      <Text variant="heading-subsection" as="h4">Vertical Layout (Default)</Text>
+  code={`<div className="space-y-cn-md w-full">
+  <div className="flex items-start gap-cn-md border-b border-cn-borders-3 pb-cn-md">
+    <span className="text-cn-size-2 text-cn-3 w-40 shrink-0 font-mono pt-cn-xs">vertical</span>
+    <div className="flex-1 min-w-0">
       <CardSelect.Root type="single" layout="vertical">
         <CardSelect.Item value="v1">
           <CardSelect.Title>First Card</CardSelect.Title>
@@ -111,9 +122,10 @@ Cards can be arranged horizontally, vertically, or in a grid:
         </CardSelect.Item>
       </CardSelect.Root>
     </div>
-
-    <div className="flex flex-col space-y-cn-xs">
-      <Text variant="heading-subsection" as="h4">Horizontal Layout</Text>
+  </div>
+  <div className="flex items-start gap-cn-md border-b border-cn-borders-3 pb-cn-md">
+    <span className="text-cn-size-2 text-cn-3 w-40 shrink-0 font-mono pt-cn-xs">horizontal</span>
+    <div className="flex-1 min-w-0">
       <CardSelect.Root type="single" layout="horizontal">
         <CardSelect.Item value="Text">
           <CardSelect.Title>First Card</CardSelect.Title>
@@ -125,9 +137,10 @@ Cards can be arranged horizontally, vertically, or in a grid:
         </CardSelect.Item>
       </CardSelect.Root>
     </div>
-
-    <div className="flex flex-col space-y-cn-xs">
-      <Text variant="heading-subsection" as="h4">Grid Layout</Text>
+  </div>
+  <div className="flex items-start gap-cn-md">
+    <span className="text-cn-size-2 text-cn-3 w-40 shrink-0 font-mono pt-cn-xs">grid</span>
+    <div className="flex-1 min-w-0">
       <CardSelect.Root type="single" layout="grid" cols={2} rows={2} gap="md">
         <CardSelect.Item value="grid-1">
           <CardSelect.Title>Grid Item 1</CardSelect.Title>
@@ -143,8 +156,8 @@ Cards can be arranged horizontally, vertically, or in a grid:
         </CardSelect.Item>
       </CardSelect.Root>
     </div>
-
-  </div>`}
+  </div>
+</div>`}
 />
 
 ### Gap
@@ -153,9 +166,10 @@ Control the gap between cards using the `gap` prop:
 
 <DocsPage.ComponentExample
   client:only
-  code={`<div className="flex flex-col space-y-cn-2xl">
-    <div className="flex flex-col space-y-cn-xs">
-      <Text variant="heading-subsection" as="h4">XS Gap</Text>
+  code={`<div className="space-y-cn-md w-full">
+  <div className="flex items-start gap-cn-md border-b border-cn-borders-3 pb-cn-md">
+    <span className="text-cn-size-2 text-cn-3 w-40 shrink-0 font-mono pt-cn-xs">xs</span>
+    <div className="flex-1 min-w-0">
       <CardSelect.Root type="single" gap="xs" layout="horizontal">
         <CardSelect.Item value="xs-1">
           <CardSelect.Title>XS 1</CardSelect.Title>
@@ -168,9 +182,10 @@ Control the gap between cards using the `gap` prop:
         </CardSelect.Item>
       </CardSelect.Root>
     </div>
-
-    <div className="flex flex-col space-y-cn-xs">
-      <Text variant="heading-subsection" as="h4">Small Gap</Text>
+  </div>
+  <div className="flex items-start gap-cn-md border-b border-cn-borders-3 pb-cn-md">
+    <span className="text-cn-size-2 text-cn-3 w-40 shrink-0 font-mono pt-cn-xs">sm</span>
+    <div className="flex-1 min-w-0">
       <CardSelect.Root type="single" gap="sm" layout="horizontal">
         <CardSelect.Item value="small-1">
           <CardSelect.Title>Small 1</CardSelect.Title>
@@ -183,9 +198,10 @@ Control the gap between cards using the `gap` prop:
         </CardSelect.Item>
       </CardSelect.Root>
     </div>
-
-    <div className="flex flex-col space-y-cn-xs">
-      <Text variant="heading-subsection" as="h4">Medium Gap (Default)</Text>
+  </div>
+  <div className="flex items-start gap-cn-md border-b border-cn-borders-3 pb-cn-md">
+    <span className="text-cn-size-2 text-cn-3 w-40 shrink-0 font-mono pt-cn-xs">md</span>
+    <div className="flex-1 min-w-0">
       <CardSelect.Root type="single" gap="md" layout="horizontal">
         <CardSelect.Item value="medium-1">
           <CardSelect.Title>Medium 1</CardSelect.Title>
@@ -198,9 +214,10 @@ Control the gap between cards using the `gap` prop:
         </CardSelect.Item>
       </CardSelect.Root>
     </div>
-
-    <div className="flex flex-col space-y-cn-xs">
-      <Text variant="heading-subsection" as="h4">Large Gap</Text>
+  </div>
+  <div className="flex items-start gap-cn-md">
+    <span className="text-cn-size-2 text-cn-3 w-40 shrink-0 font-mono pt-cn-xs">lg</span>
+    <div className="flex-1 min-w-0">
       <CardSelect.Root type="single" gap="lg" layout="horizontal">
         <CardSelect.Item value="large-1">
           <CardSelect.Title>Large 1</CardSelect.Title>
@@ -213,8 +230,8 @@ Control the gap between cards using the `gap` prop:
         </CardSelect.Item>
       </CardSelect.Root>
     </div>
-
-  </div>`}
+  </div>
+</div>`}
 />
 
 ### Icons and Logos
@@ -223,16 +240,21 @@ Cards can display either an icon or a logo:
 
 <DocsPage.ComponentExample
   client:only
-  code={`<div className="flex flex-col space-y-cn-md">
-    <CardSelect.Root type="single">
-      <CardSelect.Item value="icon" icon="git-branch">
-        <CardSelect.Title>With Icon</CardSelect.Title>
-      </CardSelect.Item>
-      <CardSelect.Item value="logo" logo="kubernetes">
-        <CardSelect.Title>With Logo</CardSelect.Title>
-      </CardSelect.Item>
-    </CardSelect.Root>
-  </div>`}
+  code={`<div className="space-y-cn-sm w-full">
+  <div className="flex items-start gap-cn-md">
+    <span className="text-cn-size-2 text-cn-3 w-40 shrink-0 font-mono pt-cn-xs">icon + logo</span>
+    <div className="flex-1 min-w-0">
+      <CardSelect.Root type="single">
+        <CardSelect.Item value="icon" icon="git-branch">
+          <CardSelect.Title>With Icon</CardSelect.Title>
+        </CardSelect.Item>
+        <CardSelect.Item value="logo" logo="kubernetes">
+          <CardSelect.Title>With Logo</CardSelect.Title>
+        </CardSelect.Item>
+      </CardSelect.Root>
+    </div>
+  </div>
+</div>`}
 />
 
 ### Disabled
@@ -241,9 +263,10 @@ Cards can be disabled either individually or as a group:
 
 <DocsPage.ComponentExample
   client:only
-  code={`<div className="flex flex-col space-y-cn-2xl">
-    <div className="flex flex-col space-y-cn-xs">
-      <Text variant="heading-subsection" as="h4">Individual Cards Disabled</Text>
+  code={`<div className="space-y-cn-md w-full">
+  <div className="flex items-start gap-cn-md border-b border-cn-borders-3 pb-cn-md">
+    <span className="text-cn-size-2 text-cn-3 w-40 shrink-0 font-mono pt-cn-xs">item disabled</span>
+    <div className="flex-1 min-w-0">
       <CardSelect.Root type="single">
         <CardSelect.Item value="enabled" icon="git-branch">
           <CardSelect.Title>Enabled Card</CardSelect.Title>
@@ -253,9 +276,10 @@ Cards can be disabled either individually or as a group:
         </CardSelect.Item>
       </CardSelect.Root>
     </div>
-
-    <div className="flex flex-col space-y-cn-xs">
-      <Text variant="heading-subsection" as="h4">Entire Group Disabled</Text>
+  </div>
+  <div className="flex items-start gap-cn-md">
+    <span className="text-cn-size-2 text-cn-3 w-40 shrink-0 font-mono pt-cn-xs">group disabled</span>
+    <div className="flex-1 min-w-0">
       <CardSelect.Root type="single" disabled>
         <CardSelect.Item value="one" icon="git-branch">
           <CardSelect.Title>First Option</CardSelect.Title>
@@ -265,8 +289,8 @@ Cards can be disabled either individually or as a group:
         </CardSelect.Item>
       </CardSelect.Root>
     </div>
-
-  </div>`}
+  </div>
+</div>`}
 />
 
 ### Coming Soon
@@ -275,18 +299,23 @@ Cards can be marked as not-yet-available. `comingSoon` forces the item disabled 
 
 <DocsPage.ComponentExample
   client:only
-  code={`<div className="flex flex-col space-y-cn-xs">
-    <CardSelect.Root type="single" defaultValue="kubernetes">
-      <CardSelect.Item value="kubernetes" logo="kubernetes">
-        <CardSelect.Title>Kubernetes</CardSelect.Title>
-        <CardSelect.Description>Real, available now</CardSelect.Description>
-      </CardSelect.Item>
-      <CardSelect.Item value="ecs" comingSoon>
-        <CardSelect.Title>Amazon ECS</CardSelect.Title>
-        <CardSelect.Description>Not built yet</CardSelect.Description>
-      </CardSelect.Item>
-    </CardSelect.Root>
-  </div>`}
+  code={`<div className="space-y-cn-sm w-full">
+  <div className="flex items-start gap-cn-md">
+    <span className="text-cn-size-2 text-cn-3 w-40 shrink-0 font-mono pt-cn-xs">coming soon</span>
+    <div className="flex-1 min-w-0">
+      <CardSelect.Root type="single" defaultValue="kubernetes">
+        <CardSelect.Item value="kubernetes" logo="kubernetes">
+          <CardSelect.Title>Kubernetes</CardSelect.Title>
+          <CardSelect.Description>Real, available now</CardSelect.Description>
+        </CardSelect.Item>
+        <CardSelect.Item value="ecs" comingSoon>
+          <CardSelect.Title>Amazon ECS</CardSelect.Title>
+          <CardSelect.Description>Not built yet</CardSelect.Description>
+        </CardSelect.Item>
+      </CardSelect.Root>
+    </div>
+  </div>
+</div>`}
 />
 
 ### Glow
@@ -295,16 +324,21 @@ Selected cards can show an accent glow ring in addition to the standard checked 
 
 <DocsPage.ComponentExample
   client:only
-  code={`<div className="flex flex-col space-y-cn-xs">
-    <CardSelect.Root type="single" defaultValue="option-1">
-      <CardSelect.Item value="option-1" glow>
-        <CardSelect.Title>Glowing When Selected</CardSelect.Title>
-      </CardSelect.Item>
-      <CardSelect.Item value="option-2">
-        <CardSelect.Title>Standard Selection</CardSelect.Title>
-      </CardSelect.Item>
-    </CardSelect.Root>
-  </div>`}
+  code={`<div className="space-y-cn-sm w-full">
+  <div className="flex items-start gap-cn-md">
+    <span className="text-cn-size-2 text-cn-3 w-40 shrink-0 font-mono pt-cn-xs">glow</span>
+    <div className="flex-1 min-w-0">
+      <CardSelect.Root type="single" defaultValue="option-1">
+        <CardSelect.Item value="option-1" glow>
+          <CardSelect.Title>Glowing When Selected</CardSelect.Title>
+        </CardSelect.Item>
+        <CardSelect.Item value="option-2">
+          <CardSelect.Title>Standard Selection</CardSelect.Title>
+        </CardSelect.Item>
+      </CardSelect.Root>
+    </div>
+  </div>
+</div>`}
 />
 
 ## API Reference

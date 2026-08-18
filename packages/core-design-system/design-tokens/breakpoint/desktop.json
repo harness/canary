@@ -32,7 +32,7 @@
         "fontFamily": "{fontFamily.default}",
         "fontWeight": "{fontWeight.default.normal.500}",
         "fontSize": "{fontSize.10}",
-        "lineHeight": "{lineHeight.10.tight}",
+        "lineHeight": "{lineHeight.36}",
         "letterSpacing": "{tracking.tight}",
         "textCase": "{textCase.none}"
       },
@@ -422,7 +422,7 @@
             "fontFamily": "{fontFamily.default}",
             "fontWeight": "{fontWeight.default.normal.600}",
             "fontSize": "{fontSize.5}",
-            "lineHeight": "{lineHeight.5.normal}",
+            "lineHeight": "{lineHeight.20}",
             "letterSpacing": "{tracking.tight}",
             "paragraphSpacing": "4px"
           },

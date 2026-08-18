@@ -119,7 +119,9 @@ export class ThreadRuntime extends BaseSubscribable {
       if (!hasOpen) continue
       this._core.updateMessageContent(message.id, content =>
         content.map(item =>
-          this.isOpenElicitation(item) ? { ...item, data: { ...(item.data as object), status: 'superseded' } } : item
+          this.isOpenElicitation(item)
+            ? { ...item, data: { ...(item.data as object), status: 'superseded' } }
+            : item
         )
       )
     }

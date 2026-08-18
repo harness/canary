@@ -346,7 +346,7 @@
             "fontFamily": "{fontFamily.default}",
             "fontWeight": "{fontWeight.default.normal.500}",
             "fontSize": "{fontSize.9}",
-            "lineHeight": "{lineHeight.9.normal}",
+            "lineHeight": "{lineHeight.36}",
             "letterSpacing": "{tracking.tighter}"
           },
           "$description": "Secondary heading for major content divisions. Creates clear breaks between primary sections while maintaining hierarchical relationship with H1.\n\nCommon uses: Chapter divisions, Major content sections, Topic groups, Process divisions."

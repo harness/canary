@@ -994,10 +994,11 @@ button[aria-label="Search"] {
 }
 
 /* ============================================================
-   EXPLORATORY (UUI-3226): force all page content text to text.1
-   Removes the secondary neutral grays from prose.
+   UUI-3226: force all page content text to text.1 (foreground-1).
+   Removes the secondary neutral grays from doc-site prose.
    Intentionally skips: code snippets, tables/swatches (.not-content),
    callouts (asides), and the right-hand TOC. Links keep their color.
+   `!important` is required to override Starlight's default prose colors.
    ============================================================ */
 .sl-container
   :is(p, li, span, strong, em, b, i, blockquote, dt, dd, figcaption, small):not(

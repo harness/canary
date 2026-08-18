@@ -9,14 +9,18 @@ import { DocsPage } from "@/components/docs-page";
 
 <DocsPage.ComponentExample
   client:only
-  contentClassName={"!block ![place-items:normal]"}
-  code={`
-    <ButtonLayout>
-      <Button variant="outline">Button outline</Button>
-      <Button variant="secondary">Button secondary</Button>
-      <Button>Button primary</Button>
-    </ButtonLayout>
-  `}
+  code={`<div className="space-y-cn-sm w-full">
+  <div className="flex items-start gap-cn-md">
+    <span className="text-cn-size-2 text-cn-3 w-40 shrink-0 font-mono pt-cn-xs">default</span>
+    <div className="flex-1 min-w-0">
+      <ButtonLayout>
+        <Button variant="outline">Button outline</Button>
+        <Button variant="secondary">Button secondary</Button>
+        <Button>Button primary</Button>
+      </ButtonLayout>
+    </div>
+  </div>
+</div>`}
 />
 
 ## Usage
@@ -65,23 +69,28 @@ The `ButtonLayout` component accepts an `orientation` prop, which defines the la
 
 <DocsPage.ComponentExample
   client:only
-  contentClassName={"!block ![place-items:normal]"}
-  code={`
-    <div className="flex flex-col gap-cn-3xl">
+  code={`<div className="space-y-cn-md w-full">
+  <div className="flex items-start gap-cn-md border-b border-cn-borders-3 pb-cn-md">
+    <span className="text-cn-size-2 text-cn-3 w-40 shrink-0 font-mono pt-cn-xs">horizontal</span>
+    <div className="flex-1 min-w-0">
       <ButtonLayout>
         <Button variant="outline">Button outline</Button>
         <Button variant="secondary">Button secondary</Button>
         <Button>Button primary</Button>
       </ButtonLayout>
-
+    </div>
+  </div>
+  <div className="flex items-start gap-cn-md">
+    <span className="text-cn-size-2 text-cn-3 w-40 shrink-0 font-mono pt-cn-xs">vertical</span>
+    <div className="flex-1 min-w-0">
       <ButtonLayout orientation="vertical">
         <Button>Button primary</Button>
         <Button variant="secondary">Button secondary</Button>
         <Button variant="outline">Button outline</Button>
       </ButtonLayout>
     </div>
-
-`}
+  </div>
+</div>`}
 />
 
 ## Horizontal Alignment
@@ -90,23 +99,28 @@ When `orientation` is `horizontal`, the `horizontalAlign` prop controls alignmen
 
 <DocsPage.ComponentExample
   client:only
-  contentClassName={"!block ![place-items:normal]"}
-  code={`
-    <div className="flex flex-col gap-cn-3xl">
+  code={`<div className="space-y-cn-md w-full">
+  <div className="flex items-start gap-cn-md border-b border-cn-borders-3 pb-cn-md">
+    <span className="text-cn-size-2 text-cn-3 w-40 shrink-0 font-mono pt-cn-xs">end</span>
+    <div className="flex-1 min-w-0">
       <ButtonLayout>
         <Button variant="outline">Button outline</Button>
         <Button variant="secondary">Button secondary</Button>
         <Button>Button primary</Button>
       </ButtonLayout>
-
+    </div>
+  </div>
+  <div className="flex items-start gap-cn-md">
+    <span className="text-cn-size-2 text-cn-3 w-40 shrink-0 font-mono pt-cn-xs">start</span>
+    <div className="flex-1 min-w-0">
       <ButtonLayout horizontalAlign="start">
         <Button>Button primary</Button>
         <Button variant="secondary">Button secondary</Button>
         <Button variant="outline">Button outline</Button>
       </ButtonLayout>
     </div>
-
-`}
+  </div>
+</div>`}
 />
 
 ## Primary and secondary button groups
@@ -130,9 +144,10 @@ When `orientation` is set to `vertical`:
 
 <DocsPage.ComponentExample
   client:only
-  contentClassName={"!block ![place-items:normal]"}
-  code={`
-    <div className="flex flex-col gap-cn-3xl">
+  code={`<div className="space-y-cn-md w-full">
+  <div className="flex items-start gap-cn-md border-b border-cn-borders-3 pb-cn-md">
+    <span className="text-cn-size-2 text-cn-3 w-40 shrink-0 font-mono pt-cn-xs">horizontal</span>
+    <div className="flex-1 min-w-0">
       <ButtonLayout.Root>
         <ButtonLayout.Primary>
           <Button>Button primary</Button>
@@ -141,7 +156,11 @@ When `orientation` is set to `vertical`:
           <Button variant="secondary">Button secondary</Button>
         </ButtonLayout.Secondary>
       </ButtonLayout.Root>
-
+    </div>
+  </div>
+  <div className="flex items-start gap-cn-md">
+    <span className="text-cn-size-2 text-cn-3 w-40 shrink-0 font-mono pt-cn-xs">vertical</span>
+    <div className="flex-1 min-w-0">
       <ButtonLayout.Root orientation="vertical">
         <ButtonLayout.Primary>
           <Button>Button primary</Button>
@@ -151,8 +170,8 @@ When `orientation` is set to `vertical`:
         </ButtonLayout.Secondary>
       </ButtonLayout.Root>
     </div>
-
-`}
+  </div>
+</div>`}
 />
 
 ## API Reference

@@ -1,5 +1,5 @@
 ---
-title: Page
+title: Page (Page Header)
 description: Page header and content primitives used inside the app shell
 ---
 
@@ -7,7 +7,31 @@ import { DocsPage } from "@/components/docs-page";
 
 The `Page` component provides the header + content structure that sits inside the [Sandbox Layout](/components/foundations/sandbox-layout) main area. It standardizes page titles, back navigation, header actions, and the scrollable content region across screens.
 
-Because it renders page-level structure (a sticky/scroll-aware header and a full-height content region), it is documented here with anatomy and code rather than an inline live preview.
+## Header
+
+`Page.Header` composes a back link, an icon or logo, the page title, a description, and header-right actions into a single standardized header.
+
+<DocsPage.ComponentExample
+  client:only
+  code={`
+    <div className="w-full">
+      <Page.Header
+        title="Pipelines"
+        iconName="empty-page"
+        description="Define, run, and monitor your CI/CD pipelines."
+        backLink={{ linkText: 'Back to project', linkProps: { to: '#' } }}
+        actions={
+          <>
+            <Button variant="outline">Settings</Button>
+            <Button>New pipeline</Button>
+          </>
+        }
+      />
+    </div>
+`}
+/>
+
+The header also becomes sticky when used inside `<Page.Root scrollable>` with a tall content region — that scroll behavior isn't shown in the preview above, but the visual header is identical.
 
 ## Anatomy
 
@@ -28,7 +52,44 @@ import { Page } from "@harnessio/ui/components";
 
 ## Header with tabs (`Page.HeaderV2`)
 
-`Page.HeaderV2` is the newer header variant that supports a title row plus a tab strip for section navigation.
+`Page.HeaderV2` is the newer header variant that supports a title row plus a tab strip for section navigation. The tabs are router-driven — each `value` is a route the tab links to, and the active tab is derived from the current URL.
+
+<DocsPage.ComponentExample
+  client:only
+  code={`
+    <div className="w-full">
+      <Page.HeaderV2
+        title="Repository"
+        iconName="git-branch"
+        description="Browse files, commits, and branches."
+        breadcrumbs={
+          <Breadcrumb.Root>
+            <Breadcrumb.List>
+              <Breadcrumb.Item>
+                <Breadcrumb.Link href="#">Lorem ipsum page</Breadcrumb.Link>
+              </Breadcrumb.Item>
+              <Breadcrumb.Separator />
+              <Breadcrumb.Item>
+                <Breadcrumb.Link href="#">Lorem ipsum page</Breadcrumb.Link>
+              </Breadcrumb.Item>
+              <Breadcrumb.Separator />
+              <Breadcrumb.Page>Lorem ipsum page</Breadcrumb.Page>
+            </Breadcrumb.List>
+          </Breadcrumb.Root>
+        }
+        tabs={[
+          { label: 'Summary', value: '/', exact: true },
+          { label: 'Files', value: '/files', icon: 'empty-page' },
+          { label: 'Commits', value: '/commits', icon: 'git-commit', counter: 12 },
+          { label: 'Branches', value: '/branches', icon: 'git-branch' },
+        ]}
+        actions={<Button>Clone</Button>}
+      />
+    </div>
+`}
+/>
+
+In context, `Page.HeaderV2` sits inside `Page.Root` above the content region:
 
 ```tsx
 <Page.Root>

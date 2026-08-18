@@ -13,8 +13,11 @@ The default button with no specified variant or theme.
 
 <DocsPage.ComponentExample
   client:only
-  code={`<div className="flex flex-col items-start min-w-[600px] gap-cn-2xl">
-  <Button>Default Button</Button>
+  code={`<div className="space-y-cn-sm">
+  <div className="flex items-center gap-cn-md">
+    <span className="text-cn-size-2 text-cn-3 w-32 shrink-0 font-mono">default</span>
+    <Button>Default Button</Button>
+  </div>
 </div>`}
 />
 
@@ -24,45 +27,49 @@ Primary buttons are the most prominent buttons in the interface.
 
 <DocsPage.ComponentExample
   client:only
-  code={`<div className="flex flex-col items-start min-w-[600px] gap-cn-2xl">
-  <Button variant="primary" theme="default">Primary Button</Button>
+  code={`<div className="space-y-cn-sm">
+  <div className="flex items-center gap-cn-md border-b border-cn-borders-3 pb-cn-sm">
+    <span className="text-cn-size-2 text-cn-3 w-32 shrink-0 font-mono">default</span>
+    <Button variant="primary" theme="default">Primary Button</Button>
+  </div>
 
-<hr />
-
-<h4>Primary Button with Themes</h4>
-
-<div className="flex gap-cn-sm">
-  <Button variant="primary" theme="default">
-    Default
-  </Button>
-  <Button variant="primary" theme="success">
-    Success
-  </Button>
-  <Button variant="primary" theme="danger">
-    Danger
-  </Button>
+<div className="flex items-center gap-cn-md border-b border-cn-borders-3 pb-cn-sm">
+  <span className="text-cn-size-2 text-cn-3 w-32 shrink-0 font-mono">
+    themes
+  </span>
+  <div className="flex gap-cn-sm items-center">
+    <Button variant="primary" theme="default">
+      Default
+    </Button>
+    <Button variant="primary" theme="success">
+      Success
+    </Button>
+    <Button variant="primary" theme="danger">
+      Danger
+    </Button>
+  </div>
 </div>
 
-<hr />
-
-<h4>Primary Button with Sizes</h4>
-
-<div className="flex gap-cn-sm items-end">
-  <Button variant="primary">Medium</Button>
-  <Button variant="primary" size="sm">
-    Small
-  </Button>
-  <Button variant="primary" size="xs">
-    Extra Small
-  </Button>
+<div className="flex items-center gap-cn-md border-b border-cn-borders-3 pb-cn-sm">
+  <span className="text-cn-size-2 text-cn-3 w-32 shrink-0 font-mono">
+    sizes
+  </span>
+  <div className="flex gap-cn-sm items-end">
+    <Button variant="primary">Medium</Button>
+    <Button variant="primary" size="sm">
+      Small
+    </Button>
+    <Button variant="primary" size="xs">
+      Extra Small
+    </Button>
+  </div>
 </div>
 
-<hr />
-
-<h4>Primary Button with States</h4>
-
-<div className="flex flex-col gap-cn-sm">
-  <div className="flex gap-cn-sm">
+<div className="flex items-center gap-cn-md border-b border-cn-borders-3 pb-cn-sm">
+  <span className="text-cn-size-2 text-cn-3 w-32 shrink-0 font-mono">
+    disabled
+  </span>
+  <div className="flex gap-cn-sm items-center">
     <Button variant="primary" disabled>
       Default Disabled
     </Button>
@@ -73,11 +80,11 @@ Primary buttons are the most prominent buttons in the interface.
       Danger Disabled
     </Button>
   </div>
-  <div className="flex gap-cn-sm">
-    <Button variant="primary" loading>
-      Loading
-    </Button>
-  </div>
+</div>
+
+<div className="flex items-center gap-cn-md">
+  <span className="text-cn-size-2 text-cn-3 w-32 shrink-0 font-mono">loading</span>
+  <Button variant="primary" loading>Loading</Button>
 </div>
 </div>`}
 />
@@ -88,35 +95,32 @@ Secondary buttons are less prominent than primary buttons.
 
 <DocsPage.ComponentExample
   client:only
-  code={`<div className="flex flex-col items-start min-w-[600px] gap-cn-2xl">
-  <Button variant="secondary" theme="default">Secondary Button</Button>
+  code={`<div className="space-y-cn-sm">
+  <div className="flex items-center gap-cn-md border-b border-cn-borders-3 pb-cn-sm">
+    <span className="text-cn-size-2 text-cn-3 w-32 shrink-0 font-mono">default</span>
+    <Button variant="secondary" theme="default">Secondary Button</Button>
+  </div>
 
-<hr />
-
-<h4>Secondary Button with Sizes</h4>
-
-<div className="flex gap-cn-sm items-end">
-  <Button variant="secondary">Medium</Button>
-  <Button variant="secondary" size="sm">
-    Small
-  </Button>
-  <Button variant="secondary" size="xs">
-    Extra Small
-  </Button>
+<div className="flex items-center gap-cn-md border-b border-cn-borders-3 pb-cn-sm">
+  <span className="text-cn-size-2 text-cn-3 w-32 shrink-0 font-mono">
+    sizes
+  </span>
+  <div className="flex gap-cn-sm items-end">
+    <Button variant="secondary">Medium</Button>
+    <Button variant="secondary" size="sm">
+      Small
+    </Button>
+    <Button variant="secondary" size="xs">
+      Extra Small
+    </Button>
+  </div>
 </div>
 
-<hr />
-
-<h4>Secondary Button with States</h4>
-
-<div className="flex flex-col gap-cn-sm">
-  <div className="flex gap-cn-sm">
-    <Button variant="secondary" disabled>
-      Default Disabled
-    </Button>
-    <Button variant="secondary" loading>
-      Loading
-    </Button>
+<div className="flex items-center gap-cn-md">
+  <span className="text-cn-size-2 text-cn-3 w-32 shrink-0 font-mono">states</span>
+  <div className="flex gap-cn-sm items-center">
+    <Button variant="secondary" disabled>Default Disabled</Button>
+    <Button variant="secondary" loading>Loading</Button>
   </div>
 </div>
 </div>`}
@@ -128,18 +132,20 @@ Secondary buttons can be styled with different themes for various contexts.
 
 <DocsPage.ComponentExample
   client:only
-  code={`<div className="flex flex-col items-start min-w-[600px] gap-cn-2xl">
-  <div className="flex gap-cn-sm items-center">
-    <Button variant="secondary" theme="default">Secondary Default</Button>
-    <Button variant="secondary" theme="success">Secondary Success</Button>
-    <Button variant="secondary" theme="danger">Secondary Danger</Button>
+  code={`<div className="space-y-cn-sm">
+  <div className="flex items-center gap-cn-md border-b border-cn-borders-3 pb-cn-sm">
+    <span className="text-cn-size-2 text-cn-3 w-32 shrink-0 font-mono">themes</span>
+    <div className="flex gap-cn-sm items-center">
+      <Button variant="secondary" theme="default">Secondary Default</Button>
+      <Button variant="secondary" theme="success">Secondary Success</Button>
+      <Button variant="secondary" theme="danger">Secondary Danger</Button>
+    </div>
   </div>
 
-<hr />
-
-<h4>Secondary Button Themes with Sizes</h4>
-
-<div className="flex flex-col gap-cn-md">
+<div className="flex items-center gap-cn-md border-b border-cn-borders-3 pb-cn-sm">
+  <span className="text-cn-size-2 text-cn-3 w-32 shrink-0 font-mono">
+    success sizes
+  </span>
   <div className="flex gap-cn-sm items-end">
     <Button variant="secondary" theme="success">
       Medium
@@ -151,7 +157,12 @@ Secondary buttons can be styled with different themes for various contexts.
       Extra Small
     </Button>
   </div>
+</div>
 
+<div className="flex items-center gap-cn-md border-b border-cn-borders-3 pb-cn-sm">
+  <span className="text-cn-size-2 text-cn-3 w-32 shrink-0 font-mono">
+    danger sizes
+  </span>
   <div className="flex gap-cn-sm items-end">
     <Button variant="secondary" theme="danger">
       Medium
@@ -165,12 +176,11 @@ Secondary buttons can be styled with different themes for various contexts.
   </div>
 </div>
 
-<hr />
-
-<h4>Secondary Button Themes with States</h4>
-
-<div className="flex flex-col gap-cn-sm">
-  <div className="flex gap-cn-sm">
+<div className="flex items-center gap-cn-md border-b border-cn-borders-3 pb-cn-sm">
+  <span className="text-cn-size-2 text-cn-3 w-32 shrink-0 font-mono">
+    success states
+  </span>
+  <div className="flex gap-cn-sm items-center">
     <Button variant="secondary" theme="success" disabled>
       Success Disabled
     </Button>
@@ -178,14 +188,13 @@ Secondary buttons can be styled with different themes for various contexts.
       Success Loading
     </Button>
   </div>
+</div>
 
-  <div className="flex gap-cn-sm">
-    <Button variant="secondary" theme="danger" disabled>
-      Danger Disabled
-    </Button>
-    <Button variant="secondary" theme="danger" loading>
-      Danger Loading
-    </Button>
+<div className="flex items-center gap-cn-md">
+  <span className="text-cn-size-2 text-cn-3 w-32 shrink-0 font-mono">danger states</span>
+  <div className="flex gap-cn-sm items-center">
+    <Button variant="secondary" theme="danger" disabled>Danger Disabled</Button>
+    <Button variant="secondary" theme="danger" loading>Danger Loading</Button>
   </div>
 </div>
 </div>`}
@@ -197,45 +206,49 @@ Outline buttons have a transparent background with a visible border.
 
 <DocsPage.ComponentExample
   client:only
-  code={`<div className="flex flex-col items-start min-w-[600px] gap-cn-2xl">
-  <Button variant="outline" theme="default">Outline Button</Button>
+  code={`<div className="space-y-cn-sm">
+  <div className="flex items-center gap-cn-md border-b border-cn-borders-3 pb-cn-sm">
+    <span className="text-cn-size-2 text-cn-3 w-32 shrink-0 font-mono">default</span>
+    <Button variant="outline" theme="default">Outline Button</Button>
+  </div>
 
-<hr />
-
-<h4>Outline Button with Themes</h4>
-
-<div className="flex gap-cn-sm">
-  <Button variant="outline" theme="default">
-    Default
-  </Button>
-  <Button variant="outline" theme="success">
-    Success
-  </Button>
-  <Button variant="outline" theme="danger">
-    Danger
-  </Button>
+<div className="flex items-center gap-cn-md border-b border-cn-borders-3 pb-cn-sm">
+  <span className="text-cn-size-2 text-cn-3 w-32 shrink-0 font-mono">
+    themes
+  </span>
+  <div className="flex gap-cn-sm items-center">
+    <Button variant="outline" theme="default">
+      Default
+    </Button>
+    <Button variant="outline" theme="success">
+      Success
+    </Button>
+    <Button variant="outline" theme="danger">
+      Danger
+    </Button>
+  </div>
 </div>
 
-<hr />
-
-<h4>Outline Button with Sizes</h4>
-
-<div className="flex gap-cn-sm items-end">
-  <Button variant="outline">Medium</Button>
-  <Button variant="outline" size="sm">
-    Small
-  </Button>
-  <Button variant="outline" size="xs">
-    Extra Small
-  </Button>
+<div className="flex items-center gap-cn-md border-b border-cn-borders-3 pb-cn-sm">
+  <span className="text-cn-size-2 text-cn-3 w-32 shrink-0 font-mono">
+    sizes
+  </span>
+  <div className="flex gap-cn-sm items-end">
+    <Button variant="outline">Medium</Button>
+    <Button variant="outline" size="sm">
+      Small
+    </Button>
+    <Button variant="outline" size="xs">
+      Extra Small
+    </Button>
+  </div>
 </div>
 
-<hr />
-
-<h4>Outline Button with States</h4>
-
-<div className="flex flex-col gap-cn-sm">
-  <div className="flex gap-cn-sm">
+<div className="flex items-center gap-cn-md border-b border-cn-borders-3 pb-cn-sm">
+  <span className="text-cn-size-2 text-cn-3 w-32 shrink-0 font-mono">
+    disabled
+  </span>
+  <div className="flex gap-cn-sm items-center">
     <Button variant="outline" disabled>
       Default Disabled
     </Button>
@@ -246,11 +259,11 @@ Outline buttons have a transparent background with a visible border.
       Danger Disabled
     </Button>
   </div>
-  <div className="flex gap-cn-sm">
-    <Button variant="outline" loading>
-      Loading
-    </Button>
-  </div>
+</div>
+
+<div className="flex items-center gap-cn-md">
+  <span className="text-cn-size-2 text-cn-3 w-32 shrink-0 font-mono">loading</span>
+  <Button variant="outline" loading>Loading</Button>
 </div>
 </div>`}
 />
@@ -261,52 +274,50 @@ Ghost buttons are minimally styled and blend into the background when not intera
 
 <DocsPage.ComponentExample
   client:only
-  code={`<div className="flex flex-col items-start min-w-[600px] gap-cn-2xl">
-  <div>
+  code={`<div className="space-y-cn-sm">
+  <div className="flex items-center gap-cn-md border-b border-cn-borders-3 pb-cn-sm">
+    <span className="text-cn-size-2 text-cn-3 w-32 shrink-0 font-mono">default</span>
     <Button variant="ghost">Ghost Button</Button>
   </div>
 
-<hr />
-
-<h4>Ghost Button with Themes</h4>
-
-<div className="flex gap-cn-sm">
-  <Button variant="ghost" theme="default">
-    Default
-  </Button>
-  <Button variant="ghost" theme="success">
-    Success
-  </Button>
-  <Button variant="ghost" theme="danger">
-    Danger
-  </Button>
+<div className="flex items-center gap-cn-md border-b border-cn-borders-3 pb-cn-sm">
+  <span className="text-cn-size-2 text-cn-3 w-32 shrink-0 font-mono">
+    themes
+  </span>
+  <div className="flex gap-cn-sm items-center">
+    <Button variant="ghost" theme="default">
+      Default
+    </Button>
+    <Button variant="ghost" theme="success">
+      Success
+    </Button>
+    <Button variant="ghost" theme="danger">
+      Danger
+    </Button>
+  </div>
 </div>
 
-<hr />
-
-<h4>Ghost Button with Sizes</h4>
-
-<div className="flex gap-cn-sm items-end">
-  <Button variant="ghost">Medium</Button>
-  <Button variant="ghost" size="sm">
-    Small
-  </Button>
-  <Button variant="ghost" size="xs">
-    Extra Small
-  </Button>
+<div className="flex items-center gap-cn-md border-b border-cn-borders-3 pb-cn-sm">
+  <span className="text-cn-size-2 text-cn-3 w-32 shrink-0 font-mono">
+    sizes
+  </span>
+  <div className="flex gap-cn-sm items-end">
+    <Button variant="ghost">Medium</Button>
+    <Button variant="ghost" size="sm">
+      Small
+    </Button>
+    <Button variant="ghost" size="xs">
+      Extra Small
+    </Button>
+  </div>
 </div>
 
-<hr />
-
-<h4>Ghost Button with States</h4>
-
-<div className="flex gap-cn-sm">
-  <Button variant="ghost" disabled>
-    Disabled
-  </Button>
-  <Button variant="ghost" loading>
-    Loading
-  </Button>
+<div className="flex items-center gap-cn-md">
+  <span className="text-cn-size-2 text-cn-3 w-32 shrink-0 font-mono">states</span>
+  <div className="flex gap-cn-sm items-center">
+    <Button variant="ghost" disabled>Disabled</Button>
+    <Button variant="ghost" loading>Loading</Button>
+  </div>
 </div>
 </div>`}
 />
@@ -317,34 +328,33 @@ AI variant buttons are used specifically for AI-related actions.
 
 <DocsPage.ComponentExample
   client:only
-  code={`<div className="flex flex-col items-start min-w-[600px] gap-cn-2xl">
-  <Button variant="ai">AI Button</Button>
+  code={`<div className="space-y-cn-sm">
+  <div className="flex items-center gap-cn-md border-b border-cn-borders-3 pb-cn-sm">
+    <span className="text-cn-size-2 text-cn-3 w-32 shrink-0 font-mono">default</span>
+    <Button variant="ai">AI Button</Button>
+  </div>
 
-<hr />
-
-<h4>AI Button with Sizes</h4>
-
-<div className="flex gap-cn-sm items-end">
-  <Button variant="ai">Medium</Button>
-  <Button variant="ai" size="sm">
-    Small
-  </Button>
-  <Button variant="ai" size="xs">
-    Extra Small
-  </Button>
+<div className="flex items-center gap-cn-md border-b border-cn-borders-3 pb-cn-sm">
+  <span className="text-cn-size-2 text-cn-3 w-32 shrink-0 font-mono">
+    sizes
+  </span>
+  <div className="flex gap-cn-sm items-end">
+    <Button variant="ai">Medium</Button>
+    <Button variant="ai" size="sm">
+      Small
+    </Button>
+    <Button variant="ai" size="xs">
+      Extra Small
+    </Button>
+  </div>
 </div>
 
-<hr />
-
-<h4>AI Button with States</h4>
-
-<div className="flex gap-cn-sm">
-  <Button variant="ai" disabled>
-    Disabled
-  </Button>
-  <Button variant="ai" loading>
-    Loading
-  </Button>
+<div className="flex items-center gap-cn-md">
+  <span className="text-cn-size-2 text-cn-3 w-32 shrink-0 font-mono">states</span>
+  <div className="flex gap-cn-sm items-center">
+    <Button variant="ai" disabled>Disabled</Button>
+    <Button variant="ai" loading>Loading</Button>
+  </div>
 </div>
 </div>`}
 />
@@ -355,34 +365,33 @@ Link buttons appear as text links and don't accept theme props.
 
 <DocsPage.ComponentExample
   client:only
-  code={`<div className="flex flex-col items-start min-w-[600px] gap-cn-2xl">
-  <Button variant="link">Link Button</Button>
+  code={`<div className="space-y-cn-sm">
+  <div className="flex items-center gap-cn-md border-b border-cn-borders-3 pb-cn-sm">
+    <span className="text-cn-size-2 text-cn-3 w-32 shrink-0 font-mono">default</span>
+    <Button variant="link">Link Button</Button>
+  </div>
 
-<hr />
-
-<h4>Link Button with Sizes</h4>
-
-<div className="flex gap-cn-sm items-end">
-  <Button variant="link">Medium</Button>
-  <Button variant="link" size="sm">
-    Small
-  </Button>
-  <Button variant="link" size="xs">
-    Extra Small
-  </Button>
+<div className="flex items-center gap-cn-md border-b border-cn-borders-3 pb-cn-sm">
+  <span className="text-cn-size-2 text-cn-3 w-32 shrink-0 font-mono">
+    sizes
+  </span>
+  <div className="flex gap-cn-sm items-end">
+    <Button variant="link">Medium</Button>
+    <Button variant="link" size="sm">
+      Small
+    </Button>
+    <Button variant="link" size="xs">
+      Extra Small
+    </Button>
+  </div>
 </div>
 
-<hr />
-
-<h4>Link Button with States</h4>
-
-<div className="flex gap-cn-sm">
-  <Button variant="link" disabled>
-    Disabled
-  </Button>
-  <Button variant="link" loading>
-    Loading
-  </Button>
+<div className="flex items-center gap-cn-md">
+  <span className="text-cn-size-2 text-cn-3 w-32 shrink-0 font-mono">states</span>
+  <div className="flex gap-cn-sm items-center">
+    <Button variant="link" disabled>Disabled</Button>
+    <Button variant="link" loading>Loading</Button>
+  </div>
 </div>
 </div>`}
 />
@@ -393,34 +402,33 @@ Transparent buttons have no background or border and don't accept theme props.
 
 <DocsPage.ComponentExample
   client:only
-  code={`<div className="flex flex-col items-start min-w-[600px] gap-cn-2xl">
-  <Button variant="transparent">Transparent Button</Button>
+  code={`<div className="space-y-cn-sm">
+  <div className="flex items-center gap-cn-md border-b border-cn-borders-3 pb-cn-sm">
+    <span className="text-cn-size-2 text-cn-3 w-32 shrink-0 font-mono">default</span>
+    <Button variant="transparent">Transparent Button</Button>
+  </div>
 
-<hr />
-
-<h4>Transparent Button with Sizes</h4>
-
-<div className="flex gap-cn-sm items-end">
-  <Button variant="transparent">Medium</Button>
-  <Button variant="transparent" size="sm">
-    Small
-  </Button>
-  <Button variant="transparent" size="xs">
-    Extra Small
-  </Button>
+<div className="flex items-center gap-cn-md border-b border-cn-borders-3 pb-cn-sm">
+  <span className="text-cn-size-2 text-cn-3 w-32 shrink-0 font-mono">
+    sizes
+  </span>
+  <div className="flex gap-cn-sm items-end">
+    <Button variant="transparent">Medium</Button>
+    <Button variant="transparent" size="sm">
+      Small
+    </Button>
+    <Button variant="transparent" size="xs">
+      Extra Small
+    </Button>
+  </div>
 </div>
 
-<hr />
-
-<h4>Transparent Button with States</h4>
-
-<div className="flex gap-cn-sm">
-  <Button variant="transparent" disabled>
-    Disabled
-  </Button>
-  <Button variant="transparent" loading>
-    Loading
-  </Button>
+<div className="flex items-center gap-cn-md">
+  <span className="text-cn-size-2 text-cn-3 w-32 shrink-0 font-mono">states</span>
+  <div className="flex gap-cn-sm items-center">
+    <Button variant="transparent" disabled>Disabled</Button>
+    <Button variant="transparent" loading>Loading</Button>
+  </div>
 </div>
 </div>`}
 />
@@ -431,72 +439,69 @@ When the `onClick` prop returns a promise, the button automatically shows a load
 
 <DocsPage.ComponentExample
   client:only
-  code={`<div className="flex flex-col items-start min-w-[600px] gap-cn-2xl">
-<h4>Promise-based onClick Handlers</h4>
+  code={`<div className="space-y-cn-sm">
+  <div className="flex items-center gap-cn-md border-b border-cn-borders-3 pb-cn-sm">
+    <span className="text-cn-size-2 text-cn-3 w-32 shrink-0 font-mono">promise</span>
+    <div className="flex gap-cn-sm items-center">
+      <Button
+        onClick={async () => {
+          // Simulate API call
+          await new Promise((resolve) => setTimeout(resolve, 2000));
+          console.log("API call completed");
+        }}
+      >
+        Save Data (2s)
+      </Button>
+      <Button
+        variant="secondary"
+        onClick={() => {
+          // Return a promise directly
+          return fetch("/api/endpoint")
+            .then((response) => response.json())
+            .then((data) => console.log("Data:", data))
+            .catch((error) => console.error("Error:", error));
+        }}
+      >
+        Fetch Data
+      </Button>
+      <Button
+        variant="outline"
+        onClick={() => {
+          // Promise that might reject
+          return new Promise((resolve, reject) => {
+            setTimeout(() => {
+              Math.random() > 0.5 ? resolve("Success!") : reject("Failed!");
+            }, 1500);
+          });
+        }}
+      >
+        Random Result (1.5s)
+      </Button>
+    </div>
+  </div>
 
-<div className="flex gap-cn-sm">
-  <Button
-    onClick={async () => {
-      // Simulate API call
-      await new Promise((resolve) => setTimeout(resolve, 2000));
-      console.log("API call completed");
-    }}
-  >
-    Save Data (2s)
-  </Button>
-
-<Button
-  variant="secondary"
-  onClick={() => {
-    // Return a promise directly
-    return fetch("/api/endpoint")
-      .then((response) => response.json())
-      .then((data) => console.log("Data:", data))
-      .catch((error) => console.error("Error:", error));
-  }}
->
-  Fetch Data
-</Button>
-
-  <Button
-    variant="outline"
-    onClick={() => {
-      // Promise that might reject
-      return new Promise((resolve, reject) => {
-        setTimeout(() => {
-          Math.random() > 0.5 ? resolve("Success!") : reject("Failed!");
-        }, 1500);
-      });
-    }}
-  >
-    Random Result (1.5s)
-  </Button>
-</div>
-
-<hr />
-
-<h4>Combined with Manual Loading State</h4>
-
-<div className="flex gap-cn-sm">
-  <Button 
-    loading={true}
-    onClick={async () => {
-      await new Promise(resolve => setTimeout(resolve, 1000))
-    }}
-  >
-    Always Loading
-  </Button>
-  
-  <Button 
-    iconOnly
-    variant="ai"
-    tooltipProps={{ content: "Ask AI" }}
-    onClick={async () => {
-      await new Promise(resolve => setTimeout(resolve, 1000))
-    }}
-  >
-    <IconV2 name="ai-solid" skipSize />
-  </Button>
+<div className="flex items-center gap-cn-md">
+  <span className="text-cn-size-2 text-cn-3 w-32 shrink-0 font-mono">manual loading</span>
+  <div className="flex gap-cn-sm items-center">
+    <Button
+      loading={true}
+      onClick={async () => {
+        await new Promise(resolve => setTimeout(resolve, 1000))
+      }}
+    >
+      Always Loading
+    </Button>
+    <Button
+      iconOnly
+      variant="ai"
+      tooltipProps={{ content: "Ask AI" }}
+      onClick={async () => {
+        await new Promise(resolve => setTimeout(resolve, 1000))
+      }}
+    >
+      <IconV2 name="ai-solid" skipSize />
+    </Button>
+  </div>
 </div>
 </div>`}
 />
@@ -509,45 +514,43 @@ If you need to skip showing the tooltip, you should set `ignoreIconOnlyTooltip`.
 
 <DocsPage.ComponentExample
   client:only
-  code={`<div className="flex flex-col items-start min-w-[600px] gap-cn-2xl">
-<h4>Icon Only Buttons</h4>
+  code={`<div className="space-y-cn-sm">
+  <div className="flex items-center gap-cn-md border-b border-cn-borders-3 pb-cn-sm">
+    <span className="text-cn-size-2 text-cn-3 w-32 shrink-0 font-mono">icon-only</span>
+    <div className="flex gap-cn-sm items-center">
+      <Button iconOnly tooltipProps={{ content: "Add" }}>
+        <IconV2 name="plus" skipSize />
+      </Button>
+      <Button variant="secondary" size="sm" iconOnly ignoreIconOnlyTooltip>
+        <IconV2 name="git-branch" skipSize />
+      </Button>
+      <Button variant="transparent" size="sm" iconOnly ignoreIconOnlyTooltip>
+        <IconV2 name="xmark" skipSize />
+      </Button>
+      <Button variant="outline" size="xs" iconOnly ignoreIconOnlyTooltip>
+        <IconV2 name="check" skipSize />
+      </Button>
+      <Button variant="outline" size="2xs" iconOnly ignoreIconOnlyTooltip>
+        <IconV2 name="check" skipSize />
+      </Button>
+      <Button variant="outline" size="3xs" iconOnly ignoreIconOnlyTooltip>
+        <IconV2 name="check" skipSize />
+      </Button>
+      <Button variant="outline" size="2xs" iconOnly ignoreIconOnlyTooltip>
+        <IconV2 name="xmark" skipSize />
+      </Button>
+      <Button variant="outline" size="3xs" iconOnly ignoreIconOnlyTooltip>
+        <IconV2 name="xmark" skipSize />
+      </Button>
+    </div>
+  </div>
 
-<div className="flex gap-cn-sm">
-  <Button iconOnly tooltipProps={{ content: "Add" }}>
-    <IconV2 name="plus" skipSize />
-  </Button>
-  <Button variant="secondary" size="sm" iconOnly ignoreIconOnlyTooltip>
-    <IconV2 name="git-branch" skipSize />
-  </Button>
-  <Button variant="transparent" size="sm" iconOnly ignoreIconOnlyTooltip>
-    <IconV2 name="xmark" skipSize />
-  </Button>
-  <Button variant="outline" size="xs" iconOnly ignoreIconOnlyTooltip>
-    <IconV2 name="check" skipSize />
-  </Button>
-  <Button variant="outline" size="2xs" iconOnly ignoreIconOnlyTooltip>
-    <IconV2 name="check" skipSize />
-  </Button>
-  <Button variant="outline" size="3xs" iconOnly ignoreIconOnlyTooltip>
-    <IconV2 name="check" skipSize />
-  </Button>
-  <Button variant="outline" size="2xs" iconOnly ignoreIconOnlyTooltip>
-    <IconV2 name="xmark" skipSize />
-  </Button>
-  <Button variant="outline" size="3xs" iconOnly ignoreIconOnlyTooltip>
-    <IconV2 name="xmark" skipSize />
-  </Button>
-</div>
-
-<hr />
-
-<h4>Rounded Buttons</h4>
-
-<div className="flex gap-cn-sm">
-  <Button rounded>Rounded Button</Button>
-  <Button rounded variant="outline">
-    Rounded Outline
-  </Button>
+<div className="flex items-center gap-cn-md">
+  <span className="text-cn-size-2 text-cn-3 w-32 shrink-0 font-mono">rounded</span>
+  <div className="flex gap-cn-sm items-center">
+    <Button rounded>Rounded Button</Button>
+    <Button rounded variant="outline">Rounded Outline</Button>
+  </div>
 </div>
 </div>`}
 />

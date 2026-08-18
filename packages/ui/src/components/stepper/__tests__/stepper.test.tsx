@@ -4,6 +4,7 @@ import { act, fireEvent, render, screen, waitFor } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { describe, expect, test, vi } from 'vitest'
 
+import stepperStyles from '../../../../tailwind-utils-config/components/stepper'
 import { Stepper } from '../index'
 import { useStepperContext } from '../stepper-context'
 
@@ -378,6 +379,39 @@ describe('Stepper', () => {
         '--cn-stepper-trunk-blue-end':
           'calc(var(--cn-stepper-step-content-overflow, 0px) + var(--cn-spacing-3) + 0 * (var(--cn-spacing-2) * 2 + var(--cn-size-5)) + var(--cn-spacing-2) + var(--cn-size-5) / 2 - (12 / 22) * (var(--cn-size-5) / 2 + var(--cn-rounded-5)))'
       })
+    })
+
+    // The cap is CSS (`bottom: auto` on the active-partial connector). JSDOM does not load
+    // tailwind-utils-config, so this asserts the selector itself: without `:last-child` the gray
+    // trunk dies at the nested elbow even when later groups exist (CI onboarding 1→2 gap).
+    test('collapsibleNestedSteps caps active trunk only when the active group is last-child', () => {
+      const capSelector = Object.keys(stepperStyles).find(
+        key =>
+          key.includes('cn-stepper-collapsible-nested-steps') && key.includes('cn-stepper-connector-active-partial')
+      )
+
+      expect(capSelector).toBeDefined()
+      expect(capSelector).toContain(':last-child')
+    })
+
+    test('collapsibleNestedSteps leaves a following group as a later sibling of the active group', () => {
+      const { container } = render(
+        <Stepper.Root value="sub1" onValueChange={vi.fn()} showConnectors collapsibleNestedSteps>
+          <Stepper.StepGroup value="step1" title="First" hasNestedSteps>
+            <Stepper.Step value="sub1" title="Sub One" state="active">
+              <div className="cn-stepper-nested-step-panel">Panel content</div>
+            </Stepper.Step>
+          </Stepper.StepGroup>
+          <Stepper.StepGroup value="step2" title="Second" state="upcoming" />
+        </Stepper.Root>
+      )
+
+      const items = container.querySelectorAll(':scope .cn-stepper-list > .cn-stepper-step-item')
+      const activeStepItem = container.querySelector('.cn-stepper-step-active')?.closest('.cn-stepper-step-item')
+
+      expect(items.length).toBe(2)
+      expect(activeStepItem).toBe(items[0])
+      expect(activeStepItem).not.toBe(items[1])
     })
 
     test('collapsible completed nested step renders collapsed on mount', () => {

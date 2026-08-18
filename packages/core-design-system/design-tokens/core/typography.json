@@ -233,7 +233,7 @@
     "1": {
       "none": {
         "$type": "lineHeights",
-        "$value": "{fontSize.1}*{lineHeight.multiplier.none}"
+        "$value": "0.75rem"
       }
     },
     "2": {
@@ -263,7 +263,7 @@
       },
       "normal": {
         "$type": "lineHeights",
-        "$value": "{fontSize.4}*{lineHeight.multiplier.normal}"
+        "$value": "1.25rem"
       }
     },
     "5": {
@@ -273,7 +273,7 @@
       },
       "snug": {
         "$type": "lineHeights",
-        "$value": "{fontSize.5}*{lineHeight.multiplier.snug}"
+        "$value": "1.25rem"
       },
       "normal": {
         "$type": "lineHeights",
@@ -291,7 +291,7 @@
       },
       "tight": {
         "$type": "lineHeights",
-        "$value": "{fontSize.6}*{lineHeight.multiplier.tight}"
+        "$value": "1.25rem"
       },
       "snug": {
         "$type": "lineHeights",
@@ -299,7 +299,7 @@
       },
       "normal": {
         "$type": "lineHeights",
-        "$value": "{fontSize.6}*{lineHeight.multiplier.normal}"
+        "$value": "1.5rem"
       },
       "relaxed": {
         "$type": "lineHeights",
@@ -337,13 +337,13 @@
       },
       "normal": {
         "$type": "lineHeights",
-        "$value": "{fontSize.9}*{lineHeight.multiplier.normal}"
+        "$value": "2.25rem"
       }
     },
     "10": {
       "none": {
         "$type": "lineHeights",
-        "$value": "{fontSize.10}*{lineHeight.multiplier.none}"
+        "$value": "2rem"
       },
       "tight": {
         "$type": "lineHeights",
@@ -351,7 +351,7 @@
       },
       "snug": {
         "$type": "lineHeights",
-        "$value": "{fontSize.10}*{lineHeight.multiplier.snug}"
+        "$value": "2.5rem"
       }
     },
     "15": {

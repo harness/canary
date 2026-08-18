@@ -162,6 +162,7 @@ export const BranchesList: FC<BranchListPageProps> = ({
               <Table.Cell>
                 {branch?.behindAhead?.default ? (
                   <Layout.Flex>
+                    {/* eslint-disable-next-line no-restricted-syntax -- TODO(deprecate-rounded): rounded is deprecated, remove during phase-out */}
                     <Tag className="m-auto" value={t('views:repos.default', 'Default')} rounded />
                   </Layout.Flex>
                 ) : (

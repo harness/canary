@@ -103,6 +103,7 @@ export function SignInPage({ handleSignIn, isLoading, error }: SignInPageProps) 
               label="Password"
               placeholder="Password"
             />
+            {/* eslint-disable-next-line no-restricted-syntax -- TODO(deprecate-rounded): rounded is deprecated, remove during phase-out */}
             <Button className="mt-cn-3xl w-full" rounded type="submit" loading={isLoading}>
               {isLoading ? 'Signing in...' : 'Sign in'}
             </Button>

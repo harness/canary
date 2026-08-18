@@ -113,6 +113,7 @@ export function NewPasswordPage({ isLoading, handleFormSubmit, error }: NewPassw
               {...register('confirmPassword', { onChange: handleInputChange })}
               placeholder="Confirm password"
             />
+            {/* eslint-disable-next-line no-restricted-syntax -- TODO(deprecate-rounded): rounded is deprecated, remove during phase-out */}
             <Button className="mt-cn-3xl w-full" rounded type="submit" loading={isLoading}>
               {isLoading ? 'Saving...' : 'Save'}
             </Button>

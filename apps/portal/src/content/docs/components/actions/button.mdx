@@ -540,16 +540,6 @@ If you need to skip showing the tooltip, you should set `ignoreIconOnlyTooltip`.
   </Button>
 </div>
 
-<hr />
-
-<h4>Rounded Buttons</h4>
-
-<div className="flex gap-cn-sm">
-  <Button rounded>Rounded Button</Button>
-  <Button rounded variant="outline">
-    Rounded Outline
-  </Button>
-</div>
 </div>`}
 />
 
@@ -590,9 +580,6 @@ import { Button } from '@harnessio/ui/components'
 <Button>Medium Size Button (default)</Button>
 <Button size="sm">Small Button</Button>
 <Button size="xs">Extra Small Button</Button>
-
-// Rounded button
-<Button rounded>Rounded Button</Button>
 
 // Icon only button
 <Button iconOnly tooltipProps={{ content: 'Add' }}>
@@ -650,13 +637,6 @@ This ensures type safety and provides proper development-time feedback on invali
       required: false,
       value: "'md' | 'sm' | 'xs' | '2xs' | '3xs'",
       defaultValue: "'md'",
-    },
-    {
-      name: "rounded",
-      description: "Applies rounded corners to the button.",
-      required: false,
-      value: "boolean",
-      defaultValue: "false",
     },
     {
       name: "iconOnly",

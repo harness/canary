@@ -118,6 +118,7 @@ export function SignUpPage({ isLoading, handleSignUp, error }: SignUpPageProps) 
                 <Alert.Title>{serverError}</Alert.Title>
               </Alert.Root>
             )}
+            {/* eslint-disable-next-line no-restricted-syntax -- TODO(deprecate-rounded): rounded is deprecated, remove during phase-out */}
             <Button className="mt-cn-3xl w-full" rounded type="submit" loading={isLoading}>
               {isLoading ? 'Signing up...' : 'Sign up'}
             </Button>

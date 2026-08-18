@@ -28,6 +28,24 @@ function getClassNameRules() {
   return deprecatedCnRules
 }
 
+/**
+ * Deprecate the `rounded` variant on Tag and Text Buttons.
+ *
+ * Rounded Tag / Button are no longer allowed in new builds. The `iconOnly`
+ * button (and any iconOnly variant) is exempt — a circular icon button is fine.
+ * Existing usages will surface as errors and should be phased out over time.
+ */
+function getRoundedVariantRules() {
+  const components = ['Tag', 'Button']
+
+  return components.map(name => ({
+    // Matches <Component rounded ...> that does NOT also set iconOnly.
+    selector: `JSXOpeningElement[name.name='${name}']:has(JSXAttribute[name.name='rounded']):not(:has(JSXAttribute[name.name='iconOnly']))`,
+    message: `Rounded ${name} is deprecated and not allowed in new builds. Use the default (non-rounded) ${name}. Rounded is only permitted on the iconOnly variant.`
+  }))
+}
+
 module.exports = {
-  classNameRules: getClassNameRules()
+  classNameRules: getClassNameRules(),
+  roundedVariantRules: getRoundedVariantRules()
 }

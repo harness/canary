@@ -67,6 +67,7 @@ export function StageNode(props: StageNodeProps) {
       {!hideContextMenu && <NodeMenuTrigger onEllipsisClick={onEllipsisClick} />}
 
       {!collapsed && isEmpty && (
+        // eslint-disable-next-line no-restricted-syntax -- Approved round icon button: Pipelines nodes are a sanctioned special use case (product-design approved), exempt from the rounded deprecation.
         <Button
           rounded
           className="p-cn-sm self-center"

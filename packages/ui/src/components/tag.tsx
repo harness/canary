@@ -48,6 +48,9 @@ type TagProps = Omit<React.HTMLAttributes<HTMLDivElement>, 'role' | 'tabIndex'> 
   variant?: VariantProps<typeof tagVariants>['variant']
   size?: VariantProps<typeof tagVariants>['size']
   theme?: VariantProps<typeof tagVariants>['theme']
+  /**
+   * @deprecated Rounded Tag is deprecated and must not be used in new builds. Use the default (non-rounded) Tag.
+   */
   rounded?: boolean
   icon?: IconV2NamesType
   iconProps?: Omit<IconPropsV2, 'name' | 'size' | 'fallback' | 'ref'>

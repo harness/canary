@@ -13,6 +13,7 @@ export default function AvatarDropdown({ routes }: { routes?: RouteDefinitions }
   return (
     <DropdownMenu.Root>
       <DropdownMenu.Trigger asChild>
+        {/* eslint-disable-next-line no-restricted-syntax -- TODO(deprecate-rounded): rounded is deprecated, remove during phase-out */}
         <Button variant="ghost" size="sm" rounded className="pl-0 pr-cn-xs">
           <Avatar rounded name={user?.name || user?.email} size="md" />
           <IconV2 name="nav-arrow-down" size="2xs" />

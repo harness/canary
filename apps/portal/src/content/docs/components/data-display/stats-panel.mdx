@@ -1,0 +1,101 @@
+---
+title: Stats Panel (Key Value Pairs)
+description: Compact key–value pairs for entity metadata
+---
+
+The `StatsPanel` component renders a horizontal set of key–value pairs — a label above its value — used across the application to surface entity metadata such as created/updated timestamps, status, ownership, and counts.
+
+Each value accepts any React node, so it can be plain text, a `StatusBadge`, a `TimeAgoCard`, an icon, and more. A missing value renders as `-`, and passing `isLoading` shows skeleton placeholders.
+
+import { DocsPage } from "@/components/docs-page";
+
+<DocsPage.ComponentExample
+  client:only
+  code={`
+    <StatsPanel
+      data={[
+        { label: 'Created', value: <TimeAgoCard timestamp="Dec 6, 2024" /> },
+        { label: 'Last updated', value: undefined },
+        {
+          label: 'Connection status',
+          value: (
+            <StatusBadge variant="status" theme="success">
+              Success
+            </StatusBadge>
+          )
+        },
+        { label: 'Owner', value: <span>jane.doe</span> }
+      ]}
+    />
+`}
+/>
+
+## Loading
+
+Pass `isLoading` to render skeleton placeholders while data is being fetched.
+
+<DocsPage.ComponentExample
+  client:only
+  code={`
+    <StatsPanel
+      isLoading
+      data={[
+        { label: 'Created', value: <span>—</span> },
+        { label: 'Last updated', value: <span>—</span> },
+        { label: 'Connection status', value: <span>—</span> },
+        { label: 'Owner', value: <span>—</span> }
+      ]}
+    />
+`}
+/>
+
+## Usage
+
+```tsx
+import { StatsPanel, StatusBadge, TimeAgoCard } from "@harnessio/ui/components";
+
+<StatsPanel
+  data={[
+    { label: "Created", value: <TimeAgoCard timestamp="Dec 6, 2024" /> },
+    { label: "Last updated", value: undefined }, // renders as "-"
+    {
+      label: "Connection status",
+      value: (
+        <StatusBadge variant="status" theme="success">
+          Success
+        </StatusBadge>
+      ),
+    },
+  ]}
+/>;
+```
+
+## API Reference
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "data",
+      description:
+        'Array of key–value pairs to display. Each item has a string label and an optional value node; a missing value renders as "-".',
+      required: true,
+      value: "{ label: string; value?: JSX.Element }[]",
+    },
+    {
+      name: "isLoading",
+      description:
+        "When true, renders skeleton placeholders instead of values.",
+      required: false,
+      defaultValue: "false",
+      value: "boolean",
+    },
+    {
+      name: "gap",
+      description: "Vertical gap between each label and its value.",
+      required: false,
+      defaultValue: "'3xs'",
+      value:
+        "'none' | '4xs' | '3xs' | '2xs' | 'xs' | 'sm' | 'md' | 'lg' | 'xl' | '2xl' | '3xl' | '4xl'",
+    },
+  ]}
+/>

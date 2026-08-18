@@ -1,0 +1,79 @@
+---
+title: Page
+description: Page header and content primitives used inside the app shell
+---
+
+import { DocsPage } from "@/components/docs-page";
+
+The `Page` component provides the header + content structure that sits inside the [Sandbox Layout](/components/foundations/sandbox-layout) main area. It standardizes page titles, back navigation, header actions, and the scrollable content region across screens.
+
+Because it renders page-level structure (a sticky/scroll-aware header and a full-height content region), it is documented here with anatomy and code rather than an inline live preview.
+
+## Anatomy
+
+```tsx
+import { Page } from "@harnessio/ui/components";
+
+<Page.Root>
+  <Page.Header
+    title="Pipelines"
+    backLink={{ linkText: "Back to project", linkProps: { to: "/project" } }}
+  >
+    {/* optional header-right actions, e.g. <Button>New</Button> */}
+  </Page.Header>
+
+  <Page.Content>{/* page body */}</Page.Content>
+</Page.Root>;
+```
+
+## Header with tabs (`Page.HeaderV2`)
+
+`Page.HeaderV2` is the newer header variant that supports a title row plus a tab strip for section navigation.
+
+```tsx
+<Page.Root>
+  <Page.HeaderV2
+    title="Repository"
+    tabs={[
+      { label: "Summary", value: "/summary" },
+      { label: "Files", value: "/files" },
+      { label: "Commits", value: "/commits" },
+    ]}
+  />
+  <Page.Content>{/* active tab content */}</Page.Content>
+</Page.Root>
+```
+
+## Parts
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "Page.Root",
+      description:
+        "Wrapper that establishes the page's header + scrollable content context.",
+      required: false,
+      value: "{ children, className }",
+    },
+    {
+      name: "Page.Header",
+      description:
+        "Page header with title, optional backLink, and header-right children (actions).",
+      required: false,
+      value: "PageHeaderProps",
+    },
+    {
+      name: "Page.HeaderV2",
+      description:
+        "Header variant with a title row and a tab strip for section navigation.",
+      required: false,
+      value: "PageHeaderV2Props",
+    },
+    {
+      name: "Page.Content",
+      description: "Scrollable content region for the page body.",
+      required: false,
+      value: "{ children, className }",
+    },
+  ]}
+/>

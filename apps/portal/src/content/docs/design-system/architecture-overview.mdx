@@ -6,11 +6,27 @@ description: Architecture, token layers, and usage guide for the Harness Design 
 import { Aside } from "@astrojs/starlight/components";
 import LinkCard from "@/components/LinkCard.astro";
 
-The Harness Design System is a shared contract between design and engineering.
+{/* Page-scoped overrides for this doc only. */}
 
-Design tokens — stored as JSON — are the single source of truth. From that single source, Figma styles and production CSS/TypeScript are generated automatically.
+<style>{`
+  #_top,
+  #repository-structure,
+  #token-architecture,
+  #layer-1-core-primitives,
+  #layer-2-semantic-tokens-mode,
+  #layer-3-breakpoint--layout,
+  #layer-4-component-tokens,
+  #glossary {
+    font-weight: 600;
+  }
 
-This page explains the architecture, how tokens flow from JSON to UI, and how to use the system in code.
+  /* Second content panel (the markdown content) — remove top padding. */
+  .content-panel + .content-panel {
+    padding-top: 0 !important;
+  }
+`}</style>
+
+The Harness Design System is a shared contract between design and engineering. Design tokens — stored as JSON — are the single source of truth, and from that single source, Figma styles and production CSS/TypeScript are generated automatically. This page explains the architecture, how tokens flow from JSON to UI, and how to use the system in code.
 
 ## Repository Structure
 
@@ -163,14 +179,6 @@ Key concepts at this layer:
           <td className="cn-table-v2-cell">
             Build tool that transforms JSON tokens into CSS custom properties
             and TypeScript modules.
-          </td>
-        </tr>
-        <tr className="cn-table-v2-row">
-          <td className="cn-table-v2-cell" style={{ fontWeight: 600 }}>
-            Token Studio
-          </td>
-          <td className="cn-table-v2-cell">
-            Figma plugin that syncs JSON tokens ↔ Figma styles.
           </td>
         </tr>
         <tr className="cn-table-v2-row">

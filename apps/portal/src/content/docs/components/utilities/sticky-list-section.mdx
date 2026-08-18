@@ -1,7 +1,6 @@
 ---
 title: Sticky List Section
 description: Compound component for sticky section headers inside scrollable containers
-beta: true
 ---
 
 The `StickyListSection` component provides sticky section headers that pin to the top of a scroll container while the section is visible, then push out as the next section scrolls in. Built with IntersectionObserver, it detects when a header becomes stuck and applies a subtle shadow.
@@ -35,7 +34,7 @@ const ListItem = ({ icon, label }) => (
 <Card.Root size="sm" interactive={false}>
   <Card.Content>
     <Layout.Horizontal align="center" gap="sm">
-      <IconV2 name={icon} size="sm" color="neutral" />
+      <IconV2 name={icon} size="sm" color="inherit" />
       <Text className="text-sm" color="foreground-1">
         {label}
       </Text>
@@ -185,7 +184,7 @@ const SecretRow = ({ name, type }) => (
   <Card.Content>
     <Layout.Horizontal align="center" className="justify-between">
       <Layout.Horizontal align="center" gap="sm">
-        <IconV2 name="lock" size="sm" color="neutral" />
+        <IconV2 name="lock" size="sm" color="inherit" />
         <Text className="text-sm font-mono" color="foreground-1">
           {name}
         </Text>

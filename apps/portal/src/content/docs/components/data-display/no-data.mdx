@@ -1,0 +1,126 @@
+---
+title: No Data
+description: Empty-state block with illustration, title, description, and actions
+---
+
+The `NoData` component renders a centered empty state used across the application when a list, table, or view has no content (or after an error). It pairs an illustration with a title, one or more description lines, and optional primary / secondary / split-button actions.
+
+import { DocsPage } from "@/components/docs-page";
+
+<DocsPage.ComponentExample
+  client:only
+  code={`
+    <NoData
+      withBorder
+      imageName="no-data-cog"
+      title="No pipelines yet"
+      description={[
+        'Create your first pipeline to get started.',
+        'Pipelines automate your build, test, and deploy steps.'
+      ]}
+      primaryButton={{ label: 'Create pipeline', icon: 'plus' }}
+      secondaryButton={{ label: 'Learn more', variant: 'outline' }}
+    />
+`}
+/>
+
+## Without actions
+
+A minimal empty state — just an illustration, title, and description.
+
+<DocsPage.ComponentExample
+  client:only
+  code={`
+    <NoData
+      withBorder
+      imageName="no-search-magnifying-glass"
+      title="No results found"
+      description={['Try adjusting your search or filters.']}
+    />
+`}
+/>
+
+## Usage
+
+```tsx
+import { NoData } from "@harnessio/ui/components";
+
+<NoData
+  imageName="no-data-cog"
+  title="No pipelines yet"
+  description={["Create your first pipeline to get started."]}
+  primaryButton={{
+    label: "Create pipeline",
+    icon: "plus",
+    to: "/pipelines/new",
+  }}
+  secondaryButton={{ label: "Learn more", variant: "outline" }}
+/>;
+```
+
+## API Reference
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "title",
+      description: "Empty-state heading.",
+      required: true,
+      value: "string",
+    },
+    {
+      name: "description",
+      description:
+        "One or more lines of supporting text, each rendered on its own line.",
+      required: true,
+      value: "string[]",
+    },
+    {
+      name: "imageName",
+      description:
+        "Illustration to display above the title (e.g. no-data-cog, no-search-magnifying-glass).",
+      required: false,
+      value: "IllustrationsNameType",
+    },
+    {
+      name: "imageSize",
+      description: "Illustration size in pixels.",
+      required: false,
+      defaultValue: "112",
+      value: "number",
+    },
+    {
+      name: "primaryButton",
+      description:
+        "Primary action. Supports label, icon, to (link), and isDialogTrigger, plus Button props.",
+      required: false,
+      value: "ButtonProps & { label; icon?; to?; isDialogTrigger? }",
+    },
+    {
+      name: "secondaryButton",
+      description: "Secondary action, same shape as primaryButton.",
+      required: false,
+      value: "ButtonProps & { label; icon?; to?; isDialogTrigger? }",
+    },
+    {
+      name: "splitButton",
+      description:
+        "Renders a SplitButton action with dropdown options instead of a plain primary button.",
+      required: false,
+      value: "{ label; icon?; options; handleOptionChange; handleButtonClick }",
+    },
+    {
+      name: "withBorder",
+      description: "Wraps the empty state in a bordered, rounded container.",
+      required: false,
+      defaultValue: "false",
+      value: "boolean",
+    },
+    {
+      name: "children",
+      description: "Custom action content rendered in the actions row.",
+      required: false,
+      value: "ReactNode",
+    },
+  ]}
+/>

@@ -1,0 +1,109 @@
+---
+title: Sandbox Layout
+description: Page-level scaffold for the app shell — panels, header, and content
+---
+
+import { DocsPage } from "@/components/docs-page";
+
+The `SandboxLayout` component is the outer scaffold used by most full-page screens. It provides a stable grid shell with an optional left navigation panel, a fixed header, and a scrollable main content area. It is a set of compound layout primitives — you compose the pieces you need.
+
+Because it establishes full-viewport structure (`min-height: 100vh`, a fixed header, sticky panels), it is documented here with its anatomy and code rather than an inline live preview.
+
+## Anatomy
+
+```tsx
+import { SandboxLayout } from "@harnessio/ui/components";
+
+<SandboxLayout.Root>
+  {/* Optional left navigation column (sticky, full height) */}
+  <SandboxLayout.LeftPanel>{/* nav */}</SandboxLayout.LeftPanel>
+
+  {/* Optional secondary nav column */}
+  <SandboxLayout.LeftSubPanel>{/* sub-nav */}</SandboxLayout.LeftSubPanel>
+
+  <SandboxLayout.Main>
+    <SandboxLayout.Header>{/* breadcrumbs / top bar */}</SandboxLayout.Header>
+    <SandboxLayout.SubHeader>{/* tabs */}</SandboxLayout.SubHeader>
+
+    <SandboxLayout.Content maxWidth="5xl">
+      {/* page content */}
+    </SandboxLayout.Content>
+  </SandboxLayout.Main>
+</SandboxLayout.Root>;
+```
+
+## Columns
+
+Use `SandboxLayout.Columns` / `SandboxLayout.Column` to split content into a grid. `columnWidths` accepts any CSS `grid-template-columns` value.
+
+```tsx
+<SandboxLayout.Columns columnWidths="1fr 320px">
+  <SandboxLayout.Column>{/* primary */}</SandboxLayout.Column>
+  <SandboxLayout.Column>{/* sidebar */}</SandboxLayout.Column>
+</SandboxLayout.Columns>
+```
+
+## Parts
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "SandboxLayout.Root",
+      description:
+        "Full-height grid shell (auto | 1fr columns). Wraps the whole layout.",
+      required: false,
+      value: "{ children }",
+    },
+    {
+      name: "SandboxLayout.LeftPanel",
+      description:
+        "Sticky, full-height left navigation column (hidden below md).",
+      required: false,
+      value: "{ children, className }",
+    },
+    {
+      name: "SandboxLayout.LeftSubPanel",
+      description: "Secondary scrollable nav column with a right border.",
+      required: false,
+      value: "{ children, className }",
+    },
+    {
+      name: "SandboxLayout.Main",
+      description: "Main content section; fullWidth makes it flex-1.",
+      required: false,
+      value: "{ children, fullWidth?, className }",
+    },
+    {
+      name: "SandboxLayout.Header",
+      description: "Fixed top header (breadcrumbs height).",
+      required: false,
+      value: "{ children, className }",
+    },
+    {
+      name: "SandboxLayout.SubHeader",
+      description: "Secondary header row (tabs-nav height).",
+      required: false,
+      value: "{ children, className }",
+    },
+    {
+      name: "SandboxLayout.Content",
+      description:
+        "Scrollable content wrapper with optional maxWidth (sm–7xl, centered).",
+      required: false,
+      value: "{ children, maxWidth?, className }",
+    },
+    {
+      name: "SandboxLayout.Columns",
+      description:
+        "Grid container; columnWidths sets grid-template-columns (default 'repeat(2, 1fr)').",
+      required: false,
+      value: "{ children, columnWidths?, className }",
+    },
+    {
+      name: "SandboxLayout.Column",
+      description: "A single grid cell within Columns.",
+      required: false,
+      value: "{ children, className }",
+    },
+  ]}
+/>

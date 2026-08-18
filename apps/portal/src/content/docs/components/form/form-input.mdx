@@ -1,0 +1,79 @@
+---
+title: Form Input
+description: React Hook Form–bound wrappers over the input primitives
+---
+
+import { DocsPage } from "@/components/docs-page";
+
+`FormInput` is a set of thin wrappers that bind the input primitives to [React Hook Form](https://react-hook-form.com/). Each wrapper reads the surrounding form context, so you pass a `name` (the field path) plus the underlying input's props — value, `onChange`, and validation wiring are handled for you.
+
+Use these instead of the raw inputs whenever a field lives inside a form, so state, errors, and submission stay consistent.
+
+Because these require a form context to function, they are documented here with usage code rather than a standalone live preview.
+
+## Available inputs
+
+`FormInput.Text`, `FormInput.Textarea`, `FormInput.Number`, `FormInput.Time`, `FormInput.Radio`, `FormInput.Checkbox`, `FormInput.Select`, `FormInput.MultiSelect` — each maps to its corresponding primitive (`TextInput`, `Textarea`, `NumberInput`, `TimeInput`, `Radio`, `Checkbox`, `Select`, `MultiSelect`).
+
+## Usage
+
+```tsx
+import { FormProvider, useForm } from "react-hook-form";
+import { FormInput, Button } from "@harnessio/ui/components";
+
+function ConnectorForm() {
+  const methods = useForm({
+    defaultValues: { name: "", type: "", enabled: false },
+  });
+
+  return (
+    <FormProvider {...methods}>
+      <form onSubmit={methods.handleSubmit(console.log)}>
+        <FormInput.Text name="name" label="Name" placeholder="my-connector" />
+
+        <FormInput.Select
+          name="type"
+          label="Type"
+          options={[
+            { label: "GitHub", value: "github" },
+            { label: "GitLab", value: "gitlab" },
+          ]}
+        />
+
+        <FormInput.Checkbox name="enabled" label="Enabled" />
+
+        <Button type="submit">Save</Button>
+      </form>
+    </FormProvider>
+  );
+}
+```
+
+Each wrapper forwards the full prop set of its underlying primitive — see the individual input pages ([Text Input](/components/form/input), [Select](/components/form/multi-select), [Checkbox](/components/form/checkbox), etc.) for the available props.
+
+## Common props
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "name",
+      description:
+        "Field path in the form. Binds the input's value and validation to this key.",
+      required: true,
+      value: "string",
+    },
+    {
+      name: "label",
+      description: "Field label rendered by the underlying input.",
+      required: false,
+      value: "string",
+    },
+    {
+      name: "...inputProps",
+      description:
+        "All remaining props are forwarded to the wrapped primitive (placeholder, options, disabled, etc.).",
+      required: false,
+      value: "props of the underlying input",
+    },
+  ]}
+/>

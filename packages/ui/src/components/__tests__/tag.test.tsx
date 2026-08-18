@@ -584,6 +584,7 @@ describe('Tag', () => {
       const handleAction = vi.fn()
 
       const { container } = render(
+        // eslint-disable-next-line no-restricted-syntax -- TODO(deprecate-rounded): rounded is deprecated, remove during phase-out
         <Tag
           value="Complete Tag"
           variant="secondary"
@@ -616,6 +617,7 @@ describe('Tag', () => {
       const handleAction = vi.fn()
 
       const { container } = render(
+        // eslint-disable-next-line no-restricted-syntax -- TODO(deprecate-rounded): rounded is deprecated, remove during phase-out
         <Tag
           label="Status"
           value="Active"

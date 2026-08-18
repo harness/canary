@@ -77,23 +77,6 @@ import { DocsPage } from "@/components/docs-page";
   </div>
 </div>
 
-{/* Rounded Tags */}
-
-<div>
-  <Text variant="heading-subsection" as="h4" className="mb-cn-sm">
-    Rounded Tags
-  </Text>
-  <div className="flex flex-wrap items-end gap-cn-sm">
-    <Tag value="Rounded Outline Tag" variant="outline" rounded theme="pink" />
-    <Tag
-      value="Rounded Secondary Tag"
-      variant="secondary"
-      rounded
-      theme="orange"
-    />
-  </div>
-</div>
-
 {/* Split Tags */}
 
 <div>
@@ -129,20 +112,6 @@ import { DocsPage } from "@/components/docs-page";
   <div className="flex flex-wrap items-end gap-cn-sm">
     <Tag value="Outline Icon" variant="outline" showIcon theme="yellow" />
     <Tag value="Secondary Icon" variant="secondary" showIcon theme="violet" />
-    <Tag
-      value="Rounded Outline Icon"
-      variant="outline"
-      rounded
-      showIcon
-      theme="brown"
-    />
-    <Tag
-      value="Rounded Secondary Icon"
-      variant="secondary"
-      rounded
-      showIcon
-      theme="indigo"
-    />
   </div>
 </div>
 
@@ -166,22 +135,6 @@ import { DocsPage } from "@/components/docs-page";
       showIcon
       icon="plus"
       theme="cyan"
-    />
-    <Tag
-      value="Rounded Custom Icon"
-      variant="outline"
-      rounded
-      showIcon
-      icon="plus"
-      theme="orange"
-    />
-    <Tag
-      value="Rounded Custom Icon Secondary"
-      variant="secondary"
-      rounded
-      showIcon
-      icon="plus"
-      theme="pink"
     />
   </div>
 </div>
@@ -208,22 +161,6 @@ import { DocsPage } from "@/components/docs-page";
       onActionClick={() => alert("Reset clicked")}
       theme="green"
     />
-    <Tag
-      value="Rounded Outline Reset"
-      variant="outline"
-      rounded
-      actionIcon="xmark"
-      onActionClick={() => alert("Reset clicked")}
-      theme="purple"
-    />
-    <Tag
-      value="Rounded Secondary Reset"
-      variant="secondary"
-      rounded
-      actionIcon="xmark"
-      onActionClick={() => alert("Reset clicked")}
-      theme="red"
-    />
   </div>
 </div>
 
@@ -248,25 +185,6 @@ import { DocsPage } from "@/components/docs-page";
         onActionClick={() => alert("Reset clicked")}
         theme="violet"
       />
-      <Tag
-        value="Rounded Outline Icon Reset"
-        variant="outline"
-        rounded
-        showIcon
-        actionIcon="xmark"
-        onActionClick={() => alert("Reset clicked")}
-        theme="brown"
-      />
-      <Tag
-        value="Rounded Secondary Icon Reset"
-        variant="secondary"
-        rounded
-        showIcon
-        onClick={() => alert("Tag clicked")}
-        actionIcon="xmark"
-        onActionClick={() => alert("Reset clicked")}
-        theme="indigo"
-      />
     </div>
   </div>
 </div>`}
@@ -285,14 +203,6 @@ import { Tag } from '@harnessio/ui/components'
 
 // Variant
 <Tag value="Outline Tag" variant="outline" theme="blue" />
-
-// Rounded tag
-<Tag
-  value="Rounded Outline Tag"
-  variant="outline"
-  rounded
-  theme="pink"
-/>
 
 // Split tag
 <Tag
@@ -363,13 +273,6 @@ import { Tag } from '@harnessio/ui/components'
       required: false,
       value: "'gray' | 'blue' | 'green' | 'red' | ...",
       defaultValue: "'gray'",
-    },
-    {
-      name: "rounded",
-      description: "Applies rounded corners to the tag.",
-      required: false,
-      value: "boolean",
-      defaultValue: "false",
     },
     {
       name: "icon",

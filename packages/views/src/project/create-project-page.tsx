@@ -169,6 +169,7 @@ export const CreateProjectPage: FC<CreateProjectPageProps> = props => {
           </Fieldset>
 
           <ControlGroup type="button">
+            {/* eslint-disable-next-line no-restricted-syntax -- TODO(deprecate-rounded): rounded is deprecated, remove during phase-out */}
             <Button className="mt-cn-sm w-full" rounded type="submit" loading={isLoading} disabled={hasError}>
               {isLoading
                 ? t('views:createProject.create.projectCreation', 'Creating project...')
@@ -184,6 +185,7 @@ export const CreateProjectPage: FC<CreateProjectPageProps> = props => {
             </div>
 
             {/* TODO: Update the variant of this button to outline once the component supports this style. */}
+            {/* eslint-disable-next-line no-restricted-syntax -- TODO(deprecate-rounded): rounded is deprecated, remove during phase-out */}
             <Button asChild className="mt-cn-sm w-full" rounded variant="outline">
               <Link to={importProjectLinkProps.to}>{t('views:createProject.importProject', 'Import project')}</Link>
             </Button>

@@ -189,6 +189,7 @@ const InputField: FC<InputFieldProps> = ({
         placeholder={placeholder}
         aria-label="Chat input"
       />
+      {/* eslint-disable-next-line no-restricted-syntax -- Approved round icon button: AI Chat is a sanctioned special use case (product-design approved), exempt from the rounded deprecation. */}
       <Button
         className="bottom-cn-xs right-cn-xs absolute z-10 size-7"
         rounded

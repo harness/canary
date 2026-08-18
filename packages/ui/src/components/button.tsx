@@ -51,6 +51,13 @@ type CommonButtonProps = Omit<ButtonHTMLAttributes<HTMLButtonElement>, 'onClick'
   VariantProps<typeof buttonVariants> & {
     asChild?: boolean
     loading?: boolean
+    /**
+     * @deprecated Rounded Button is deprecated and must not be used in new builds. Use the default (non-rounded) Button.
+     *
+     * Round icon buttons are a unique use case only (e.g. Pipelines nodes, AI Chat) and require product design
+     * approval. Sanctioned exceptions keep an inline `eslint-disable no-restricted-syntax` comment explaining the
+     * approval; do not add new ones without design sign-off.
+     */
     rounded?: boolean
     onClick?: (event: React.MouseEvent<HTMLButtonElement>) => void | Promise<unknown>
   }

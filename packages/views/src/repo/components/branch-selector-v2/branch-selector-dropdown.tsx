@@ -144,6 +144,7 @@ export const BranchSelectorDropdown: FC<BranchSelectorDropdownProps> = ({
               >
                 <div className="ml-cn-xs flex size-4 items-center">{isSelected && <IconV2 name="check" />}</div>
                 <HighlightText text={item.name} match={searchQuery} />
+                {/* eslint-disable-next-line no-restricted-syntax -- TODO(deprecate-rounded): rounded is deprecated, remove during phase-out */}
                 {isDefault && <Tag theme="blue" size="sm" rounded value={t('views:repos.default', 'Default')} />}
               </Command.Item>
             )

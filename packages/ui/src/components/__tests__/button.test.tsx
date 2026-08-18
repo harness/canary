@@ -793,6 +793,7 @@ describe('Button', () => {
       variants.forEach(variant => {
         render(
           <TestWrapper>
+            {/* eslint-disable-next-line no-restricted-syntax -- TODO(deprecate-rounded): rounded is deprecated, remove during phase-out */}
             <Button variant={variant} rounded>
               Rounded {variant}
             </Button>

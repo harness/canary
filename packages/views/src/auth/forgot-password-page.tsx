@@ -99,6 +99,7 @@ export function ForgotPasswordPage({ isLoading, onSubmit, error }: ForgotPasswor
               {...register('email', { onChange: handleInputChange })}
               autoFocus
             />
+            {/* eslint-disable-next-line no-restricted-syntax -- TODO(deprecate-rounded): rounded is deprecated, remove during phase-out */}
             <Button className="mt-cn-3xl w-full" variant="outline" rounded type="submit" loading={isLoading}>
               {isLoading ? 'Sending...' : 'Send'}
             </Button>

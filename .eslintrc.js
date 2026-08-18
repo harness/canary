@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
-const { classNameRules } = require('./eslint/rules.js')
+const { classNameRules, roundedVariantRules } = require('./eslint/rules.js')
 
 module.exports = {
   root: true,
@@ -50,7 +50,7 @@ module.exports = {
      * Soon it will be converted to "error"
      * once all the old variants are removed
      */
-    'no-restricted-syntax': ['error', ...classNameRules],
+    'no-restricted-syntax': ['error', ...classNameRules, ...roundedVariantRules],
 
     'jsx-a11y/click-events-have-key-events': 'warn',
     'jsx-a11y/no-autofocus': 'off',

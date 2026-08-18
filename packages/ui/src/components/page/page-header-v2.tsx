@@ -27,6 +27,8 @@ export interface PageHeaderV2Props {
   tabs?: HeaderV2TabItem[]
   /** `ghost` renders tabs inline in the title row; `underlined` (default) renders below. */
   tabsVariant?: HeaderV2TabsVariant
+  /** Optional className passed to the `Tabs.List` element. */
+  tabsClassName?: string
   contentTabs?: boolean
   children?: ReactNode
   className?: string
@@ -83,12 +85,13 @@ const TitleSection: FC<TitleSectionProps> = ({ title, iconName, description, act
   )
 }
 
-const NavTabsSection: FC<{ items: HeaderV2TabItem[]; variant?: HeaderV2TabsVariant }> = ({
+const NavTabsSection: FC<{ items: HeaderV2TabItem[]; variant?: HeaderV2TabsVariant; className?: string }> = ({
   items,
-  variant = 'underlined'
+  variant = 'underlined',
+  className
 }) => (
   <Tabs.NavRoot>
-    <Tabs.List variant={variant}>
+    <Tabs.List variant={variant} className={className}>
       {items.map(tab => (
         <Tabs.Trigger
           key={tab.value}
@@ -123,6 +126,7 @@ export const HeaderV2: FC<PageHeaderV2Props> = ({
   breadcrumbs,
   tabs,
   tabsVariant = 'underlined',
+  tabsClassName,
   contentTabs,
   children,
   className
@@ -153,7 +157,7 @@ export const HeaderV2: FC<PageHeaderV2Props> = ({
       />
       {children}
       {showSeparateTabs && contentTabs && <ContentTabsSection items={tabs} />}
-      {showSeparateTabs && !contentTabs && <NavTabsSection items={tabs} />}
+      {showSeparateTabs && !contentTabs && <NavTabsSection items={tabs} className={tabsClassName} />}
     </Layout.Vertical>
   )
 }

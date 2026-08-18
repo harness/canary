@@ -9,15 +9,36 @@ import { GrayShadesPreview } from "@/components/gray-shades-preview";
 import ColorSystemDiagram from "@/components/ColorSystemDiagram.astro";
 import LinkCard from "@/components/LinkCard.astro";
 
+{/* Selected headings set to font-weight 600 (page-scoped to this doc). */}
+
+<style>{`
+  #_top,
+  #why-lch,
+  #semantic-levels,
+  #backgrounds,
+  #text,
+  #borders,
+  #interactive-states,
+  #color-sets--the-core-pattern,
+  #component-specific-colors,
+  #state-tokens--color-modifiers,
+  #available-modifiers {
+    font-weight: 600;
+  }
+
+  /* Second content panel (the markdown content) — remove top padding. */
+  .content-panel + .content-panel {
+    padding-top: 0 !important;
+  }
+`}</style>
+
 Colors are the most complex part of the design system. This page explains how they're structured, from raw LCH values to the semantic pairs developers use in code.
 
 <ColorSystemDiagram />
 
 ## Why LCH?
 
-All colors are authored in <span style="font-weight: 600">LCH color space</span> (Lightness, Chroma, Hue). LCH is perceptually uniform — equal numeric steps produce equal visual differences. This makes it straightforward to build consistent color ramps and verify contrast ratios mathematically.
-
-HEX values exist only as a Figma export fallback. <span style="font-weight: 600">LCH is the source of truth</span>.
+All colors are authored in <span style="font-weight: 600">LCH color space</span> (Lightness, Chroma, Hue). LCH is perceptually uniform — equal numeric steps produce equal visual differences. This makes it straightforward to build consistent color ramps and verify contrast ratios mathematically. HEX values exist only as a Figma export fallback. <span style="font-weight: 600">LCH is the source of truth</span>.
 
 ```json
 {

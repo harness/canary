@@ -417,6 +417,23 @@ describe('deriveFlatStepperModel', () => {
     })
   })
 
+  test('skipped step renders skipped, not completed', () => {
+    // deriveBucketState (shared with deriveStepperModel's step-group buckets) has no 'skipped'
+    // member in its return type and folds a resolved-but-skipped entry into 'completed' — flat
+    // mode's bucket is always exactly one entry, so it must surface that entry's own 'skipped'
+    // status directly instead of going through deriveBucketState's coarser aggregation.
+    const history: CardEntry[] = [
+      { stepId: 'a', status: 'skipped', stateSnapshot: {} },
+      { stepId: 'b', status: 'active', stateSnapshot: {} }
+    ]
+    const result = deriveFlatStepperModel(flatFlow, history, 'b')
+    expect(result).toEqual([
+      { stepId: 'a', title: 'A', description: undefined, state: 'skipped', visualCompleted: false },
+      { stepId: 'b', title: 'B', description: undefined, state: 'active', visualCompleted: false },
+      { stepId: 'c', title: 'C', description: undefined, state: 'upcoming', visualCompleted: false }
+    ])
+  })
+
   test('CDv2-shaped single dynamic-choice step renders active with no visualCompleted', () => {
     const cdv2ShapedFlow: FlowConfig = {
       steps: {

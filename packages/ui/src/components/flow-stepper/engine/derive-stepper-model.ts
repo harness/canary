@@ -254,7 +254,7 @@ export interface DerivedFlatStep {
   stepId: string
   title: string
   description?: string
-  state: 'completed' | 'active' | 'error' | 'upcoming'
+  state: 'completed' | 'active' | 'error' | 'upcoming' | 'skipped'
   visualCompleted: boolean
 }
 
@@ -279,13 +279,23 @@ export function deriveFlatStepperModel(
   const visited: DerivedFlatStep[] = cardHistory.map(entry => {
     const stepConfig = flow.steps[entry.stepId]
     const isActive = entry.stepId === activeStepId
-    const state = deriveBucketState({
-      entries: [entry],
-      isActiveBucket: isActive,
-      activeStepId,
-      isFlowComplete,
-      visualCompletedFor
-    })
+    // deriveBucketState's return type has no 'skipped' member: step-GROUP buckets (its real
+    // consumer, deriveStepperModel) can hold several entries, so it only cares whether the whole
+    // bucket resolved, not each entry's own status — a skipped entry is just "resolved" to it,
+    // same as completed, and folds into 'completed'. Flat mode's bucket is always exactly one
+    // entry, so it can and must surface that entry's own 'skipped' status directly instead of
+    // going through deriveBucketState's coarser aggregation. Do not widen deriveBucketState for
+    // this — that function's contract is intentionally group-scoped.
+    const state =
+      entry.status === 'skipped'
+        ? 'skipped'
+        : deriveBucketState({
+            entries: [entry],
+            isActiveBucket: isActive,
+            activeStepId,
+            isFlowComplete,
+            visualCompletedFor
+          })
 
     return {
       stepId: entry.stepId,

@@ -5,6 +5,15 @@ import { BaseSubscribable, Unsubscribe } from '../../utils/Subscribable'
 import ComposerRuntime from '../ComposerRuntime/ComposerRuntime'
 import { ThreadRuntimeCore } from './ThreadRuntimeCore'
 
+const ELICITATION_TYPE_PREFIX = 'elicitation_'
+
+/** Minimal shape of an elicitation content item's `data` used for supersession. */
+interface ElicitationLike {
+  review_id?: string
+  status?: string
+  resolved?: unknown
+}
+
 export class ThreadRuntime extends BaseSubscribable {
   public readonly composer: ComposerRuntime
 
@@ -81,6 +90,13 @@ export class ThreadRuntime extends BaseSubscribable {
         })
       }
 
+      // Close still-open elicitation cards in the live UI. ml-infra already
+      // pops pending reviews on this plain-text turn, so we do not fire a
+      // separate action_cancelled stream.
+      if (this._core.supersedeOpenElicitationsOnSend) {
+        this.supersedeOpenElicitations()
+      }
+
       this.composer.clear()
       await this._core.startRun({
         role: 'user',
@@ -91,6 +107,29 @@ export class ThreadRuntime extends BaseSubscribable {
     } finally {
       this.composer.setSubmitting(false)
     }
+  }
+
+  /**
+   * Marks every still-open elicitation card terminal in the live thread.
+   * Resume invalidation happens on the following plain-text turn in ml-infra.
+   */
+  private supersedeOpenElicitations(): void {
+    for (const message of this._core.messages) {
+      const hasOpen = message.content.some(item => this.isOpenElicitation(item))
+      if (!hasOpen) continue
+      this._core.updateMessageContent(message.id, content =>
+        content.map(item =>
+          this.isOpenElicitation(item) ? { ...item, data: { ...(item.data as object), status: 'superseded' } } : item
+        )
+      )
+    }
+  }
+
+  private isOpenElicitation(item: MessageContent): boolean {
+    if (!item.type.startsWith(ELICITATION_TYPE_PREFIX)) return false
+    const data = item.data as ElicitationLike | undefined
+    if (!data?.review_id || data.resolved) return false
+    return !data.status || data.status === 'open'
   }
 
   /**

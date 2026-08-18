@@ -115,7 +115,7 @@
         "fontFamily": "{fontFamily.mono}",
         "fontWeight": "{fontWeight.mono.normal.300}",
         "fontSize": "0.75rem",
-        "lineHeight": "{lineHeight.4.normal}",
+        "lineHeight": "{lineHeight.20}",
         "letterSpacing": "{tracking.tight}"
       },
       "$description": "Monospaced typography that ensures character alignment for technical content. Maintains consistent spacing and character width to preserve code formatting while integrating harmoniously with surrounding text.\n\nCommon uses: Code snippets and examples, Terminal command instructions, File paths and system references, API endpoints."
@@ -488,7 +488,7 @@
             "fontFamily": "{fontFamily.default}",
             "fontWeight": "{fontWeight.default.normal.600}",
             "fontSize": "{fontSize.4}",
-            "lineHeight": "{lineHeight.4.normal}",
+            "lineHeight": "{lineHeight.20}",
             "letterSpacing": "{tracking.tight}",
             "paragraphSpacing": "4px"
           },
@@ -502,7 +502,7 @@
             "fontFamily": "{fontFamily.default}",
             "fontWeight": "{fontWeight.default.normal.400}",
             "fontSize": "{fontSize.4}",
-            "lineHeight": "{lineHeight.4.normal}",
+            "lineHeight": "{lineHeight.20}",
             "letterSpacing": "{tracking.tight}",
             "paragraphSpacing": "{fontSize.4}"
           },
@@ -514,7 +514,7 @@
             "fontFamily": "{fontFamily.default}",
             "fontWeight": "{fontWeight.default.normal.500}",
             "fontSize": "{fontSize.4}",
-            "lineHeight": "{lineHeight.4.normal}",
+            "lineHeight": "{lineHeight.20}",
             "letterSpacing": "{tracking.tight}",
             "paragraphSpacing": "{fontSize.4}"
           },

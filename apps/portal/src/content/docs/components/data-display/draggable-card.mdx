@@ -26,7 +26,17 @@ import { Aside } from "@astrojs/starlight/components";
 
 return (
 
-<DraggableCardList cards={cards} setCards={setCards} />) } `} />
+<div className="space-y-cn-sm w-full">
+  <div className="flex items-start gap-cn-md">
+    <span className="text-cn-size-2 text-cn-3 w-40 shrink-0 font-mono pt-cn-xs">
+      default
+    </span>
+    <div className="flex-1 min-w-0">
+      <DraggableCardList cards={cards} setCards={setCards} />
+    </div>
+  </div>
+</div>
+) } `} />
 
 <Aside type="tip">
   Try dragging the cards to reorder them. The component handles all the drag and
@@ -180,9 +190,19 @@ This example shows how to add interactive elements like close buttons to your dr
     }
   ])
 
-return <DraggableCardList cards={cards} setCards={setCards} />
-}`}
-/>
+return (
+
+<div className="space-y-cn-sm w-full">
+  <div className="flex items-start gap-cn-md">
+    <span className="text-cn-size-2 text-cn-3 w-40 shrink-0 font-mono pt-cn-xs">
+      with actions
+    </span>
+    <div className="flex-1 min-w-0">
+      <DraggableCardList cards={cards} setCards={setCards} />
+    </div>
+  </div>
+</div>
+) }`} />
 
 ## Grip Position Outside
 
@@ -281,9 +301,19 @@ The draggable card supports placing the grip handle outside the card container u
     }
   ])
 
-return <DraggableCardList cards={cards} setCards={setCards} />
-}`}
-/>
+return (
+
+<div className="space-y-cn-sm w-full">
+  <div className="flex items-start gap-cn-md">
+    <span className="text-cn-size-2 text-cn-3 w-40 shrink-0 font-mono pt-cn-xs">
+      grip outside
+    </span>
+    <div className="flex-1 min-w-0">
+      <DraggableCardList cards={cards} setCards={setCards} />
+    </div>
+  </div>
+</div>
+) }`} />
 
 ## Sticky Headers
 
@@ -331,37 +361,44 @@ const SectionHeader = ({ label }) => (
 
 return (
 
-<Drawer.Root>
-  <Drawer.Trigger>
-    <Button>Open Drawer</Button>
-  </Drawer.Trigger>
-  <Drawer.Content size="sm">
-    <Drawer.Header>
-      <Drawer.Title>Configure stage</Drawer.Title>
-    </Drawer.Header>
-    <Drawer.Body>
-      <Layout.Vertical gap="md">
-        <DraggableCardList
-          sticky
-          header={<SectionHeader label="Service" />}
-          cards={serviceCards}
-          setCards={setServiceCards}
-          listGap="sm"
-        />
-        <DraggableCardList
-          sticky
-          header={<SectionHeader label="Environment" />}
-          cards={envCards}
-          setCards={setEnvCards}
-          listGap="sm"
-        />
-      </Layout.Vertical>
-    </Drawer.Body>
-    <Drawer.Footer>
-      <Button>Submit</Button>
-    </Drawer.Footer>
-  </Drawer.Content>
-</Drawer.Root>
+<div className="space-y-cn-sm w-full">
+  <div className="flex items-center gap-cn-md">
+    <span className="text-cn-size-2 text-cn-3 w-40 shrink-0 font-mono">
+      sticky headers
+    </span>
+    <Drawer.Root>
+      <Drawer.Trigger>
+        <Button>Open Drawer</Button>
+      </Drawer.Trigger>
+      <Drawer.Content size="sm">
+        <Drawer.Header>
+          <Drawer.Title>Configure stage</Drawer.Title>
+        </Drawer.Header>
+        <Drawer.Body>
+          <Layout.Vertical gap="md">
+            <DraggableCardList
+              sticky
+              header={<SectionHeader label="Service" />}
+              cards={serviceCards}
+              setCards={setServiceCards}
+              listGap="sm"
+            />
+            <DraggableCardList
+              sticky
+              header={<SectionHeader label="Environment" />}
+              cards={envCards}
+              setCards={setEnvCards}
+              listGap="sm"
+            />
+          </Layout.Vertical>
+        </Drawer.Body>
+        <Drawer.Footer>
+          <Button>Submit</Button>
+        </Drawer.Footer>
+      </Drawer.Content>
+    </Drawer.Root>
+  </div>
+</div>
 ) }`} />
 
 ### Contained Mode (inside form wrappers)
@@ -405,7 +442,10 @@ const [envCards, setEnvCards] = React.useState([
 
 return (
 
-<Drawer.Root>
+<div className="space-y-cn-sm w-full">
+  <div className="flex items-center gap-cn-md">
+    <span className="text-cn-size-2 text-cn-3 w-40 shrink-0 font-mono">contained</span>
+    <Drawer.Root>
 <Drawer.Trigger>
 <Button>Open Form Drawer</Button>
 </Drawer.Trigger>
@@ -476,6 +516,9 @@ return (
         </Drawer.Footer>
       </Drawer.Content>
     </Drawer.Root>
+
+  </div>
+</div>
 
 )
 }`} />

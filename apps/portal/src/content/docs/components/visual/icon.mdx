@@ -10,7 +10,12 @@ import LinkCard from "@/components/LinkCard.astro";
 
 <DocsPage.ComponentExample
   client:only
-  code={`<IconV2 name="check" size="lg" />`}
+  code={`<div className="space-y-cn-sm w-full">
+  <div className="flex items-center gap-cn-md">
+    <span className="text-cn-size-2 text-cn-3 w-32 shrink-0 font-mono">default</span>
+    <IconV2 name="check" size="lg" />
+  </div>
+</div>`}
 />
 
 ## Size Variants
@@ -19,14 +24,32 @@ IconV2 supports multiple predefined size variants: `2xs`, `xs`, `sm`, `md`, `lg`
 
 <DocsPage.ComponentExample
   client:only
-  code={`<Layout.Flex gap="md" align="center">
+  code={`<div className="space-y-cn-sm w-full">
+  <div className="flex items-center gap-cn-md border-b border-cn-borders-3 pb-cn-sm">
+    <span className="text-cn-size-2 text-cn-3 w-32 shrink-0 font-mono">2xs</span>
     <IconV2 name="star" size="2xs" />
+  </div>
+  <div className="flex items-center gap-cn-md border-b border-cn-borders-3 pb-cn-sm">
+    <span className="text-cn-size-2 text-cn-3 w-32 shrink-0 font-mono">xs</span>
     <IconV2 name="star" size="xs" />
+  </div>
+  <div className="flex items-center gap-cn-md border-b border-cn-borders-3 pb-cn-sm">
+    <span className="text-cn-size-2 text-cn-3 w-32 shrink-0 font-mono">sm</span>
     <IconV2 name="star" size="sm" />
+  </div>
+  <div className="flex items-center gap-cn-md border-b border-cn-borders-3 pb-cn-sm">
+    <span className="text-cn-size-2 text-cn-3 w-32 shrink-0 font-mono">md</span>
     <IconV2 name="star" size="md" />
+  </div>
+  <div className="flex items-center gap-cn-md border-b border-cn-borders-3 pb-cn-sm">
+    <span className="text-cn-size-2 text-cn-3 w-32 shrink-0 font-mono">lg</span>
     <IconV2 name="star" size="lg" />
+  </div>
+  <div className="flex items-center gap-cn-md">
+    <span className="text-cn-size-2 text-cn-3 w-32 shrink-0 font-mono">xl</span>
     <IconV2 name="star" size="xl" />
-  </Layout.Flex>`}
+  </div>
+</div>`}
 />
 
 ## Color Variants
@@ -35,15 +58,36 @@ IconV2 supports predefined color variants through the `color` prop: `inherit`, `
 
 <DocsPage.ComponentExample
   client:only
-  code={`<Layout.Flex gap="md" align="center">
+  code={`<div className="space-y-cn-sm w-full">
+  <div className="flex items-center gap-cn-md border-b border-cn-borders-3 pb-cn-sm">
+    <span className="text-cn-size-2 text-cn-3 w-32 shrink-0 font-mono">inherit</span>
     <IconV2 name="check" size="md" color="inherit" />
+  </div>
+  <div className="flex items-center gap-cn-md border-b border-cn-borders-3 pb-cn-sm">
+    <span className="text-cn-size-2 text-cn-3 w-32 shrink-0 font-mono">danger</span>
     <IconV2 name="warning-triangle-solid" size="md" color="danger" />
+  </div>
+  <div className="flex items-center gap-cn-md border-b border-cn-borders-3 pb-cn-sm">
+    <span className="text-cn-size-2 text-cn-3 w-32 shrink-0 font-mono">warning</span>
     <IconV2 name="warning-triangle-solid" size="md" color="warning" />
+  </div>
+  <div className="flex items-center gap-cn-md border-b border-cn-borders-3 pb-cn-sm">
+    <span className="text-cn-size-2 text-cn-3 w-32 shrink-0 font-mono">success</span>
     <IconV2 name="check" size="md" color="success" />
-    <IconV2 name="info" size="md" color="info" />
+  </div>
+  <div className="flex items-center gap-cn-md border-b border-cn-borders-3 pb-cn-sm">
+    <span className="text-cn-size-2 text-cn-3 w-32 shrink-0 font-mono">info</span>
+    <IconV2 name="info-circle-solid" size="md" color="info" />
+  </div>
+  <div className="flex items-center gap-cn-md border-b border-cn-borders-3 pb-cn-sm">
+    <span className="text-cn-size-2 text-cn-3 w-32 shrink-0 font-mono">risk</span>
     <IconV2 name="warning-triangle-solid" size="md" color="risk" />
+  </div>
+  <div className="flex items-center gap-cn-md">
+    <span className="text-cn-size-2 text-cn-3 w-32 shrink-0 font-mono">neutral</span>
     <IconV2 name="check" size="md" color="neutral" />
-  </Layout.Flex>`}
+  </div>
+</div>`}
 />
 
 ## Custom Colors
@@ -52,13 +96,19 @@ You can also set custom colors using the `className` prop to override the defaul
 
 <DocsPage.ComponentExample
   client:only
-  code={`<Layout.Flex gap="md">
-    <div className="text-cn-success">
-      <IconV2 name="check" size="md" />
-    </div>
-    
-    <IconV2 name="xmark" size="md" color="danger" />
-  </Layout.Flex>`}
+  code={`<div className="space-y-cn-sm w-full">
+  <div className="flex items-center gap-cn-md">
+    <span className="text-cn-size-2 text-cn-3 w-32 shrink-0 font-mono">custom</span>
+    <Layout.Flex gap="md">
+      <div className="text-cn-success">
+        <IconV2 name="check" size="md" />
+      </div>
+
+      <IconV2 name="xmark" size="md" color="danger" />
+    </Layout.Flex>
+
+  </div>
+</div>`}
 />
 
 ## Usage
@@ -89,13 +139,16 @@ The `IconV2` component can be sized using the `size` prop, which applies predefi
 
 <DocsPage.ComponentExample
   client:only
-  code={`
-  <Layout.Flex gap="md">
-    <IconWithTooltip content="Tooltip content" />
-    <IconWithTooltip content="Tooltip content" iconProps={{ name: 'warning-triangle', color: 'danger' }} />
-    <IconWithTooltip content="Tooltip content" iconProps={{ name: 'warning-triangle', color: 'warning', size: 'xl' }} />
-  </Layout.Flex>
-  `}
+  code={`<div className="space-y-cn-sm w-full">
+  <div className="flex items-center gap-cn-md">
+    <span className="text-cn-size-2 text-cn-3 w-32 shrink-0 font-mono">tooltip</span>
+    <Layout.Flex gap="md">
+      <IconWithTooltip content="Tooltip content" />
+      <IconWithTooltip content="Tooltip content" iconProps={{ name: 'warning-triangle', color: 'danger' }} />
+      <IconWithTooltip content="Tooltip content" iconProps={{ name: 'warning-triangle', color: 'warning', size: 'xl' }} />
+    </Layout.Flex>
+  </div>
+</div>`}
 />
 
 <DocsPage.PropsTable

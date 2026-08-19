@@ -15,10 +15,15 @@ import Argo from './symbols/argo.svg'
 import ArmoreCode from './symbols/armore-code.svg'
 import Artifactory from './symbols/artifactory.svg'
 import AutoScaler from './symbols/auto-scaler.svg'
+import AwsAsg from './symbols/aws-asg.svg'
+import AwsEbs from './symbols/aws-ebs.svg'
 import AwsEc2 from './symbols/aws-ec2.svg'
+import AwsEcs from './symbols/aws-ecs.svg'
 import AwsElasticache from './symbols/aws-elasticache.svg'
 import AwsRds from './symbols/aws-rds.svg'
+import AwsRedshift from './symbols/aws-redshift.svg'
 import Aws from './symbols/aws.svg'
+import AzureVm from './symbols/azure-vm.svg'
 import Azure from './symbols/azure.svg'
 import Background from './symbols/background.svg'
 import Bamboo from './symbols/bamboo.svg'
@@ -54,6 +59,7 @@ import DatabaseRollback from './symbols/database-rollback.svg'
 import Databricks from './symbols/databricks.svg'
 import Debian from './symbols/debian.svg'
 import DefaultSecretManager from './symbols/default-secret-manager.svg'
+import Devin from './symbols/devin.svg'
 import Docker from './symbols/docker.svg'
 import Dynatrace from './symbols/dynatrace.svg'
 import Elastic from './symbols/elastic.svg'
@@ -179,10 +185,15 @@ export const SymbolNameMap = {
   'armore-code': ArmoreCode,
   artifactory: Artifactory,
   'auto-scaler': AutoScaler,
+  'aws-asg': AwsAsg,
+  'aws-ebs': AwsEbs,
   'aws-ec2': AwsEc2,
+  'aws-ecs': AwsEcs,
   'aws-elasticache': AwsElasticache,
   'aws-rds': AwsRds,
+  'aws-redshift': AwsRedshift,
   aws: Aws,
+  'azure-vm': AzureVm,
   azure: Azure,
   background: Background,
   bamboo: Bamboo,
@@ -218,6 +229,7 @@ export const SymbolNameMap = {
   databricks: Databricks,
   debian: Debian,
   'default-secret-manager': DefaultSecretManager,
+  devin: Devin,
   docker: Docker,
   dynatrace: Dynatrace,
   elastic: Elastic,

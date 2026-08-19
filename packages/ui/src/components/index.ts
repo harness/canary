@@ -129,3 +129,9 @@ export {
   type SinglePaneStepperRootProps,
   type SinglePaneStepperCardProps
 } from './single-pane-stepper'
+// The shared flow engine, for consumers that need to read live engine state (e.g. an onboarding
+// browser-draft persist bridge) outside of a card's own `useFlowCard`. `useFlowCard` is already
+// re-exported via `./dual-pane-stepper` above, so it is deliberately omitted here to avoid a
+// duplicate-export clash. `EngineContextValue`, `CardContextProvider`, and `useCardStatus` stay
+// internal to the stepper implementations.
+export { FlowEngineProvider, useEngineContext } from './flow-stepper/engine'

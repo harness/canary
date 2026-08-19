@@ -339,6 +339,8 @@ The root component that sets up the flow engine, renders the single-column layou
   onComplete={(state) => console.log(state)}
   reactivationPrompt={{ title: "Go back?", description: "Progress will be lost." }}
   disableAutoScroll={false}
+  hideUpcomingGroups={false}
+  hidePredictedSteps={false}
 />
 ```
 
@@ -446,6 +448,22 @@ The root component that sets up the flow engine, renders the single-column layou
       name: "showStepBadge",
       description:
         "Renders a 'Step {n}/{total}' pill badge next to each step's title. The badge's total reflects only the path this run actually walks, not every step/group configured in the flow — so a designed end (a step with no `next`, whether or not it's flagged `terminal`) makes the total match the run's real length. Only a step flagged `dynamicNext` (its real continuation is decided at runtime, not statically) makes the total fall back to a flow-wide count instead, since more steps may genuinely follow that can't be predicted from the config.",
+      required: false,
+      value: "boolean",
+      defaultValue: "false",
+    },
+    {
+      name: "hideUpcomingGroups",
+      description:
+        "Grouped-mode only: omit groups whose derived state is upcoming. Visited and active groups still render. No-op on flat flows. Visual only — engine derivation, routing, and badge totals are unchanged.",
+      required: false,
+      value: "boolean",
+      defaultValue: "false",
+    },
+    {
+      name: "hidePredictedSteps",
+      description:
+        "Omit predicted nested-step placeholders in grouped mode, and upcoming entries from the flat timeline. Visual only — engine derivation, routing, badge totals, and the indeterminate placeholder still follow the engine.",
       required: false,
       value: "boolean",
       defaultValue: "false",

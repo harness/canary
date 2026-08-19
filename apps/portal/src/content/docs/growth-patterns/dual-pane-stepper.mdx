@@ -451,6 +451,8 @@ The root component that sets up the flow engine, renders the dual-pane layout, a
   leftPane={<CustomStepper />}               // [OPTIONAL] Override entire left pane content
   panelSizes={{ default: 30, min: 20, max: 40 }} // [OPTIONAL] Left panel sizing (%)
   reactivationPrompt={{ title: "Go back?", description: "Progress will be lost." }} // [OPTIONAL]
+  hideUpcomingGroups={false}             // [OPTIONAL] Hide upcoming groups (default stepper pane)
+  hidePredictedSteps={false}             // [OPTIONAL] Hide predicted/upcoming step placeholders
 />
 ```
 
@@ -536,6 +538,22 @@ The root component that sets up the flow engine, renders the dual-pane layout, a
       value: "{ title: string; description: string }",
       defaultValue:
         '{ title: "Go back?", description: "Going back will discard progress..." }',
+    },
+    {
+      name: "hideUpcomingGroups",
+      description:
+        "Grouped-mode only: omit groups whose derived state is upcoming. Visited and active groups still render. No-op on flat flows. Applies to the default left pane only. Visual only — engine derivation, routing, and badge totals are unchanged.",
+      required: false,
+      value: "boolean",
+      defaultValue: "false",
+    },
+    {
+      name: "hidePredictedSteps",
+      description:
+        "Omit predicted nested-step placeholders in grouped mode, and upcoming entries from the flat timeline. Applies to the default left pane only. Visual only — engine derivation, routing, badge totals, and the indeterminate placeholder still follow the engine.",
+      required: false,
+      value: "boolean",
+      defaultValue: "false",
     },
   ]}
 />

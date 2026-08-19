@@ -110,6 +110,40 @@ describe('DualPaneStepper', () => {
       expect(screen.getByText('Third Step')).toBeInTheDocument()
     })
 
+    test('hideUpcomingGroups omits groups whose derived state is upcoming', () => {
+      render(<DualPaneStepper.Root flow={testFlow} title="Test Flow" hideUpcomingGroups />)
+
+      expect(screen.getByText('First Step')).toBeInTheDocument()
+      expect(screen.queryByText('Second Step')).not.toBeInTheDocument()
+      expect(screen.queryByText('Third Step')).not.toBeInTheDocument()
+    })
+
+    test('hidePredictedSteps omits predicted nested placeholders in grouped mode', () => {
+      function TestCardChained() {
+        const { complete } = useFlowCard()
+        return (
+          <DualPaneStepper.Card title="Chained">
+            <button onClick={() => complete({}, 'card-next')}>Go</button>
+          </DualPaneStepper.Card>
+        )
+      }
+
+      const chainedFlow: FlowConfig = {
+        stepGroups: { 'step-1': { title: 'Group' } },
+        steps: {
+          'card-chained': { step: 'step-1', title: 'Chained', component: TestCardChained, next: 'card-next' },
+          'card-next': { step: 'step-1', title: 'Next Card', component: TestCardB }
+        },
+        initialStep: 'card-chained'
+      }
+
+      const { container } = render(<DualPaneStepper.Root flow={chainedFlow} title="Test Flow" hidePredictedSteps />)
+
+      expect(container.querySelectorAll('.cn-stepper-nested-step-upcoming').length).toBe(0)
+      expect(screen.queryByText('Next Card')).not.toBeInTheDocument()
+      expect(screen.getAllByText('Chained').length).toBeGreaterThanOrEqual(1)
+    })
+
     test('renders panel group for split pane layout', () => {
       render(<DualPaneStepper.Root flow={testFlow} title="Test Flow" />)
       expect(screen.getByTestId('panel-group')).toBeInTheDocument()
@@ -239,6 +273,18 @@ describe('DualPaneStepper', () => {
       })
 
       expect(container.querySelector('.cn-stepper-nested-step-item')).not.toBeInTheDocument()
+    })
+
+    test('hidePredictedSteps omits upcoming entries from the flat timeline', async () => {
+      const { container } = render(<DualPaneStepper.Root flow={flatTestFlow} title="Test Flow" hidePredictedSteps />)
+
+      await userEvent.click(screen.getByText('Next'))
+      await waitFor(() => {
+        expect(screen.getAllByText('Card B').length).toBeGreaterThanOrEqual(1)
+      })
+
+      expect(screen.queryByText('Card C')).not.toBeInTheDocument()
+      expect(container.querySelectorAll('.cn-stepper-step-item').length).toBe(2)
     })
   })
 })

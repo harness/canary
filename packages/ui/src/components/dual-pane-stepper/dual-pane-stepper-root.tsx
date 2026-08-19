@@ -25,7 +25,9 @@ function DualPaneStepperContent({
   onClose,
   leftPane,
   reactivationPrompt,
-  panelSizes
+  panelSizes,
+  hideUpcomingGroups,
+  hidePredictedSteps
 }: Omit<DualPaneStepperRootProps, 'flow' | 'onComplete'>) {
   const { drawerState, closeDrawer, pendingReactivation, confirmReactivation, cancelReactivation } = useEngineContext()
 
@@ -40,7 +42,13 @@ function DualPaneStepperContent({
     return <DrawerComponent open={true} onClose={closeDrawer} props={drawerState.props} />
   }, [drawerState, drawers, closeDrawer])
 
-  const defaultLeftPane = <DefaultStepperPane stepperTitle={stepperTitle} />
+  const defaultLeftPane = (
+    <DefaultStepperPane
+      stepperTitle={stepperTitle}
+      hideUpcomingGroups={hideUpcomingGroups}
+      hidePredictedSteps={hidePredictedSteps}
+    />
+  )
 
   return (
     <>
@@ -108,7 +116,15 @@ function DualPaneStepperContent({
   )
 }
 
-function DefaultStepperPane({ stepperTitle }: { stepperTitle?: string }) {
+function DefaultStepperPane({
+  stepperTitle,
+  hideUpcomingGroups,
+  hidePredictedSteps
+}: {
+  stepperTitle?: string
+  hideUpcomingGroups?: boolean
+  hidePredictedSteps?: boolean
+}) {
   const { flow, cardHistory, activeStepId, predictedPath, scrollToCard } = useEngineContext()
 
   const handleStepperClick = (value: string) => {
@@ -133,6 +149,8 @@ function DefaultStepperPane({ stepperTitle }: { stepperTitle?: string }) {
       onValueChange={handleStepperClick}
       stepperTitle={stepperTitle}
       showStepperHeader
+      hideUpcomingGroups={hideUpcomingGroups}
+      hidePredictedSteps={hidePredictedSteps}
     />
   )
 }

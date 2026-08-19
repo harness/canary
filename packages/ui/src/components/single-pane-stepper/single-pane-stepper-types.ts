@@ -48,6 +48,14 @@ export interface SinglePaneStepperRootProps {
   /** When true, renders a "Step {n}/{total}" pill badge next to each step's title. Default false —
    *  purely opt-in, no rendering change for existing consumers that don't pass it. */
   showStepBadge?: boolean
+  /** Grouped-mode only: omit groups whose derived state is `upcoming`. Visited and active groups
+   *  still render. No-op on flat flows. Visual only — engine derivation, routing, and badge totals
+   *  are unchanged. Default false. */
+  hideUpcomingGroups?: boolean
+  /** Omit predicted nested-step placeholders in grouped mode, and upcoming entries from the flat
+   *  timeline. Visual only — engine derivation, routing, badge totals, and the indeterminate
+   *  placeholder still follow the engine. Default false. */
+  hidePredictedSteps?: boolean
   /** Override the default 440px max-width (`.cn-single-pane-stepper-root`) — merged via `cn()`,
    *  so a utility class like `max-w-[600px]` reliably overrides the hardcoded default (Tailwind
    *  always emits `@layer utilities` after `@layer components`). */

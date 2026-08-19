@@ -13,6 +13,8 @@ interface SinglePaneStepperCardStackProps {
   /** When true, renders a "Step {n}/{total}" pill badge next to each step's title. Default false —
    * purely opt-in, no rendering change for existing consumers that don't pass it. */
   showStepBadge?: boolean
+  hideUpcomingGroups?: boolean
+  hidePredictedSteps?: boolean
 }
 
 export function SinglePaneStepperCardStack({
@@ -20,7 +22,9 @@ export function SinglePaneStepperCardStack({
   showStepperHeader,
   contentTitle,
   contentSubtitle,
-  showStepBadge
+  showStepBadge,
+  hideUpcomingGroups,
+  hidePredictedSteps
 }: SinglePaneStepperCardStackProps) {
   const { flow, cardHistory, activeStepId, predictedPath, registerScrollToCard, scrollToCard, disableAutoScroll } =
     useEngineContext()
@@ -188,6 +192,8 @@ export function SinglePaneStepperCardStack({
           stepNumberOverrides={stepNumberOverrides}
           stepNumberOverridesComplete={pathWalkComplete}
           collapsibleNestedSteps
+          hideUpcomingGroups={hideUpcomingGroups}
+          hidePredictedSteps={hidePredictedSteps}
           renderStepContent={(stepId, status) => {
             const CardComponent = flow.steps[stepId]?.component
             if (!CardComponent) return null

@@ -464,6 +464,74 @@ describe('SinglePaneStepper', () => {
       expect(screen.getByText('Next Card')).toBeInTheDocument()
     })
 
+    test('hideUpcomingGroups omits groups whose derived state is upcoming', () => {
+      render(<SinglePaneStepper.Root flow={testFlow} hideUpcomingGroups />)
+
+      expect(screen.getByText('First Step')).toBeInTheDocument()
+      expect(screen.queryByText('Second Step')).not.toBeInTheDocument()
+      expect(screen.queryByText('Third Step')).not.toBeInTheDocument()
+    })
+
+    test('hidePredictedSteps omits predicted nested placeholders in grouped mode', () => {
+      function TestCardChained() {
+        const { complete } = useFlowCard()
+        return (
+          <SinglePaneStepper.Card title="Chained">
+            <button onClick={() => complete({}, 'card-next')}>Go</button>
+          </SinglePaneStepper.Card>
+        )
+      }
+
+      const chainedFlow: FlowConfig = {
+        stepGroups: { 'step-1': { title: 'Group' } },
+        steps: {
+          'card-chained': { step: 'step-1', title: 'Chained', component: TestCardChained, next: 'card-next' },
+          'card-next': { step: 'step-1', title: 'Next Card', component: TestCardB }
+        },
+        initialStep: 'card-chained'
+      }
+
+      const { container } = render(<SinglePaneStepper.Root flow={chainedFlow} hidePredictedSteps />)
+
+      expect(container.querySelectorAll('.cn-stepper-nested-step-upcoming').length).toBe(0)
+      expect(screen.queryByText('Next Card')).not.toBeInTheDocument()
+      expect(screen.getByText('Chained')).toBeInTheDocument()
+    })
+
+    test('hidePredictedSteps does not invent an indeterminate placeholder', () => {
+      function TestCardChained() {
+        const { complete } = useFlowCard()
+        return (
+          <SinglePaneStepper.Card title="Chained">
+            <button onClick={() => complete({}, 'card-next')}>Go</button>
+          </SinglePaneStepper.Card>
+        )
+      }
+
+      const chainedFlow: FlowConfig = {
+        stepGroups: { 'step-1': { title: 'Group' } },
+        steps: {
+          'card-chained': { step: 'step-1', title: 'Chained', component: TestCardChained, next: 'card-next' },
+          'card-next': { step: 'step-1', title: 'Next Card', component: TestCardB }
+        },
+        initialStep: 'card-chained'
+      }
+
+      const { container } = render(<SinglePaneStepper.Root flow={chainedFlow} hidePredictedSteps />)
+
+      expect(container.querySelector('.cn-stepper-nested-step-placeholder')).not.toBeInTheDocument()
+      expect(container.querySelector('[data-testid="icon-more-horizontal"]')).not.toBeInTheDocument()
+    })
+
+    test('hidePredictedSteps does not change the showStepBadge total', () => {
+      const { container } = render(
+        <SinglePaneStepper.Root flow={testFlow} hideUpcomingGroups hidePredictedSteps showStepBadge />
+      )
+
+      const badge = container.querySelector('.cn-stepper-step-badge')
+      expect(badge).toHaveTextContent('Step 1/3')
+    })
+
     test('completed nested steps default collapsed and toggle via chevron', async () => {
       const { container } = render(<SinglePaneStepper.Root flow={testFlow} />)
       await userEvent.click(screen.getByText('Next'))
@@ -702,6 +770,28 @@ describe('SinglePaneStepper', () => {
 
         // Still top-level, still no nested-step-item.
         expect(container.querySelector('.cn-stepper-nested-step-item')).not.toBeInTheDocument()
+        expect(container.querySelectorAll('.cn-stepper-step-item').length).toBe(3)
+      })
+    })
+
+    test('hidePredictedSteps omits upcoming entries from the flat timeline', async () => {
+      const { container } = render(<SinglePaneStepper.Root flow={flatTestFlow} hidePredictedSteps />)
+
+      await userEvent.click(screen.getByText('Next'))
+      await waitFor(() => {
+        expect(screen.getAllByText('Card B').length).toBeGreaterThanOrEqual(1)
+      })
+
+      expect(container.querySelectorAll('.cn-stepper-step-item').length).toBe(2)
+      expect(screen.queryByText('Card C')).not.toBeInTheDocument()
+    })
+
+    test('hideUpcomingGroups is a no-op on flat flows', async () => {
+      const { container } = render(<SinglePaneStepper.Root flow={flatTestFlow} hideUpcomingGroups />)
+
+      await userEvent.click(screen.getByText('Next'))
+      await waitFor(() => {
+        expect(screen.getAllByText('Card B').length).toBeGreaterThanOrEqual(1)
         expect(container.querySelectorAll('.cn-stepper-step-item').length).toBe(3)
       })
     })

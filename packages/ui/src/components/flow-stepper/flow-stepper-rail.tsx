@@ -42,6 +42,14 @@ export interface FlowStepperRailProps {
   /** Renders inline content under a visited/active step. Omit for a rail with no inline content
    * (DualPaneStepper's left pane — its card content lives in the separate right pane instead). */
   renderStepContent?: (stepId: string, status: CardStatus) => ReactNode
+  /** Grouped-mode only: omit groups whose derived state is `upcoming`. Visited and active groups
+   * still render. No-op on flat flows (no groups). Visual only — engine derivation, routing, and
+   * badge totals are unchanged. Default false. */
+  hideUpcomingGroups?: boolean
+  /** Omit predicted nested-step placeholders in grouped mode, and upcoming entries from
+   * `deriveFlatStepperModel` in flat mode. Visual only — engine derivation, routing, badge totals,
+   * and the indeterminate placeholder still follow the engine. Default false. */
+  hidePredictedSteps?: boolean
 }
 
 export function FlowStepperRail({
@@ -58,13 +66,16 @@ export function FlowStepperRail({
   stepNumberOverrides,
   stepNumberOverridesComplete,
   collapsibleNestedSteps,
-  renderStepContent
+  renderStepContent,
+  hideUpcomingGroups,
+  hidePredictedSteps
 }: FlowStepperRailProps) {
   const cardStatusMap = new Map(cardHistory.map(e => [e.stepId, e.status]))
   const title = showStepperHeader ? stepperTitle : undefined
 
   if (!flow.stepGroups) {
     const derivedSteps = deriveFlatStepperModel(flow, cardHistory, activeStepId)
+    const stepsToRender = hidePredictedSteps ? derivedSteps.filter(step => step.state !== 'upcoming') : derivedSteps
 
     return (
       <Stepper.Root
@@ -73,7 +84,7 @@ export function FlowStepperRail({
         title={title}
         collapsibleNestedSteps={collapsibleNestedSteps}
       >
-        {derivedSteps.map(step => {
+        {stepsToRender.map(step => {
           const status = cardStatusMap.get(step.stepId)
           const content = status && renderStepContent ? renderStepContent(step.stepId, status) : null
 
@@ -97,6 +108,9 @@ export function FlowStepperRail({
   }
 
   const derivedSteps = deriveStepperModel(flow, cardHistory, predictedPath, activeStepId)
+  const groupsToRender = hideUpcomingGroups
+    ? derivedSteps.filter(derivedStep => derivedStep.state !== 'upcoming')
+    : derivedSteps
 
   // A group absent from stepNumberOverrides still needs its OWN number whenever the map is
   // incomplete (see stepGroupHasNumber below) — but it must not fall back to its raw stepIndex
@@ -124,7 +138,7 @@ export function FlowStepperRail({
       title={title}
       collapsibleNestedSteps={collapsibleNestedSteps}
     >
-      {derivedSteps.map(derivedStep => {
+      {groupsToRender.map(derivedStep => {
         const activeStepGroupId = flow.steps[activeStepId]?.step
         const isActiveStepGroup = activeStepGroupId === derivedStep.stepGroupId
         const showSteps = derivedStep.visited.length > 0 || isActiveStepGroup
@@ -176,6 +190,7 @@ export function FlowStepperRail({
                 )
               })}
             {isActiveStepGroup &&
+              !hidePredictedSteps &&
               !derivedStep.isTerminalStepGroup &&
               derivedStep.predicted.map(stepId => (
                 <Stepper.Step

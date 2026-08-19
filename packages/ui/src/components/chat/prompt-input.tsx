@@ -27,7 +27,7 @@ export const PromptInputTags = ({ tags, onRemove, className, ...props }: PromptI
   if (!tags.length) return null
 
   return (
-    <div className={cn('flex flex-wrap gap-cn-xs', className)} {...props}>
+    <div className={cn('flex shrink-0 flex-wrap gap-cn-xs', className)} {...props}>
       {tags.map(tag => (
         <Tag
           key={tag.id}
@@ -68,6 +68,7 @@ export const PromptInputTextarea = ({
     <Textarea
       name="message"
       autoResize={true}
+      wrapperClassName="min-h-0 flex-1 overflow-hidden"
       className={className}
       onChange={(e: ChangeEvent<HTMLTextAreaElement>) => {
         onChange?.(e)
@@ -82,7 +83,7 @@ export const PromptInputTextarea = ({
 export type PromptInputToolbarProps = HTMLAttributes<HTMLDivElement>
 
 export const PromptInputToolbar = ({ className, ...props }: PromptInputToolbarProps) => (
-  <div className={cn('flex items-center justify-between', className)} {...props} />
+  <div className={cn('flex shrink-0 items-center justify-between', className)} {...props} />
 )
 
 export type PromptInputToolsProps = HTMLAttributes<HTMLDivElement>

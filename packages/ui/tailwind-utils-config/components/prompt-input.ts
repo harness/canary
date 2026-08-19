@@ -20,12 +20,30 @@ export default {
     maxHeight: 'var(--cn-input-ai-max-height)',
     transition: 'box-shadow 0.2s ease-in-out',
 
+    // Keep tags + toolbar visible; only the field grows/scrolls inside the cap.
+    '.cn-control-group': {
+      display: 'flex',
+      flexDirection: 'column',
+      flex: '1 1 auto',
+      minHeight: 0,
+      overflow: 'hidden'
+    },
+
+    '.cn-control-group-input': {
+      flex: 1,
+      minHeight: 0,
+      overflow: 'hidden'
+    },
+
     '.cn-textarea': {
       boxShadow: 'none',
       border: 'none',
       padding: 'var(--cn-spacing-none)',
       backgroundColor: 'transparent',
       minHeight: 'var(--cn-size-10)',
+      // Cap the auto-resizing field so the toolbar stays pinned; overflow scrolls.
+      maxHeight: 'var(--cn-size-64)',
+      overflowY: 'auto',
 
       '&:focus-visible': {
         boxShadow: 'none',

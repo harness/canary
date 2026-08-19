@@ -1175,19 +1175,19 @@
         "$value": "{bg.2}",
         "$description": "Elevated app-shell surface for content panels (chat, main content). Unchanged in light; unifies to bg.2 in dark for separation from the shell."
       },
-      "rail-shadow": {
+      "chat-shadow": {
         "$extensions": {
           "studio.tokens": {
             "modify": {
               "type": "alpha",
-              "value": "0.8",
+              "value": "0.30",
               "space": "lch"
             }
           }
         },
         "$type": "color",
         "$value": "{pure.black}",
-        "$description": "Shadow color for app shell nav and chat rail elevation in dark mode (#000000 / bg.0)."
+        "$description": "Inner shadow color for the app shell chat panel edge in dark mode (#000000 at 30%)."
       }
     },
     "avatar": {
@@ -2666,41 +2666,29 @@
           "$description": "Inner shadow for AI-themed components. Adds depth to AI elements."
         }
       },
-      "nav-rail": {
-        "$type": "boxShadow",
-        "$value": {
-          "x": "0",
-          "y": "7",
-          "blur": "8",
-          "spread": "0",
-          "color": "{comp.app-shell.rail-shadow}",
-          "type": "dropShadow"
-        },
-        "$description": "Drop shadow for app shell navigation rail. Casts toward main content."
-      },
       "chat-rail": {
         "$type": "boxShadow",
         "$value": {
-          "x": "0",
-          "y": "7",
-          "blur": "8",
+          "x": "8",
+          "y": "-1",
+          "blur": "7",
           "spread": "0",
-          "color": "{comp.app-shell.rail-shadow}",
-          "type": "dropShadow"
+          "color": "{comp.app-shell.chat-shadow}",
+          "type": "innerShadow"
         },
-        "$description": "Drop shadow for app shell chat panel when chat is left of main content."
+        "$description": "Inner shadow for app shell chat panel when chat is left of main content."
       },
       "chat-rail-mirror": {
         "$type": "boxShadow",
         "$value": {
-          "x": "0",
-          "y": "7",
-          "blur": "8",
+          "x": "-8",
+          "y": "-1",
+          "blur": "7",
           "spread": "0",
-          "color": "{comp.app-shell.rail-shadow}",
-          "type": "dropShadow"
+          "color": "{comp.app-shell.chat-shadow}",
+          "type": "innerShadow"
         },
-        "$description": "Drop shadow for app shell chat panel when chat is right of main content."
+        "$description": "Inner shadow for app shell chat panel when chat is right of main content."
       },
       "pipeline-studio-page-header": {
         "$type": "boxShadow",

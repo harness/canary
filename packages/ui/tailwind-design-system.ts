@@ -408,7 +408,6 @@ const tailwindDesignSystem: TailwindConfig = {
       'cn-yellow': 'var(--cn-comp-shadow-data-viz-11-yellow)',
       'cn-gray': 'var(--cn-comp-shadow-data-viz-12-gray)',
 
-      'cn-nav-rail': 'var(--cn-comp-shadow-nav-rail)',
       'cn-chat-rail': 'var(--cn-comp-shadow-chat-rail)',
       'cn-chat-rail-mirror': 'var(--cn-comp-shadow-chat-rail-mirror)',
       'cn-pipeline-studio-page-header': 'var(--cn-comp-shadow-pipeline-studio-page-header)'

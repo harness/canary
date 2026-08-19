@@ -3,6 +3,7 @@ import { type ComponentType, type CSSProperties, type ReactNode } from 'react'
 import {
   type DrawerComponentProps,
   type FlowConfig,
+  type InitialEngineState,
   type ReactivationPrompt
 } from '../flow-stepper/engine/engine-types'
 
@@ -62,6 +63,11 @@ export interface SinglePaneStepperRootProps {
   className?: string
   /** Inline-style escape hatch alongside `className`, for consumers that need computed values. */
   style?: CSSProperties
+  /** Rendered after the visual content, inside `FlowEngineProvider` — for context-only consumers
+   *  (e.g. a persist bridge) that need engine access without affecting layout. */
+  children?: ReactNode
+  /** Seeds the engine's state and card history on mount, restoring a previously persisted run. */
+  initialEngineState?: InitialEngineState
 }
 
 // CardAction props come from the shared FlowStepperCardAction (single source of truth).

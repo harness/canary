@@ -38,7 +38,7 @@ function SinglePaneStepperContent({
   showStepBadge,
   hideUpcomingGroups,
   hidePredictedSteps
-}: Omit<SinglePaneStepperRootProps, 'flow' | 'onComplete'>) {
+}: Omit<SinglePaneStepperRootProps, 'flow' | 'onComplete' | 'children' | 'initialEngineState'>) {
   const { drawerState, closeDrawer, pendingReactivation, confirmReactivation, cancelReactivation } = useEngineContext()
 
   const prompt = reactivationPrompt || DEFAULT_REACTIVATION_PROMPT
@@ -99,10 +99,23 @@ function SinglePaneStepperContent({
   )
 }
 
-export function SinglePaneStepperRoot({ flow, onComplete, disableAutoScroll, ...props }: SinglePaneStepperRootProps) {
+export function SinglePaneStepperRoot({
+  flow,
+  onComplete,
+  disableAutoScroll,
+  initialEngineState,
+  children,
+  ...props
+}: SinglePaneStepperRootProps) {
   return (
-    <FlowEngineProvider flow={flow} onComplete={onComplete} disableAutoScroll={disableAutoScroll}>
+    <FlowEngineProvider
+      flow={flow}
+      onComplete={onComplete}
+      disableAutoScroll={disableAutoScroll}
+      initialEngineState={initialEngineState}
+    >
       <SinglePaneStepperContent {...props} />
+      {children}
     </FlowEngineProvider>
   )
 }

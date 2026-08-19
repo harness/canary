@@ -4,7 +4,7 @@ import { render, screen, waitFor } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { describe, expect, test, vi } from 'vitest'
 
-import { CardContextProvider, FlowEngineProvider } from '../../flow-stepper/engine'
+import { CardContextProvider, FlowEngineProvider, useEngineContext } from '../../flow-stepper/engine'
 import { FlowStepperCard } from '../../flow-stepper/flow-stepper-card'
 import { SinglePaneStepper, useFlowCard } from '../index'
 import type { FlowConfig } from '../single-pane-stepper-types'
@@ -80,6 +80,11 @@ function TestCardTerminal() {
       <button onClick={() => complete({ done: true })}>Complete Terminal</button>
     </SinglePaneStepper.Card>
   )
+}
+
+function EngineChildProbe() {
+  const { activeStepId } = useEngineContext()
+  return <span data-testid="bridge-child">{activeStepId}</span>
 }
 
 function TestCardBlocked() {
@@ -1208,6 +1213,42 @@ describe('SinglePaneStepper', () => {
       // back to Object.keys(flow.steps).length = 3 instead, proving the flag is honored wherever it
       // appears on the path, not only at the final stop.
       expect(badge).toHaveTextContent('Step 1/3')
+    })
+  })
+
+  describe('Root children', () => {
+    test('Root children render inside FlowEngineProvider after visual content', () => {
+      render(
+        <SinglePaneStepper.Root flow={testFlow}>
+          <EngineChildProbe />
+        </SinglePaneStepper.Root>
+      )
+      expect(screen.getByTestId('bridge-child')).toHaveTextContent('card-a')
+    })
+
+    test('Root children are not forwarded onto Content DOM', () => {
+      const { container } = render(
+        <SinglePaneStepper.Root flow={testFlow}>
+          <EngineChildProbe />
+        </SinglePaneStepper.Root>
+      )
+      expect(container.querySelectorAll('[data-testid="bridge-child"]')).toHaveLength(1)
+    })
+
+    test('Root forwards initialEngineState into the engine', () => {
+      render(
+        <SinglePaneStepper.Root
+          flow={testFlow}
+          initialEngineState={{
+            state: { answer: 'restored' },
+            cardHistory: [
+              { stepId: 'card-a', status: 'completed', stateSnapshot: { answer: 'restored' } },
+              { stepId: 'card-b', status: 'active', stateSnapshot: {} }
+            ]
+          }}
+        />
+      )
+      expect(screen.getByText('Card B')).toBeInTheDocument()
     })
   })
 

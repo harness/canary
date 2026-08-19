@@ -3,6 +3,11 @@ export default {
     '&-content': {
       userSelect: 'auto !important',
       backgroundColor: 'var(--cn-bg-1)',
+      // In dark themes the main drawer panel uses --cn-bg-2 so it reads as a distinct
+      // surface above the near-black page background; light mode keeps --cn-bg-1.
+      '.dark &, [class^="dark-"] &': {
+        backgroundColor: 'var(--cn-bg-2)'
+      },
       borderColor: 'var(--cn-border-3)',
       borderRadius: 'var(--cn-drawer-radius)',
       boxShadow: 'var(--cn-shadow-5)',
@@ -187,7 +192,12 @@ export default {
       borderTopColor: 'var(--cn-border-3)',
       gap: 'var(--cn-drawer-gap)',
       padding: 'var(--cn-drawer-container)',
-      '@apply flex flex-col border-t': ''
+      '@apply flex flex-col border-t': '',
+      // Match the main drawer panel: --cn-bg-2 in dark themes only, transparent (inheriting
+      // the panel) in light mode.
+      '.dark &, [class^="dark-"] &': {
+        backgroundColor: 'var(--cn-bg-2)'
+      }
     },
 
     '&-dual-pane': {

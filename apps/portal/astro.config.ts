@@ -236,6 +236,10 @@ export default defineConfig({
                 onclick: "event.preventDefault(); return false;",
               },
             },
+            {
+              slug: "growth-patterns/growth-card",
+              label: "Growth Box [WIP]",
+            },
           ],
         },
       ],

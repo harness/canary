@@ -1,7 +1,13 @@
 import { toast as sonnerToast } from 'sonner'
 
 import { CustomToast } from './custom-toast'
-import { LoadingToastParamsType, PromiseToastParamsType, ToastParamsType, ToastPromiseType } from './types'
+import {
+  InfoToastParamsType,
+  LoadingToastParamsType,
+  PromiseToastParamsType,
+  ToastParamsType,
+  ToastPromiseType
+} from './types'
 
 const DEFAULT_DURATION = 10_000
 
@@ -25,8 +31,8 @@ const defaultToast = ({ title, description, options = {} }: ToastParamsType) => 
   )
 }
 
-const infoToast = ({ title, description, options = {} }: ToastParamsType) => {
-  const { dismissible, duration, action } = options
+const infoToast = ({ title, description, options = {} }: InfoToastParamsType) => {
+  const { dismissible, duration, action, secondaryAction, ctaPosition, severity } = options
   return sonnerToast.custom(
     t => (
       <CustomToast
@@ -37,6 +43,9 @@ const infoToast = ({ title, description, options = {} }: ToastParamsType) => {
         closeButton={dismissible}
         variant="info"
         action={action}
+        secondaryAction={secondaryAction}
+        ctaPosition={ctaPosition}
+        severity={severity}
       />
     ),
     {

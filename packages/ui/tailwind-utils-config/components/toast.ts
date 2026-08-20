@@ -39,6 +39,22 @@ export default {
       '@apply text-cn-2': ''
     },
 
+    '&.cn-toast-severity-critical': {
+      borderLeftColor: 'var(--cn-border-danger)'
+    },
+
+    '&.cn-toast-severity-high': {
+      borderLeftColor: 'var(--cn-border-warning)'
+    },
+
+    '&.cn-toast-severity-medium': {
+      borderLeftColor: 'var(--cn-border-success)'
+    },
+
+    '&.cn-toast-severity-low': {
+      borderLeftColor: 'var(--cn-border-brand)'
+    },
+
     '&.cn-toast-danger': {
       backgroundColor: 'var(--cn-comp-toast-danger-bg)',
       borderColor: 'var(--cn-comp-toast-danger-border)',
@@ -86,6 +102,10 @@ export default {
         transform: 'rotate(180deg)',
         transition: 'transform 0.2s ease-out'
       }
+    },
+
+    '.cn-toast-bottom-actions': {
+      '@apply w-full': ''
     }
   }
 }

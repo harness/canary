@@ -10,6 +10,8 @@ import { cn } from '@utils/cn'
 import { cva, VariantProps } from 'class-variance-authority'
 import { Action, toast as sonnerToast } from 'sonner'
 
+import type { InfoToastCtaPosition, InfoToastSeverity } from './types'
+
 const toastVariants = cva('cn-toast', {
   variants: {
     variant: {
@@ -25,6 +27,23 @@ const toastVariants = cva('cn-toast', {
   }
 })
 
+const INFO_SEVERITY_BORDER_WIDTH_CLASS = 'border-l-[3px]'
+
+const getInfoSeverityBorderClass = (severity: InfoToastSeverity | undefined): string => {
+  switch (severity) {
+    case 'Critical':
+      return 'cn-toast-severity-critical'
+    case 'High':
+      return 'cn-toast-severity-high'
+    case 'Medium':
+      return 'cn-toast-severity-medium'
+    case 'Low':
+      return 'cn-toast-severity-low'
+    default:
+      return ''
+  }
+}
+
 interface CustomToastProps {
   toastId: string | number
   variant?: VariantProps<typeof toastVariants>['variant']
@@ -34,6 +53,9 @@ interface CustomToastProps {
   className?: string
   closeButton?: boolean
   action?: Action
+  secondaryAction?: Action
+  ctaPosition?: InfoToastCtaPosition
+  severity?: InfoToastSeverity
   promise?: Promise<any>
   successMessage?: string
   errorMessage?: string
@@ -49,6 +71,9 @@ export function CustomToast({
   onClose,
   closeButton = true,
   action,
+  secondaryAction,
+  ctaPosition,
+  severity,
   promise = undefined,
   successMessage,
   errorMessage
@@ -63,6 +88,9 @@ export function CustomToast({
   const [isExpanded, setIsExpanded] = useState(false)
 
   const showExpandButton = description && isOverflowing
+  const isLegacyActionLayout = secondaryAction === undefined && ctaPosition === undefined
+  const showActionsAtBottom = ctaPosition === 'bottom' && Boolean(action || secondaryAction)
+  const showTopActions = !showActionsAtBottom && Boolean(action || secondaryAction)
 
   const toggleExpand = useCallback(() => setIsExpanded(prev => !prev), [])
 
@@ -108,8 +136,57 @@ export function CustomToast({
     }
   }, [internalVariant])
 
+  const renderLegacyAction = () =>
+    action ? (
+      <Button
+        className="cn-toast-action-button"
+        size="sm"
+        // TODO: remove this cast
+        title={action.label as string}
+        onClick={e => {
+          action.onClick?.(e)
+        }}
+      >
+        {action.label}
+      </Button>
+    ) : null
+
+  const renderActionButton = (toastAction: Action, buttonVariant: 'primary' | 'secondary') => (
+    <Button
+      className="cn-toast-action-button"
+      size="sm"
+      variant={buttonVariant}
+      // TODO: remove this cast
+      title={toastAction.label as string}
+      onClick={e => {
+        toastAction.onClick?.(e)
+      }}
+    >
+      {toastAction.label}
+    </Button>
+  )
+
+  const renderActionGroup = () => {
+    if (isLegacyActionLayout) {
+      return renderLegacyAction()
+    }
+
+    return (
+      <>
+        {action && renderActionButton(action, 'primary')}
+        {secondaryAction && renderActionButton(secondaryAction, 'secondary')}
+      </>
+    )
+  }
+
   return (
-    <Layout.Vertical gap="xs" className={toastVariants({ variant: internalVariant })}>
+    <Layout.Vertical
+      gap="xs"
+      className={cn(toastVariants({ variant: internalVariant }), {
+        [INFO_SEVERITY_BORDER_WIDTH_CLASS]: !!severity,
+        [getInfoSeverityBorderClass(severity)]: !!severity
+      })}
+    >
       <Layout.Flex align="center" gap="2xs" justify="between" className="cn-toast-title">
         <Layout.Horizontal className="flex-1" align="center" gap="xs">
           {titleIcon}
@@ -118,19 +195,14 @@ export function CustomToast({
           </Text>
         </Layout.Horizontal>
 
-        {action && (
-          <Button
-            className="cn-toast-action-button"
-            size="sm"
-            // TODO: remove this cast
-            title={action.label as string}
-            onClick={e => {
-              action.onClick?.(e)
-            }}
-          >
-            {action.label}
-          </Button>
-        )}
+        {showTopActions &&
+          (isLegacyActionLayout ? (
+            renderLegacyAction()
+          ) : (
+            <Layout.Horizontal gap="xs" align="center">
+              {renderActionGroup()}
+            </Layout.Horizontal>
+          ))}
 
         {closeButton && (
           <Button size="xs" ignoreIconOnlyTooltip title="Close" variant="transparent" iconOnly onClick={onClose}>
@@ -171,6 +243,12 @@ export function CustomToast({
 
           <div className={cn('cn-toast-fade-overlay', { 'cn-toast-fade-overlay-not-visible': isExpanded })} />
         </>
+      )}
+
+      {showActionsAtBottom && (
+        <Layout.Horizontal justify="end" gap="xs" className="cn-toast-bottom-actions">
+          {renderActionGroup()}
+        </Layout.Horizontal>
       )}
     </Layout.Vertical>
   )

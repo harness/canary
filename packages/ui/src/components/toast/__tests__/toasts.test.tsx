@@ -1,4 +1,4 @@
-import React from 'react'
+import * as React from 'react'
 
 import { vi } from 'vitest'
 
@@ -115,6 +115,58 @@ describe('toast helpers', () => {
 
     props.onClose()
     expect(dismissMock).toHaveBeenCalledWith('toast-variant')
+  })
+
+  it('forwards info-only options to CustomToast while preserving duration', () => {
+    const action = { label: 'View details', onClick: vi.fn() }
+    const secondaryAction = { label: 'Ignore', onClick: vi.fn() }
+
+    toast.info({
+      title: 'Vulnerability found',
+      description: 'Review the dependency before merging.',
+      options: {
+        duration: 5000,
+        action,
+        secondaryAction,
+        ctaPosition: 'bottom',
+        severity: 'High'
+      }
+    })
+
+    const [, config] = customMock.mock.calls.at(-1)!
+    expect(config).toEqual({ duration: 5000, dismissible: true })
+
+    const props = invokeRenderWithId('info-toast')
+    expect(props).toMatchObject({
+      toastId: 'info-toast',
+      title: 'Vulnerability found',
+      description: 'Review the dependency before merging.',
+      variant: 'info',
+      action,
+      secondaryAction,
+      ctaPosition: 'bottom',
+      severity: 'High'
+    })
+  })
+
+  it('does not forward info-only options from other toast helpers', () => {
+    toast.success({
+      title: 'Saved',
+      options: {
+        action: { label: 'Undo', onClick: vi.fn() },
+        // Info-only fields are not on ToastOptions; cast to assert runtime ignore.
+        ...({
+          severity: 'High',
+          secondaryAction: { label: 'Ignore', onClick: vi.fn() },
+          ctaPosition: 'bottom'
+        } as Record<string, unknown>)
+      }
+    })
+
+    const props = invokeRenderWithId('success-toast')
+    expect(props.severity).toBeUndefined()
+    expect(props.secondaryAction).toBeUndefined()
+    expect(props.ctaPosition).toBeUndefined()
   })
 
   it('creates a loading toast that is not dismissible', () => {

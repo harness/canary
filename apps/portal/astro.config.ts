@@ -237,7 +237,7 @@ export default defineConfig({
               },
             },
             {
-              slug: "growth-patterns/growth-card",
+              slug: "growth-patterns/growth-box",
               label: "Growth Box [WIP]",
             },
           ],

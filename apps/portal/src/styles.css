@@ -1039,17 +1039,38 @@ button[aria-label="Search"] {
 }
 
 /*
- * Primary CTA border — Figma: linear border/brand @ 16% → set/purple/primary @ 87%.
- * Tokens: --cn-border-brand, --cn-set-purple-primary-bg (set.purple.primary.bg).
- * Angle: 135deg for diagonal blue (top-left) → purple (bottom-right).
- * Keeps AI button fill/hover; overrides only the border gradient layer.
+ * Primary CTA — Figma linear border: border/brand @ 16% → set/purple/primary @ 87%, 90deg.
+ * Same layered-bg technique as Button variant="ai", but only these two design-system stops.
+ * !important beats .cn-button-secondary border-color so the transparent ring (and gradient) wins.
+ * Fill matches card surface; gradient paints only the transparent border ring.
  */
-.cn-growth-card-cta {
+.cn-button.cn-growth-card-cta {
+  color: var(--cn-set-ai-outline-text) !important;
+  background-color: transparent !important;
   background-image:
-    var(--cn-set-ai-outline-bg-gradient),
+    linear-gradient(var(--cn-bg-1), var(--cn-bg-1)),
     linear-gradient(
-      135deg,
+      90deg,
       var(--cn-border-brand) 16%,
       var(--cn-set-purple-primary-bg) 87%
-    );
+    ) !important;
+  background-origin: border-box !important;
+  background-clip: padding-box, border-box !important;
+  background-size: 100% 100%, 100% 100% !important;
+  border: var(--cn-btn-border) solid transparent !important;
+  box-shadow: none !important;
+}
+
+.cn-button.cn-growth-card-cta:hover:not(:disabled, .cn-button-disabled),
+.cn-button.cn-growth-card-cta:active:not(:disabled, .cn-button-disabled) {
+  background-color: transparent !important;
+  background-image:
+    linear-gradient(var(--cn-bg-2), var(--cn-bg-2)),
+    linear-gradient(
+      90deg,
+      var(--cn-border-brand) 16%,
+      var(--cn-set-purple-primary-bg) 87%
+    ) !important;
+  border-color: transparent !important;
+  box-shadow: none !important;
 }

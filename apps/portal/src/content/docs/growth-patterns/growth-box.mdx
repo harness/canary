@@ -1,0 +1,151 @@
+---
+title: Growth Box [WIP]
+description: A compact in-app card for upgrade prompts, plan limits, and other growth-oriented calls to action
+beta: true
+---
+
+import { DocsPage } from "@/components/docs-page";
+import { Aside } from "@astrojs/starlight/components";
+
+
+The **Growth Box** is a composition pattern built on the [`Card`](/components/data-display/card) component. Use it for contextual upgrade prompts, plan-limit notices, and other lightweight growth messages.
+
+This pattern is only used in the **bottom left of the navigation** — at the top of the sidebar footer list, above alerts, support links, and the user profile.
+
+The card pairs a short headline with supporting copy and a right-aligned action row.
+
+### Default
+
+<DocsPage.ComponentExample
+  client:only
+  code={`() => {
+    const [visible, setVisible] = React.useState(true);
+
+    if (!visible) {
+      return (
+        <div className="flex items-center gap-cn-xs">
+          <Text color="foreground-3">Growth box dismissed — don't show the same message after dismissal</Text>
+          <Button variant="link" size="xs" onClick={() => setVisible(true)}>
+            <IconV2 name="refresh" size="xs" />
+            Refresh
+          </Button>
+        </div>
+      );
+    }
+
+    return (
+      <Card.Root size="sm" interactive={false} className="cn-growth-card w-full">
+        <Card.Title>Setup is almost finished</Card.Title>
+        <Card.Content>Only a few minutes left to complete your pipeline.</Card.Content>
+        <div className="cn-growth-card-actions flex justify-end gap-cn-xs">
+          <Button variant="ghost" size="xs" onClick={() => setVisible(false)}>
+            Dismiss
+          </Button>
+          <Button variant="secondary" size="xs" className="cn-growth-card-cta">
+            Finish setup
+          </Button>
+        </div>
+      </Card.Root>
+    );
+
+}`}
+/>
+
+<Aside type="note">
+  Growth boxes are for PLG and growth surfaces only. Use standard
+  [`Alert`](/components/feedback/alert) or
+  [`Card`](/components/data-display/card) patterns for general product UI.
+</Aside>
+
+## Usage
+
+### Default
+
+```css
+.cn-growth-card {
+  width: 100%;
+  max-width: 220px;
+}
+
+.cn-growth-card-actions {
+  margin-top: var(--cn-spacing-3);
+}
+
+.cn-growth-card .cn-card-content {
+  font-size: var(--cn-font-size-3);
+  line-height: 1.428;
+  letter-spacing: var(--cn-tracking-tight);
+}
+
+/*
+ * Primary CTA border — Figma: border/brand @ 16% → set/purple/primary @ 87%, 90deg.
+ * Do not use Button variant="ai"; its multi-stop border fights this override.
+ */
+.cn-button.cn-growth-card-cta {
+  color: var(--cn-set-ai-outline-text) !important;
+  background-color: transparent !important;
+  background-image:
+    linear-gradient(var(--cn-bg-1), var(--cn-bg-1)),
+    linear-gradient(
+      90deg,
+      var(--cn-border-brand) 16%,
+      var(--cn-set-purple-primary-bg) 87%
+    ) !important;
+  background-origin: border-box !important;
+  background-clip: padding-box, border-box !important;
+  background-size: 100% 100%, 100% 100% !important;
+  border: var(--cn-btn-border) solid transparent !important;
+  box-shadow: none !important;
+}
+```
+
+```typescript jsx
+import { Button, Card, IconV2, Text } from "@harnessio/ui";
+
+const [visible, setVisible] = React.useState(true);
+
+if (!visible) {
+  return (
+    <div className="flex items-center gap-cn-xs">
+      <Text color="foreground-3">Growth box dismissed — don't show the same message after dismissal</Text>
+      <Button variant="link" size="xs" onClick={() => setVisible(true)}>
+        <IconV2 name="refresh" size="xs" />
+        Refresh
+      </Button>
+    </div>
+  );
+}
+
+<Card.Root size="sm" interactive={false} className="cn-growth-card">
+  <Card.Title>Setup is almost finished</Card.Title>
+  <Card.Content>Only a few minutes left to complete your pipeline.</Card.Content>
+  <div className="flex justify-end gap-cn-xs cn-growth-card-actions">
+    <Button variant="ghost" size="xs" onClick={onDismiss}>
+      Dismiss
+    </Button>
+    <Button variant="secondary" size="xs" className="cn-growth-card-cta" onClick={onPrimary}>
+      Finish setup
+    </Button>
+  </div>
+</Card.Root>
+```
+
+## Anatomy
+
+| Element        | Component                                                         | Guidance                                                                                               |
+| -------------- | ----------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------ |
+| Placement      | Sidebar footer                                                    | Bottom left of the navigation only — first item above alerts, support, and profile                     |
+| Container      | `Card.Root`                                                       | Use `size="sm"`, `interactive={false}`, and `className="cn-growth-card"` for body small typography     |
+| Headline       | `Card.Title`                                                      | One short sentence stating the value or constraint                                                     |
+| Body           | `Card.Content`                                                    | Body small (`text-cn-size-3` / 12px). Apply via `cn-growth-card` on the card root                      |
+| Action row     | `cn-growth-card-actions`                                          | Adds spacing above the action buttons. Use `size="xs"` on all buttons                                  |
+| Dismiss        | `Button` (`variant="ghost"`, `size="xs"`)                         | Removes the card from view                                                                             |
+| Primary action | `Button` (`variant="secondary"`, `className="cn-growth-card-cta"`, `size="xs"`) | Main CTA. Gradient border only: `border/brand` @ 16% → `set/purple/primary` @ 87% (90deg). Not `variant="ai"`. |
+
+## Guidelines
+
+- **Bottom-left navigation only.** Place the box at the top of the sidebar footer list — above alerts, support links, and the user profile.
+- **Keep copy brief.** The box should scan in one glance: headline, one supporting line, then actions.
+- **Right-align actions.** Place dismiss and primary CTA in a horizontal row at the bottom-right of the card.
+- **Respect dismissal.** Persist dismiss state per message — don't show the same message after dismissal.
+- **Constrain width.** Growth boxes are narrow by design — default width is `220px`, set via `cn-growth-card`.

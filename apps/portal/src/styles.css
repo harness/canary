@@ -1025,7 +1025,9 @@ button[aria-label="Search"] {
     ) !important;
   background-origin: border-box !important;
   background-clip: padding-box, border-box !important;
-  background-size: 100% 100%, 100% 100% !important;
+  background-size:
+    100% 100%,
+    100% 100% !important;
   border: var(--cn-btn-border) solid transparent !important;
   box-shadow: none !important;
 }

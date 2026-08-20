@@ -7,7 +7,6 @@ beta: true
 import { DocsPage } from "@/components/docs-page";
 import { Aside } from "@astrojs/starlight/components";
 
-
 The **Growth Box** is a composition pattern built on the [`Card`](/components/data-display/card) component. Use it for contextual upgrade prompts, plan-limit notices, and other lightweight growth messages.
 
 This pattern is only used in the **bottom left of the navigation** — at the top of the sidebar footer list, above alerts, support links, and the user profile.
@@ -93,7 +92,9 @@ The card pairs a short headline with supporting copy and a right-aligned action 
     ) !important;
   background-origin: border-box !important;
   background-clip: padding-box, border-box !important;
-  background-size: 100% 100%, 100% 100% !important;
+  background-size:
+    100% 100%,
+    100% 100% !important;
   border: var(--cn-btn-border) solid transparent !important;
   box-shadow: none !important;
 }
@@ -132,14 +133,14 @@ if (!visible) {
 
 ## Anatomy
 
-| Element        | Component                                                         | Guidance                                                                                               |
-| -------------- | ----------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------ |
-| Placement      | Sidebar footer                                                    | Bottom left of the navigation only — first item above alerts, support, and profile                     |
-| Container      | `Card.Root`                                                       | Use `size="sm"`, `interactive={false}`, and `className="cn-growth-card"` for body small typography     |
-| Headline       | `Card.Title`                                                      | One short sentence stating the value or constraint                                                     |
-| Body           | `Card.Content`                                                    | Body small (`text-cn-size-3` / 12px). Apply via `cn-growth-card` on the card root                      |
-| Action row     | `cn-growth-card-actions`                                          | Adds spacing above the action buttons. Use `size="xs"` on all buttons                                  |
-| Dismiss        | `Button` (`variant="ghost"`, `size="xs"`)                         | Removes the card from view                                                                             |
+| Element        | Component                                                                       | Guidance                                                                                                       |
+| -------------- | ------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------- |
+| Placement      | Sidebar footer                                                                  | Bottom left of the navigation only — first item above alerts, support, and profile                             |
+| Container      | `Card.Root`                                                                     | Use `size="sm"`, `interactive={false}`, and `className="cn-growth-card"` for body small typography             |
+| Headline       | `Card.Title`                                                                    | One short sentence stating the value or constraint                                                             |
+| Body           | `Card.Content`                                                                  | Body small (`text-cn-size-3` / 12px). Apply via `cn-growth-card` on the card root                              |
+| Action row     | `cn-growth-card-actions`                                                        | Adds spacing above the action buttons. Use `size="xs"` on all buttons                                          |
+| Dismiss        | `Button` (`variant="ghost"`, `size="xs"`)                                       | Removes the card from view                                                                                     |
 | Primary action | `Button` (`variant="secondary"`, `className="cn-growth-card-cta"`, `size="xs"`) | Main CTA. Gradient border only: `border/brand` @ 16% → `set/purple/primary` @ 87% (90deg). Not `variant="ai"`. |
 
 ## Guidelines

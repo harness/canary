@@ -994,40 +994,9 @@ button[aria-label="Search"] {
 }
 
 /* Growth box (CSS class prefix remains cn-growth-card) */
-.cn-growth-card,
-.cn-growth-card-stack {
+.cn-growth-card {
   width: 100%;
   max-width: 220px;
-}
-
-/* Growth box stacked deck */
-.cn-growth-card-stack {
-  position: relative;
-  padding-bottom: 10px;
-}
-
-.cn-growth-card-stack__layer {
-  position: absolute;
-  inset-inline: 0;
-  border: var(--cn-card-border) solid var(--cn-border-2);
-  border-radius: var(--cn-card-sm-radius);
-  background-color: var(--cn-bg-1);
-  pointer-events: none;
-}
-
-.cn-growth-card-stack__layer--1 {
-  top: 4px;
-  bottom: 6px;
-}
-
-.cn-growth-card-stack__layer--2 {
-  top: 8px;
-  bottom: 2px;
-}
-
-.cn-growth-card-stack > .cn-card {
-  position: relative;
-  z-index: 1;
 }
 
 .cn-growth-card-actions {

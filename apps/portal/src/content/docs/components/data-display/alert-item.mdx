@@ -1,0 +1,208 @@
+---
+title: Alert Item
+description: Theme-accented notification row with read/unread state
+beta: true
+---
+
+The `AlertItem` component renders a single alert or notification row: a theme-colored left accent, title, relative timestamp, optional unread indicator, metadata line, and optional action link. Rows support full-row navigation via `to`/`onClick` while keeping nested action links independently clickable.
+
+`AlertItem` deliberately ships without a list container. Render items inside any container you already use — a `Card`, a plain `Layout.Vertical`, or your own wrapper — and the row handles its own accent and corner rounding based on its position.
+
+import { DocsPage } from "@/components/docs-page";
+
+<DocsPage.ComponentExample
+  client:only
+  contentClassName={"!block ![place-items:normal]"}
+  code={`
+    <>
+      <AlertItem theme="warning" read={false} timestamp={Date.now() - 3 * 60 * 60 * 1000} to="/alerts/1">
+        <AlertItem.Title>Pipeline Failed</AlertItem.Title>
+        <AlertItem.Description>
+          build #2481 failed at the integration stage due to an authentication error.
+        </AlertItem.Description>
+        <AlertItem.Link to="/subscription">View subscription</AlertItem.Link>
+      </AlertItem>
+      <AlertItem theme="danger" read={false} timestamp={Date.now() - 5 * 60 * 1000} to="/alerts/critical">
+        <AlertItem.Title>System Outage Imminent</AlertItem.Title>
+        <AlertItem.Description>
+          All services will be unavailable in 5 minutes due to a critical system update.
+        </AlertItem.Description>
+        <AlertItem.Link to="/status">View Status Page</AlertItem.Link>
+      </AlertItem>
+      <AlertItem theme="warning" read={true} timestamp={Date.now() - 24 * 60 * 60 * 1000}>
+        <AlertItem.Title>Security Vulnerability Detected</AlertItem.Title>
+        <AlertItem.Description>
+          A high-severity vulnerability was found in module 'X'. Patch has been deployed.
+        </AlertItem.Description>
+      </AlertItem>
+      <AlertItem theme="success" read={false} timestamp={Date.now() - 2 * 24 * 60 * 60 * 1000} onClick={() => alert('Medium alert clicked!')}>
+        <AlertItem.Title>New Feature Release</AlertItem.Title>
+      </AlertItem>
+      <AlertItem theme="info" read={true} timestamp={Date.now() - 7 * 24 * 60 * 60 * 1000}>
+        <AlertItem.Title>Weekly Newsletter</AlertItem.Title>
+        <AlertItem.Description>
+          Check out the latest updates from our team this week!
+        </AlertItem.Description>
+      </AlertItem>
+    </>
+  `}
+/>
+
+## Usage
+
+```typescript jsx
+import { AlertItem } from '@harnessio/ui/components'
+
+//...
+
+return (
+  <AlertItem theme="info" read timestamp={timestamp} to="/alerts/1">
+    <AlertItem.Title>Company All-Hands This Friday</AlertItem.Title>
+    <AlertItem.Description>
+      Join us at 10:00 PT for the Q3 town hall...
+    </AlertItem.Description>
+    <AlertItem.Link to="/invite">View invite</AlertItem.Link>
+  </AlertItem>
+)
+```
+
+To show several alerts, render multiple `AlertItem`s inside any container of your choice.
+
+## Anatomy
+
+All parts of the `AlertItem` component can be imported and composed as required.
+
+```typescript jsx
+<AlertItem theme="info" read timestamp={timestamp}>
+  <AlertItem.Title />
+  <AlertItem.Description />
+  <AlertItem.Link />
+</AlertItem>
+```
+
+## API Reference
+
+### `AlertItem`
+
+Renders a single alert row with a theme accent, read/unread styling, and optional row navigation.
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "theme",
+      description: "Visual theme controlling the left accent color.",
+      required: true,
+      value: "'info' | 'success' | 'warning' | 'danger'",
+    },
+    {
+      name: "read",
+      description: "Whether the alert has been read. Default is true.",
+      required: false,
+      value: "boolean",
+      defaultValue: "true",
+    },
+    {
+      name: "timestamp",
+      description:
+        "ISO string or epoch ms displayed as a relative time via TimeAgoCard.",
+      required: false,
+      value: "string | number | null",
+    },
+    {
+      name: "to",
+      description: "URL for full-row navigation overlay (StackedList-style).",
+      required: false,
+      value: "string",
+    },
+    {
+      name: "linkProps",
+      description: "Additional props passed to the row overlay Link.",
+      required: false,
+      value: "Omit<LinkProps, 'to'>",
+    },
+    {
+      name: "onClick",
+      description:
+        "Callback fired on normal row click (skipped when modifier keys are pressed).",
+      required: false,
+      value: "() => void",
+    },
+    {
+      name: "children",
+      description:
+        "AlertItem.Title, AlertItem.Description, and optional AlertItem.Link",
+      required: true,
+      value: "ReactNode",
+    },
+  ]}
+/>
+
+### `Title`
+
+Primary heading shown in the item header row.
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "children",
+      description: "Title content",
+      required: true,
+      value: "ReactNode",
+    },
+    {
+      name: "className",
+      description: "Additional class names",
+      required: false,
+      value: "string",
+    },
+  ]}
+/>
+
+### `Description`
+
+Truncated description shown on the metadata line.
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "children",
+      description: "Description content",
+      required: true,
+      value: "ReactNode",
+    },
+    {
+      name: "className",
+      description: "Additional class names",
+      required: false,
+      value: "string",
+    },
+  ]}
+/>
+
+### `Link`
+
+Optional action link rendered below the metadata line. Uses Alert link styling.
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "to",
+      description: "The URL to link to.",
+      required: true,
+      value: "string",
+    },
+    {
+      name: "children",
+      description: "Link content",
+      required: true,
+      value: "ReactNode",
+    },
+    {
+      name: "external",
+      description: "If true, opens in a new tab.",
+      required: false,
+      value: "boolean",
+      defaultValue: "false",
+    },
+  ]}
+/>

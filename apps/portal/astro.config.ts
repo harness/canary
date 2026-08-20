@@ -144,6 +144,7 @@ export default defineConfig({
           label: "Components",
           items: [
             "components/data-display/accordion",
+            "components/data-display/alert-item",
             "components/feedback/alert",
             "components/overlays/alert-dialog",
             "components/visual/avatar",

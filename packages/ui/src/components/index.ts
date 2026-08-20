@@ -1,4 +1,5 @@
 export * from './alert'
+export * from './alert-item'
 export * from './icon-v2'
 export * from './logo-v2'
 export * from './button'

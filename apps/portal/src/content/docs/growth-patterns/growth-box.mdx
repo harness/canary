@@ -33,18 +33,20 @@ The card pairs a short headline with supporting copy and a right-aligned action 
     }
 
     return (
-      <Card.Root size="sm" interactive={false} className="cn-growth-card w-full">
-        <Card.Title>Setup is almost finished</Card.Title>
-        <Card.Content>Only a few minutes left to complete your pipeline.</Card.Content>
-        <div className="cn-growth-card-actions flex justify-end gap-cn-xs">
-          <Button variant="ghost" size="xs" onClick={() => setVisible(false)}>
-            Dismiss
-          </Button>
-          <Button variant="secondary" size="xs" className="cn-growth-card-cta">
-            Finish setup
-          </Button>
-        </div>
-      </Card.Root>
+      <div className="cn-growth-card-demo">
+        <Card.Root size="sm" interactive={false} className="cn-growth-card">
+          <Card.Title>Setup is almost finished</Card.Title>
+          <Card.Content>Only a few minutes left to complete your pipeline.</Card.Content>
+          <div className="cn-growth-card-actions flex justify-end gap-cn-xs">
+            <Button variant="ghost" size="xs" onClick={() => setVisible(false)}>
+              Dismiss
+            </Button>
+            <Button variant="secondary" size="xs" className="cn-growth-card-cta">
+              Finish setup
+            </Button>
+          </div>
+        </Card.Root>
+      </div>
     );
 
 }`}
@@ -63,7 +65,6 @@ The card pairs a short headline with supporting copy and a right-aligned action 
 ```css
 .cn-growth-card {
   width: 100%;
-  max-width: 220px;
 }
 
 .cn-growth-card-actions {
@@ -117,18 +118,21 @@ if (!visible) {
   );
 }
 
-<Card.Root size="sm" interactive={false} className="cn-growth-card">
-  <Card.Title>Setup is almost finished</Card.Title>
-  <Card.Content>Only a few minutes left to complete your pipeline.</Card.Content>
-  <div className="flex justify-end gap-cn-xs cn-growth-card-actions">
-    <Button variant="ghost" size="xs" onClick={onDismiss}>
-      Dismiss
-    </Button>
-    <Button variant="secondary" size="xs" className="cn-growth-card-cta" onClick={onPrimary}>
-      Finish setup
-    </Button>
-  </div>
-</Card.Root>
+{/* Parent sets width (e.g. sidebar column); card fills it via width: 100% */}
+<div style={{ width: 220 }}>
+  <Card.Root size="sm" interactive={false} className="cn-growth-card">
+    <Card.Title>Setup is almost finished</Card.Title>
+    <Card.Content>Only a few minutes left to complete your pipeline.</Card.Content>
+    <div className="flex justify-end gap-cn-xs cn-growth-card-actions">
+      <Button variant="ghost" size="xs" onClick={onDismiss}>
+        Dismiss
+      </Button>
+      <Button variant="secondary" size="xs" className="cn-growth-card-cta" onClick={onPrimary}>
+        Finish setup
+      </Button>
+    </div>
+  </Card.Root>
+</div>
 ```
 
 ## Anatomy
@@ -149,4 +153,4 @@ if (!visible) {
 - **Keep copy brief.** The box should scan in one glance: headline, one supporting line, then actions.
 - **Right-align actions.** Place dismiss and primary CTA in a horizontal row at the bottom-right of the card.
 - **Respect dismissal.** Persist dismiss state per message — don't show the same message after dismissal.
-- **Constrain width.** Growth boxes are narrow by design — default width is `220px`, set via `cn-growth-card`.
+- **Constrain width via the parent.** Growth boxes fill their container (`width: 100%` on `cn-growth-card`). Place them in a ~`220px` parent (e.g. the sidebar column); do not hard-code `max-width` on the card.

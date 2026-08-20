@@ -996,7 +996,11 @@ button[aria-label="Search"] {
 /* Growth box (CSS class prefix remains cn-growth-card) */
 .cn-growth-card {
   width: 100%;
-  max-width: 220px;
+}
+
+/* Docs live preview: constrain the demo to the intended sidebar width */
+.cn-growth-card-demo {
+  width: 220px;
 }
 
 .cn-growth-card-actions {

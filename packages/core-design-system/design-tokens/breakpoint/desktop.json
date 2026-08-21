@@ -32,7 +32,7 @@
         "fontFamily": "{fontFamily.default}",
         "fontWeight": "{fontWeight.default.normal.500}",
         "fontSize": "{fontSize.10}",
-        "lineHeight": "{lineHeight.10.tight}",
+        "lineHeight": "{lineHeight.36}",
         "letterSpacing": "{tracking.tight}",
         "textCase": "{textCase.none}"
       },
@@ -44,7 +44,7 @@
         "fontFamily": "{fontFamily.default}",
         "fontWeight": "{fontWeight.default.normal.400}",
         "fontSize": "{fontSize.9}",
-        "lineHeight": "{lineHeight.9.snug}",
+        "lineHeight": "{lineHeight.36}",
         "letterSpacing": "{tracking.tight}",
         "textCase": "{textCase.none}"
       },
@@ -56,7 +56,7 @@
         "fontFamily": "{fontFamily.default}",
         "fontWeight": "{fontWeight.default.normal.400}",
         "fontSize": "{fontSize.7}",
-        "lineHeight": "{lineHeight.7.snug}",
+        "lineHeight": "{lineHeight.24}",
         "letterSpacing": "{tracking.tight}"
       },
       "$description": "Secondary heading for logical grouping within larger content sections. Creates clear visual hierarchy through weight and size contrast while maintaining typographic cohesion with section headings above it.\n\nCommon uses: Sub-topics within longer articles, Feature description headers, FAQ question headings, Setting category labels, Card headers in grid layouts."
@@ -67,7 +67,7 @@
         "fontFamily": "{fontFamily.default}",
         "fontWeight": "{fontWeight.default.normal.400}",
         "fontSize": "{fontSize.6}",
-        "lineHeight": "{lineHeight.6.tight}",
+        "lineHeight": "{lineHeight.20}",
         "letterSpacing": "{tracking.tight}"
       },
       "$description": "Versatile heading for content organization at the paragraph level. Provides subtle visual separation while maintaining content flow. Creates recognizable signposts for scanning without overwhelming surrounding text.\n\nCommon uses: Small widget headers, Related content groups, List section headers, Step-by-step instructions titles, Table headers."
@@ -78,7 +78,7 @@
         "fontFamily": "{fontFamily.default}",
         "fontWeight": "{fontWeight.default.normal.500}",
         "fontSize": "{fontSize.5}",
-        "lineHeight": "{lineHeight.5.snug}",
+        "lineHeight": "{lineHeight.20}",
         "letterSpacing": "{tracking.normal}"
       },
       "$description": "Compact heading treatment that maintains hierarchical presence while optimizing for space efficiency. Uses increased weight to compensate for reduced size, ensuring sufficient contrast with body text.\n\nCommon uses: Data visualization labels, Small card titles."
@@ -91,7 +91,7 @@
         "fontFamily": "{fontFamily.default}",
         "fontWeight": "{fontWeight.default.normal.400}",
         "fontSize": "{fontSize.5}",
-        "lineHeight": "{lineHeight.5.snug}",
+        "lineHeight": "{lineHeight.20}",
         "letterSpacing": "{tracking.tight}",
         "paragraphSpacing": "0.375rem"
       },
@@ -103,7 +103,7 @@
         "fontFamily": "{fontFamily.default}",
         "fontWeight": "{fontWeight.default.normal.500}",
         "fontSize": "{fontSize.5}",
-        "lineHeight": "{lineHeight.5.snug}",
+        "lineHeight": "{lineHeight.20}",
         "letterSpacing": "{tracking.tight}",
         "paragraphSpacing": "0.375rem"
       },
@@ -115,7 +115,7 @@
         "fontFamily": "{fontFamily.mono}",
         "fontWeight": "{fontWeight.mono.normal.300}",
         "fontSize": "0.75rem",
-        "lineHeight": "{lineHeight.4.normal}",
+        "lineHeight": "{lineHeight.20}",
         "letterSpacing": "{tracking.tight}"
       },
       "$description": "Monospaced typography that ensures character alignment for technical content. Maintains consistent spacing and character width to preserve code formatting while integrating harmoniously with surrounding text.\n\nCommon uses: Code snippets and examples, Terminal command instructions, File paths and system references, API endpoints."
@@ -126,7 +126,7 @@
         "fontFamily": "{fontFamily.default}",
         "fontWeight": "{fontWeight.default.normal.300}",
         "fontSize": "{fontSize.5}",
-        "lineHeight": "{lineHeight.5.snug}",
+        "lineHeight": "{lineHeight.20}",
         "letterSpacing": "{tracking.tight}",
         "paragraphSpacing": "0.375rem"
       },
@@ -139,7 +139,7 @@
           "fontFamily": "{fontFamily.mono}",
           "fontWeight": "{fontWeight.default.normal.300}",
           "fontSize": "0.75rem",
-          "lineHeight": "{lineHeight.4.none}",
+          "lineHeight": "{lineHeight.16}",
           "letterSpacing": "{tracking.tight}"
         },
         "$description": "Monospaced typography that ensures character alignment for technical content. Maintains consistent spacing and character width to preserve code formatting while integrating harmoniously with surrounding text.\n\nCommon uses: Code snippets and examples, Terminal command instructions, File paths and system references, API endpoints."
@@ -150,7 +150,7 @@
           "fontFamily": "{fontFamily.default}",
           "fontWeight": "{fontWeight.default.normal.400}",
           "fontSize": "{fontSize.5}",
-          "lineHeight": "{lineHeight.5.tight}",
+          "lineHeight": "{lineHeight.16}",
           "letterSpacing": "{tracking.tight}"
         },
         "$description": "Component-optimized text style with zero line-height for precise vertical positioning. Designed specifically for UI elements with fixed height constraints where text must maintain consistent vertical alignment."
@@ -161,7 +161,7 @@
           "fontFamily": "{fontFamily.default}",
           "fontWeight": "{fontWeight.default.normal.500}",
           "fontSize": "{fontSize.5}",
-          "lineHeight": "{lineHeight.5.tight}",
+          "lineHeight": "{lineHeight.16}",
           "letterSpacing": "{tracking.tight}"
         },
         "$description": "Emphasized component text for important interactive elements. Increases visual prominence without affecting component height. Ensures consistent vertical alignment within fixed-height UI elements."
@@ -172,7 +172,7 @@
           "fontFamily": "{fontFamily.default}",
           "fontWeight": "{fontWeight.default.normal.300}",
           "fontSize": "{fontSize.5}",
-          "lineHeight": "{lineHeight.5.tight}",
+          "lineHeight": "{lineHeight.16}",
           "letterSpacing": "{tracking.tight}"
         },
         "$description": "Subtle single-line text for tertiary information in compact UI elements. Combines reduced weight with zero line-height for minimal visual presence while remaining legible."
@@ -186,7 +186,7 @@
         "fontFamily": "{fontFamily.default}",
         "fontWeight": "{fontWeight.default.normal.400}",
         "fontSize": "0.75rem",
-        "lineHeight": "{lineHeight.4.snug}",
+        "lineHeight": "{lineHeight.20}",
         "letterSpacing": "{tracking.normal}",
         "paragraphSpacing": "0.375rem"
       },
@@ -198,7 +198,7 @@
         "fontFamily": "{fontFamily.default}",
         "fontWeight": "{fontWeight.default.normal.500}",
         "fontSize": "0.75rem",
-        "lineHeight": "{lineHeight.4.snug}",
+        "lineHeight": "{lineHeight.20}",
         "letterSpacing": "{tracking.normal}",
         "paragraphSpacing": "0.375rem"
       },
@@ -210,7 +210,7 @@
         "fontFamily": "{fontFamily.mono}",
         "fontWeight": "{fontWeight.mono.normal.400}",
         "fontSize": "0.75rem",
-        "lineHeight": "{lineHeight.3.snug}",
+        "lineHeight": "{lineHeight.16}",
         "letterSpacing": "{tracking.normal}",
         "paragraphSpacing": "0.375rem"
       },
@@ -222,7 +222,7 @@
         "fontFamily": "{fontFamily.default}",
         "fontWeight": "{fontWeight.default.normal.300}",
         "fontSize": "0.75rem",
-        "lineHeight": "{lineHeight.4.snug}",
+        "lineHeight": "{lineHeight.20}",
         "letterSpacing": "{tracking.normal}",
         "paragraphSpacing": "0.375rem"
       },
@@ -235,7 +235,7 @@
           "fontFamily": "{fontFamily.default}",
           "fontWeight": "{fontWeight.default.normal.400}",
           "fontSize": "0.75rem",
-          "lineHeight": "{lineHeight.4.none}",
+          "lineHeight": "{lineHeight.16}",
           "letterSpacing": "{tracking.normal}"
         },
         "$description": "Component-specific annotation style with zero line-height for precise positioning. Designed for compact UI elements requiring single-line supporting text with consistent vertical alignment."
@@ -246,7 +246,7 @@
           "fontFamily": "{fontFamily.default}",
           "fontWeight": "{fontWeight.default.normal.400}",
           "fontSize": "0.75rem",
-          "lineHeight": "{lineHeight.4.none}",
+          "lineHeight": "{lineHeight.16}",
           "letterSpacing": "{tracking.wide}",
           "textCase": "{textCase.uppercase}"
         },
@@ -258,7 +258,7 @@
           "fontFamily": "{fontFamily.default}",
           "fontWeight": "{fontWeight.default.normal.500}",
           "fontSize": "0.75rem",
-          "lineHeight": "{lineHeight.4.none}",
+          "lineHeight": "{lineHeight.16}",
           "letterSpacing": "{tracking.normal}"
         },
         "$description": "Emphasized single-line caption for important compact labels. Combines increased weight with zero line-height for prominent metadata in constrained UI elements.\n\nCommon uses: Badge text, Important tags, Highlighted counts, Key indicators."
@@ -269,7 +269,7 @@
           "fontFamily": "{fontFamily.mono}",
           "fontWeight": "{fontWeight.default.normal.500}",
           "fontSize": "0.75rem",
-          "lineHeight": "{lineHeight.3.none}",
+          "lineHeight": "{lineHeight.16}",
           "letterSpacing": "{tracking.normal}"
         },
         "$description": "Compact monospaced caption for inline technical content. Optimized for single-line display of code snippets in space-constrained UI elements.\n\nCommon uses: Inline variable names, Short commands, Version tags, Technical badges."
@@ -280,7 +280,7 @@
           "fontFamily": "{fontFamily.default}",
           "fontWeight": "{fontWeight.default.normal.300}",
           "fontSize": "0.75rem",
-          "lineHeight": "{lineHeight.4.none}",
+          "lineHeight": "{lineHeight.16}",
           "letterSpacing": "{tracking.normal}"
         },
         "$description": "Minimal-emphasis component text for auxiliary information. Combines reduced weight with zero line-height for the most visually subtle typography suitable for non-critical interface elements."
@@ -295,7 +295,7 @@
           "fontFamily": "{fontFamily.default}",
           "fontWeight": "{fontWeight.default.normal.400}",
           "fontSize": "{fontSize.5}",
-          "lineHeight": "{lineHeight.5.snug}",
+          "lineHeight": "{lineHeight.20}",
           "letterSpacing": "{tracking.tight}",
           "textDecoration": "{textDecoration.none}"
         },
@@ -307,7 +307,7 @@
           "fontFamily": "{fontFamily.default}",
           "fontWeight": "{fontWeight.default.normal.500}",
           "fontSize": "{fontSize.4}",
-          "lineHeight": "{lineHeight.4.snug}",
+          "lineHeight": "{lineHeight.20}",
           "letterSpacing": "{tracking.normal}",
           "textDecoration": "{textDecoration.none}"
         },
@@ -321,7 +321,7 @@
           "fontFamily": "{fontFamily.default}",
           "fontWeight": "{fontWeight.default.normal.500}",
           "fontSize": "{fontSize.8}",
-          "lineHeight": "{lineHeight.8.tight}",
+          "lineHeight": "{lineHeight.24}",
           "letterSpacing": "{tracking.tight}"
         },
         "$description": "Prominent typography for modal interface headers. Creates immediate context for interrupting content while establishing visual hierarchy within the dialog component.\n\nCommon uses: Confirmation dialogs, Settings modals, Feature popups, Alert notifications, Form submission dialogs, Drawers."
@@ -335,7 +335,7 @@
             "fontFamily": "{fontFamily.default}",
             "fontWeight": "{fontWeight.default.normal.500}",
             "fontSize": "{fontSize.10}",
-            "lineHeight": "{lineHeight.10.snug}",
+            "lineHeight": "{lineHeight.40}",
             "letterSpacing": "{tracking.tighter}"
           },
           "$description": "Primary document heading that establishes the main topic with prominent visual weight and size. Creates the top level in document hierarchy.\n\nCommon uses: Document titles, Main article headings, Tutorial titles, Report titles."
@@ -346,7 +346,7 @@
             "fontFamily": "{fontFamily.default}",
             "fontWeight": "{fontWeight.default.normal.500}",
             "fontSize": "{fontSize.9}",
-            "lineHeight": "{lineHeight.9.normal}",
+            "lineHeight": "{lineHeight.36}",
             "letterSpacing": "{tracking.tighter}"
           },
           "$description": "Secondary heading for major content divisions. Creates clear breaks between primary sections while maintaining hierarchical relationship with H1.\n\nCommon uses: Chapter divisions, Major content sections, Topic groups, Process divisions."
@@ -357,7 +357,7 @@
             "fontFamily": "{fontFamily.default}",
             "fontWeight": "{fontWeight.default.normal.500}",
             "fontSize": "{fontSize.8}",
-            "lineHeight": "{lineHeight.6.normal}",
+            "lineHeight": "{lineHeight.24}",
             "letterSpacing": "{tracking.tight}"
           },
           "$description": "Tertiary heading for smaller content groupings. Provides additional organization while preserving clear hierarchy within document structure.\n\nCommon uses: Subtopics, Feature headers, Step groupings, Related concept clusters."
@@ -370,7 +370,7 @@
             "fontFamily": "{fontFamily.default}",
             "fontWeight": "{fontWeight.default.normal.400}",
             "fontSize": "{fontSize.6}",
-            "lineHeight": "{lineHeight.6.relaxed}",
+            "lineHeight": "{lineHeight.28}",
             "letterSpacing": "{tracking.tight}",
             "paragraphSpacing": "{fontSize.6}"
           },
@@ -382,7 +382,7 @@
             "fontFamily": "{fontFamily.default}",
             "fontWeight": "{fontWeight.default.normal.500}",
             "fontSize": "{fontSize.6}",
-            "lineHeight": "{lineHeight.6.relaxed}",
+            "lineHeight": "{lineHeight.28}",
             "letterSpacing": "{tracking.tight}",
             "paragraphSpacing": "{fontSize.6}"
           },
@@ -398,7 +398,7 @@
             "fontFamily": "{fontFamily.default}",
             "fontWeight": "{fontWeight.default.normal.500}",
             "fontSize": "{fontSize.7}",
-            "lineHeight": "{lineHeight.7.snug}",
+            "lineHeight": "{lineHeight.24}",
             "letterSpacing": "{tracking.tight}",
             "paragraphSpacing": "4px"
           },
@@ -410,7 +410,7 @@
             "fontFamily": "{fontFamily.default}",
             "fontWeight": "{fontWeight.default.normal.500}",
             "fontSize": "{fontSize.6}",
-            "lineHeight": "{lineHeight.6.normal}",
+            "lineHeight": "{lineHeight.24}",
             "letterSpacing": "{tracking.tight}",
             "paragraphSpacing": "4px"
           },
@@ -422,7 +422,7 @@
             "fontFamily": "{fontFamily.default}",
             "fontWeight": "{fontWeight.default.normal.600}",
             "fontSize": "{fontSize.5}",
-            "lineHeight": "{lineHeight.5.normal}",
+            "lineHeight": "{lineHeight.20}",
             "letterSpacing": "{tracking.tight}",
             "paragraphSpacing": "4px"
           },
@@ -436,7 +436,7 @@
             "fontFamily": "{fontFamily.default}",
             "fontWeight": "{fontWeight.default.normal.400}",
             "fontSize": "{fontSize.5}",
-            "lineHeight": "{lineHeight.5.relaxed}",
+            "lineHeight": "{lineHeight.24}",
             "letterSpacing": "{tracking.tight}",
             "paragraphSpacing": "{fontSize.5}"
           },
@@ -448,7 +448,7 @@
             "fontFamily": "{fontFamily.default}",
             "fontWeight": "{fontWeight.default.normal.500}",
             "fontSize": "{fontSize.5}",
-            "lineHeight": "{lineHeight.5.relaxed}",
+            "lineHeight": "{lineHeight.24}",
             "letterSpacing": "{tracking.tight}",
             "paragraphSpacing": "{fontSize.5}"
           },
@@ -521,7 +521,7 @@
         "fontFamily": "{fontFamily.default}",
         "fontWeight": "{fontWeight.default.normal.500}",
         "fontSize": "0.6875rem",
-        "lineHeight": "{lineHeight.2.normal}",
+        "lineHeight": "{lineHeight.16}",
         "letterSpacing": "{tracking.wider}"
       },
       "$description": "The smallest service text (labels, signatures, technical information)"

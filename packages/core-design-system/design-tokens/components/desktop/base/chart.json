@@ -7,7 +7,7 @@
           "fontFamily": "{fontFamily.default}",
           "fontWeight": "{fontWeight.default.normal.400}",
           "fontSize": "{fontSize.1}",
-          "lineHeight": "{lineHeight.1.none}",
+          "lineHeight": "{lineHeight.chart.1.none}",
           "letterSpacing": "{tracking.normal}"
         },
         "$description": "Typography for axis labels"
@@ -141,7 +141,7 @@
           "fontFamily": "{fontFamily.mono}",
           "fontWeight": "{fontWeight.mono.normal.500}",
           "fontSize": "{fontSize.1}",
-          "lineHeight": "{lineHeight.1.none}",
+          "lineHeight": "{lineHeight.chart.1.none}",
           "letterSpacing": "{tracking.normal}"
         },
         "$description": "Typography for chart legend text"
@@ -217,7 +217,7 @@
             "fontFamily": "{fontFamily.default}",
             "fontWeight": "{fontWeight.default.normal.400}",
             "fontSize": "{fontSize.3}",
-            "lineHeight": "{lineHeight.3.none}",
+            "lineHeight": "{lineHeight.chart.3.none}",
             "letterSpacing": "{tracking.normal}"
           },
           "$description": "Typography for small donut label"
@@ -228,7 +228,7 @@
             "fontFamily": "{fontFamily.default}",
             "fontWeight": "{fontWeight.default.normal.400}",
             "fontSize": "{fontSize.8}",
-            "lineHeight": "{lineHeight.8.none}",
+            "lineHeight": "{lineHeight.chart.8.none}",
             "letterSpacing": "{tracking.normal}"
           },
           "$description": "Typography for large donut label"
@@ -241,7 +241,7 @@
             "fontFamily": "{fontFamily.default}",
             "fontWeight": "{fontWeight.default.normal.600}",
             "fontSize": "{fontSize.10}",
-            "lineHeight": "{lineHeight.10.none}",
+            "lineHeight": "{lineHeight.chart.10.none}",
             "letterSpacing": "{tracking.tight}"
           },
           "$description": "Typography for small donut center value"
@@ -252,7 +252,7 @@
             "fontFamily": "{fontFamily.default}",
             "fontWeight": "{fontWeight.default.normal.600}",
             "fontSize": "{fontSize.15}",
-            "lineHeight": "{lineHeight.15.none}",
+            "lineHeight": "{lineHeight.chart.15.none}",
             "letterSpacing": "{tracking.tighter}"
           },
           "$description": "Typography for large donut center value"
@@ -298,7 +298,7 @@
             "fontFamily": "{fontFamily.default}",
             "fontWeight": "{fontWeight.default.normal.500}",
             "fontSize": "{fontSize.10}",
-            "lineHeight": "{lineHeight.10.none}",
+            "lineHeight": "{lineHeight.chart.10.none}",
             "letterSpacing": "{tracking.tight}"
           },
           "$description": "Typography for gauge numeric value"
@@ -309,7 +309,7 @@
             "fontFamily": "{fontFamily.default}",
             "fontWeight": "{fontWeight.default.normal.500}",
             "fontSize": "{fontSize.6}",
-            "lineHeight": "{lineHeight.6.none}",
+            "lineHeight": "{lineHeight.chart.6.none}",
             "letterSpacing": "{tracking.normal}"
           },
           "$description": "Typography for gauge unit"
@@ -321,7 +321,7 @@
           "fontFamily": "{fontFamily.default}",
           "fontWeight": "{fontWeight.default.normal.400}",
           "fontSize": "{fontSize.4}",
-          "lineHeight": "{lineHeight.4.none}",
+          "lineHeight": "{lineHeight.chart.4.none}",
           "letterSpacing": "{tracking.normal}"
         },
         "$description": "Typography for gauge label text"

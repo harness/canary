@@ -183,156 +183,102 @@
       "none": {
         "$type": "lineHeights",
         "$value": "1.14"
-      },
-      "tight": {
-        "$type": "lineHeights",
-        "$value": "1.25"
-      },
-      "snug": {
-        "$type": "lineHeights",
-        "$value": "1.428"
-      },
-      "normal": {
-        "$type": "lineHeights",
-        "$value": "1.5"
-      },
-      "relaxed": {
-        "$type": "lineHeights",
-        "$value": "1.625"
-      },
-      "loose": {
-        "$type": "lineHeights",
-        "$value": "1.75"
-      }
-    },
-    "1": {
-      "none": {
-        "$type": "lineHeights",
-        "$value": "{fontSize.1}*{lineHeight.multiplier.none}"
-      }
-    },
-    "2": {
-      "normal": {
-        "$type": "lineHeights",
-        "$value": "{fontSize.2}*{lineHeight.multiplier.normal}"
-      }
-    },
-    "3": {
-      "none": {
-        "$type": "lineHeights",
-        "$value": "{fontSize.3}*{lineHeight.multiplier.none}"
-      },
-      "snug": {
-        "$type": "lineHeights",
-        "$value": "{fontSize.3}*{lineHeight.multiplier.snug}"
-      }
-    },
-    "4": {
-      "none": {
-        "$type": "lineHeights",
-        "$value": "{fontSize.4}*{lineHeight.multiplier.none}"
-      },
-      "snug": {
-        "$type": "lineHeights",
-        "$value": "{fontSize.4}*{lineHeight.multiplier.snug}"
-      },
-      "normal": {
-        "$type": "lineHeights",
-        "$value": "{fontSize.4}*{lineHeight.multiplier.normal}"
-      }
-    },
-    "5": {
-      "tight": {
-        "$type": "lineHeights",
-        "$value": "{fontSize.5}*{lineHeight.multiplier.tight}"
-      },
-      "snug": {
-        "$type": "lineHeights",
-        "$value": "{fontSize.5}*{lineHeight.multiplier.snug}"
-      },
-      "normal": {
-        "$type": "lineHeights",
-        "$value": "{fontSize.5}*{lineHeight.multiplier.normal}"
-      },
-      "relaxed": {
-        "$type": "lineHeights",
-        "$value": "{fontSize.5}*{lineHeight.multiplier.relaxed}"
-      }
-    },
-    "6": {
-      "none": {
-        "$type": "lineHeights",
-        "$value": "{fontSize.6}*{lineHeight.multiplier.none}"
-      },
-      "tight": {
-        "$type": "lineHeights",
-        "$value": "{fontSize.6}*{lineHeight.multiplier.tight}"
-      },
-      "snug": {
-        "$type": "lineHeights",
-        "$value": "{fontSize.6}*{lineHeight.multiplier.snug}"
-      },
-      "normal": {
-        "$type": "lineHeights",
-        "$value": "{fontSize.6}*{lineHeight.multiplier.normal}"
-      },
-      "relaxed": {
-        "$type": "lineHeights",
-        "$value": "{fontSize.6}*{lineHeight.multiplier.relaxed}"
-      }
-    },
-    "7": {
-      "tight": {
-        "$type": "lineHeights",
-        "$value": "{fontSize.7}*{lineHeight.multiplier.tight}"
-      },
-      "snug": {
-        "$type": "lineHeights",
-        "$value": "{fontSize.7}*{lineHeight.multiplier.snug}"
       }
     },
     "8": {
-      "none": {
-        "$type": "lineHeights",
-        "$value": "{fontSize.8}*{lineHeight.multiplier.none}"
-      },
-      "tight": {
-        "$type": "lineHeights",
-        "$value": "{fontSize.8}*{lineHeight.multiplier.tight}"
-      },
-      "normal": {
-        "$type": "lineHeights",
-        "$value": "{fontSize.8}*{lineHeight.multiplier.normal}"
-      }
+      "$type": "lineHeights",
+      "$value": "0.5rem",
+      "$description": "8px"
     },
-    "9": {
-      "snug": {
-        "$type": "lineHeights",
-        "$value": "{fontSize.9}*{lineHeight.multiplier.snug}"
-      },
-      "normal": {
-        "$type": "lineHeights",
-        "$value": "{fontSize.9}*{lineHeight.multiplier.normal}"
-      }
+    "12": {
+      "$type": "lineHeights",
+      "$value": "0.75rem",
+      "$description": "12px"
     },
-    "10": {
-      "none": {
-        "$type": "lineHeights",
-        "$value": "{fontSize.10}*{lineHeight.multiplier.none}"
-      },
-      "tight": {
-        "$type": "lineHeights",
-        "$value": "{fontSize.10}*{lineHeight.multiplier.tight}"
-      },
-      "snug": {
-        "$type": "lineHeights",
-        "$value": "{fontSize.10}*{lineHeight.multiplier.snug}"
-      }
+    "16": {
+      "$type": "lineHeights",
+      "$value": "1rem",
+      "$description": "16px"
     },
-    "15": {
-      "none": {
-        "$type": "lineHeights",
-        "$value": "{fontSize.15}*{lineHeight.multiplier.none}"
+    "20": {
+      "$type": "lineHeights",
+      "$value": "1.25rem",
+      "$description": "20px"
+    },
+    "24": {
+      "$type": "lineHeights",
+      "$value": "1.5rem",
+      "$description": "24px"
+    },
+    "28": {
+      "$type": "lineHeights",
+      "$value": "1.75rem",
+      "$description": "28px"
+    },
+    "32": {
+      "$type": "lineHeights",
+      "$value": "2rem",
+      "$description": "32px"
+    },
+    "36": {
+      "$type": "lineHeights",
+      "$value": "2.25rem",
+      "$description": "36px"
+    },
+    "40": {
+      "$type": "lineHeights",
+      "$value": "2.5rem",
+      "$description": "40px"
+    },
+    "chart": {
+      "1": {
+        "none": {
+          "$type": "lineHeights",
+          "$value": "{fontSize.1}*{lineHeight.multiplier.none}",
+          "$description": "Chart-only legacy token (retire with chart migration)"
+        }
+      },
+      "3": {
+        "none": {
+          "$type": "lineHeights",
+          "$value": "{fontSize.3}*{lineHeight.multiplier.none}",
+          "$description": "Chart-only legacy token (retire with chart migration)"
+        }
+      },
+      "4": {
+        "none": {
+          "$type": "lineHeights",
+          "$value": "{fontSize.4}*{lineHeight.multiplier.none}",
+          "$description": "Chart-only legacy token (retire with chart migration)"
+        }
+      },
+      "6": {
+        "none": {
+          "$type": "lineHeights",
+          "$value": "{fontSize.6}*{lineHeight.multiplier.none}",
+          "$description": "Chart-only legacy token (retire with chart migration)"
+        }
+      },
+      "8": {
+        "none": {
+          "$type": "lineHeights",
+          "$value": "{fontSize.8}*{lineHeight.multiplier.none}",
+          "$description": "Chart-only legacy token (retire with chart migration)"
+        }
+      },
+      "10": {
+        "none": {
+          "$type": "lineHeights",
+          "$value": "{fontSize.10}*{lineHeight.multiplier.none}",
+          "$description": "Chart-only legacy token (retire with chart migration)"
+        }
+      },
+      "15": {
+        "none": {
+          "$type": "lineHeights",
+          "$value": "{fontSize.15}*{lineHeight.multiplier.none}",
+          "$description": "Chart-only legacy token (retire with chart migration)"
+        }
       }
     }
   }

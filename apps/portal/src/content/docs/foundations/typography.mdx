@@ -841,6 +841,91 @@ Individual font size tokens are available via `text-cn-size-{n}` classes. These 
   </div>
 </div>
 
+### Line Height Scale
+
+Line heights follow a flat 4px grid. **By design there is no standalone line-height utility class** — line-height is paired with font-size, so apply it through the composite `.font-*` styles above (or the `Text` component) for all typography. That keeps size and leading in their intended relationship.
+
+For the occasional **layout** case — e.g. sizing a placeholder box to a line of text — reference the token directly as an arbitrary value rather than hard-coding a pixel height, so it stays in sync with the type: `h-[var(--cn-line-height-20)]`.
+
+<div className="cn-table-v2 cn-table-v2-normal not-content">
+  <div className="cn-table-v2-container">
+    <table className="cn-table-v2-element">
+      <thead className="cn-table-v2-header">
+        <tr className="cn-table-v2-row">
+          <th className="cn-table-v2-head">CSS Variable</th>
+          <th className="cn-table-v2-head">Value</th>
+          <th className="cn-table-v2-head">Pixels</th>
+        </tr>
+      </thead>
+      <tbody className="cn-table-v2-body">
+        <tr className="cn-table-v2-row">
+          <td className="cn-table-v2-cell">
+            <code>--cn-line-height-8</code>
+          </td>
+          <td className="cn-table-v2-cell">0.5rem</td>
+          <td className="cn-table-v2-cell">8px</td>
+        </tr>
+        <tr className="cn-table-v2-row">
+          <td className="cn-table-v2-cell">
+            <code>--cn-line-height-12</code>
+          </td>
+          <td className="cn-table-v2-cell">0.75rem</td>
+          <td className="cn-table-v2-cell">12px</td>
+        </tr>
+        <tr className="cn-table-v2-row">
+          <td className="cn-table-v2-cell">
+            <code>--cn-line-height-16</code>
+          </td>
+          <td className="cn-table-v2-cell">1rem</td>
+          <td className="cn-table-v2-cell">16px</td>
+        </tr>
+        <tr className="cn-table-v2-row">
+          <td className="cn-table-v2-cell">
+            <code>--cn-line-height-20</code>
+          </td>
+          <td className="cn-table-v2-cell">1.25rem</td>
+          <td className="cn-table-v2-cell">20px</td>
+        </tr>
+        <tr className="cn-table-v2-row">
+          <td className="cn-table-v2-cell">
+            <code>--cn-line-height-24</code>
+          </td>
+          <td className="cn-table-v2-cell">1.5rem</td>
+          <td className="cn-table-v2-cell">24px</td>
+        </tr>
+        <tr className="cn-table-v2-row">
+          <td className="cn-table-v2-cell">
+            <code>--cn-line-height-28</code>
+          </td>
+          <td className="cn-table-v2-cell">1.75rem</td>
+          <td className="cn-table-v2-cell">28px</td>
+        </tr>
+        <tr className="cn-table-v2-row">
+          <td className="cn-table-v2-cell">
+            <code>--cn-line-height-32</code>
+          </td>
+          <td className="cn-table-v2-cell">2rem</td>
+          <td className="cn-table-v2-cell">32px</td>
+        </tr>
+        <tr className="cn-table-v2-row">
+          <td className="cn-table-v2-cell">
+            <code>--cn-line-height-36</code>
+          </td>
+          <td className="cn-table-v2-cell">2.25rem</td>
+          <td className="cn-table-v2-cell">36px</td>
+        </tr>
+        <tr className="cn-table-v2-row">
+          <td className="cn-table-v2-cell">
+            <code>--cn-line-height-40</code>
+          </td>
+          <td className="cn-table-v2-cell">2.5rem</td>
+          <td className="cn-table-v2-cell">40px</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
 ### Letter Spacing
 
 <div className="cn-table-v2 cn-table-v2-normal not-content">

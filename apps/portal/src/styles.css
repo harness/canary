@@ -12,15 +12,19 @@ main {
 }
 
 .sl-container :is(h1):not(:where(.not-content *)) {
-  @apply text-cn-size-10 font-normal text-cn-1;
+  @apply text-cn-size-10 font-semibold text-cn-1;
 }
 
 .sl-container :is(h2):not(:where(.not-content *)) {
-  @apply text-cn-size-9 font-normal text-cn-1;
+  @apply text-cn-size-9 font-semibold text-cn-1;
 }
 
 .sl-container :is(h3):not(:where(.not-content *)) {
   @apply text-cn-size-7 font-normal text-cn-1;
+}
+
+.sl-container :is(h4):not(:where(.not-content *)) {
+  @apply font-semibold text-cn-1;
 }
 
 /* List styles for content */

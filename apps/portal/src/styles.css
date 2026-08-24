@@ -1,3 +1,19 @@
+/* ============================================================
+   Doc-site typography weight floor.
+   The DS optically remaps weights: "light" (slot 300) renders as 310
+   and "normal" (slot 400) as 360 — both below a true 400. Per the docs
+   request, every sub-400 weight is raised to 400 for the doc site only.
+   These override the DS weight tokens locally: this file is loaded only
+   by the portal, so @harnessio/ui and the shared tokens are untouched.
+   !important is required because @harnessio/ui/styles.css loads after
+   this file and would otherwise reset these vars.
+   ============================================================ */
+:root {
+  --cn-font-weight-default-normal-300: 400 !important; /* was 310 */
+  --cn-font-weight-default-normal-400: 400 !important; /* was 360 */
+  --cn-font-weight-mono-normal-300: 400 !important; /* was 300 */
+}
+
 body {
   @apply text-cn-1 text-cn-size-6 overscroll-none tracking-cn-normal font-body-normal !important;
   @apply !leading-7 !text-cn-size-6;

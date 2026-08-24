@@ -1,0 +1,8 @@
+#!/bin/bash
+set -e
+
+# Install all workspace dependencies. pnpm is content-addressable and will
+# no-op quickly when nothing has changed, so this is safe to run every session.
+echo "Installing dependencies with pnpm..."
+pnpm install --frozen-lockfile
+echo "Dependencies installed"

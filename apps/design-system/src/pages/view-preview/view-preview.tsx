@@ -12,6 +12,7 @@ import DataTableGroupedHeadersDemo from '@subjects/views/data-table-grouped-head
 import DraggableCardsDemo from '@subjects/views/draggable-cards-demo'
 import ExecutionListWrapper from '@subjects/views/execution-list/execution-list'
 import GaugeDemo from '@subjects/views/gauge-demo'
+import HelloWorld from '@subjects/views/hello-world'
 import { LabelsForm } from '@subjects/views/labels/labels-form'
 import { ProjectLabelsList } from '@subjects/views/labels/project-labels-list'
 import { RepoLabelsList } from '@subjects/views/labels/repo-labels-list'
@@ -589,6 +590,10 @@ export const viewPreviews: Record<string, ViewPreviewGroup> = {
   components: {
     label: 'Components',
     items: {
+      'hello-world': {
+        label: 'Hello World',
+        element: <HelloWorld />
+      },
       'waterfall-progress-demo': {
         label: 'Waterfall Progress',
         element: (

@@ -1,0 +1,22 @@
+#!/bin/bash
+set -e
+
+PORT="${PORT:-5173}"
+HEALTHCHECK_URL="http://localhost:${PORT}/"
+MAX_WAIT=300 # 5 minutes — the package build runs as part of dev before Vite comes up
+INTERVAL=2
+ELAPSED=0
+
+echo "Waiting for dev server at ${HEALTHCHECK_URL}..."
+
+while [ $ELAPSED -lt $MAX_WAIT ]; do
+  if curl -sf "$HEALTHCHECK_URL" >/dev/null 2>&1; then
+    echo "Dev server is up"
+    exit 0
+  fi
+  sleep $INTERVAL
+  ELAPSED=$((ELAPSED + INTERVAL))
+done
+
+echo "Error: Dev server did not start within ${MAX_WAIT}s"
+exit 1

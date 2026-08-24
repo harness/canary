@@ -10,74 +10,85 @@ import { DocsPage } from "@/components/docs-page";
 
 <DocsPage.ComponentExample
   client:only
-  code={`<div className="w-[400px] flex flex-col gap-cn-lg">
-    <h5>Single value</h5>
-    <Slider
-      label="Pipeline timeout"
-      description="Maximum execution time in minutes"
-      showValue
-      defaultValue={[30]}
-      min={5}
-      max={120}
-      step={5}
-      formatValue={(v) => v[0] + 'm'}
-    />
-
-    <hr className="my-cn-xs" />
-
-    <h5>Range</h5>
-    <Slider
-      label="CPU cores"
-      description="Min and max cores for build containers"
-      showValue
-      defaultValue={[2, 8]}
-      min={1}
-      max={16}
-    />
-
-    <hr className="my-cn-xs" />
-
-    <h5>Min / Max labels</h5>
-    <Slider
-      label="Deployment rollout"
-      caption="min-max"
-      minLabel="0%"
-      maxLabel="100%"
-      defaultValue={[25]}
-    />
-
-    <hr className="my-cn-xs" />
-
-    <h5>Custom format</h5>
-    <Slider
-      label="Canary rollout"
-      description="Percentage of traffic to route to canary"
-      showValue
-      defaultValue={[25]}
-      step={5}
-      formatValue={(v) => v[0] + '%'}
-    />
-
-    <hr className="my-cn-xs" />
-
-    <h5>Disabled</h5>
-    <Slider
-      label="Max replicas"
-      description="Upgrade your plan to adjust scaling limits"
-      showValue
-      defaultValue={[3]}
-      min={1}
-      max={10}
-      disabled
-    />
-
-    <Slider
-      label="Failure rate threshold"
-      showValue
-      defaultValue={[20, 80]}
-      disabled
-    />
-
+  code={`<div className="space-y-cn-sm w-full">
+  <div className="flex items-start gap-cn-md border-b border-cn-borders-3 pb-cn-sm">
+    <span className="text-cn-size-2 text-cn-3 w-40 shrink-0 font-mono pt-cn-xs">single value</span>
+    <div className="flex-1 min-w-0 max-w-[420px]">
+      <Slider
+        label="Pipeline timeout"
+        description="Maximum execution time in minutes"
+        showValue
+        defaultValue={[30]}
+        min={5}
+        max={120}
+        step={5}
+        formatValue={(v) => v[0] + 'm'}
+      />
+    </div>
+  </div>
+  <div className="flex items-start gap-cn-md border-b border-cn-borders-3 pb-cn-sm">
+    <span className="text-cn-size-2 text-cn-3 w-40 shrink-0 font-mono pt-cn-xs">range</span>
+    <div className="flex-1 min-w-0 max-w-[420px]">
+      <Slider
+        label="CPU cores"
+        description="Min and max cores for build containers"
+        showValue
+        defaultValue={[2, 8]}
+        min={1}
+        max={16}
+      />
+    </div>
+  </div>
+  <div className="flex items-start gap-cn-md border-b border-cn-borders-3 pb-cn-sm">
+    <span className="text-cn-size-2 text-cn-3 w-40 shrink-0 font-mono pt-cn-xs">min-max labels</span>
+    <div className="flex-1 min-w-0 max-w-[420px]">
+      <Slider
+        label="Deployment rollout"
+        caption="min-max"
+        minLabel="0%"
+        maxLabel="100%"
+        defaultValue={[25]}
+      />
+    </div>
+  </div>
+  <div className="flex items-start gap-cn-md border-b border-cn-borders-3 pb-cn-sm">
+    <span className="text-cn-size-2 text-cn-3 w-40 shrink-0 font-mono pt-cn-xs">custom format</span>
+    <div className="flex-1 min-w-0 max-w-[420px]">
+      <Slider
+        label="Canary rollout"
+        description="Percentage of traffic to route to canary"
+        showValue
+        defaultValue={[25]}
+        step={5}
+        formatValue={(v) => v[0] + '%'}
+      />
+    </div>
+  </div>
+  <div className="flex items-start gap-cn-md border-b border-cn-borders-3 pb-cn-sm">
+    <span className="text-cn-size-2 text-cn-3 w-40 shrink-0 font-mono pt-cn-xs">disabled</span>
+    <div className="flex-1 min-w-0 max-w-[420px]">
+      <Slider
+        label="Max replicas"
+        description="Upgrade your plan to adjust scaling limits"
+        showValue
+        defaultValue={[3]}
+        min={1}
+        max={10}
+        disabled
+      />
+    </div>
+  </div>
+  <div className="flex items-start gap-cn-md">
+    <span className="text-cn-size-2 text-cn-3 w-40 shrink-0 font-mono pt-cn-xs">disabled range</span>
+    <div className="flex-1 min-w-0 max-w-[420px]">
+      <Slider
+        label="Failure rate threshold"
+        showValue
+        defaultValue={[20, 80]}
+        disabled
+      />
+    </div>
+  </div>
 </div>`}
 />
 
@@ -87,31 +98,36 @@ A specialized variant with a gradient track and two thumbs for defining severity
 
 <DocsPage.ComponentExample
   client:only
-  code={`<div className="w-[400px] flex flex-col gap-cn-lg">
-    <h5>Default</h5>
-    <SeveritySlider
-      label="Alert thresholds"
-      defaultValue={[25, 75]}
-    />
-
-    <hr className="my-cn-xs" />
-
-    <h5>Custom labels</h5>
-    <SeveritySlider
-      label="Incident priority"
-      labels={["Info", "Warning", "Error", "Fatal"]}
-      defaultValue={[20, 60]}
-    />
-
-    <hr className="my-cn-xs" />
-
-    <h5>Disabled</h5>
-    <SeveritySlider
-      label="SLO thresholds (locked)"
-      defaultValue={[30, 70]}
-      disabled
-    />
-
+  code={`<div className="space-y-cn-sm w-full">
+  <div className="flex items-start gap-cn-md border-b border-cn-borders-3 pb-cn-sm">
+    <span className="text-cn-size-2 text-cn-3 w-40 shrink-0 font-mono pt-cn-xs">default</span>
+    <div className="flex-1 min-w-0 max-w-[420px]">
+      <SeveritySlider
+        label="Alert thresholds"
+        defaultValue={[25, 75]}
+      />
+    </div>
+  </div>
+  <div className="flex items-start gap-cn-md border-b border-cn-borders-3 pb-cn-sm">
+    <span className="text-cn-size-2 text-cn-3 w-40 shrink-0 font-mono pt-cn-xs">custom labels</span>
+    <div className="flex-1 min-w-0 max-w-[420px]">
+      <SeveritySlider
+        label="Incident priority"
+        labels={["Info", "Warning", "Error", "Fatal"]}
+        defaultValue={[20, 60]}
+      />
+    </div>
+  </div>
+  <div className="flex items-start gap-cn-md">
+    <span className="text-cn-size-2 text-cn-3 w-40 shrink-0 font-mono pt-cn-xs">disabled</span>
+    <div className="flex-1 min-w-0 max-w-[420px]">
+      <SeveritySlider
+        label="SLO thresholds (locked)"
+        defaultValue={[30, 70]}
+        disabled
+      />
+    </div>
+  </div>
 </div>`}
 />
 

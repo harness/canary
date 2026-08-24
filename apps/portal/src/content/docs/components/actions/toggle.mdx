@@ -48,10 +48,16 @@ The `Toggle` component can be used in both controlled and uncontrolled modes. In
     };
 
     return (
-    <ButtonLayout orientation="vertical">
-      <Toggle text="Controlled" selected={controlled} onChange={handleControlledChange} />
-      <Toggle text="Uncontrolled" defaultValue={true} />
-    </ButtonLayout>
+    <div className="space-y-cn-sm w-full">
+      <div className="flex items-center gap-cn-md border-b border-cn-borders-3 pb-cn-sm">
+        <span className="text-cn-size-2 text-cn-3 w-40 shrink-0 font-mono">controlled</span>
+        <Toggle text="Controlled" selected={controlled} onChange={handleControlledChange} />
+      </div>
+      <div className="flex items-center gap-cn-md">
+        <span className="text-cn-size-2 text-cn-3 w-40 shrink-0 font-mono">uncontrolled</span>
+        <Toggle text="Uncontrolled" defaultValue={true} />
+      </div>
+    </div>
 
 )}`}
 />
@@ -64,42 +70,28 @@ The `Toggle` component accepts a `variant` prop to control its applyed styles. S
 
 <DocsPage.ComponentExample
   client:only
-  code={`
-  <Layout.Vertical gap="xl" align="center">
-    <Text variant="heading-subsection" align="center">variant / selectedVariant</Text>
-
-    <Layout.Horizontal gap="xl">
-      <Layout.Vertical gap="xs" align="center">
-        <Text className="w-[200px]" variant="body-strong" align="center">outline / primary</Text>
-        <Toggle text="Toggle" />
-      </Layout.Vertical>
-
-      <Layout.Vertical gap="xs" align="center">
-        <Text className="w-[200px]" variant="body-strong" align="center">outline / secondary</Text>
-        <Toggle text="Toggle" selectedVariant="secondary" />
-      </Layout.Vertical>
-    </Layout.Horizontal>
-
-    <Layout.Horizontal gap="xl">
-      <Layout.Vertical gap="xs" align="center">
-        <Text className="w-[200px]" variant="body-strong" align="center">ghost / primary</Text>
-        <Toggle text="Toggle" variant="ghost" />
-      </Layout.Vertical>
-
-      <Layout.Vertical gap="xs" align="center">
-        <Text className="w-[200px]" variant="body-strong" align="center">ghost / secondary</Text>
-        <Toggle text="Toggle" variant="ghost" selectedVariant="secondary" />
-      </Layout.Vertical>
-    </Layout.Horizontal>
-
-    <Layout.Horizontal gap="xl">
-      <Layout.Vertical gap="xs" align="center">
-        <Text className="w-[200px]" variant="body-strong" align="center">transparent</Text>
-        <Toggle text="Toggle" variant="transparent" />
-      </Layout.Vertical>
-    </Layout.Horizontal>
-
-  </Layout.Vertical >
+  code={`<div className="space-y-cn-sm w-full">
+  <div className="flex items-center gap-cn-md border-b border-cn-borders-3 pb-cn-sm">
+    <span className="text-cn-size-2 text-cn-3 w-48 shrink-0 font-mono">outline / primary</span>
+    <Toggle text="Toggle" />
+  </div>
+  <div className="flex items-center gap-cn-md border-b border-cn-borders-3 pb-cn-sm">
+    <span className="text-cn-size-2 text-cn-3 w-48 shrink-0 font-mono">outline / secondary</span>
+    <Toggle text="Toggle" selectedVariant="secondary" />
+  </div>
+  <div className="flex items-center gap-cn-md border-b border-cn-borders-3 pb-cn-sm">
+    <span className="text-cn-size-2 text-cn-3 w-48 shrink-0 font-mono">ghost / primary</span>
+    <Toggle text="Toggle" variant="ghost" />
+  </div>
+  <div className="flex items-center gap-cn-md border-b border-cn-borders-3 pb-cn-sm">
+    <span className="text-cn-size-2 text-cn-3 w-48 shrink-0 font-mono">ghost / secondary</span>
+    <Toggle text="Toggle" variant="ghost" selectedVariant="secondary" />
+  </div>
+  <div className="flex items-center gap-cn-md">
+    <span className="text-cn-size-2 text-cn-3 w-48 shrink-0 font-mono">transparent</span>
+    <Toggle text="Toggle" variant="transparent" />
+  </div>
+</div>
 `}
 />
 
@@ -109,12 +101,20 @@ The `Toggle` component accepts a `size` prop to control its overall dimensions. 
 
 <DocsPage.ComponentExample
   client:only
-  code={`
-    <div className="grid gap-cn-md justify-items-center">
-      <Toggle text="Toggle" prefixIcon="plus" suffixIcon="minus" />
-      <Toggle size="sm" text="Toggle" prefixIcon="plus" suffixIcon="minus" prefixIconProps={{ size: 'sm' }} suffixIconProps={{ size: 'sm' }} />
-      <Toggle size="xs" text="Toggle" prefixIcon="plus" suffixIcon="minus" prefixIconProps={{ size: 'xs' }} suffixIconProps={{ size: 'xs' }} />
-    </div>
+  code={`<div className="space-y-cn-sm w-full">
+  <div className="flex items-center gap-cn-md border-b border-cn-borders-3 pb-cn-sm">
+    <span className="text-cn-size-2 text-cn-3 w-40 shrink-0 font-mono">md</span>
+    <Toggle text="Toggle" prefixIcon="plus" suffixIcon="minus" />
+  </div>
+  <div className="flex items-center gap-cn-md border-b border-cn-borders-3 pb-cn-sm">
+    <span className="text-cn-size-2 text-cn-3 w-40 shrink-0 font-mono">sm</span>
+    <Toggle size="sm" text="Toggle" prefixIcon="plus" suffixIcon="minus" prefixIconProps={{ size: 'sm' }} suffixIconProps={{ size: 'sm' }} />
+  </div>
+  <div className="flex items-center gap-cn-md">
+    <span className="text-cn-size-2 text-cn-3 w-40 shrink-0 font-mono">xs</span>
+    <Toggle size="xs" text="Toggle" prefixIcon="plus" suffixIcon="minus" prefixIconProps={{ size: 'xs' }} suffixIconProps={{ size: 'xs' }} />
+  </div>
+</div>
 `}
 />
 

@@ -1,6 +1,6 @@
 import { describe, expect, test } from 'vitest'
 
-import { deriveFullPredictedPath, deriveStepperModel } from '../derive-stepper-model'
+import { deriveFlatStepperModel, deriveFullPredictedPath, deriveStepperModel } from '../derive-stepper-model'
 import type { CardEntry, FlowConfig } from '../engine-types'
 
 const flow: FlowConfig = {
@@ -161,12 +161,18 @@ describe('deriveStepperModel', () => {
 })
 
 describe('deriveFullPredictedPath', () => {
-  test('linear flow: walks every remaining step to the end, same as a single-branch flow would', () => {
-    // No branching here — the full remaining path is just b then c.
+  test('linear flow: walks every remaining step, but reachedKnownEnd stays false when the last step reached is not flagged terminal', () => {
+    // No branching here — the full remaining path is just b then c. But `flow`'s 'c' has no static
+    // `next` and isn't flagged `terminal` (see the dedicated ambiguous-ending test below, which
+    // relies on this same fixture's 'c' being exactly that) — so even though every hop UP TO 'c' was
+    // statically known, the walk still stops on an unresolved, non-terminal step. reachedKnownEnd
+    // must reflect where the WHOLE walk stopped, not just whether the active step's own first hop
+    // was static — treating "some earlier hop resolved statically" as sufficient was the root-cause
+    // bug (a step's own `next` only proves the walk advanced one hop, not that it reached the end).
     const history: CardEntry[] = [{ stepId: 'a', status: 'active', stateSnapshot: {} }]
     const result = deriveFullPredictedPath(flow, history, 'a')
     expect(result.path).toEqual(['b', 'c'])
-    expect(result.reachedKnownEnd).toBe(true)
+    expect(result.reachedKnownEnd).toBe(false)
   })
 
   test('branching flow: only walks the ACTIVE branch, not every mutually-exclusive sibling step', () => {
@@ -181,7 +187,10 @@ describe('deriveFullPredictedPath', () => {
         'gitlab-auth': { step: 'auth', title: 'GitLab', component: () => null, next: 'connect-repo' },
         'bitbucket-auth': { step: 'auth', title: 'Bitbucket', component: () => null, next: 'connect-repo' },
         'connect-repo': { step: 'connect', title: 'Connect', component: () => null, next: 'finish' },
-        finish: { step: 'done', title: 'Finish', component: () => null }
+        // Flagged terminal: 'finish' is this flow's genuine, designed end (not a step whose real
+        // continuation is decided dynamically at runtime) — required for reachedKnownEnd to
+        // correctly report true once the walk reaches it.
+        finish: { step: 'done', title: 'Finish', component: () => null, terminal: true }
       },
       initialStep: 'github-auth'
     }
@@ -202,7 +211,9 @@ describe('deriveFullPredictedPath', () => {
       steps: {
         'github-auth': { step: 'auth', title: 'GitHub', component: () => null, next: 'connect-repo' },
         'connect-repo': { step: 'connect', title: 'Connect', component: () => null, next: 'finish' },
-        finish: { step: 'done', title: 'Finish', component: () => null }
+        // Flagged terminal: 'finish' is this flow's genuine, designed end — required for
+        // reachedKnownEnd to correctly report true once the walk reaches it.
+        finish: { step: 'done', title: 'Finish', component: () => null, terminal: true }
       },
       initialStep: 'github-auth'
     }
@@ -313,5 +324,129 @@ describe('deriveFullPredictedPath', () => {
     const result = deriveFullPredictedPath(cyclicFlow, history, 'start')
     expect(result.path).toEqual(['a', 'b'])
     expect(result.reachedKnownEnd).toBe(true)
+  })
+})
+
+describe('deriveFlatStepperModel', () => {
+  const flatFlow: FlowConfig = {
+    steps: {
+      a: { title: 'A', component: () => null, next: 'b' },
+      b: { title: 'B', component: () => null, next: 'c' },
+      c: { title: 'C', component: () => null }
+    },
+    initialStep: 'a'
+  }
+
+  test('visited step shows completed; active step shows active; unreached steps on static path show upcoming', () => {
+    const history: CardEntry[] = [
+      { stepId: 'a', status: 'completed', stateSnapshot: {} },
+      { stepId: 'b', status: 'active', stateSnapshot: {} }
+    ]
+    const result = deriveFlatStepperModel(flatFlow, history, 'b')
+    expect(result).toEqual([
+      { stepId: 'a', title: 'A', description: undefined, state: 'completed', visualCompleted: false },
+      { stepId: 'b', title: 'B', description: undefined, state: 'active', visualCompleted: false },
+      { stepId: 'c', title: 'C', description: undefined, state: 'upcoming', visualCompleted: false }
+    ])
+  })
+
+  test('error status on active step marks it error', () => {
+    const history: CardEntry[] = [{ stepId: 'a', status: 'error', stateSnapshot: {} }]
+    const result = deriveFlatStepperModel(flatFlow, history, 'a')
+    expect(result[0]).toEqual({
+      stepId: 'a',
+      title: 'A',
+      description: undefined,
+      state: 'error',
+      visualCompleted: false
+    })
+  })
+
+  test('flow complete: all steps completed marks visited step completed, not active', () => {
+    const history: CardEntry[] = [
+      { stepId: 'a', status: 'completed', stateSnapshot: {} },
+      { stepId: 'b', status: 'completed', stateSnapshot: {} },
+      { stepId: 'c', status: 'completed', stateSnapshot: {} }
+    ]
+    const result = deriveFlatStepperModel(flatFlow, history, 'c')
+    expect(result).toEqual([
+      { stepId: 'a', title: 'A', description: undefined, state: 'completed', visualCompleted: false },
+      { stepId: 'b', title: 'B', description: undefined, state: 'completed', visualCompleted: false },
+      { stepId: 'c', title: 'C', description: undefined, state: 'completed', visualCompleted: false }
+    ])
+  })
+
+  test('terminal + visualCompleted step renders completed, not active, despite always-active cardHistory status', () => {
+    const terminalFlow: FlowConfig = {
+      steps: {
+        x: { title: 'X', component: () => null, next: 'y' },
+        y: { title: 'Y', component: () => null, terminal: true, visualCompleted: true }
+      },
+      initialStep: 'x'
+    }
+    const history: CardEntry[] = [
+      { stepId: 'x', status: 'completed', stateSnapshot: {} },
+      { stepId: 'y', status: 'active', stateSnapshot: {} }
+    ]
+    const result = deriveFlatStepperModel(terminalFlow, history, 'y')
+    expect(result).toEqual([
+      { stepId: 'x', title: 'X', description: undefined, state: 'completed', visualCompleted: false },
+      { stepId: 'y', title: 'Y', description: undefined, state: 'completed', visualCompleted: true }
+    ])
+  })
+
+  test('active step without visualCompleted stays active (no regression on the terminal case above)', () => {
+    const terminalFlow: FlowConfig = {
+      steps: {
+        x: { title: 'X', component: () => null, next: 'y' },
+        y: { title: 'Y', component: () => null, terminal: true }
+      },
+      initialStep: 'x'
+    }
+    const history: CardEntry[] = [
+      { stepId: 'x', status: 'completed', stateSnapshot: {} },
+      { stepId: 'y', status: 'active', stateSnapshot: {} }
+    ]
+    const result = deriveFlatStepperModel(terminalFlow, history, 'y')
+    expect(result[1]).toEqual({
+      stepId: 'y',
+      title: 'Y',
+      description: undefined,
+      state: 'active',
+      visualCompleted: false
+    })
+  })
+
+  test('skipped step renders skipped, not completed', () => {
+    // deriveBucketState (shared with deriveStepperModel's step-group buckets) has no 'skipped'
+    // member in its return type and folds a resolved-but-skipped entry into 'completed' — flat
+    // mode's bucket is always exactly one entry, so it must surface that entry's own 'skipped'
+    // status directly instead of going through deriveBucketState's coarser aggregation.
+    const history: CardEntry[] = [
+      { stepId: 'a', status: 'skipped', stateSnapshot: {} },
+      { stepId: 'b', status: 'active', stateSnapshot: {} }
+    ]
+    const result = deriveFlatStepperModel(flatFlow, history, 'b')
+    expect(result).toEqual([
+      { stepId: 'a', title: 'A', description: undefined, state: 'skipped', visualCompleted: false },
+      { stepId: 'b', title: 'B', description: undefined, state: 'active', visualCompleted: false },
+      { stepId: 'c', title: 'C', description: undefined, state: 'upcoming', visualCompleted: false }
+    ])
+  })
+
+  test('CDv2-shaped single dynamic-choice step renders active with no visualCompleted', () => {
+    const cdv2ShapedFlow: FlowConfig = {
+      steps: {
+        pick: { title: 'Pick', component: () => null },
+        'landing-a': { title: 'Landing A', component: () => null },
+        'landing-b': { title: 'Landing B', component: () => null }
+      },
+      initialStep: 'pick'
+    }
+    const history: CardEntry[] = [{ stepId: 'pick', status: 'active', stateSnapshot: {} }]
+    const result = deriveFlatStepperModel(cdv2ShapedFlow, history, 'pick')
+    expect(result).toEqual([
+      { stepId: 'pick', title: 'Pick', description: undefined, state: 'active', visualCompleted: false }
+    ])
   })
 })

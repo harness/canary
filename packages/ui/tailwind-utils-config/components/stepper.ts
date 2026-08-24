@@ -366,8 +366,10 @@ export default {
     }
   },
 
-  // SinglePaneStepper: cap the active partial trunk at the active branch — no gray line into card panels.
-  '.cn-stepper-collapsible-nested-steps .cn-stepper-step-item:has(.cn-stepper-step-active) .cn-stepper-connector-active-partial':
+  // SinglePaneStepper: cap the active partial trunk at the active branch so a gray line does not
+  // run into the inline card panel. Only the last group — if later groups exist, `bottom: 0` gray
+  // continuation down the indicator column is the join to the next circle.
+  '.cn-stepper-collapsible-nested-steps .cn-stepper-step-item:last-child:has(.cn-stepper-step-active) .cn-stepper-connector-active-partial':
     {
       height: 'var(--cn-stepper-trunk-blue-end)',
       bottom: 'auto'

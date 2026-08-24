@@ -1,11 +1,11 @@
 import { useMemo } from 'react'
 
 import { AlertDialog } from '../alert-dialog'
-import { deriveStepperModel, FlowEngineProvider, useEngineContext } from '../flow-stepper/engine'
+import { FlowEngineProvider, useEngineContext } from '../flow-stepper/engine'
+import { FlowStepperRail } from '../flow-stepper/flow-stepper-rail'
 import { IconV2 } from '../icon-v2'
 import { Layout } from '../layout'
 import { Resizable } from '../resizable'
-import { Stepper } from '../stepper'
 import { Text } from '../text'
 import { DualPaneStepperCardStack } from './dual-pane-stepper-card-stack'
 import { DualPaneStepperRootProps } from './dual-pane-stepper-types'
@@ -25,7 +25,9 @@ function DualPaneStepperContent({
   onClose,
   leftPane,
   reactivationPrompt,
-  panelSizes
+  panelSizes,
+  hideUpcomingGroups,
+  hidePredictedSteps
 }: Omit<DualPaneStepperRootProps, 'flow' | 'onComplete'>) {
   const { drawerState, closeDrawer, pendingReactivation, confirmReactivation, cancelReactivation } = useEngineContext()
 
@@ -40,7 +42,13 @@ function DualPaneStepperContent({
     return <DrawerComponent open={true} onClose={closeDrawer} props={drawerState.props} />
   }, [drawerState, drawers, closeDrawer])
 
-  const defaultLeftPane = <DefaultStepperPane stepperTitle={stepperTitle} />
+  const defaultLeftPane = (
+    <DefaultStepperPane
+      stepperTitle={stepperTitle}
+      hideUpcomingGroups={hideUpcomingGroups}
+      hidePredictedSteps={hidePredictedSteps}
+    />
+  )
 
   return (
     <>
@@ -108,13 +116,16 @@ function DualPaneStepperContent({
   )
 }
 
-function DefaultStepperPane({ stepperTitle }: { stepperTitle?: string }) {
+function DefaultStepperPane({
+  stepperTitle,
+  hideUpcomingGroups,
+  hidePredictedSteps
+}: {
+  stepperTitle?: string
+  hideUpcomingGroups?: boolean
+  hidePredictedSteps?: boolean
+}) {
   const { flow, cardHistory, activeStepId, predictedPath, scrollToCard } = useEngineContext()
-
-  const derivedSteps = useMemo(
-    () => deriveStepperModel(flow, cardHistory, predictedPath, activeStepId),
-    [flow, cardHistory, predictedPath, activeStepId]
-  )
 
   const handleStepperClick = (value: string) => {
     const historyEntry = cardHistory.find(e => e.stepId === value)
@@ -129,48 +140,18 @@ function DefaultStepperPane({ stepperTitle }: { stepperTitle?: string }) {
   }
 
   return (
-    <Stepper.Root value={activeStepId} onValueChange={handleStepperClick} title={stepperTitle}>
-      {derivedSteps.map(derivedStep => {
-        const activeStepGroupId = flow.steps[activeStepId]?.step
-        const isActiveStepGroup = activeStepGroupId === derivedStep.stepGroupId
-        const showSteps = derivedStep.visited.length > 0 || isActiveStepGroup
-
-        return (
-          <Stepper.StepGroup
-            key={derivedStep.stepGroupId}
-            value={derivedStep.stepGroupId}
-            title={derivedStep.title}
-            description={derivedStep.description}
-            state={derivedStep.state}
-            hasNestedSteps={derivedStep.showIndeterminate}
-          >
-            {showSteps &&
-              !derivedStep.isTerminalStepGroup &&
-              derivedStep.visited.map(v => (
-                <Stepper.Step
-                  key={v.stepId}
-                  value={v.stepId}
-                  title={flow.steps[v.stepId]?.title}
-                  description={flow.steps[v.stepId]?.description}
-                  state={v.state}
-                  visualCompleted={flow.steps[v.stepId]?.visualCompleted}
-                />
-              ))}
-            {isActiveStepGroup &&
-              !derivedStep.isTerminalStepGroup &&
-              derivedStep.predicted.map(stepId => (
-                <Stepper.Step
-                  key={stepId}
-                  value={stepId}
-                  title={flow.steps[stepId]?.title}
-                  description={flow.steps[stepId]?.description}
-                  state="upcoming"
-                />
-              ))}
-          </Stepper.StepGroup>
-        )
-      })}
-    </Stepper.Root>
+    <FlowStepperRail
+      flow={flow}
+      cardHistory={cardHistory}
+      activeStepId={activeStepId}
+      predictedPath={predictedPath}
+      value={activeStepId}
+      onValueChange={handleStepperClick}
+      stepperTitle={stepperTitle}
+      showStepperHeader
+      hideUpcomingGroups={hideUpcomingGroups}
+      hidePredictedSteps={hidePredictedSteps}
+    />
   )
 }
 

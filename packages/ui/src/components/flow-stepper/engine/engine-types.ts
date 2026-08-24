@@ -5,29 +5,71 @@ export interface StepGroupConfig {
   description?: string
 }
 
-export interface StepConfig {
-  step: string
+interface BaseStepConfig {
   title: string
   description?: string
   component: ComponentType
   next?: string
-  // When true, complete()/error()/skip() on this step become permanent no-ops after the
-  // first call (re-entry guard only). Does NOT affect this step's initial rendered status —
+  // When true, complete()/error()/skip() on this step become permanent no-ops after
+  // the first call (re-entry guard only). Does NOT affect the step's initial rendered status —
   // it always enters 'active' like any other step.
   terminal?: boolean
+  // Explicit opt-in: this step's real continuation is decided dynamically at runtime (e.g. a card
+  // calls `complete(statePatch, nextStepId)` with a step id chosen from its own logic, not a static
+  // `next`) and cannot be predicted just by reading the flow config. Badge-total fallbacks
+  // (single-pane-stepper-card-stack.tsx's totalStepsCount/totalStepGroupsCount) use this to tell
+  // "the walk stopped here because it's a genuine, designed end of the flow the author simply
+  // forgot to flag `terminal`" (leave unset — trust the walked total, don't inflate it) apart from
+  // "the walk stopped here only because we can't see further statically" (set this — more steps may
+  // genuinely follow, so fall back to a flow-wide count instead of undercounting). Leave unset for
+  // an ordinary designed end; this flag exists precisely so that case no longer needs the inflated
+  // fallback.
+  dynamicNext?: true
   // Presentation-only hint: always render this step as finished/success (icon + color),
-  // regardless of its actual cardHistory status. Does not affect the state machine, does not
-  // affect re-entry (pair with `terminal` for that), and does not affect accordion-open
-  // behavior, which continues to reflect the real derived state.
+  // regardless of actual cardHistory status. Does not affect the state machine, does not
+  // affect re-entry (pair with `terminal` for that), does not affect accordion-open
+  // behavior, and continues to reflect the real derived state.
   visualCompleted?: boolean
 }
 
-export interface FlowConfig {
-  // Every real flow groups its steps under at least one StepGroup — see derive-stepper-model.ts's
-  // dev-mode warning for the runtime safety net if a caller passes an empty object anyway.
+export interface GroupedStepConfig extends BaseStepConfig {
+  step: string
+}
+
+export interface FlatStepConfig extends BaseStepConfig {
+  step?: undefined
+}
+
+export type StepConfig = GroupedStepConfig | FlatStepConfig
+
+export function isGroupedStepConfig(step: StepConfig): step is GroupedStepConfig {
+  return step.step !== undefined
+}
+
+export function isFlatStepConfig(step: StepConfig): step is FlatStepConfig {
+  return step.step === undefined
+}
+
+export interface GroupedFlowConfig {
   stepGroups: Record<string, StepGroupConfig>
-  steps: Record<string, StepConfig>
+  steps: Record<string, GroupedStepConfig>
   initialStep: string
+}
+
+export interface FlatFlowConfig {
+  stepGroups?: undefined
+  steps: Record<string, FlatStepConfig>
+  initialStep: string
+}
+
+export type FlowConfig = GroupedFlowConfig | FlatFlowConfig
+
+export function isGroupedFlowConfig(flow: FlowConfig): flow is GroupedFlowConfig {
+  return flow.stepGroups !== undefined
+}
+
+export function isFlatFlowConfig(flow: FlowConfig): flow is FlatFlowConfig {
+  return flow.stepGroups === undefined
 }
 
 export type CardStatus = 'active' | 'completed' | 'error' | 'skipped'

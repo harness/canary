@@ -114,10 +114,19 @@ function MyCard() {
 The `FlowConfig` object defines the structure of your flow:
 
 ```typescript
-interface FlowConfig {
-  stepGroups?: Record<string, StepGroupConfig>; // Timeline step groups
-  steps: Record<string, StepConfig>; // Card definitions
+type FlowConfig = GroupedFlowConfig | FlatFlowConfig;
+
+interface GroupedFlowConfig {
+  stepGroups: Record<string, StepGroupConfig>; // Timeline step groups
+  steps: Record<string, GroupedStepConfig>; // Card definitions, one group per step
   initialStep: string; // First card to show
+}
+
+interface FlatFlowConfig {
+  // Omit stepGroups entirely for a flat timeline — no top-level grouping, each step renders
+  // directly under the timeline root.
+  steps: Record<string, FlatStepConfig>;
+  initialStep: string;
 }
 
 interface StepGroupConfig {
@@ -125,21 +134,37 @@ interface StepGroupConfig {
   description?: string;
 }
 
-interface StepConfig {
+interface GroupedStepConfig {
   step: string; // Which step group this step belongs to
   title: string; // Shown in the timeline
   description?: string; // Shown in the timeline
   component: ComponentType; // React component to render as a card
   next?: string; // Next step ID (for routing)
   terminal?: boolean; // Auto-complete on entry (for summary cards)
+  visualCompleted?: boolean; // Always render step as finished, regardless of actual status — presentation-only hint
+  dynamicNext?: true; // This step's real continuation is decided at runtime, not statically — see showStepBadge below
+}
+
+interface FlatStepConfig {
+  // No `step` field — a flat step belongs to no group.
+  title: string;
+  description?: string;
+  component: ComponentType;
+  next?: string;
+  terminal?: boolean;
+  visualCompleted?: boolean;
+  dynamicNext?: true;
 }
 ```
 
 <Aside type="note">
-  Each step must be associated with a step group via `step: 'group-id'`.
-  Multiple steps can belong to the same step group. The `next` field defines the
-  default routing — cards advance automatically unless an explicit destination
-  is passed to `complete()` or `skip()`.
+  Each step in a grouped flow must be associated with a step group via `step:
+  'group-id'`. Multiple steps can belong to the same step group. The `next`
+  field defines the default routing — cards advance automatically unless an
+  explicit destination is passed to `complete()` or `skip()`. Omit `stepGroups`
+  entirely for a flat flow, where steps render as a plain top-level list with no
+  grouping — same shape as `DualPaneStepper`'s [Flat
+  Timelines](/growth-patterns/dual-pane-stepper#flat-timelines).
 </Aside>
 
 ## Cards
@@ -216,11 +241,11 @@ function MyCard() {
   type your state for better autocomplete.
 </Aside>
 
-## Steps and Progressive Disclosure
+## Steps and Status Progression
 
-The stepper timeline reveals content progressively. Top-level step groups only appear once reached — completed, active, and error states are visible; upcoming step groups stay hidden until the flow advances to them.
+All declared step groups and their steps render up front in the stepper timeline. As the flow advances, each step's status updates to reflect its current state (active, completed, error, or skipped) — visibility is not gated on reaching the step.
 
-Within each step group, only visited steps appear in the timeline. Cards render inline beneath their step as the user progresses. Unvisited steps do not show as upcoming placeholders — each step and its card appear only after the user reaches it. The `next` field in your flow config still drives default routing when cards complete, but does not preview future steps in the timeline.
+The `next` field in your flow config drives default routing when cards complete, but does not preview future steps in the timeline beyond their rendered structure.
 
 ## Drawer Integration
 
@@ -314,6 +339,8 @@ The root component that sets up the flow engine, renders the single-column layou
   onComplete={(state) => console.log(state)}
   reactivationPrompt={{ title: "Go back?", description: "Progress will be lost." }}
   disableAutoScroll={false}
+  hideUpcomingGroups={false}
+  hidePredictedSteps={false}
 />
 ```
 
@@ -420,15 +447,23 @@ The root component that sets up the flow engine, renders the single-column layou
     {
       name: "showStepBadge",
       description:
-        "Renders a 'Step {n}/{total}' pill badge next to each step's title",
+        "Renders a 'Step {n}/{total}' pill badge next to each step's title. The badge's total reflects only the path this run actually walks, not every step/group configured in the flow — so a designed end (a step with no `next`, whether or not it's flagged `terminal`) makes the total match the run's real length. Only a step flagged `dynamicNext` (its real continuation is decided at runtime, not statically) makes the total fall back to a flow-wide count instead, since more steps may genuinely follow that can't be predicted from the config.",
       required: false,
       value: "boolean",
       defaultValue: "false",
     },
     {
-      name: "flat",
+      name: "hideUpcomingGroups",
       description:
-        "Renders each step group's steps as flat top-level Stepper.Step items (plain straight connector, no branch/StepGroup nesting) instead of the default nested/branch-connector layout",
+        "Grouped-mode only: omit groups whose derived state is upcoming. Visited and active groups still render. No-op on flat flows. Visual only — engine derivation, routing, and badge totals are unchanged.",
+      required: false,
+      value: "boolean",
+      defaultValue: "false",
+    },
+    {
+      name: "hidePredictedSteps",
+      description:
+        "Omit predicted nested-step placeholders in grouped mode, and upcoming entries from the flat timeline. Visual only — engine derivation, routing, badge totals, and the indeterminate placeholder still follow the engine.",
       required: false,
       value: "boolean",
       defaultValue: "false",

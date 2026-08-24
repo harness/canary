@@ -1,13 +1,8 @@
 import { useCallback, useEffect, useMemo, useRef } from 'react'
 
-import {
-  CardContextProvider,
-  deriveFullPredictedPath,
-  deriveStepperModel,
-  useEngineContext
-} from '../flow-stepper/engine'
+import { CardContextProvider, deriveFullPredictedPath, useEngineContext } from '../flow-stepper/engine'
+import { FlowStepperRail } from '../flow-stepper/flow-stepper-rail'
 import { Layout } from '../layout'
-import { Stepper } from '../stepper'
 import { Text } from '../text'
 
 interface SinglePaneStepperCardStackProps {
@@ -16,13 +11,10 @@ interface SinglePaneStepperCardStackProps {
   contentTitle?: string
   contentSubtitle?: string
   /** When true, renders a "Step {n}/{total}" pill badge next to each step's title. Default false —
-   *  purely opt-in, no rendering change for existing consumers that don't pass it. */
+   * purely opt-in, no rendering change for existing consumers that don't pass it. */
   showStepBadge?: boolean
-  /** When true, renders each step group's steps as flat top-level `Stepper.Step` items (plain straight
-   *  connector, self-registered directly under `Stepper.Root` — no `Stepper.StepGroup` wrapper)
-   *  instead of the default nested/branch-connector layout. Default false — purely opt-in, no
-   *  rendering change for existing consumers that don't pass it. */
-  flat?: boolean
+  hideUpcomingGroups?: boolean
+  hidePredictedSteps?: boolean
 }
 
 export function SinglePaneStepperCardStack({
@@ -31,7 +23,8 @@ export function SinglePaneStepperCardStack({
   contentTitle,
   contentSubtitle,
   showStepBadge,
-  flat
+  hideUpcomingGroups,
+  hidePredictedSteps
 }: SinglePaneStepperCardStackProps) {
   const { flow, cardHistory, activeStepId, predictedPath, registerScrollToCard, scrollToCard, disableAutoScroll } =
     useEngineContext()
@@ -42,26 +35,23 @@ export function SinglePaneStepperCardStack({
   const scrollToCardLocal = useCallback(
     (stepId: string) => {
       // Consumers can disable all programmatic scroll (completed/review flows) — the timeline then
-      // renders from the top and stays put; only the user scrolls.
+      // renders from the top and stays put; only user scrolls.
       if (disableAutoScroll) return
       const container = containerRef.current
       if (!container) return
       const cardEl = container.querySelector(`[data-card-id="${stepId}"]`) as HTMLElement | null
       if (!cardEl) return
-
       const containerRect = container.getBoundingClientRect()
       const cardRect = cardEl.getBoundingClientRect()
-      const offsetTop = cardRect.top - containerRect.top + container.scrollTop
-      const targetScroll = offsetTop
-
-      // JSDOM doesn't implement scrollTo; fall back to direct scrollTop for test environments
-      if (typeof container.scrollTo === 'function') {
-        container.scrollTo({ top: Math.max(0, targetScroll), behavior: 'smooth' })
+      const offset = cardRect.top - containerRect.top + container.scrollTop
+      // scrollTo is unavailable in JSDOM — guard so tests don't throw.
+      if (container.scrollTo) {
+        container.scrollTo({ top: Math.max(0, offset - 16), behavior: 'smooth' })
       } else {
-        container.scrollTop = Math.max(0, targetScroll)
+        container.scrollTop = Math.max(0, offset - 16)
       }
     },
-    [containerRef, disableAutoScroll]
+    [disableAutoScroll]
   )
 
   useEffect(() => {
@@ -75,16 +65,11 @@ export function SinglePaneStepperCardStack({
     }
   }, [scrollToCardLocal])
 
-  const derivedSteps = useMemo(
-    () => deriveStepperModel(flow, cardHistory, predictedPath, activeStepId),
-    [flow, cardHistory, predictedPath, activeStepId]
-  )
-
-  // The badge denominators below must reflect only the path THIS run will actually walk, not every
+  // Badge denominators below must reflect only the path THIS run will actually walk, not every
   // step configured in the flow. `flow.steps` is a flat map of EVERY step across EVERY branch —
-  // real flows branch heavily (e.g. mutually-exclusive auth-provider or infra-setup steps that all
+  // real flows branch heavily (e.g. mutually-exclusive auth-provider or infra-setup steps all
   // converge on a shared next step), and a run only ever traverses one branch. Using
-  // `Object.keys(flow.steps).length` as the denominator overcounts every step NOT on this run's
+  // `Object.keys(flow.steps).length` as the denominator overcounts steps NOT on this run's
   // path, so the badge could never reach n/n. `deriveFullPredictedPath` walks the same `next`-pointer
   // chain as `predictedPath` (engine-context.tsx) but doesn't stop at step-group boundaries, giving
   // the full remainder of THIS run's path from the active step to the flow's terminal step.
@@ -93,40 +78,75 @@ export function SinglePaneStepperCardStack({
     [flow, cardHistory, activeStepId]
   )
 
-  // Flat mode's badge denominator: individual steps already visited plus the individual steps still
-  // ahead on this run's actual path. When the walk couldn't confirm the true end of this run's path
-  // (the active step's real destination is decided dynamically at runtime — see
-  // deriveFullPredictedPath's doc comment), never let the denominator collapse below what's already
-  // known; fall back to the flow-wide step count instead of undercounting.
+  // `reachedKnownEnd` (from the engine) only trusts a `terminal`-flagged step or a confirmed
+  // cycle-back — by design it can't tell "the walk hit a genuine dead end the flow author simply
+  // forgot to flag terminal" apart from "the walk stopped at (or passed through) a step whose real
+  // continuation is decided dynamically at runtime" (e.g. CDv2's deployment-pipeline-v2, where a
+  // card picks its own next step). Only the SECOND case might genuinely have more steps we can't
+  // see statically. `dynamicNext` is the flow author's explicit opt-in for that case. It must be
+  // checked along the WHOLE walked-plus-predicted path, not just the step the walk stopped on: a
+  // step can carry both a static `next` (so the walk doesn't stop there) AND `dynamicNext: true` —
+  // that step's flag would otherwise be silently skipped as the walk continues past it via its
+  // static `next`, even though the flag says that continuation isn't the true, final one. Absent
+  // the flag anywhere on the path, treat a non-terminal dead end as a real, designed end: trust the
+  // walked total instead of inflating it to every configured step/group. This intentionally does
+  // NOT change `deriveFullPredictedPath`'s own `reachedKnownEnd` computation
+  // (derive-stepper-model.ts) — it's computed here, from data that function already returns, so
+  // grouped-mode's stepNumberOverridesComplete (below) can share it.
+  const hasDynamicNextOnPath = [activeStepId, ...fullPredictedPath].some(stepId => flow.steps[stepId]?.dynamicNext)
+  const pathWalkComplete = reachedKnownEnd || !hasDynamicNextOnPath
+
+  // Flat mode's badge denominator: individual steps already visited plus individual steps still
+  // ahead on the run's actual path. When the walk stopped at a step flagged `dynamicNext` (its real
+  // continuation is decided at runtime, so more steps may genuinely follow that we can't see
+  // statically), never let the denominator collapse below what's already known; fall back to the
+  // flow-wide step count instead of undercounting.
   const totalStepsCount = useMemo(() => {
     const walkedTotal = cardHistory.length + fullPredictedPath.length
-    if (reachedKnownEnd) return walkedTotal
+    if (pathWalkComplete) return walkedTotal
     return Math.max(walkedTotal, Object.keys(flow.steps).length)
-  }, [cardHistory, fullPredictedPath, reachedKnownEnd, flow.steps])
+  }, [cardHistory.length, fullPredictedPath.length, pathWalkComplete, flow.steps])
 
-  // Non-flat mode's badge denominator: distinct step GROUPS among the steps already visited plus the
-  // steps still ahead on this run's actual path (mirrors totalStepsCount, but counts groups, with
-  // the same fallback-rather-than-undercount rule when reachedKnownEnd is false).
-  const totalStepGroupsCount = useMemo(() => {
-    const stepGroupIds = new Set<string>()
+  // Per-group numerator for the badge: each group's 1-based position in the ORDER the run
+  // actually encounters it (cardHistory first, then the predicted remainder) — not the raw
+  // rendering index, which would also count off-path mutually-exclusive sibling groups. Groups
+  // never encountered on the run's path (truly off-path siblings) are absent from this map;
+  // FlowStepperRail suppresses that group's badge entirely rather than showing a fallback number,
+  // since a badge for a path this run never walks would be inherently misleading (see
+  // flow-stepper-rail.tsx's stepGroupHasNumber check).
+  const stepNumberOverrides = useMemo(() => {
+    const seen = new Set<string>()
+    const orderedIds: string[] = []
     for (const entry of cardHistory) {
       const stepGroupId = flow.steps[entry.stepId]?.step
-      if (stepGroupId) stepGroupIds.add(stepGroupId)
+      if (stepGroupId && !seen.has(stepGroupId)) {
+        seen.add(stepGroupId)
+        orderedIds.push(stepGroupId)
+      }
     }
     for (const stepId of fullPredictedPath) {
       const stepGroupId = flow.steps[stepId]?.step
-      if (stepGroupId) stepGroupIds.add(stepGroupId)
+      if (stepGroupId && !seen.has(stepGroupId)) {
+        seen.add(stepGroupId)
+        orderedIds.push(stepGroupId)
+      }
     }
-    const walkedTotal = stepGroupIds.size
-    if (reachedKnownEnd) return walkedTotal
+    return new Map(orderedIds.map((id, index) => [id, index + 1]))
+  }, [cardHistory, fullPredictedPath, flow.steps])
+
+  // Grouped-mode denominator: same fallback-rather-than-undercount rule as totalStepsCount above,
+  // one level up (distinct step GROUPS on the run's path, not steps). Derived from
+  // stepNumberOverrides.size — not a separate walk — so the numerator (each group's entry in that
+  // map) and this denominator can never drift out of sync with each other again. Uses
+  // pathWalkComplete (not raw reachedKnownEnd) for the same dynamicNext-aware reason as
+  // totalStepsCount above.
+  const totalStepGroupsCount = useMemo(() => {
+    const walkedTotal = stepNumberOverrides.size
+    if (pathWalkComplete) return walkedTotal
     return Math.max(walkedTotal, Object.keys(flow.stepGroups ?? {}).length)
-  }, [cardHistory, fullPredictedPath, reachedKnownEnd, flow.steps, flow.stepGroups])
+  }, [stepNumberOverrides, pathWalkComplete, flow.stepGroups])
 
-  // Progressive disclosure: only render step groups that have been reached (active, completed, or error).
-  const visibleStepGroups = useMemo(() => derivedSteps.filter(step => step.state !== 'upcoming'), [derivedSteps])
-
-  // Build map of stepId -> card status from cardHistory for status prop
-  const cardStatusMap = new Map(cardHistory.map(e => [e.stepId, e.status]))
+  const totalOverride = flow.stepGroups ? totalStepGroupsCount : totalStepsCount
 
   const handleStepperClick = (value: string) => {
     const historyEntry = cardHistory.find(e => e.stepId === value)
@@ -158,92 +178,35 @@ export function SinglePaneStepperCardStack({
           </Layout.Vertical>
         )}
 
-        <Stepper.Root
+        <FlowStepperRail
+          flow={flow}
+          cardHistory={cardHistory}
+          activeStepId={activeStepId}
+          predictedPath={predictedPath}
           value={activeStepId}
           onValueChange={handleStepperClick}
-          title={showStepperHeader ? stepperTitle : undefined}
+          stepperTitle={stepperTitle}
+          showStepperHeader={showStepperHeader}
+          showStepBadge={showStepBadge}
+          totalOverride={totalOverride}
+          stepNumberOverrides={stepNumberOverrides}
+          stepNumberOverridesComplete={pathWalkComplete}
           collapsibleNestedSteps
-        >
-          {visibleStepGroups.map(derivedStep => {
-            const activeStepGroupId = flow.steps[activeStepId]?.step
-            const isActiveStepGroup = activeStepGroupId === derivedStep.stepGroupId
-            const showSteps = derivedStep.visited.length > 0 || isActiveStepGroup
-
-            // Flat mode: no Stepper.StepGroup wrapper. Each visited step renders as a top-level
-            // Stepper.Step — the dual-mode Step component (see stepper-step.tsx) auto-detects "no
-            // ancestor StepGroup" via useParentStep() returning null and renders itself as
-            // TopLevelStep (plain straight connector, self-registered into ctx.orderedSteps), so no
-            // extra plumbing (no ParentStepProvider) is needed here. The derivedStep's own
-            // title/description/state are unused in this branch — the step's title becomes the
-            // visible "step" in a flat layout.
-            if (flat) {
-              if (!showSteps || derivedStep.isTerminalStepGroup) return null
-
-              return derivedStep.visited.map(v => {
-                const CardComponent = flow.steps[v.stepId]?.component
-                const cardStatus = cardStatusMap.get(v.stepId)
-                if (!CardComponent || !cardStatus) return null
-
-                return (
-                  <Stepper.Step
-                    key={v.stepId}
-                    value={v.stepId}
-                    title={flow.steps[v.stepId]?.title}
-                    description={flow.steps[v.stepId]?.description}
-                    state={v.state}
-                    visualCompleted={flow.steps[v.stepId]?.visualCompleted}
-                    showStepBadge={showStepBadge}
-                    totalStepsOverride={totalStepsCount}
-                  >
-                    <div data-card-id={v.stepId}>
-                      <CardContextProvider stepId={v.stepId} status={cardStatus} contentOnly>
-                        <CardComponent />
-                      </CardContextProvider>
-                    </div>
-                  </Stepper.Step>
-                )
-              })
-            }
+          hideUpcomingGroups={hideUpcomingGroups}
+          hidePredictedSteps={hidePredictedSteps}
+          renderStepContent={(stepId, status) => {
+            const CardComponent = flow.steps[stepId]?.component
+            if (!CardComponent) return null
 
             return (
-              <Stepper.StepGroup
-                key={derivedStep.stepGroupId}
-                value={derivedStep.stepGroupId}
-                title={derivedStep.title}
-                description={derivedStep.description}
-                state={derivedStep.state}
-                hasNestedSteps={false}
-                showStepBadge={showStepBadge}
-                totalStepsOverride={totalStepGroupsCount}
-              >
-                {showSteps &&
-                  !derivedStep.isTerminalStepGroup &&
-                  derivedStep.visited.map(v => {
-                    const CardComponent = flow.steps[v.stepId]?.component
-                    const cardStatus = cardStatusMap.get(v.stepId)
-                    if (!CardComponent || !cardStatus) return null
-
-                    return (
-                      <Stepper.Step
-                        key={v.stepId}
-                        value={v.stepId}
-                        title={flow.steps[v.stepId]?.title}
-                        description={flow.steps[v.stepId]?.description}
-                        state={v.state}
-                        visualCompleted={flow.steps[v.stepId]?.visualCompleted}
-                      >
-                        <div data-card-id={v.stepId}>
-                          <CardContextProvider stepId={v.stepId} status={cardStatus} contentOnly>
-                            <CardComponent />
-                          </CardContextProvider>
-                        </div>
-                      </Stepper.Step>
-                    )
-                  })}
-              </Stepper.StepGroup>
+              <div data-card-id={stepId}>
+                <CardContextProvider stepId={stepId} status={status} contentOnly>
+                  <CardComponent />
+                </CardContextProvider>
+              </div>
             )
-          })}
-        </Stepper.Root>
+          }}
+        />
       </div>
     </div>
   )

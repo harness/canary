@@ -152,6 +152,8 @@ export function StepperGroup({
   disabled,
   showStepBadge,
   totalStepsOverride,
+  stepNumberOverride,
+  hideStepNumber,
   className,
   children
 }: StepperGroupProps) {
@@ -172,7 +174,14 @@ export function StepperGroup({
   const derivedState = state || ctx.getStepState(value)
   const stepDisabled = ctx.isStepDisabled(value)
   const stepIndex = ctx.orderedSteps.indexOf(value)
-  const stepNumber = stepIndex + 1
+  // Only apply the override when the badge is actually shown — otherwise a consumer that never
+  // opts into showStepBadge would silently get different indicator-circle numbers/aria-labels than
+  // before this override existed, breaking this component's own "opt-in, no rendering change"
+  // contract for showStepBadge.
+  const stepNumber = showStepBadge ? (stepNumberOverride ?? stepIndex + 1) : stepIndex + 1
+  // Only takes effect when the badge feature is actually active — with showStepBadge off,
+  // stepNumber is already the plain raw index for every group and never collides with anything.
+  const showNumberPlaceholder = showStepBadge && hideStepNumber
   // ctx.orderedSteps only contains groups that have mounted so far under progressive disclosure —
   // totalStepsOverride lets a non-flat-mode consumer (e.g. SinglePaneStepperCardStack) supply the
   // flow's real step-group count instead of that currently-registered count (mirrors
@@ -364,7 +373,13 @@ export function StepperGroup({
         disabled={stepDisabled}
         onClick={handleClick}
         aria-current={isActive ? 'step' : undefined}
-        aria-label={`Step ${stepNumber} of ${totalSteps}: ${typeof title === 'string' ? title : value}`}
+        aria-label={
+          showNumberPlaceholder
+            ? typeof title === 'string'
+              ? title
+              : value
+            : `Step ${stepNumber} of ${totalSteps}: ${typeof title === 'string' ? title : value}`
+        }
         aria-disabled={stepDisabled ? 'true' : undefined}
         tabIndex={stepDisabled ? undefined : isActive ? 0 : -1}
       >
@@ -375,12 +390,14 @@ export function StepperGroup({
             <IconV2 name="xmark" size="xs" color="danger" />
           ) : isLoading ? (
             <IconV2 name="loader" size="xs" className="animate-spin" />
+          ) : showNumberPlaceholder ? (
+            <IconV2 name="empty-circle" size="xs" color="neutral" />
           ) : (
             <span className="cn-stepper-indicator-number">{stepNumber}</span>
           )}
         </span>
         <span className="cn-stepper-step-content">
-          {showStepBadge ? (
+          {showStepBadge && !showNumberPlaceholder ? (
             // Grid auto-placement (see .cn-stepper-step gridTemplateColumns) puts each direct child
             // of this display:contents wrapper in its own cell — a plain sibling badge would land in
             // the NEXT row, not beside the title. Wrapping title + badge in a flex row keeps them as

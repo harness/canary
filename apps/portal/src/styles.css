@@ -14,6 +14,16 @@
   --cn-font-weight-mono-normal-300: 400 !important; /* was 300 */
 }
 
+/* Type specimens opt out of the weight floor above so the DS reference
+   demos render each variant's TRUE weight (310/360) and stay accurate
+   against their spec labels. Applied to the type-scale reference tables
+   and the Text variant specimen. */
+.ds-type-specimen {
+  --cn-font-weight-default-normal-300: 310 !important;
+  --cn-font-weight-default-normal-400: 360 !important;
+  --cn-font-weight-mono-normal-300: 300 !important;
+}
+
 body {
   @apply text-cn-1 text-cn-size-6 overscroll-none tracking-cn-normal font-body-normal !important;
   @apply !leading-7 !text-cn-size-6;

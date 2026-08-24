@@ -1,0 +1,23 @@
+#!/bin/bash
+set -e
+
+echo "Checking system dependencies..."
+
+# Node — required to run Vite and the workspace tooling
+NODE_VERSION="$(node --version 2>/dev/null || echo "none")"
+if [[ "$NODE_VERSION" == "none" ]]; then
+  echo "Installing node"
+  brew install node
+fi
+echo "Node ${NODE_VERSION} OK"
+
+# pnpm — this repo pins pnpm@9 as its package manager (see package.json packageManager)
+PNPM_VERSION="$(pnpm --version 2>/dev/null || echo "none")"
+if [[ "$PNPM_VERSION" == "none" ]]; then
+  echo "Installing pnpm via corepack"
+  corepack enable
+  corepack prepare pnpm@9.5.0 --activate
+fi
+echo "pnpm ${PNPM_VERSION} OK"
+
+echo "System dependencies verified."

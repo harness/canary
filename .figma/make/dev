@@ -1,0 +1,14 @@
+#!/bin/bash
+set -e
+
+# The design-system "view-preview" app consumes the workspace packages
+# (@harnessio/ui, forms, views, etc.) from their built dist output, so those
+# packages must be built before the Vite dev server starts.
+echo "Building workspace packages..."
+pnpm -r -F './packages/*' build
+
+# Start the Vite dev server for the design-system app on a fixed port so the
+# browser preview has a stable URL. --strictPort fails fast rather than
+# silently drifting to another port.
+echo "Starting design-system dev server..."
+pnpm -F ./apps/design-system dev -- --port "${PORT:-5173}" --strictPort --host

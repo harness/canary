@@ -49,178 +49,166 @@ return (
 )
 ```
 
-## `Variant`
+## Variant
 
 The `Text` component supports various typographic variants that map to semantic HTML elements.
 The default variant is `body-normal`, which renders as a `<p>` element. Other variants include:
 
 <DocsPage.ComponentExample
   client:only
-  code={`<div className="grid gap-cn-md ds-type-specimen">
-    <Text as="h3" variant="heading-section">Heading variants:</Text>
-    <div>
-        <Text variant="heading-base" color="foreground-2" className="underline mb-cn-3xs">heading-hero:</Text>
-        <Text variant="heading-hero">dummyText</Text>
-    </div>
-    <div>
-        <Text variant="heading-base" color="foreground-2" className="underline mb-cn-3xs">heading-section:</Text>
-        <Text variant="heading-section">dummyText</Text>
-    </div>
-    <div>
-        <Text variant="heading-base" color="foreground-2" className="underline mb-cn-3xs">heading-subsection:</Text>
-        <Text variant="heading-subsection">dummyText</Text>
-    </div>
-    <div>
-        <Text variant="heading-base" color="foreground-2" className="underline mb-cn-3xs">heading-base:</Text>
-        <Text variant="heading-base">dummyText</Text>
-    </div>
-    <div>
-        <Text variant="heading-base" color="foreground-2" className="underline mb-cn-3xs">heading-small:</Text>
-        <Text variant="heading-small">dummyText</Text>
-    </div>
-
-    <hr />
-
-    <Text as="h3" variant="heading-section">Body variants:</Text>
-    <div>
-        <Text variant="heading-base" className="underline mb-cn-3xs">body-normal:</Text>
-        <Text variant="body-normal">dummyText</Text>
-    </div>
-    <div>
-        <Text variant="heading-base" className="underline mb-cn-3xs">body-single-line-normal:</Text>
-        <Text variant="body-single-line-normal">dummyText</Text>
-    </div>
-    <div>
-        <Text variant="heading-base" className="underline mb-cn-3xs">body-strong:</Text>
-        <Text variant="body-strong">dummyText</Text>
-    </div>
-    <div>
-        <Text variant="heading-base" className="underline mb-cn-3xs">body-single-line-strong:</Text>
-        <Text variant="body-single-line-strong">dummyText</Text>
-    </div>
-    <div>
-        <Text variant="heading-base" className="underline mb-cn-3xs">body-code:</Text>
-        <Text variant="body-code" wrap="wrap">dummyText</Text>
-    </div>
-
-    <hr />
-
-    <Text as="h3" variant="heading-section">Caption variants</Text>
-    <div>
-        <Text variant="heading-base" className="underline mb-cn-3xs">caption-normal:</Text>
-        <Text variant="caption-normal">dummyText</Text>
-
-    </div>
-    <div>
-        <Text variant="heading-base" className="underline mb-cn-3xs">caption-light:</Text>
-        <Text variant="caption-light">dummyText</Text>
-    </div>
-    <div>
-        <Text variant="heading-base" className="underline mb-cn-3xs">caption-single-line-normal:</Text>
-        <Text variant="caption-single-line-normal">dummyText</Text>
-    </div>
-
+  code={`<div className="space-y-cn-sm w-full ds-type-specimen">
+  <div className="flex items-start gap-cn-md border-b border-cn-borders-3 pb-cn-sm">
+    <span className="text-cn-size-2 text-cn-3 w-56 shrink-0 font-mono pt-cn-3xs">heading-hero</span>
+    <div className="flex-1 min-w-0"><Text variant="heading-hero">dummyText</Text></div>
+  </div>
+  <div className="flex items-start gap-cn-md border-b border-cn-borders-3 pb-cn-sm">
+    <span className="text-cn-size-2 text-cn-3 w-56 shrink-0 font-mono pt-cn-3xs">heading-section</span>
+    <div className="flex-1 min-w-0"><Text variant="heading-section">dummyText</Text></div>
+  </div>
+  <div className="flex items-start gap-cn-md border-b border-cn-borders-3 pb-cn-sm">
+    <span className="text-cn-size-2 text-cn-3 w-56 shrink-0 font-mono pt-cn-3xs">heading-subsection</span>
+    <div className="flex-1 min-w-0"><Text variant="heading-subsection">dummyText</Text></div>
+  </div>
+  <div className="flex items-start gap-cn-md border-b border-cn-borders-3 pb-cn-sm">
+    <span className="text-cn-size-2 text-cn-3 w-56 shrink-0 font-mono pt-cn-3xs">heading-base</span>
+    <div className="flex-1 min-w-0"><Text variant="heading-base">dummyText</Text></div>
+  </div>
+  <div className="flex items-start gap-cn-md border-b border-cn-borders-3 pb-cn-sm">
+    <span className="text-cn-size-2 text-cn-3 w-56 shrink-0 font-mono pt-cn-3xs">heading-small</span>
+    <div className="flex-1 min-w-0"><Text variant="heading-small">dummyText</Text></div>
+  </div>
+  <div className="flex items-start gap-cn-md border-b border-cn-borders-3 pb-cn-sm">
+    <span className="text-cn-size-2 text-cn-3 w-56 shrink-0 font-mono pt-cn-3xs">body-normal</span>
+    <div className="flex-1 min-w-0"><Text variant="body-normal">dummyText</Text></div>
+  </div>
+  <div className="flex items-start gap-cn-md border-b border-cn-borders-3 pb-cn-sm">
+    <span className="text-cn-size-2 text-cn-3 w-56 shrink-0 font-mono pt-cn-3xs">body-single-line-normal</span>
+    <div className="flex-1 min-w-0"><Text variant="body-single-line-normal">dummyText</Text></div>
+  </div>
+  <div className="flex items-start gap-cn-md border-b border-cn-borders-3 pb-cn-sm">
+    <span className="text-cn-size-2 text-cn-3 w-56 shrink-0 font-mono pt-cn-3xs">body-strong</span>
+    <div className="flex-1 min-w-0"><Text variant="body-strong">dummyText</Text></div>
+  </div>
+  <div className="flex items-start gap-cn-md border-b border-cn-borders-3 pb-cn-sm">
+    <span className="text-cn-size-2 text-cn-3 w-56 shrink-0 font-mono pt-cn-3xs">body-single-line-strong</span>
+    <div className="flex-1 min-w-0"><Text variant="body-single-line-strong">dummyText</Text></div>
+  </div>
+  <div className="flex items-start gap-cn-md border-b border-cn-borders-3 pb-cn-sm">
+    <span className="text-cn-size-2 text-cn-3 w-56 shrink-0 font-mono pt-cn-3xs">body-code</span>
+    <div className="flex-1 min-w-0"><Text variant="body-code" wrap="wrap">dummyText</Text></div>
+  </div>
+  <div className="flex items-start gap-cn-md border-b border-cn-borders-3 pb-cn-sm">
+    <span className="text-cn-size-2 text-cn-3 w-56 shrink-0 font-mono pt-cn-3xs">caption-normal</span>
+    <div className="flex-1 min-w-0"><Text variant="caption-normal">dummyText</Text></div>
+  </div>
+  <div className="flex items-start gap-cn-md border-b border-cn-borders-3 pb-cn-sm">
+    <span className="text-cn-size-2 text-cn-3 w-56 shrink-0 font-mono pt-cn-3xs">caption-light</span>
+    <div className="flex-1 min-w-0"><Text variant="caption-light">dummyText</Text></div>
+  </div>
+  <div className="flex items-start gap-cn-md border-b border-cn-borders-3 pb-cn-sm">
+    <span className="text-cn-size-2 text-cn-3 w-56 shrink-0 font-mono pt-cn-3xs">caption-single-line-normal</span>
+    <div className="flex-1 min-w-0"><Text variant="caption-single-line-normal">dummyText</Text></div>
+  </div>
 </div>`.replaceAll('dummyText', `Consistency in typography helps users navigate content with ease. Always use hierarchy to guide attention and improve readability.`)}
 />
 
-## `Color`
+## Color
 
 The `Text` component supports various color options to enhance visibility and convey meaning. The default color is `foreground-2`. Other available colors include:
 
 <DocsPage.ComponentExample
   client:only
-  code={`<div className="grid gap-cn-md">
-    <div>
-        <Text variant="heading-base" className="underline mb-cn-3xs">inherit:</Text>
-        <Text color="inherit">dummyText</Text>
-    </div>
-    <div>
-        <Text variant="heading-base" className="underline mb-cn-3xs">foreground-1:</Text>
-        <Text color="foreground-1">dummyText</Text>
-    </div>
-    <div>
-        <Text variant="heading-base" className="underline mb-cn-3xs">foreground-2:</Text>
-        <Text color="foreground-2">dummyText</Text>
-    </div>
-    <div>
-        <Text variant="heading-base" className="underline mb-cn-3xs">foreground-3:</Text>
-        <Text color="foreground-3">dummyText</Text>
-    </div>
-    <div>
-        <Text variant="heading-base" className="underline mb-cn-3xs">state-disabled:</Text>
-        <Text color="foreground-3">dummyText</Text>
-    </div>
-    <div>
-        <Text variant="heading-base" className="underline mb-cn-3xs">success:</Text>
-        <Text color="success">dummyText</Text>
-    </div>
-    <div>
-        <Text variant="heading-base" className="underline mb-cn-3xs">warning:</Text>
-        <Text color="warning">dummyText</Text>
-    </div>
-    <div>
-        <Text variant="heading-base" className="underline mb-cn-3xs">danger:</Text>
-        <Text color="danger">dummyText</Text>
-    </div>
-
+  code={`<div className="space-y-cn-sm w-full">
+  <div className="flex items-start gap-cn-md border-b border-cn-borders-3 pb-cn-sm">
+    <span className="text-cn-size-2 text-cn-3 w-40 shrink-0 font-mono pt-cn-3xs">inherit</span>
+    <div className="flex-1 min-w-0"><Text color="inherit">dummyText</Text></div>
+  </div>
+  <div className="flex items-start gap-cn-md border-b border-cn-borders-3 pb-cn-sm">
+    <span className="text-cn-size-2 text-cn-3 w-40 shrink-0 font-mono pt-cn-3xs">foreground-1</span>
+    <div className="flex-1 min-w-0"><Text color="foreground-1">dummyText</Text></div>
+  </div>
+  <div className="flex items-start gap-cn-md border-b border-cn-borders-3 pb-cn-sm">
+    <span className="text-cn-size-2 text-cn-3 w-40 shrink-0 font-mono pt-cn-3xs">foreground-2</span>
+    <div className="flex-1 min-w-0"><Text color="foreground-2">dummyText</Text></div>
+  </div>
+  <div className="flex items-start gap-cn-md border-b border-cn-borders-3 pb-cn-sm">
+    <span className="text-cn-size-2 text-cn-3 w-40 shrink-0 font-mono pt-cn-3xs">foreground-3</span>
+    <div className="flex-1 min-w-0"><Text color="foreground-3">dummyText</Text></div>
+  </div>
+  <div className="flex items-start gap-cn-md border-b border-cn-borders-3 pb-cn-sm">
+    <span className="text-cn-size-2 text-cn-3 w-40 shrink-0 font-mono pt-cn-3xs">disabled</span>
+    <div className="flex-1 min-w-0"><Text color="disabled">dummyText</Text></div>
+  </div>
+  <div className="flex items-start gap-cn-md border-b border-cn-borders-3 pb-cn-sm">
+    <span className="text-cn-size-2 text-cn-3 w-40 shrink-0 font-mono pt-cn-3xs">success</span>
+    <div className="flex-1 min-w-0"><Text color="success">dummyText</Text></div>
+  </div>
+  <div className="flex items-start gap-cn-md border-b border-cn-borders-3 pb-cn-sm">
+    <span className="text-cn-size-2 text-cn-3 w-40 shrink-0 font-mono pt-cn-3xs">warning</span>
+    <div className="flex-1 min-w-0"><Text color="warning">dummyText</Text></div>
+  </div>
+  <div className="flex items-start gap-cn-md">
+    <span className="text-cn-size-2 text-cn-3 w-40 shrink-0 font-mono pt-cn-3xs">danger</span>
+    <div className="flex-1 min-w-0"><Text color="danger">dummyText</Text></div>
+  </div>
 </div>`.replaceAll('dummyText', `Consistency in typography helps users navigate content with ease. Always use hierarchy to guide attention and improve readability.`)}
 />
 
-## `Align`
+## Align
 
 <DocsPage.ComponentExample
   client:only
-  code={`<div className="grid gap-cn-md">
-    <div>
-        <Text variant="heading-base" className="underline mb-cn-3xs">default:</Text>
-        <Text>dummyText</Text>
-    </div>
-    <div>
-        <Text variant="heading-base" className="underline mb-cn-3xs">left:</Text>
-        <Text align="left">dummyText</Text>
-    </div>
-    <div>
-        <Text variant="heading-base" className="underline mb-cn-3xs">center:</Text>
-        <Text align="center">dummyText</Text>
-    </div>
-    <div>
-        <Text variant="heading-base" className="underline mb-cn-3xs">right:</Text>
-        <Text align="right">dummyText</Text>
-    </div>
+  code={`<div className="space-y-cn-sm w-full">
+  <div className="flex items-start gap-cn-md border-b border-cn-borders-3 pb-cn-sm">
+    <span className="text-cn-size-2 text-cn-3 w-40 shrink-0 font-mono pt-cn-3xs">default</span>
+    <div className="flex-1 min-w-0"><Text>dummyText</Text></div>
+  </div>
+  <div className="flex items-start gap-cn-md border-b border-cn-borders-3 pb-cn-sm">
+    <span className="text-cn-size-2 text-cn-3 w-40 shrink-0 font-mono pt-cn-3xs">left</span>
+    <div className="flex-1 min-w-0"><Text align="left">dummyText</Text></div>
+  </div>
+  <div className="flex items-start gap-cn-md border-b border-cn-borders-3 pb-cn-sm">
+    <span className="text-cn-size-2 text-cn-3 w-40 shrink-0 font-mono pt-cn-3xs">center</span>
+    <div className="flex-1 min-w-0"><Text align="center">dummyText</Text></div>
+  </div>
+  <div className="flex items-start gap-cn-md">
+    <span className="text-cn-size-2 text-cn-3 w-40 shrink-0 font-mono pt-cn-3xs">right</span>
+    <div className="flex-1 min-w-0"><Text align="right">dummyText</Text></div>
+  </div>
 </div>`.replaceAll(
     "dummyText",
     `Consistency in typography helps users navigate content with ease. Always use hierarchy to guide attention and improve readability.`,
   )}
 />
 
-## `Wrap`
+## Wrap
 
 <DocsPage.ComponentExample
   client:only
-  code={`<div className="grid gap-cn-md">
-    <div className="max-w-[400px]">
-        <Text variant="heading-base" className="underline mb-cn-3xs">wrap:</Text>
-        <Text wrap="wrap">dummyText</Text>
-    </div>
-    <div className="max-w-[400px]">
-        <Text variant="heading-base" className="underline mb-cn-3xs">nowrap:</Text>
-        <Text wrap="nowrap">dummyText</Text>
-    </div>
-    <div className="max-w-[400px]">
-        <Text variant="heading-base" className="underline mb-cn-3xs">pretty:</Text>
-        <Text wrap="pretty">dummyText</Text>
-    </div>
-    <div className="max-w-[400px]">
-        <Text variant="heading-base" className="underline mb-cn-3xs">balance:</Text>
-        <Text wrap="balance">dummyText</Text>
-    </div>
+  code={`<div className="space-y-cn-sm w-full">
+  <div className="flex items-start gap-cn-md border-b border-cn-borders-3 pb-cn-sm">
+    <span className="text-cn-size-2 text-cn-3 w-40 shrink-0 font-mono pt-cn-3xs">wrap</span>
+    <div className="flex-1 min-w-0 max-w-[400px]"><Text wrap="wrap">dummyText</Text></div>
+  </div>
+  <div className="flex items-start gap-cn-md border-b border-cn-borders-3 pb-cn-sm">
+    <span className="text-cn-size-2 text-cn-3 w-40 shrink-0 font-mono pt-cn-3xs">nowrap</span>
+    <div className="flex-1 min-w-0 max-w-[400px]"><Text wrap="nowrap">dummyText</Text></div>
+  </div>
+  <div className="flex items-start gap-cn-md border-b border-cn-borders-3 pb-cn-sm">
+    <span className="text-cn-size-2 text-cn-3 w-40 shrink-0 font-mono pt-cn-3xs">pretty</span>
+    <div className="flex-1 min-w-0 max-w-[400px]"><Text wrap="pretty">dummyText</Text></div>
+  </div>
+  <div className="flex items-start gap-cn-md">
+    <span className="text-cn-size-2 text-cn-3 w-40 shrink-0 font-mono pt-cn-3xs">balance</span>
+    <div className="flex-1 min-w-0 max-w-[400px]"><Text wrap="balance">dummyText</Text></div>
+  </div>
 </div>`.replaceAll(
     "dummyText",
     `Consistency in typography helps users navigate content with ease. Always use hierarchy to guide attention and improve readability.`,
   )}
 />
 
-## `Truncate`
+## Truncate
 
 The `truncate` prop allows you to truncate text with an ellipsis if it overflows its container. This is particularly useful for single-line text that should not wrap.
 
@@ -233,7 +221,7 @@ The `truncate` prop allows you to truncate text with an ellipsis if it overflows
 </div>`}
 />
 
-## `Line Clamp`
+## Line Clamp
 
 The `lineClamp` prop controls how many lines of text are shown before truncating. It can be set to a specific number or to 'default' for the component's default behavior.
 

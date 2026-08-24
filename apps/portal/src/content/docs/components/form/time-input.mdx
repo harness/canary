@@ -9,11 +9,31 @@ import { DocsPage } from "@/components/docs-page";
 
 <DocsPage.ComponentExample
   client:only
-  code={`<div className="flex flex-col gap-cn-md items-baseline min-w-[320px]">
-  <TimeInput label="Start time" id="start-time" defaultValue="09:30" />
-  <TimeInput label="End time" id="end-time" defaultValue="17:00" step={1} caption="Includes seconds" />
-  <TimeInput label="Duration" id="duration" error="Required" />
-  <TimeInput label="Disabled" id="disabled-time" defaultValue="08:00" disabled />
+  code={`<div className="space-y-cn-sm w-full">
+  <div className="flex items-start gap-cn-md border-b border-cn-borders-3 pb-cn-sm">
+    <span className="text-cn-size-2 text-cn-3 w-40 shrink-0 font-mono pt-cn-xs">default</span>
+    <div className="flex-1 min-w-0 max-w-[360px]">
+      <TimeInput label="Start time" id="start-time" defaultValue="09:30" />
+    </div>
+  </div>
+  <div className="flex items-start gap-cn-md border-b border-cn-borders-3 pb-cn-sm">
+    <span className="text-cn-size-2 text-cn-3 w-40 shrink-0 font-mono pt-cn-xs">with seconds</span>
+    <div className="flex-1 min-w-0 max-w-[360px]">
+      <TimeInput label="End time" id="end-time" defaultValue="17:00" step={1} caption="Includes seconds" />
+    </div>
+  </div>
+  <div className="flex items-start gap-cn-md border-b border-cn-borders-3 pb-cn-sm">
+    <span className="text-cn-size-2 text-cn-3 w-40 shrink-0 font-mono pt-cn-xs">error</span>
+    <div className="flex-1 min-w-0 max-w-[360px]">
+      <TimeInput label="Duration" id="duration" error="Required" />
+    </div>
+  </div>
+  <div className="flex items-start gap-cn-md">
+    <span className="text-cn-size-2 text-cn-3 w-40 shrink-0 font-mono pt-cn-xs">disabled</span>
+    <div className="flex-1 min-w-0 max-w-[360px]">
+      <TimeInput label="Disabled" id="disabled-time" defaultValue="08:00" disabled />
+    </div>
+  </div>
 </div>`}
 />
 
@@ -38,10 +58,25 @@ The leading icon defaults to `clock`. Pass any `IconV2` name via the `icon` prop
 
 <DocsPage.ComponentExample
   client:only
-  code={`<div className="flex flex-col gap-cn-md items-baseline min-w-[320px]">
-  <TimeInput label="Default icon (clock)" id="icon-default" defaultValue="09:00" />
-  <TimeInput label="Custom icon (clock-solid)" id="icon-solid" icon="clock-solid" defaultValue="09:00" />
-  <TimeInput label="No icon" id="icon-none" icon={undefined} defaultValue="09:00" />
+  code={`<div className="space-y-cn-sm w-full">
+  <div className="flex items-start gap-cn-md border-b border-cn-borders-3 pb-cn-sm">
+    <span className="text-cn-size-2 text-cn-3 w-40 shrink-0 font-mono pt-cn-xs">default (clock)</span>
+    <div className="flex-1 min-w-0 max-w-[360px]">
+      <TimeInput label="Default icon" id="icon-default" defaultValue="09:00" />
+    </div>
+  </div>
+  <div className="flex items-start gap-cn-md border-b border-cn-borders-3 pb-cn-sm">
+    <span className="text-cn-size-2 text-cn-3 w-40 shrink-0 font-mono pt-cn-xs">clock-solid</span>
+    <div className="flex-1 min-w-0 max-w-[360px]">
+      <TimeInput label="Custom icon" id="icon-solid" icon="clock-solid" defaultValue="09:00" />
+    </div>
+  </div>
+  <div className="flex items-start gap-cn-md">
+    <span className="text-cn-size-2 text-cn-3 w-40 shrink-0 font-mono pt-cn-xs">no icon</span>
+    <div className="flex-1 min-w-0 max-w-[360px]">
+      <TimeInput label="No icon" id="icon-none" icon={undefined} defaultValue="09:00" />
+    </div>
+  </div>
 </div>`}
 />
 
@@ -51,12 +86,37 @@ The leading icon defaults to `clock`. Pass any `IconV2` name via the `icon` prop
 
 <DocsPage.ComponentExample
   client:only
-  code={`<div className="flex flex-col gap-cn-md items-baseline min-w-[320px]">
-  <TimeInput label="Required field" id="required" />
-  <TimeInput label="Optional field" id="optional-field" optional caption="Leave blank to use default" />
-  <TimeInput label="With error" id="with-error" error="Please select a valid time" />
-  <TimeInput label="With warning" id="with-warning" warning="Outside business hours" />
-  <TimeInput label="With caption" id="with-caption" caption="Use 24-hour format" />
+  code={`<div className="space-y-cn-sm w-full">
+  <div className="flex items-start gap-cn-md border-b border-cn-borders-3 pb-cn-sm">
+    <span className="text-cn-size-2 text-cn-3 w-40 shrink-0 font-mono pt-cn-xs">required</span>
+    <div className="flex-1 min-w-0 max-w-[360px]">
+      <TimeInput label="Required field" id="required" />
+    </div>
+  </div>
+  <div className="flex items-start gap-cn-md border-b border-cn-borders-3 pb-cn-sm">
+    <span className="text-cn-size-2 text-cn-3 w-40 shrink-0 font-mono pt-cn-xs">optional</span>
+    <div className="flex-1 min-w-0 max-w-[360px]">
+      <TimeInput label="Optional field" id="optional-field" optional caption="Leave blank to use default" />
+    </div>
+  </div>
+  <div className="flex items-start gap-cn-md border-b border-cn-borders-3 pb-cn-sm">
+    <span className="text-cn-size-2 text-cn-3 w-40 shrink-0 font-mono pt-cn-xs">error</span>
+    <div className="flex-1 min-w-0 max-w-[360px]">
+      <TimeInput label="With error" id="with-error" error="Please select a valid time" />
+    </div>
+  </div>
+  <div className="flex items-start gap-cn-md border-b border-cn-borders-3 pb-cn-sm">
+    <span className="text-cn-size-2 text-cn-3 w-40 shrink-0 font-mono pt-cn-xs">warning</span>
+    <div className="flex-1 min-w-0 max-w-[360px]">
+      <TimeInput label="With warning" id="with-warning" warning="Outside business hours" />
+    </div>
+  </div>
+  <div className="flex items-start gap-cn-md">
+    <span className="text-cn-size-2 text-cn-3 w-40 shrink-0 font-mono pt-cn-xs">caption</span>
+    <div className="flex-1 min-w-0 max-w-[360px]">
+      <TimeInput label="With caption" id="with-caption" caption="Use 24-hour format" />
+    </div>
+  </div>
 </div>`}
 />
 
@@ -64,9 +124,19 @@ The leading icon defaults to `clock`. Pass any `IconV2` name via the `icon` prop
 
 <DocsPage.ComponentExample
   client:only
-  code={`<div className="flex flex-col gap-cn-md items-baseline min-w-[320px]">
-  <TimeInput label="Disabled" id="disabled" defaultValue="14:30" disabled />
-  <TimeInput label="Read-only" id="readonly" defaultValue="14:30" readOnly />
+  code={`<div className="space-y-cn-sm w-full">
+  <div className="flex items-start gap-cn-md border-b border-cn-borders-3 pb-cn-sm">
+    <span className="text-cn-size-2 text-cn-3 w-40 shrink-0 font-mono pt-cn-xs">disabled</span>
+    <div className="flex-1 min-w-0 max-w-[360px]">
+      <TimeInput label="Disabled" id="disabled" defaultValue="14:30" disabled />
+    </div>
+  </div>
+  <div className="flex items-start gap-cn-md">
+    <span className="text-cn-size-2 text-cn-3 w-40 shrink-0 font-mono pt-cn-xs">read-only</span>
+    <div className="flex-1 min-w-0 max-w-[360px]">
+      <TimeInput label="Read-only" id="readonly" defaultValue="14:30" readOnly />
+    </div>
+  </div>
 </div>`}
 />
 

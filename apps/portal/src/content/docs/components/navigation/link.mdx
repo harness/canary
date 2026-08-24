@@ -10,78 +10,71 @@ import { DocsPage } from "@/components/docs-page";
 <DocsPage.ComponentExample
   client:only
   code={`<div className="space-y-cn-sm w-full">
-  <div className="flex items-center gap-cn-md pb-cn-3xs">
+  <div className="flex gap-cn-md pb-cn-3xs">
     <span className="text-cn-size-1 text-cn-4 w-48 shrink-0 font-mono uppercase tracking-wide">Variant</span>
-    <span className="text-cn-size-1 text-cn-4 w-24 shrink-0 font-mono uppercase tracking-wide">Size</span>
-    <span className="text-cn-size-1 text-cn-4 font-mono uppercase tracking-wide">Preview</span>
+    <span className="text-cn-size-1 text-cn-4 flex-1 min-w-0 font-mono uppercase tracking-wide">Default Size</span>
+    <span className="text-cn-size-1 text-cn-4 flex-1 min-w-0 font-mono uppercase tracking-wide">Small Size</span>
   </div>
-  <div className="flex items-center gap-cn-md border-b border-cn-borders-3 pb-cn-sm">
-    <span className="text-cn-size-2 text-cn-3 w-48 shrink-0 font-mono">default</span>
-    <span className="text-cn-size-2 text-cn-3 w-24 shrink-0 font-mono">Default</span>
-    <div className="flex items-center gap-cn-lg flex-wrap">
+  <div className="flex items-start gap-cn-md border-b border-cn-borders-3 pb-cn-sm">
+    <span className="text-cn-size-2 text-cn-3 w-48 shrink-0 font-mono pt-cn-3xs">default</span>
+    <div className="flex-1 min-w-0 flex flex-col gap-cn-xs">
       <Link to="#1">Link</Link>
       <Link to="#2" data-hovered="true">Link (hovered)</Link>
       <Link to="#4" disabled>Link (disabled)</Link>
     </div>
-  </div>
-  <div className="flex items-center gap-cn-md border-b border-cn-borders-3 pb-cn-sm">
-    <span className="text-cn-size-2 text-cn-3 w-48 shrink-0 font-mono">default</span>
-    <span className="text-cn-size-2 text-cn-3 w-24 shrink-0 font-mono">Small</span>
-    <div className="flex items-center gap-cn-lg flex-wrap">
+    <div className="flex-1 min-w-0 flex flex-col gap-cn-xs">
       <Link size="sm" to="#1">Link</Link>
       <Link size="sm" to="#2" data-hovered="true">Link (hovered)</Link>
       <Link size="sm" to="#4" disabled>Link (disabled)</Link>
     </div>
   </div>
-  <div className="flex items-center gap-cn-md border-b border-cn-borders-3 pb-cn-sm">
-    <span className="text-cn-size-2 text-cn-3 w-48 shrink-0 font-mono">secondary</span>
-    <span className="text-cn-size-2 text-cn-3 w-24 shrink-0 font-mono">Default</span>
-    <div className="flex items-center gap-cn-lg flex-wrap">
+  <div className="flex items-start gap-cn-md border-b border-cn-borders-3 pb-cn-sm">
+    <span className="text-cn-size-2 text-cn-3 w-48 shrink-0 font-mono pt-cn-3xs">secondary</span>
+    <div className="flex-1 min-w-0 flex flex-col gap-cn-xs">
       <Link variant="secondary" to="#1">Link</Link>
       <Link variant="secondary" to="#2" data-hovered="true">Link (hovered)</Link>
       <Link variant="secondary" to="#4" disabled>Link (disabled)</Link>
     </div>
-  </div>
-  <div className="flex items-center gap-cn-md border-b border-cn-borders-3 pb-cn-sm">
-    <span className="text-cn-size-2 text-cn-3 w-48 shrink-0 font-mono">secondary</span>
-    <span className="text-cn-size-2 text-cn-3 w-24 shrink-0 font-mono">Small</span>
-    <div className="flex items-center gap-cn-lg flex-wrap">
+    <div className="flex-1 min-w-0 flex flex-col gap-cn-xs">
       <Link size="sm" variant="secondary" to="#1">Link</Link>
       <Link size="sm" variant="secondary" to="#2" data-hovered="true">Link (hovered)</Link>
       <Link size="sm" variant="secondary" to="#4" disabled>Link (disabled)</Link>
     </div>
   </div>
-  <div className="flex items-center gap-cn-md border-b border-cn-borders-3 pb-cn-sm">
-    <span className="text-cn-size-2 text-cn-3 w-48 shrink-0 font-mono">default + icons</span>
-    <span className="text-cn-size-2 text-cn-3 w-24 shrink-0 font-mono">Default</span>
-    <div className="flex items-center gap-cn-lg flex-wrap">
+  <div className="flex items-start gap-cn-md border-b border-cn-borders-3 pb-cn-sm">
+    <span className="text-cn-size-2 text-cn-3 w-48 shrink-0 font-mono pt-cn-3xs">default + icons</span>
+    <div className="flex-1 min-w-0 flex flex-col gap-cn-xs">
       <Link prefixIcon suffixIcon to="#1">Link</Link>
       <Link prefixIcon suffixIcon to="#2" data-hovered="true">Link (hovered)</Link>
       <Link prefixIcon suffixIcon to="#4" disabled>Link (disabled)</Link>
     </div>
-  </div>
-  <div className="flex items-center gap-cn-md border-b border-cn-borders-3 pb-cn-sm">
-    <span className="text-cn-size-2 text-cn-3 w-48 shrink-0 font-mono">default + icons</span>
-    <span className="text-cn-size-2 text-cn-3 w-24 shrink-0 font-mono">Small</span>
-    <div className="flex items-center gap-cn-lg flex-wrap">
+    <div className="flex-1 min-w-0 flex flex-col gap-cn-xs">
       <Link size="sm" prefixIcon suffixIcon to="#1">Link</Link>
       <Link size="sm" prefixIcon suffixIcon to="#2" data-hovered="true">Link (hovered)</Link>
       <Link size="sm" prefixIcon suffixIcon to="#4" disabled>Link (disabled)</Link>
     </div>
   </div>
-  <div className="flex items-center gap-cn-md border-b border-cn-borders-3 pb-cn-sm">
-    <span className="text-cn-size-2 text-cn-3 w-48 shrink-0 font-mono">secondary + icons</span>
-    <span className="text-cn-size-2 text-cn-3 w-24 shrink-0 font-mono">Default</span>
-    <div className="flex items-center gap-cn-lg flex-wrap">
+  <div className="flex items-start gap-cn-md border-b border-cn-borders-3 pb-cn-sm">
+    <span className="text-cn-size-2 text-cn-3 w-48 shrink-0 font-mono pt-cn-3xs">secondary + icons</span>
+    <div className="flex-1 min-w-0 flex flex-col gap-cn-xs">
       <Link prefixIcon suffixIcon variant="secondary" to="#1">Link</Link>
       <Link prefixIcon suffixIcon variant="secondary" to="#2" data-hovered="true">Link (hovered)</Link>
       <Link prefixIcon suffixIcon variant="secondary" to="#4" disabled>Link (disabled)</Link>
     </div>
+    <div className="flex-1 min-w-0 flex flex-col gap-cn-xs">
+      <Link size="sm" prefixIcon suffixIcon variant="secondary" to="#1">Link</Link>
+      <Link size="sm" prefixIcon suffixIcon variant="secondary" to="#2" data-hovered="true">Link (hovered)</Link>
+      <Link size="sm" prefixIcon suffixIcon variant="secondary" to="#4" disabled>Link (disabled)</Link>
+    </div>
   </div>
-  <div className="flex items-center gap-cn-md">
-    <span className="text-cn-size-2 text-cn-3 w-48 shrink-0 font-mono">secondary + icons + external</span>
-    <span className="text-cn-size-2 text-cn-3 w-24 shrink-0 font-mono">Small</span>
-    <div className="flex items-center gap-cn-lg flex-wrap">
+  <div className="flex items-start gap-cn-md">
+    <span className="text-cn-size-2 text-cn-3 w-48 shrink-0 font-mono pt-cn-3xs">secondary + icons + external</span>
+    <div className="flex-1 min-w-0 flex flex-col gap-cn-xs">
+      <Link prefixIcon suffixIcon variant="secondary" external href="#1">Link</Link>
+      <Link prefixIcon suffixIcon variant="secondary" external href="#2" data-hovered="true">Link (hovered)</Link>
+      <Link prefixIcon suffixIcon variant="secondary" external href="#4" disabled>Link (disabled)</Link>
+    </div>
+    <div className="flex-1 min-w-0 flex flex-col gap-cn-xs">
       <Link size="sm" prefixIcon suffixIcon variant="secondary" external href="#1">Link</Link>
       <Link size="sm" prefixIcon suffixIcon variant="secondary" external href="#2" data-hovered="true">Link (hovered)</Link>
       <Link size="sm" prefixIcon suffixIcon variant="secondary" external href="#4" disabled>Link (disabled)</Link>

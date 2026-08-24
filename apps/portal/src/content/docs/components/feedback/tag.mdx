@@ -9,228 +9,185 @@ import { DocsPage } from "@/components/docs-page";
 
 <DocsPage.ComponentExample
   client:only
-  code={`<div className="flex flex-col gap-cn-2xl">
-  
-{/* Themes */}
-
-<div>
-  <Text variant="heading-subsection" as="h4" className="mb-cn-sm">
-    Themes
-  </Text>
-  <div className="flex flex-wrap items-end gap-cn-sm">
-    {[
-      "gray",
-      "blue",
-      "brown",
-      "cyan",
-      "green",
-      "indigo",
-      "forest-green",
-      "mint",
-      "orange",
-      "pink",
-      "purple",
-      "red",
-      "violet",
-      "yellow",
-    ].map((theme) => (
+  code={`<div className="space-y-cn-sm w-full">
+  <div className="flex items-start gap-cn-md border-b border-cn-borders-3 pb-cn-sm">
+    <span className="text-cn-size-2 text-cn-3 w-40 shrink-0 font-mono pt-cn-3xs">themes</span>
+    <div className="flex-1 min-w-0 flex flex-wrap items-center gap-cn-sm">
+      {[
+        "gray",
+        "blue",
+        "brown",
+        "cyan",
+        "green",
+        "indigo",
+        "forest-green",
+        "mint",
+        "orange",
+        "pink",
+        "purple",
+        "red",
+        "violet",
+        "yellow",
+      ].map((theme) => (
+        <Tag
+          key={theme}
+          value={theme.charAt(0).toUpperCase() + theme.slice(1)}
+          theme={theme}
+        />
+      ))}
+    </div>
+  </div>
+  <div className="flex items-start gap-cn-md border-b border-cn-borders-3 pb-cn-sm">
+    <span className="text-cn-size-2 text-cn-3 w-40 shrink-0 font-mono pt-cn-3xs">variants</span>
+    <div className="flex-1 min-w-0 flex flex-wrap items-center gap-cn-sm">
+      <Tag value="Outline Tag" variant="outline" theme="blue" />
+      <Tag value="Secondary Tag" variant="secondary" theme="green" />
+    </div>
+  </div>
+  <div className="flex items-start gap-cn-md border-b border-cn-borders-3 pb-cn-sm">
+    <span className="text-cn-size-2 text-cn-3 w-40 shrink-0 font-mono pt-cn-3xs">sizes</span>
+    <div className="flex-1 min-w-0 flex flex-wrap items-center gap-cn-sm">
+      <Tag value="Default Size" theme="blue" />
+      <Tag value="Small Size" size="sm" theme="blue" />
+      <Tag value="Small Size" size="sm" theme="blue" icon="label" />
       <Tag
-        key={theme}
-        value={theme.charAt(0).toUpperCase() + theme.slice(1)}
-        theme={theme}
+        value="Small Size"
+        size="sm"
+        theme="blue"
+        icon="label"
+        actionIcon="xmark"
+        onActionClick={() => alert("Reset clicked")}
       />
-    ))}
+    </div>
   </div>
-</div>
-
-{/* Variants */}
-
-<div>
-  <Text variant="heading-subsection" as="h4" className="mb-cn-sm">
-    Variants
-  </Text>
-  <div className="flex flex-wrap items-end gap-cn-sm">
-    <Tag value="Outline Tag" variant="outline" theme="blue" />
-    <Tag value="Secondary Tag" variant="secondary" theme="green" />
+  <div className="flex items-start gap-cn-md border-b border-cn-borders-3 pb-cn-sm">
+    <span className="text-cn-size-2 text-cn-3 w-40 shrink-0 font-mono pt-cn-3xs">rounded</span>
+    <div className="flex-1 min-w-0 flex flex-wrap items-center gap-cn-sm">
+      <Tag value="Rounded Outline Tag" variant="outline" rounded theme="pink" />
+      <Tag
+        value="Rounded Secondary Tag"
+        variant="secondary"
+        rounded
+        theme="orange"
+      />
+    </div>
   </div>
-</div>
-
-{/* Sizes */}
-
-<div>
-  <Text variant="heading-subsection" as="h4" className="mb-cn-sm">
-    Sizes
-  </Text>
-  <div className="flex flex-wrap items-end gap-cn-sm">
-    <Tag value="Default Size" theme="blue" />
-    <Tag value="Small Size" size="sm" theme="blue" />
-    <Tag value="Small Size" size="sm" theme="blue" icon="label" />
-    <Tag
-      value="Small Size"
-      size="sm"
-      theme="blue"
-      icon="label"
-      actionIcon="xmark"
-      onActionClick={() => alert("Reset clicked")}
-    />
+  <div className="flex items-start gap-cn-md border-b border-cn-borders-3 pb-cn-sm">
+    <span className="text-cn-size-2 text-cn-3 w-40 shrink-0 font-mono pt-cn-3xs">split</span>
+    <div className="flex-1 min-w-0 flex flex-wrap items-center gap-cn-sm">
+      <Tag
+        label="Split"
+        value="Forest-green"
+        variant="secondary"
+        theme="forest-green"
+      />
+      <Tag label="Split" value="Pink" variant="secondary" theme="pink" />
+      <Tag label="Split" value="Blue" variant="secondary" theme="blue" />
+      <Tag
+        label="Split"
+        value="Reset"
+        variant="secondary"
+        theme="orange"
+        actionIcon="xmark"
+        onActionClick={() => alert("Reset clicked")}
+      />
+    </div>
   </div>
-</div>
-
-{/* Rounded Tags */}
-
-<div>
-  <Text variant="heading-subsection" as="h4" className="mb-cn-sm">
-    Rounded Tags
-  </Text>
-  <div className="flex flex-wrap items-end gap-cn-sm">
-    <Tag value="Rounded Outline Tag" variant="outline" rounded theme="pink" />
-    <Tag
-      value="Rounded Secondary Tag"
-      variant="secondary"
-      rounded
-      theme="orange"
-    />
+  <div className="flex items-start gap-cn-md border-b border-cn-borders-3 pb-cn-sm">
+    <span className="text-cn-size-2 text-cn-3 w-40 shrink-0 font-mono pt-cn-3xs">with icon</span>
+    <div className="flex-1 min-w-0 flex flex-wrap items-center gap-cn-sm">
+      <Tag value="Outline Icon" variant="outline" showIcon theme="yellow" />
+      <Tag value="Secondary Icon" variant="secondary" showIcon theme="violet" />
+      <Tag
+        value="Rounded Outline Icon"
+        variant="outline"
+        rounded
+        showIcon
+        theme="brown"
+      />
+      <Tag
+        value="Rounded Secondary Icon"
+        variant="secondary"
+        rounded
+        showIcon
+        theme="indigo"
+      />
+    </div>
   </div>
-</div>
-
-{/* Split Tags */}
-
-<div>
-  <Text variant="heading-subsection" as="h4" className="mb-cn-sm">
-    Split Tags
-  </Text>
-  <div className="flex flex-wrap items-end gap-cn-sm">
-    <Tag
-      label="Split"
-      value="Forest-green"
-      variant="secondary"
-      theme="forest-green"
-    />
-    <Tag label="Split" value="Pink" variant="secondary" theme="pink" />
-    <Tag label="Split" value="Blue" variant="secondary" theme="blue" />
-    <Tag
-      label="Split"
-      value="Reset"
-      variant="secondary"
-      theme="orange"
-      actionIcon="xmark"
-      onActionClick={() => alert("Reset clicked")}
-    />
+  <div className="flex items-start gap-cn-md border-b border-cn-borders-3 pb-cn-sm">
+    <span className="text-cn-size-2 text-cn-3 w-40 shrink-0 font-mono pt-cn-3xs">custom icon</span>
+    <div className="flex-1 min-w-0 flex flex-wrap items-center gap-cn-sm">
+      <Tag
+        value="Custom Icon"
+        variant="outline"
+        showIcon
+        icon="plus"
+        theme="mint"
+      />
+      <Tag
+        value="Custom Icon Secondary"
+        variant="secondary"
+        showIcon
+        icon="plus"
+        theme="cyan"
+      />
+      <Tag
+        value="Rounded Custom Icon"
+        variant="outline"
+        rounded
+        showIcon
+        icon="plus"
+        theme="orange"
+      />
+      <Tag
+        value="Rounded Custom Icon Secondary"
+        variant="secondary"
+        rounded
+        showIcon
+        icon="plus"
+        theme="pink"
+      />
+    </div>
   </div>
-</div>
-
-{/* Tags with Icon */}
-
-<div>
-  <Text variant="heading-subsection" as="h4" className="mb-cn-sm">
-    Tags with Icon
-  </Text>
-  <div className="flex flex-wrap items-end gap-cn-sm">
-    <Tag value="Outline Icon" variant="outline" showIcon theme="yellow" />
-    <Tag value="Secondary Icon" variant="secondary" showIcon theme="violet" />
-    <Tag
-      value="Rounded Outline Icon"
-      variant="outline"
-      rounded
-      showIcon
-      theme="brown"
-    />
-    <Tag
-      value="Rounded Secondary Icon"
-      variant="secondary"
-      rounded
-      showIcon
-      theme="indigo"
-    />
+  <div className="flex items-start gap-cn-md border-b border-cn-borders-3 pb-cn-sm">
+    <span className="text-cn-size-2 text-cn-3 w-40 shrink-0 font-mono pt-cn-3xs">with reset</span>
+    <div className="flex-1 min-w-0 flex flex-wrap items-center gap-cn-sm">
+      <Tag
+        value="Outline Reset"
+        variant="outline"
+        actionIcon="xmark"
+        onActionClick={() => alert("Reset clicked")}
+        theme="blue"
+      />
+      <Tag
+        value="Secondary Reset"
+        variant="secondary"
+        icon="label"
+        actionIcon="xmark"
+        onActionClick={() => alert("Reset clicked")}
+        theme="green"
+      />
+      <Tag
+        value="Rounded Outline Reset"
+        variant="outline"
+        rounded
+        actionIcon="xmark"
+        onActionClick={() => alert("Reset clicked")}
+        theme="purple"
+      />
+      <Tag
+        value="Rounded Secondary Reset"
+        variant="secondary"
+        rounded
+        actionIcon="xmark"
+        onActionClick={() => alert("Reset clicked")}
+        theme="red"
+      />
+    </div>
   </div>
-</div>
-
-{/* Tags with Custom Icon */}
-
-<div>
-  <Text variant="heading-subsection" as="h4" className="mb-cn-sm">
-    Tags with Custom Icon
-  </Text>
-  <div className="flex flex-wrap items-end gap-cn-sm">
-    <Tag
-      value="Custom Icon"
-      variant="outline"
-      showIcon
-      icon="plus"
-      theme="mint"
-    />
-    <Tag
-      value="Custom Icon Secondary"
-      variant="secondary"
-      showIcon
-      icon="plus"
-      theme="cyan"
-    />
-    <Tag
-      value="Rounded Custom Icon"
-      variant="outline"
-      rounded
-      showIcon
-      icon="plus"
-      theme="orange"
-    />
-    <Tag
-      value="Rounded Custom Icon Secondary"
-      variant="secondary"
-      rounded
-      showIcon
-      icon="plus"
-      theme="pink"
-    />
-  </div>
-</div>
-
-{/* Tags with Reset */}
-
-<div>
-  <Text variant="heading-subsection" as="h4" className="mb-cn-sm">
-    Tags with Reset
-  </Text>
-  <div className="flex flex-wrap items-end gap-cn-sm">
-    <Tag
-      value="Outline Reset"
-      variant="outline"
-      actionIcon="xmark"
-      onActionClick={() => alert("Reset clicked")}
-      theme="blue"
-    />
-    <Tag
-      value="Secondary Reset"
-      variant="secondary"
-      icon="label"
-      actionIcon="xmark"
-      onActionClick={() => alert("Reset clicked")}
-      theme="green"
-    />
-    <Tag
-      value="Rounded Outline Reset"
-      variant="outline"
-      rounded
-      actionIcon="xmark"
-      onActionClick={() => alert("Reset clicked")}
-      theme="purple"
-    />
-    <Tag
-      value="Rounded Secondary Reset"
-      variant="secondary"
-      rounded
-      actionIcon="xmark"
-      onActionClick={() => alert("Reset clicked")}
-      theme="red"
-    />
-  </div>
-</div>
-
-{/* Tags with Icon and Reset */}
-
-  <div>
-    <Text variant="heading-subsection" as="h4" className="mb-cn-sm">Tags with Icon and Reset</Text>
-    <div className="flex flex-wrap items-end gap-cn-sm">
+  <div className="flex items-start gap-cn-md">
+    <span className="text-cn-size-2 text-cn-3 w-40 shrink-0 font-mono pt-cn-3xs">icon + reset</span>
+    <div className="flex-1 min-w-0 flex flex-wrap items-center gap-cn-sm">
       <Tag
         value="Outline Icon Reset"
         variant="outline"

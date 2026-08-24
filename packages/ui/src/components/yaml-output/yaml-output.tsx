@@ -23,7 +23,8 @@ export const YamlOutput: FC<YamlOutputProps> = ({
   runDisabled,
   runLoading,
   readOnly,
-  showModeToggle = true
+  showModeToggle = true,
+  hideLineNumbers = false
 }) => {
   const themeConfig = useMonacoTheme()
 
@@ -81,7 +82,7 @@ export const YamlOutput: FC<YamlOutputProps> = ({
             }
           }}
           themeConfig={themeConfig}
-          options={{ readOnly: readOnly || !onChange }}
+          options={{ readOnly: readOnly || !onChange, lineNumbers: hideLineNumbers ? 'off' : 'on' }}
           instanceId="yaml-output"
         />
       </div>

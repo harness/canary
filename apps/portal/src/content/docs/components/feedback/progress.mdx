@@ -32,22 +32,19 @@ The `Progress` component supports the `variant` prop to indicate the type of pro
 
 <DocsPage.ComponentExample
   client:only
-  code={`<div className="w-[600px] grid gap-cn-md">
-    <div>
-      <Text variant="heading-base" className="underline mb-cn-3xs">default:</Text>
-      <Progress
-        value={0.75}
-        state="processing"
-      />
+  code={`<div className="space-y-cn-sm w-full">
+  <div className="flex items-start gap-cn-md border-b border-cn-borders-3 pb-cn-sm">
+    <span className="text-cn-size-2 text-cn-3 w-40 shrink-0 font-mono pt-cn-xs">default</span>
+    <div className="flex-1 min-w-0 max-w-[600px]">
+      <Progress value={0.75} state="processing" />
     </div>
-
-    <div>
-      <Text variant="heading-base" className="underline mb-cn-3xs">indeterminate:</Text>
-      <Progress
-        variant="indeterminate"
-      />
+  </div>
+  <div className="flex items-start gap-cn-md">
+    <span className="text-cn-size-2 text-cn-3 w-40 shrink-0 font-mono pt-cn-xs">indeterminate</span>
+    <div className="flex-1 min-w-0 max-w-[600px]">
+      <Progress variant="indeterminate" />
     </div>
-
+  </div>
 </div>`}
 />
 
@@ -57,30 +54,32 @@ The `Progress` component supports the `state` prop to reflect the current status
 
 <DocsPage.ComponentExample
   client:only
-  code={`<div className="w-[600px] grid gap-cn-md">
-    
-    <div>
-      <Text variant="heading-base" className="underline mb-cn-3xs">completed:</Text>
-      <Progress 
+  code={`<div className="space-y-cn-sm w-full">
+  <div className="flex items-start gap-cn-md border-b border-cn-borders-3 pb-cn-sm">
+    <span className="text-cn-size-2 text-cn-3 w-40 shrink-0 font-mono pt-cn-xs">completed</span>
+    <div className="flex-1 min-w-0 max-w-[600px]">
+      <Progress
         value={1}
         subtitle="Completed"
         label="Analytics_Report_March.csv"
         state="completed"
       />
     </div>
-    
-    <div>
-      <Text variant="heading-base" className="underline mb-cn-3xs">paused:</Text>
-      <Progress 
+  </div>
+  <div className="flex items-start gap-cn-md border-b border-cn-borders-3 pb-cn-sm">
+    <span className="text-cn-size-2 text-cn-3 w-40 shrink-0 font-mono pt-cn-xs">paused</span>
+    <div className="flex-1 min-w-0 max-w-[600px]">
+      <Progress
         value={0.5}
         label="Analytics_Report_March.csv"
         subtitle="Paused"
         state="paused"
       />
     </div>
-
-    <div>
-      <Text variant="heading-base" className="underline mb-cn-3xs">failed:</Text>
+  </div>
+  <div className="flex items-start gap-cn-md border-b border-cn-borders-3 pb-cn-sm">
+    <span className="text-cn-size-2 text-cn-3 w-40 shrink-0 font-mono pt-cn-xs">failed</span>
+    <div className="flex-1 min-w-0 max-w-[600px]">
       <Progress
         value={0.5}
         label="Analytics_Report_March.csv"
@@ -89,9 +88,10 @@ The `Progress` component supports the `state` prop to reflect the current status
         state="failed"
       />
     </div>
-
-    <div>
-      <Text variant="heading-base" className="underline mb-cn-3xs">processing:</Text>
+  </div>
+  <div className="flex items-start gap-cn-md border-b border-cn-borders-3 pb-cn-sm">
+    <span className="text-cn-size-2 text-cn-3 w-40 shrink-0 font-mono pt-cn-xs">processing</span>
+    <div className="flex-1 min-w-0 max-w-[600px]">
       <Progress
         value={0.5}
         label="Analytics_Report_March.csv"
@@ -99,9 +99,10 @@ The `Progress` component supports the `state` prop to reflect the current status
         state="processing"
       />
     </div>
-
-    <div>
-      <Text variant="heading-base" className="underline mb-cn-3xs">default:</Text>
+  </div>
+  <div className="flex items-start gap-cn-md">
+    <span className="text-cn-size-2 text-cn-3 w-40 shrink-0 font-mono pt-cn-xs">default</span>
+    <div className="flex-1 min-w-0 max-w-[600px]">
       <Progress
         value={0.5}
         label="Analytics_Report_March.csv"
@@ -109,7 +110,7 @@ The `Progress` component supports the `state` prop to reflect the current status
         description="This is a description text"
       />
     </div>
-
+  </div>
 </div>`}
 />
 
@@ -121,10 +122,10 @@ The `Progress` component supports a `color` prop that accepts a closed enum of p
 
 <DocsPage.ComponentExample
   client:only
-  code={`<div className="w-[600px] grid gap-cn-md">
-
-    <div>
-      <Text variant="heading-base" className="underline mb-cn-3xs">blue:</Text>
+  code={`<div className="space-y-cn-sm w-full">
+  <div className="flex items-start gap-cn-md border-b border-cn-borders-3 pb-cn-sm">
+    <span className="text-cn-size-2 text-cn-3 w-40 shrink-0 font-mono pt-cn-xs">blue</span>
+    <div className="flex-1 min-w-0 max-w-[600px]">
       <Progress
         value={0.6}
         color="blue"
@@ -132,9 +133,10 @@ The `Progress` component supports a `color` prop that accepts a closed enum of p
         subtitle="60%"
       />
     </div>
-
-    <div>
-      <Text variant="heading-base" className="underline mb-cn-3xs">purple:</Text>
+  </div>
+  <div className="flex items-start gap-cn-md border-b border-cn-borders-3 pb-cn-sm">
+    <span className="text-cn-size-2 text-cn-3 w-40 shrink-0 font-mono pt-cn-xs">purple</span>
+    <div className="flex-1 min-w-0 max-w-[600px]">
       <Progress
         value={0.4}
         color="purple"
@@ -142,9 +144,10 @@ The `Progress` component supports a `color` prop that accepts a closed enum of p
         subtitle="40%"
       />
     </div>
-
-    <div>
-      <Text variant="heading-base" className="underline mb-cn-3xs">forest-green:</Text>
+  </div>
+  <div className="flex items-start gap-cn-md border-b border-cn-borders-3 pb-cn-sm">
+    <span className="text-cn-size-2 text-cn-3 w-40 shrink-0 font-mono pt-cn-xs">forest-green</span>
+    <div className="flex-1 min-w-0 max-w-[600px]">
       <Progress
         value={0.8}
         color="forest-green"
@@ -152,17 +155,18 @@ The `Progress` component supports a `color` prop that accepts a closed enum of p
         subtitle="80%"
       />
     </div>
-
-    <div>
-      <Text variant="heading-base" className="underline mb-cn-3xs">indeterminate + cyan:</Text>
+  </div>
+  <div className="flex items-start gap-cn-md">
+    <span className="text-cn-size-2 text-cn-3 w-40 shrink-0 font-mono pt-cn-xs">indeterminate + cyan</span>
+    <div className="flex-1 min-w-0 max-w-[600px]">
       <Progress
         variant="indeterminate"
         color="cyan"
         label="Loading"
       />
     </div>
-
-  </div>`}
+  </div>
+</div>`}
 />
 
 ### Sizes
@@ -171,10 +175,10 @@ The `Progress` component supports the `size` prop to adjust the height of the pr
 
 <DocsPage.ComponentExample
   client:only
-  code={`<div className="w-[600px] grid gap-cn-md">
-    
-    <div>
-      <Text variant="heading-base" className="underline mb-cn-3xs">small:</Text>
+  code={`<div className="space-y-cn-sm w-full">
+  <div className="flex items-start gap-cn-md border-b border-cn-borders-3 pb-cn-sm">
+    <span className="text-cn-size-2 text-cn-3 w-40 shrink-0 font-mono pt-cn-xs">small</span>
+    <div className="flex-1 min-w-0 max-w-[600px]">
       <Progress
         size="sm"
         value={0.5}
@@ -183,9 +187,10 @@ The `Progress` component supports the `size` prop to adjust the height of the pr
         description="This is a description text"
       />
     </div>
-
-    <div>
-      <Text variant="heading-base" className="underline mb-cn-3xs">medium:</Text>
+  </div>
+  <div className="flex items-start gap-cn-md border-b border-cn-borders-3 pb-cn-sm">
+    <span className="text-cn-size-2 text-cn-3 w-40 shrink-0 font-mono pt-cn-xs">medium</span>
+    <div className="flex-1 min-w-0 max-w-[600px]">
       <Progress
         size="md"
         value={0.5}
@@ -194,9 +199,10 @@ The `Progress` component supports the `size` prop to adjust the height of the pr
         description="This is a description text"
       />
     </div>
-
-    <div>
-      <Text variant="heading-base" className="underline mb-cn-3xs">large:</Text>
+  </div>
+  <div className="flex items-start gap-cn-md border-b border-cn-borders-3 pb-cn-sm">
+    <span className="text-cn-size-2 text-cn-3 w-40 shrink-0 font-mono pt-cn-xs">large</span>
+    <div className="flex-1 min-w-0 max-w-[600px]">
       <Progress
         size="lg"
         value={0.5}
@@ -205,12 +211,26 @@ The `Progress` component supports the `size` prop to adjust the height of the pr
         description="This is a description text"
       />
     </div>
-
-    <Progress size="sm" value={0.75} state="processing"  />
-    <Progress size="md" value={0.75} state="processing" />
-    <Progress size="lg" value={0.75} state="processing" />
-
-  </div>`}
+  </div>
+  <div className="flex items-center gap-cn-md border-b border-cn-borders-3 pb-cn-sm">
+    <span className="text-cn-size-2 text-cn-3 w-40 shrink-0 font-mono">sm · processing</span>
+    <div className="flex-1 min-w-0 max-w-[600px]">
+      <Progress size="sm" value={0.75} state="processing" />
+    </div>
+  </div>
+  <div className="flex items-center gap-cn-md border-b border-cn-borders-3 pb-cn-sm">
+    <span className="text-cn-size-2 text-cn-3 w-40 shrink-0 font-mono">md · processing</span>
+    <div className="flex-1 min-w-0 max-w-[600px]">
+      <Progress size="md" value={0.75} state="processing" />
+    </div>
+  </div>
+  <div className="flex items-center gap-cn-md">
+    <span className="text-cn-size-2 text-cn-3 w-40 shrink-0 font-mono">lg · processing</span>
+    <div className="flex-1 min-w-0 max-w-[600px]">
+      <Progress size="lg" value={0.75} state="processing" />
+    </div>
+  </div>
+</div>`}
 />
 
 ## API Reference

@@ -20,7 +20,7 @@ main {
 }
 
 .sl-container :is(h3):not(:where(.not-content *)) {
-  @apply text-cn-size-7 font-normal text-cn-1;
+  @apply text-cn-size-7 font-semibold text-cn-1;
 }
 
 .sl-container :is(h4):not(:where(.not-content *)) {

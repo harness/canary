@@ -10,42 +10,46 @@ import { DocsPage } from "@/components/docs-page";
 
 <DocsPage.ComponentExample
   client:only
-  code={`<div className="flex flex-col gap-cn-md">
-    <h5>Standard usage</h5>
-    <Switch 
-      id="airplane-mode"
-      label="Airplane mode"
-      caption="Enable or disable airplane mode to control all wireless communication."
-    />
-
-    <hr className="my-cn-md" />
-
-    <h5>Optional Field</h5>
-    <Switch
-      id="notifications"
-      label="Enable notifications"
-      caption="Toggle to enable or disable notifications."
-      optional
-    />
-
-    <hr className="my-cn-md" />
-
-    <h5>Disabled</h5>
-    <Switch
-      id="god-mode"
-      label="God mode"
-      caption="Toggle to enable or disable God mode, which grants unrestricted access and control."
-      disabled
-    />
-
-    <hr className="my-cn-md" />
-
-    <h5>Without Label and Caption</h5>
-    <div className="flex gap-cn-md">
+  code={`<div className="space-y-cn-sm w-full">
+  <div className="flex items-start gap-cn-md border-b border-cn-borders-3 pb-cn-sm">
+    <span className="text-cn-size-2 text-cn-3 w-40 shrink-0 font-mono pt-cn-xs">standard</span>
+    <div className="flex-1 min-w-0 max-w-[520px]">
+      <Switch
+        id="airplane-mode"
+        label="Airplane mode"
+        caption="Enable or disable airplane mode to control all wireless communication."
+      />
+    </div>
+  </div>
+  <div className="flex items-start gap-cn-md border-b border-cn-borders-3 pb-cn-sm">
+    <span className="text-cn-size-2 text-cn-3 w-40 shrink-0 font-mono pt-cn-xs">optional</span>
+    <div className="flex-1 min-w-0 max-w-[520px]">
+      <Switch
+        id="notifications"
+        label="Enable notifications"
+        caption="Toggle to enable or disable notifications."
+        optional
+      />
+    </div>
+  </div>
+  <div className="flex items-start gap-cn-md border-b border-cn-borders-3 pb-cn-sm">
+    <span className="text-cn-size-2 text-cn-3 w-40 shrink-0 font-mono pt-cn-xs">disabled</span>
+    <div className="flex-1 min-w-0 max-w-[520px]">
+      <Switch
+        id="god-mode"
+        label="God mode"
+        caption="Toggle to enable or disable God mode, which grants unrestricted access and control."
+        disabled
+      />
+    </div>
+  </div>
+  <div className="flex items-start gap-cn-md">
+    <span className="text-cn-size-2 text-cn-3 w-40 shrink-0 font-mono pt-cn-xs">no label / caption</span>
+    <div className="flex-1 min-w-0 flex gap-cn-md">
       <Switch id="no-label-caption" />
       <Switch id="no-label-caption-disabled" disabled />
     </div>
-
+  </div>
 </div>`}
 />
 

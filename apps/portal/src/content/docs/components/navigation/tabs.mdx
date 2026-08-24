@@ -86,46 +86,59 @@ The `Tabs` component supports multiple visual variants that can be applied via t
 
 <DocsPage.ComponentExample
   client:only
-  code={`<div className="grid gap-cn-sm">
-    {/* Underlined (default) */}
-    <Tabs.Root defaultValue="tab1">
+  code={`<div className="space-y-cn-sm w-full">
+  <div className="flex items-center gap-cn-md border-b border-cn-borders-3 pb-cn-sm">
+    <span className="text-cn-size-2 text-cn-3 w-40 shrink-0 font-mono">underlined</span>
+    <div className="flex-1 min-w-0">
+      <Tabs.Root defaultValue="tab1">
         <Tabs.List>
-            <Tabs.Trigger value="tab1">Underlined 1</Tabs.Trigger>
-            <Tabs.Trigger value="tab2">Underlined 2</Tabs.Trigger>
-            <Tabs.Trigger value="tab3">Underlined 3</Tabs.Trigger>
-            <Tabs.Trigger value="tab4" disabled>Underlined 3</Tabs.Trigger>
+          <Tabs.Trigger value="tab1">Underlined 1</Tabs.Trigger>
+          <Tabs.Trigger value="tab2">Underlined 2</Tabs.Trigger>
+          <Tabs.Trigger value="tab3">Underlined 3</Tabs.Trigger>
+          <Tabs.Trigger value="tab4" disabled>Underlined 4</Tabs.Trigger>
         </Tabs.List>
-    </Tabs.Root>
-    
-    {/* Overlined */}
-    <Tabs.Root defaultValue="tab1">
+      </Tabs.Root>
+    </div>
+  </div>
+  <div className="flex items-center gap-cn-md border-b border-cn-borders-3 pb-cn-sm">
+    <span className="text-cn-size-2 text-cn-3 w-40 shrink-0 font-mono">overlined</span>
+    <div className="flex-1 min-w-0">
+      <Tabs.Root defaultValue="tab1">
         <Tabs.List variant="overlined">
-            <Tabs.Trigger value="tab1">Overlined 1</Tabs.Trigger>
-            <Tabs.Trigger value="tab2">Overlined 2</Tabs.Trigger>
-            <Tabs.Trigger value="tab3">Overlined 3</Tabs.Trigger>
-            <Tabs.Trigger value="tab4" disabled>Overlined 3</Tabs.Trigger>
+          <Tabs.Trigger value="tab1">Overlined 1</Tabs.Trigger>
+          <Tabs.Trigger value="tab2">Overlined 2</Tabs.Trigger>
+          <Tabs.Trigger value="tab3">Overlined 3</Tabs.Trigger>
+          <Tabs.Trigger value="tab4" disabled>Overlined 4</Tabs.Trigger>
         </Tabs.List>
-    </Tabs.Root>
-    
-    {/* Ghost */}
-    <Tabs.Root defaultValue="tab1">
+      </Tabs.Root>
+    </div>
+  </div>
+  <div className="flex items-center gap-cn-md border-b border-cn-borders-3 pb-cn-sm">
+    <span className="text-cn-size-2 text-cn-3 w-40 shrink-0 font-mono">ghost</span>
+    <div className="flex-1 min-w-0">
+      <Tabs.Root defaultValue="tab1">
         <Tabs.List variant="ghost">
-            <Tabs.Trigger value="tab1">Ghost 1</Tabs.Trigger>
-            <Tabs.Trigger value="tab2">Ghost 2</Tabs.Trigger>
-            <Tabs.Trigger value="tab3">Ghost 3</Tabs.Trigger>
-            <Tabs.Trigger value="tab4" disabled>Ghost 3</Tabs.Trigger>
+          <Tabs.Trigger value="tab1">Ghost 1</Tabs.Trigger>
+          <Tabs.Trigger value="tab2">Ghost 2</Tabs.Trigger>
+          <Tabs.Trigger value="tab3">Ghost 3</Tabs.Trigger>
+          <Tabs.Trigger value="tab4" disabled>Ghost 4</Tabs.Trigger>
         </Tabs.List>
-    </Tabs.Root>
-    
-    {/* Outlined */}
-    <Tabs.Root defaultValue="tab1">
+      </Tabs.Root>
+    </div>
+  </div>
+  <div className="flex items-center gap-cn-md">
+    <span className="text-cn-size-2 text-cn-3 w-40 shrink-0 font-mono">outlined</span>
+    <div className="flex-1 min-w-0">
+      <Tabs.Root defaultValue="tab1">
         <Tabs.List variant="outlined">
-            <Tabs.Trigger value="tab1">Outlined 1</Tabs.Trigger>
-            <Tabs.Trigger value="tab2">Outlined 2</Tabs.Trigger>
-            <Tabs.Trigger value="tab3">Outlined 3</Tabs.Trigger>
-            <Tabs.Trigger value="tab4" disabled>Outlined 3</Tabs.Trigger>
+          <Tabs.Trigger value="tab1">Outlined 1</Tabs.Trigger>
+          <Tabs.Trigger value="tab2">Outlined 2</Tabs.Trigger>
+          <Tabs.Trigger value="tab3">Outlined 3</Tabs.Trigger>
+          <Tabs.Trigger value="tab4" disabled>Outlined 4</Tabs.Trigger>
         </Tabs.List>
-    </Tabs.Root>
+      </Tabs.Root>
+    </div>
+  </div>
 </div>`}
 />
 

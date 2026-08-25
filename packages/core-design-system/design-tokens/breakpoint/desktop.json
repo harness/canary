@@ -133,17 +133,6 @@
       "$description": "De-emphasized body text for secondary information. Uses reduced weight to create visual hierarchy while maintaining readability and size consistency with normal body text.\n\nCommon uses: Helper text, Placeholder content, Secondary descriptions, Supplementary information."
     },
     "single-line": {
-      "code": {
-        "$type": "typography",
-        "$value": {
-          "fontFamily": "{fontFamily.mono}",
-          "fontWeight": "{fontWeight.default.normal.300}",
-          "fontSize": "0.75rem",
-          "lineHeight": "{lineHeight.16}",
-          "letterSpacing": "{tracking.tight}"
-        },
-        "$description": "Monospaced typography that ensures character alignment for technical content. Maintains consistent spacing and character width to preserve code formatting while integrating harmoniously with surrounding text.\n\nCommon uses: Code snippets and examples, Terminal command instructions, File paths and system references, API endpoints."
-      },
       "normal": {
         "$type": "typography",
         "$value": {
@@ -165,17 +154,6 @@
           "letterSpacing": "{tracking.tight}"
         },
         "$description": "Emphasized component text for important interactive elements. Increases visual prominence without affecting component height. Ensures consistent vertical alignment within fixed-height UI elements."
-      },
-      "light": {
-        "$type": "typography",
-        "$value": {
-          "fontFamily": "{fontFamily.default}",
-          "fontWeight": "{fontWeight.default.normal.300}",
-          "fontSize": "{fontSize.5}",
-          "lineHeight": "{lineHeight.16}",
-          "letterSpacing": "{tracking.tight}"
-        },
-        "$description": "Subtle single-line text for tertiary information in compact UI elements. Combines reduced weight with zero line-height for minimal visual presence while remaining legible."
       }
     }
   },
@@ -251,39 +229,6 @@
           "textCase": "{textCase.uppercase}"
         },
         "$description": "Uppercase caption for categorical labels and section identifiers. Uses wide letter-spacing for improved legibility at small sizes.\n\nCommon uses: Category tags, Section labels, Status indicators, Column headers."
-      },
-      "strong": {
-        "$type": "typography",
-        "$value": {
-          "fontFamily": "{fontFamily.default}",
-          "fontWeight": "{fontWeight.default.normal.500}",
-          "fontSize": "0.75rem",
-          "lineHeight": "{lineHeight.16}",
-          "letterSpacing": "{tracking.normal}"
-        },
-        "$description": "Emphasized single-line caption for important compact labels. Combines increased weight with zero line-height for prominent metadata in constrained UI elements.\n\nCommon uses: Badge text, Important tags, Highlighted counts, Key indicators."
-      },
-      "code": {
-        "$type": "typography",
-        "$value": {
-          "fontFamily": "{fontFamily.mono}",
-          "fontWeight": "{fontWeight.default.normal.500}",
-          "fontSize": "0.75rem",
-          "lineHeight": "{lineHeight.16}",
-          "letterSpacing": "{tracking.normal}"
-        },
-        "$description": "Compact monospaced caption for inline technical content. Optimized for single-line display of code snippets in space-constrained UI elements.\n\nCommon uses: Inline variable names, Short commands, Version tags, Technical badges."
-      },
-      "light": {
-        "$type": "typography",
-        "$value": {
-          "fontFamily": "{fontFamily.default}",
-          "fontWeight": "{fontWeight.default.normal.300}",
-          "fontSize": "0.75rem",
-          "lineHeight": "{lineHeight.16}",
-          "letterSpacing": "{tracking.normal}"
-        },
-        "$description": "Minimal-emphasis component text for auxiliary information. Combines reduced weight with zero line-height for the most visually subtle typography suitable for non-critical interface elements."
       }
     }
   },

@@ -15,7 +15,7 @@ const variant = instance.getEnum('variant', {
   body: 'body-normal',
   'body: code': 'body-code',
   'body: single-line': 'body-single-line-normal',
-  'body: single-line: code': 'body-single-line-code',
+  'body: single-line: code': 'body-code',
   caption: 'caption-normal',
   'caption: single-line': 'caption-single-line'
 })

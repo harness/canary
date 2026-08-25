@@ -36,10 +36,6 @@ export const typography = {
       font: 'var(--cn-body-code)',
       letterSpacing: 'var(--cn-tracking-tight)'
     },
-    '&-body-single-line-code': {
-      font: 'var(--cn-body-single-line-code)',
-      letterSpacing: 'var(--cn-tracking-tight)'
-    },
     '&-caption-normal': {
       font: 'var(--cn-caption-normal)',
       letterSpacing: 'var(--cn-tracking-normal)'
@@ -56,10 +52,6 @@ export const typography = {
       font: 'var(--cn-caption-code)',
       letterSpacing: 'var(--cn-tracking-normal)'
     },
-    '&-caption-single-line-code': {
-      font: 'var(--cn-caption-single-line-code)',
-      letterSpacing: 'var(--cn-tracking-normal)'
-    },
     '&-link-default': {
       font: 'var(--cn-comp-link-default)'
     },
@@ -74,20 +66,8 @@ export const typography = {
       font: 'var(--cn-body-single-line-normal)',
       letterSpacing: 'var(--cn-tracking-tight)'
     },
-    '&-body-single-line-light': {
-      font: 'var(--cn-body-single-line-light)',
-      letterSpacing: 'var(--cn-tracking-tight)'
-    },
     '&-caption-single-line-normal': {
       font: 'var(--cn-caption-single-line-normal)',
-      letterSpacing: 'var(--cn-tracking-normal)'
-    },
-    '&-caption-single-line-strong': {
-      font: 'var(--cn-caption-single-line-strong)',
-      letterSpacing: 'var(--cn-tracking-normal)'
-    },
-    '&-caption-single-line-light': {
-      font: 'var(--cn-caption-single-line-light)',
       letterSpacing: 'var(--cn-tracking-normal)'
     },
     '&-dialog-title': {

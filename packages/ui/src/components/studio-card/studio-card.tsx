@@ -220,7 +220,7 @@ function ExpandButton({
           {variant === 'default' && (icon ?? <IconV2 name="harness-plugins" size="lg" />)}
           <Text
             color="inherit"
-            variant={variant === 'minimal' ? 'caption-single-line-code' : 'body-strong'}
+            variant={variant === 'minimal' ? 'caption-code' : 'body-strong'}
             className="min-w-0 flex-1"
             truncate
           >
@@ -232,7 +232,7 @@ function ExpandButton({
         {/* Count + expand icon */}
         {variant === 'default' && (
           <div className="cn-studio-card-expand-button-bottom">
-            <Text color="foreground-1" variant="body-single-line-code">
+            <Text color="foreground-1" variant="body-code" className="leading-none">
               +{stepCount} more
             </Text>
             <IconV2
@@ -336,7 +336,7 @@ function StudioCardButton({
       type="button"
       className={cn('cn-studio-card-button', 'bg-cn-3 shadow-cn-none self-start', className)}
     >
-      <Text color="foreground-1" variant="body-single-line-code">
+      <Text color="foreground-1" variant="body-code" className="leading-none">
         {children}
       </Text>
       {icon && <IconV2 className="text-cn-2" name={icon} size="sm" />}

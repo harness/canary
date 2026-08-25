@@ -193,13 +193,15 @@ export function FlowEngineProvider({
   pendingReactivationRef.current = pendingReactivation
   // Tracks steps that have reached a terminal state (completed/skipped).
   // Prevents duplicate transitions from React strict mode or async races.
+  // Fresh mounts must start empty: live complete() adds the current step on first
+  // transition, and adds a *next* terminal step only when navigating onto it.
+  // Rebuilding from the default `{ initialStep, active }` seed would mark a
+  // terminal initial step as already done, so the first complete() takes the
+  // re-entry path and never paints completed.
   const terminalRef = useRef<Set<string>>(
-    rebuildTerminalRef(
-      flow,
-      isUsableInitialEngineState(flow, initialEngineState)
-        ? initialEngineState.cardHistory
-        : [{ stepId: flow.initialStep, status: 'active', stateSnapshot: {} }]
-    )
+    isUsableInitialEngineState(flow, initialEngineState)
+      ? rebuildTerminalRef(flow, initialEngineState.cardHistory)
+      : new Set()
   )
 
   // Derived: active step

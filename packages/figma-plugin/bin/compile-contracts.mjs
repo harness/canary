@@ -17,7 +17,7 @@ const uiRoot = path.resolve(pluginRoot, '../ui')
 const inventoryPath = path.join(uiRoot, 'catalog', 'component-inventory.json')
 const contractsDir = path.join(uiRoot, 'catalog', 'contracts')
 const evaluationProfilePath = path.join(uiRoot, 'catalog', 'evaluation-profile.json')
-const buttonReceiptPath = path.join(uiRoot, 'catalog', 'generated', 'button.audit-receipt.json')
+const generatedCatalogDir = path.join(uiRoot, 'catalog', 'generated')
 const catalogsRoot = path.join(pluginRoot, 'catalogs')
 const publicRoot = path.join(pluginRoot, 'public', 'catalogs')
 const SYSTEM_ID = 'canary'
@@ -141,6 +141,34 @@ function contractFingerprint(filePath) {
   return createHash('sha256').update(readFileSync(filePath)).digest('hex')
 }
 
+function contractSlug(contractId) {
+  return String(contractId ?? '').replace(/^canary\./, '')
+}
+
+function auditReceiptPath(contractId) {
+  const slug = contractSlug(contractId)
+  if (!slug) {
+    throw new Error(`${contractId ?? 'unknown'}: cannot derive audit receipt path`)
+  }
+  return path.join(generatedCatalogDir, `${slug}.audit-receipt.json`)
+}
+
+function readBaselineReceipt(contract) {
+  const contractId = contract?.identity?.id
+  const filePath = auditReceiptPath(contractId)
+  if (!existsSync(filePath)) {
+    throw new Error(`${contractId}: missing audit receipt ${repositoryPath(filePath)}`)
+  }
+
+  const receipt = readJson(filePath)
+  if (receipt.componentId && receipt.componentId !== contractId) {
+    throw new Error(
+      `${contractId}: audit receipt ${repositoryPath(filePath)} belongs to ${receipt.componentId}`
+    )
+  }
+  return receipt
+}
+
 function catalogType(type) {
   if (type === 'react-node') return 'string'
   if (CATALOG_PROP_TYPES.has(type)) return type
@@ -257,7 +285,7 @@ export function compileContract(contract, source) {
   const designOnly = properties.filter(property => property.bindings?.figma && !property.bindings?.react)
   const codeOnly = properties.filter(property => !property.bindings?.figma && property.bindings?.react)
   const evaluationProfile = readJson(evaluationProfilePath)
-  const baselineReceipt = readJson(buttonReceiptPath)
+  const baselineReceipt = readBaselineReceipt(contract)
 
   const entry = {
     id: contractId,
@@ -385,7 +413,7 @@ export function compileCanaryPack({ packedAt = new Date().toISOString() } = {}) 
   const entries = sources.map(({ contract, filePath }) => compileContract(contract, { filePath }))
   const components = entries.map((entry, index) => {
     const contract = sources[index].contract
-    const slug = entry.id.replace(/^canary\./, '')
+    const slug = contractSlug(entry.id)
     return {
       id: entry.id,
       path: `${slug}.catalog.json`,

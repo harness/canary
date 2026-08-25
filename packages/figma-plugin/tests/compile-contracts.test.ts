@@ -94,6 +94,24 @@ describe('compiled Button catalog', () => {
       expect(button.figma.componentKeys).not.toContain(key)
     }
   })
+
+  it('loads the audit receipt for the compiled contract instead of a hardcoded Button path', async () => {
+    const { compileContract } = await import('../bin/compile-contracts.mjs')
+    const contract = JSON.parse(buttonContractSource)
+    const compiled = compileContract(contract, { filePath: buttonContractPath })
+
+    expect(compiled.baselineReceipt.componentId).toBe(contract.identity.id)
+
+    expect(() =>
+      compileContract(
+        {
+          ...contract,
+          identity: { ...contract.identity, id: 'canary.checkbox' }
+        },
+        { filePath: buttonContractPath }
+      )
+    ).toThrow(/checkbox\.audit-receipt\.json/)
+  })
 })
 
 describe('compiled Canary pack', () => {

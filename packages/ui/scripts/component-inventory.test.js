@@ -247,6 +247,35 @@ test('matches Code Connect evidence by component metadata instead of filename pr
   ])
 })
 
+test('warns when a Code Connect file has no parseable component header', async () => {
+  const packageRoot = mkdtempSync(join(tmpdir(), 'canary-inventory-'))
+  tempRoots.push(packageRoot)
+
+  const componentsIndexPath = writeFixture(packageRoot, 'src/components/index.ts', "export * from './button'")
+  writeFixture(packageRoot, 'src/components/button.ts', 'export const Button = () => null')
+  writeFixture(packageRoot, 'src/components/button-primary.figma.ts', '// component=Button\nexport default {}')
+  writeFixture(packageRoot, 'src/components/button-forgotten.figma.ts', 'export default {}')
+  writeFixture(packageRoot, 'src/components/button-mistyped.figma.ts', '// component Button\nexport default {}')
+
+  const warnings = []
+  const { generateComponentInventory } = await import('./component-inventory.mjs')
+  const inventory = generateComponentInventory({
+    packageRoot,
+    componentsIndexPath,
+    portalDocsRoot: join(packageRoot, 'portal/components'),
+    codeConnectRoot: join(packageRoot, 'src/components'),
+    warn: message => warnings.push(message)
+  })
+
+  expect(warnings).toEqual([
+    'Code Connect file src/components/button-forgotten.figma.ts is missing a parseable // component= header and will not be attached as inventory evidence',
+    'Code Connect file src/components/button-mistyped.figma.ts is missing a parseable // component= header and will not be attached as inventory evidence'
+  ])
+  expect(inventory.components.find(component => component.exportName === 'Button')?.codeConnect).toEqual([
+    'src/components/button-primary.figma.ts'
+  ])
+})
+
 test('serializes the generated inventory using canonical JSON formatting', async () => {
   const { serializeComponentInventory } = await import('./component-inventory.mjs')
 

@@ -136,25 +136,35 @@ function relativeEvidencePath(packageRoot, filePath) {
   return toPosixPath(relative(packageRoot, filePath))
 }
 
+function readCodeConnectComponentName(filePath) {
+  return readFileSync(filePath, 'utf8').match(/^\/\/ component=(.+)$/m)?.[1]?.trim() || undefined
+}
+
 export function generateComponentInventory({
   packageRoot,
   componentsIndexPath,
   portalDocsRoot,
   codeConnectRoot,
-  existingInventory = { components: [] }
+  existingInventory = { components: [] },
+  warn = console.warn
 }) {
   const componentsRoot = dirname(componentsIndexPath)
   const docs = listFiles(portalDocsRoot, filePath => filePath.endsWith('.mdx'))
   const codeConnectFiles = listFiles(
     codeConnectRoot,
     filePath => filePath.endsWith('.figma.ts') || filePath.endsWith('.figma.tsx')
-  )
-  const codeConnectEvidence = codeConnectFiles.map(filePath => ({
-    filePath,
-    componentName: readFileSync(filePath, 'utf8')
-      .match(/^\/\/ component=(.+)$/m)?.[1]
-      .trim()
-  }))
+  ).sort()
+  const codeConnectEvidence = []
+  for (const filePath of codeConnectFiles) {
+    const componentName = readCodeConnectComponentName(filePath)
+    if (!componentName) {
+      warn(
+        `Code Connect file ${relativeEvidencePath(packageRoot, filePath)} is missing a parseable // component= header and will not be attached as inventory evidence`
+      )
+      continue
+    }
+    codeConnectEvidence.push({ filePath, componentName })
+  }
 
   const byExportName = new Map()
   const existingById = new Map((existingInventory.components ?? []).map(component => [component.id, component]))

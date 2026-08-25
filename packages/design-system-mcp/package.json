@@ -1,18 +1,26 @@
 {
   "name": "@harnessio/design-system-mcp",
-  "private": true,
+  "private": false,
   "version": "0.1.0",
   "type": "module",
   "description": "Local stdio MCP server that resolves intent to Canary UI imports, examples, and icons",
   "bin": {
-    "canary-mcp": "./bin/canary-mcp.js"
+    "canary-mcp": "./bin/canary-mcp.js",
+    "design-system-mcp": "./bin/canary-mcp.js"
   },
+  "files": [
+    "bin",
+    "dist",
+    "catalog"
+  ],
   "scripts": {
     "build": "tsc",
     "start": "node ./bin/canary-mcp.js",
+    "bundle-catalog": "node ./scripts/bundle-agent-catalog.mjs",
+    "prepublishOnly": "node ../ui/scripts/compile-agent-catalog.mjs --write && node ./scripts/bundle-agent-catalog.mjs && tsc",
     "test": "node ../ui/scripts/compile-agent-catalog.mjs --write && vitest run",
     "typecheck": "tsc --noEmit",
-    "pretty": "prettier --check ./src ./tests ./bin"
+    "pretty": "prettier --check ./src ./tests ./bin ./scripts"
   },
   "engines": {
     "node": ">=18.17.1"

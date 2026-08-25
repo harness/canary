@@ -134,7 +134,10 @@ export function resolveAgentCatalogDir(
   const sibling = join(moduleDir, '../../ui/catalog/generated/agent')
   if (existsSync(join(sibling, 'components.json'))) return sibling
 
-  return join(moduleDir, '../catalog')
+  const bundled = join(moduleDir, '../catalog')
+  if (existsSync(join(bundled, 'components.json'))) return bundled
+
+  return bundled
 }
 
 export function loadAgentCatalog(catalogDir = resolveAgentCatalogDir()): AgentCatalog {
@@ -144,7 +147,9 @@ export function loadAgentCatalog(catalogDir = resolveAgentCatalogDir()): AgentCa
   const tokensPath = join(catalogDir, 'tokens.json')
 
   if (!existsSync(componentsPath) || !existsSync(iconsPath) || !existsSync(foundationsPath)) {
-    throw new Error(`Missing agent catalog at ${catalogDir}. Run: pnpm --filter @harnessio/ui catalog:generate`)
+    throw new Error(
+      `Missing agent catalog at ${catalogDir}. In this repo run: pnpm --filter @harnessio/ui catalog:generate. Published packages include catalog/ from prepublishOnly.`
+    )
   }
 
   const components = readEnvelope(componentsPath, componentSchema)

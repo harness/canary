@@ -7,7 +7,9 @@ import { fileURLToPath, pathToFileURL } from 'node:url'
 const packageRoot = join(dirname(fileURLToPath(import.meta.url)), '..')
 const repoRoot = join(packageRoot, '../..')
 const distEntry = join(packageRoot, 'dist/index.js')
-const catalogFile = join(repoRoot, 'packages/ui/catalog/generated/agent/components.json')
+const workspaceCatalog = join(repoRoot, 'packages/ui/catalog/generated/agent/components.json')
+const bundledCatalog = join(packageRoot, 'catalog/components.json')
+const compiler = join(repoRoot, 'packages/ui/scripts/compile-agent-catalog.mjs')
 
 function run(command, args, cwd) {
   const result = spawnSync(command, args, { cwd, encoding: 'utf8' })
@@ -27,21 +29,22 @@ if (!existsSync(distEntry)) {
   const tsc = resolveTsc()
   if (tsc) {
     run(tsc, ['-p', packageRoot], packageRoot)
-  } else {
+  } else if (existsSync(join(packageRoot, 'tsconfig.json'))) {
     run('pnpm', ['exec', 'tsc', '-p', packageRoot], packageRoot)
+  } else {
+    console.error('Missing dist/. Published packages include dist/; a fresh clone should compile with tsc.')
+    process.exit(1)
   }
 }
 
-if (!existsSync(catalogFile)) {
-  run(
-    process.execPath,
-    [join(repoRoot, 'packages/ui/scripts/compile-agent-catalog.mjs'), '--write'],
-    join(repoRoot, 'packages/ui')
-  )
+if (!existsSync(workspaceCatalog) && existsSync(compiler)) {
+  run(process.execPath, [compiler, '--write'], join(repoRoot, 'packages/ui'))
 }
 
-if (!existsSync(catalogFile)) {
-  console.error('Missing agent catalog after compile. Run: pnpm --filter @harnessio/ui catalog:generate')
+if (!existsSync(workspaceCatalog) && !existsSync(bundledCatalog)) {
+  console.error(
+    'Missing agent catalog. In this repo run: pnpm --filter @harnessio/ui catalog:generate. Published packages include catalog/ from prepublishOnly.'
+  )
   process.exit(1)
 }
 

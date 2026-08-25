@@ -27,6 +27,21 @@ This repo starts the server from `.cursor/mcp.json`:
 
 A fresh Cursor window on this repo should show **canary** connected with eight tools. The Canary UI skill is `.cursor/skills/canary-ui/SKILL.md`.
 
+Consumers that do not clone Canary can run the published package:
+
+```json
+{
+  "mcpServers": {
+    "canary": {
+      "command": "npx",
+      "args": ["-y", "@harnessio/design-system-mcp"]
+    }
+  }
+}
+```
+
+The published tarball includes compiled `dist/` and a bundled agent catalog. `npx` may serve a stale catalog from cache; refresh with `npx -y --prefer-online @harnessio/design-system-mcp` or by clearing the npx cache. Installing `@harnessio/ui` remains the app’s job; this process does not run `pnpm add`. HTTP is out of scope.
+
 ## Rebuild
 
 ```bash

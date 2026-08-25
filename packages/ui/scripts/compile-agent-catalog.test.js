@@ -217,6 +217,7 @@ function createFixturePackage() {
       {
         id: 'canary.drawer',
         exportName: 'Drawer',
+        summary: 'Slide-over panel from a screen edge. Compose Drawer.Root.',
         sourcePath: 'src/components/drawer/index.ts',
         family: 'drawer',
         disposition: 'contract',
@@ -236,6 +237,7 @@ function createFixturePackage() {
       {
         id: 'canary.mystery-export',
         exportName: 'MysteryExport',
+        summary: 'Unreviewed export with an inventory one-liner.',
         sourcePath: 'src/components/mystery.ts',
         family: 'mystery',
         disposition: 'unreviewed',
@@ -321,9 +323,33 @@ test('maps IconV2 to the visual icon Portal page and lists trash with delete syn
 
   expect(iconV2.confidence).toBe('fallback')
   expect(iconV2.portalPath).toContain('components/visual/icon.mdx')
+  expect(iconV2.summary).toMatch(/search_icons/)
   expect(iconV2.examples.some(example => example.code?.includes('<IconV2 name="check"'))).toBe(true)
   expect(trash.usage).toBe('<IconV2 name="trash" />')
   expect(trash.synonyms).toEqual(expect.arrayContaining(['delete', 'remove']))
+})
+
+test('golden-screen fallbacks use inventory summaries, not stub Portal copy or invented do/don’t', () => {
+  const expected = {
+    'canary.alert': { snippet: 'Alert.Root', confidence: 'fallback' },
+    'canary.button-layout': { snippet: 'Buttons', confidence: 'fallback' },
+    'canary.drawer': { snippet: 'Drawer.Root', confidence: 'fallback' },
+    'canary.icon-v2': { snippet: 'lucide-react', confidence: 'fallback' },
+    'canary.link': { snippet: 'Button for in-place', confidence: 'fallback' },
+    'canary.no-data': { snippet: 'Empty-state', confidence: 'unreviewed' },
+    'canary.select': { snippet: 'DropdownMenu', confidence: 'fallback' },
+    'canary.text-input': { snippet: 'form field', confidence: 'fallback' }
+  }
+
+  for (const [id, { snippet, confidence }] of Object.entries(expected)) {
+    const record = findRecord(catalog.components.records, id)
+    expect(record.confidence).toBe(confidence)
+    expect(record.summary).toContain(snippet)
+    expect(record.summary).not.toMatch(/ in the .+ family\.$/)
+    expect(record.do).toEqual([])
+    expect(record.dont).toEqual([])
+    expect(record.props).toEqual([])
+  }
 })
 
 test('emits a thin installation foundation without generatedAt', () => {
@@ -366,9 +392,11 @@ test('missing contract files and ComponentExample extraction work on a fixture p
   expect(dialog.members).toEqual(expect.arrayContaining(['Root', 'Trigger', 'Content']))
   expect(drawer.confidence).toBe('fallback')
   expect(drawer.props).toEqual([])
+  expect(drawer.summary).toBe('Slide-over panel from a screen edge. Compose Drawer.Root.')
   expect(drawer.examples[0].code).toContain('Drawer.Root')
   expect(mystery.confidence).toBe('unreviewed')
   expect(mystery.props).toEqual([])
+  expect(mystery.summary).toBe('Unreviewed export with an inventory one-liner.')
   expect(ids).not.toContain('canary.diff-mode-enum')
 })
 

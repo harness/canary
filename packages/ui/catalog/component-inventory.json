@@ -30,6 +30,7 @@
     {
       "id": "canary.alert",
       "exportName": "Alert",
+      "summary": "In-page status message. Compose Alert.Root. Not AlertDialog.",
       "sourcePath": "src/components/alert/index.ts",
       "family": "alert",
       "disposition": "unreviewed",
@@ -184,6 +185,7 @@
     {
       "id": "canary.button-layout",
       "exportName": "ButtonLayout",
+      "summary": "Groups related Buttons horizontally or vertically.",
       "sourcePath": "src/components/button-layout.tsx",
       "family": "button-layout",
       "disposition": "unreviewed",
@@ -645,6 +647,7 @@
     {
       "id": "canary.drawer",
       "exportName": "Drawer",
+      "summary": "Slide-over panel from a screen edge. Compose Drawer.Root.",
       "sourcePath": "src/components/drawer/index.ts",
       "family": "drawer",
       "disposition": "contract",
@@ -1024,6 +1027,7 @@
     {
       "id": "canary.icon-v2",
       "exportName": "IconV2",
+      "summary": "Renders a Canary icon by name. Call search_icons; never lucide-react.",
       "sourcePath": "src/components/icon-v2/icon-v2.tsx",
       "family": "icon-v2",
       "disposition": "unreviewed",
@@ -1213,6 +1217,7 @@
     {
       "id": "canary.link",
       "exportName": "Link",
+      "summary": "Navigates to a route, URL, or file. Use Button for in-place actions.",
       "sourcePath": "src/components/link.tsx",
       "family": "link",
       "disposition": "unreviewed",
@@ -1414,6 +1419,7 @@
     {
       "id": "canary.no-data",
       "exportName": "NoData",
+      "summary": "Empty-state placeholder when a list or page has nothing to show.",
       "sourcePath": "src/components/no-data.tsx",
       "family": "no-data",
       "disposition": "unreviewed",
@@ -1821,6 +1827,7 @@
     {
       "id": "canary.select",
       "exportName": "Select",
+      "summary": "Dropdown for choosing one option from a list. Not DropdownMenu.",
       "sourcePath": "src/components/form-primitives/select.tsx",
       "family": "select",
       "disposition": "contract",
@@ -2266,6 +2273,7 @@
     {
       "id": "canary.text-input",
       "exportName": "TextInput",
+      "summary": "Labeled single-line form field for user text.",
       "sourcePath": "src/components/inputs/text-input.tsx",
       "family": "text-input",
       "disposition": "contract",

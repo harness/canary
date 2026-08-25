@@ -301,10 +301,23 @@ function projectStable(component, contract, aliases, extra) {
   })
 }
 
+function isStubDescription(exportName, text) {
+  if (!text?.trim()) return true
+  const trimmed = text.trim()
+  if (trimmed.length < 20) return true
+  return new RegExp(`^${exportName}\\s+component\\b`, 'i').test(trimmed)
+}
+
+function catalogSummary(component, portalDescription) {
+  if (component.summary) return component.summary
+  if (portalDescription && !isStubDescription(component.exportName, portalDescription)) return portalDescription
+  return `${component.exportName} in the ${component.family} family.`
+}
+
 function projectFallback(component, aliases, extra) {
   return withSharedFields(component, aliases, extra, {
     import: defaultImport(component.exportName),
-    summary: extra.summary || `${component.exportName} in the ${component.family} family.`,
+    summary: extra.summary,
     confidence: 'fallback',
     examples: extra.examples ?? []
   })
@@ -313,7 +326,7 @@ function projectFallback(component, aliases, extra) {
 function projectUnreviewed(component, aliases, extra) {
   return withSharedFields(component, aliases, extra, {
     import: defaultImport(component.exportName),
-    summary: `${component.exportName} in the ${component.family} family.`,
+    summary: extra.summary,
     confidence: 'unreviewed'
   })
 }
@@ -397,7 +410,7 @@ export function compileAgentCatalog({ packageRoot, write = false }) {
       members,
       portalPath,
       examples,
-      summary: portalMdx ? parseFrontmatter(portalMdx).description : undefined
+      summary: catalogSummary(component, portalMdx ? parseFrontmatter(portalMdx).description : undefined)
     }
 
     const lifecycle = contract?.lifecycle?.status

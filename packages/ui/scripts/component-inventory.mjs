@@ -183,6 +183,7 @@ export function generateComponentInventory({
       return {
         id,
         exportName,
+        ...(existing?.summary ? { summary: existing.summary } : {}),
         sourcePath: relativeEvidencePath(packageRoot, sourcePath),
         family: existing?.family ?? componentFamily(sourcePath, componentsRoot),
         disposition: existing?.disposition ?? 'unreviewed',

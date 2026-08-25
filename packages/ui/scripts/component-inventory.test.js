@@ -160,6 +160,7 @@ test('preserves reviewed inventory fields when evidence is regenerated', async (
           sourcePath: 'old/button.ts',
           family: 'actions',
           disposition: 'contract',
+          summary: 'Triggers an immediate user action.',
           codeConnect: [],
           figmaComponentKeys: ['button-key'],
           contractPath: 'catalog/button.catalog.json',
@@ -176,6 +177,7 @@ test('preserves reviewed inventory fields when evidence is regenerated', async (
   expect(inventory.components[0]).toEqual({
     id: 'canary.button',
     exportName: 'Button',
+    summary: 'Triggers an immediate user action.',
     sourcePath: 'src/components/button.ts',
     family: 'actions',
     disposition: 'contract',

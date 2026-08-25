@@ -73,6 +73,7 @@ import Fossa from './logos/fossa.svg'
 import Git from './logos/git.svg'
 import Gitea from './logos/gitea.svg'
 import GithubAction from './logos/github-action.svg'
+import GithubCopilot from './logos/github-copilot.svg'
 import Github from './logos/github.svg'
 import Gitlab from './logos/gitlab.svg'
 import Gitleaks from './logos/gitleaks.svg'
@@ -243,6 +244,7 @@ export const LogoNameMapV2 = {
   git: Git,
   gitea: Gitea,
   'github-action': GithubAction,
+  'github-copilot': GithubCopilot,
   github: Github,
   gitlab: Gitlab,
   gitleaks: Gitleaks,

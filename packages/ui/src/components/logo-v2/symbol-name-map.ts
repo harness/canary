@@ -73,6 +73,7 @@ import Fossa from './symbols/fossa.svg'
 import Git from './symbols/git.svg'
 import Gitea from './symbols/gitea.svg'
 import GithubAction from './symbols/github-action.svg'
+import GithubCopilot from './symbols/github-copilot.svg'
 import Github from './symbols/github.svg'
 import Gitlab from './symbols/gitlab.svg'
 import Gitleaks from './symbols/gitleaks.svg'
@@ -243,6 +244,7 @@ export const SymbolNameMap = {
   git: Git,
   gitea: Gitea,
   'github-action': GithubAction,
+  'github-copilot': GithubCopilot,
   github: Github,
   gitlab: Gitlab,
   gitleaks: Gitleaks,

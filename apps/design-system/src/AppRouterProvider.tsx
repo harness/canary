@@ -12,6 +12,7 @@ import {
 
 import {
   Button,
+  ButtonProps,
   MoreActionsTooltip,
   RbacButtonProps,
   rbacTooltip,
@@ -23,7 +24,16 @@ import { ComponentProvider, RouterContextProvider } from '@harnessio/ui/context'
 const RbacButton = ({ rbac: _, tooltip, ...rest }: RbacButtonProps) => {
   const hasPermission = true
 
-  const button = <Button {...rest} ignoreIconOnlyTooltip disabled={!hasPermission} />
+  const button = (
+    <Button
+      // Omit<ButtonProps> on RbacButtonProps collapses the icon-only discriminant.
+      {...({
+        ...rest,
+        disabled: !hasPermission,
+        ...(rest.iconOnly ? { ignoreIconOnlyTooltip: true as const } : {})
+      } as ButtonProps)}
+    />
+  )
 
   return !hasPermission ? (
     <Tooltip title={tooltip?.title ?? rbacTooltip} content={tooltip?.content}>

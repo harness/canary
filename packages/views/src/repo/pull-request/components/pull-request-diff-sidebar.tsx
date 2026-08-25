@@ -44,6 +44,7 @@ export const PullRequestDiffSidebar: FC<PullRequestDiffSidebarProps> = ({
             variant="outline"
             onClick={() => setShowExplorer(false)}
             iconOnly
+            aria-label={t('views:pullRequests.collapseSidebar', 'Collapse Sidebar')}
             tooltipProps={{
               content: t('views:pullRequests.collapseSidebar', 'Collapse Sidebar')
             }}

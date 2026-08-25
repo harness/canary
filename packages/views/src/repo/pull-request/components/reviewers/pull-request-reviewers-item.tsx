@@ -155,6 +155,7 @@ const ReviewerItem = ({
           size="xs"
           variant="transparent"
           iconOnly
+          aria-label="Remove reviewer"
           tooltipProps={{ content: 'Remove reviewer', align: 'end' }}
         >
           <IconV2 name="xmark" skipSize />

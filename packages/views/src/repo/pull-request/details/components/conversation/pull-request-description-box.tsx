@@ -148,6 +148,7 @@ const PullRequestDescBox: FC<PullRequestDescBoxProps> = ({
                   setEdit(true)
                 }}
                 iconOnly
+                aria-label="Edit"
                 size="sm"
                 variant="outline"
                 tooltipProps={{

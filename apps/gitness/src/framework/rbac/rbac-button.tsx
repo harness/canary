@@ -1,4 +1,4 @@
-import { Button, RbacButtonProps, rbacTooltip, Resource, Tooltip } from '@harnessio/ui/components'
+import { Button, ButtonProps, RbacButtonProps, rbacTooltip, Resource, Tooltip } from '@harnessio/ui/components'
 
 import { useMFEContext } from '../hooks/useMFEContext'
 
@@ -16,7 +16,16 @@ export const RbacButton = ({ rbac, tooltip, ...rest }: RbacButtonProps) => {
       })
       ?.some(Boolean) ?? true
 
-  const button = <Button {...rest} ignoreIconOnlyTooltip disabled={!hasPermission} />
+  const button = (
+    <Button
+      // Omit<ButtonProps> on RbacButtonProps collapses the icon-only discriminant.
+      {...({
+        ...rest,
+        disabled: !hasPermission,
+        ...(rest.iconOnly ? { ignoreIconOnlyTooltip: true as const } : {})
+      } as ButtonProps)}
+    />
+  )
 
   return !hasPermission ? (
     <Tooltip title={tooltip?.title ?? rbacTooltip} content={tooltip?.content}>

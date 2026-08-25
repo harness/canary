@@ -133,7 +133,6 @@ export const SearchPageView: FC<SearchPageViewProps> = ({
               <Layout.Horizontal gap="2xs" align="center">
                 {isRepoScope && showSemanticSearch && (
                   <Toggle
-                    text="Toggle regex search"
                     selected={semanticEnabled}
                     onChange={setSemanticEnabled}
                     prefixIcon="sparks"
@@ -150,6 +149,7 @@ export const SearchPageView: FC<SearchPageViewProps> = ({
                     iconOnly
                     variant="ghost"
                     prefixIcon="regex"
+                    text="Toggle Regex Search"
                     size="xs"
                     tooltipProps={{ content: 'Toggle Regex Search' }}
                   />

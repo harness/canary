@@ -60,6 +60,13 @@ const foundationPages = [
   { id: 'single-pane-stepper', path: '../../apps/portal/src/content/docs/growth-patterns/single-pane-stepper.mdx' },
   { id: 'button-layout', path: '../../apps/portal/src/content/docs/components/actions/button-layout.mdx' }
 ]
+const recipePages = [
+  { id: 'dialog-form', path: 'catalog/agent-recipes/dialog-form.md' },
+  { id: 'filter-bar', path: 'catalog/agent-recipes/filter-bar.md' },
+  { id: 'page-header', path: 'catalog/agent-recipes/page-header.md' },
+  { id: 'empty-state', path: 'catalog/agent-recipes/empty-state.md' },
+  { id: 'dual-pane-drawer', path: 'catalog/agent-recipes/dual-pane-drawer.md' }
+]
 
 const defaultIconImport = 'import { IconV2 } from "@harnessio/ui/components"'
 const noiseExportPattern = /(Enum|Context|Map(?:V\d+)?|Props|Type)$/
@@ -426,8 +433,8 @@ function extractFoundationRules(mdx, seed = []) {
   return rules.slice(0, maxFoundationRules)
 }
 
-function compileFoundations(packageRoot, inputs) {
-  return foundationPages.flatMap(page => {
+function compileGuidelinePages(packageRoot, inputs, pages) {
+  return pages.flatMap(page => {
     const mdx = recordInput(inputs, packageRoot, join(packageRoot, page.path))
     if (!mdx && page.id !== 'installation') return []
     const frontmatter = mdx ? parseFrontmatter(mdx) : {}
@@ -440,6 +447,13 @@ function compileFoundations(packageRoot, inputs) {
       }
     ]
   })
+}
+
+function compileFoundations(packageRoot, inputs) {
+  return [
+    ...compileGuidelinePages(packageRoot, inputs, foundationPages),
+    ...compileGuidelinePages(packageRoot, inputs, recipePages)
+  ]
 }
 
 function compileTokens(registry) {

@@ -45,7 +45,8 @@ Generated agent JSON is gitignored. Two compiles of the same tree are byte-ident
 | `validate_props` | Contract combinations. No constraints → `unknown`, not `supported`. |
 | `search_icons` | IconV2 `name` keys. Never Lucide. |
 | `get_tokens` | Semantic token ids + `cn-` usage note. |
-| `get_guidelines` | Short foundation / growth-pattern page (≤ 12 bullets). |
+| `get_guidelines` | Short foundation, growth-pattern, or screen-recipe page (≤ 12 bullets). |
+| `get_pattern` | Alias of `get_guidelines` for screen recipes (`filter-bar`, `dialog-form`, …). |
 
 ## Resource
 

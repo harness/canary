@@ -49,6 +49,22 @@ test('get_tokens can filter by Button component', () => {
   expect(tokens.some(token => token.id.includes('button'))).toBe(true)
 })
 
+test('get_guidelines returns screen recipes including the filters package', () => {
+  const filterBar = getGuidelines(catalog, 'filter-bar')
+  const viaPattern = getGuidelines(catalog, 'dialog-form')
+
+  expect('error' in filterBar).toBe(false)
+  if ('error' in filterBar) return
+  expect(filterBar.rules.some(rule => rule.includes('@harnessio/filters'))).toBe(true)
+  expect(filterBar.rules.some(rule => rule.includes('createFilters'))).toBe(true)
+  expect(filterBar.rules.some(rule => /FilterBar/.test(rule) && rule.includes('@harnessio/ui'))).toBe(true)
+  expect(filterBar.rules.length).toBeLessThanOrEqual(12)
+
+  expect('error' in viaPattern).toBe(false)
+  if ('error' in viaPattern) return
+  expect(viaPattern.rules.some(rule => rule.includes('ButtonLayout'))).toBe(true)
+})
+
 test('get_guidelines unknown id returns known ids in the hint', () => {
   const result = getGuidelines(catalog, 'not-a-page')
 

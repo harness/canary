@@ -3,7 +3,7 @@ import { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js'
 import { compactInventory } from './guidelines.js'
 import { registerGetComponent } from './tools/get-component.js'
 import { registerGetExample } from './tools/get-example.js'
-import { registerGetGuidelines } from './tools/get-guidelines.js'
+import { registerGetGuidelines, registerGetPattern } from './tools/get-guidelines.js'
 import { registerGetTokens } from './tools/get-tokens.js'
 import { registerSearchComponents } from './tools/search-components.js'
 import { registerSearchIcons } from './tools/search-icons.js'
@@ -19,7 +19,8 @@ export const MCP_TOOL_NAMES = [
   'validate_props',
   'search_icons',
   'get_tokens',
-  'get_guidelines'
+  'get_guidelines',
+  'get_pattern'
 ] as const
 
 export function createMcpServer(catalog: AgentCatalog): McpServer {
@@ -36,6 +37,7 @@ export function createMcpServer(catalog: AgentCatalog): McpServer {
   registerSearchIcons(server, catalog)
   registerGetTokens(server, catalog)
   registerGetGuidelines(server, catalog)
+  registerGetPattern(server, catalog)
 
   server.registerResource(
     'inventory',

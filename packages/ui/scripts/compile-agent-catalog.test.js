@@ -338,10 +338,15 @@ test('compiles installation, theming, and other foundation pages', () => {
       'button-layout',
       'color',
       'color-system',
+      'dialog-form',
+      'dual-pane-drawer',
       'dual-pane-stepper',
+      'empty-state',
+      'filter-bar',
       'icons',
       'installation',
       'layout',
+      'page-header',
       'single-pane-stepper',
       'spacing',
       'theming',
@@ -350,6 +355,12 @@ test('compiles installation, theming, and other foundation pages', () => {
       'variables'
     ].sort()
   )
+  expect(byId['filter-bar'].rules.some(rule => rule.includes('@harnessio/filters'))).toBe(true)
+  expect(byId['filter-bar'].rules.some(rule => rule.includes('FilterBar') && rule.includes('@harnessio/ui'))).toBe(true)
+  expect(byId['dialog-form'].rules.some(rule => rule.includes('ButtonLayout'))).toBe(true)
+  expect(byId['page-header'].rules.some(rule => rule.includes('Page.Header'))).toBe(true)
+  expect(byId['empty-state'].rules.some(rule => rule.includes('NoData'))).toBe(true)
+  expect(byId['dual-pane-drawer'].rules.some(rule => rule.includes('Drawer.DualPane'))).toBe(true)
   expect(byId.theming).toBeTruthy()
   expect(byId.theming.rules.length).toBeGreaterThan(0)
   expect(byId.theming.rules.length).toBeLessThanOrEqual(12)

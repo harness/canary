@@ -80,7 +80,7 @@ export default {
       },
 
       '&-title': {
-        '@apply min-w-0 select-none': ''
+        '@apply min-w-0': ''
       }
     }
   }

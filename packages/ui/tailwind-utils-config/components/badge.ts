@@ -69,7 +69,7 @@ export default {
     paddingInline: 'var(--cn-badge-md-px)',
     gap: 'var(--cn-badge-md-gap)',
     minWidth: 'fit-content',
-    '@apply select-none font-body-single-line-normal truncate': '',
+    '@apply font-body-single-line-normal truncate': '',
 
     /** Size */
     '&:where(.cn-badge-sm)': {

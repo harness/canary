@@ -3,9 +3,12 @@ export default {
     border: 'var(--cn-card-border) solid var(--cn-border-2)',
     borderRadius: 'var(--cn-card-md-radius)',
     backgroundColor: 'var(--cn-bg-1)',
-    '@apply flex overflow-hidden select-none': '',
+    '@apply flex overflow-hidden': '',
 
+    // Clickable cards stay non-selectable so a drag-selection can't fire the card's click handler.
     '&:where(.cn-card-interactive)': {
+      '@apply select-none': '',
+
       '&:hover:not(.cn-card-disabled)': {
         borderColor: 'var(--cn-border-brand)'
       }

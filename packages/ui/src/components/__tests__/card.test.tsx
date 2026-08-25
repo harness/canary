@@ -2,6 +2,7 @@ import React from 'react'
 
 import { render, screen } from '@testing-library/react'
 
+import cardStyles from '../../../tailwind-utils-config/components/card'
 import { Card } from '../card'
 
 const renderComponent = (component: React.ReactElement) => {
@@ -731,6 +732,20 @@ describe('Card', () => {
       expect(Card.Title).toBeDefined()
       expect(Card.Content).toBeDefined()
       expect(Card.Image).toBeDefined()
+    })
+  })
+
+  describe('Text Selection', () => {
+    test('should not disable text selection on the card root', () => {
+      const applyRules = Object.keys(cardStyles['.cn-card']).join(' ')
+
+      expect(applyRules).not.toContain('select-none')
+    })
+
+    test('should disable text selection on interactive cards', () => {
+      const applyRules = Object.keys(cardStyles['.cn-card']['&:where(.cn-card-interactive)']).join(' ')
+
+      expect(applyRules).toContain('select-none')
     })
   })
 })

@@ -48,6 +48,10 @@ Generated agent JSON is gitignored. Two compiles of the same tree are byte-ident
 | `get_guidelines` | Short foundation, growth-pattern, or screen-recipe page (≤ 12 bullets). |
 | `get_pattern` | Alias of `get_guidelines` for screen recipes (`filter-bar`, `dialog-form`, …). |
 
+## Prompt
+
+`review_canary_ui` (**Review Canary UI**) — advisory. Given a diff or file, call `search_components` / `validate_props` for Button, flag Lucide, `@/components/ui` shadcn paths, and raw `<button>` when Button exists. **Does not fail CI.**
+
 ## Resource
 
 `canary://inventory` — compact `{ id, exportName, confidence, category }` for every searchable export.

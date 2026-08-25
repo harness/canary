@@ -1,6 +1,7 @@
 import { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js'
 
 import { compactInventory } from './guidelines.js'
+import { registerReviewCanaryUiPrompt, REVIEW_CANARY_UI_PROMPT_NAME } from './prompts/review-canary-ui.js'
 import { registerGetComponent } from './tools/get-component.js'
 import { registerGetExample } from './tools/get-example.js'
 import { registerGetGuidelines, registerGetPattern } from './tools/get-guidelines.js'
@@ -22,6 +23,7 @@ export const MCP_TOOL_NAMES = [
   'get_guidelines',
   'get_pattern'
 ] as const
+export const MCP_PROMPT_NAMES = [REVIEW_CANARY_UI_PROMPT_NAME] as const
 
 export function createMcpServer(catalog: AgentCatalog): McpServer {
   const server = new McpServer({
@@ -38,6 +40,7 @@ export function createMcpServer(catalog: AgentCatalog): McpServer {
   registerGetTokens(server, catalog)
   registerGetGuidelines(server, catalog)
   registerGetPattern(server, catalog)
+  registerReviewCanaryUiPrompt(server)
 
   server.registerResource(
     'inventory',

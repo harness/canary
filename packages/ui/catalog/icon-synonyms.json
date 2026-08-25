@@ -1,0 +1,6 @@
+{
+  "trash": ["delete", "remove"],
+  "xmark": ["close", "clear"],
+  "settings": ["gear"],
+  "search": ["magnifying-glass"]
+}

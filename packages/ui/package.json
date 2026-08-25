@@ -56,8 +56,8 @@
     "test:changed": "vitest --run --changed=origin/main",
     "typecheck": "tsc -b",
     "catalog:inventory": "node scripts/generate-component-inventory.mjs",
-    "catalog:generate": "node scripts/component-contract-artifacts.mjs --write",
-    "catalog:validate": "node scripts/validate-component-contracts.mjs",
+    "catalog:generate": "node scripts/component-contract-artifacts.mjs --write && node scripts/compile-agent-catalog.mjs --write",
+    "catalog:validate": "node scripts/validate-component-contracts.mjs && node scripts/validate-agent-catalog.mjs",
     "extract": "i18next --config './i18n.config.ts'",
     "update:icons": "node scripts/icons.js",
     "update:logos": "node scripts/logos.js"

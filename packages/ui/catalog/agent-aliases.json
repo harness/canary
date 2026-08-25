@@ -1,0 +1,7 @@
+{
+  "Dialog": ["modal", "dialog overlay"],
+  "TextInput": ["form field", "text field", "input"],
+  "Link": ["navigate", "navigation", "link to"],
+  "Select": ["dropdown", "select menu"],
+  "Drawer": ["drawer", "slide-over", "side panel"]
+}

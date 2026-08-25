@@ -1,6 +1,6 @@
 import { createContext, ReactNode, useCallback, useContext, useMemo, useRef, useState } from 'react'
 
-import { CardEntry, CardStatus, DrawerResult, FlowCardContext, FlowConfig } from './engine-types'
+import { CardEntry, CardStatus, DrawerResult, FlowCardContext, FlowConfig, InitialEngineState } from './engine-types'
 
 // === Engine Context ===
 
@@ -122,14 +122,66 @@ interface FlowEngineProviderProps {
   // When true, the panes never auto-scroll the active card into view (on mount or transition).
   // Use for completed/review/read-only flows where chasing the active card is undesirable.
   disableAutoScroll?: boolean
+  // Optional resume snapshot from a host app (e.g. a browser-persisted draft). Canary does not
+  // read/write storage itself — the host app validates and passes an already-usable snapshot.
+  // Omitted (or unusable — see isUsableInitialEngineState) falls back to today's behavior:
+  // `initialStep` active with empty `state`.
+  initialEngineState?: InitialEngineState
   children: ReactNode
 }
 
-export function FlowEngineProvider({ flow, onComplete, disableAutoScroll = false, children }: FlowEngineProviderProps) {
-  const [state, setState] = useState<Record<string, unknown>>({})
-  const [cardHistory, setCardHistory] = useState<CardEntry[]>([
-    { stepId: flow.initialStep, status: 'active', stateSnapshot: {} }
-  ])
+// A snapshot is only usable if it has at least one history entry and every entry's stepId is
+// still present in the current flow config. A flow can change shape between app versions, so a
+// stale snapshot referencing a removed/renamed step must fall back to the default seed rather
+// than render a blank card for an unknown step.
+function isUsableInitialEngineState(
+  flow: FlowConfig,
+  snapshot: InitialEngineState | undefined
+): snapshot is InitialEngineState {
+  if (!snapshot) return false
+  if (snapshot.cardHistory.length === 0) return false
+  return snapshot.cardHistory.every(entry => entry.stepId in flow.steps)
+}
+
+// Rebuilds the terminalRef re-entry guard from a restored cardHistory, mirroring the invariants
+// that complete()/skip()/error() maintain live:
+// - 'completed' / 'skipped' entries are always terminal (re-entry guarded).
+// - a step flagged `terminal` in the flow config is terminal regardless of its history status.
+// - an 'error' entry is terminal only if it is NOT the last entry in history (error-and-continue
+//   already advanced past it live). A last-entry 'error' is the current recoverable position and
+//   must stay retry-able.
+function rebuildTerminalRef(flow: FlowConfig, history: CardEntry[]): Set<string> {
+  const terminal = new Set<string>()
+  history.forEach((entry, index) => {
+    const isLast = index === history.length - 1
+    if (entry.status === 'completed' || entry.status === 'skipped') {
+      terminal.add(entry.stepId)
+    }
+    if (flow.steps[entry.stepId]?.terminal) {
+      terminal.add(entry.stepId)
+    }
+    if (entry.status === 'error' && !isLast) {
+      terminal.add(entry.stepId)
+    }
+  })
+  return terminal
+}
+
+export function FlowEngineProvider({
+  flow,
+  onComplete,
+  disableAutoScroll = false,
+  initialEngineState,
+  children
+}: FlowEngineProviderProps) {
+  const [state, setState] = useState<Record<string, unknown>>(() =>
+    isUsableInitialEngineState(flow, initialEngineState) ? initialEngineState.state : {}
+  )
+  const [cardHistory, setCardHistory] = useState<CardEntry[]>(() =>
+    isUsableInitialEngineState(flow, initialEngineState)
+      ? initialEngineState.cardHistory
+      : [{ stepId: flow.initialStep, status: 'active', stateSnapshot: {} }]
+  )
   const [drawerState, setDrawerState] = useState<DrawerState | null>(null)
   const [pendingReactivation, setPendingReactivation] = useState<string | null>(null)
   const scrollToCardRef = useRef<((stepId: string) => void) | null>(null)
@@ -141,7 +193,16 @@ export function FlowEngineProvider({ flow, onComplete, disableAutoScroll = false
   pendingReactivationRef.current = pendingReactivation
   // Tracks steps that have reached a terminal state (completed/skipped).
   // Prevents duplicate transitions from React strict mode or async races.
-  const terminalRef = useRef<Set<string>>(new Set())
+  // Fresh mounts must start empty: live complete() adds the current step on first
+  // transition, and adds a *next* terminal step only when navigating onto it.
+  // Rebuilding from the default `{ initialStep, active }` seed would mark a
+  // terminal initial step as already done, so the first complete() takes the
+  // re-entry path and never paints completed.
+  const terminalRef = useRef<Set<string>>(
+    isUsableInitialEngineState(flow, initialEngineState)
+      ? rebuildTerminalRef(flow, initialEngineState.cardHistory)
+      : new Set()
+  )
 
   // Derived: active step
   const activeStepId = useMemo(() => {

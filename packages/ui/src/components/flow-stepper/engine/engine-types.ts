@@ -81,6 +81,19 @@ export interface CardEntry {
 }
 
 /**
+ * A serialized snapshot of engine state that a host app can pass to `FlowEngineProvider` (or
+ * `SinglePaneStepper.Root`) to resume a flow instead of starting at `flow.initialStep`.
+ *
+ * Canary does not persist this itself — the host app is responsible for storage/validation and
+ * only passes an already-valid snapshot. An unusable snapshot (empty `cardHistory`, or any
+ * `stepId` not present in the current `flow.steps`) is treated as omitted.
+ */
+export interface InitialEngineState {
+  state: Record<string, unknown>
+  cardHistory: CardEntry[]
+}
+
+/**
  * The result a drawer adapter passes to `onClose` to resolve the `openDrawer` promise.
  *
  * `success` is the confirm-vs-dismiss signal every consumer relies on:

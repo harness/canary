@@ -1,10 +1,17 @@
 import React, { useEffect } from 'react'
 
-import { render, screen, waitFor } from '@testing-library/react'
+import { render, screen, waitFor, within } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { describe, expect, test, vi } from 'vitest'
 
-import { CardContextProvider, FlowEngineProvider, useEngineContext, useFlowCard, type FlowConfig } from '../index'
+import {
+  CardContextProvider,
+  FlowEngineProvider,
+  useEngineContext,
+  useFlowCard,
+  type FlowConfig,
+  type InitialEngineState
+} from '../index'
 
 // Mocks
 vi.mock('@components/icon-v2', () => ({
@@ -140,6 +147,44 @@ function ErrorRecoveryCard() {
       <h3>Error Recovery Card</h3>
       <span data-testid="error-status">{status}</span>
       <button onClick={() => complete({})}>Recover</button>
+    </div>
+  )
+}
+
+// Restore test cards: report their own card status so a restored snapshot's per-entry status
+// can be asserted without colliding testids when two of these render side by side.
+function RestoreErrorCard() {
+  const { status } = useFlowCard()
+  return <span data-testid="restore-status">{status}</span>
+}
+
+// Engine-level probe that can target ANY stepId (not just the card it's mounted on) — used to
+// exercise complete()/error() against a restored, non-active step (e.g. a restored 'completed' or
+// 'error' entry that is not the current activeStepId).
+function EngineStepProbe({ stepId }: { stepId: string }) {
+  const { complete, error } = useEngineContext()
+  return (
+    <div>
+      <button data-testid={`probe-complete-${stepId}`} onClick={() => complete(stepId, { probed: true })}>
+        probe-complete-{stepId}
+      </button>
+      <button data-testid={`probe-error-${stepId}`} onClick={() => error(stepId)}>
+        probe-error-{stepId}
+      </button>
+    </div>
+  )
+}
+
+// Probe from the task brief: exercises complete() on the current activeStepId and surfaces
+// engine-level state for assertions.
+function CompleteProbe() {
+  const { complete, activeStepId, cardHistory, state } = useEngineContext()
+  return (
+    <div>
+      <span data-testid="active">{activeStepId}</span>
+      <span data-testid="history-len">{cardHistory.length}</span>
+      <span data-testid="state-answer">{String(state.answer ?? '')}</span>
+      <button onClick={() => complete(activeStepId, { probed: true })}>probe-complete</button>
     </div>
   )
 }
@@ -295,7 +340,11 @@ const errorRecoveryFlow: FlowConfig = {
     'step-1': { title: 'First Step' }
   },
   steps: {
-    'error-recovery': { step: 'step-1', title: 'Error Recovery', component: ErrorRecoveryCard }
+    'error-recovery': { step: 'step-1', title: 'Error Recovery', component: ErrorRecoveryCard },
+    // Extra steps used only by initialEngineState restore tests (terminalRef rebuild around
+    // 'error' entries). Not part of the 'error-recovery' initialStep path above.
+    'error-a': { step: 'step-1', title: 'Error A', component: RestoreErrorCard, next: 'error-b' },
+    'error-b': { step: 'step-1', title: 'Error B', component: RestoreErrorCard }
   },
   initialStep: 'error-recovery'
 }
@@ -753,6 +802,197 @@ describe('Flow Engine', () => {
         expect(screen.queryByTestId('reactivation-dialog')).not.toBeInTheDocument()
         expect(screen.getByText('Reactivate Card C')).toBeInTheDocument()
       })
+    })
+  })
+
+  describe('initialEngineState', () => {
+    test('present snapshot seeds cardHistory and state; active is the restored active step', () => {
+      const initialEngineState: InitialEngineState = {
+        state: { answer: 'yes' },
+        cardHistory: [
+          { stepId: 'card-a', status: 'completed', stateSnapshot: {} },
+          { stepId: 'card-b', status: 'active', stateSnapshot: {} }
+        ]
+      }
+
+      render(
+        <FlowEngineProvider flow={testFlow} initialEngineState={initialEngineState}>
+          <TestHarness>
+            <CardStack />
+            <CompleteProbe />
+          </TestHarness>
+        </FlowEngineProvider>
+      )
+
+      expect(screen.getByTestId('active')).toHaveTextContent('card-b')
+      expect(screen.getByTestId('history-len')).toHaveTextContent('2')
+      expect(screen.getByTestId('state-answer')).toHaveTextContent('yes')
+      expect(screen.getByTestId('card-card-a')).toHaveAttribute('data-status', 'completed')
+      expect(screen.getByTestId('card-card-b')).toHaveAttribute('data-status', 'active')
+    })
+
+    test('restored completed step: re-completing it does not push a duplicate completed entry', async () => {
+      const initialEngineState: InitialEngineState = {
+        state: { answer: 'yes' },
+        cardHistory: [
+          { stepId: 'card-a', status: 'completed', stateSnapshot: {} },
+          { stepId: 'card-b', status: 'active', stateSnapshot: {} }
+        ]
+      }
+
+      render(
+        <FlowEngineProvider flow={testFlow} initialEngineState={initialEngineState}>
+          <TestHarness>
+            <CardStack />
+            <CompleteProbe />
+            <EngineStepProbe stepId="card-a" />
+          </TestHarness>
+        </FlowEngineProvider>
+      )
+
+      expect(screen.getByTestId('history-len')).toHaveTextContent('2')
+
+      await userEvent.click(screen.getByTestId('probe-complete-card-a'))
+
+      // No duplicate 'card-b' pushed, card-a stays completed, and its state patch was NOT merged
+      // in (terminalRef guarded re-entry before setState ran).
+      await waitFor(() => {
+        expect(screen.getByTestId('history-len')).toHaveTextContent('2')
+        expect(screen.getByTestId('card-card-a')).toHaveAttribute('data-status', 'completed')
+        expect(screen.getByTestId('card-card-b')).toHaveAttribute('data-status', 'active')
+        expect(screen.getByTestId('state-answer')).toHaveTextContent('yes')
+      })
+    })
+
+    test("history [{error-a: 'error'}, {error-b: 'active'}]: complete('error-a') is a no-op (error not last is terminal)", async () => {
+      const initialEngineState: InitialEngineState = {
+        state: {},
+        cardHistory: [
+          { stepId: 'error-a', status: 'error', stateSnapshot: {} },
+          { stepId: 'error-b', status: 'active', stateSnapshot: {} }
+        ]
+      }
+
+      render(
+        <FlowEngineProvider flow={errorRecoveryFlow} initialEngineState={initialEngineState}>
+          <TestHarness>
+            <CardStack />
+            <CompleteProbe />
+            <EngineStepProbe stepId="error-a" />
+          </TestHarness>
+        </FlowEngineProvider>
+      )
+
+      expect(screen.getByTestId('history-len')).toHaveTextContent('2')
+      expect(within(screen.getByTestId('card-error-a')).getByTestId('restore-status')).toHaveTextContent('error')
+
+      await userEvent.click(screen.getByTestId('probe-complete-error-a'))
+
+      // Swallowed: still 2 entries, error-a still 'error'.
+      await waitFor(() => {
+        expect(screen.getByTestId('history-len')).toHaveTextContent('2')
+        expect(within(screen.getByTestId('card-error-a')).getByTestId('restore-status')).toHaveTextContent('error')
+      })
+    })
+
+    test("history [{error-a: 'error'}] (last entry): complete('error-a') is NOT swallowed by terminalRef (retry works)", async () => {
+      const initialEngineState: InitialEngineState = {
+        state: {},
+        cardHistory: [{ stepId: 'error-a', status: 'error', stateSnapshot: {} }]
+      }
+
+      render(
+        <FlowEngineProvider flow={errorRecoveryFlow} initialEngineState={initialEngineState}>
+          <TestHarness>
+            <CardStack />
+            <CompleteProbe />
+            <EngineStepProbe stepId="error-a" />
+          </TestHarness>
+        </FlowEngineProvider>
+      )
+
+      expect(screen.getByTestId('history-len')).toHaveTextContent('1')
+      expect(within(screen.getByTestId('card-error-a')).getByTestId('restore-status')).toHaveTextContent('error')
+
+      await userEvent.click(screen.getByTestId('probe-complete-error-a'))
+
+      // Not swallowed: transitions to 'completed' and advances to 'error-b'.
+      await waitFor(() => {
+        expect(within(screen.getByTestId('card-error-a')).getByTestId('restore-status')).toHaveTextContent('completed')
+        expect(screen.getByTestId('history-len')).toHaveTextContent('2')
+      })
+    })
+
+    test('empty cardHistory is treated as omitted: seeds initialStep active with empty state', () => {
+      const initialEngineState: InitialEngineState = {
+        state: { foo: 'bar' },
+        cardHistory: []
+      }
+
+      render(
+        <FlowEngineProvider flow={testFlow} initialEngineState={initialEngineState}>
+          <TestHarness>
+            <CardStack />
+            <CompleteProbe />
+          </TestHarness>
+        </FlowEngineProvider>
+      )
+
+      expect(screen.getByTestId('active')).toHaveTextContent('card-a')
+      expect(screen.getByTestId('history-len')).toHaveTextContent('1')
+      expect(screen.getByTestId('state-answer')).toHaveTextContent('')
+    })
+
+    test('unknown stepId in cardHistory is treated as omitted: seeds initialStep active', () => {
+      const initialEngineState: InitialEngineState = {
+        state: { foo: 'bar' },
+        cardHistory: [{ stepId: 'not-a-real-step', status: 'active', stateSnapshot: {} }]
+      }
+
+      render(
+        <FlowEngineProvider flow={testFlow} initialEngineState={initialEngineState}>
+          <TestHarness>
+            <CardStack />
+            <CompleteProbe />
+          </TestHarness>
+        </FlowEngineProvider>
+      )
+
+      expect(screen.getByTestId('active')).toHaveTextContent('card-a')
+      expect(screen.getByTestId('history-len')).toHaveTextContent('1')
+      expect(screen.getByTestId('state-answer')).toHaveTextContent('')
+    })
+
+    test('drawerState and pendingReactivation stay null after hydrate', () => {
+      function DrawerAndReactivationProbe() {
+        const { drawerState, pendingReactivation } = useEngineContext()
+        return (
+          <div>
+            <span data-testid="drawer-state">{drawerState === null ? 'null' : 'non-null'}</span>
+            <span data-testid="pending-reactivation">{pendingReactivation === null ? 'null' : 'non-null'}</span>
+          </div>
+        )
+      }
+
+      const initialEngineState: InitialEngineState = {
+        state: { answer: 'yes' },
+        cardHistory: [
+          { stepId: 'card-a', status: 'completed', stateSnapshot: {} },
+          { stepId: 'card-b', status: 'active', stateSnapshot: {} }
+        ]
+      }
+
+      render(
+        <FlowEngineProvider flow={testFlow} initialEngineState={initialEngineState}>
+          <TestHarness>
+            <CardStack />
+            <DrawerAndReactivationProbe />
+          </TestHarness>
+        </FlowEngineProvider>
+      )
+
+      expect(screen.getByTestId('drawer-state')).toHaveTextContent('null')
+      expect(screen.getByTestId('pending-reactivation')).toHaveTextContent('null')
     })
   })
 })

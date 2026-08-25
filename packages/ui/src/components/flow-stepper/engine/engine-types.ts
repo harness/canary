@@ -82,7 +82,8 @@ export interface CardEntry {
 
 /**
  * A serialized snapshot of engine state that a host app can pass to `FlowEngineProvider` (or
- * `SinglePaneStepper.Root`) to resume a flow instead of starting at `flow.initialStep`.
+ * `SinglePaneStepper.Root` / `DualPaneStepper.Root`) to resume a flow instead of starting at
+ * `flow.initialStep`.
  *
  * Canary does not persist this itself — the host app is responsible for storage/validation and
  * only passes an already-valid snapshot. An unusable snapshot (empty `cardHistory`, or any

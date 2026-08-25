@@ -4,6 +4,7 @@ import { render, screen, waitFor } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { describe, expect, test, vi } from 'vitest'
 
+import { useEngineContext } from '../../flow-stepper/engine'
 import type { FlowConfig } from '../dual-pane-stepper-types'
 import { DualPaneStepper, useFlowCard } from '../index'
 
@@ -70,6 +71,11 @@ function TestCardC() {
       <span>All done</span>
     </DualPaneStepper.Card>
   )
+}
+
+function EngineChildProbe() {
+  const { activeStepId } = useEngineContext()
+  return <span data-testid="bridge-child">{activeStepId}</span>
 }
 
 const testFlow: FlowConfig = {
@@ -215,6 +221,42 @@ describe('DualPaneStepper', () => {
     test('renders custom left pane content when provided', () => {
       render(<DualPaneStepper.Root flow={testFlow} title="Test Flow" leftPane={<div>Custom Left</div>} />)
       expect(screen.getByText('Custom Left')).toBeInTheDocument()
+    })
+  })
+
+  describe('Root children', () => {
+    test('Root children render inside FlowEngineProvider after visual content', () => {
+      render(
+        <DualPaneStepper.Root flow={testFlow}>
+          <EngineChildProbe />
+        </DualPaneStepper.Root>
+      )
+      expect(screen.getByTestId('bridge-child')).toHaveTextContent('card-a')
+    })
+
+    test('Root children are not forwarded onto Content DOM', () => {
+      const { container } = render(
+        <DualPaneStepper.Root flow={testFlow}>
+          <EngineChildProbe />
+        </DualPaneStepper.Root>
+      )
+      expect(container.querySelectorAll('[data-testid="bridge-child"]')).toHaveLength(1)
+    })
+
+    test('Root forwards initialEngineState into the engine', () => {
+      render(
+        <DualPaneStepper.Root
+          flow={testFlow}
+          initialEngineState={{
+            state: { answer: 'restored' },
+            cardHistory: [
+              { stepId: 'card-a', status: 'completed', stateSnapshot: { answer: 'restored' } },
+              { stepId: 'card-b', status: 'active', stateSnapshot: {} }
+            ]
+          }}
+        />
+      )
+      expect(screen.getAllByText('Card B').length).toBeGreaterThanOrEqual(1)
     })
   })
 

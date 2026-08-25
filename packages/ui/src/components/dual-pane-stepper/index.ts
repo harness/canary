@@ -19,6 +19,8 @@ export {
 
 export type {
   FlowConfig,
+  GroupedFlowConfig,
+  FlatFlowConfig,
   StepGroupConfig,
   StepConfig,
   CardStatus,

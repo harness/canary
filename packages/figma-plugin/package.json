@@ -19,17 +19,17 @@
   },
   "license": "Apache-2.0",
   "dependencies": {
-    "preact": "^10.29.8",
-    "zod": "^4.0.0"
+    "preact": "10.29.8",
+    "zod": "4.4.3"
   },
   "devDependencies": {
-    "@figma/plugin-typings": "^1.132.0",
-    "@preact/preset-vite": "^2.10.6",
-    "@types/node": "^22.9.0",
-    "jsdom": "^25.0.1",
-    "typescript": "^5.9.2",
-    "vite": "^6.1.1",
-    "vite-plugin-singlefile": "^2.3.3",
-    "vitest": "^3.0.6"
+    "@figma/plugin-typings": "1.133.0",
+    "@preact/preset-vite": "2.10.6",
+    "@types/node": "22.13.9",
+    "jsdom": "25.0.1",
+    "typescript": "5.9.2",
+    "vite": "6.2.5",
+    "vite-plugin-singlefile": "2.3.3",
+    "vitest": "3.0.7"
   }
 }

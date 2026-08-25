@@ -1,0 +1,8 @@
+# Published Figma component-set identifiers used in Canary Copilot tests.
+# These are library asset keys from HDS Components 3.0, not credentials.
+# Fingerprints from gitLeaks on 71c3382cd (generic-api-key).
+71c3382cd15db158e71c972dae0b1314a670f2ab:packages/figma-plugin/tests/checkPipeline.test.ts:generic-api-key:90
+71c3382cd15db158e71c972dae0b1314a670f2ab:packages/figma-plugin/tests/componentKeys.test.ts:generic-api-key:36
+71c3382cd15db158e71c972dae0b1314a670f2ab:packages/figma-plugin/tests/componentKeys.test.ts:generic-api-key:57
+71c3382cd15db158e71c972dae0b1314a670f2ab:packages/figma-plugin/tests/check.test.ts:generic-api-key:195
+71c3382cd15db158e71c972dae0b1314a670f2ab:packages/figma-plugin/tests/match.test.ts:generic-api-key:99

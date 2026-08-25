@@ -15,6 +15,9 @@
 
 # Packages with shared ownership
 /packages/ui/* abhinav.rastogi@harness.io kevin.nagurski@harness.io vardan.bansal@harness.io pranesh.g@harness.io shaurya.kalia@harness.io srdjan.arsic@harness.io katie.grantier@harness.io
+/packages/ui/scripts/ abhinav.rastogi@harness.io kevin.nagurski@harness.io vardan.bansal@harness.io pranesh.g@harness.io shaurya.kalia@harness.io srdjan.arsic@harness.io katie.grantier@harness.io
+/packages/ui/catalog/ abhinav.rastogi@harness.io kevin.nagurski@harness.io vardan.bansal@harness.io pranesh.g@harness.io shaurya.kalia@harness.io srdjan.arsic@harness.io katie.grantier@harness.io
+/packages/design-system-mcp/ abhinav.rastogi@harness.io kevin.nagurski@harness.io vardan.bansal@harness.io pranesh.g@harness.io shaurya.kalia@harness.io srdjan.arsic@harness.io
 
 # Packages with individual owners
 /packages/forms/* srdjan.arsic@harness.io

@@ -15,6 +15,7 @@ PNPM monorepo containing shared component libraries and packages for the Harness
 | Package | Path | Description |
 |---------|------|-------------|
 | `@harnessio/ui` | `packages/ui/` | Main component library (Radix UI + ShadCN + Tailwind) |
+| `@harnessio/design-system-mcp` | `packages/design-system-mcp/` | Local stdio MCP for Canary UI lookup (Node; not a React 17 package) |
 | `@harnessio/ai-chat-core` | `packages/ai-chat-core/` | Framework-agnostic AI chat state machine |
 | `@harnessio/filters` | `packages/filters/` | Filter/search components |
 | `@harnessio/forms` | `packages/forms/` | React Hook Form + Zod/Yup form primitives |

@@ -71,6 +71,14 @@ export type AgentFoundation = {
   examples?: string[]
 }
 
+export type AgentToken = {
+  id: string
+  kind: string
+  description: string
+  source?: string
+  usage: string
+}
+
 export type AgentCatalogFile<T> = {
   formatVersion: number
   sourceInventoryCount: number
@@ -82,6 +90,7 @@ export type AgentCatalog = {
   components: AgentComponent[]
   icons: AgentIcon[]
   foundations: AgentFoundation[]
+  tokens: AgentToken[]
   sourceSha256: string
 }
 

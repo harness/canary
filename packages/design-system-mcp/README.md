@@ -44,6 +44,12 @@ Generated agent JSON is gitignored. Two compiles of the same tree are byte-ident
 | `get_example` | One snippet. The only code channel. |
 | `validate_props` | Contract combinations. No constraints → `unknown`, not `supported`. |
 | `search_icons` | IconV2 `name` keys. Never Lucide. |
+| `get_tokens` | Semantic token ids + `cn-` usage note. |
+| `get_guidelines` | Short foundation / growth-pattern page (≤ 12 bullets). |
+
+## Resource
+
+`canary://inventory` — compact `{ id, exportName, confidence, category }` for every searchable export.
 
 ## Confidence
 

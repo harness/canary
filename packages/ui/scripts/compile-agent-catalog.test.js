@@ -28,7 +28,8 @@ function parseCatalog(result) {
   return {
     components: JSON.parse(result.files['catalog/generated/agent/components.json']),
     icons: JSON.parse(result.files['catalog/generated/agent/icons.json']),
-    foundations: JSON.parse(result.files['catalog/generated/agent/foundations.json'])
+    foundations: JSON.parse(result.files['catalog/generated/agent/foundations.json']),
+    tokens: JSON.parse(result.files['catalog/generated/agent/tokens.json'])
   }
 }
 
@@ -326,12 +327,40 @@ test('maps IconV2 to the visual icon Portal page and lists trash with delete syn
   expect(trash.synonyms).toEqual(expect.arrayContaining(['delete', 'remove']))
 })
 
-test('emits a thin installation foundation without generatedAt', () => {
-  expect(catalog.foundations.records[0].id).toBe('installation')
-  expect(catalog.foundations.records[0].rules.some(rule => rule.includes('@harnessio/ui/styles.css'))).toBe(true)
+test('compiles installation, theming, and other foundation pages', () => {
+  const byId = Object.fromEntries(catalog.foundations.records.map(record => [record.id, record]))
+
+  expect(byId.installation.rules.some(rule => rule.includes('pnpm add @harnessio/ui'))).toBe(true)
+  expect(byId.installation.rules.some(rule => rule.includes('react >= 17'))).toBe(true)
+  expect(byId.installation.rules.some(rule => rule.includes('@harnessio/ui/styles.css'))).toBe(true)
+  expect(Object.keys(byId).sort()).toEqual(
+    [
+      'button-layout',
+      'color',
+      'color-system',
+      'dual-pane-stepper',
+      'icons',
+      'installation',
+      'layout',
+      'single-pane-stepper',
+      'spacing',
+      'theming',
+      'typography',
+      'usage',
+      'variables'
+    ].sort()
+  )
+  expect(byId.theming).toBeTruthy()
+  expect(byId.theming.rules.length).toBeGreaterThan(0)
+  expect(byId.theming.rules.length).toBeLessThanOrEqual(12)
+  for (const record of catalog.foundations.records) {
+    expect(record.rules.length).toBeLessThanOrEqual(12)
+  }
+  expect(catalog.tokens.records.some(token => token.id === 'canary.semantic.focus-ring')).toBe(true)
   expect(catalog.components).not.toHaveProperty('generatedAt')
   expect(catalog.icons).not.toHaveProperty('generatedAt')
   expect(catalog.foundations).not.toHaveProperty('generatedAt')
+  expect(catalog.tokens).not.toHaveProperty('generatedAt')
 })
 
 test('two compiles of the same tree are byte-identical', () => {
@@ -344,6 +373,7 @@ test('two compiles of the same tree are byte-identical', () => {
   expect(second.files['catalog/generated/agent/foundations.json']).toBe(
     compiled.files['catalog/generated/agent/foundations.json']
   )
+  expect(second.files['catalog/generated/agent/tokens.json']).toBe(compiled.files['catalog/generated/agent/tokens.json'])
   expect(compiled.sourceSha256).toMatch(/^[a-f0-9]{64}$/)
 })
 
@@ -370,6 +400,8 @@ test('missing contract files and ComponentExample extraction work on a fixture p
   expect(mystery.confidence).toBe('unreviewed')
   expect(mystery.props).toEqual([])
   expect(ids).not.toContain('canary.diff-mode-enum')
+  expect(parsed.foundations.records.map(record => record.id)).toEqual(['installation'])
+  expect(parsed.foundations.records[0].rules.some(rule => rule.includes('pnpm add @harnessio/ui'))).toBe(true)
 })
 
 test('editing Portal copy changes sourceSha256 after regenerate', () => {

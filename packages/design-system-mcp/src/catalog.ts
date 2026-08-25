@@ -4,7 +4,7 @@ import { fileURLToPath } from 'node:url'
 
 import { z } from 'zod'
 
-import type { AgentCatalog, AgentCatalogFile, AgentComponent, AgentFoundation, AgentIcon } from './types.js'
+import type { AgentCatalog, AgentCatalogFile, AgentComponent, AgentFoundation, AgentIcon, AgentToken } from './types.js'
 
 const envelopeSchema = z.object({
   formatVersion: z.number(),
@@ -86,6 +86,14 @@ const foundationSchema = z.object({
   examples: z.array(z.string()).optional()
 })
 
+const tokenSchema = z.object({
+  id: z.string(),
+  kind: z.string(),
+  description: z.string(),
+  source: z.string().optional(),
+  usage: z.string()
+})
+
 function readEnvelope<T>(path: string, recordSchema: z.ZodType<T>): AgentCatalogFile<T> {
   const parsed = envelopeSchema.parse(JSON.parse(readFileSync(path, 'utf8')))
   return {
@@ -133,6 +141,7 @@ export function loadAgentCatalog(catalogDir = resolveAgentCatalogDir()): AgentCa
   const componentsPath = join(catalogDir, 'components.json')
   const iconsPath = join(catalogDir, 'icons.json')
   const foundationsPath = join(catalogDir, 'foundations.json')
+  const tokensPath = join(catalogDir, 'tokens.json')
 
   if (!existsSync(componentsPath) || !existsSync(iconsPath) || !existsSync(foundationsPath)) {
     throw new Error(`Missing agent catalog at ${catalogDir}. Run: pnpm --filter @harnessio/ui catalog:generate`)
@@ -141,11 +150,13 @@ export function loadAgentCatalog(catalogDir = resolveAgentCatalogDir()): AgentCa
   const components = readEnvelope(componentsPath, componentSchema)
   const icons = readEnvelope(iconsPath, iconSchema)
   const foundations = readEnvelope(foundationsPath, foundationSchema)
+  const tokens = existsSync(tokensPath) ? readEnvelope(tokensPath, tokenSchema) : { records: [] as AgentToken[] }
 
   return {
     components: components.records as AgentComponent[],
     icons: icons.records as AgentIcon[],
     foundations: foundations.records as AgentFoundation[],
+    tokens: tokens.records as AgentToken[],
     sourceSha256: components.sourceSha256
   }
 }

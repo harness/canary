@@ -19,13 +19,13 @@ async function listToolNamesFromServer() {
   return listed.tools.map(tool => tool.name)
 }
 
-test('in-process server lists the five tools', async () => {
+test('in-process server lists the tools', async () => {
   const names = await listToolNamesFromServer()
 
   expect(names).toEqual([...MCP_TOOL_NAMES])
 })
 
-test('bin lists the five tools after compiling a missing dist/', async () => {
+test('bin lists the tools after compiling a missing dist/', async () => {
   rmSync(`${packageRoot}/dist`, { recursive: true, force: true })
 
   const transport = new StdioClientTransport({

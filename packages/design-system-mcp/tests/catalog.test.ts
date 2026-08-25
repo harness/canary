@@ -9,6 +9,8 @@ test('loads the compiled agent catalog', () => {
 
   expect(catalog.components.some(component => component.id === 'canary.button')).toBe(true)
   expect(catalog.icons.some(icon => icon.name === 'trash')).toBe(true)
+  expect(catalog.foundations.some(page => page.id === 'installation')).toBe(true)
+  expect(catalog.tokens.some(token => token.id === 'canary.semantic.focus-ring')).toBe(true)
   expect(catalog.sourceSha256).toMatch(/^[a-f0-9]{64}$/)
 })
 

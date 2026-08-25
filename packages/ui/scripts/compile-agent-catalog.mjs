@@ -9,7 +9,8 @@ export const agentCatalogExampleLineCap = 40
 const agentCatalogRelativePaths = {
   components: 'catalog/generated/agent/components.json',
   icons: 'catalog/generated/agent/icons.json',
-  foundations: 'catalog/generated/agent/foundations.json'
+  foundations: 'catalog/generated/agent/foundations.json',
+  tokens: 'catalog/generated/agent/tokens.json'
 }
 
 const inventoryRelativePath = 'catalog/component-inventory.json'
@@ -18,6 +19,47 @@ const synonymsRelativePath = 'catalog/icon-synonyms.json'
 const iconNameMapRelativePath = 'src/components/icon-v2/icon-name-map.ts'
 const iconV2PortalRelativePath = '../../apps/portal/src/content/docs/components/visual/icon.mdx'
 const installationRelativePath = '../../apps/portal/src/content/docs/getting-started/installation.mdx'
+const tokenRegistryRelativePath = 'catalog/token-registry.json'
+const maxFoundationRules = 12
+const installationRules = [
+  'Install with `pnpm add @harnessio/ui`.',
+  'Peer dependency: React 17 or later (`react >= 17`).',
+  'Import `@harnessio/ui/styles.css` once in the app entry.'
+]
+const foundationPages = [
+  {
+    id: 'installation',
+    path: installationRelativePath,
+    seed: installationRules
+  },
+  { id: 'color', path: '../../apps/portal/src/content/docs/foundations/colors.mdx' },
+  { id: 'typography', path: '../../apps/portal/src/content/docs/foundations/typography.mdx' },
+  { id: 'spacing', path: '../../apps/portal/src/content/docs/foundations/spacings.mdx' },
+  { id: 'layout', path: '../../apps/portal/src/content/docs/foundations/layout.mdx' },
+  {
+    id: 'icons',
+    path: '../../apps/portal/src/content/docs/foundations/icons.mdx',
+    seed: [
+      'This page is the glyph gallery, not the IconV2 React API.',
+      'Use `<IconV2 name="…" />` from `@harnessio/ui/components`.',
+      'Call search_icons for names. Never lucide-react.'
+    ]
+  },
+  {
+    id: 'variables',
+    path: '../../apps/portal/src/content/docs/foundations/variables.mdx',
+    seed: [
+      'Canary exposes CSS custom properties and Tailwind utilities from the design system.',
+      'Prefer cn- utility classes and --cn-* variables over hard-coded values.'
+    ]
+  },
+  { id: 'theming', path: '../../apps/portal/src/content/docs/design-system/theming.mdx' },
+  { id: 'color-system', path: '../../apps/portal/src/content/docs/design-system/color-system.mdx' },
+  { id: 'usage', path: '../../apps/portal/src/content/docs/design-system/usage.mdx' },
+  { id: 'dual-pane-stepper', path: '../../apps/portal/src/content/docs/growth-patterns/dual-pane-stepper.mdx' },
+  { id: 'single-pane-stepper', path: '../../apps/portal/src/content/docs/growth-patterns/single-pane-stepper.mdx' },
+  { id: 'button-layout', path: '../../apps/portal/src/content/docs/components/actions/button-layout.mdx' }
+]
 
 const defaultIconImport = 'import { IconV2 } from "@harnessio/ui/components"'
 const noiseExportPattern = /(Enum|Context|Map(?:V\d+)?|Props|Type)$/
@@ -344,20 +386,70 @@ function envelope(records, sourceInventoryCount, sourceSha256) {
   }
 }
 
-function compileFoundations(installationMdx) {
-  const frontmatter = installationMdx ? parseFrontmatter(installationMdx) : {}
-  return [
-    {
-      id: 'installation',
-      title: frontmatter.title || 'Installation',
-      summary: frontmatter.description || 'Install @harnessio/ui and import the Canary stylesheet.',
-      rules: [
-        'Install with `pnpm add @harnessio/ui`.',
-        'Peer dependency: React 17 or later (`react >= 17`).',
-        'Import `@harnessio/ui/styles.css` once in the app entry.'
-      ]
+function cleanRule(text) {
+  return text
+    .replace(/<[^>]+>/g, ' ')
+    .replace(/\[([^\]]+)\]\([^)]+\)/g, '$1')
+    .replace(/[`*_#]/g, '')
+    .replace(/\s+/g, ' ')
+    .trim()
+    .slice(0, 220)
+}
+
+function extractFoundationRules(mdx, seed = []) {
+  const rules = []
+  const push = value => {
+    const cleaned = cleanRule(value)
+    if (cleaned && !rules.includes(cleaned)) rules.push(cleaned)
+  }
+
+  for (const extra of seed) push(extra)
+  if (!mdx) return rules.slice(0, maxFoundationRules)
+
+  for (const match of mdx.matchAll(/^\s*(?:[-*]|\d+\.)\s+(.+)$/gm)) push(match[1])
+  if (rules.length < 5) {
+    for (const match of mdx.matchAll(/^##\s+(.+)$/gm)) push(match[1])
+  }
+  if (rules.length < 5) {
+    const body = mdx
+      .replace(/^---[\s\S]*?---/, '')
+      .replace(/^import .*$/gm, '')
+      .replace(/```[\s\S]*?```/g, '')
+      .replace(/<[^>]+>/g, ' ')
+    for (const sentence of body.split(/(?<=[.!?])\s+/)) {
+      if (cleanRule(sentence).length < 40) continue
+      push(sentence)
+      if (rules.length >= maxFoundationRules) break
     }
-  ]
+  }
+
+  return rules.slice(0, maxFoundationRules)
+}
+
+function compileFoundations(packageRoot, inputs) {
+  return foundationPages.flatMap(page => {
+    const mdx = recordInput(inputs, packageRoot, join(packageRoot, page.path))
+    if (!mdx && page.id !== 'installation') return []
+    const frontmatter = mdx ? parseFrontmatter(mdx) : {}
+    return [
+      {
+        id: page.id,
+        title: frontmatter.title || page.id,
+        summary: frontmatter.description || `${page.id} guidelines from Portal.`,
+        rules: extractFoundationRules(mdx, page.seed ?? [])
+      }
+    ]
+  })
+}
+
+function compileTokens(registry) {
+  return (registry?.tokens ?? []).map(token => ({
+    id: token.id,
+    kind: token.kind,
+    description: token.description,
+    ...(token.source ? { source: token.source } : {}),
+    usage: `Use Canary cn- utilities and --cn-* CSS variables. Do not hard-code hex. Token: ${token.id}.`
+  }))
 }
 
 export function compileAgentCatalog({ packageRoot, write = false }) {
@@ -371,7 +463,7 @@ export function compileAgentCatalog({ packageRoot, write = false }) {
   const aliasMap = JSON.parse(recordInput(inputs, packageRoot, join(packageRoot, aliasesRelativePath)) ?? '{}')
   const synonymMap = JSON.parse(recordInput(inputs, packageRoot, join(packageRoot, synonymsRelativePath)) ?? '{}')
   const iconNameMapSource = recordInput(inputs, packageRoot, join(packageRoot, iconNameMapRelativePath)) ?? ''
-  const installationMdx = recordInput(inputs, packageRoot, join(packageRoot, installationRelativePath))
+  const tokenRegistry = JSON.parse(recordInput(inputs, packageRoot, join(packageRoot, tokenRegistryRelativePath)) ?? '{"tokens":[]}')
 
   const componentRecords = []
   for (const component of inventory.components ?? []) {
@@ -421,13 +513,15 @@ export function compileAgentCatalog({ packageRoot, write = false }) {
     synonyms: synonymMap[name] ?? []
   }))
 
-  const foundationRecords = compileFoundations(installationMdx)
+  const foundationRecords = compileFoundations(packageRoot, inputs)
+  const tokenRecords = compileTokens(tokenRegistry)
   const sourceInventoryCount = (inventory.components ?? []).length
   const sourceSha256 = hashInputs(inputs)
   const files = {
     [agentCatalogRelativePaths.components]: json(envelope(componentRecords, sourceInventoryCount, sourceSha256)),
     [agentCatalogRelativePaths.icons]: json(envelope(iconRecords, sourceInventoryCount, sourceSha256)),
-    [agentCatalogRelativePaths.foundations]: json(envelope(foundationRecords, sourceInventoryCount, sourceSha256))
+    [agentCatalogRelativePaths.foundations]: json(envelope(foundationRecords, sourceInventoryCount, sourceSha256)),
+    [agentCatalogRelativePaths.tokens]: json(envelope(tokenRecords, sourceInventoryCount, sourceSha256))
   }
 
   if (write) {
@@ -443,7 +537,8 @@ export function compileAgentCatalog({ packageRoot, write = false }) {
     catalog: {
       components: componentRecords,
       icons: iconRecords,
-      foundations: foundationRecords
+      foundations: foundationRecords,
+      tokens: tokenRecords
     },
     sourceSha256
   }

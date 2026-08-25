@@ -1,8 +1,26 @@
 # Published Figma component-set identifiers used in Canary Copilot tests.
 # These are library asset keys from HDS Components 3.0, not credentials.
-# Fingerprints from gitLeaks on 71c3382cd (generic-api-key).
+# Fingerprints are per-commit because CI scans each commit with gitleaks --log-opts=-1.
+
+# 71c3382cd feat: add in-repo Figma plugin that compiles Canary contracts
 71c3382cd15db158e71c972dae0b1314a670f2ab:packages/figma-plugin/tests/checkPipeline.test.ts:generic-api-key:90
 71c3382cd15db158e71c972dae0b1314a670f2ab:packages/figma-plugin/tests/componentKeys.test.ts:generic-api-key:36
 71c3382cd15db158e71c972dae0b1314a670f2ab:packages/figma-plugin/tests/componentKeys.test.ts:generic-api-key:57
 71c3382cd15db158e71c972dae0b1314a670f2ab:packages/figma-plugin/tests/check.test.ts:generic-api-key:195
 71c3382cd15db158e71c972dae0b1314a670f2ab:packages/figma-plugin/tests/match.test.ts:generic-api-key:99
+
+# e6c689448 feat(figma-plugin): harden Canary Copilot contract audits
+e6c689448f2535ee74e72cd5f3573043a23ac5af:packages/figma-plugin/tests/checkPipeline.test.ts:generic-api-key:56
+e6c689448f2535ee74e72cd5f3573043a23ac5af:packages/figma-plugin/tests/checkPipeline.test.ts:generic-api-key:82
+e6c689448f2535ee74e72cd5f3573043a23ac5af:packages/figma-plugin/tests/checkPipeline.test.ts:generic-api-key:107
+
+# 22a5cb3c8 fix(figma-plugin): align button audits with figma
+22a5cb3c84ba6f6c2eb8b0cee0815b4a76e64279:packages/figma-plugin/tests/checkPipeline.test.ts:generic-api-key:222
+
+# 32b925858 feat(figma-plugin): evaluate canonical Button contracts
+32b925858d4b3a54877b7a29177a2dcb56ceb3de:packages/figma-plugin/tests/checkPipeline.test.ts:generic-api-key:49
+32b925858d4b3a54877b7a29177a2dcb56ceb3de:packages/figma-plugin/tests/check.test.ts:generic-api-key:314
+32b925858d4b3a54877b7a29177a2dcb56ceb3de:packages/figma-plugin/tests/checkPipeline.test.ts:generic-api-key:76
+32b925858d4b3a54877b7a29177a2dcb56ceb3de:packages/figma-plugin/tests/checkPipeline.test.ts:generic-api-key:101
+32b925858d4b3a54877b7a29177a2dcb56ceb3de:packages/figma-plugin/tests/checkPipeline.test.ts:generic-api-key:172
+32b925858d4b3a54877b7a29177a2dcb56ceb3de:packages/figma-plugin/tests/checkPipeline.test.ts:generic-api-key:207

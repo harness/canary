@@ -23,6 +23,10 @@ PNPM monorepo containing shared component libraries and packages for the Harness
 | `@harnessio/yaml-editor` | `packages/yaml-editor/` | Monaco-based YAML editor |
 | `@harnessio/core-design-system` | `packages/core-design-system/` | Design tokens and themes (style-dictionary) |
 
+## Canary UI for coding agents
+
+When adding or swapping UI components, call the Canary MCP (`search_components`) before writing JSX. Import from `@harnessio/ui/components`. Do not copy component source, install shadcn, or use `lucide-react`. Restyling existing Canary markup with classes does not require a tool call. React 17 does not apply to `@harnessio/design-system-mcp` (Node stdio process, no UI).
+
 ## Common Commands
 
 ```bash

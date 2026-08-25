@@ -39,7 +39,11 @@ storybook-static/
 yaml-editor-test/
 
 #cursor
-.cursor
+.cursor/*
+!.cursor/mcp.json
+!.cursor/skills/
+!.cursor/skills/canary-ui/
+!.cursor/skills/canary-ui/**
 
 #local environment
 .env

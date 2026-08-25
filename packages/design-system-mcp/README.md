@@ -12,17 +12,25 @@ node packages/design-system-mcp/bin/canary-mcp.js
 
 The bin compiles `dist/` if it is missing and compiles the agent catalog if `packages/ui/catalog/generated/agent/` is missing, then speaks JSON-RPC on stdin/stdout. Do not point Cursor at `node dist/index.js` as the only entry: a fresh clone has no `dist/`. Do not use `pnpm --filter … exec` as the MCP command.
 
-Cursor wiring (`.cursor/mcp.json` and the Canary skill) is a follow-up. Until then, start the bin from this package:
+This repo starts the server from `.cursor/mcp.json`:
 
-```bash
-pnpm --filter @harnessio/design-system-mcp start
+```json
+{
+  "mcpServers": {
+    "canary": {
+      "command": "node",
+      "args": ["./packages/design-system-mcp/bin/canary-mcp.js"]
+    }
+  }
+}
 ```
+
+A fresh Cursor window on this repo should show **canary** connected with five tools. The Canary UI skill is `.cursor/skills/canary-ui/SKILL.md`.
 
 ## Rebuild
 
 ```bash
-pnpm --filter @harnessio/ui catalog:generate
-pnpm --filter @harnessio/design-system-mcp build
+pnpm --filter @harnessio/ui catalog:generate && pnpm --filter @harnessio/design-system-mcp build
 ```
 
 Generated agent JSON is gitignored. Two compiles of the same tree are byte-identical.

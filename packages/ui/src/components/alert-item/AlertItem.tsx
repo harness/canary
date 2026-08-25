@@ -116,8 +116,8 @@ export const AlertItemComp = forwardRef<HTMLDivElement, AlertItemProps>(
             onClick={() => onClick?.()}
           />
         )}
-        <Layout.Horizontal align="start" gap="2xs" className="px-cn-xl py-cn-md flex-1 truncate">
-          <Layout.Vertical gap="2xs" className="flex-1">
+        <Layout.Horizontal align="start" gap="2xs" className="pl-cn-xl pr-cn-md py-cn-md flex-1 truncate">
+          <Layout.Vertical gap="2xs" className="min-w-0 flex-1">
             {title}
             {description}
             {link}

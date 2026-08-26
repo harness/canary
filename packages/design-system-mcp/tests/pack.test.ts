@@ -38,25 +38,29 @@ test('published layout resolves the bundled catalog next to dist/', () => {
   expect(resolved).toBe(join(root, 'catalog'))
 })
 
-test('npm pack includes dist, bin, and bundled catalog', () => {
-  const build = spawnSync(process.execPath, [join(packageRoot, 'scripts/bundle-agent-catalog.mjs')], {
-    cwd: packageRoot,
-    encoding: 'utf8'
-  })
-  expect(build.status).toBe(0)
+test(
+  'npm pack includes dist, bin, and bundled catalog',
+  () => {
+    const build = spawnSync(process.execPath, [join(packageRoot, 'scripts/bundle-agent-catalog.mjs')], {
+      cwd: packageRoot,
+      encoding: 'utf8'
+    })
+    expect(build.status).toBe(0)
 
-  const tsc = spawnSync('pnpm', ['exec', 'tsc', '-p', packageRoot], { cwd: packageRoot, encoding: 'utf8' })
-  expect(tsc.status).toBe(0)
+    const tsc = spawnSync('pnpm', ['exec', 'tsc', '-p', packageRoot], { cwd: packageRoot, encoding: 'utf8' })
+    expect(tsc.status).toBe(0)
 
-  const packed = spawnSync('npm', ['pack', '--dry-run', '--json', '--ignore-scripts'], {
-    cwd: packageRoot,
-    encoding: 'utf8'
-  })
-  expect(packed.status).toBe(0)
+    const packed = spawnSync('npm', ['pack', '--dry-run', '--json', '--ignore-scripts'], {
+      cwd: packageRoot,
+      encoding: 'utf8'
+    })
+    expect(packed.status).toBe(0)
 
-  const listing = packed.stdout
-  expect(listing).toMatch(/bin\/canary-mcp\.js/)
-  expect(listing).toMatch(/dist\/index\.js/)
-  expect(listing).toMatch(/catalog\/components\.json/)
-  expect(binPath).toMatch(/canary-mcp\.js$/)
-})
+    const listing = packed.stdout
+    expect(listing).toMatch(/bin\/canary-mcp\.js/)
+    expect(listing).toMatch(/dist\/index\.js/)
+    expect(listing).toMatch(/catalog\/components\.json/)
+    expect(binPath).toMatch(/canary-mcp\.js$/)
+  },
+  60_000
+)

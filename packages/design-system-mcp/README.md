@@ -25,7 +25,7 @@ This repo starts the server from `.cursor/mcp.json`:
 }
 ```
 
-A fresh Cursor window on this repo should show **canary** connected with five tools. The Canary UI skill is `.cursor/skills/canary-ui/SKILL.md`.
+A fresh Cursor window on this repo should show **canary** connected with eight tools. The Canary UI skill is `.cursor/skills/canary-ui/SKILL.md`.
 
 ## Rebuild
 

@@ -81,20 +81,12 @@ export default {
   },
 
   '.cn-single-pane-stepper-card-stack-inner': {
-    padding: 'var(--cn-spacing-6)',
-
-    '&::before': {
-      content: "''",
-      display: 'block',
-      minHeight: '8cqh',
-      flexShrink: '0'
-    },
-
-    '&::after': {
-      content: "''",
-      display: 'block',
-      minHeight: '36vh',
-      flexShrink: '0'
-    }
+    // DualPane keeps 8cqh / 36vh ::before/::after spacers so auto-scroll can
+    // keep the active card in focus. SinglePane is a timeline: contentTitle
+    // lives in this stack and should start at the top, and the last step
+    // should end the scroll content. Do not copy those spacers here.
+    // Vertical padding matches YamlOutput's header (--cn-spacing-3 = 12px) so
+    // contentTitle lines up with the YAML pane title. Sides stay --cn-spacing-6.
+    padding: 'var(--cn-spacing-3) var(--cn-spacing-6)'
   }
 }

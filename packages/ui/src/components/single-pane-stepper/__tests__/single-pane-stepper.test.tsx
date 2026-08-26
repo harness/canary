@@ -4,6 +4,7 @@ import { render, screen, waitFor } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { describe, expect, test, vi } from 'vitest'
 
+import singlePaneStepperStyles from '../../../../tailwind-utils-config/components/single-pane-stepper'
 import { CardContextProvider, FlowEngineProvider, useEngineContext } from '../../flow-stepper/engine'
 import { FlowStepperCard } from '../../flow-stepper/flow-stepper-card'
 import { SinglePaneStepper, useFlowCard } from '../index'
@@ -219,6 +220,22 @@ describe('SinglePaneStepper', () => {
       expect(root?.querySelector(':scope > .cn-single-pane-stepper-content-header')).toBeNull()
       expect(screen.getByText('Pipeline Configuration')).toBeInTheDocument()
       expect(screen.getByText('Connect your code')).toBeInTheDocument()
+    })
+
+    test('card stack inner has no DualPane-style scroll spacers', () => {
+      // DualPane uses 8cqh / 36vh spacers to keep the active card in focus.
+      // SinglePane is a timeline: contentTitle and steps should start at the
+      // top of the pane and end after the last step, with no empty bands.
+      const inner = singlePaneStepperStyles['.cn-single-pane-stepper-card-stack-inner']
+      expect(Object.hasOwn(inner, '&::before')).toBe(false)
+      expect(Object.hasOwn(inner, '&::after')).toBe(false)
+    })
+
+    test('card stack inner matches YAML header vertical padding and keeps side padding', () => {
+      // YAML header uses --cn-spacing-3 (12px) top/bottom. Uniform --cn-spacing-6
+      // (24px) sat the contentTitle a step below the YAML pane title.
+      const inner = singlePaneStepperStyles['.cn-single-pane-stepper-card-stack-inner']
+      expect(inner.padding).toBe('var(--cn-spacing-3) var(--cn-spacing-6)')
     })
 
     test('does not render stepper header when stepperTitle provided without showStepperHeader', () => {

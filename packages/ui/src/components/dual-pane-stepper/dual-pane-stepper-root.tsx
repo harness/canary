@@ -38,7 +38,7 @@ function DualPaneStepperContent({
   showStepBadge,
   hideUpcomingGroups,
   hidePredictedSteps
-}: Omit<DualPaneStepperRootProps, 'flow' | 'onComplete' | 'children' | 'initialEngineState'>) {
+}: Omit<DualPaneStepperRootProps, 'flow' | 'onComplete' | 'onReactivate' | 'children' | 'initialEngineState'>) {
   const { drawerState, closeDrawer, pendingReactivation, confirmReactivation, cancelReactivation } = useEngineContext()
 
   const prompt = reactivationPrompt || DEFAULT_REACTIVATION_PROMPT
@@ -169,6 +169,7 @@ function DefaultStepperPane({
 export function DualPaneStepperRoot({
   flow,
   onComplete,
+  onReactivate,
   disableAutoScroll,
   initialEngineState,
   children,
@@ -178,6 +179,7 @@ export function DualPaneStepperRoot({
     <FlowEngineProvider
       flow={flow}
       onComplete={onComplete}
+      onReactivate={onReactivate}
       disableAutoScroll={disableAutoScroll}
       initialEngineState={initialEngineState}
     >

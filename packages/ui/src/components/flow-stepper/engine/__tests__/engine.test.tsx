@@ -45,7 +45,11 @@ function CardStack() {
         const CardComponent = flow.steps[entry.stepId]?.component
         if (!CardComponent) return null
         return (
-          <CardContextProvider key={entry.stepId} stepId={entry.stepId} status={entry.status}>
+          <CardContextProvider
+            key={`${entry.stepId}-${entry.mountGeneration ?? 0}`}
+            stepId={entry.stepId}
+            status={entry.status}
+          >
             <div data-testid={`card-${entry.stepId}`} data-status={entry.status}>
               <CardComponent />
             </div>
@@ -274,6 +278,39 @@ function ReactivateCardC() {
   )
 }
 
+function RemountCardA() {
+  const { complete } = useFlowCard()
+  return (
+    <div>
+      <h3>Remount Card A</h3>
+      <button onClick={() => complete({ step1: 'done' }, 'remount-b')}>Next</button>
+    </div>
+  )
+}
+
+function RemountCardB() {
+  const { complete } = useFlowCard()
+  const [count, setCount] = React.useState(0)
+  return (
+    <div>
+      <h3>Remount Card B</h3>
+      <span data-testid="remount-counter">{count}</span>
+      <button onClick={() => setCount(c => c + 1)}>Increment</button>
+      <button onClick={() => complete({ step2: 'done' }, 'remount-c')}>Next</button>
+    </div>
+  )
+}
+
+function RemountCardC() {
+  const { requestReactivation } = useEngineContext()
+  return (
+    <div>
+      <h3>Remount Card C</h3>
+      <button onClick={() => requestReactivation('remount-b')}>Edit Previous</button>
+    </div>
+  )
+}
+
 function ReactivationDialog() {
   const { pendingReactivation, confirmReactivation, cancelReactivation } = useEngineContext()
   if (!pendingReactivation) return null
@@ -381,6 +418,20 @@ const reactivateFlow: FlowConfig = {
     'reactivate-c': { step: 'step-3', title: 'Reactivate C', component: ReactivateCardC }
   },
   initialStep: 'reactivate-a'
+}
+
+const remountFlow: FlowConfig = {
+  stepGroups: {
+    'step-1': { title: 'First Step' },
+    'step-2': { title: 'Second Step' },
+    'step-3': { title: 'Third Step' }
+  },
+  steps: {
+    'remount-a': { step: 'step-1', title: 'Remount A', component: RemountCardA, next: 'remount-b' },
+    'remount-b': { step: 'step-2', title: 'Remount B', component: RemountCardB, next: 'remount-c' },
+    'remount-c': { step: 'step-3', title: 'Remount C', component: RemountCardC }
+  },
+  initialStep: 'remount-a'
 }
 
 describe('Flow Engine', () => {
@@ -802,6 +853,115 @@ describe('Flow Engine', () => {
         expect(screen.queryByTestId('reactivation-dialog')).not.toBeInTheDocument()
         expect(screen.getByText('Reactivate Card C')).toBeInTheDocument()
       })
+    })
+
+    test('remounts the reactivated card so local state resets', async () => {
+      render(
+        <FlowEngineProvider flow={remountFlow}>
+          <TestHarness>
+            <CardStack />
+            <ReactivationDialog />
+          </TestHarness>
+        </FlowEngineProvider>
+      )
+
+      await userEvent.click(screen.getAllByText('Next')[0])
+      await waitFor(() => {
+        expect(screen.getByText('Remount Card B')).toBeInTheDocument()
+      })
+
+      expect(screen.getByTestId('remount-counter')).toHaveTextContent('0')
+      await userEvent.click(screen.getByText('Increment'))
+      expect(screen.getByTestId('remount-counter')).toHaveTextContent('1')
+
+      const cardB = screen.getByTestId('card-remount-b')
+      const nextButton = cardB.querySelector('button:last-of-type')
+      expect(nextButton).toBeTruthy()
+      await userEvent.click(nextButton as HTMLElement)
+
+      await waitFor(() => {
+        expect(screen.getByText('Remount Card C')).toBeInTheDocument()
+      })
+
+      await userEvent.click(screen.getByText('Edit Previous'))
+      await waitFor(() => {
+        expect(screen.getByTestId('reactivation-dialog')).toBeInTheDocument()
+      })
+      await userEvent.click(screen.getByText('Confirm'))
+
+      await waitFor(() => {
+        expect(screen.getByTestId('card-remount-b')).toHaveAttribute('data-status', 'active')
+        expect(screen.queryByTestId('card-remount-c')).not.toBeInTheDocument()
+      })
+
+      expect(screen.getByTestId('remount-counter')).toHaveTextContent('0')
+    })
+
+    test('calls onReactivate with the restarted step id after confirm', async () => {
+      const onReactivate = vi.fn()
+      render(
+        <FlowEngineProvider flow={reactivateFlow} onReactivate={onReactivate}>
+          <TestHarness>
+            <CardStack />
+            <ReactivationDialog />
+          </TestHarness>
+        </FlowEngineProvider>
+      )
+
+      await userEvent.click(screen.getAllByText('Next')[0])
+      await waitFor(() => {
+        expect(screen.getByText('Reactivate Card B')).toBeInTheDocument()
+      })
+      const cardB = screen.getByTestId('card-reactivate-b')
+      const nextButton = cardB.querySelector('button')
+      expect(nextButton).toBeTruthy()
+      await userEvent.click(nextButton as HTMLElement)
+      await waitFor(() => {
+        expect(screen.getByText('Reactivate Card C')).toBeInTheDocument()
+      })
+
+      await userEvent.click(screen.getByText('Edit Previous'))
+      await waitFor(() => {
+        expect(screen.getByTestId('reactivation-dialog')).toBeInTheDocument()
+      })
+      await userEvent.click(screen.getByText('Confirm'))
+
+      await waitFor(() => {
+        expect(onReactivate).toHaveBeenCalledTimes(1)
+        expect(onReactivate).toHaveBeenCalledWith('reactivate-b')
+      })
+    })
+
+    test('does not call onReactivate when reactivation is cancelled', async () => {
+      const onReactivate = vi.fn()
+      render(
+        <FlowEngineProvider flow={reactivateFlow} onReactivate={onReactivate}>
+          <TestHarness>
+            <CardStack />
+            <ReactivationDialog />
+          </TestHarness>
+        </FlowEngineProvider>
+      )
+
+      await userEvent.click(screen.getAllByText('Next')[0])
+      await waitFor(() => {
+        expect(screen.getByText('Reactivate Card B')).toBeInTheDocument()
+      })
+      const cardB = screen.getByTestId('card-reactivate-b')
+      const nextButton = cardB.querySelector('button')
+      expect(nextButton).toBeTruthy()
+      await userEvent.click(nextButton as HTMLElement)
+      await waitFor(() => {
+        expect(screen.getByText('Reactivate Card C')).toBeInTheDocument()
+      })
+
+      await userEvent.click(screen.getByText('Edit Previous'))
+      await waitFor(() => {
+        expect(screen.getByTestId('reactivation-dialog')).toBeInTheDocument()
+      })
+      await userEvent.click(screen.getByText('Cancel'))
+
+      expect(onReactivate).not.toHaveBeenCalled()
     })
   })
 

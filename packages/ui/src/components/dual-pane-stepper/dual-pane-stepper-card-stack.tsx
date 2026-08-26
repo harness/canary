@@ -51,7 +51,7 @@ export function DualPaneStepperCardStack() {
           if (!config) return null
           const CardComponent = config.component
           return (
-            <div key={entry.stepId} data-card-id={entry.stepId}>
+            <div key={`${entry.stepId}-${entry.mountGeneration ?? 0}`} data-card-id={entry.stepId}>
               <CardContextProvider stepId={entry.stepId} status={entry.status}>
                 <CardComponent />
               </CardContextProvider>

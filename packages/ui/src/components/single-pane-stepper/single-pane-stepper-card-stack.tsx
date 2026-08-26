@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useRef } from 'react'
 
 import { CardContextProvider, useEngineContext } from '../flow-stepper/engine'
+import { FlowStepperRestartButton } from '../flow-stepper/flow-stepper-card'
 import { FlowStepperRail } from '../flow-stepper/flow-stepper-rail'
 import { useFlowStepperRailModel } from '../flow-stepper/use-flow-stepper-rail-model'
 import { Layout } from '../layout'
@@ -101,12 +102,14 @@ export function SinglePaneStepperCardStack({
           collapsibleNestedSteps
           hideUpcomingGroups={hideUpcomingGroups}
           hidePredictedSteps={hidePredictedSteps}
+          renderStepHeaderActions={(stepId, status) => <FlowStepperRestartButton stepId={stepId} status={status} />}
           renderStepContent={(stepId, status) => {
             const CardComponent = flow.steps[stepId]?.component
             if (!CardComponent) return null
+            const mountGeneration = cardHistory.find(e => e.stepId === stepId)?.mountGeneration ?? 0
 
             return (
-              <div data-card-id={stepId}>
+              <div key={`${stepId}-${mountGeneration}`} data-card-id={stepId}>
                 <CardContextProvider stepId={stepId} status={status} contentOnly>
                   <CardComponent />
                 </CardContextProvider>

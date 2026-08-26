@@ -78,6 +78,9 @@ export interface CardEntry {
   stepId: string
   status: CardStatus
   stateSnapshot: Record<string, unknown>
+  // Incremented on confirmReactivation so card stacks can remount local state.
+  // Optional so derive-stepper-model fixtures stay untouched; missing is treated as 0.
+  mountGeneration?: number
 }
 
 /**

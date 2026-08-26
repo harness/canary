@@ -18,6 +18,12 @@ type CardSelectRootProps<T> = {
   defaultValue?: T extends 'single' ? unknown : unknown[]
   onValueChange?: T extends 'single' ? (val: unknown) => void : (val: unknown[]) => void
   disabled?: boolean
+  /**
+   * Single-select only. When true, re-clicking the selected item clears it (`onValueChange(null)`).
+   * Off by default so `type="single"` stays radio-sticky for existing consumers. No-op for
+   * `type="multiple"`, which already toggles.
+   */
+  deselectable?: boolean
   rows?: number
   cols?: number
   children: ReactNode
@@ -40,6 +46,7 @@ interface CardSelectContext {
   name: string
   currentValue: unknown | unknown[]
   disabled: boolean
+  deselectable: boolean
   onValueChange: (value: unknown) => void
 }
 
@@ -87,6 +94,7 @@ function CardSelectRoot<T extends CardSelectType>({
   defaultValue,
   onValueChange,
   disabled = false,
+  deselectable = false,
   children,
   rows,
   cols
@@ -95,8 +103,10 @@ function CardSelectRoot<T extends CardSelectType>({
     defaultValue ?? (type === 'multiple' ? [] : undefined)
   )
 
-  const currentValue = value ?? internalValue
+  // `value !== undefined` (not `value ??`) so a parent can pass `null` as controlled empty
+  // and actually clear a stale check. `null ?? internalValue` would fall through.
   const isControlled = value !== undefined
+  const currentValue = isControlled ? value : internalValue
 
   const handleValueChange = (itemValue: unknown) => {
     if (disabled) return
@@ -108,7 +118,9 @@ function CardSelectRoot<T extends CardSelectType>({
             ? currentValue.filter(v => v !== itemValue)
             : [...currentValue, itemValue]
           : [itemValue]
-        : itemValue
+        : deselectable && isChecked(itemValue, currentValue)
+          ? null
+          : itemValue
 
     if (!isControlled) {
       setInternalValue(newValue)
@@ -123,6 +135,7 @@ function CardSelectRoot<T extends CardSelectType>({
         name,
         currentValue,
         disabled,
+        deselectable,
         onValueChange: handleValueChange
       }}
     >
@@ -157,7 +170,7 @@ const CardSelectItem = forwardRef<HTMLLabelElement, CardSelectItemProps>(
     },
     ref
   ) => {
-    const { type, name, currentValue, disabled: groupDisabled, onValueChange } = useCardSelect()
+    const { type, name, currentValue, disabled: groupDisabled, deselectable, onValueChange } = useCardSelect()
     const { t } = useTranslation()
     const isDisabled = itemDisabled || groupDisabled || comingSoon
     const checked = isChecked(value, currentValue)
@@ -186,6 +199,16 @@ const CardSelectItem = forwardRef<HTMLLabelElement, CardSelectItemProps>(
             if (!isDisabled) {
               onValueChange(value)
             }
+          }
+        }}
+        onClick={e => {
+          // Native <input type="radio"> onChange does not fire on the already-checked input,
+          // so re-click would be a no-op without this. Opt-in via deselectable so default
+          // single-select stays radio-sticky. Only intercept the selected item — first-select
+          // still goes through onChange, avoiding a double fire.
+          if (deselectable && type === 'single' && checked && !isDisabled) {
+            e.preventDefault()
+            onValueChange(value)
           }
         }}
       >

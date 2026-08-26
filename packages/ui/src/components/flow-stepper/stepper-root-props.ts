@@ -23,6 +23,8 @@ export interface SharedFlowStepperRootProps {
   contentSubtitle?: string
   drawers?: Record<string, ComponentType<DrawerComponentProps>>
   onComplete?: (state: Record<string, unknown>) => void
+  /** Called after Restart is confirmed, with the step that is now active again. */
+  onReactivate?: (stepId: string) => void
   onClose?: () => void
   /**
    * Show the root header (icon, title, close button). Shown by default when header content is

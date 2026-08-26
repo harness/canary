@@ -259,7 +259,9 @@ export default {
     display: 'flex',
     alignItems: 'center',
     width: '100%',
-    minWidth: '0'
+    minWidth: '0',
+    // 4px between title / Restart / caret so the two icons are not flush.
+    gap: 'var(--cn-spacing-1)'
   },
 
   '.cn-stepper-step-collapse-trigger': {
@@ -505,7 +507,17 @@ export default {
     display: 'flex',
     alignItems: 'center',
     width: '100%',
-    minWidth: '0'
+    minWidth: '0',
+    // 4px between title / Restart / caret so the two icons are not flush.
+    gap: 'var(--cn-spacing-1)'
+  },
+
+  // Shared by top-level and nested collapsible headers. Sits immediately left of the caret so
+  // Restart (and any future header chrome) does not consume tile/content width.
+  '.cn-stepper-header-actions': {
+    display: 'flex',
+    alignItems: 'center',
+    flexShrink: '0'
   },
 
   '.cn-stepper-nested-step-collapse-trigger': {

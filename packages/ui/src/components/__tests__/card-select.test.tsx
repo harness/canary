@@ -234,6 +234,123 @@ describe('CardSelect', () => {
         expect(option2).toHaveAttribute('aria-checked', 'true')
         expect(option1).toHaveAttribute('aria-checked', 'false')
       })
+
+      test('should keep the selected item checked on re-click by default', async () => {
+        const onValueChange = vi.fn()
+        renderComponent(
+          <CardSelect.Root type="single" onValueChange={onValueChange}>
+            <CardSelect.Item value="option1">Option 1</CardSelect.Item>
+            <CardSelect.Item value="option2">Option 2</CardSelect.Item>
+          </CardSelect.Root>
+        )
+
+        const option1 = screen.getByRole('radio', { name: /option 1/i })
+        await userEvent.click(option1)
+        expect(option1).toHaveAttribute('aria-checked', 'true')
+        expect(onValueChange).toHaveBeenCalledWith('option1')
+
+        onValueChange.mockClear()
+        await userEvent.click(option1)
+
+        expect(option1).toHaveAttribute('aria-checked', 'true')
+        expect(onValueChange).not.toHaveBeenCalled()
+      })
+
+      test('should deselect the selected item on Enter when deselectable', async () => {
+        const onValueChange = vi.fn()
+        renderComponent(
+          <CardSelect.Root type="single" deselectable onValueChange={onValueChange}>
+            <CardSelect.Item value="option1">Option 1</CardSelect.Item>
+            <CardSelect.Item value="option2">Option 2</CardSelect.Item>
+          </CardSelect.Root>
+        )
+
+        const option1 = screen.getByRole('radio', { name: /option 1/i })
+        await userEvent.click(option1)
+        onValueChange.mockClear()
+        option1.focus()
+        await userEvent.keyboard('{Enter}')
+
+        expect(option1).toHaveAttribute('aria-checked', 'false')
+        expect(onValueChange).toHaveBeenCalledWith(null)
+      })
+
+      test('should deselect the selected item on re-click when deselectable', async () => {
+        const onValueChange = vi.fn()
+        renderComponent(
+          <CardSelect.Root type="single" deselectable onValueChange={onValueChange}>
+            <CardSelect.Item value="option1">Option 1</CardSelect.Item>
+            <CardSelect.Item value="option2">Option 2</CardSelect.Item>
+          </CardSelect.Root>
+        )
+
+        const option1 = screen.getByRole('radio', { name: /option 1/i })
+        await userEvent.click(option1)
+        expect(option1).toHaveAttribute('aria-checked', 'true')
+        expect(onValueChange).toHaveBeenCalledWith('option1')
+
+        onValueChange.mockClear()
+        await userEvent.click(option1)
+
+        expect(option1).toHaveAttribute('aria-checked', 'false')
+        expect(onValueChange).toHaveBeenCalledTimes(1)
+        expect(onValueChange).toHaveBeenCalledWith(null)
+      })
+
+      test('should call onValueChange(null) on re-click in controlled deselectable mode without changing visual state', async () => {
+        const onValueChange = vi.fn()
+        renderComponent(
+          <CardSelect.Root type="single" deselectable value="option1" onValueChange={onValueChange}>
+            <CardSelect.Item value="option1">Option 1</CardSelect.Item>
+            <CardSelect.Item value="option2">Option 2</CardSelect.Item>
+          </CardSelect.Root>
+        )
+
+        const option1 = screen.getByRole('radio', { name: /option 1/i })
+        expect(option1).toHaveAttribute('aria-checked', 'true')
+
+        await userEvent.click(option1)
+
+        expect(onValueChange).toHaveBeenCalledTimes(1)
+        expect(onValueChange).toHaveBeenCalledWith(null)
+        expect(option1).toHaveAttribute('aria-checked', 'true')
+      })
+
+      test('should treat controlled value={null} as empty with no item checked', () => {
+        renderComponent(
+          <CardSelect.Root type="single" value={null} defaultValue="option1">
+            <CardSelect.Item value="option1">Option 1</CardSelect.Item>
+            <CardSelect.Item value="option2">Option 2</CardSelect.Item>
+          </CardSelect.Root>
+        )
+
+        const option1 = screen.getByRole('radio', { name: /option 1/i })
+        const option2 = screen.getByRole('radio', { name: /option 2/i })
+        expect(option1).toHaveAttribute('aria-checked', 'false')
+        expect(option2).toHaveAttribute('aria-checked', 'false')
+      })
+
+      test('should uncheck the previously selected item when rerendered with value={null}', () => {
+        const { rerender } = renderComponent(
+          <CardSelect.Root type="single" value="option1">
+            <CardSelect.Item value="option1">Option 1</CardSelect.Item>
+            <CardSelect.Item value="option2">Option 2</CardSelect.Item>
+          </CardSelect.Root>
+        )
+
+        const option1 = screen.getByRole('radio', { name: /option 1/i })
+        expect(option1).toHaveAttribute('aria-checked', 'true')
+
+        rerender(
+          <CardSelect.Root type="single" value={null}>
+            <CardSelect.Item value="option1">Option 1</CardSelect.Item>
+            <CardSelect.Item value="option2">Option 2</CardSelect.Item>
+          </CardSelect.Root>
+        )
+
+        expect(screen.getByRole('radio', { name: /option 1/i })).toHaveAttribute('aria-checked', 'false')
+        expect(screen.getByRole('radio', { name: /option 2/i })).toHaveAttribute('aria-checked', 'false')
+      })
     })
 
     describe('Multiple Selection', () => {

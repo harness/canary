@@ -67,11 +67,20 @@ export default {
     cursor: 'pointer',
     padding: '0',
     flexShrink: '0',
+    // Same two-tone as the collapse caret: subdued until the pointer is on this control.
+    color: 'var(--cn-text-3)',
     opacity: '0',
     transition: 'opacity 150ms ease',
 
     '&:hover': {
-      background: 'var(--cn-bg-3)'
+      color: 'var(--cn-text-1)'
+    },
+
+    '&:focus-visible': {
+      opacity: '1',
+      color: 'var(--cn-text-1)',
+      outline: 'var(--cn-focus)',
+      outlineOffset: 'var(--cn-outline-offset-tight)'
     }
   },
 
@@ -79,9 +88,18 @@ export default {
     opacity: '1'
   },
 
+  // Whole step item (header or tiles). Completing a step while the pointer is still on the tiles
+  // will briefly reveal Restart before collapse. Header-only hover would hide that flash but also
+  // hide Restart on tile hover, which is too hard to discover.
+  '.cn-stepper-step-item:hover .cn-flow-stepper-card-edit, .cn-stepper-nested-step-item:hover .cn-flow-stepper-card-edit':
+    {
+      opacity: '1'
+    },
+
   '.cn-flow-stepper-card-content': {
     marginTop: 'var(--cn-spacing-6)',
     paddingLeft: 'calc(var(--cn-size-4) + var(--cn-spacing-3))',
+    minWidth: '0',
 
     '&[inert]': {
       opacity: '0.6',

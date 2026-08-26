@@ -119,6 +119,9 @@ export function useFlowCard<TState = Record<string, unknown>>(): FlowCardContext
 interface FlowEngineProviderProps {
   flow: FlowConfig
   onComplete?: (state: Record<string, unknown>) => void
+  // Host callback after Restart is confirmed. Engine state is already rewound to the target
+  // step. Use this to reset consumer flow context (provider, repo, yaml, …) to that point.
+  onReactivate?: (stepId: string) => void
   // When true, the panes never auto-scroll the active card into view (on mount or transition).
   // Use for completed/review/read-only flows where chasing the active card is undesirable.
   disableAutoScroll?: boolean
@@ -170,6 +173,7 @@ function rebuildTerminalRef(flow: FlowConfig, history: CardEntry[]): Set<string>
 export function FlowEngineProvider({
   flow,
   onComplete,
+  onReactivate,
   disableAutoScroll = false,
   initialEngineState,
   children
@@ -177,10 +181,12 @@ export function FlowEngineProvider({
   const [state, setState] = useState<Record<string, unknown>>(() =>
     isUsableInitialEngineState(flow, initialEngineState) ? initialEngineState.state : {}
   )
+  // Hydrated history is passed through as-is. Missing `mountGeneration` is treated as 0, so a
+  // resume does not remount cards. Fresh seeds start at 0 and bump on Restart.
   const [cardHistory, setCardHistory] = useState<CardEntry[]>(() =>
     isUsableInitialEngineState(flow, initialEngineState)
       ? initialEngineState.cardHistory
-      : [{ stepId: flow.initialStep, status: 'active', stateSnapshot: {} }]
+      : [{ stepId: flow.initialStep, status: 'active', stateSnapshot: {}, mountGeneration: 0 }]
   )
   const [drawerState, setDrawerState] = useState<DrawerState | null>(null)
   const [pendingReactivation, setPendingReactivation] = useState<string | null>(null)
@@ -289,7 +295,8 @@ export function FlowEngineProvider({
           updated.push({
             stepId: resolvedNext,
             status: 'active',
-            stateSnapshot: newState
+            stateSnapshot: newState,
+            mountGeneration: 0
           })
         }
         return updated
@@ -332,7 +339,8 @@ export function FlowEngineProvider({
           updated.push({
             stepId: resolvedNext,
             status: 'active',
-            stateSnapshot: stateRef.current
+            stateSnapshot: stateRef.current,
+            mountGeneration: 0
           })
         }
         return updated
@@ -361,7 +369,8 @@ export function FlowEngineProvider({
           updated.push({
             stepId: resolvedNext,
             status: 'active',
-            stateSnapshot: stateRef.current
+            stateSnapshot: stateRef.current,
+            mountGeneration: 0
           })
         }
         return updated
@@ -413,16 +422,26 @@ export function FlowEngineProvider({
     setState(prevSnapshot)
     setCardHistory(prev => {
       const trimmed = prev.slice(0, targetIndex + 1)
-      return trimmed.map((entry, idx) => (idx === targetIndex ? { ...entry, status: 'active' as const } : entry))
+      return trimmed.map((entry, idx) =>
+        idx === targetIndex
+          ? {
+              ...entry,
+              status: 'active' as const,
+              // Bump so card stacks remount this card's local state (collapse still uses forceMount).
+              mountGeneration: (entry.mountGeneration ?? 0) + 1
+            }
+          : entry
+      )
     })
 
     for (const entry of history.slice(targetIndex)) {
       terminalRef.current.delete(entry.stepId)
     }
     setPendingReactivation(null)
+    onReactivate?.(target)
 
     setTimeout(() => scrollToCardRef.current?.(target), 150)
-  }, [])
+  }, [onReactivate])
 
   const cancelReactivation = useCallback(() => {
     setPendingReactivation(null)

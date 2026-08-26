@@ -70,6 +70,10 @@ export interface StepperStepProps {
   showStepBadge?: boolean
   /** Lets a flat-mode consumer supply the flow's real nested-step count instead of the currently-registered count. */
   totalStepsOverride?: number
+  /** Optional controls rendered in the collapsible step header, immediately left of the
+   *  expand/collapse caret (e.g. SinglePaneStepper's Restart). Ignored when the step is not
+   *  collapsible. */
+  headerActions?: ReactNode
   className?: string
   children?: ReactNode
 }

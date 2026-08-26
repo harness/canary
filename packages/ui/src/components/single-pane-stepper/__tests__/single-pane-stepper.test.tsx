@@ -667,6 +667,12 @@ describe('SinglePaneStepper', () => {
       const restartButton = screen.getByRole('button', { name: 'Redo this step' })
       expect(restartButton.closest('[inert]')).toBeNull()
 
+      const header = completedItem?.querySelector('.cn-stepper-nested-step-header')
+      const headerActions = header?.querySelector('.cn-stepper-header-actions')
+      expect(headerActions).toContainElement(restartButton)
+      expect(headerActions?.nextElementSibling).toBe(collapseTrigger)
+      expect(completedItem?.querySelector('.cn-flow-stepper-card-content')).not.toContainElement(restartButton)
+
       await userEvent.click(restartButton)
 
       await waitFor(() => {

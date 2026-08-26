@@ -27,6 +27,7 @@ function TopLevelStep({
   disabled,
   showStepBadge,
   totalStepsOverride,
+  headerActions,
   className,
   children
 }: StepperStepProps) {
@@ -167,6 +168,7 @@ function TopLevelStep({
       >
         <div className="cn-stepper-step-header">
           {stepButton}
+          {headerActions ? <span className="cn-stepper-header-actions">{headerActions}</span> : null}
           <CollapsiblePrimitive.Trigger asChild>
             <span
               role="button"
@@ -211,6 +213,7 @@ function NestedStep({
   state: explicitState,
   visualCompleted = false,
   contentOnly = false,
+  headerActions,
   className,
   children
 }: StepperStepProps & { parentValue: string }) {
@@ -363,6 +366,7 @@ function NestedStep({
       <li className={cn('cn-stepper-nested-step-item', stateClass, 'cn-stepper-nested-step-item-collapsible')}>
         <div className="cn-stepper-nested-step-header">
           {nestedStepRow}
+          {headerActions ? <span className="cn-stepper-header-actions">{headerActions}</span> : null}
           <CollapsiblePrimitive.Trigger asChild>
             <span
               role="button"

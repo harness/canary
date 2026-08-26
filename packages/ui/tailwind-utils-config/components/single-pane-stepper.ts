@@ -73,17 +73,11 @@ export default {
       paddingLeft: '0',
       marginTop: '0',
       marginBottom: 'var(--cn-spacing-3)'
-    },
-
-    '& .cn-flow-stepper-card-content-only': {
-      position: 'relative'
-    },
-
-    '& .cn-flow-stepper-card-content-only .cn-flow-stepper-card-edit': {
-      position: 'absolute',
-      top: '0',
-      right: '0'
     }
+
+    // Single-pane Restart is slotted into the Stepper.Step header (left of the collapse caret) via
+    // renderStepHeaderActions. Do not reserve a content column for it here — that shrinks tiles
+    // after selection. DualPane still renders Restart in the card title row.
   },
 
   '.cn-single-pane-stepper-card-stack-inner': {

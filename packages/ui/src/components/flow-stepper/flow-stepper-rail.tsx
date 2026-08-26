@@ -41,6 +41,10 @@ export interface FlowStepperRailProps {
   /** Renders inline content under a visited/active step. Omit for a rail with no inline content
    * (DualPaneStepper's left pane — its card content lives in the separate right pane instead). */
   renderStepContent?: (stepId: string, status: CardStatus) => ReactNode
+  /** Optional header chrome for a visited/active collapsible step, rendered immediately left of
+   * the expand/collapse caret. SinglePaneStepper uses this for Restart so tile content is not
+   * squeezed. Omit to render no header actions (DualPaneStepper). */
+  renderStepHeaderActions?: (stepId: string, status: CardStatus) => ReactNode
   /** Grouped-mode only: omit groups whose derived state is `upcoming`. Visited and active groups
    * still render. No-op on flat flows (no groups). Visual only — engine derivation, routing, and
    * badge totals are unchanged. Default false. */
@@ -66,6 +70,7 @@ export function FlowStepperRail({
   stepNumberOverridesComplete,
   collapsibleNestedSteps,
   renderStepContent,
+  renderStepHeaderActions,
   hideUpcomingGroups,
   hidePredictedSteps
 }: FlowStepperRailProps) {
@@ -86,6 +91,8 @@ export function FlowStepperRail({
         {stepsToRender.map(step => {
           const status = cardStatusMap.get(step.stepId)
           const content = status && renderStepContent ? renderStepContent(step.stepId, status) : null
+          const headerActions =
+            status && renderStepHeaderActions ? renderStepHeaderActions(step.stepId, status) : undefined
 
           return (
             <Stepper.Step
@@ -97,6 +104,7 @@ export function FlowStepperRail({
               visualCompleted={step.visualCompleted}
               showStepBadge={showStepBadge}
               totalStepsOverride={totalOverride}
+              headerActions={headerActions}
             >
               {content}
             </Stepper.Step>
@@ -174,6 +182,8 @@ export function FlowStepperRail({
                 const stepConfig = flow.steps[v.stepId]
                 const status = cardStatusMap.get(v.stepId)
                 const content = status && renderStepContent ? renderStepContent(v.stepId, status) : null
+                const headerActions =
+                  status && renderStepHeaderActions ? renderStepHeaderActions(v.stepId, status) : undefined
 
                 return (
                   <Stepper.Step
@@ -183,6 +193,7 @@ export function FlowStepperRail({
                     description={stepConfig?.description}
                     state={v.state}
                     visualCompleted={stepConfig?.visualCompleted}
+                    headerActions={headerActions}
                   >
                     {content}
                   </Stepper.Step>

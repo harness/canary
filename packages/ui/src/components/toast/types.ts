@@ -3,6 +3,8 @@ import { ReactNode } from 'react'
 import { Action, ExternalToast } from 'sonner'
 
 type ToastOptions = Pick<ExternalToast, 'action' | 'duration' | 'dismissible'> & {
+  onClose?: () => void
+  onAutoClose?: () => void
   action?: Action
 }
 

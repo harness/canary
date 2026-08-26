@@ -237,6 +237,10 @@ export default defineConfig({
                 onclick: "event.preventDefault(); return false;",
               },
             },
+            {
+              slug: "growth-patterns/growth-box",
+              label: "Growth Box [WIP]",
+            },
           ],
         },
       ],

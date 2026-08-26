@@ -9,6 +9,17 @@ import { FullFlowDemo, StatesDemo } from "@/components/dual-pane-stepper-demo";
 
 The `DualPaneStepper` is a full-page builder shell component for multi-step guided flows. It combines a left-pane stepper with a right-pane card stack that supports decision-tree navigation, drawer overlays, dynamic steps, and back-navigation with reactivation guards.
 
+It shares the same `FlowConfig`, `useFlowCard`, and Root engine APIs as `SinglePaneStepper`. The only intentional difference is layout: DualPane renders cards in a right pane, SinglePane embeds them in the timeline. DualPane-only extras are `leftPane` and `panelSizes`.
+
+<Aside type="note">
+  Header visibility uses the same `show*` convention as SinglePane:
+  `showRootHeader` (default `true`) controls the root header with
+  icon/title/close, and `showStepperHeader` (default `false`) controls the
+  stepper timeline header. Pass `showStepperHeader` along with `stepperTitle` to
+  display the timeline header. The legacy `hideHeader` prop remains supported as
+  a deprecated alias for `showRootHeader={false}`.
+</Aside>
+
 Use this component for onboarding wizards, setup flows, and any multi-step process where the user's choices determine the next card(s) to show.
 
 ## Step States
@@ -441,19 +452,23 @@ The root component that sets up the flow engine, renders the dual-pane layout, a
 <DualPaneStepper.Root
   flow={flowConfig}                          // [REQUIRED] Flow configuration
   icon={<Logo />}                            // [OPTIONAL] Element rendered before the title in header
-  title="Create a pipeline"                  // [OPTIONAL] Header title (header hidden if no icon or title)
+  title="Create a pipeline"                  // [OPTIONAL] Header title
+  showStepperHeader                          // [OPTIONAL] Show stepperTitle above the timeline (default false)
   stepperTitle="Setup Steps"                 // [OPTIONAL] Title shown in stepper pane
   contentTitle="Configuration"               // [OPTIONAL] Heading above card stack
   contentSubtitle="Follow the steps below"   // [OPTIONAL] Subtitle under contentTitle
   drawers={{ connector: ConnectorDrawer }}   // [OPTIONAL] Drawer components keyed by ID
   onComplete={(state) => console.log(state)} // [OPTIONAL] Called when the final card completes
   onClose={() => navigate('/')}              // [OPTIONAL] Renders close button in header
-  leftPane={<CustomStepper />}               // [OPTIONAL] Override entire left pane content
-  panelSizes={{ default: 30, min: 20, max: 40 }} // [OPTIONAL] Left panel sizing (%)
+  leftPane={<CustomStepper />}               // [OPTIONAL] Override entire left pane content (layout)
+  panelSizes={{ default: 30, min: 20, max: 40 }} // [OPTIONAL] Left panel sizing (%) (layout)
   reactivationPrompt={{ title: "Go back?", description: "Progress will be lost." }} // [OPTIONAL]
   hideUpcomingGroups={false}             // [OPTIONAL] Hide upcoming groups (default stepper pane)
   hidePredictedSteps={false}             // [OPTIONAL] Hide predicted/upcoming step placeholders
-/>
+  initialEngineState={snapshot}          // [OPTIONAL] Resume a persisted engine snapshot
+>
+  {/* optional persist-bridge children, inside FlowEngineProvider */}
+</DualPaneStepper.Root>
 ```
 
 <DocsPage.PropsTable
@@ -475,13 +490,22 @@ The root component that sets up the flow engine, renders the dual-pane layout, a
     {
       name: "title",
       description:
-        "Title displayed in the header bar. Header is hidden if neither icon nor title is provided.",
+        "Title displayed in the header bar. Header shows when icon, title, or onClose is provided unless showRootHeader is false.",
       required: false,
       value: "string",
     },
     {
+      name: "showStepperHeader",
+      description:
+        "Show stepperTitle above the left-pane timeline. Default false — same as SinglePane.",
+      required: false,
+      value: "boolean",
+      defaultValue: "false",
+    },
+    {
       name: "stepperTitle",
-      description: "Title shown above the stepper in the left pane",
+      description:
+        "Title shown above the stepper in the left pane when showStepperHeader is true",
       required: false,
       value: "string",
     },
@@ -515,6 +539,22 @@ The root component that sets up the flow engine, renders the dual-pane layout, a
       description: "When provided, renders a close button in the header",
       required: false,
       value: "() => void",
+    },
+    {
+      name: "showRootHeader",
+      description:
+        "Show the root header (icon, title, close button). Hidden when false — useful for PLG flows that use contentTitle instead",
+      required: false,
+      value: "boolean",
+      defaultValue: "true",
+    },
+    {
+      name: "hideHeader",
+      description:
+        "Deprecated alias for showRootHeader={false}. Prefer showRootHeader for new code",
+      required: false,
+      value: "boolean",
+      defaultValue: "false",
     },
     {
       name: "leftPane",
@@ -554,6 +594,48 @@ The root component that sets up the flow engine, renders the dual-pane layout, a
       required: false,
       value: "boolean",
       defaultValue: "false",
+    },
+    {
+      name: "disableAutoScroll",
+      description:
+        "Disable auto-scrolling the right pane to the active card — useful for review/demo flows",
+      required: false,
+      value: "boolean",
+      defaultValue: "false",
+    },
+    {
+      name: "showStepBadge",
+      description:
+        "Renders a 'Step {n}/{total}' pill badge next to each step's title. Same semantics as SinglePane.",
+      required: false,
+      value: "boolean",
+      defaultValue: "false",
+    },
+    {
+      name: "initialEngineState",
+      description:
+        "Optional snapshot of engine state and cardHistory used to resume a flow instead of starting at flow.initialStep",
+      required: false,
+      value: "InitialEngineState",
+    },
+    {
+      name: "children",
+      description:
+        "Rendered after the visual layout, inside FlowEngineProvider — for context-only consumers such as a persist bridge",
+      required: false,
+      value: "ReactNode",
+    },
+    {
+      name: "className",
+      description: "Merged onto the DualPane root layout element",
+      required: false,
+      value: "string",
+    },
+    {
+      name: "style",
+      description: "Inline style on the DualPane root layout element",
+      required: false,
+      value: "CSSProperties",
     },
   ]}
 />

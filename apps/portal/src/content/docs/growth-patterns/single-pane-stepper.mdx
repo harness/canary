@@ -468,6 +468,32 @@ The root component that sets up the flow engine, renders the single-column layou
       value: "boolean",
       defaultValue: "false",
     },
+    {
+      name: "initialEngineState",
+      description:
+        "Optional snapshot of engine state and cardHistory used to resume a flow instead of starting at flow.initialStep",
+      required: false,
+      value: "InitialEngineState",
+    },
+    {
+      name: "children",
+      description:
+        "Rendered after the visual layout, inside FlowEngineProvider — for context-only consumers such as a persist bridge",
+      required: false,
+      value: "ReactNode",
+    },
+    {
+      name: "className",
+      description: "Merged onto the SinglePane root layout element",
+      required: false,
+      value: "string",
+    },
+    {
+      name: "style",
+      description: "Inline style on the SinglePane root layout element",
+      required: false,
+      value: "CSSProperties",
+    },
   ]}
 />
 

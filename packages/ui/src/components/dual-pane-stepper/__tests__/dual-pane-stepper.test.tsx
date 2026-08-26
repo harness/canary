@@ -4,6 +4,7 @@ import { render, screen, waitFor } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { describe, expect, test, vi } from 'vitest'
 
+import { useEngineContext } from '../../flow-stepper/engine'
 import type { FlowConfig } from '../dual-pane-stepper-types'
 import { DualPaneStepper, useFlowCard } from '../index'
 
@@ -72,6 +73,11 @@ function TestCardC() {
   )
 }
 
+function EngineChildProbe() {
+  const { activeStepId } = useEngineContext()
+  return <span data-testid="bridge-child">{activeStepId}</span>
+}
+
 const testFlow: FlowConfig = {
   stepGroups: {
     'step-1': { title: 'First Step', description: 'Do first thing' },
@@ -96,6 +102,34 @@ describe('DualPaneStepper', () => {
     test('renders flow title', () => {
       render(<DualPaneStepper.Root flow={testFlow} title="Test Flow" />)
       expect(screen.getAllByText('Test Flow').length).toBeGreaterThanOrEqual(1)
+    })
+
+    test('showRootHeader=false hides header even when title provided', () => {
+      render(<DualPaneStepper.Root flow={testFlow} title="Test Flow" showRootHeader={false} />)
+      expect(screen.queryByText('Test Flow')).not.toBeInTheDocument()
+    })
+
+    test('hideHeader hides header as deprecated alias of showRootHeader={false}', () => {
+      render(<DualPaneStepper.Root flow={testFlow} title="Test Flow" hideHeader />)
+      expect(screen.queryByText('Test Flow')).not.toBeInTheDocument()
+    })
+
+    test('showRootHeader takes precedence over hideHeader when both are provided', () => {
+      render(<DualPaneStepper.Root flow={testFlow} title="Test Flow" showRootHeader hideHeader />)
+      expect(screen.getAllByText('Test Flow').length).toBeGreaterThanOrEqual(1)
+    })
+
+    test('does not render stepper header when stepperTitle provided without showStepperHeader', () => {
+      const { container } = render(<DualPaneStepper.Root flow={testFlow} stepperTitle="Setup Steps" />)
+      expect(container.querySelector('.cn-stepper-header')).not.toBeInTheDocument()
+    })
+
+    test('renders stepper header when showStepperHeader and stepperTitle are provided', () => {
+      const { container } = render(
+        <DualPaneStepper.Root flow={testFlow} stepperTitle="Setup Steps" showStepperHeader />
+      )
+      expect(container.querySelector('.cn-stepper-header')).toBeInTheDocument()
+      expect(screen.getByText('Setup Steps')).toBeInTheDocument()
     })
 
     test('renders contentSubtitle when provided', () => {
@@ -218,6 +252,42 @@ describe('DualPaneStepper', () => {
     })
   })
 
+  describe('Root children', () => {
+    test('Root children render inside FlowEngineProvider after visual content', () => {
+      render(
+        <DualPaneStepper.Root flow={testFlow}>
+          <EngineChildProbe />
+        </DualPaneStepper.Root>
+      )
+      expect(screen.getByTestId('bridge-child')).toHaveTextContent('card-a')
+    })
+
+    test('Root children are not forwarded onto Content DOM', () => {
+      const { container } = render(
+        <DualPaneStepper.Root flow={testFlow}>
+          <EngineChildProbe />
+        </DualPaneStepper.Root>
+      )
+      expect(container.querySelectorAll('[data-testid="bridge-child"]')).toHaveLength(1)
+    })
+
+    test('Root forwards initialEngineState into the engine', () => {
+      render(
+        <DualPaneStepper.Root
+          flow={testFlow}
+          initialEngineState={{
+            state: { answer: 'restored' },
+            cardHistory: [
+              { stepId: 'card-a', status: 'completed', stateSnapshot: { answer: 'restored' } },
+              { stepId: 'card-b', status: 'active', stateSnapshot: {} }
+            ]
+          }}
+        />
+      )
+      expect(screen.getAllByText('Card B').length).toBeGreaterThanOrEqual(1)
+    })
+  })
+
   describe('Terminal Steps', () => {
     test('visualCompleted terminal step renders parent step group as completed (green), not active', async () => {
       const visualCompletedFlow: FlowConfig = {
@@ -285,6 +355,60 @@ describe('DualPaneStepper', () => {
 
       expect(screen.queryByText('Card C')).not.toBeInTheDocument()
       expect(container.querySelectorAll('.cn-stepper-step-item').length).toBe(2)
+    })
+  })
+
+  describe('Step Badge Totals', () => {
+    test('grouped mode: showStepBadge renders Step 1/3 on the active path', () => {
+      const { container } = render(<DualPaneStepper.Root flow={testFlow} showStepBadge />)
+
+      const badge = container.querySelector('.cn-stepper-step-badge')
+      expect(badge).toHaveTextContent('Step 1/3')
+    })
+
+    test('hidePredictedSteps does not change the showStepBadge total', () => {
+      const { container } = render(
+        <DualPaneStepper.Root flow={testFlow} hideUpcomingGroups hidePredictedSteps showStepBadge />
+      )
+
+      const badge = container.querySelector('.cn-stepper-step-badge')
+      expect(badge).toHaveTextContent('Step 1/3')
+    })
+
+    test("flat mode: badge total counts only the active path's steps, not every mutually-exclusive sibling step", () => {
+      const branchingStepsFlow: FlowConfig = {
+        steps: {
+          start: { title: 'Start', component: () => null, next: 'github-auth' },
+          'github-auth': { title: 'GitHub', component: () => null, next: 'connect-repo' },
+          'gitlab-auth': { title: 'GitLab', component: () => null, next: 'connect-repo' },
+          'bitbucket-auth': { title: 'Bitbucket', component: () => null, next: 'connect-repo' },
+          'connect-repo': { title: 'Connect', component: () => null, terminal: true }
+        },
+        initialStep: 'start'
+      }
+
+      const { container } = render(<DualPaneStepper.Root flow={branchingStepsFlow} showStepBadge />)
+
+      const badge = container.querySelector('.cn-stepper-step-badge')
+      expect(badge).toBeInTheDocument()
+      expect(badge).toHaveTextContent('Step 1/3')
+    })
+  })
+
+  describe('Collapsible nested steps', () => {
+    test('default left rail opts into collapsible nested-step chrome; cards stay in the right pane', async () => {
+      const { container } = render(<DualPaneStepper.Root flow={testFlow} title="Test Flow" />)
+
+      expect(container.querySelector('.cn-stepper-collapsible-nested-steps')).toBeInTheDocument()
+
+      await userEvent.click(screen.getByText('Next'))
+      await waitFor(() => {
+        expect(screen.getByText('Answer: yes')).toBeInTheDocument()
+      })
+
+      // Nested steps have no inline card children in DualPane, so collapse chevrons do not render.
+      expect(container.querySelectorAll('.cn-stepper-nested-step-collapse-trigger').length).toBe(0)
+      expect(screen.getAllByText('Card A').length).toBeGreaterThanOrEqual(1)
     })
   })
 })

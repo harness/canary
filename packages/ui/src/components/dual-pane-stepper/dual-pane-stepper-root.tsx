@@ -1,8 +1,12 @@
 import { useMemo } from 'react'
 
+import { cn } from '@utils/cn'
+
 import { AlertDialog } from '../alert-dialog'
 import { FlowEngineProvider, useEngineContext } from '../flow-stepper/engine'
 import { FlowStepperRail } from '../flow-stepper/flow-stepper-rail'
+import { resolveShowRootHeader } from '../flow-stepper/resolve-show-root-header'
+import { useFlowStepperRailModel } from '../flow-stepper/use-flow-stepper-rail-model'
 import { IconV2 } from '../icon-v2'
 import { Layout } from '../layout'
 import { Resizable } from '../resizable'
@@ -19,21 +23,27 @@ function DualPaneStepperContent({
   title,
   icon,
   stepperTitle,
+  showStepperHeader,
   contentTitle,
   contentSubtitle,
   drawers,
   onClose,
+  showRootHeader,
+  hideHeader,
   leftPane,
   reactivationPrompt,
   panelSizes,
+  className,
+  style,
+  showStepBadge,
   hideUpcomingGroups,
   hidePredictedSteps
-}: Omit<DualPaneStepperRootProps, 'flow' | 'onComplete'>) {
+}: Omit<DualPaneStepperRootProps, 'flow' | 'onComplete' | 'children' | 'initialEngineState'>) {
   const { drawerState, closeDrawer, pendingReactivation, confirmReactivation, cancelReactivation } = useEngineContext()
 
   const prompt = reactivationPrompt || DEFAULT_REACTIVATION_PROMPT
   const panels = { default: 30, min: 20, max: 40, ...panelSizes }
-  const showHeader = !!(icon || title)
+  const showHeader = resolveShowRootHeader(showRootHeader, hideHeader) && !!(icon || title || onClose)
 
   const activeDrawer = useMemo(() => {
     if (!drawerState || !drawers) return null
@@ -45,6 +55,8 @@ function DualPaneStepperContent({
   const defaultLeftPane = (
     <DefaultStepperPane
       stepperTitle={stepperTitle}
+      showStepperHeader={showStepperHeader}
+      showStepBadge={showStepBadge}
       hideUpcomingGroups={hideUpcomingGroups}
       hidePredictedSteps={hidePredictedSteps}
     />
@@ -52,7 +64,7 @@ function DualPaneStepperContent({
 
   return (
     <>
-      <Layout.Vertical gap="none" className="cn-dual-pane-stepper-root">
+      <Layout.Vertical gap="none" className={cn('cn-dual-pane-stepper-root', className)} style={style}>
         {showHeader && (
           <Layout.Horizontal as="header" align="center" gap="sm" className="cn-dual-pane-stepper-header">
             {icon}
@@ -118,26 +130,20 @@ function DualPaneStepperContent({
 
 function DefaultStepperPane({
   stepperTitle,
+  showStepperHeader,
+  showStepBadge,
   hideUpcomingGroups,
   hidePredictedSteps
 }: {
   stepperTitle?: string
+  showStepperHeader?: boolean
+  showStepBadge?: boolean
   hideUpcomingGroups?: boolean
   hidePredictedSteps?: boolean
 }) {
-  const { flow, cardHistory, activeStepId, predictedPath, scrollToCard } = useEngineContext()
-
-  const handleStepperClick = (value: string) => {
-    const historyEntry = cardHistory.find(e => e.stepId === value)
-    if (historyEntry) {
-      scrollToCard(historyEntry.stepId)
-      return
-    }
-    const firstInStepGroup = cardHistory.find(e => flow.steps[e.stepId]?.step === value)
-    if (firstInStepGroup) {
-      scrollToCard(firstInStepGroup.stepId)
-    }
-  }
+  const { flow, cardHistory, activeStepId, predictedPath } = useEngineContext()
+  const { totalOverride, stepNumberOverrides, stepNumberOverridesComplete, handleStepperClick } =
+    useFlowStepperRailModel()
 
   return (
     <FlowStepperRail
@@ -148,17 +154,35 @@ function DefaultStepperPane({
       value={activeStepId}
       onValueChange={handleStepperClick}
       stepperTitle={stepperTitle}
-      showStepperHeader
+      showStepperHeader={showStepperHeader}
+      showStepBadge={showStepBadge}
+      totalOverride={totalOverride}
+      stepNumberOverrides={stepNumberOverrides}
+      stepNumberOverridesComplete={stepNumberOverridesComplete}
+      collapsibleNestedSteps
       hideUpcomingGroups={hideUpcomingGroups}
       hidePredictedSteps={hidePredictedSteps}
     />
   )
 }
 
-export function DualPaneStepperRoot({ flow, onComplete, disableAutoScroll, ...props }: DualPaneStepperRootProps) {
+export function DualPaneStepperRoot({
+  flow,
+  onComplete,
+  disableAutoScroll,
+  initialEngineState,
+  children,
+  ...props
+}: DualPaneStepperRootProps) {
   return (
-    <FlowEngineProvider flow={flow} onComplete={onComplete} disableAutoScroll={disableAutoScroll}>
+    <FlowEngineProvider
+      flow={flow}
+      onComplete={onComplete}
+      disableAutoScroll={disableAutoScroll}
+      initialEngineState={initialEngineState}
+    >
       <DualPaneStepperContent {...props} />
+      {children}
     </FlowEngineProvider>
   )
 }

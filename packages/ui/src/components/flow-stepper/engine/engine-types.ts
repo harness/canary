@@ -17,7 +17,7 @@ interface BaseStepConfig {
   // Explicit opt-in: this step's real continuation is decided dynamically at runtime (e.g. a card
   // calls `complete(statePatch, nextStepId)` with a step id chosen from its own logic, not a static
   // `next`) and cannot be predicted just by reading the flow config. Badge-total fallbacks
-  // (single-pane-stepper-card-stack.tsx's totalStepsCount/totalStepGroupsCount) use this to tell
+  // (use-flow-stepper-rail-model.ts's totalStepsCount/totalStepGroupsCount) use this to tell
   // "the walk stopped here because it's a genuine, designed end of the flow the author simply
   // forgot to flag `terminal`" (leave unset — trust the walked total, don't inflate it) apart from
   // "the walk stopped here only because we can't see further statically" (set this — more steps may
@@ -82,7 +82,8 @@ export interface CardEntry {
 
 /**
  * A serialized snapshot of engine state that a host app can pass to `FlowEngineProvider` (or
- * `SinglePaneStepper.Root`) to resume a flow instead of starting at `flow.initialStep`.
+ * `SinglePaneStepper.Root` / `DualPaneStepper.Root`) to resume a flow instead of starting at
+ * `flow.initialStep`.
  *
  * Canary does not persist this itself — the host app is responsible for storage/validation and
  * only passes an already-valid snapshot. An unusable snapshot (empty `cardHistory`, or any

@@ -32,12 +32,11 @@ export interface FlowStepperRailProps {
    * unresolved point, not genuinely off-path, and their step number must not be hidden — see
    * stepGroupHasNumber below. (The caller narrows this further with the `dynamicNext` step-config
    * flag — an unflagged dead end counts as a genuinely known end too — see
-   * single-pane-stepper-card-stack.tsx's pathWalkComplete.) */
+   * use-flow-stepper-rail-model.ts's pathWalkComplete.) */
   stepNumberOverridesComplete?: boolean
-  /** Forwarded to `Stepper.Root`. SinglePaneStepperCardStack's current `<Stepper.Root>` always sets
-   * this; DualPaneStepper's current `<Stepper.Root>` never does — `collapsibleNestedSteps` changes
-   * real rendering behavior (caps the active trunk and hides the indeterminate placeholder), so it
-   * must stay opt-in per caller instead of being hardcoded here. */
+  /** Forwarded to `Stepper.Root`. Both default rails (SinglePane timeline and DualPane left pane)
+   * set this so nested-step chrome matches. DualPane still omits `renderStepContent` because cards
+   * live in the right pane. Stays opt-in here so a custom DualPane `leftPane` is not forced into it. */
   collapsibleNestedSteps?: boolean
   /** Renders inline content under a visited/active step. Omit for a rail with no inline content
    * (DualPaneStepper's left pane — its card content lives in the separate right pane instead). */

@@ -4,6 +4,7 @@ import { cn } from '@utils/cn'
 
 import { AlertDialog } from '../alert-dialog'
 import { FlowEngineProvider, useEngineContext } from '../flow-stepper/engine'
+import { resolveShowRootHeader } from '../flow-stepper/resolve-show-root-header'
 import { IconV2 } from '../icon-v2'
 import { Layout } from '../layout'
 import { Text } from '../text'
@@ -13,12 +14,6 @@ import { SinglePaneStepperRootProps } from './single-pane-stepper-types'
 const DEFAULT_REACTIVATION_PROMPT = {
   title: 'Go back?',
   description: 'Going back to this step will discard your progress on subsequent steps. Are you sure?'
-}
-
-function resolveShowRootHeader(showRootHeader?: boolean, hideHeader?: boolean): boolean {
-  if (showRootHeader !== undefined) return showRootHeader
-  if (hideHeader !== undefined) return !hideHeader
-  return true
 }
 
 function SinglePaneStepperContent({

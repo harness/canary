@@ -1,7 +1,25 @@
-const { container } = require('webpack')
 const MonacoWebpackPlugin = require('monaco-editor-webpack-plugin')
 
-const { ModuleFederationPlugin } = container
+// pnpm isolates webpack by optional peers (@swc/core vs not), so webpack-cli's
+// Compiler can be a different copy than require('webpack'). Instantiate
+// ModuleFederationPlugin from compiler.webpack so instanceof Compilation matches.
+const moduleFederationOptions = {
+  name: 'codev2',
+  filename: 'remoteEntry.js',
+  exposes: {
+    './MicroFrontendApp': './src/AppMFE.tsx'
+  },
+  shared: {
+    react: {
+      singleton: true,
+      requiredVersion: false
+    },
+    'react-dom': {
+      singleton: true,
+      requiredVersion: false
+    }
+  }
+}
 
 module.exports = {
   devtool: 'cheap-module-source-map',
@@ -45,23 +63,12 @@ module.exports = {
     ]
   },
   plugins: [
-    new ModuleFederationPlugin({
-      name: 'codev2',
-      filename: 'remoteEntry.js',
-      exposes: {
-        './MicroFrontendApp': './src/AppMFE.tsx'
-      },
-      shared: {
-        react: {
-          singleton: true,
-          requiredVersion: false
-        },
-        'react-dom': {
-          singleton: true,
-          requiredVersion: false
-        }
+    {
+      apply(compiler) {
+        const { ModuleFederationPlugin } = compiler.webpack.container
+        new ModuleFederationPlugin(moduleFederationOptions).apply(compiler)
       }
-    }),
+    },
     new MonacoWebpackPlugin({
       // available options are documented at https://github.com/Microsoft/monaco-editor-webpack-plugin#options
       languages: [

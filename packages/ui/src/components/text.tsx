@@ -49,7 +49,6 @@ export const typographyVariantConfig = {
   'body-single-line-strong': 'font-body-single-line-strong',
   'body-code': 'font-body-code',
   'caption-normal': 'font-caption-normal',
-  'caption-light': 'font-caption-light',
   'caption-strong': 'font-caption-strong',
   'caption-code': 'font-caption-code',
   'caption-single-line-normal': 'font-caption-single-line-normal'
@@ -120,7 +119,6 @@ const textVariantToElement: Record<
   'body-code': { element: 'pre', color: 'foreground-2' },
   'caption-code': { element: 'span', color: 'foreground-2' },
   'caption-normal': { element: 'span', color: 'foreground-2' },
-  'caption-light': { element: 'span', color: 'foreground-2' },
   'caption-strong': { element: 'span', color: 'foreground-2' },
   'caption-single-line-normal': { element: 'span', color: 'foreground-2' }
 }

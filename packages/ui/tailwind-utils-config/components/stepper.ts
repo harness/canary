@@ -231,7 +231,7 @@ export default {
     // --cn-font-size-2 at ~11.5px) and no --cn-line-height-* token matches 1.35, so these two stay
     // hardcoded rather than snapping to a visually-different token.
     fontSize: '11px',
-    fontWeight: 'var(--cn-font-weight-default-normal-500)',
+    fontWeight: 'var(--cn-font-weight-default-normal-600)',
     lineHeight: '1.35'
   },
 
@@ -637,7 +637,7 @@ export default {
 
   '.cn-stepper-nested-step-ordinal': {
     fontSize: 'var(--cn-font-size-0)',
-    fontWeight: 'var(--cn-font-weight-default-normal-500)',
+    fontWeight: 'var(--cn-font-weight-default-normal-600)',
     lineHeight: '1',
     color: 'var(--cn-text-3)',
 

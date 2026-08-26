@@ -29,17 +29,9 @@
   "fontWeight": {
     "default": {
       "normal": {
-        "300": {
-          "$type": "fontWeights",
-          "$value": "310"
-        },
         "400": {
           "$type": "fontWeights",
-          "$value": "360"
-        },
-        "500": {
-          "$type": "fontWeights",
-          "$value": "440"
+          "$value": "400"
         },
         "600": {
           "$type": "fontWeights",
@@ -53,17 +45,9 @@
     },
     "mono": {
       "normal": {
-        "300": {
-          "$type": "fontWeights",
-          "$value": "Light"
-        },
         "400": {
           "$type": "fontWeights",
           "$value": "Regular"
-        },
-        "500": {
-          "$type": "fontWeights",
-          "$value": "Medium"
         },
         "700": {
           "$type": "fontWeights",

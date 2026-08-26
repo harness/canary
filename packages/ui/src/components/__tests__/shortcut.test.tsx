@@ -40,9 +40,9 @@ describe('Shortcut', () => {
 
     const text = screen.getByTestId('mock-text')
     expect(text).toHaveTextContent('Cmd + K')
-    expect(text.getAttribute('data-variant')).toBe('caption-light')
+    expect(text.getAttribute('data-variant')).toBe('caption-normal')
     expect(text.className.split(/\s+/)).toContain('cn-shortcut')
-    expect(textCalls[0]?.variant).toBe('caption-light')
+    expect(textCalls[0]?.variant).toBe('caption-normal')
   })
 
   it('merges custom class names and forwards other props', () => {

@@ -287,7 +287,7 @@ colors:
 # TYPOGRAPHY
 # =============================================================================
 # Inter for UI, JetBrains Mono for code. Variable-font weight axis maps the
-# common 100–900 scale to its own `Thin/ExtraLight/310/360/440/550/Bold/...`
+# common 100–900 scale to its own `Thin/ExtraLight/400/550/Bold/...`
 # values; in CSS the standard numeric weights resolve to those.
 # 11 semantic roles below; the underlying 17-step `cn-size-*` scale and the
 # six lineHeight multipliers (none 1.14 → loose 1.75) are documented in
@@ -537,7 +537,7 @@ The color system has two layers and components only ever consume the second one.
 
 ## Typography
 
-**Families.** `Inter` for UI (`fontFamily.default`), `JetBrains Mono` for code. Both are variable fonts — Inter's weight axis maps the standard 100–900 ladder onto a denser numeric scale (`310`/`360`/`440`/`550` instead of Light/Regular/Medium/SemiBold) for finer control.
+**Families.** `Inter` for UI (`fontFamily.default`), `JetBrains Mono` for code. Both are variable fonts — Inter's weight axis maps the standard 100–900 ladder onto a tuned numeric scale (`400`/`550` for Regular/SemiBold) for optical balance.
 
 **Size scale.** Seventeen steps (`fontSize.0`…`fontSize.16`), 0.55rem (8.8px) → 8rem (128px). The scale is consumed via the eleven semantic roles enumerated in the frontmatter — code should reach for `body-normal`, `heading-section`, `caption-strong`, etc., not raw size tokens.
 

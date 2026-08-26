@@ -139,7 +139,7 @@ export default {
     },
 
     '&-tagline': {
-      font: 'var(--cn-caption-light)',
+      font: 'var(--cn-caption-normal)',
       color: 'var(--cn-text-2)'
     },
 

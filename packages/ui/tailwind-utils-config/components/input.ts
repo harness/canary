@@ -43,7 +43,7 @@ export default {
 
       '&::placeholder': {
         color: 'var(--cn-text-4)',
-        '@apply font-body-light select-none': ''
+        '@apply font-body-normal select-none': ''
       },
 
       '&:where([disabled])': {

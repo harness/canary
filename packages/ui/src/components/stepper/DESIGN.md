@@ -518,7 +518,7 @@ Following existing convention: `cn-{component}-{element}-{state}`
 |                                    | title/desc text | `cn-shimmer`              | Gradient shimmer sweep across text (4s linear infinite, blue highlight) |
 | **Step title**                     | text color      | `text-cn-1`               | `--cn-text-1`                                                           |
 |                                    | font size       | `text-cn-size-5`          | `--cn-font-size-5` (14px)                                               |
-|                                    | font weight     | —                         | 440 (medium via variable font)                                          |
+|                                    | font weight     | —                         | 550 (semibold via variable font)                                        |
 | **Step description**               | text color      | `text-cn-3`               | `--cn-text-3`                                                           |
 |                                    | font size       | `text-cn-size-4`          | `--cn-font-size-4` (13px)                                               |
 | **Header title**                   | text color      | `text-cn-2`               | `--cn-text-2`                                                           |

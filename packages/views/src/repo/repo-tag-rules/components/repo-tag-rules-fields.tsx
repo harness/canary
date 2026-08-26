@@ -227,7 +227,7 @@ export const TagSettingsRuleListField: FC<{
                 disabled={isDisabled}
                 label={rule.label}
                 caption={rule.description}
-                captionVariant="caption-light"
+                captionVariant="caption-normal"
               />
             </Fragment>
           )

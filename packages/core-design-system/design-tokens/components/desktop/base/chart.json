@@ -139,7 +139,7 @@
         "$type": "typography",
         "$value": {
           "fontFamily": "{fontFamily.mono}",
-          "fontWeight": "{fontWeight.mono.normal.500}",
+          "fontWeight": "{fontWeight.mono.normal.700}",
           "fontSize": "{fontSize.1}",
           "lineHeight": "{lineHeight.chart.1.none}",
           "letterSpacing": "{tracking.normal}"
@@ -296,7 +296,7 @@
           "$type": "typography",
           "$value": {
             "fontFamily": "{fontFamily.default}",
-            "fontWeight": "{fontWeight.default.normal.500}",
+            "fontWeight": "{fontWeight.default.normal.600}",
             "fontSize": "{fontSize.10}",
             "lineHeight": "{lineHeight.chart.10.none}",
             "letterSpacing": "{tracking.tight}"
@@ -307,7 +307,7 @@
           "$type": "typography",
           "$value": {
             "fontFamily": "{fontFamily.default}",
-            "fontWeight": "{fontWeight.default.normal.500}",
+            "fontWeight": "{fontWeight.default.normal.600}",
             "fontSize": "{fontSize.6}",
             "lineHeight": "{lineHeight.chart.6.none}",
             "letterSpacing": "{tracking.normal}"

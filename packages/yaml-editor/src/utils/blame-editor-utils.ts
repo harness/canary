@@ -86,7 +86,7 @@ export function getMonacoEditorCommitCss({
             top: -2px;
             box-shadow: var(--cn-shadow-comp-avatar-inner);
             font-size: var(--cn-font-size-0);
-            font-weight: var(--cn-font-weight-default-normal-500);
+            font-weight: var(--cn-font-weight-default-normal-600);
             background-color: var(--cn-set-brand-secondary-bg);
             color: var(--cn-set-brand-secondary-text);
             font-family: var(--font-family);

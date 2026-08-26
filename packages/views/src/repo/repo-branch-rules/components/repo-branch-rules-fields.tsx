@@ -351,7 +351,7 @@ export const BranchSettingsRuleListField: FC<{
                   disabled={isDisabled}
                   label={rule.label}
                   caption={rule.description}
-                  captionVariant="caption-light"
+                  captionVariant="caption-normal"
                   className={cn(rule.isNested && 'ml-[26px]')}
                 />
 

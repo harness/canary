@@ -1,0 +1,1393 @@
+/*
+ * Canary Copilot — token layer.
+ *
+ * Light theme is authoritative here rather than inherited from Figma's own
+ * variables: Figma's --figma-color-text-secondary is rgba(0,0,0,0.5), which
+ * fails WCAG AA on any of our surfaces. Dark theme keys off the `figma-dark`
+ * class Figma sets on <html> when `themeColors: true`; prefers-color-scheme is
+ * only consulted when neither Figma class is present (i.e. outside Figma).
+ */
+
+:root {
+  color-scheme: light dark;
+
+  /* —— Surfaces —— */
+  --surface: #f6f6f8;
+  --raised: #ffffff;
+  --fill: #ececef;
+  --fill-hover: #e3e3e8;
+  --fill-active: #dadae1;
+  --fill-strong: #dfdfe4;
+  --hairline: rgb(0 0 0 / 8%);
+
+  /* —— Text (all values ≥ 4.5:1 on --surface) —— */
+  --text: #1d1d1f;
+  --text-secondary: #5f6066;
+  /* Quietest text we ship. Chosen to clear 4.5:1 on --fill too, since
+     placeholders and chips sit on filled tracks, not on --surface. */
+  --text-tertiary: #66666e;
+
+  /* —— Accent —— */
+  --accent: #007aff; /* indicators, focus rings — never carries text */
+  --accent-solid: #0a6bd8; /* filled controls that carry white text (5.1:1) */
+  --accent-text: #ffffff;
+  --accent-fg: #0059bf; /* accent-coloured text on --surface (6.1:1) */
+  --focus-ring: #007aff;
+
+  /* —— Brand —— */
+  --brand-harness: #00ade4; /* Harness mark; same value on both themes */
+
+  /* —— Semantic —— */
+  --fail: #c0271f;
+  --warn: #8a5a00;
+  --ok: #15703f;
+  --info: #0059bf;
+
+  /* —— Type —— */
+  --font: -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Inter', system-ui, sans-serif;
+  --font-mono: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, monospace;
+  --fs-body: 13px;
+  --fs-meta: 12px;
+  --fs-micro: 11px;
+  --fw-regular: 400;
+  --fw-medium: 500;
+  --fw-strong: 590;
+
+  /* —— Space —— */
+  --sp-1: 4px;
+  --sp-2: 6px;
+  --sp-3: 8px;
+  --sp-4: 12px;
+  --sp-5: 16px;
+  --sp-6: 20px;
+  --gutter: 14px;
+  --label-col: 112px;
+  --control-h: 28px;
+
+  /* —— Radii —— */
+  --radius-sm: 5px;
+  --radius: 7px;
+  --radius-lg: 10px;
+  --radius-pill: 999px;
+
+  /* —— Elevation —— */
+  --shadow-control: 0 1px 1.5px rgb(0 0 0 / 6%);
+
+  /* Legacy aliases — kept so nothing referencing the old names breaks. */
+  --bg: var(--surface);
+  --bg-secondary: var(--fill);
+  --bg-tertiary: var(--fill-hover);
+  --border: var(--hairline);
+  --danger: var(--fail);
+}
+
+/* Tints: semantic colour laid very lightly over the surface. */
+:root {
+  --fail-tint: color-mix(in srgb, var(--fail) 8%, var(--surface));
+  --warn-tint: color-mix(in srgb, var(--warn) 10%, var(--surface));
+  --ok-tint: color-mix(in srgb, var(--ok) 9%, var(--surface));
+  --info-tint: color-mix(in srgb, var(--info) 8%, var(--surface));
+  --accent-tint: color-mix(in srgb, var(--accent) 22%, var(--surface));
+}
+
+html.figma-dark {
+  --surface: #262628;
+  --raised: #48484f;
+  --fill: #333338;
+  --fill-hover: #3c3c43;
+  --fill-active: #45454d;
+  --fill-strong: #43434b;
+  --hairline: rgb(255 255 255 / 10%);
+
+  --text: #f2f2f5;
+  --text-secondary: #a8a8b0;
+  --text-tertiary: #a3a3ac;
+
+  --accent: #0a84ff;
+  --accent-solid: #0a6bd8;
+  --accent-fg: #7cbcff;
+  --focus-ring: #4da3ff;
+
+  --fail: #ff7b70;
+  --warn: #e6a93c;
+  --ok: #56d08c;
+  --info: #7cbcff;
+
+  --shadow-control: 0 1px 1.5px rgb(0 0 0 / 30%);
+}
+
+@media (prefers-color-scheme: dark) {
+  html:not(.figma-light):not(.figma-dark) {
+    --surface: #262628;
+    --raised: #35353a;
+    --fill: #333338;
+    --fill-hover: #3c3c43;
+    --fill-active: #45454d;
+    --fill-strong: #43434b;
+    --hairline: rgb(255 255 255 / 10%);
+    --text: #f2f2f5;
+    --text-secondary: #a8a8b0;
+    --text-tertiary: #a3a3ac;
+    --accent: #0a84ff;
+    --accent-fg: #7cbcff;
+    --focus-ring: #4da3ff;
+    --fail: #ff7b70;
+    --warn: #e6a93c;
+    --ok: #56d08c;
+    --info: #7cbcff;
+  }
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#app {
+  margin: 0;
+  height: 100%;
+  background: var(--surface);
+  color: var(--text);
+  font-family: var(--font);
+  font-size: var(--fs-body);
+  line-height: 1.4;
+  letter-spacing: -0.003em;
+  -webkit-font-smoothing: antialiased;
+}
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+  letter-spacing: inherit;
+  color: inherit;
+}
+
+input[type='checkbox'] {
+  accent-color: var(--accent);
+  width: 13px;
+  height: 13px;
+  margin: 1px 0 0;
+  flex-shrink: 0;
+}
+
+a {
+  color: var(--accent-fg);
+}
+
+/* macOS-style focus ring: outline (not box-shadow) so scroll containers can't
+   clip it. Never removed — only restyled. */
+:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 2px;
+}
+
+/* Thin overlay scrollbar, closer to macOS than the default Chromium bar. */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: color-mix(in srgb, var(--text) 22%, transparent);
+  border: 3px solid transparent;
+  background-clip: content-box;
+  border-radius: var(--radius-pill);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: color-mix(in srgb, var(--text) 34%, transparent);
+  background-clip: content-box;
+}
+
+/* —— App chrome —— */
+.app {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  min-height: 0;
+}
+
+.app-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--sp-3);
+  padding: 10px var(--gutter);
+  border-bottom: 1px solid var(--hairline);
+  flex-shrink: 0;
+}
+
+.brand {
+  display: flex;
+  gap: var(--sp-2);
+  align-items: center;
+  min-width: 0;
+}
+
+.brand-mark {
+  display: block;
+  color: var(--brand-harness);
+  flex-shrink: 0;
+}
+
+.app-header h1 {
+  margin: 0;
+  font-size: var(--fs-body);
+  font-weight: var(--fw-strong);
+  white-space: nowrap;
+}
+
+.subtitle {
+  margin: 0;
+  color: var(--text-secondary);
+  font-size: var(--fs-meta);
+}
+
+/* Status reads as a dot plus a word — no outline, no pill. */
+.status-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: var(--fs-micro);
+  color: var(--text-secondary);
+  white-space: nowrap;
+}
+
+.status-pill::before {
+  content: '';
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--text-tertiary);
+  flex-shrink: 0;
+}
+
+.status-pill.ok::before {
+  background: var(--ok);
+}
+
+.status-pill.fail::before {
+  background: var(--fail);
+}
+
+.status-pill.fail {
+  color: var(--fail);
+}
+
+.panel {
+  flex: 1;
+  overflow: auto;
+  padding: var(--sp-5) var(--gutter) var(--sp-6);
+  min-height: 0;
+}
+
+/* —— Button —— */
+.ds-btn {
+  appearance: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--sp-2);
+  min-height: var(--control-h);
+  border-radius: var(--radius);
+  border: 0;
+  padding: 0 12px;
+  background: var(--fill);
+  color: var(--text);
+  font-size: var(--fs-meta);
+  font-weight: var(--fw-medium);
+  cursor: pointer;
+  line-height: 1.2;
+  white-space: nowrap;
+  transition:
+    background 0.12s ease,
+    color 0.12s ease;
+}
+
+.ds-btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.ds-btn:active:not(:disabled) {
+  background: var(--fill-active);
+}
+
+.ds-btn-primary {
+  background: var(--accent-solid);
+  color: var(--accent-text);
+  box-shadow: var(--shadow-control);
+}
+
+.ds-btn-primary:hover:not(:disabled) {
+  background: color-mix(in srgb, var(--accent-solid) 88%, black);
+}
+
+.ds-btn-primary:active:not(:disabled) {
+  background: color-mix(in srgb, var(--accent-solid) 78%, black);
+}
+
+.ds-btn-secondary {
+  background: var(--fill);
+}
+
+.ds-btn-secondary:hover:not(:disabled) {
+  background: var(--fill-hover);
+}
+
+.ds-btn-ghost {
+  background: transparent;
+  color: var(--text-secondary);
+}
+
+.ds-btn-ghost:hover:not(:disabled) {
+  background: var(--fill);
+  color: var(--text);
+}
+
+.ds-btn-danger {
+  background: var(--fail-tint);
+  color: var(--fail);
+}
+
+.ds-btn-danger:hover:not(:disabled) {
+  background: color-mix(in srgb, var(--fail) 16%, var(--surface));
+}
+
+.ds-btn-sm {
+  min-height: 22px;
+  padding: 0 var(--sp-3);
+  font-size: var(--fs-micro);
+}
+
+.ds-btn-block {
+  width: 100%;
+}
+
+/* —— Tabs: macOS segmented control —— */
+.ds-tabs {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: 1fr;
+  gap: 2px;
+  margin: 10px var(--gutter) 0;
+  padding: 2px;
+  background: var(--fill);
+  border-radius: var(--radius-lg);
+  flex-shrink: 0;
+}
+
+.ds-tab {
+  appearance: none;
+  border: 0;
+  background: transparent;
+  color: var(--text-secondary);
+  padding: 0 var(--sp-2);
+  min-height: 24px;
+  border-radius: var(--radius-sm);
+  font-size: var(--fs-meta);
+  font-weight: var(--fw-medium);
+  cursor: pointer;
+  transition:
+    background 0.12s ease,
+    color 0.12s ease;
+}
+
+.ds-tab:hover {
+  color: var(--text);
+}
+
+.ds-tab[aria-selected='true'] {
+  background: var(--raised);
+  color: var(--text);
+  font-weight: var(--fw-strong);
+  box-shadow: var(--shadow-control);
+}
+
+/* —— Banner —— */
+.ds-banner {
+  display: flex;
+  gap: var(--sp-2);
+  align-items: flex-start;
+  padding: var(--sp-3) 10px;
+  border-radius: var(--radius);
+  background: var(--fill);
+  margin-bottom: 10px;
+  font-size: var(--fs-meta);
+}
+
+.ds-banner-icon {
+  font-size: var(--fs-micro);
+  font-weight: 700;
+  line-height: 1.5;
+  flex-shrink: 0;
+  min-width: 1.1em;
+  text-align: center;
+}
+
+.ds-banner-body {
+  flex: 1;
+  min-width: 0;
+}
+
+.ds-banner-body p {
+  margin: 0;
+}
+
+.ds-banner-actions {
+  display: flex;
+  gap: var(--sp-2);
+  margin-top: var(--sp-2);
+  flex-wrap: wrap;
+}
+
+/* A borderless text button needs to hang left to optically align with the
+   banner copy above it. */
+.ds-banner-actions > .ds-btn-ghost:first-child {
+  margin-left: calc(var(--sp-3) * -1);
+}
+
+.ds-banner-info {
+  background: var(--info-tint);
+}
+
+.ds-banner-info .ds-banner-icon {
+  color: var(--info);
+}
+
+.ds-banner-warn {
+  background: var(--warn-tint);
+}
+
+.ds-banner-warn .ds-banner-icon {
+  color: var(--warn);
+}
+
+.ds-banner-fail {
+  background: var(--fail-tint);
+}
+
+.ds-banner-fail .ds-banner-icon {
+  color: var(--fail);
+}
+
+.ds-banner-ok {
+  background: var(--ok-tint);
+}
+
+.ds-banner-ok .ds-banner-icon {
+  color: var(--ok);
+}
+
+/* Manual-copy escape hatch when the clipboard is blocked. */
+.ds-manual-copy {
+  display: block;
+  width: 100%;
+  margin-top: var(--sp-2);
+  padding: var(--sp-2);
+  border: 0;
+  border-radius: var(--radius);
+  background: var(--surface);
+  color: var(--text);
+  font-family: var(--font-mono);
+  font-size: var(--fs-micro);
+  line-height: 1.45;
+  min-height: 96px;
+  resize: vertical;
+  white-space: pre;
+}
+
+/* —— Empty —— */
+.ds-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--sp-2);
+  padding: 28px 0 var(--sp-6);
+  color: var(--text-secondary);
+}
+
+.ds-empty h2 {
+  margin: 0;
+  font-size: var(--fs-body);
+  font-weight: var(--fw-strong);
+  color: var(--text);
+}
+
+.ds-empty p {
+  margin: 0;
+  max-width: 34ch;
+}
+
+/* —— Spinner —— */
+.ds-spinner {
+  width: 14px;
+  height: 14px;
+  border: 2px solid var(--fill-strong);
+  border-top-color: var(--accent);
+  border-radius: 50%;
+  animation: ds-spin 0.7s linear infinite;
+  display: inline-block;
+}
+
+@keyframes ds-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.ds-loading-row {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-3);
+  color: var(--text-secondary);
+  font-size: var(--fs-meta);
+  padding: var(--sp-2) 0;
+}
+
+/* —— Finding row —— */
+.ds-finding {
+  display: block;
+  padding: 7px 10px;
+  margin: 0 -10px 3px;
+  border-radius: var(--radius);
+  background: transparent;
+  transition: background 0.12s ease;
+}
+
+.ds-finding:hover,
+.ds-finding:focus-within {
+  background: var(--fill);
+}
+
+/* Problems get a whisper of tint so they read without an outline. */
+.ds-finding-fail {
+  background: var(--fail-tint);
+}
+
+.ds-finding-warn {
+  background: var(--warn-tint);
+}
+
+.ds-finding-fail:hover,
+.ds-finding-fail:focus-within {
+  background: color-mix(in srgb, var(--fail) 13%, var(--surface));
+}
+
+.ds-finding-warn:hover,
+.ds-finding-warn:focus-within {
+  background: color-mix(in srgb, var(--warn) 15%, var(--surface));
+}
+
+.ds-finding-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--sp-2);
+}
+
+/* Icon + word, both retained: colour is never the only severity cue. */
+.ds-finding-sev {
+  display: inline-flex;
+  align-items: baseline;
+  gap: var(--sp-1);
+  font-size: var(--fs-micro);
+  font-weight: 600;
+  letter-spacing: 0.045em;
+  text-transform: uppercase;
+  color: var(--text-secondary);
+}
+
+.ds-finding-glyph {
+  font-weight: 700;
+  letter-spacing: 0;
+  text-transform: none;
+}
+
+.ds-finding-sev-fail {
+  color: var(--fail);
+}
+
+.ds-finding-sev-warn {
+  color: var(--warn);
+}
+
+/* Pass keeps a calm grey word; the checkmark carries colour. Info has no
+   glyph — the tinted word is the cue. */
+.ds-finding-sev-info {
+  color: var(--info);
+}
+
+.ds-finding-sev-pass .ds-finding-glyph {
+  color: var(--ok);
+}
+
+.ds-finding-prop {
+  color: var(--text-secondary);
+}
+
+.ds-finding-msg {
+  margin: var(--sp-1) 0 0;
+  font-size: var(--fs-body);
+}
+
+.ds-finding-meta {
+  margin: 2px 0 0;
+  color: var(--text-secondary);
+  font-size: var(--fs-meta);
+}
+
+/* Secondary until the row is hovered or focused. */
+.ds-finding-actions {
+  display: flex;
+  gap: var(--sp-1);
+  margin: var(--sp-2) 0 0;
+}
+
+/* Translucent so it sits correctly on a plain row and on a tinted one. */
+.ds-finding-actions .ds-btn-secondary {
+  background: color-mix(in srgb, var(--text) 6%, transparent);
+  color: var(--text-secondary);
+}
+
+.ds-finding:hover .ds-finding-actions .ds-btn-secondary,
+.ds-finding:focus-within .ds-finding-actions .ds-btn-secondary {
+  background: color-mix(in srgb, var(--text) 13%, transparent);
+  color: var(--text);
+}
+
+.ds-instance {
+  margin-bottom: var(--sp-4);
+}
+
+.ds-instance-title {
+  display: flex;
+  align-items: baseline;
+  gap: var(--sp-2);
+  margin: 0 0 var(--sp-1);
+  font-size: var(--fs-meta);
+  color: var(--text-secondary);
+}
+
+.ds-instance-title .ds-code {
+  color: var(--text-tertiary);
+}
+
+/* —— Check sections (Catalog-style anchors) —— */
+.ds-check-jumps {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--sp-2);
+  margin: 0 0 var(--sp-4);
+}
+
+.ds-check-jump {
+  appearance: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 24px;
+  padding: 0 10px;
+  border: 0;
+  border-radius: 999px;
+  background: var(--fill);
+  color: var(--text);
+  font-size: var(--fs-micro);
+  font-weight: var(--fw-medium);
+  cursor: pointer;
+}
+
+.ds-check-jump:hover {
+  background: var(--fill-hover);
+}
+
+.ds-check-jump.is-unmapped {
+  color: var(--text-secondary);
+}
+
+.ds-check-jump.has-fail {
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--fail) 35%, transparent);
+}
+
+.ds-check-jump-count {
+  min-width: 1.1em;
+  padding: 0 5px;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--fail) 16%, transparent);
+  color: var(--fail);
+  font-variant-numeric: tabular-nums;
+  text-align: center;
+}
+
+.ds-check-section {
+  margin: 0 0 var(--sp-5);
+  padding-top: var(--sp-1);
+  scroll-margin-top: var(--sp-3);
+}
+
+.ds-check-section + .ds-check-section {
+  border-top: 1px solid var(--hairline);
+  padding-top: var(--sp-4);
+}
+
+.ds-check-section.is-unmapped {
+  --unmapped-yellow: #ffd60a;
+  --unmapped-hover: color-mix(in srgb, var(--warn) 10%, var(--surface));
+  padding: var(--sp-3);
+  border-radius: var(--radius);
+  /* Bright wash — previous muddy warn tint is reserved for item hover. */
+  background: color-mix(in srgb, var(--unmapped-yellow) 9%, var(--surface));
+  border-top: 0;
+}
+
+.ds-check-section.is-unmapped + .ds-check-section,
+.ds-check-section + .ds-check-section.is-unmapped {
+  border-top: 0;
+  margin-top: var(--sp-2);
+}
+
+.ds-check-section.is-unmapped .ds-instance {
+  margin: 0 calc(-1 * var(--sp-2)) var(--sp-3);
+  padding: var(--sp-2);
+  border-radius: var(--radius);
+  transition: background 0.12s ease;
+}
+
+.ds-check-section.is-unmapped .ds-instance:last-child {
+  margin-bottom: 0;
+}
+
+.ds-check-section.is-unmapped .ds-instance:hover,
+.ds-check-section.is-unmapped .ds-instance:focus-within {
+  background: var(--unmapped-hover);
+}
+
+.ds-check-section.is-unmapped .ds-finding:hover,
+.ds-check-section.is-unmapped .ds-finding:focus-within {
+  background: color-mix(in srgb, var(--warn) 14%, var(--surface));
+}
+
+.ds-check-section-header {
+  margin-bottom: var(--sp-3);
+}
+
+.ds-check-section-severity {
+  margin: 4px 0 0;
+  font-size: var(--fs-micro);
+  font-weight: var(--fw-medium);
+  color: var(--text-secondary);
+}
+
+.ds-check-passes {
+  margin-top: var(--sp-2);
+}
+
+.ds-check-passes-toggle {
+  appearance: none;
+  border: 0;
+  background: transparent;
+  padding: 0;
+  margin: 0 0 var(--sp-2);
+  font: inherit;
+  font-size: var(--fs-micro);
+  font-weight: var(--fw-medium);
+  color: var(--text-secondary);
+  cursor: pointer;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.ds-check-passes-toggle:hover {
+  color: var(--text);
+}
+
+.ds-check-more-hint {
+  margin: var(--sp-2) 0;
+  font-size: var(--fs-micro);
+  color: var(--text-tertiary);
+}
+
+.ds-check-show-more {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-3);
+  margin: var(--sp-4) 0 var(--sp-2);
+}
+
+.ds-catalog-status {
+  margin: 0 0 var(--sp-4);
+  font-size: var(--fs-meta);
+  color: var(--text-secondary);
+  line-height: 1.4;
+}
+
+.ds-catalog-status strong {
+  font-weight: var(--fw-medium);
+  color: var(--text);
+}
+
+.ds-catalog-status-detail {
+  color: var(--text-tertiary);
+}
+
+/* —— Summary —— */
+.ds-summary {
+  margin: 0 0 var(--sp-4);
+}
+
+.ds-health-list {
+  display: grid;
+  gap: var(--sp-2);
+  margin: 0 0 var(--sp-3);
+}
+
+.ds-health {
+  padding: var(--sp-3);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  background: var(--surface-subtle);
+}
+
+.ds-health-score {
+  display: flex;
+  align-items: baseline;
+  gap: var(--sp-2);
+  color: var(--text);
+  font-size: var(--fs-meta);
+}
+
+.ds-health-breakdown {
+  position: relative;
+}
+
+.ds-health-trigger {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--sp-2);
+  margin: -2px;
+  padding: 2px;
+  border: 0;
+  border-radius: var(--radius-sm);
+  background: transparent;
+  cursor: help;
+}
+
+.ds-health-trigger:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 2px;
+}
+
+.ds-health-trigger strong {
+  font-size: var(--fs-body);
+  font-variant-numeric: tabular-nums;
+}
+
+.ds-health-info {
+  display: inline-grid;
+  width: 14px;
+  height: 14px;
+  place-items: center;
+  border: 1px solid currentColor;
+  border-radius: var(--radius-pill);
+  font-size: 9px;
+  font-weight: var(--fw-strong);
+  line-height: 1;
+  opacity: 0.72;
+}
+
+.ds-health-tooltip {
+  position: absolute;
+  z-index: 10;
+  top: calc(100% + var(--sp-2));
+  left: 0;
+  width: min(300px, calc(100vw - 72px));
+  padding: var(--sp-3);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--raised);
+  box-shadow: 0 8px 24px rgb(0 0 0 / 16%);
+  color: var(--text);
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-2px);
+  transition:
+    opacity 100ms ease,
+    transform 100ms ease,
+    visibility 100ms ease;
+}
+
+.ds-health-breakdown:hover .ds-health-tooltip,
+.ds-health-breakdown:focus-within .ds-health-tooltip {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+.ds-health-tooltip-title {
+  display: block;
+  margin-bottom: var(--sp-2);
+  font-size: var(--fs-meta);
+  font-weight: var(--fw-strong);
+}
+
+.ds-health-tooltip ul {
+  display: grid;
+  gap: var(--sp-2);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.ds-health-tooltip li {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--sp-4);
+}
+
+.ds-health-tooltip li > span {
+  display: grid;
+}
+
+.ds-health-tooltip small {
+  color: var(--text-tertiary);
+  font-size: var(--fs-micro);
+}
+
+.ds-health-tooltip li > strong {
+  font-size: var(--fs-meta);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.ds-health-healthy .ds-health-trigger strong {
+  color: var(--ok);
+}
+
+.ds-health-blocked .ds-health-trigger strong,
+.ds-health-atRisk .ds-health-trigger strong {
+  color: var(--fail);
+}
+
+.ds-health-needsAttention .ds-health-trigger strong {
+  color: var(--warn);
+}
+
+.ds-health-status {
+  color: var(--text-secondary);
+}
+
+.ds-summary-counts {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--sp-1) 14px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.ds-count {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 5px;
+  font-size: var(--fs-meta);
+  color: var(--text-secondary);
+}
+
+.ds-count::before {
+  content: '';
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: color-mix(in srgb, var(--text) 22%, var(--surface));
+  flex-shrink: 0;
+  transform: translateY(-1px);
+}
+
+.ds-count-value {
+  font-variant-numeric: tabular-nums;
+}
+
+.ds-count.is-active {
+  color: var(--text);
+}
+
+.ds-count.is-active .ds-count-value {
+  font-weight: var(--fw-strong);
+}
+
+.ds-count-fail.is-active::before {
+  background: var(--fail);
+}
+
+.ds-count-warn.is-active::before {
+  background: var(--warn);
+}
+
+.ds-count-info.is-active::before {
+  background: var(--info);
+}
+
+.ds-count-pass.is-active::before {
+  background: var(--ok);
+}
+
+.ds-summary-meta {
+  margin: var(--sp-2) 0 0;
+  font-size: var(--fs-meta);
+  color: var(--text-secondary);
+}
+
+/* —— Rows / forms —— */
+.ds-row {
+  display: flex;
+  gap: var(--sp-2);
+  flex-wrap: wrap;
+  align-items: center;
+  margin-bottom: var(--sp-4);
+}
+
+.ds-row-end {
+  margin-left: auto;
+}
+
+.ds-propose-actions {
+  margin-top: var(--sp-2);
+}
+
+.ds-propose-title {
+  margin-bottom: var(--sp-4);
+}
+
+.ds-propose-actions > .ds-row {
+  margin-bottom: var(--sp-3);
+}
+
+.ds-propose-utility {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--sp-2);
+  padding-top: var(--sp-3);
+  border-top: 1px solid var(--hairline);
+}
+
+.ds-propose-utility-label {
+  font-size: var(--fs-micro);
+  font-weight: var(--fw-medium);
+  color: var(--text-tertiary);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-right: var(--sp-1);
+}
+
+.ds-chip {
+  font-size: var(--fs-micro);
+  font-weight: var(--fw-medium);
+  padding: 2px var(--sp-2);
+  border-radius: var(--radius-sm);
+  background: var(--fill);
+  color: var(--text-secondary);
+}
+
+.ds-chip strong {
+  font-weight: var(--fw-strong);
+  color: var(--text);
+}
+
+.ds-field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-1);
+  margin-bottom: 10px;
+}
+
+.ds-field label,
+.ds-field legend {
+  font-size: var(--fs-body);
+  font-weight: var(--fw-regular);
+  color: var(--text-secondary);
+}
+
+/* Fieldset checklists: reset UA chrome, keep the same bottom rhythm as .ds-field. */
+fieldset.ds-field {
+  border: 0;
+  padding: 0;
+  margin: 0 0 10px;
+  min-width: 0;
+}
+
+.ds-field legend {
+  padding: 0;
+  margin-bottom: var(--sp-3);
+}
+
+/* Label left, control right — the reference panel's row rhythm. Long labels
+   wrap inside --label-col; the control stays full width in the second column. */
+.ds-field-row {
+  display: grid;
+  grid-template-columns: var(--label-col) 1fr;
+  align-items: center;
+  gap: 10px;
+  min-height: 32px;
+  margin-bottom: var(--sp-2);
+}
+
+.ds-field-row > label {
+  grid-column: 1;
+  line-height: 1.25;
+  overflow-wrap: break-word;
+}
+
+.ds-field-row > .hint {
+  grid-column: 2;
+}
+
+.ds-field input:not([type='checkbox']),
+.ds-field select,
+.ds-field textarea {
+  border: 0;
+  border-radius: var(--radius);
+  padding: 6px var(--sp-3);
+  min-height: var(--control-h);
+  background: var(--fill);
+  color: var(--text);
+  font-size: var(--fs-body);
+  width: 100%;
+}
+
+.ds-field select {
+  appearance: none;
+  padding-right: 24px;
+  /* Chevron is baked in per theme: a data URI can't read currentColor. */
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='9' height='6' viewBox='0 0 9 6'%3E%3Cpath d='M1 1.5 4.5 5 8 1.5' fill='none' stroke='%2366666e' stroke-width='1.4' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  background-position: right var(--sp-3) center;
+  background-repeat: no-repeat;
+  cursor: pointer;
+}
+
+html.figma-dark .ds-field select {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='9' height='6' viewBox='0 0 9 6'%3E%3Cpath d='M1 1.5 4.5 5 8 1.5' fill='none' stroke='%23a3a3ac' stroke-width='1.4' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+}
+
+.ds-field input::placeholder,
+.ds-field textarea::placeholder {
+  color: var(--text-tertiary);
+}
+
+.ds-field input:not([type='checkbox']):hover,
+.ds-field select:hover,
+.ds-field textarea:hover {
+  background: var(--fill-hover);
+}
+
+.ds-field textarea {
+  min-height: 60px;
+  resize: vertical;
+  line-height: 1.45;
+}
+
+.ds-field .hint,
+.hint {
+  color: var(--text-secondary);
+  font-size: var(--fs-micro);
+}
+
+.ds-optional {
+  color: var(--text-tertiary);
+  font-weight: var(--fw-regular);
+  font-size: var(--fs-micro);
+}
+
+.ds-field-row > label:has(.ds-optional) {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 1px;
+  line-height: 1.25;
+}
+
+.ds-check {
+  display: flex;
+  gap: var(--sp-2);
+  align-items: flex-start;
+  font-size: var(--fs-body);
+  margin-bottom: var(--sp-2);
+  /* Native checkbox boxes sit a hair left of text; nudge to match input edges. */
+  padding-left: 3px;
+  cursor: pointer;
+}
+
+.ds-group-title {
+  margin: var(--sp-5) 0 var(--sp-3);
+  font-size: var(--fs-micro);
+  font-weight: var(--fw-medium);
+  color: var(--text-tertiary);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+/* —— Table: one hairline under the head, spacing does the rest —— */
+.ds-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: var(--fs-meta);
+  margin-bottom: var(--sp-4);
+}
+
+.ds-table th,
+.ds-table td {
+  text-align: left;
+  padding: 5px var(--sp-2) 5px 0;
+  vertical-align: top;
+}
+
+.ds-table th {
+  color: var(--text-tertiary);
+  font-weight: var(--fw-medium);
+  font-size: var(--fs-micro);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  border-bottom: 1px solid var(--hairline);
+  padding-bottom: var(--sp-1);
+}
+
+.ds-list {
+  margin: 0;
+  padding-left: var(--sp-5);
+  font-size: var(--fs-meta);
+}
+
+.ds-code {
+  font-family: var(--font-mono);
+  font-size: var(--fs-micro);
+}
+
+.ds-entry-title {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-2);
+  margin: var(--sp-2) 0 2px;
+  font-size: var(--fs-body);
+  font-weight: var(--fw-strong);
+}
+
+.ds-live {
+  /* Visually hidden but available to assistive tech */
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.ds-live-visible {
+  position: static;
+  width: auto;
+  height: auto;
+  margin: 0 0 var(--sp-3);
+  clip: auto;
+  white-space: normal;
+  color: var(--text-secondary);
+  font-size: var(--fs-meta);
+}
+
+/* —— Flash toast: brief copy confirmation —— */
+.ds-flash {
+  position: absolute;
+  left: 50%;
+  bottom: var(--sp-5);
+  z-index: 20;
+  transform: translateX(-50%);
+  max-width: calc(100% - 2 * var(--gutter));
+  padding: 8px 14px;
+  border-radius: 999px;
+  background: var(--text);
+  color: var(--raised);
+  font-size: var(--fs-meta);
+  font-weight: var(--fw-medium);
+  line-height: 1.2;
+  box-shadow: var(--shadow-control);
+  pointer-events: none;
+  animation: ds-flash-in 0.18s ease-out;
+}
+
+html.figma-dark .ds-flash {
+  background: #ececef;
+  color: #1d1d1f;
+}
+
+@keyframes ds-flash-in {
+  from {
+    opacity: 0;
+    transform: translateX(-50%) translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+}
+
+/* —— Onboarding —— */
+.ds-onboarding {
+  position: absolute;
+  inset: 0;
+  background: var(--surface);
+  z-index: 20;
+  display: flex;
+  flex-direction: column;
+  padding: var(--sp-6) var(--gutter);
+}
+
+.ds-onboarding-mark {
+  /* Optical alignment: the mark's own bounds already read as padded, so it
+     needs no chip behind it at this size. */
+  margin-left: -1px;
+}
+
+.ds-onboarding h2 {
+  margin: 10px 0 var(--sp-2);
+  font-size: 15px;
+  font-weight: var(--fw-strong);
+}
+
+.ds-onboarding p {
+  margin: 0;
+  color: var(--text-secondary);
+  max-width: 36ch;
+}
+
+.ds-onboarding-footer {
+  margin-top: auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: var(--sp-3);
+}
+
+.ds-dots {
+  display: flex;
+  gap: 5px;
+}
+
+.ds-dot {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--fill-strong);
+}
+
+.ds-dot.active {
+  background: var(--accent);
+}

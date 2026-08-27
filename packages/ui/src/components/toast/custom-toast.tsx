@@ -205,7 +205,15 @@ export function CustomToast({
           ))}
 
         {closeButton && (
-          <Button size="xs" ignoreIconOnlyTooltip title="Close" variant="transparent" iconOnly onClick={onClose}>
+          <Button
+            size="xs"
+            ignoreIconOnlyTooltip
+            aria-label="Close notification"
+            title="Close"
+            variant="transparent"
+            iconOnly
+            onClick={onClose}
+          >
             <IconV2 size="xs" name="xmark" />
           </Button>
         )}

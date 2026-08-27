@@ -24,9 +24,7 @@ const buttonVariants = cva('cn-button', {
     size: {
       md: '',
       sm: 'cn-button-sm',
-      xs: 'cn-button-xs',
-      '2xs': 'cn-button-2xs',
-      '3xs': 'cn-button-3xs'
+      xs: 'cn-button-xs'
     },
     rounded: {
       true: 'cn-button-rounded'
@@ -51,23 +49,28 @@ type CommonButtonProps = Omit<ButtonHTMLAttributes<HTMLButtonElement>, 'onClick'
   VariantProps<typeof buttonVariants> & {
     asChild?: boolean
     loading?: boolean
+    /** Applies the supported rounded shape to icon-only Buttons. Rounded text Buttons are deprecated. */
     rounded?: boolean
     onClick?: (event: React.MouseEvent<HTMLButtonElement>) => void | Promise<unknown>
   }
 
-type ButtonPropsIconOnlyRequired = {
+type ButtonAccessibleName =
+  | { 'aria-label': string; 'aria-labelledby'?: string }
+  | { 'aria-label'?: string; 'aria-labelledby': string }
+
+type ButtonPropsIconOnlyRequired = ButtonAccessibleName & {
   iconOnly: true
   tooltipProps: ButtonTooltipProps
 }
 
-type ButtonPropsIconOnlyIgnored = {
+type ButtonPropsIconOnlyIgnored = ButtonAccessibleName & {
   iconOnly: true
   ignoreIconOnlyTooltip: true
   tooltipProps?: never
 }
 
 type ButtonPropsRegular = {
-  iconOnly?: boolean
+  iconOnly?: false
   tooltipProps?: ButtonTooltipProps
 }
 
@@ -101,8 +104,7 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(
     const [isPromiseLoading, setIsPromiseLoading] = useState(false)
 
     const Comp = asChild ? Slot : 'button'
-    const microSize = size === '2xs' || size === '3xs'
-    const iconOnly = iconOnlyProp || microSize
+    const iconOnly = iconOnlyProp
 
     // Handle onClick that might return a promise
     const handleClick = useCallback(

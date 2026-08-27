@@ -7,6 +7,17 @@ The `Link` component provides styled links for navigation within and outside the
 
 import { DocsPage } from "@/components/docs-page";
 
+## When to use Link
+
+Use Link when activating the control takes the user to a route, URL, file, or other destination. Use Button when the control performs an in-place action, submits data, opens an interface, or starts or advances a workflow.
+
+The label does not determine the component:
+
+- “Get Started” is a Button when it begins or advances an onboarding flow in place.
+- “Get Started” is a Link when it navigates to an onboarding destination.
+
+Do not use Button for ordinary navigation. Canary does not currently provide an approved Link styled as a primary Button. If a navigational destination requires that treatment, raise a design-system proposal rather than composing `Button asChild`, applying Button classes to Link, or substituting Button semantics.
+
 <DocsPage.ComponentExample
   client:only
   code={`<div className="grid grid-cols-2 gap-cn-md">

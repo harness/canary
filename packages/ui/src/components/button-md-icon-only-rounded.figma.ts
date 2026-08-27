@@ -17,8 +17,7 @@ const variant = instance.getEnum('variant', {
 const theme = instance.getEnum('theme', {
   '⚫ default': 'default',
   '🟢 success': 'success',
-  '🔴 danger': 'danger',
-  '-': undefined
+  '🔴 danger': 'danger'
 })
 
 const disabled = instance.getEnum('👁️ disabled', {
@@ -33,32 +32,26 @@ const loading = instance.getEnum('state', {
   loading: true
 })
 
-const icon = instance.getInstanceSwap('↳ icon#7790:2')
+const icon = instance.getInstanceSwap('↳ icon')
 let iconCode
 if (icon && icon.type === 'INSTANCE') {
   iconCode = icon.executeTemplate().example
 }
 
-const hasTooltip = instance.getBoolean('tooltip#7883:0')
-const tooltipContent = hasTooltip ? instance.getString('tooltip text#5971:0') : null
-const hasTitle = hasTooltip ? instance.getBoolean('title#7308:9') : false
-const tooltipTitle = hasTitle ? instance.getString('title text#7308:7') : null
+const hasTooltip = instance.getBoolean('tooltip')
+const tooltipContent = hasTooltip ? '...' : null
 
 export default {
   example: figma.code`
     <Button
       variant="${variant}"
       size="md"
+      theme="${theme}"
       rounded
       iconOnly
-      ${theme ? figma.code`theme="${theme}"` : ''}
       ${disabled ? 'disabled' : ''}
       ${loading ? 'loading' : ''}
-      ${
-        hasTooltip
-          ? figma.code`tooltipProps={{ content: "${tooltipContent}"${tooltipTitle ? figma.code`, title: "${tooltipTitle}"` : ''} }}`
-          : 'ignoreIconOnlyTooltip'
-      }
+      ${hasTooltip ? figma.code`tooltipProps={{ content: "${tooltipContent}" }}` : 'ignoreIconOnlyTooltip'}
     >
       ${iconCode ? figma.code`${iconCode}` : ''}
     </Button>

@@ -49,6 +49,7 @@ interface SidebarBadgeProps extends Omit<StatusBadgeProps, 'children' | 'size' |
 }
 
 type SidebarItemActionButtonPropsType = ButtonProps & {
+  ignoreIconOnlyTooltip?: boolean
   title?: string
   iconName?: IconV2NamesType
   iconProps?: Omit<IconPropsV2, 'ref' | 'name' | 'fallback'>
@@ -242,22 +243,75 @@ const SidebarItemTrigger = forwardRef<HTMLButtonElement | HTMLAnchorElement, Sid
       return (
         <Layout.Horizontal gap="none" className="cn-sidebar-item-content-action-buttons">
           {actionButtons?.map((buttonProps, index) => {
-            const { title, iconOnly = true, iconName, iconProps, onClick: actionButtonOnClick, ...rest } = buttonProps
+            const {
+              title,
+              iconOnly = true,
+              iconName,
+              iconProps,
+              onClick: actionButtonOnClick,
+              tooltipProps,
+              ignoreIconOnlyTooltip,
+              'aria-label': ariaLabel,
+              ...rest
+            } = buttonProps
+            const accessibleLabel =
+              ariaLabel ?? title ?? (typeof buttonProps.children === 'string' ? buttonProps.children : 'Sidebar action')
+            const content = (
+              <>
+                {iconName && <IconV2 name={iconName} {...iconProps} />}
+                {title}
+              </>
+            )
+            const handleActionClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+              e.preventDefault()
+              e.stopPropagation()
+              actionButtonOnClick(e)
+            }
+
+            if (!iconOnly) {
+              return (
+                <Button
+                  key={index}
+                  size="xs"
+                  variant="ghost"
+                  onClick={handleActionClick}
+                  tooltipProps={tooltipProps}
+                  {...rest}
+                >
+                  {content}
+                </Button>
+              )
+            }
+
+            if (ignoreIconOnlyTooltip) {
+              return (
+                <Button
+                  key={index}
+                  size="xs"
+                  variant="ghost"
+                  iconOnly
+                  aria-label={accessibleLabel}
+                  ignoreIconOnlyTooltip
+                  onClick={handleActionClick}
+                  {...rest}
+                >
+                  {content}
+                </Button>
+              )
+            }
+
             return (
               <Button
                 key={index}
-                size="2xs"
+                size="xs"
                 variant="ghost"
-                iconOnly={iconOnly}
-                onClick={e => {
-                  e.preventDefault()
-                  e.stopPropagation()
-                  actionButtonOnClick(e)
-                }}
+                iconOnly
+                aria-label={accessibleLabel}
+                tooltipProps={tooltipProps ?? { content: accessibleLabel }}
+                onClick={handleActionClick}
                 {...rest}
               >
-                {iconName && <IconV2 name={iconName} {...iconProps} />}
-                {title}
+                {content}
               </Button>
             )
           })}

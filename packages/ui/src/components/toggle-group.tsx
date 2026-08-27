@@ -13,6 +13,7 @@ import {
 
 import {
   Button,
+  ButtonProps,
   IconPropsV2,
   IconV2,
   IconV2NamesType,
@@ -162,6 +163,9 @@ const ToggleGroupItem = forwardRef<
     {
       value,
       tooltipProps,
+      ignoreIconOnlyTooltip,
+      'aria-label': ariaLabel,
+      'aria-labelledby': ariaLabelledBy,
       disabled: itemDisabled,
       iconOnly,
       prefixIcon,
@@ -189,6 +193,9 @@ const ToggleGroupItem = forwardRef<
 
     const finalDisabled = groupDisabled || itemDisabled
 
+    const accessibleLabel = ariaLabel ?? text
+    const resolvedTooltipProps = tooltipProps ?? (text !== undefined ? { content: text } : undefined)
+
     const renderContent = () => {
       if (iconOnly) {
         return <IconV2 {...prefixIconProps} name={prefixIcon} fallback={prefixIconProps?.fallback ?? 'stop'} />
@@ -207,21 +214,55 @@ const ToggleGroupItem = forwardRef<
       )
     }
 
-    const accessibilityProps = iconOnly && text ? { 'aria-label': text } : {}
-
-    return (
-      <ToggleGroupPrimitive.Item ref={ref} asChild value={value} disabled={finalDisabled} {...props}>
+    const button = iconOnly ? (
+      ignoreIconOnlyTooltip ? (
         <Button
-          className={toggleVariants({ size, variant, iconOnly })}
-          variant={buttonVariant}
-          size={size}
-          disabled={finalDisabled}
-          {...accessibilityProps}
-          iconOnly={iconOnly}
-          tooltipProps={tooltipProps}
+          {...({
+            className: toggleVariants({ size, variant, iconOnly }),
+            variant: buttonVariant,
+            size,
+            disabled: finalDisabled,
+            'aria-label': accessibleLabel,
+            'aria-labelledby': ariaLabelledBy,
+            iconOnly: true,
+            ignoreIconOnlyTooltip: true
+          } as ButtonProps)}
         >
           {renderContent()}
         </Button>
+      ) : (
+        <Button
+          {...({
+            className: toggleVariants({ size, variant, iconOnly }),
+            variant: buttonVariant,
+            size,
+            disabled: finalDisabled,
+            'aria-label': accessibleLabel,
+            'aria-labelledby': ariaLabelledBy,
+            iconOnly: true,
+            tooltipProps: resolvedTooltipProps
+          } as ButtonProps)}
+        >
+          {renderContent()}
+        </Button>
+      )
+    ) : (
+      <Button
+        className={toggleVariants({ size, variant, iconOnly })}
+        variant={buttonVariant}
+        size={size}
+        disabled={finalDisabled}
+        aria-label={ariaLabel}
+        aria-labelledby={ariaLabelledBy}
+        tooltipProps={tooltipProps}
+      >
+        {renderContent()}
+      </Button>
+    )
+
+    return (
+      <ToggleGroupPrimitive.Item ref={ref} asChild value={value} disabled={finalDisabled} {...props}>
+        {button}
       </ToggleGroupPrimitive.Item>
     )
   }

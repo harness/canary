@@ -341,11 +341,23 @@ const ShowcaseGrid: FC = () => {
             <div className="flex items-center justify-between gap-cn-md">
               <Text variant="caption-strong">Number of GPUs</Text>
               <div className="flex items-center gap-cn-sm">
-                <Button variant="ghost" size="sm" iconOnly>
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  iconOnly
+                  aria-label="Decrease GPU count"
+                  ignoreIconOnlyTooltip
+                >
                   <IconV2 name="minus" size="xs" />
                 </Button>
                 <Text variant="body-normal">8</Text>
-                <Button variant="ghost" size="sm" iconOnly>
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  iconOnly
+                  aria-label="Increase GPU count"
+                  ignoreIconOnlyTooltip
+                >
                   <IconV2 name="plus" size="xs" />
                 </Button>
               </div>
@@ -433,7 +445,13 @@ const ShowcaseGrid: FC = () => {
                 />
                 <DropdownMenu.Root>
                   <DropdownMenu.Trigger asChild>
-                    <Button variant="outline" size="sm" iconOnly>
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      iconOnly
+                      aria-label="Open more options"
+                      ignoreIconOnlyTooltip
+                    >
                       <IconV2 name="more-horizontal" />
                     </Button>
                   </DropdownMenu.Trigger>
@@ -697,7 +715,13 @@ const ShowcaseGrid: FC = () => {
             <div className="flex flex-col gap-cn-sm">
               <Text variant="caption-strong">Tooltip</Text>
               <Tooltip content="This indicates account verification status">
-                <Button variant="ghost" size="sm" iconOnly>
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  iconOnly
+                  aria-label="View account verification information"
+                  ignoreIconOnlyTooltip
+                >
                   <IconV2 name="info-circle" className="text-cn-info" />
                 </Button>
               </Tooltip>

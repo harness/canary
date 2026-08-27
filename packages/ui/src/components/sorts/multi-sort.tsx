@@ -111,6 +111,7 @@ const SortableItem = ({
         variant="transparent"
         size="sm"
         iconOnly
+        aria-label="Remove sort"
         className="ml-auto"
         onClick={() => onRemoveSort(index)}
         ignoreIconOnlyTooltip

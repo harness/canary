@@ -3,16 +3,16 @@ import { render, RenderResult, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { vi } from 'vitest'
 
-import { Toggle } from '../toggle'
+import { Toggle, type ToggleProps } from '../toggle'
 
 const TestWrapper = ({ children }: { children: React.ReactNode }) => (
   <TooltipPrimitive.Provider>{children}</TooltipPrimitive.Provider>
 )
 
-const renderComponent = (props: Partial<React.ComponentProps<typeof Toggle>> = {}): RenderResult => {
+const renderComponent = (props: ToggleProps = {}): RenderResult => {
   return render(
     <TestWrapper>
-      <Toggle text="Toggle" {...props} />
+      <Toggle {...props} text={props.text ?? 'Toggle'} />
     </TestWrapper>
   )
 }
@@ -268,8 +268,14 @@ describe('Toggle', () => {
   })
 
   describe('Rounded Prop', () => {
-    test('should apply rounded style when rounded is true', () => {
-      const { container } = renderComponent({ rounded: true })
+    test('should apply rounded style to an icon-only Toggle', () => {
+      const { container } = renderComponent({
+        iconOnly: true,
+        rounded: true,
+        prefixIcon: 'star',
+        text: 'Favorite',
+        tooltipProps: { content: 'Favorite' }
+      })
 
       const button = container.querySelector('.cn-button-rounded')
       expect(button).toBeInTheDocument()
@@ -308,7 +314,6 @@ describe('Toggle', () => {
         selectedVariant: 'primary',
         variant: 'outline',
         size: 'sm',
-        rounded: true,
         onChange: handleChange,
         className: 'custom-class'
       })
@@ -316,7 +321,6 @@ describe('Toggle', () => {
       expect(screen.getByRole('button', { name: 'Complete Toggle' })).toBeInTheDocument()
       expect(container.querySelector('.custom-class')).toBeInTheDocument()
       expect(container.querySelector('.cn-toggle-sm')).toBeInTheDocument()
-      expect(container.querySelector('.cn-button-rounded')).toBeInTheDocument()
     })
 
     test('should render icon-only with tooltip', () => {

@@ -46,7 +46,7 @@ const renderComposer = ({
         <PromptInput.Textarea value={value} onChange={vi.fn()} />
         <PromptInput.Toolbar>
           <PromptInput.Tools>
-            <PromptInput.Button prefixIcon="plus" tooltipProps={{ content: 'Add' }} />
+            <PromptInput.Button aria-label="Add" prefixIcon="plus" tooltipProps={{ content: 'Add' }} />
           </PromptInput.Tools>
           <PromptInput.Submit status={streaming ? 'streaming' : undefined} />
         </PromptInput.Toolbar>

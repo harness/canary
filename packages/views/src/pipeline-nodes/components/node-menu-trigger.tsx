@@ -18,6 +18,7 @@ export const NodeMenuTrigger: FC<NodeMenuTriggerProps> = ({ onEllipsisClick }) =
       variant="ghost"
       size="sm"
       iconOnly
+      aria-label="Open node menu"
       onMouseDown={e => e.stopPropagation()}
       onClick={onEllipsisClick}
       ignoreIconOnlyTooltip

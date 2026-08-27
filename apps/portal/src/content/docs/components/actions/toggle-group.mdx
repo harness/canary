@@ -263,15 +263,15 @@ The `ToggleGroup.Root` component accepts a `unselectable` prop to control whethe
 ## Icon only
 
 The `ToggleGroup.Item` component accepts a `iconOnly` prop. When this prop is set, the `ToggleGroup.Item` is styled to fit the dimensions of an icon, making it suitable for icon-only buttons.
-Note that when `iconOnly` is set, the `text` prop will be used for the `area-label`, and the `prefixIcon` prop will be used as the only icon displayed.
+When `iconOnly` is set, `text` is required and becomes the underlying Button's `aria-label`. The `prefixIcon` prop is the only visible content.
 
 <DocsPage.ComponentExample
   client:only
   code={`
     <ToggleGroup.Root type="multiple" value={['2']}>
-      <ToggleGroup.Item value="1" prefixIcon="plus" iconOnly />
-      <ToggleGroup.Item value="2" iconOnly prefixIcon="minus" />
-      <ToggleGroup.Item value="3" iconOnly prefixIcon="xmark" />
+      <ToggleGroup.Item value="1" prefixIcon="plus" iconOnly text="Add" />
+      <ToggleGroup.Item value="2" iconOnly prefixIcon="minus" text="Subtract" />
+      <ToggleGroup.Item value="3" iconOnly prefixIcon="xmark" text="Remove" />
     </ToggleGroup.Root>
   `}
 />

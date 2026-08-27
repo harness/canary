@@ -1,5 +1,6 @@
 {
   "codeConnect": {
+    "parser": "react",
     "include": [
       "packages/ui/src/components/**/*.figma.{ts,tsx}",
       "packages/pipeline-graph/src/components/**/*.figma.{ts,tsx}"

@@ -47,6 +47,7 @@ export function ThemeSelector() {
     <Button
       variant="ghost"
       iconOnly
+      aria-label={isDark ? "Switch to light mode" : "Switch to dark mode"}
       onClick={toggleTheme}
       tooltipProps={{
         content: isDark ? "Switch to light mode" : "Switch to dark mode",
@@ -68,7 +69,12 @@ export default function ThemeSelectorWrapper() {
 
   return (
     <TooltipProvider>
-      <Button variant="ghost" iconOnly ignoreIconOnlyTooltip>
+      <Button
+        variant="ghost"
+        iconOnly
+        aria-label="Toggle color theme"
+        ignoreIconOnlyTooltip
+      >
         <IconV2 name="half-moon" />
       </Button>
     </TooltipProvider>

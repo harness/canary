@@ -1,0 +1,2490 @@
+{
+  "formatVersion": 2,
+  "schemaVersion": "0.5.0",
+  "sections": [
+    {
+      "path": "anatomy",
+      "owner": "Design system design and engineering",
+      "consumers": [
+        "Canary Copilot",
+        "CI",
+        "Documentation",
+        "Future generators"
+      ]
+    },
+    {
+      "path": "constraints",
+      "owner": "Design system engineering with design review",
+      "consumers": [
+        "Canary Copilot",
+        "CI",
+        "Documentation",
+        "Future generators"
+      ]
+    },
+    {
+      "path": "contractVersion",
+      "owner": "Schema maintainers",
+      "consumers": [
+        "Engineers",
+        "Designers",
+        "Agents",
+        "Documentation"
+      ]
+    },
+    {
+      "path": "evaluations",
+      "owner": "Design system governance",
+      "consumers": [
+        "Health scoring",
+        "CI",
+        "Governance",
+        "Documentation"
+      ]
+    },
+    {
+      "path": "evidenceReferences",
+      "owner": "Design system governance",
+      "consumers": [
+        "Health scoring",
+        "CI",
+        "Governance",
+        "Documentation"
+      ]
+    },
+    {
+      "path": "examples",
+      "owner": "Design system design and engineering",
+      "consumers": [
+        "Canary Copilot",
+        "CI",
+        "Documentation",
+        "Future generators"
+      ]
+    },
+    {
+      "path": "identity",
+      "owner": "Design system design and engineering",
+      "consumers": [
+        "Engineers",
+        "Designers",
+        "Agents",
+        "Documentation"
+      ]
+    },
+    {
+      "path": "lifecycle",
+      "owner": "Design system governance",
+      "consumers": [
+        "Engineers",
+        "Designers",
+        "Agents",
+        "Documentation"
+      ]
+    },
+    {
+      "path": "migrations",
+      "owner": "Design system governance",
+      "consumers": [
+        "Engineers",
+        "Designers",
+        "Agents",
+        "Documentation"
+      ]
+    },
+    {
+      "path": "ownership",
+      "owner": "Design system governance",
+      "consumers": [
+        "Engineers",
+        "Designers",
+        "Agents",
+        "Documentation"
+      ]
+    },
+    {
+      "path": "presentation",
+      "owner": "Design system design and engineering",
+      "consumers": [
+        "Canary Copilot",
+        "CI",
+        "Documentation",
+        "Future generators"
+      ]
+    },
+    {
+      "path": "properties",
+      "owner": "Design system engineering with design review",
+      "consumers": [
+        "Canary Copilot",
+        "CI",
+        "Documentation",
+        "Future generators"
+      ]
+    },
+    {
+      "path": "schemaVersion",
+      "owner": "Schema maintainers",
+      "consumers": [
+        "Engineers",
+        "Designers",
+        "Agents",
+        "Documentation"
+      ]
+    },
+    {
+      "path": "semantics",
+      "owner": "Design system design and engineering",
+      "consumers": [
+        "Engineers",
+        "Designers",
+        "Agents",
+        "Documentation"
+      ]
+    },
+    {
+      "path": "slots",
+      "owner": "Design system design and engineering",
+      "consumers": [
+        "Canary Copilot",
+        "CI",
+        "Documentation",
+        "Future generators"
+      ]
+    },
+    {
+      "path": "states",
+      "owner": "Design system design and engineering",
+      "consumers": [
+        "Canary Copilot",
+        "CI",
+        "Documentation",
+        "Future generators"
+      ]
+    },
+    {
+      "path": "surfaces",
+      "owner": "Design system engineering with design review",
+      "consumers": [
+        "Compiler",
+        "Canary Copilot",
+        "CI",
+        "Future generators"
+      ]
+    },
+    {
+      "path": "tokens",
+      "owner": "Design system design and engineering",
+      "consumers": [
+        "Engineers",
+        "Designers",
+        "Agents",
+        "Documentation"
+      ]
+    },
+    {
+      "path": "usage",
+      "owner": "Design system design and engineering",
+      "consumers": [
+        "Engineers",
+        "Designers",
+        "Agents",
+        "Documentation"
+      ]
+    }
+  ],
+  "rows": [
+    {
+      "path": "anatomy",
+      "type": "array",
+      "required": true,
+      "allowedValues": null,
+      "default": null,
+      "description": "Contract field anatomy."
+    },
+    {
+      "path": "anatomy[]",
+      "type": "object",
+      "required": true,
+      "allowedValues": null,
+      "default": null,
+      "description": "Contract field anatomy[]."
+    },
+    {
+      "path": "anatomy[].bindings",
+      "type": "object",
+      "required": false,
+      "allowedValues": null,
+      "default": null,
+      "description": "Contract field anatomy[].bindings."
+    },
+    {
+      "path": "anatomy[].bindings.figma",
+      "type": "object",
+      "required": false,
+      "allowedValues": null,
+      "default": null,
+      "description": "Contract field anatomy[].bindings.figma."
+    },
+    {
+      "path": "anatomy[].bindings.figma.aliases",
+      "type": "array",
+      "required": false,
+      "allowedValues": null,
+      "default": null,
+      "description": "Contract field anatomy[].bindings.figma.aliases."
+    },
+    {
+      "path": "anatomy[].bindings.figma.aliases[]",
+      "type": "string",
+      "required": true,
+      "allowedValues": null,
+      "default": null,
+      "description": "Contract field anatomy[].bindings.figma.aliases[]."
+    },
+    {
+      "path": "anatomy[].bindings.figma.kind",
+      "type": "string",
+      "required": true,
+      "allowedValues": [
+        "root",
+        "layer",
+        "property",
+        "slot",
+        "composition"
+      ],
+      "default": null,
+      "description": "Contract field anatomy[].bindings.figma.kind."
+    },
+    {
+      "path": "anatomy[].bindings.figma.names",
+      "type": "array",
+      "required": false,
+      "allowedValues": null,
+      "default": null,
+      "description": "Contract field anatomy[].bindings.figma.names."
+    },
+    {
+      "path": "anatomy[].bindings.figma.names[]",
+      "type": "string",
+      "required": true,
+      "allowedValues": null,
+      "default": null,
+      "description": "Contract field anatomy[].bindings.figma.names[]."
+    },
+    {
+      "path": "anatomy[].bindings.figma.property",
+      "type": "string",
+      "required": false,
+      "allowedValues": null,
+      "default": null,
+      "description": "Contract field anatomy[].bindings.figma.property."
+    },
+    {
+      "path": "anatomy[].bindings.figma.target",
+      "type": "string",
+      "required": false,
+      "allowedValues": null,
+      "default": null,
+      "description": "Contract field anatomy[].bindings.figma.target."
+    },
+    {
+      "path": "anatomy[].bindings.figma.visibleWhen",
+      "type": "object",
+      "required": false,
+      "allowedValues": null,
+      "default": null,
+      "description": "Contract field anatomy[].bindings.figma.visibleWhen."
+    },
+    {
+      "path": "anatomy[].bindings.figma.visibleWhen.*",
+      "type": "string | number | boolean | null",
+      "required": false,
+      "allowedValues": null,
+      "default": null,
+      "description": "Contract field anatomy[].bindings.figma.visibleWhen.*."
+    },
+    {
+      "path": "anatomy[].bindings.react",
+      "type": "object",
+      "required": false,
+      "allowedValues": null,
+      "default": null,
+      "description": "Contract field anatomy[].bindings.react."
+    },
+    {
+      "path": "anatomy[].bindings.react.aliases",
+      "type": "array",
+      "required": false,
+      "allowedValues": null,
+      "default": null,
+      "description": "Contract field anatomy[].bindings.react.aliases."
+    },
+    {
+      "path": "anatomy[].bindings.react.aliases[]",
+      "type": "string",
+      "required": true,
+      "allowedValues": null,
+      "default": null,
+      "description": "Contract field anatomy[].bindings.react.aliases[]."
+    },
+    {
+      "path": "anatomy[].bindings.react.kind",
+      "type": "string",
+      "required": true,
+      "allowedValues": [
+        "root",
+        "layer",
+        "property",
+        "slot",
+        "composition"
+      ],
+      "default": null,
+      "description": "Contract field anatomy[].bindings.react.kind."
+    },
+    {
+      "path": "anatomy[].bindings.react.names",
+      "type": "array",
+      "required": false,
+      "allowedValues": null,
+      "default": null,
+      "description": "Contract field anatomy[].bindings.react.names."
+    },
+    {
+      "path": "anatomy[].bindings.react.names[]",
+      "type": "string",
+      "required": true,
+      "allowedValues": null,
+      "default": null,
+      "description": "Contract field anatomy[].bindings.react.names[]."
+    },
+    {
+      "path": "anatomy[].bindings.react.property",
+      "type": "string",
+      "required": false,
+      "allowedValues": null,
+      "default": null,
+      "description": "Contract field anatomy[].bindings.react.property."
+    },
+    {
+      "path": "anatomy[].bindings.react.target",
+      "type": "string",
+      "required": false,
+      "allowedValues": null,
+      "default": null,
+      "description": "Contract field anatomy[].bindings.react.target."
+    },
+    {
+      "path": "anatomy[].bindings.react.visibleWhen",
+      "type": "object",
+      "required": false,
+      "allowedValues": null,
+      "default": null,
+      "description": "Contract field anatomy[].bindings.react.visibleWhen."
+    },
+    {
+      "path": "anatomy[].bindings.react.visibleWhen.*",
+      "type": "string | number | boolean | null",
+      "required": false,
+      "allowedValues": null,
+      "default": null,
+      "description": "Contract field anatomy[].bindings.react.visibleWhen.*."
+    },
+    {
+      "path": "anatomy[].content",
+      "type": "array",
+      "required": false,
+      "allowedValues": null,
+      "default": null,
+      "description": "Contract field anatomy[].content."
+    },
+    {
+      "path": "anatomy[].content[]",
+      "type": "string",
+      "required": true,
+      "allowedValues": null,
+      "default": null,
+      "description": "Contract field anatomy[].content[]."
+    },
+    {
+      "path": "anatomy[].description",
+      "type": "string",
+      "required": true,
+      "allowedValues": null,
+      "default": null,
+      "description": "Contract field anatomy[].description."
+    },
+    {
+      "path": "anatomy[].id",
+      "type": "string",
+      "required": true,
+      "allowedValues": null,
+      "default": null,
+      "description": "Contract field anatomy[].id."
+    },
+    {
+      "path": "anatomy[].name",
+      "type": "string",
+      "required": true,
+      "allowedValues": null,
+      "default": null,
+      "description": "Contract field anatomy[].name."
+    },
+    {
+      "path": "anatomy[].parentId",
+      "type": "string",
+      "required": false,
+      "allowedValues": null,
+      "default": null,
+      "description": "Contract field anatomy[].parentId."
+    },
+    {
+      "path": "anatomy[].presence",
+      "type": "string",
+      "required": true,
+      "allowedValues": [
+        "required",
+        "optional",
+        "conditional",
+        "repeatable"
+      ],
+      "default": null,
+      "description": "Contract field anatomy[].presence."
+    },
+    {
+      "path": "anatomy[].role",
+      "type": "string",
+      "required": false,
+      "allowedValues": null,
+      "default": null,
+      "description": "Contract field anatomy[].role."
+    },
+    {
+      "path": "constraints",
+      "type": "object",
+      "required": true,
+      "allowedValues": null,
+      "default": null,
+      "description": "Contract field constraints."
+    },
+    {
+      "path": "constraints.combinations",
+      "type": "array",
+      "required": false,
+      "allowedValues": null,
+      "default": [],
+      "description": "Contract field constraints.combinations."
+    },
+    {
+      "path": "constraints.combinations[]",
+      "type": "object",
+      "required": true,
+      "allowedValues": null,
+      "default": null,
+      "description": "Contract field constraints.combinations[]."
+    },
+    {
+      "path": "constraints.combinations[].conditions",
+      "type": "object",
+      "required": true,
+      "allowedValues": null,
+      "default": null,
+      "description": "Contract field constraints.combinations[].conditions."
+    },
+    {
+      "path": "constraints.combinations[].conditions.*",
+      "type": "array",
+      "required": false,
+      "allowedValues": null,
+      "default": null,
+      "description": "Contract field constraints.combinations[].conditions.*."
+    },
+    {
+      "path": "constraints.combinations[].conditions.*[]",
+      "type": "string | number | boolean | null",
+      "required": true,
+      "allowedValues": null,
+      "default": null,
+      "description": "Contract field constraints.combinations[].conditions.*[]."
+    },
+    {
+      "path": "constraints.combinations[].description",
+      "type": "string",
+      "required": true,
+      "allowedValues": null,
+      "default": null,
+      "description": "Contract field constraints.combinations[].description."
+    },
+    {
+      "path": "constraints.combinations[].id",
+      "type": "string",
+      "required": true,
+      "allowedValues": null,
+      "default": null,
+      "description": "Contract field constraints.combinations[].id."
+    },
+    {
+      "path": "constraints.combinations[].migrationId",
+      "type": "string",
+      "required": false,
+      "allowedValues": null,
+      "default": null,
+      "description": "Contract field constraints.combinations[].migrationId."
+    },
+    {
+      "path": "constraints.combinations[].ruleId",
+      "type": "string",
+      "required": false,
+      "allowedValues": null,
+      "default": null,
+      "description": "Contract field constraints.combinations[].ruleId."
+    },
+    {
+      "path": "constraints.combinations[].status",
+      "type": "string",
+      "required": true,
+      "allowedValues": [
+        "supported",
+        "deprecated",
+        "unsupported"
+      ],
+      "default": null,
+      "description": "Contract field constraints.combinations[].status."
+    },
+    {
+      "path": "constraints.combinations[].surfaces",
+      "type": "array",
+      "required": true,
+      "allowedValues": null,
+      "default": null,
+      "description": "Contract field constraints.combinations[].surfaces."
+    },
+    {
+      "path": "constraints.combinations[].surfaces[]",
+      "type": "string",
+      "required": true,
+      "allowedValues": [
+        "figma",
+        "react"
+      ],
+      "default": null,
+      "description": "Contract field constraints.combinations[].surfaces[]."
+    },
+    {
+      "path": "constraints.dimensions",
+      "type": "array",
+      "required": true,
+      "allowedValues": null,
+      "default": null,
+      "description": "Contract field constraints.dimensions."
+    },
+    {
+      "path": "constraints.dimensions[]",
+      "type": "string",
+      "required": true,
+      "allowedValues": null,
+      "default": null,
+      "description": "Contract field constraints.dimensions[]."
+    },
+    {
+      "path": "constraints.exhaustive",
+      "type": "boolean",
+      "required": true,
+      "allowedValues": null,
+      "default": null,
+      "description": "Contract field constraints.exhaustive."
+    },
+    {
+      "path": "contractVersion",
+      "type": "string",
+      "required": true,
+      "allowedValues": null,
+      "default": null,
+      "description": "Contract field contractVersion."
+    },
+    {
+      "path": "evaluations",
+      "type": "array",
+      "required": false,
+      "allowedValues": null,
+      "default": [],
+      "description": "Contract field evaluations."
+    },
+    {
+      "path": "evaluations[]",
+      "type": "object",
+      "required": true,
+      "allowedValues": null,
+      "default": null,
+      "description": "Contract field evaluations[]."
+    },
+    {
+      "path": "evaluations[].category",
+      "type": "string",
+      "required": true,
+      "allowedValues": [
+        "semantics",
+        "structure",
+        "accessibility",
+        "api",
+        "parity",
+        "governance"
+      ],
+      "default": null,
+      "description": "Contract field evaluations[].category."
+    },
+    {
+      "path": "evaluations[].dimension",
+      "type": "string",
+      "required": true,
+      "allowedValues": [
+        "contractDefinition",
+        "figmaImplementation",
+        "codeImplementation",
+        "designCodeParity",
+        "governanceEvidence"
+      ],
+      "default": null,
+      "description": "Contract field evaluations[].dimension."
+    },
+    {
+      "path": "evaluations[].enforcement",
+      "type": "string",
+      "required": true,
+      "allowedValues": [
+        "automated",
+        "manual",
+        "advisory"
+      ],
+      "default": null,
+      "description": "Contract field evaluations[].enforcement."
+    },
+    {
+      "path": "evaluations[].evaluator",
+      "type": "string",
+      "required": false,
+      "allowedValues": [
+        "schema",
+        "libraryIdentity",
+        "propertyValues",
+        "constraint",
+        "anatomy",
+        "source",
+        "parity",
+        "evidence",
+        "manual"
+      ],
+      "default": null,
+      "description": "Contract field evaluations[].evaluator."
+    },
+    {
+      "path": "evaluations[].id",
+      "type": "string",
+      "required": true,
+      "allowedValues": null,
+      "default": null,
+      "description": "Contract field evaluations[].id."
+    },
+    {
+      "path": "evaluations[].maxAgeDays",
+      "type": "integer",
+      "required": false,
+      "allowedValues": null,
+      "default": null,
+      "description": "Contract field evaluations[].maxAgeDays."
+    },
+    {
+      "path": "evaluations[].remediation",
+      "type": "string",
+      "required": false,
+      "allowedValues": null,
+      "default": null,
+      "description": "Contract field evaluations[].remediation."
+    },
+    {
+      "path": "evaluations[].severity",
+      "type": "string",
+      "required": true,
+      "allowedValues": [
+        "critical",
+        "major",
+        "minor",
+        "informational"
+      ],
+      "default": null,
+      "description": "Contract field evaluations[].severity."
+    },
+    {
+      "path": "evaluations[].statement",
+      "type": "string",
+      "required": true,
+      "allowedValues": null,
+      "default": null,
+      "description": "Contract field evaluations[].statement."
+    },
+    {
+      "path": "evidenceReferences",
+      "type": "object",
+      "required": true,
+      "allowedValues": null,
+      "default": null,
+      "description": "Contract field evidenceReferences."
+    },
+    {
+      "path": "evidenceReferences.sources",
+      "type": "array",
+      "required": false,
+      "allowedValues": null,
+      "default": [],
+      "description": "Contract field evidenceReferences.sources."
+    },
+    {
+      "path": "evidenceReferences.sources[]",
+      "type": "object",
+      "required": true,
+      "allowedValues": null,
+      "default": null,
+      "description": "Contract field evidenceReferences.sources[]."
+    },
+    {
+      "path": "evidenceReferences.sources[].id",
+      "type": "string",
+      "required": true,
+      "allowedValues": null,
+      "default": null,
+      "description": "Contract field evidenceReferences.sources[].id."
+    },
+    {
+      "path": "evidenceReferences.sources[].path",
+      "type": "string",
+      "required": true,
+      "allowedValues": null,
+      "default": null,
+      "description": "Contract field evidenceReferences.sources[].path."
+    },
+    {
+      "path": "evidenceReferences.sources[].type",
+      "type": "string",
+      "required": true,
+      "allowedValues": [
+        "source",
+        "docs",
+        "tests",
+        "code-connect",
+        "plugin",
+        "figma",
+        "decision"
+      ],
+      "default": null,
+      "description": "Contract field evidenceReferences.sources[].type."
+    },
+    {
+      "path": "examples",
+      "type": "array",
+      "required": false,
+      "allowedValues": null,
+      "default": [],
+      "description": "Contract field examples."
+    },
+    {
+      "path": "examples[]",
+      "type": "object",
+      "required": true,
+      "allowedValues": null,
+      "default": null,
+      "description": "Contract field examples[]."
+    },
+    {
+      "path": "examples[].id",
+      "type": "string",
+      "required": true,
+      "allowedValues": null,
+      "default": null,
+      "description": "Contract field examples[].id."
+    },
+    {
+      "path": "examples[].name",
+      "type": "string",
+      "required": true,
+      "allowedValues": null,
+      "default": null,
+      "description": "Contract field examples[].name."
+    },
+    {
+      "path": "examples[].properties",
+      "type": "object",
+      "required": true,
+      "allowedValues": null,
+      "default": null,
+      "description": "Contract field examples[].properties."
+    },
+    {
+      "path": "examples[].properties.*",
+      "type": "string | number | boolean | null",
+      "required": false,
+      "allowedValues": null,
+      "default": null,
+      "description": "Contract field examples[].properties.*."
+    },
+    {
+      "path": "examples[].purpose",
+      "type": "string",
+      "required": true,
+      "allowedValues": null,
+      "default": null,
+      "description": "Contract field examples[].purpose."
+    },
+    {
+      "path": "examples[].references",
+      "type": "object",
+      "required": false,
+      "allowedValues": null,
+      "default": null,
+      "description": "Contract field examples[].references."
+    },
+    {
+      "path": "examples[].references.code",
+      "type": "string",
+      "required": false,
+      "allowedValues": null,
+      "default": null,
+      "description": "Contract field examples[].references.code."
+    },
+    {
+      "path": "examples[].references.docs",
+      "type": "string",
+      "required": false,
+      "allowedValues": null,
+      "default": null,
+      "description": "Contract field examples[].references.docs."
+    },
+    {
+      "path": "examples[].references.figmaNodeId",
+      "type": "string",
+      "required": false,
+      "allowedValues": null,
+      "default": null,
+      "description": "Contract field examples[].references.figmaNodeId."
+    },
+    {
+      "path": "examples[].slots",
+      "type": "object",
+      "required": true,
+      "allowedValues": null,
+      "default": null,
+      "description": "Contract field examples[].slots."
+    },
+    {
+      "path": "examples[].slots.*",
+      "type": "array",
+      "required": false,
+      "allowedValues": null,
+      "default": null,
+      "description": "Contract field examples[].slots.*."
+    },
+    {
+      "path": "examples[].slots.*[]",
+      "type": "string",
+      "required": true,
+      "allowedValues": null,
+      "default": null,
+      "description": "Contract field examples[].slots.*[]."
+    },
+    {
+      "path": "examples[].status",
+      "type": "string",
+      "required": true,
+      "allowedValues": [
+        "recommended",
+        "illustrative"
+      ],
+      "default": null,
+      "description": "Contract field examples[].status."
+    },
+    {
+      "path": "identity",
+      "type": "object",
+      "required": true,
+      "allowedValues": null,
+      "default": null,
+      "description": "Contract field identity."
+    },
+    {
+      "path": "identity.aliases",
+      "type": "array",
+      "required": false,
+      "allowedValues": null,
+      "default": [],
+      "description": "Contract field identity.aliases."
+    },
+    {
+      "path": "identity.aliases[]",
+      "type": "string",
+      "required": true,
+      "allowedValues": null,
+      "default": null,
+      "description": "Contract field identity.aliases[]."
+    },
+    {
+      "path": "identity.id",
+      "type": "string",
+      "required": true,
+      "allowedValues": null,
+      "default": null,
+      "description": "Contract field identity.id."
+    },
+    {
+      "path": "identity.name",
+      "type": "string",
+      "required": true,
+      "allowedValues": null,
+      "default": null,
+      "description": "Contract field identity.name."
+    },
+    {
+      "path": "identity.summary",
+      "type": "string",
+      "required": true,
+      "allowedValues": null,
+      "default": null,
+      "description": "Contract field identity.summary."
+    },
+    {
+      "path": "lifecycle",
+      "type": "object",
+      "required": true,
+      "allowedValues": null,
+      "default": null,
+      "description": "Contract field lifecycle."
+    },
+    {
+      "path": "lifecycle.replacementId",
+      "type": "string",
+      "required": false,
+      "allowedValues": null,
+      "default": null,
+      "description": "Contract field lifecycle.replacementId."
+    },
+    {
+      "path": "lifecycle.status",
+      "type": "string",
+      "required": true,
+      "allowedValues": [
+        "draft",
+        "piloting",
+        "stable",
+        "deprecated"
+      ],
+      "default": null,
+      "description": "Contract field lifecycle.status."
+    },
+    {
+      "path": "migrations",
+      "type": "array",
+      "required": false,
+      "allowedValues": null,
+      "default": [],
+      "description": "Contract field migrations."
+    },
+    {
+      "path": "migrations[]",
+      "type": "object",
+      "required": true,
+      "allowedValues": null,
+      "default": null,
+      "description": "Contract field migrations[]."
+    },
+    {
+      "path": "migrations[].from",
+      "type": "string",
+      "required": true,
+      "allowedValues": null,
+      "default": null,
+      "description": "Contract field migrations[].from."
+    },
+    {
+      "path": "migrations[].id",
+      "type": "string",
+      "required": true,
+      "allowedValues": null,
+      "default": null,
+      "description": "Contract field migrations[].id."
+    },
+    {
+      "path": "migrations[].instructions",
+      "type": "string",
+      "required": true,
+      "allowedValues": null,
+      "default": null,
+      "description": "Contract field migrations[].instructions."
+    },
+    {
+      "path": "migrations[].owner",
+      "type": "string",
+      "required": false,
+      "allowedValues": null,
+      "default": null,
+      "description": "Contract field migrations[].owner."
+    },
+    {
+      "path": "migrations[].target",
+      "type": "string",
+      "required": false,
+      "allowedValues": null,
+      "default": null,
+      "description": "Contract field migrations[].target."
+    },
+    {
+      "path": "migrations[].to",
+      "type": "string",
+      "required": true,
+      "allowedValues": null,
+      "default": null,
+      "description": "Contract field migrations[].to."
+    },
+    {
+      "path": "ownership",
+      "type": "object",
+      "required": true,
+      "allowedValues": null,
+      "default": null,
+      "description": "Contract field ownership."
+    },
+    {
+      "path": "ownership.contacts",
+      "type": "array",
+      "required": true,
+      "allowedValues": null,
+      "default": null,
+      "description": "Contract field ownership.contacts."
+    },
+    {
+      "path": "ownership.contacts[]",
+      "type": "string",
+      "required": true,
+      "allowedValues": null,
+      "default": null,
+      "description": "Contract field ownership.contacts[]."
+    },
+    {
+      "path": "ownership.team",
+      "type": "string",
+      "required": true,
+      "allowedValues": null,
+      "default": null,
+      "description": "Contract field ownership.team."
+    },
+    {
+      "path": "presentation",
+      "type": "object",
+      "required": true,
+      "allowedValues": null,
+      "default": null,
+      "description": "Contract field presentation."
+    },
+    {
+      "path": "presentation.parts",
+      "type": "array",
+      "required": true,
+      "allowedValues": null,
+      "default": null,
+      "description": "Contract field presentation.parts."
+    },
+    {
+      "path": "presentation.parts[]",
+      "type": "object",
+      "required": true,
+      "allowedValues": null,
+      "default": null,
+      "description": "Contract field presentation.parts[]."
+    },
+    {
+      "path": "presentation.parts[].layout",
+      "type": "object",
+      "required": false,
+      "allowedValues": null,
+      "default": null,
+      "description": "Contract field presentation.parts[].layout."
+    },
+    {
+      "path": "presentation.parts[].layout.align",
+      "type": "string",
+      "required": false,
+      "allowedValues": [
+        "start",
+        "center",
+        "end",
+        "stretch"
+      ],
+      "default": null,
+      "description": "Contract field presentation.parts[].layout.align."
+    },
+    {
+      "path": "presentation.parts[].layout.direction",
+      "type": "string",
+      "required": false,
+      "allowedValues": [
+        "block",
+        "inline",
+        "block-reverse",
+        "inline-reverse"
+      ],
+      "default": null,
+      "description": "Contract field presentation.parts[].layout.direction."
+    },
+    {
+      "path": "presentation.parts[].layout.justify",
+      "type": "string",
+      "required": false,
+      "allowedValues": [
+        "start",
+        "center",
+        "end",
+        "between"
+      ],
+      "default": null,
+      "description": "Contract field presentation.parts[].layout.justify."
+    },
+    {
+      "path": "presentation.parts[].partId",
+      "type": "string",
+      "required": true,
+      "allowedValues": null,
+      "default": null,
+      "description": "Contract field presentation.parts[].partId."
+    },
+    {
+      "path": "presentation.parts[].tokens",
+      "type": "object",
+      "required": false,
+      "allowedValues": null,
+      "default": null,
+      "description": "Contract field presentation.parts[].tokens."
+    },
+    {
+      "path": "presentation.parts[].tokens.*",
+      "type": "string",
+      "required": false,
+      "allowedValues": null,
+      "default": null,
+      "description": "Contract field presentation.parts[].tokens.*."
+    },
+    {
+      "path": "presentation.variants",
+      "type": "array",
+      "required": false,
+      "allowedValues": null,
+      "default": [],
+      "description": "Contract field presentation.variants."
+    },
+    {
+      "path": "presentation.variants[]",
+      "type": "object",
+      "required": true,
+      "allowedValues": null,
+      "default": null,
+      "description": "Contract field presentation.variants[]."
+    },
+    {
+      "path": "presentation.variants[].conditions",
+      "type": "object",
+      "required": false,
+      "allowedValues": null,
+      "default": null,
+      "description": "Contract field presentation.variants[].conditions."
+    },
+    {
+      "path": "presentation.variants[].conditions.*",
+      "type": "array",
+      "required": false,
+      "allowedValues": null,
+      "default": null,
+      "description": "Contract field presentation.variants[].conditions.*."
+    },
+    {
+      "path": "presentation.variants[].conditions.*[]",
+      "type": "string | number | boolean | null",
+      "required": true,
+      "allowedValues": null,
+      "default": null,
+      "description": "Contract field presentation.variants[].conditions.*[]."
+    },
+    {
+      "path": "presentation.variants[].id",
+      "type": "string",
+      "required": true,
+      "allowedValues": null,
+      "default": null,
+      "description": "Contract field presentation.variants[].id."
+    },
+    {
+      "path": "presentation.variants[].parts",
+      "type": "array",
+      "required": true,
+      "allowedValues": null,
+      "default": null,
+      "description": "Contract field presentation.variants[].parts."
+    },
+    {
+      "path": "presentation.variants[].parts[]",
+      "type": "object",
+      "required": true,
+      "allowedValues": null,
+      "default": null,
+      "description": "Contract field presentation.variants[].parts[]."
+    },
+    {
+      "path": "presentation.variants[].parts[].layout",
+      "type": "object",
+      "required": false,
+      "allowedValues": null,
+      "default": null,
+      "description": "Contract field presentation.variants[].parts[].layout."
+    },
+    {
+      "path": "presentation.variants[].parts[].layout.align",
+      "type": "string",
+      "required": false,
+      "allowedValues": [
+        "start",
+        "center",
+        "end",
+        "stretch"
+      ],
+      "default": null,
+      "description": "Contract field presentation.variants[].parts[].layout.align."
+    },
+    {
+      "path": "presentation.variants[].parts[].layout.direction",
+      "type": "string",
+      "required": false,
+      "allowedValues": [
+        "block",
+        "inline",
+        "block-reverse",
+        "inline-reverse"
+      ],
+      "default": null,
+      "description": "Contract field presentation.variants[].parts[].layout.direction."
+    },
+    {
+      "path": "presentation.variants[].parts[].layout.justify",
+      "type": "string",
+      "required": false,
+      "allowedValues": [
+        "start",
+        "center",
+        "end",
+        "between"
+      ],
+      "default": null,
+      "description": "Contract field presentation.variants[].parts[].layout.justify."
+    },
+    {
+      "path": "presentation.variants[].parts[].partId",
+      "type": "string",
+      "required": true,
+      "allowedValues": null,
+      "default": null,
+      "description": "Contract field presentation.variants[].parts[].partId."
+    },
+    {
+      "path": "presentation.variants[].parts[].tokens",
+      "type": "object",
+      "required": false,
+      "allowedValues": null,
+      "default": null,
+      "description": "Contract field presentation.variants[].parts[].tokens."
+    },
+    {
+      "path": "presentation.variants[].parts[].tokens.*",
+      "type": "string",
+      "required": false,
+      "allowedValues": null,
+      "default": null,
+      "description": "Contract field presentation.variants[].parts[].tokens.*."
+    },
+    {
+      "path": "presentation.variants[].stateId",
+      "type": "string",
+      "required": false,
+      "allowedValues": null,
+      "default": null,
+      "description": "Contract field presentation.variants[].stateId."
+    },
+    {
+      "path": "properties",
+      "type": "array",
+      "required": true,
+      "allowedValues": null,
+      "default": null,
+      "description": "Contract field properties."
+    },
+    {
+      "path": "properties[]",
+      "type": "object",
+      "required": true,
+      "allowedValues": null,
+      "default": null,
+      "description": "Contract field properties[]."
+    },
+    {
+      "path": "properties[].bindings",
+      "type": "object",
+      "required": true,
+      "allowedValues": null,
+      "default": null,
+      "description": "Contract field properties[].bindings."
+    },
+    {
+      "path": "properties[].bindings.figma",
+      "type": "object",
+      "required": false,
+      "allowedValues": null,
+      "default": null,
+      "description": "Contract field properties[].bindings.figma."
+    },
+    {
+      "path": "properties[].bindings.react",
+      "type": "object",
+      "required": false,
+      "allowedValues": null,
+      "default": null,
+      "description": "Contract field properties[].bindings.react."
+    },
+    {
+      "path": "properties[].bindings.react.kind",
+      "type": "string",
+      "required": true,
+      "allowedValues": [
+        "prop",
+        "slot",
+        "composition",
+        "pseudoClass",
+        "behavior"
+      ],
+      "default": null,
+      "description": "Contract field properties[].bindings.react.kind."
+    },
+    {
+      "path": "properties[].bindings.react.name",
+      "type": "string",
+      "required": false,
+      "allowedValues": null,
+      "default": null,
+      "description": "Contract field properties[].bindings.react.name."
+    },
+    {
+      "path": "properties[].bindings.react.target",
+      "type": "string",
+      "required": false,
+      "allowedValues": null,
+      "default": null,
+      "description": "Contract field properties[].bindings.react.target."
+    },
+    {
+      "path": "properties[].bindings.react.transform",
+      "type": "string",
+      "required": false,
+      "allowedValues": null,
+      "default": null,
+      "description": "Contract field properties[].bindings.react.transform."
+    },
+    {
+      "path": "properties[].bindings.react.type",
+      "type": "string",
+      "required": false,
+      "allowedValues": null,
+      "default": null,
+      "description": "Contract field properties[].bindings.react.type."
+    },
+    {
+      "path": "properties[].default",
+      "type": "string | number | boolean | null",
+      "required": false,
+      "allowedValues": null,
+      "default": null,
+      "description": "Contract field properties[].default."
+    },
+    {
+      "path": "properties[].description",
+      "type": "string",
+      "required": true,
+      "allowedValues": null,
+      "default": null,
+      "description": "Contract field properties[].description."
+    },
+    {
+      "path": "properties[].id",
+      "type": "string",
+      "required": true,
+      "allowedValues": null,
+      "default": null,
+      "description": "Contract field properties[].id."
+    },
+    {
+      "path": "properties[].name",
+      "type": "string",
+      "required": true,
+      "allowedValues": null,
+      "default": null,
+      "description": "Contract field properties[].name."
+    },
+    {
+      "path": "properties[].required",
+      "type": "boolean",
+      "required": false,
+      "allowedValues": null,
+      "default": null,
+      "description": "Contract field properties[].required."
+    },
+    {
+      "path": "properties[].type",
+      "type": "string",
+      "required": true,
+      "allowedValues": [
+        "boolean",
+        "enum",
+        "number",
+        "string",
+        "slot",
+        "function",
+        "object"
+      ],
+      "default": null,
+      "description": "Contract field properties[].type."
+    },
+    {
+      "path": "properties[].values",
+      "type": "array",
+      "required": false,
+      "allowedValues": null,
+      "default": null,
+      "description": "Contract field properties[].values."
+    },
+    {
+      "path": "properties[].values[]",
+      "type": "string | number | boolean | null",
+      "required": true,
+      "allowedValues": null,
+      "default": null,
+      "description": "Contract field properties[].values[]."
+    },
+    {
+      "path": "schemaVersion",
+      "type": "string",
+      "required": true,
+      "allowedValues": "0.5.0",
+      "default": null,
+      "description": "Contract field schemaVersion."
+    },
+    {
+      "path": "semantics",
+      "type": "object",
+      "required": true,
+      "allowedValues": null,
+      "default": null,
+      "description": "Contract field semantics."
+    },
+    {
+      "path": "semantics.avoidWhen",
+      "type": "array",
+      "required": true,
+      "allowedValues": null,
+      "default": null,
+      "description": "Contract field semantics.avoidWhen."
+    },
+    {
+      "path": "semantics.avoidWhen[]",
+      "type": "string",
+      "required": true,
+      "allowedValues": null,
+      "default": null,
+      "description": "Contract field semantics.avoidWhen[]."
+    },
+    {
+      "path": "semantics.roles",
+      "type": "array",
+      "required": true,
+      "allowedValues": null,
+      "default": null,
+      "description": "Contract field semantics.roles."
+    },
+    {
+      "path": "semantics.roles[]",
+      "type": "string",
+      "required": true,
+      "allowedValues": null,
+      "default": null,
+      "description": "Contract field semantics.roles[]."
+    },
+    {
+      "path": "semantics.useWhen",
+      "type": "array",
+      "required": true,
+      "allowedValues": null,
+      "default": null,
+      "description": "Contract field semantics.useWhen."
+    },
+    {
+      "path": "semantics.useWhen[]",
+      "type": "string",
+      "required": true,
+      "allowedValues": null,
+      "default": null,
+      "description": "Contract field semantics.useWhen[]."
+    },
+    {
+      "path": "slots",
+      "type": "array",
+      "required": true,
+      "allowedValues": null,
+      "default": null,
+      "description": "Contract field slots."
+    },
+    {
+      "path": "slots[]",
+      "type": "object",
+      "required": true,
+      "allowedValues": null,
+      "default": null,
+      "description": "Contract field slots[]."
+    },
+    {
+      "path": "slots[].allowedContent",
+      "type": "array",
+      "required": true,
+      "allowedValues": null,
+      "default": null,
+      "description": "Contract field slots[].allowedContent."
+    },
+    {
+      "path": "slots[].allowedContent[]",
+      "type": "string",
+      "required": true,
+      "allowedValues": null,
+      "default": null,
+      "description": "Contract field slots[].allowedContent[]."
+    },
+    {
+      "path": "slots[].bindings",
+      "type": "object",
+      "required": true,
+      "allowedValues": null,
+      "default": null,
+      "description": "Contract field slots[].bindings."
+    },
+    {
+      "path": "slots[].bindings.figma",
+      "type": "object",
+      "required": false,
+      "allowedValues": null,
+      "default": null,
+      "description": "Contract field slots[].bindings.figma."
+    },
+    {
+      "path": "slots[].bindings.figma.aliases",
+      "type": "array",
+      "required": false,
+      "allowedValues": null,
+      "default": null,
+      "description": "Contract field slots[].bindings.figma.aliases."
+    },
+    {
+      "path": "slots[].bindings.figma.aliases[]",
+      "type": "string",
+      "required": true,
+      "allowedValues": null,
+      "default": null,
+      "description": "Contract field slots[].bindings.figma.aliases[]."
+    },
+    {
+      "path": "slots[].bindings.figma.kind",
+      "type": "string",
+      "required": true,
+      "allowedValues": [
+        "root",
+        "layer",
+        "property",
+        "slot",
+        "composition"
+      ],
+      "default": null,
+      "description": "Contract field slots[].bindings.figma.kind."
+    },
+    {
+      "path": "slots[].bindings.figma.names",
+      "type": "array",
+      "required": false,
+      "allowedValues": null,
+      "default": null,
+      "description": "Contract field slots[].bindings.figma.names."
+    },
+    {
+      "path": "slots[].bindings.figma.names[]",
+      "type": "string",
+      "required": true,
+      "allowedValues": null,
+      "default": null,
+      "description": "Contract field slots[].bindings.figma.names[]."
+    },
+    {
+      "path": "slots[].bindings.figma.property",
+      "type": "string",
+      "required": false,
+      "allowedValues": null,
+      "default": null,
+      "description": "Contract field slots[].bindings.figma.property."
+    },
+    {
+      "path": "slots[].bindings.figma.target",
+      "type": "string",
+      "required": false,
+      "allowedValues": null,
+      "default": null,
+      "description": "Contract field slots[].bindings.figma.target."
+    },
+    {
+      "path": "slots[].bindings.figma.visibleWhen",
+      "type": "object",
+      "required": false,
+      "allowedValues": null,
+      "default": null,
+      "description": "Contract field slots[].bindings.figma.visibleWhen."
+    },
+    {
+      "path": "slots[].bindings.figma.visibleWhen.*",
+      "type": "string | number | boolean | null",
+      "required": false,
+      "allowedValues": null,
+      "default": null,
+      "description": "Contract field slots[].bindings.figma.visibleWhen.*."
+    },
+    {
+      "path": "slots[].bindings.react",
+      "type": "object",
+      "required": false,
+      "allowedValues": null,
+      "default": null,
+      "description": "Contract field slots[].bindings.react."
+    },
+    {
+      "path": "slots[].bindings.react.aliases",
+      "type": "array",
+      "required": false,
+      "allowedValues": null,
+      "default": null,
+      "description": "Contract field slots[].bindings.react.aliases."
+    },
+    {
+      "path": "slots[].bindings.react.aliases[]",
+      "type": "string",
+      "required": true,
+      "allowedValues": null,
+      "default": null,
+      "description": "Contract field slots[].bindings.react.aliases[]."
+    },
+    {
+      "path": "slots[].bindings.react.kind",
+      "type": "string",
+      "required": true,
+      "allowedValues": [
+        "root",
+        "layer",
+        "property",
+        "slot",
+        "composition"
+      ],
+      "default": null,
+      "description": "Contract field slots[].bindings.react.kind."
+    },
+    {
+      "path": "slots[].bindings.react.names",
+      "type": "array",
+      "required": false,
+      "allowedValues": null,
+      "default": null,
+      "description": "Contract field slots[].bindings.react.names."
+    },
+    {
+      "path": "slots[].bindings.react.names[]",
+      "type": "string",
+      "required": true,
+      "allowedValues": null,
+      "default": null,
+      "description": "Contract field slots[].bindings.react.names[]."
+    },
+    {
+      "path": "slots[].bindings.react.property",
+      "type": "string",
+      "required": false,
+      "allowedValues": null,
+      "default": null,
+      "description": "Contract field slots[].bindings.react.property."
+    },
+    {
+      "path": "slots[].bindings.react.target",
+      "type": "string",
+      "required": false,
+      "allowedValues": null,
+      "default": null,
+      "description": "Contract field slots[].bindings.react.target."
+    },
+    {
+      "path": "slots[].bindings.react.visibleWhen",
+      "type": "object",
+      "required": false,
+      "allowedValues": null,
+      "default": null,
+      "description": "Contract field slots[].bindings.react.visibleWhen."
+    },
+    {
+      "path": "slots[].bindings.react.visibleWhen.*",
+      "type": "string | number | boolean | null",
+      "required": false,
+      "allowedValues": null,
+      "default": null,
+      "description": "Contract field slots[].bindings.react.visibleWhen.*."
+    },
+    {
+      "path": "slots[].defaultExampleId",
+      "type": "string",
+      "required": false,
+      "allowedValues": null,
+      "default": null,
+      "description": "Contract field slots[].defaultExampleId."
+    },
+    {
+      "path": "slots[].description",
+      "type": "string",
+      "required": true,
+      "allowedValues": null,
+      "default": null,
+      "description": "Contract field slots[].description."
+    },
+    {
+      "path": "slots[].id",
+      "type": "string",
+      "required": true,
+      "allowedValues": null,
+      "default": null,
+      "description": "Contract field slots[].id."
+    },
+    {
+      "path": "slots[].maxItems",
+      "type": "integer",
+      "required": false,
+      "allowedValues": null,
+      "default": null,
+      "description": "Contract field slots[].maxItems."
+    },
+    {
+      "path": "slots[].minItems",
+      "type": "integer",
+      "required": true,
+      "allowedValues": null,
+      "default": null,
+      "description": "Contract field slots[].minItems."
+    },
+    {
+      "path": "slots[].name",
+      "type": "string",
+      "required": true,
+      "allowedValues": null,
+      "default": null,
+      "description": "Contract field slots[].name."
+    },
+    {
+      "path": "slots[].partId",
+      "type": "string",
+      "required": true,
+      "allowedValues": null,
+      "default": null,
+      "description": "Contract field slots[].partId."
+    },
+    {
+      "path": "slots[].presence",
+      "type": "string",
+      "required": true,
+      "allowedValues": [
+        "required",
+        "optional",
+        "conditional",
+        "repeatable"
+      ],
+      "default": null,
+      "description": "Contract field slots[].presence."
+    },
+    {
+      "path": "states",
+      "type": "array",
+      "required": true,
+      "allowedValues": null,
+      "default": null,
+      "description": "Contract field states."
+    },
+    {
+      "path": "states[]",
+      "type": "object",
+      "required": true,
+      "allowedValues": null,
+      "default": null,
+      "description": "Contract field states[]."
+    },
+    {
+      "path": "states[].bindings",
+      "type": "object",
+      "required": true,
+      "allowedValues": null,
+      "default": null,
+      "description": "Contract field states[].bindings."
+    },
+    {
+      "path": "states[].bindings.figma",
+      "type": "object",
+      "required": false,
+      "allowedValues": null,
+      "default": null,
+      "description": "Contract field states[].bindings.figma."
+    },
+    {
+      "path": "states[].bindings.figma.kind",
+      "type": "string",
+      "required": true,
+      "allowedValues": [
+        "property",
+        "pseudoClass",
+        "behavior",
+        "specification",
+        "unavailable"
+      ],
+      "default": null,
+      "description": "Contract field states[].bindings.figma.kind."
+    },
+    {
+      "path": "states[].bindings.figma.property",
+      "type": "string",
+      "required": false,
+      "allowedValues": null,
+      "default": null,
+      "description": "Contract field states[].bindings.figma.property."
+    },
+    {
+      "path": "states[].bindings.figma.reference",
+      "type": "string",
+      "required": false,
+      "allowedValues": null,
+      "default": null,
+      "description": "Contract field states[].bindings.figma.reference."
+    },
+    {
+      "path": "states[].bindings.figma.target",
+      "type": "string",
+      "required": false,
+      "allowedValues": null,
+      "default": null,
+      "description": "Contract field states[].bindings.figma.target."
+    },
+    {
+      "path": "states[].bindings.figma.value",
+      "type": "string | number | boolean | null",
+      "required": false,
+      "allowedValues": null,
+      "default": null,
+      "description": "Contract field states[].bindings.figma.value."
+    },
+    {
+      "path": "states[].bindings.react",
+      "type": "object",
+      "required": false,
+      "allowedValues": null,
+      "default": null,
+      "description": "Contract field states[].bindings.react."
+    },
+    {
+      "path": "states[].bindings.react.kind",
+      "type": "string",
+      "required": true,
+      "allowedValues": [
+        "property",
+        "pseudoClass",
+        "behavior",
+        "specification",
+        "unavailable"
+      ],
+      "default": null,
+      "description": "Contract field states[].bindings.react.kind."
+    },
+    {
+      "path": "states[].bindings.react.property",
+      "type": "string",
+      "required": false,
+      "allowedValues": null,
+      "default": null,
+      "description": "Contract field states[].bindings.react.property."
+    },
+    {
+      "path": "states[].bindings.react.reference",
+      "type": "string",
+      "required": false,
+      "allowedValues": null,
+      "default": null,
+      "description": "Contract field states[].bindings.react.reference."
+    },
+    {
+      "path": "states[].bindings.react.target",
+      "type": "string",
+      "required": false,
+      "allowedValues": null,
+      "default": null,
+      "description": "Contract field states[].bindings.react.target."
+    },
+    {
+      "path": "states[].bindings.react.value",
+      "type": "string | number | boolean | null",
+      "required": false,
+      "allowedValues": null,
+      "default": null,
+      "description": "Contract field states[].bindings.react.value."
+    },
+    {
+      "path": "states[].description",
+      "type": "string",
+      "required": true,
+      "allowedValues": null,
+      "default": null,
+      "description": "Contract field states[].description."
+    },
+    {
+      "path": "states[].fidelity",
+      "type": "object",
+      "required": true,
+      "allowedValues": null,
+      "default": null,
+      "description": "Contract field states[].fidelity."
+    },
+    {
+      "path": "states[].fidelity.figma",
+      "type": "string",
+      "required": false,
+      "allowedValues": [
+        "exact",
+        "approximate",
+        "specification",
+        "unsupported"
+      ],
+      "default": null,
+      "description": "Contract field states[].fidelity.figma."
+    },
+    {
+      "path": "states[].fidelity.react",
+      "type": "string",
+      "required": false,
+      "allowedValues": [
+        "exact",
+        "approximate",
+        "specification",
+        "unsupported"
+      ],
+      "default": null,
+      "description": "Contract field states[].fidelity.react."
+    },
+    {
+      "path": "states[].id",
+      "type": "string",
+      "required": true,
+      "allowedValues": null,
+      "default": null,
+      "description": "Contract field states[].id."
+    },
+    {
+      "path": "states[].name",
+      "type": "string",
+      "required": true,
+      "allowedValues": null,
+      "default": null,
+      "description": "Contract field states[].name."
+    },
+    {
+      "path": "states[].required",
+      "type": "boolean",
+      "required": true,
+      "allowedValues": null,
+      "default": null,
+      "description": "Contract field states[].required."
+    },
+    {
+      "path": "surfaces",
+      "type": "object",
+      "required": true,
+      "allowedValues": null,
+      "default": null,
+      "description": "Contract field surfaces."
+    },
+    {
+      "path": "surfaces.figma",
+      "type": "object",
+      "required": false,
+      "allowedValues": null,
+      "default": null,
+      "description": "Contract field surfaces.figma."
+    },
+    {
+      "path": "surfaces.figma.codeConnect",
+      "type": "array",
+      "required": false,
+      "allowedValues": null,
+      "default": [],
+      "description": "Contract field surfaces.figma.codeConnect."
+    },
+    {
+      "path": "surfaces.figma.codeConnect[]",
+      "type": "string",
+      "required": true,
+      "allowedValues": null,
+      "default": null,
+      "description": "Contract field surfaces.figma.codeConnect[]."
+    },
+    {
+      "path": "surfaces.figma.componentKeys",
+      "type": "array",
+      "required": false,
+      "allowedValues": null,
+      "default": [],
+      "description": "Contract field surfaces.figma.componentKeys."
+    },
+    {
+      "path": "surfaces.figma.componentKeys[]",
+      "type": "string",
+      "required": true,
+      "allowedValues": null,
+      "default": null,
+      "description": "Contract field surfaces.figma.componentKeys[]."
+    },
+    {
+      "path": "surfaces.figma.exampleNodeId",
+      "type": "string",
+      "required": true,
+      "allowedValues": null,
+      "default": null,
+      "description": "Contract field surfaces.figma.exampleNodeId."
+    },
+    {
+      "path": "surfaces.figma.fileKey",
+      "type": "string",
+      "required": true,
+      "allowedValues": null,
+      "default": null,
+      "description": "Contract field surfaces.figma.fileKey."
+    },
+    {
+      "path": "surfaces.figma.library",
+      "type": "string",
+      "required": true,
+      "allowedValues": null,
+      "default": null,
+      "description": "Contract field surfaces.figma.library."
+    },
+    {
+      "path": "surfaces.figma.mappingStatus",
+      "type": "string",
+      "required": true,
+      "allowedValues": [
+        "unverified",
+        "verified"
+      ],
+      "default": null,
+      "description": "Contract field surfaces.figma.mappingStatus."
+    },
+    {
+      "path": "surfaces.figma.names",
+      "type": "array",
+      "required": true,
+      "allowedValues": null,
+      "default": null,
+      "description": "Contract field surfaces.figma.names."
+    },
+    {
+      "path": "surfaces.figma.names[]",
+      "type": "string",
+      "required": true,
+      "allowedValues": null,
+      "default": null,
+      "description": "Contract field surfaces.figma.names[]."
+    },
+    {
+      "path": "surfaces.react",
+      "type": "object",
+      "required": false,
+      "allowedValues": null,
+      "default": null,
+      "description": "Contract field surfaces.react."
+    },
+    {
+      "path": "surfaces.react.export",
+      "type": "string",
+      "required": true,
+      "allowedValues": null,
+      "default": null,
+      "description": "Contract field surfaces.react.export."
+    },
+    {
+      "path": "surfaces.react.extensions",
+      "type": "array",
+      "required": false,
+      "allowedValues": null,
+      "default": [],
+      "description": "Contract field surfaces.react.extensions."
+    },
+    {
+      "path": "surfaces.react.extensions[]",
+      "type": "object",
+      "required": true,
+      "allowedValues": null,
+      "default": null,
+      "description": "Contract field surfaces.react.extensions[]."
+    },
+    {
+      "path": "surfaces.react.extensions[].binding",
+      "type": "object",
+      "required": true,
+      "allowedValues": null,
+      "default": null,
+      "description": "Contract field surfaces.react.extensions[].binding."
+    },
+    {
+      "path": "surfaces.react.extensions[].binding.kind",
+      "type": "string",
+      "required": true,
+      "allowedValues": [
+        "prop",
+        "slot",
+        "composition",
+        "pseudoClass",
+        "behavior"
+      ],
+      "default": null,
+      "description": "Contract field surfaces.react.extensions[].binding.kind."
+    },
+    {
+      "path": "surfaces.react.extensions[].binding.name",
+      "type": "string",
+      "required": false,
+      "allowedValues": null,
+      "default": null,
+      "description": "Contract field surfaces.react.extensions[].binding.name."
+    },
+    {
+      "path": "surfaces.react.extensions[].binding.target",
+      "type": "string",
+      "required": false,
+      "allowedValues": null,
+      "default": null,
+      "description": "Contract field surfaces.react.extensions[].binding.target."
+    },
+    {
+      "path": "surfaces.react.extensions[].binding.transform",
+      "type": "string",
+      "required": false,
+      "allowedValues": null,
+      "default": null,
+      "description": "Contract field surfaces.react.extensions[].binding.transform."
+    },
+    {
+      "path": "surfaces.react.extensions[].binding.type",
+      "type": "string",
+      "required": false,
+      "allowedValues": null,
+      "default": null,
+      "description": "Contract field surfaces.react.extensions[].binding.type."
+    },
+    {
+      "path": "surfaces.react.extensions[].default",
+      "type": "string | number | boolean | null",
+      "required": false,
+      "allowedValues": null,
+      "default": null,
+      "description": "Contract field surfaces.react.extensions[].default."
+    },
+    {
+      "path": "surfaces.react.extensions[].description",
+      "type": "string",
+      "required": true,
+      "allowedValues": null,
+      "default": null,
+      "description": "Contract field surfaces.react.extensions[].description."
+    },
+    {
+      "path": "surfaces.react.extensions[].id",
+      "type": "string",
+      "required": true,
+      "allowedValues": null,
+      "default": null,
+      "description": "Contract field surfaces.react.extensions[].id."
+    },
+    {
+      "path": "surfaces.react.extensions[].name",
+      "type": "string",
+      "required": true,
+      "allowedValues": null,
+      "default": null,
+      "description": "Contract field surfaces.react.extensions[].name."
+    },
+    {
+      "path": "surfaces.react.extensions[].required",
+      "type": "boolean",
+      "required": false,
+      "allowedValues": null,
+      "default": null,
+      "description": "Contract field surfaces.react.extensions[].required."
+    },
+    {
+      "path": "surfaces.react.extensions[].type",
+      "type": "string",
+      "required": true,
+      "allowedValues": [
+        "boolean",
+        "enum",
+        "number",
+        "string",
+        "slot",
+        "function",
+        "object"
+      ],
+      "default": null,
+      "description": "Contract field surfaces.react.extensions[].type."
+    },
+    {
+      "path": "surfaces.react.extensions[].values",
+      "type": "array",
+      "required": false,
+      "allowedValues": null,
+      "default": null,
+      "description": "Contract field surfaces.react.extensions[].values."
+    },
+    {
+      "path": "surfaces.react.extensions[].values[]",
+      "type": "string | number | boolean | null",
+      "required": true,
+      "allowedValues": null,
+      "default": null,
+      "description": "Contract field surfaces.react.extensions[].values[]."
+    },
+    {
+      "path": "surfaces.react.import",
+      "type": "string",
+      "required": true,
+      "allowedValues": null,
+      "default": null,
+      "description": "Contract field surfaces.react.import."
+    },
+    {
+      "path": "surfaces.react.package",
+      "type": "string",
+      "required": true,
+      "allowedValues": null,
+      "default": null,
+      "description": "Contract field surfaces.react.package."
+    },
+    {
+      "path": "surfaces.react.path",
+      "type": "string",
+      "required": true,
+      "allowedValues": null,
+      "default": null,
+      "description": "Contract field surfaces.react.path."
+    },
+    {
+      "path": "tokens",
+      "type": "array",
+      "required": false,
+      "allowedValues": null,
+      "default": [],
+      "description": "Contract field tokens."
+    },
+    {
+      "path": "tokens[]",
+      "type": "object",
+      "required": true,
+      "allowedValues": null,
+      "default": null,
+      "description": "Contract field tokens[]."
+    },
+    {
+      "path": "tokens[].bindings",
+      "type": "object",
+      "required": false,
+      "allowedValues": null,
+      "default": null,
+      "description": "Contract field tokens[].bindings."
+    },
+    {
+      "path": "tokens[].bindings.figma",
+      "type": "string",
+      "required": false,
+      "allowedValues": null,
+      "default": null,
+      "description": "Contract field tokens[].bindings.figma."
+    },
+    {
+      "path": "tokens[].bindings.react",
+      "type": "string",
+      "required": false,
+      "allowedValues": null,
+      "default": null,
+      "description": "Contract field tokens[].bindings.react."
+    },
+    {
+      "path": "tokens[].channel",
+      "type": "string",
+      "required": true,
+      "allowedValues": null,
+      "default": null,
+      "description": "Contract field tokens[].channel."
+    },
+    {
+      "path": "tokens[].conditions",
+      "type": "object",
+      "required": false,
+      "allowedValues": null,
+      "default": null,
+      "description": "Contract field tokens[].conditions."
+    },
+    {
+      "path": "tokens[].conditions.*",
+      "type": "array",
+      "required": false,
+      "allowedValues": null,
+      "default": null,
+      "description": "Contract field tokens[].conditions.*."
+    },
+    {
+      "path": "tokens[].conditions.*[]",
+      "type": "string | number | boolean | null",
+      "required": true,
+      "allowedValues": null,
+      "default": null,
+      "description": "Contract field tokens[].conditions.*[]."
+    },
+    {
+      "path": "tokens[].id",
+      "type": "string",
+      "required": true,
+      "allowedValues": null,
+      "default": null,
+      "description": "Contract field tokens[].id."
+    },
+    {
+      "path": "tokens[].partId",
+      "type": "string",
+      "required": true,
+      "allowedValues": null,
+      "default": null,
+      "description": "Contract field tokens[].partId."
+    },
+    {
+      "path": "tokens[].stateId",
+      "type": "string",
+      "required": false,
+      "allowedValues": null,
+      "default": null,
+      "description": "Contract field tokens[].stateId."
+    },
+    {
+      "path": "tokens[].tokenId",
+      "type": "string",
+      "required": true,
+      "allowedValues": null,
+      "default": null,
+      "description": "Contract field tokens[].tokenId."
+    },
+    {
+      "path": "usage",
+      "type": "object",
+      "required": true,
+      "allowedValues": null,
+      "default": null,
+      "description": "Contract field usage."
+    },
+    {
+      "path": "usage.do",
+      "type": "array",
+      "required": true,
+      "allowedValues": null,
+      "default": null,
+      "description": "Contract field usage.do."
+    },
+    {
+      "path": "usage.do[]",
+      "type": "object",
+      "required": true,
+      "allowedValues": null,
+      "default": null,
+      "description": "Contract field usage.do[]."
+    },
+    {
+      "path": "usage.do[].id",
+      "type": "string",
+      "required": true,
+      "allowedValues": null,
+      "default": null,
+      "description": "Contract field usage.do[].id."
+    },
+    {
+      "path": "usage.do[].statement",
+      "type": "string",
+      "required": true,
+      "allowedValues": null,
+      "default": null,
+      "description": "Contract field usage.do[].statement."
+    },
+    {
+      "path": "usage.dont",
+      "type": "array",
+      "required": true,
+      "allowedValues": null,
+      "default": null,
+      "description": "Contract field usage.dont."
+    },
+    {
+      "path": "usage.dont[]",
+      "type": "object",
+      "required": true,
+      "allowedValues": null,
+      "default": null,
+      "description": "Contract field usage.dont[]."
+    },
+    {
+      "path": "usage.dont[].id",
+      "type": "string",
+      "required": true,
+      "allowedValues": null,
+      "default": null,
+      "description": "Contract field usage.dont[].id."
+    },
+    {
+      "path": "usage.dont[].statement",
+      "type": "string",
+      "required": true,
+      "allowedValues": null,
+      "default": null,
+      "description": "Contract field usage.dont[].statement."
+    },
+    {
+      "path": "usage.relatedComponents",
+      "type": "array",
+      "required": false,
+      "allowedValues": null,
+      "default": [],
+      "description": "Contract field usage.relatedComponents."
+    },
+    {
+      "path": "usage.relatedComponents[]",
+      "type": "string",
+      "required": true,
+      "allowedValues": null,
+      "default": null,
+      "description": "Contract field usage.relatedComponents[]."
+    }
+  ]
+}

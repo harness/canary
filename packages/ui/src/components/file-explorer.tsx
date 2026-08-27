@@ -18,6 +18,7 @@ import { LinkProps, useRouterContext } from '@/context'
 import { cn } from '@utils/cn'
 
 type SidebarItemActionButtonPropsType = ButtonProps & {
+  ignoreIconOnlyTooltip?: boolean
   title?: string
   iconName?: IconV2NamesType
   iconProps?: Omit<IconPropsV2, 'ref' | 'name' | 'fallback'>
@@ -59,11 +60,60 @@ const InteractiveItem = forwardRef<HTMLDivElement, ItemProps>(
       return (
         <Layout.Horizontal gap="none">
           {actionButtons?.map((buttonProps, index) => {
-            const { title, iconOnly = true, iconName, iconProps, ...rest } = buttonProps
-            return (
-              <Button key={index} size="2xs" variant="ghost" iconOnly={iconOnly} {...rest}>
+            const {
+              title,
+              iconOnly = true,
+              iconName,
+              iconProps,
+              tooltipProps,
+              ignoreIconOnlyTooltip,
+              'aria-label': ariaLabel,
+              ...rest
+            } = buttonProps
+            const accessibleLabel =
+              ariaLabel ?? title ?? (typeof buttonProps.children === 'string' ? buttonProps.children : 'File action')
+            const content = (
+              <>
                 {iconName && <IconV2 name={iconName} {...iconProps} />}
                 {title}
+              </>
+            )
+
+            if (!iconOnly) {
+              return (
+                <Button key={index} size="xs" variant="ghost" tooltipProps={tooltipProps} {...rest}>
+                  {content}
+                </Button>
+              )
+            }
+
+            if (ignoreIconOnlyTooltip) {
+              return (
+                <Button
+                  key={index}
+                  size="xs"
+                  variant="ghost"
+                  iconOnly
+                  aria-label={accessibleLabel}
+                  ignoreIconOnlyTooltip
+                  {...rest}
+                >
+                  {content}
+                </Button>
+              )
+            }
+
+            return (
+              <Button
+                key={index}
+                size="xs"
+                variant="ghost"
+                iconOnly
+                aria-label={accessibleLabel}
+                tooltipProps={tooltipProps ?? { content: accessibleLabel }}
+                {...rest}
+              >
+                {content}
               </Button>
             )
           })}

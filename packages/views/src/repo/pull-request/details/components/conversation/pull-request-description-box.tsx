@@ -150,6 +150,7 @@ const PullRequestDescBox: FC<PullRequestDescBoxProps> = ({
                 iconOnly
                 size="sm"
                 variant="outline"
+                aria-label="Edit"
                 tooltipProps={{
                   content: 'Edit'
                 }}

@@ -188,6 +188,7 @@ export const PullRequestChangesFilter: React.FC<PullRequestChangesFilterProps> =
             variant="outline"
             onClick={() => setShowExplorer(true)}
             iconOnly
+            aria-label={t('views:pullRequests.expandSidebar', 'Expand Sidebar')}
             tooltipProps={{
               content: t('views:pullRequests.expandSidebar', 'Expand Sidebar')
             }}

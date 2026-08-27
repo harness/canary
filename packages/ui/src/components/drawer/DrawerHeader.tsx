@@ -61,7 +61,13 @@ export const DrawerHeader = forwardRef<HTMLDivElement, DrawerHeaderProps>(
             <div className="cn-drawer-header-title flex-1 overflow-hidden">{titleChildren}</div>
             {!hideClose && (
               <DrawerPrimitive.Close asChild>
-                <Button className="cn-drawer-close-button" variant="ghost" iconOnly ignoreIconOnlyTooltip>
+                <Button
+                  className="cn-drawer-close-button"
+                  variant="ghost"
+                  iconOnly
+                  aria-label="Close drawer"
+                  ignoreIconOnlyTooltip
+                >
                   <IconV2 className="cn-drawer-close-button-icon" name="xmark" skipSize />
                 </Button>
               </DrawerPrimitive.Close>

@@ -93,7 +93,7 @@ const FilterBoxWrapper = ({
             <Button
               iconOnly
               variant="outline"
-              size="2xs"
+              size="xs"
               onClick={handleRemoveFilter}
               aria-label={t('component:filter.delete', 'Delete filter')}
               tooltipProps={{

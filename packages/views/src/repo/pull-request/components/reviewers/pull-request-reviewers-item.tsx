@@ -152,9 +152,10 @@ const ReviewerItem = ({
           onClick={() => {
             if (id) handleDelete(id)
           }}
-          size="2xs"
+          size="xs"
           variant="transparent"
           iconOnly
+          aria-label="Remove reviewer"
           tooltipProps={{ content: 'Remove reviewer', align: 'end' }}
         >
           <IconV2 name="xmark" skipSize />

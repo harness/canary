@@ -5,7 +5,7 @@ const variants = ['primary', 'secondary', 'outline', 'ghost'] as const
 
 const themes = ['success', 'danger', 'default'] as const
 
-const sizes = ['3xs', '2xs', 'xs', 'sm', 'md'] as const
+const sizes = ['xs', 'sm', 'md'] as const
 
 const BUTTON_ACTIVE_SCALE = '0.99'
 const BUTTON_TRANSITION_DURATION = '150ms'
@@ -161,7 +161,7 @@ export default {
 
     // sizes
     ...createButtonSizeStyles(),
-    '&:where(.cn-button-xs, .cn-button-3xs, .cn-button-2xs)': {
+    '&:where(.cn-button-xs)': {
       '@apply font-caption-single-line-normal': ''
     },
 
@@ -250,32 +250,10 @@ export default {
       }
     },
 
-    '&:where(.cn-button-icon-only.cn-button-2xs)': {
-      width: 'var(--cn-btn-size-2xs)',
-      height: 'var(--cn-btn-size-2xs)',
-      '& > svg': {
-        width: 'var(--cn-icon-size-2xs)',
-        height: 'var(--cn-icon-size-2xs)',
-        minWidth: 'var(--cn-icon-size-2xs)',
-        minHeight: 'var(--cn-icon-size-2xs)',
-        strokeWidth: 'var(--cn-icon-stroke-width-2xs)'
-      }
-    },
-
-    '&:where(.cn-button-icon-only.cn-button-3xs)': {
-      width: 'var(--cn-btn-size-3xs)',
-      height: 'var(--cn-btn-size-3xs)',
-      '& > svg': {
-        width: 'var(--cn-icon-size-2xs)',
-        height: 'var(--cn-icon-size-2xs)',
-        strokeWidth: 'var(--cn-icon-stroke-width-2xs)'
-      }
-    },
-
     // Focus
     '&:where(:focus-visible)': {
       outline: 'var(--cn-focus)',
-      boxShadow: 'inset 0 0 0 2px var(--cn-chrome-25)',
+      boxShadow: 'inset 0 0 0 2px var(--cn-gray-25)',
 
       // This is to prevent focus outline from being hidden by dropdown
       position: 'relative',

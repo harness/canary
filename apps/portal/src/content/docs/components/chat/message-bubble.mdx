@@ -23,7 +23,7 @@ The MessageBubble component uses a compound pattern with `MessageBubble.Root`, `
     </MessageBubble.Content>
     <MessageBubble.Footer>
       <CopyButton name="Hello! Can you help me with my code?" buttonVariant="ghost" size="sm" />
-      <Button iconOnly variant="ghost" size="sm">
+      <Button iconOnly aria-label="Edit message" variant="ghost" size="sm" tooltipProps={{ content: "Edit message" }}>
         <IconV2 name="edit" />
       </Button>
       <Text variant="caption-normal" color="foreground-3">2:30 PM</Text>
@@ -73,7 +73,14 @@ import {
   </MessageBubble.Content>
   <MessageBubble.Footer>
     <CopyButton name="Your message here" buttonVariant="ghost" size="sm" />
-    <Button iconOnly variant="ghost" size="sm" onClick={handleEdit}>
+    <Button
+      iconOnly
+      aria-label="Edit message"
+      variant="ghost"
+      size="sm"
+      tooltipProps={{ content: "Edit message" }}
+      onClick={handleEdit}
+    >
       <IconV2 name="edit" />
     </Button>
     <Text variant="caption-normal" color="foreground-3">

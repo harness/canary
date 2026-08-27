@@ -28,7 +28,14 @@ export const ChatV2 = () => {
     >
       {collapsed ? (
         <div className="flex h-full items-end justify-center">
-          <Button variant="transparent" size="sm" iconOnly tooltipProps={{ content: 'Expand' }} onClick={handleToggle}>
+          <Button
+            variant="transparent"
+            size="sm"
+            iconOnly
+            aria-label="Expand chat"
+            tooltipProps={{ content: 'Expand' }}
+            onClick={handleToggle}
+          >
             <IconV2 name="expand-sidebar" skipSize />
           </Button>
         </div>

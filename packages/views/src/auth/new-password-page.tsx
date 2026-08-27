@@ -1,9 +1,10 @@
 import { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 
-import { Alert, Button, FormInput, FormWrapper, Text } from '@harnessio/ui/components'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod/v3'
+
+import { Alert, Button, FormInput, FormWrapper, Text } from '@harnessio/ui/components'
 
 import { Floating1ColumnLayout } from '..'
 import { Agreements } from './components/agreements'
@@ -113,7 +114,7 @@ export function NewPasswordPage({ isLoading, handleFormSubmit, error }: NewPassw
               {...register('confirmPassword', { onChange: handleInputChange })}
               placeholder="Confirm password"
             />
-            <Button className="mt-cn-3xl w-full" rounded type="submit" loading={isLoading}>
+            <Button className="mt-cn-3xl w-full" type="submit" loading={isLoading}>
               {isLoading ? 'Saving...' : 'Save'}
             </Button>
           </FormWrapper>

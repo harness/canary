@@ -253,11 +253,12 @@ export const DataTable = function DataTable<TData>({
                         e.stopPropagation()
                         row.toggleExpanded()
                       }}
-                      aria-label="Toggle Row Expanded"
+                      aria-label={row.getIsExpanded() ? 'Collapse row' : 'Expand row'}
                       variant="ghost"
                       size="xs"
                       iconOnly
                       role="button"
+                      tooltipProps={{ content: row.getIsExpanded() ? 'Collapse row' : 'Expand row' }}
                     >
                       <IconV2 name={row.getIsExpanded() ? 'nav-arrow-down' : 'nav-arrow-right'} size="2xs" />
                     </Button>

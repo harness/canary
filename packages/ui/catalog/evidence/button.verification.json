@@ -1,0 +1,118 @@
+{
+  "formatVersion": "1.0.0",
+  "componentId": "canary.button",
+  "contractVersion": "0.9.0",
+  "publishedAt": "2026-08-14",
+  "verifications": [
+    {
+      "id": "contract-validated",
+      "ruleId": "button.contract-complete",
+      "result": "pass",
+      "verifiedAt": "2026-08-14",
+      "sourceIds": ["button-tests"]
+    },
+    {
+      "id": "figma-identity-verified",
+      "ruleId": "button.library-identity",
+      "result": "pass",
+      "verifiedAt": "2026-08-13",
+      "sourceIds": ["button-figma"]
+    },
+    {
+      "id": "figma-values-verified",
+      "ruleId": "button.property-values",
+      "result": "pass",
+      "verifiedAt": "2026-08-13",
+      "sourceIds": ["button-figma", "canary-copilot"]
+    },
+    {
+      "id": "figma-matrix-verified",
+      "ruleId": "button.supported-combination",
+      "result": "pass",
+      "verifiedAt": "2026-08-14",
+      "sourceIds": ["button-figma", "button-tests", "canary-copilot"],
+      "notes": "Reviewed the standard and rounded IconOnly component sets at md, sm, and xs. All six expose default, success, and danger themes. The approved matrix permits semantic themes for primary, secondary, outline, and ghost while AI and transparent remain default-only. Canary Copilot Check page mapped all six tested Button components with 0 failures, 0 warnings, 6 passes, and a 100/100 health score."
+    },
+    {
+      "id": "figma-content-verified",
+      "ruleId": "button.required-content",
+      "result": "pass",
+      "verifiedAt": "2026-08-13",
+      "sourceIds": ["button-figma"]
+    },
+    {
+      "id": "code-api-verified",
+      "ruleId": "button.code-api",
+      "result": "pass",
+      "verifiedAt": "2026-08-14",
+      "sourceIds": ["button-source", "button-tests"]
+    },
+    {
+      "id": "focus-verified",
+      "ruleId": "button.focus-visible",
+      "result": "pass",
+      "verifiedAt": "2026-08-13",
+      "sourceIds": ["button-styles", "button-tests"]
+    },
+    {
+      "id": "native-type-verified",
+      "ruleId": "button.native-type",
+      "result": "pass",
+      "verifiedAt": "2026-08-14",
+      "sourceIds": ["button-source", "button-tests"]
+    },
+    {
+      "id": "pending-state-verified",
+      "ruleId": "button.pending-state",
+      "result": "pass",
+      "verifiedAt": "2026-08-14",
+      "sourceIds": ["button-source", "button-tests"]
+    },
+    {
+      "id": "accessible-name-verified",
+      "ruleId": "button.accessible-name",
+      "result": "pass",
+      "verifiedAt": "2026-08-14",
+      "sourceIds": ["button-source", "button-tests", "button-docs"],
+      "notes": "The icon-only Button type requires aria-label or aria-labelledby independently of tooltipProps and ignoreIconOnlyTooltip. Portal and repository usages were audited, and text, icon-only, loading, disabled, and rounded icon-only cases are covered by tests."
+    },
+    {
+      "id": "not-color-only-verified",
+      "ruleId": "button.not-color-only",
+      "result": "pass",
+      "verifiedAt": "2026-08-14",
+      "sourceIds": ["button-docs", "button-ui-usages", "button-product-usages", "button-app-usages"],
+      "notes": "Reviewed production success and danger Button usages against WCAG 2.2 SC 1.4.1. Destructive and bypass actions use explicit labels; merge and confirmation actions remain understandable without color; and completed states use text such as Saved or Updated and a check icon. Icon-only Buttons require an accessible name and context that communicates the action without relying on theme color."
+    },
+    {
+      "id": "binding-parity-verified",
+      "ruleId": "button.binding-parity",
+      "result": "pass",
+      "verifiedAt": "2026-08-14",
+      "sourceIds": ["button-code-connect", "button-figma", "button-source"],
+      "notes": "Published all six standard and rounded icon-only Code Connect mappings. A parsed xs icon-only mapping verified that the generated Button snippet includes the selected theme and maps default, success, and danger."
+    },
+    {
+      "id": "differences-verified",
+      "ruleId": "button.intentional-differences",
+      "result": "pass",
+      "verifiedAt": "2026-08-13",
+      "sourceIds": ["button-code-connect", "button-figma", "button-styles"]
+    },
+    {
+      "id": "evidence-verified",
+      "ruleId": "button.evidence-current",
+      "result": "pass",
+      "verifiedAt": "2026-08-14",
+      "sourceIds": ["button-source", "button-tests", "button-figma"]
+    },
+    {
+      "id": "publication-verified",
+      "ruleId": "button.publication-current",
+      "result": "pass",
+      "verifiedAt": "2026-08-14",
+      "sourceIds": ["button-figma", "button-code-connect", "canary-copilot"],
+      "notes": "The published HDS | Components 3.0 library matches the approved matrix. All six icon-only Code Connect mappings were validated and uploaded to Figma, and Canary Copilot completed the Button page audit without failures or warnings."
+    }
+  ]
+}

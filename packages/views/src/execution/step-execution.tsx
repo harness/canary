@@ -32,6 +32,7 @@ const StepExecutionToolbar: FC<
           variant="outline"
           size="sm"
           iconOnly
+          aria-label="Copy logs"
           onClick={onCopy}
           tooltipProps={{
             content: 'Copy'

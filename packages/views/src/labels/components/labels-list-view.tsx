@@ -1,9 +1,20 @@
 import { FC, useCallback, useState } from 'react'
 
-import { Button, getScopeType, IconV2, Layout, MoreActionsTooltip, NoData, ScopeTag, Table, Text } from '@harnessio/ui/components'
+import { ILabelsStore, ILabelType, LabelTag, LabelType } from '@views'
+
+import {
+  Button,
+  getScopeType,
+  IconV2,
+  Layout,
+  MoreActionsTooltip,
+  NoData,
+  ScopeTag,
+  Table,
+  Text
+} from '@harnessio/ui/components'
 import { useCustomDialogTrigger, useTranslation } from '@harnessio/ui/context'
 import { cn } from '@harnessio/ui/utils'
-import { ILabelsStore, ILabelType, LabelTag, LabelType } from '@views'
 
 export interface LabelsListViewProps {
   useLabelsStore: () => ILabelsStore
@@ -131,8 +142,9 @@ export const LabelsListView: FC<LabelsListViewProps> = ({
                 {valuesCount > 0 && (
                   <Button
                     variant="ghost"
-                    size="2xs"
+                    size="xs"
                     iconOnly
+                    aria-label={isExpanded ? `Collapse ${label.key} details` : `Expand ${label.key} details`}
                     onClick={e => toggleRow(label.key, e)}
                     className="mt-cn-2xs"
                     tooltipProps={{

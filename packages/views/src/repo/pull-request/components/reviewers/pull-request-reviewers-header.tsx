@@ -66,7 +66,13 @@ const ReviewersHeader = ({
 
       <DropdownMenu.Root onOpenChange={isOpen => !isOpen && handleCloseValuesView()}>
         <DropdownMenu.Trigger asChild>
-          <Button iconOnly variant="ghost" size="sm" tooltipProps={{ content: 'Manage reviewers', align: 'end' }}>
+          <Button
+            iconOnly
+            aria-label="Manage reviewers"
+            variant="ghost"
+            size="sm"
+            tooltipProps={{ content: 'Manage reviewers', align: 'end' }}
+          >
             <IconV2 name="more-vert" size="2xs" />
           </Button>
         </DropdownMenu.Trigger>

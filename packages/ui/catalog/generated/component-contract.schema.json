@@ -1,0 +1,1468 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "properties": {
+    "schemaVersion": {
+      "type": "string",
+      "const": "0.5.0"
+    },
+    "contractVersion": {
+      "$ref": "#/definitions/__schema0"
+    },
+    "identity": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "$ref": "#/definitions/__schema1"
+        },
+        "name": {
+          "$ref": "#/definitions/__schema0"
+        },
+        "summary": {
+          "$ref": "#/definitions/__schema0"
+        },
+        "aliases": {
+          "default": [],
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/__schema0"
+          }
+        }
+      },
+      "required": [
+        "id",
+        "name",
+        "summary",
+        "aliases"
+      ],
+      "additionalProperties": false
+    },
+    "semantics": {
+      "type": "object",
+      "properties": {
+        "useWhen": {
+          "minItems": 1,
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/__schema0"
+          }
+        },
+        "avoidWhen": {
+          "minItems": 1,
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/__schema0"
+          }
+        },
+        "roles": {
+          "minItems": 1,
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/__schema0"
+          }
+        }
+      },
+      "required": [
+        "useWhen",
+        "avoidWhen",
+        "roles"
+      ],
+      "additionalProperties": false
+    },
+    "lifecycle": {
+      "type": "object",
+      "properties": {
+        "status": {
+          "type": "string",
+          "enum": [
+            "draft",
+            "piloting",
+            "stable",
+            "deprecated"
+          ]
+        },
+        "replacementId": {
+          "allOf": [
+            {
+              "$ref": "#/definitions/__schema1"
+            }
+          ]
+        }
+      },
+      "required": [
+        "status"
+      ],
+      "additionalProperties": false
+    },
+    "ownership": {
+      "type": "object",
+      "properties": {
+        "team": {
+          "$ref": "#/definitions/__schema0"
+        },
+        "contacts": {
+          "minItems": 1,
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/__schema0"
+          }
+        }
+      },
+      "required": [
+        "team",
+        "contacts"
+      ],
+      "additionalProperties": false
+    },
+    "surfaces": {
+      "type": "object",
+      "properties": {
+        "figma": {
+          "$ref": "#/definitions/__schema2"
+        },
+        "react": {
+          "$ref": "#/definitions/__schema3"
+        }
+      },
+      "additionalProperties": false
+    },
+    "anatomy": {
+      "minItems": 1,
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/__schema16"
+      }
+    },
+    "properties": {
+      "minItems": 1,
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/__schema18"
+      }
+    },
+    "slots": {
+      "minItems": 1,
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/__schema23"
+      }
+    },
+    "states": {
+      "minItems": 1,
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/__schema24"
+      }
+    },
+    "constraints": {
+      "type": "object",
+      "properties": {
+        "exhaustive": {
+          "type": "boolean"
+        },
+        "dimensions": {
+          "minItems": 1,
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/__schema4"
+          }
+        },
+        "combinations": {
+          "default": [],
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "$ref": "#/definitions/__schema4"
+              },
+              "status": {
+                "type": "string",
+                "enum": [
+                  "supported",
+                  "deprecated",
+                  "unsupported"
+                ]
+              },
+              "surfaces": {
+                "minItems": 1,
+                "type": "array",
+                "items": {
+                  "$ref": "#/definitions/__schema26"
+                }
+              },
+              "conditions": {
+                "type": "object",
+                "propertyNames": {
+                  "$ref": "#/definitions/__schema0"
+                },
+                "additionalProperties": {
+                  "minItems": 1,
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/definitions/__schema7"
+                  }
+                }
+              },
+              "description": {
+                "$ref": "#/definitions/__schema0"
+              },
+              "migrationId": {
+                "allOf": [
+                  {
+                    "$ref": "#/definitions/__schema4"
+                  }
+                ]
+              },
+              "ruleId": {
+                "allOf": [
+                  {
+                    "$ref": "#/definitions/__schema4"
+                  }
+                ]
+              }
+            },
+            "required": [
+              "id",
+              "status",
+              "surfaces",
+              "conditions",
+              "description"
+            ],
+            "additionalProperties": false
+          }
+        }
+      },
+      "required": [
+        "exhaustive",
+        "dimensions",
+        "combinations"
+      ],
+      "additionalProperties": false
+    },
+    "presentation": {
+      "type": "object",
+      "properties": {
+        "parts": {
+          "minItems": 1,
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/__schema27"
+          }
+        },
+        "variants": {
+          "default": [],
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "$ref": "#/definitions/__schema4"
+              },
+              "stateId": {
+                "allOf": [
+                  {
+                    "$ref": "#/definitions/__schema4"
+                  }
+                ]
+              },
+              "conditions": {
+                "type": "object",
+                "propertyNames": {
+                  "$ref": "#/definitions/__schema4"
+                },
+                "additionalProperties": {
+                  "minItems": 1,
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/definitions/__schema7"
+                  }
+                }
+              },
+              "parts": {
+                "minItems": 1,
+                "type": "array",
+                "items": {
+                  "$ref": "#/definitions/__schema27"
+                }
+              }
+            },
+            "required": [
+              "id",
+              "parts"
+            ],
+            "additionalProperties": false
+          }
+        }
+      },
+      "required": [
+        "parts",
+        "variants"
+      ],
+      "additionalProperties": false
+    },
+    "tokens": {
+      "default": [],
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "$ref": "#/definitions/__schema4"
+          },
+          "partId": {
+            "$ref": "#/definitions/__schema4"
+          },
+          "channel": {
+            "$ref": "#/definitions/__schema0"
+          },
+          "tokenId": {
+            "$ref": "#/definitions/__schema4"
+          },
+          "stateId": {
+            "allOf": [
+              {
+                "$ref": "#/definitions/__schema4"
+              }
+            ]
+          },
+          "conditions": {
+            "type": "object",
+            "propertyNames": {
+              "$ref": "#/definitions/__schema0"
+            },
+            "additionalProperties": {
+              "minItems": 1,
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/__schema7"
+              }
+            }
+          },
+          "bindings": {
+            "type": "object",
+            "properties": {
+              "figma": {
+                "allOf": [
+                  {
+                    "$ref": "#/definitions/__schema0"
+                  }
+                ]
+              },
+              "react": {
+                "allOf": [
+                  {
+                    "$ref": "#/definitions/__schema0"
+                  }
+                ]
+              }
+            },
+            "additionalProperties": false
+          }
+        },
+        "required": [
+          "id",
+          "partId",
+          "channel",
+          "tokenId"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "usage": {
+      "type": "object",
+      "properties": {
+        "do": {
+          "minItems": 1,
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/__schema28"
+          }
+        },
+        "dont": {
+          "minItems": 1,
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/__schema28"
+          }
+        },
+        "relatedComponents": {
+          "default": [],
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/__schema0"
+          }
+        }
+      },
+      "required": [
+        "do",
+        "dont",
+        "relatedComponents"
+      ],
+      "additionalProperties": false
+    },
+    "examples": {
+      "default": [],
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "$ref": "#/definitions/__schema4"
+          },
+          "name": {
+            "$ref": "#/definitions/__schema0"
+          },
+          "purpose": {
+            "$ref": "#/definitions/__schema0"
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "recommended",
+              "illustrative"
+            ]
+          },
+          "properties": {
+            "type": "object",
+            "propertyNames": {
+              "$ref": "#/definitions/__schema4"
+            },
+            "additionalProperties": {
+              "$ref": "#/definitions/__schema7"
+            }
+          },
+          "slots": {
+            "type": "object",
+            "propertyNames": {
+              "$ref": "#/definitions/__schema4"
+            },
+            "additionalProperties": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/__schema0"
+              }
+            }
+          },
+          "references": {
+            "type": "object",
+            "properties": {
+              "figmaNodeId": {
+                "allOf": [
+                  {
+                    "$ref": "#/definitions/__schema0"
+                  }
+                ]
+              },
+              "code": {
+                "allOf": [
+                  {
+                    "$ref": "#/definitions/__schema0"
+                  }
+                ]
+              },
+              "docs": {
+                "allOf": [
+                  {
+                    "$ref": "#/definitions/__schema0"
+                  }
+                ]
+              }
+            },
+            "additionalProperties": false
+          }
+        },
+        "required": [
+          "id",
+          "name",
+          "purpose",
+          "status",
+          "properties",
+          "slots"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "evaluations": {
+      "default": [],
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "$ref": "#/definitions/__schema4"
+          },
+          "category": {
+            "type": "string",
+            "enum": [
+              "semantics",
+              "structure",
+              "accessibility",
+              "api",
+              "parity",
+              "governance"
+            ]
+          },
+          "dimension": {
+            "type": "string",
+            "enum": [
+              "contractDefinition",
+              "figmaImplementation",
+              "codeImplementation",
+              "designCodeParity",
+              "governanceEvidence"
+            ]
+          },
+          "severity": {
+            "type": "string",
+            "enum": [
+              "critical",
+              "major",
+              "minor",
+              "informational"
+            ]
+          },
+          "enforcement": {
+            "type": "string",
+            "enum": [
+              "automated",
+              "manual",
+              "advisory"
+            ]
+          },
+          "statement": {
+            "$ref": "#/definitions/__schema0"
+          },
+          "remediation": {
+            "allOf": [
+              {
+                "$ref": "#/definitions/__schema0"
+              }
+            ]
+          },
+          "evaluator": {
+            "type": "string",
+            "enum": [
+              "schema",
+              "libraryIdentity",
+              "propertyValues",
+              "constraint",
+              "anatomy",
+              "source",
+              "parity",
+              "evidence",
+              "manual"
+            ]
+          },
+          "maxAgeDays": {
+            "type": "integer",
+            "exclusiveMinimum": 0,
+            "maximum": 9007199254740991
+          }
+        },
+        "required": [
+          "id",
+          "category",
+          "dimension",
+          "severity",
+          "enforcement",
+          "statement"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "migrations": {
+      "default": [],
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "$ref": "#/definitions/__schema4"
+          },
+          "from": {
+            "$ref": "#/definitions/__schema0"
+          },
+          "to": {
+            "$ref": "#/definitions/__schema0"
+          },
+          "instructions": {
+            "$ref": "#/definitions/__schema0"
+          },
+          "owner": {
+            "allOf": [
+              {
+                "$ref": "#/definitions/__schema0"
+              }
+            ]
+          },
+          "target": {
+            "allOf": [
+              {
+                "$ref": "#/definitions/__schema0"
+              }
+            ]
+          }
+        },
+        "required": [
+          "id",
+          "from",
+          "to",
+          "instructions"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "evidenceReferences": {
+      "type": "object",
+      "properties": {
+        "sources": {
+          "default": [],
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "$ref": "#/definitions/__schema4"
+              },
+              "type": {
+                "type": "string",
+                "enum": [
+                  "source",
+                  "docs",
+                  "tests",
+                  "code-connect",
+                  "plugin",
+                  "figma",
+                  "decision"
+                ]
+              },
+              "path": {
+                "$ref": "#/definitions/__schema0"
+              }
+            },
+            "required": [
+              "id",
+              "type",
+              "path"
+            ],
+            "additionalProperties": false
+          }
+        }
+      },
+      "required": [
+        "sources"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "required": [
+    "schemaVersion",
+    "contractVersion",
+    "identity",
+    "semantics",
+    "lifecycle",
+    "ownership",
+    "surfaces",
+    "anatomy",
+    "properties",
+    "slots",
+    "states",
+    "constraints",
+    "presentation",
+    "tokens",
+    "usage",
+    "examples",
+    "evaluations",
+    "migrations",
+    "evidenceReferences"
+  ],
+  "additionalProperties": false,
+  "definitions": {
+    "__schema0": {
+      "type": "string",
+      "minLength": 1
+    },
+    "__schema1": {
+      "type": "string",
+      "pattern": "^canary\\.[a-z0-9-]+$"
+    },
+    "__schema2": {
+      "type": "object",
+      "properties": {
+        "library": {
+          "$ref": "#/definitions/__schema0"
+        },
+        "fileKey": {
+          "$ref": "#/definitions/__schema0"
+        },
+        "names": {
+          "minItems": 1,
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/__schema0"
+          }
+        },
+        "exampleNodeId": {
+          "$ref": "#/definitions/__schema0"
+        },
+        "mappingStatus": {
+          "type": "string",
+          "enum": [
+            "unverified",
+            "verified"
+          ]
+        },
+        "componentKeys": {
+          "default": [],
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/__schema0"
+          }
+        },
+        "codeConnect": {
+          "default": [],
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/__schema0"
+          }
+        }
+      },
+      "required": [
+        "library",
+        "fileKey",
+        "names",
+        "exampleNodeId",
+        "mappingStatus",
+        "componentKeys",
+        "codeConnect"
+      ],
+      "additionalProperties": false
+    },
+    "__schema3": {
+      "type": "object",
+      "properties": {
+        "package": {
+          "$ref": "#/definitions/__schema0"
+        },
+        "export": {
+          "$ref": "#/definitions/__schema0"
+        },
+        "import": {
+          "$ref": "#/definitions/__schema0"
+        },
+        "path": {
+          "$ref": "#/definitions/__schema0"
+        },
+        "extensions": {
+          "default": [],
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "$ref": "#/definitions/__schema4"
+              },
+              "name": {
+                "$ref": "#/definitions/__schema0"
+              },
+              "description": {
+                "$ref": "#/definitions/__schema0"
+              },
+              "type": {
+                "$ref": "#/definitions/__schema5"
+              },
+              "values": {
+                "$ref": "#/definitions/__schema6"
+              },
+              "default": {
+                "$ref": "#/definitions/__schema8"
+              },
+              "required": {
+                "$ref": "#/definitions/__schema9"
+              },
+              "binding": {
+                "$ref": "#/definitions/__schema10"
+              }
+            },
+            "required": [
+              "id",
+              "name",
+              "description",
+              "type",
+              "binding"
+            ],
+            "additionalProperties": false
+          }
+        }
+      },
+      "required": [
+        "package",
+        "export",
+        "import",
+        "path",
+        "extensions"
+      ],
+      "additionalProperties": false
+    },
+    "__schema4": {
+      "type": "string",
+      "pattern": "^[A-Za-z][A-Za-z0-9]*(?:[.-][A-Za-z0-9]+)*$"
+    },
+    "__schema5": {
+      "type": "string",
+      "enum": [
+        "boolean",
+        "enum",
+        "number",
+        "string",
+        "slot",
+        "function",
+        "object"
+      ]
+    },
+    "__schema6": {
+      "minItems": 1,
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/__schema7"
+      }
+    },
+    "__schema7": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "number"
+        },
+        {
+          "type": "boolean"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "__schema8": {
+      "allOf": [
+        {
+          "$ref": "#/definitions/__schema7"
+        }
+      ]
+    },
+    "__schema9": {
+      "type": "boolean"
+    },
+    "__schema10": {
+      "type": "object",
+      "properties": {
+        "kind": {
+          "$ref": "#/definitions/__schema11"
+        },
+        "name": {
+          "$ref": "#/definitions/__schema12"
+        },
+        "type": {
+          "$ref": "#/definitions/__schema13"
+        },
+        "target": {
+          "$ref": "#/definitions/__schema14"
+        },
+        "transform": {
+          "$ref": "#/definitions/__schema15"
+        }
+      },
+      "required": [
+        "kind"
+      ],
+      "additionalProperties": false
+    },
+    "__schema11": {
+      "type": "string",
+      "enum": [
+        "prop",
+        "slot",
+        "composition",
+        "pseudoClass",
+        "behavior"
+      ]
+    },
+    "__schema12": {
+      "allOf": [
+        {
+          "$ref": "#/definitions/__schema0"
+        }
+      ]
+    },
+    "__schema13": {
+      "allOf": [
+        {
+          "$ref": "#/definitions/__schema0"
+        }
+      ]
+    },
+    "__schema14": {
+      "allOf": [
+        {
+          "$ref": "#/definitions/__schema0"
+        }
+      ]
+    },
+    "__schema15": {
+      "allOf": [
+        {
+          "$ref": "#/definitions/__schema0"
+        }
+      ]
+    },
+    "__schema16": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "$ref": "#/definitions/__schema4"
+        },
+        "name": {
+          "$ref": "#/definitions/__schema0"
+        },
+        "description": {
+          "$ref": "#/definitions/__schema0"
+        },
+        "presence": {
+          "type": "string",
+          "enum": [
+            "required",
+            "optional",
+            "conditional",
+            "repeatable"
+          ]
+        },
+        "role": {
+          "allOf": [
+            {
+              "$ref": "#/definitions/__schema0"
+            }
+          ]
+        },
+        "parentId": {
+          "allOf": [
+            {
+              "$ref": "#/definitions/__schema4"
+            }
+          ]
+        },
+        "content": {
+          "minItems": 1,
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/__schema0"
+          }
+        },
+        "bindings": {
+          "type": "object",
+          "properties": {
+            "figma": {
+              "allOf": [
+                {
+                  "$ref": "#/definitions/__schema17"
+                }
+              ]
+            },
+            "react": {
+              "allOf": [
+                {
+                  "$ref": "#/definitions/__schema17"
+                }
+              ]
+            }
+          },
+          "additionalProperties": false
+        }
+      },
+      "required": [
+        "id",
+        "name",
+        "description",
+        "presence"
+      ],
+      "additionalProperties": false
+    },
+    "__schema17": {
+      "type": "object",
+      "properties": {
+        "kind": {
+          "type": "string",
+          "enum": [
+            "root",
+            "layer",
+            "property",
+            "slot",
+            "composition"
+          ]
+        },
+        "target": {
+          "allOf": [
+            {
+              "$ref": "#/definitions/__schema0"
+            }
+          ]
+        },
+        "names": {
+          "minItems": 1,
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/__schema0"
+          }
+        },
+        "property": {
+          "allOf": [
+            {
+              "$ref": "#/definitions/__schema0"
+            }
+          ]
+        },
+        "aliases": {
+          "minItems": 1,
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/__schema0"
+          }
+        },
+        "visibleWhen": {
+          "type": "object",
+          "propertyNames": {
+            "$ref": "#/definitions/__schema0"
+          },
+          "additionalProperties": {
+            "$ref": "#/definitions/__schema7"
+          }
+        }
+      },
+      "required": [
+        "kind"
+      ],
+      "additionalProperties": false
+    },
+    "__schema18": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "$ref": "#/definitions/__schema4"
+        },
+        "name": {
+          "$ref": "#/definitions/__schema0"
+        },
+        "description": {
+          "$ref": "#/definitions/__schema0"
+        },
+        "type": {
+          "$ref": "#/definitions/__schema5"
+        },
+        "values": {
+          "$ref": "#/definitions/__schema6"
+        },
+        "default": {
+          "$ref": "#/definitions/__schema8"
+        },
+        "required": {
+          "$ref": "#/definitions/__schema9"
+        },
+        "bindings": {
+          "$ref": "#/definitions/__schema19"
+        }
+      },
+      "required": [
+        "id",
+        "name",
+        "description",
+        "type",
+        "bindings"
+      ],
+      "additionalProperties": false
+    },
+    "__schema19": {
+      "type": "object",
+      "properties": {
+        "figma": {
+          "$ref": "#/definitions/__schema20"
+        },
+        "react": {
+          "$ref": "#/definitions/__schema22"
+        }
+      },
+      "additionalProperties": false
+    },
+    "__schema20": {
+      "oneOf": [
+        {
+          "type": "object",
+          "properties": {
+            "kind": {
+              "type": "string",
+              "const": "property"
+            },
+            "property": {
+              "$ref": "#/definitions/__schema0"
+            },
+            "aliases": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/__schema0"
+              }
+            },
+            "valueAliases": {
+              "type": "object",
+              "propertyNames": {
+                "$ref": "#/definitions/__schema0"
+              },
+              "additionalProperties": {
+                "$ref": "#/definitions/__schema0"
+              }
+            }
+          },
+          "required": [
+            "kind",
+            "property"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "kind": {
+              "type": "string",
+              "const": "componentName"
+            },
+            "source": {
+              "type": "string",
+              "enum": [
+                "componentSetName",
+                "mainComponentName"
+              ]
+            },
+            "matches": {
+              "minItems": 1,
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/__schema21"
+              }
+            },
+            "fallback": {
+              "allOf": [
+                {
+                  "$ref": "#/definitions/__schema7"
+                }
+              ]
+            }
+          },
+          "required": [
+            "kind",
+            "source",
+            "matches"
+          ],
+          "additionalProperties": false
+        }
+      ]
+    },
+    "__schema21": {
+      "type": "object",
+      "properties": {
+        "contains": {
+          "$ref": "#/definitions/__schema0"
+        },
+        "value": {
+          "$ref": "#/definitions/__schema7"
+        }
+      },
+      "required": [
+        "contains",
+        "value"
+      ],
+      "additionalProperties": false
+    },
+    "__schema22": {
+      "allOf": [
+        {
+          "$ref": "#/definitions/__schema10"
+        }
+      ]
+    },
+    "__schema23": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "$ref": "#/definitions/__schema4"
+        },
+        "name": {
+          "$ref": "#/definitions/__schema0"
+        },
+        "description": {
+          "$ref": "#/definitions/__schema0"
+        },
+        "partId": {
+          "$ref": "#/definitions/__schema4"
+        },
+        "presence": {
+          "type": "string",
+          "enum": [
+            "required",
+            "optional",
+            "conditional",
+            "repeatable"
+          ]
+        },
+        "minItems": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        },
+        "maxItems": {
+          "type": "integer",
+          "exclusiveMinimum": 0,
+          "maximum": 9007199254740991
+        },
+        "allowedContent": {
+          "minItems": 1,
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/__schema0"
+          }
+        },
+        "defaultExampleId": {
+          "allOf": [
+            {
+              "$ref": "#/definitions/__schema4"
+            }
+          ]
+        },
+        "bindings": {
+          "type": "object",
+          "properties": {
+            "figma": {
+              "allOf": [
+                {
+                  "$ref": "#/definitions/__schema17"
+                }
+              ]
+            },
+            "react": {
+              "allOf": [
+                {
+                  "$ref": "#/definitions/__schema17"
+                }
+              ]
+            }
+          },
+          "additionalProperties": false
+        }
+      },
+      "required": [
+        "id",
+        "name",
+        "description",
+        "partId",
+        "presence",
+        "minItems",
+        "allowedContent",
+        "bindings"
+      ],
+      "additionalProperties": false
+    },
+    "__schema24": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "$ref": "#/definitions/__schema4"
+        },
+        "name": {
+          "$ref": "#/definitions/__schema0"
+        },
+        "description": {
+          "$ref": "#/definitions/__schema0"
+        },
+        "required": {
+          "type": "boolean"
+        },
+        "bindings": {
+          "type": "object",
+          "properties": {
+            "figma": {
+              "allOf": [
+                {
+                  "$ref": "#/definitions/__schema25"
+                }
+              ]
+            },
+            "react": {
+              "allOf": [
+                {
+                  "$ref": "#/definitions/__schema25"
+                }
+              ]
+            }
+          },
+          "additionalProperties": false
+        },
+        "fidelity": {
+          "type": "object",
+          "properties": {
+            "figma": {
+              "type": "string",
+              "enum": [
+                "exact",
+                "approximate",
+                "specification",
+                "unsupported"
+              ]
+            },
+            "react": {
+              "type": "string",
+              "enum": [
+                "exact",
+                "approximate",
+                "specification",
+                "unsupported"
+              ]
+            }
+          },
+          "additionalProperties": false
+        }
+      },
+      "required": [
+        "id",
+        "name",
+        "description",
+        "required",
+        "bindings",
+        "fidelity"
+      ],
+      "additionalProperties": false
+    },
+    "__schema25": {
+      "type": "object",
+      "properties": {
+        "kind": {
+          "type": "string",
+          "enum": [
+            "property",
+            "pseudoClass",
+            "behavior",
+            "specification",
+            "unavailable"
+          ]
+        },
+        "property": {
+          "allOf": [
+            {
+              "$ref": "#/definitions/__schema0"
+            }
+          ]
+        },
+        "value": {
+          "allOf": [
+            {
+              "$ref": "#/definitions/__schema7"
+            }
+          ]
+        },
+        "target": {
+          "allOf": [
+            {
+              "$ref": "#/definitions/__schema0"
+            }
+          ]
+        },
+        "reference": {
+          "allOf": [
+            {
+              "$ref": "#/definitions/__schema0"
+            }
+          ]
+        }
+      },
+      "required": [
+        "kind"
+      ],
+      "additionalProperties": false
+    },
+    "__schema26": {
+      "type": "string",
+      "enum": [
+        "figma",
+        "react"
+      ]
+    },
+    "__schema27": {
+      "type": "object",
+      "properties": {
+        "partId": {
+          "$ref": "#/definitions/__schema4"
+        },
+        "layout": {
+          "type": "object",
+          "properties": {
+            "direction": {
+              "type": "string",
+              "enum": [
+                "block",
+                "inline",
+                "block-reverse",
+                "inline-reverse"
+              ]
+            },
+            "align": {
+              "type": "string",
+              "enum": [
+                "start",
+                "center",
+                "end",
+                "stretch"
+              ]
+            },
+            "justify": {
+              "type": "string",
+              "enum": [
+                "start",
+                "center",
+                "end",
+                "between"
+              ]
+            }
+          },
+          "additionalProperties": false
+        },
+        "tokens": {
+          "type": "object",
+          "propertyNames": {
+            "$ref": "#/definitions/__schema0"
+          },
+          "additionalProperties": {
+            "$ref": "#/definitions/__schema4"
+          }
+        }
+      },
+      "required": [
+        "partId"
+      ],
+      "additionalProperties": false
+    },
+    "__schema28": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "$ref": "#/definitions/__schema4"
+        },
+        "statement": {
+          "$ref": "#/definitions/__schema0"
+        }
+      },
+      "required": [
+        "id",
+        "statement"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "$id": "https://canary.harness.io/contracts/component-contract-0.5.0.schema.json",
+  "title": "Canary Component Contract 0.5.0"
+}

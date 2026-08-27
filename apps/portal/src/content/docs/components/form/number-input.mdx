@@ -196,7 +196,13 @@ For warnings, set `theme="warning"` and provide the warning message via the `war
       id="suffix-input"
       label="Suffix Input"
       defaultValue={15}
-      suffix={<Button variant="outline" iconOnly className="cn-input-suffix">
+      suffix={<Button
+        variant="outline"
+        iconOnly
+        aria-label="Advance"
+        tooltipProps={{ content: "Advance" }}
+        className="cn-input-suffix"
+      >
         <IconV2 name="nav-arrow-right" size="xs" />
       </Button>}
     />

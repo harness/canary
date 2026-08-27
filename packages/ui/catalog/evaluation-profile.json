@@ -1,0 +1,25 @@
+{
+  "version": "1.0.0",
+  "displayName": "Pilot evidence score",
+  "status": "pilot",
+  "dimensions": {
+    "contractDefinition": 20,
+    "figmaImplementation": 25,
+    "codeImplementation": 25,
+    "designCodeParity": 20,
+    "governanceEvidence": 10
+  },
+  "severityWeights": {
+    "critical": 8,
+    "major": 3,
+    "minor": 1,
+    "informational": 0
+  },
+  "thresholds": {
+    "healthy": 90,
+    "needsAttention": 70,
+    "atRisk": 0
+  },
+  "blockedOnCritical": true,
+  "defaultEvidenceMaxAgeDays": 180
+}

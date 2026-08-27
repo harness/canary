@@ -1,9 +1,7 @@
 import { CSSProperties } from 'react'
 
-import { Button } from '@harnessio/ui/components'
-import { IconV2 } from '@harnessio/ui/components'
-
 import { ParallelContainerConfigType, SerialContainerConfigType } from '@harnessio/pipeline-graph'
+import { Button, IconV2 } from '@harnessio/ui/components'
 
 const CONTAINER_WIDTH = '40'
 const CONTAINER_HEIGHT = '40'
@@ -64,6 +62,7 @@ export function FloatingAddButton(props: FloatingAddButtonProp) {
           marginTop: `${buttonMarginTopValue}px`
         }}
         variant="outline"
+        aria-label="Add node"
         onMouseDown={e => e.stopPropagation()}
         onClick={e => {
           e.stopPropagation()

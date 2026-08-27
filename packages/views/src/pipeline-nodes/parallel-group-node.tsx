@@ -1,8 +1,6 @@
-import { Button } from '@harnessio/ui/components'
-import { IconV2 } from '@harnessio/ui/components'
-import { cn } from '@harnessio/ui/utils'
-
 import { ParallelContainerConfigType, SerialContainerConfigType } from '@harnessio/pipeline-graph'
+import { Button, IconV2 } from '@harnessio/ui/components'
+import { cn } from '@harnessio/ui/utils'
 
 import { ExecutionStatus } from './components/execution-status'
 import { FloatingAddButton } from './components/floating-add-button'
@@ -68,11 +66,14 @@ export function ParallelGroupNode(props: ParallelGroupNodeProps) {
 
       {!collapsed && isEmpty && (
         <Button
+          iconOnly
           rounded
           className="p-cn-sm self-center"
           variant="outline"
+          aria-label="Add node"
           onMouseDown={e => e.stopPropagation()}
           onClick={onAddInClick}
+          tooltipProps={{ content: 'Add node' }}
         >
           <IconV2 name="plus" />
         </Button>

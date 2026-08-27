@@ -5,12 +5,43 @@ import { vi } from 'vitest'
 
 import { Button } from '../button'
 
+type ButtonProps = React.ComponentProps<typeof Button>
+
+const iconOnlyWithAriaLabel: ButtonProps = {
+  iconOnly: true,
+  'aria-label': 'Add item',
+  tooltipProps: { content: 'Add item' }
+}
+
+const iconOnlyWithAriaLabelledBy: ButtonProps = {
+  iconOnly: true,
+  'aria-labelledby': 'add-item-label',
+  ignoreIconOnlyTooltip: true
+}
+
+// @ts-expect-error icon-only Buttons require an accessible name in addition to a tooltip.
+const iconOnlyWithoutAccessibleName: ButtonProps = {
+  iconOnly: true,
+  tooltipProps: { content: 'Add item' }
+}
+
+// @ts-expect-error skipping the tooltip does not skip the accessible-name requirement.
+const ignoredTooltipWithoutAccessibleName: ButtonProps = {
+  iconOnly: true,
+  ignoreIconOnlyTooltip: true
+}
+
+void iconOnlyWithAriaLabel
+void iconOnlyWithAriaLabelledBy
+void iconOnlyWithoutAccessibleName
+void ignoredTooltipWithoutAccessibleName
+
 // Wrapper component to provide TooltipProvider for components that need tooltips
 const TestWrapper = ({ children }: { children: React.ReactNode }) => (
   <TooltipPrimitive.Provider>{children}</TooltipPrimitive.Provider>
 )
 
-const renderComponent = (props: Partial<React.ComponentProps<typeof Button>> = {}): RenderResult => {
+const renderComponent = (props: ButtonProps = {}): RenderResult => {
   return render(
     <TestWrapper>
       <Button {...props}>Click Me</Button>
@@ -123,20 +154,6 @@ describe('Button', () => {
     expect(button).toHaveClass('cn-button-xs')
   })
 
-  test('should apply 2xs size class', () => {
-    renderComponent({ size: '2xs' })
-
-    const button = screen.getByRole('button')
-    expect(button).toHaveClass('cn-button-2xs')
-  })
-
-  test('should apply 3xs size class', () => {
-    renderComponent({ size: '3xs' })
-
-    const button = screen.getByRole('button')
-    expect(button).toHaveClass('cn-button-3xs')
-  })
-
   test('should apply success theme class', () => {
     renderComponent({ theme: 'success' })
 
@@ -151,8 +168,13 @@ describe('Button', () => {
     expect(button).toHaveClass('cn-button-danger')
   })
 
-  test('should apply rounded class when rounded prop is true', () => {
-    renderComponent({ rounded: true })
+  test('should apply rounded class to an icon-only Button', () => {
+    renderComponent({
+      iconOnly: true,
+      rounded: true,
+      'aria-label': 'Rounded icon Button',
+      tooltipProps: { content: 'Rounded icon Button' }
+    })
 
     const button = screen.getByRole('button')
     expect(button).toHaveClass('cn-button-rounded')
@@ -239,6 +261,7 @@ describe('Button', () => {
   test('should render tooltip when tooltipProps are provided', () => {
     renderComponent({
       iconOnly: true,
+      'aria-label': 'Tooltip action',
       tooltipProps: {
         content: 'Tooltip content'
       }
@@ -249,7 +272,7 @@ describe('Button', () => {
   })
 
   test('should apply icon-only class when iconOnly is true', () => {
-    renderComponent({ iconOnly: true, tooltipProps: { content: 'Icon button' } })
+    renderComponent({ iconOnly: true, 'aria-label': 'Icon button', tooltipProps: { content: 'Icon button' } })
 
     const button = screen.getByRole('button')
     expect(button).toHaveClass('cn-button-icon-only')
@@ -295,7 +318,10 @@ describe('Button', () => {
       variant: 'outline',
       size: 'sm',
       theme: 'danger',
-      rounded: true
+      rounded: true,
+      iconOnly: true,
+      'aria-label': 'Rounded icon Button',
+      tooltipProps: { content: 'Rounded icon Button' }
     })
 
     const button = screen.getByRole('button')
@@ -347,24 +373,6 @@ describe('Button', () => {
     })
   })
 
-  describe('Micro Sizes (2xs, 3xs)', () => {
-    test('should automatically set iconOnly for 2xs size', () => {
-      renderComponent({ size: '2xs' })
-
-      const button = screen.getByRole('button')
-      expect(button).toHaveClass('cn-button-2xs')
-      expect(button).toHaveClass('cn-button-icon-only')
-    })
-
-    test('should automatically set iconOnly for 3xs size', () => {
-      renderComponent({ size: '3xs' })
-
-      const button = screen.getByRole('button')
-      expect(button).toHaveClass('cn-button-3xs')
-      expect(button).toHaveClass('cn-button-icon-only')
-    })
-  })
-
   describe('asChild Prop', () => {
     test('should render as Slot component when asChild is true', () => {
       const { container } = render(
@@ -413,7 +421,7 @@ describe('Button', () => {
     test('should show only spinner when loading and iconOnly', () => {
       const { container } = render(
         <TestWrapper>
-          <Button loading iconOnly tooltipProps={{ content: 'Save' }}>
+          <Button loading iconOnly aria-label="Save" tooltipProps={{ content: 'Save' }}>
             <span data-testid="icon-child">Icon</span>
           </Button>
         </TestWrapper>
@@ -429,7 +437,7 @@ describe('Button', () => {
     test('should render tooltip with title and content', () => {
       render(
         <TestWrapper>
-          <Button iconOnly tooltipProps={{ title: 'Save Action', content: 'Save your changes' }}>
+          <Button iconOnly aria-label="Save" tooltipProps={{ title: 'Save Action', content: 'Save your changes' }}>
             Save
           </Button>
         </TestWrapper>
@@ -442,7 +450,7 @@ describe('Button', () => {
     test('should apply tooltip side prop', () => {
       render(
         <TestWrapper>
-          <Button iconOnly tooltipProps={{ content: 'Tooltip', side: 'bottom' }}>
+          <Button iconOnly aria-label="Button" tooltipProps={{ content: 'Tooltip', side: 'bottom' }}>
             Button
           </Button>
         </TestWrapper>
@@ -455,7 +463,7 @@ describe('Button', () => {
     test('should apply tooltip align prop', () => {
       render(
         <TestWrapper>
-          <Button iconOnly tooltipProps={{ content: 'Tooltip', align: 'start' }}>
+          <Button iconOnly aria-label="Button" tooltipProps={{ content: 'Tooltip', align: 'start' }}>
             Button
           </Button>
         </TestWrapper>
@@ -468,7 +476,7 @@ describe('Button', () => {
     test('should hide tooltip arrow with hideArrow prop', () => {
       render(
         <TestWrapper>
-          <Button iconOnly tooltipProps={{ content: 'No arrow tooltip' }}>
+          <Button iconOnly aria-label="Button" tooltipProps={{ content: 'No arrow tooltip' }}>
             Button
           </Button>
         </TestWrapper>
@@ -483,7 +491,7 @@ describe('Button', () => {
     test('should not require tooltip when iconOnly with ignoreIconOnlyTooltip', () => {
       render(
         <TestWrapper>
-          <Button iconOnly ignoreIconOnlyTooltip>
+          <Button iconOnly aria-label="Icon action" ignoreIconOnlyTooltip>
             Icon
           </Button>
         </TestWrapper>
@@ -510,7 +518,7 @@ describe('Button', () => {
     test('should not pass ignoreIconOnlyTooltip to button DOM', () => {
       render(
         <TestWrapper>
-          <Button iconOnly ignoreIconOnlyTooltip>
+          <Button iconOnly aria-label="Button" ignoreIconOnlyTooltip>
             Button
           </Button>
         </TestWrapper>
@@ -723,7 +731,7 @@ describe('Button', () => {
     test('should handle iconOnly with loading', () => {
       const { container } = render(
         <TestWrapper>
-          <Button iconOnly loading tooltipProps={{ content: 'Loading' }}>
+          <Button iconOnly loading aria-label="Loading" tooltipProps={{ content: 'Loading' }}>
             Icon
           </Button>
         </TestWrapper>
@@ -733,17 +741,16 @@ describe('Button', () => {
       expect(spinner).toBeInTheDocument()
     })
 
-    test('should handle all variants with all sizes', () => {
-      const variants: Array<'primary' | 'secondary' | 'outline' | 'ghost' | 'link' | 'ai' | 'transparent'> = [
+    test('should handle supported non-link variants with all sizes', () => {
+      const variants: Array<'primary' | 'secondary' | 'outline' | 'ghost' | 'ai' | 'transparent'> = [
         'primary',
         'secondary',
         'outline',
         'ghost',
-        'link',
         'ai',
         'transparent'
       ]
-      const sizes: Array<'md' | 'sm' | 'xs' | '2xs' | '3xs'> = ['md', 'sm', 'xs', '2xs', '3xs']
+      const sizes: Array<'md' | 'sm' | 'xs'> = ['md', 'sm', 'xs']
 
       variants.forEach(variant => {
         sizes.forEach(size => {
@@ -759,6 +766,18 @@ describe('Button', () => {
           expect(button).toBeInTheDocument()
         })
       })
+    })
+
+    test.each(['md', 'sm'] as const)('should handle the link variant at %s', size => {
+      render(
+        <TestWrapper>
+          <Button variant="link" size={size}>
+            Button
+          </Button>
+        </TestWrapper>
+      )
+
+      expect(screen.getByRole('button')).toHaveClass('cn-button-link')
     })
 
     test('should handle all themes with all variants', () => {
@@ -781,7 +800,7 @@ describe('Button', () => {
       })
     })
 
-    test('should handle rounded with all variants', () => {
+    test('should handle rounded icon-only Buttons with all variants', () => {
       const variants: Array<'primary' | 'secondary' | 'outline' | 'ghost' | 'link'> = [
         'primary',
         'secondary',
@@ -793,7 +812,7 @@ describe('Button', () => {
       variants.forEach(variant => {
         render(
           <TestWrapper>
-            <Button variant={variant} rounded>
+            <Button variant={variant} iconOnly rounded aria-label={`Rounded ${variant}`} ignoreIconOnlyTooltip>
               Rounded {variant}
             </Button>
           </TestWrapper>
@@ -807,6 +826,77 @@ describe('Button', () => {
   })
 
   describe('Accessibility', () => {
+    test('should use visible text as the accessible name', () => {
+      render(
+        <TestWrapper>
+          <Button>Save changes</Button>
+        </TestWrapper>
+      )
+
+      expect(screen.getByRole('button', { name: 'Save changes' })).toBeInTheDocument()
+    })
+
+    test('should support an aria-label on an icon-only Button', () => {
+      render(
+        <TestWrapper>
+          <Button iconOnly aria-label="Add item" tooltipProps={{ content: 'Add item' }}>
+            Icon
+          </Button>
+        </TestWrapper>
+      )
+
+      expect(screen.getByRole('button', { name: 'Add item' })).toBeInTheDocument()
+    })
+
+    test('should support aria-labelledby on an icon-only Button', () => {
+      render(
+        <TestWrapper>
+          <span id="add-branch-label">Add branch</span>
+          <Button iconOnly aria-labelledby="add-branch-label" ignoreIconOnlyTooltip>
+            Icon
+          </Button>
+        </TestWrapper>
+      )
+
+      expect(screen.getByRole('button', { name: 'Add branch' })).toBeInTheDocument()
+    })
+
+    test('should preserve an icon-only accessible name while loading', () => {
+      render(
+        <TestWrapper>
+          <Button loading iconOnly aria-label="Saving changes" tooltipProps={{ content: 'Saving changes' }}>
+            Icon
+          </Button>
+        </TestWrapper>
+      )
+
+      expect(screen.getByRole('button', { name: 'Saving changes' })).toBeInTheDocument()
+    })
+
+    test('should preserve an icon-only accessible name while disabled', () => {
+      render(
+        <TestWrapper>
+          <Button disabled iconOnly aria-label="Delete item" tooltipProps={{ content: 'Delete item' }}>
+            Icon
+          </Button>
+        </TestWrapper>
+      )
+
+      expect(screen.getByRole('button', { name: 'Delete item' })).toBeDisabled()
+    })
+
+    test('should preserve an accessible name on a rounded icon-only Button', () => {
+      render(
+        <TestWrapper>
+          <Button rounded iconOnly aria-label="Add node" tooltipProps={{ content: 'Add node' }}>
+            Icon
+          </Button>
+        </TestWrapper>
+      )
+
+      expect(screen.getByRole('button', { name: 'Add node' })).toHaveClass('cn-button-rounded')
+    })
+
     test('should maintain button role', () => {
       renderComponent()
 

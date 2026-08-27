@@ -33,7 +33,7 @@ The `PromptInput` component is a compound component for AI chat interfaces. It i
   <PromptInput.Textarea placeholder="Ask me anything..." />
   <PromptInput.Toolbar>
     <PromptInput.Tools>
-      <PromptInput.Button prefixIcon="plus" prefixIconProps={{ size: 'sm' }} tooltipProps={{ title: 'Add' }} />
+      <PromptInput.Button text="Add attachment" prefixIcon="plus" prefixIconProps={{ size: 'sm' }} tooltipProps={{ title: 'Add' }} />
     </PromptInput.Tools>
     <PromptInput.Submit />
   </PromptInput.Toolbar>
@@ -51,7 +51,7 @@ The `PromptInput` component is a compound component for AI chat interfaces. It i
   <PromptInput.Textarea placeholder="Ask me anything..." value="Tell me about React hooks" />
   <PromptInput.Toolbar>
     <PromptInput.Tools>
-      <PromptInput.Button prefixIcon="plus" prefixIconProps={{ size: 'sm' }} tooltipProps={{ title: 'Add' }} />
+      <PromptInput.Button text="Add attachment" prefixIcon="plus" prefixIconProps={{ size: 'sm' }} tooltipProps={{ title: 'Add' }} />
     </PromptInput.Tools>
     <PromptInput.Submit status="streaming" />
   </PromptInput.Toolbar>
@@ -72,7 +72,7 @@ return (
     />
     <PromptInput.Toolbar>
       <PromptInput.Tools>
-        <PromptInput.Button prefixIcon="plus" tooltipProps={{ title: 'Add' }} />
+        <PromptInput.Button text="Add attachment" prefixIcon="plus" tooltipProps={{ title: 'Add' }} />
       </PromptInput.Tools>
       <PromptInput.Submit />
     </PromptInput.Toolbar>

@@ -6,7 +6,18 @@ beta: true
 
 import { DocsPage } from "@/components/docs-page";
 
-The `Button` component allows users to trigger actions, submit forms, and navigate through the application. The button component supports various combinations of variants, themes, sizes, and states.
+The `Button` component triggers actions such as submitting, saving, deleting, opening a dialog, or starting and advancing a workflow. Use `Link` when the interaction navigates to a route, URL, file, or other destination. Ordinary navigation should not use Button, even when the control is visually prominent.
+
+The label does not determine the semantic component. For example, use Button when “Get Started” begins or advances an onboarding flow in place. Use Link when “Get Started” navigates to an onboarding destination.
+
+## Meaning beyond color
+
+Button follows [WCAG 2.2 Success Criterion 1.4.1, Use of Color](https://www.w3.org/WAI/WCAG22/Understanding/use-of-color.html). The `success` and `danger` themes reinforce meaning; they never provide it by themselves.
+
+- Use an action-specific label such as “Confirm changes,” “Delete project,” or “Bypass rules and create branch.” The action must remain understandable if all Buttons are shown in the same color.
+- When Button temporarily communicates a completed state, use explicit text such as “Saved” or “Updated.” A check icon can reinforce that message.
+- Primary, secondary, outline, and ghost icon-only Buttons may use `success` or `danger` to reinforce meaning. Their accessible name and surrounding context must still communicate the action without color.
+- Loading and disabled Buttons retain their action label and expose their state programmatically; do not rely on a color change alone.
 
 ## Default Button
 
@@ -34,13 +45,13 @@ Primary buttons are the most prominent buttons in the interface.
 
 <div className="flex gap-cn-sm">
   <Button variant="primary" theme="default">
-    Default
+    Continue
   </Button>
   <Button variant="primary" theme="success">
-    Success
+    Confirm changes
   </Button>
   <Button variant="primary" theme="danger">
-    Danger
+    Delete project
   </Button>
 </div>
 
@@ -68,10 +79,10 @@ Primary buttons are the most prominent buttons in the interface.
       Default Disabled
     </Button>
     <Button variant="primary" theme="success" disabled>
-      Success Disabled
+      Confirm changes disabled
     </Button>
     <Button variant="primary" theme="danger" disabled>
-      Danger Disabled
+      Delete project disabled
     </Button>
   </div>
   <div className="flex gap-cn-sm">
@@ -131,9 +142,9 @@ Secondary buttons can be styled with different themes for various contexts.
   client:only
   code={`<div className="flex flex-col items-start min-w-[600px] gap-cn-2xl">
   <div className="flex gap-cn-sm items-center">
-    <Button variant="secondary" theme="default">Secondary Default</Button>
-    <Button variant="secondary" theme="success">Secondary Success</Button>
-    <Button variant="secondary" theme="danger">Secondary Danger</Button>
+    <Button variant="secondary" theme="default">More options</Button>
+    <Button variant="secondary" theme="success">Confirm changes</Button>
+    <Button variant="secondary" theme="danger">Delete item</Button>
   </div>
 
 <hr />
@@ -143,25 +154,25 @@ Secondary buttons can be styled with different themes for various contexts.
 <div className="flex flex-col gap-cn-md">
   <div className="flex gap-cn-sm items-end">
     <Button variant="secondary" theme="success">
-      Medium
+      Confirm changes
     </Button>
     <Button variant="secondary" theme="success" size="sm">
-      Small
+      Confirm changes
     </Button>
     <Button variant="secondary" theme="success" size="xs">
-      Extra Small
+      Confirm
     </Button>
   </div>
 
   <div className="flex gap-cn-sm items-end">
     <Button variant="secondary" theme="danger">
-      Medium
+      Delete item
     </Button>
     <Button variant="secondary" theme="danger" size="sm">
-      Small
+      Delete item
     </Button>
     <Button variant="secondary" theme="danger" size="xs">
-      Extra Small
+      Delete
     </Button>
   </div>
 </div>
@@ -173,19 +184,19 @@ Secondary buttons can be styled with different themes for various contexts.
 <div className="flex flex-col gap-cn-sm">
   <div className="flex gap-cn-sm">
     <Button variant="secondary" theme="success" disabled>
-      Success Disabled
+      Confirm changes disabled
     </Button>
     <Button variant="secondary" theme="success" loading>
-      Success Loading
+      Confirming changes
     </Button>
   </div>
 
   <div className="flex gap-cn-sm">
     <Button variant="secondary" theme="danger" disabled>
-      Danger Disabled
+      Delete item disabled
     </Button>
     <Button variant="secondary" theme="danger" loading>
-      Danger Loading
+      Deleting item
     </Button>
   </div>
 </div>
@@ -207,13 +218,13 @@ Outline buttons have a transparent background with a visible border.
 
 <div className="flex gap-cn-sm">
   <Button variant="outline" theme="default">
-    Default
+    Cancel
   </Button>
   <Button variant="outline" theme="success">
-    Success
+    Approve request
   </Button>
   <Button variant="outline" theme="danger">
-    Danger
+    Delete request
   </Button>
 </div>
 
@@ -241,10 +252,10 @@ Outline buttons have a transparent background with a visible border.
       Default Disabled
     </Button>
     <Button variant="outline" theme="success" disabled>
-      Success Disabled
+      Approve request disabled
     </Button>
     <Button variant="outline" theme="danger" disabled>
-      Danger Disabled
+      Delete request disabled
     </Button>
   </div>
   <div className="flex gap-cn-sm">
@@ -273,13 +284,13 @@ Ghost buttons are minimally styled and blend into the background when not intera
 
 <div className="flex gap-cn-sm">
   <Button variant="ghost" theme="default">
-    Default
+    Dismiss
   </Button>
   <Button variant="ghost" theme="success">
-    Success
+    Mark complete
   </Button>
   <Button variant="ghost" theme="danger">
-    Danger
+    Remove item
   </Button>
 </div>
 
@@ -350,14 +361,14 @@ AI variant buttons are used specifically for AI-related actions.
 </div>`}
 />
 
-## Link Button
+## Link-style Button
 
-Link buttons appear as text links and don't accept theme props.
+The `link` variant makes an action look like inline text. It is still a Button and must trigger an action; it does not provide link semantics and should not be used for ordinary navigation. Use the `Link` component for destinations. Link-style buttons don't accept theme props.
 
 <DocsPage.ComponentExample
   client:only
   code={`<div className="flex flex-col items-start min-w-[600px] gap-cn-2xl">
-  <Button variant="link">Link Button</Button>
+  <Button variant="link">Show details</Button>
 
 <hr />
 
@@ -490,6 +501,7 @@ When the `onClick` prop returns a promise, the button automatically shows a load
   
   <Button 
     iconOnly
+    aria-label="Ask AI"
     variant="ai"
     tooltipProps={{ content: "Ask AI" }}
     onClick={async () => {
@@ -504,9 +516,11 @@ When the `onClick` prop returns a promise, the button automatically shows a load
 
 ## Additional Features
 
-When the `iconOnly` prop is used, you must also provide `tooltipProps` to display content in the tooltip.
+When the `iconOnly` prop is used, you must provide an accessible name with `aria-label` or `aria-labelledby`. A tooltip is visual help only; it does not provide an accessible name. Also provide `tooltipProps` to display the action for sighted users.
 
-If you need to skip showing the tooltip, you should set `ignoreIconOnlyTooltip`.
+Primary, secondary, outline, and ghost icon-only Buttons support `default`, `success`, and `danger`. AI and transparent icon-only Buttons use `default` only. In every case, communicate semantic meaning through the accessible name, surrounding context, and feedback after activation rather than color alone.
+
+If you need to skip showing the tooltip, set `ignoreIconOnlyTooltip`. This override suppresses the tooltip requirement only; it does not bypass the accessible-name requirement.
 
 <DocsPage.ComponentExample
   client:only
@@ -514,44 +528,74 @@ If you need to skip showing the tooltip, you should set `ignoreIconOnlyTooltip`.
 <h4>Icon Only Buttons</h4>
 
 <div className="flex gap-cn-sm">
-  <Button iconOnly tooltipProps={{ content: "Add" }}>
+  <Button iconOnly aria-label="Add" tooltipProps={{ content: "Add" }}>
     <IconV2 name="plus" skipSize />
   </Button>
-  <Button variant="secondary" size="sm" iconOnly ignoreIconOnlyTooltip>
+  <Button variant="secondary" size="sm" iconOnly aria-label="Create branch" ignoreIconOnlyTooltip>
     <IconV2 name="git-branch" skipSize />
   </Button>
-  <Button variant="transparent" size="sm" iconOnly ignoreIconOnlyTooltip>
+  <Button variant="transparent" size="sm" iconOnly aria-label="Close" ignoreIconOnlyTooltip>
     <IconV2 name="xmark" skipSize />
   </Button>
-  <Button variant="outline" size="xs" iconOnly ignoreIconOnlyTooltip>
+  <Button variant="outline" size="xs" iconOnly aria-label="Confirm" ignoreIconOnlyTooltip>
     <IconV2 name="check" skipSize />
-  </Button>
-  <Button variant="outline" size="2xs" iconOnly ignoreIconOnlyTooltip>
-    <IconV2 name="check" skipSize />
-  </Button>
-  <Button variant="outline" size="3xs" iconOnly ignoreIconOnlyTooltip>
-    <IconV2 name="check" skipSize />
-  </Button>
-  <Button variant="outline" size="2xs" iconOnly ignoreIconOnlyTooltip>
-    <IconV2 name="xmark" skipSize />
-  </Button>
-  <Button variant="outline" size="3xs" iconOnly ignoreIconOnlyTooltip>
-    <IconV2 name="xmark" skipSize />
-  </Button>
-</div>
-
-<hr />
-
-<h4>Rounded Buttons</h4>
-
-<div className="flex gap-cn-sm">
-  <Button rounded>Rounded Button</Button>
-  <Button rounded variant="outline">
-    Rounded Outline
   </Button>
 </div>
 </div>`}
 />
+
+## Rounded icon-only Buttons
+
+The `rounded` prop is supported for icon-only Buttons in `md`, `sm`, and `xs`. Use it with `iconOnly`, an accessible name, and the required tooltip or explicit tooltip override.
+
+```tsx
+<Button
+  iconOnly
+  rounded
+  aria-label="Add node"
+  tooltipProps={{ content: "Add node" }}
+>
+  <IconV2 name="plus" />
+</Button>
+```
+
+### Deprecated: Rounded text Buttons
+
+Rounded text Buttons are deprecated. Do not use them for new work.
+
+For existing usage:
+
+- Replace `<Button rounded>Label</Button>` with the equivalent standard text Button, such as `<Button>Label</Button>`.
+- Preserve the Button's variant, theme, size, accessible name, and behavior while removing `rounded`.
+
+The text combination remains available temporarily so teams can migrate existing usage. The `rounded` prop itself remains supported for icon-only Buttons.
+
+## Keyboard focus
+
+Button displays keyboard focus through the browser's `:focus-visible` state. This is an intentional code-only runtime state: Figma component sets should not add `focus` to their published state property or Code Connect mappings.
+
+The code treatment uses:
+
+- A 2px `focus` outline using `border.brand`.
+- A 2px inset `gray.25` contrast ring.
+- A -2px outline offset for every non-link variant; the link-style action keeps the browser's default outline offset.
+- The Button's existing radius, content, variant, and theme.
+- A raised stacking context so neighboring controls do not cover the indicator.
+
+### Representative Figma focus specification
+
+Create one detached reference example near the Button component documentation. This example communicates the runtime behavior for review and handoff; it is not a published Button variant.
+
+| Attribute         | Specification                                                                |
+| ----------------- | ---------------------------------------------------------------------------- |
+| Label             | Focus specification                                                          |
+| Base Button       | Enabled `md`, `primary`, default-theme text Button                           |
+| Trigger           | Keyboard focus matching `:focus-visible`; do not show for pointer-only focus |
+| Outer indicator   | 2px solid `border.brand` focus outline                                       |
+| Inner contrast    | 2px inset `gray.25` ring                                                     |
+| Offset            | -2px for the representative non-link Button                                  |
+| Shape and content | Preserve the base Button radius, label, and layout                           |
+| Publication       | Detached documentation example only; do not add a `focus` state variant      |
 
 ## Usage
 
@@ -563,16 +607,16 @@ import { Button } from '@harnessio/ui/components'
 
 // Primary button with themes
 <Button variant="primary" theme="default">Primary Button</Button>
-<Button variant="primary" theme="success">Success Button</Button>
-<Button variant="primary" theme="danger">Danger Button</Button>
+<Button variant="primary" theme="success">Confirm changes</Button>
+<Button variant="primary" theme="danger">Delete project</Button>
 
 // Secondary button
 <Button variant="secondary">Secondary Button</Button>
 
 // Outline button with themes
 <Button variant="outline">Outline Button</Button>
-<Button variant="outline" theme="success">Success Outline</Button>
-<Button variant="outline" theme="danger">Danger Outline</Button>
+<Button variant="outline" theme="success">Approve request</Button>
+<Button variant="outline" theme="danger">Delete request</Button>
 
 // Ghost button
 <Button variant="ghost">Ghost Button</Button>
@@ -580,8 +624,8 @@ import { Button } from '@harnessio/ui/components'
 // AI button (a special variant for AI-related actions)
 <Button variant="ai">AI Button</Button>
 
-// Link button (note: doesn't accept theme prop)
-<Button variant="link">Link Button</Button>
+// Link-style action (still a Button; does not navigate)
+<Button variant="link" onClick={showDetails}>Show details</Button>
 
 // Transparent button (note: doesn't accept theme prop)
 <Button variant="transparent">Transparent Button</Button>
@@ -591,11 +635,8 @@ import { Button } from '@harnessio/ui/components'
 <Button size="sm">Small Button</Button>
 <Button size="xs">Extra Small Button</Button>
 
-// Rounded button
-<Button rounded>Rounded Button</Button>
-
 // Icon only button
-<Button iconOnly tooltipProps={{ content: 'Add' }}>
+<Button iconOnly aria-label="Add" tooltipProps={{ content: 'Add' }}>
   <IconV2 name="plus" />
 </Button>
 
@@ -606,15 +647,17 @@ import { Button } from '@harnessio/ui/components'
 <Button disabled>Disabled Button</Button>
 ```
 
-## Type Constraints
+## Supported combinations
 
-The Button component implements a discriminated union pattern with conditional prop requirements:
+- Primary, secondary, outline, and ghost text Buttons support default, success, and danger.
+- AI and transparent text Buttons use the default theme only.
+- Link-style Buttons use the default theme at md and sm only.
+- Primary, secondary, outline, and ghost icon-only Buttons support default, success, and danger.
+- AI and transparent icon-only Buttons use the default theme only.
+- Button sizes are md, sm, and xs.
+- Rounded is supported for icon-only Buttons; rounded text Buttons are deprecated.
 
-- When variant is "ghost" or "link", no theme is allowed
-- When variant is "ai", no theme is needed
-- When variant is "solid", themes "success" and "danger" are not allowed
-
-This ensures type safety and provides proper development-time feedback on invalid component usage.
+The Button contract and repository checks enforce these combinations for new source usage.
 
 ## Props
 
@@ -625,7 +668,7 @@ This ensures type safety and provides proper development-time feedback on invali
       description: "Visual style of the button.",
       required: false,
       value:
-        "'primary' | 'secondary' | 'outline' | 'ghost' | 'link' | 'transparent'",
+        "'primary' | 'secondary' | 'outline' | 'ghost' | 'ai' | 'link' | 'transparent'",
       defaultValue: "'primary'",
     },
     {
@@ -638,7 +681,7 @@ This ensures type safety and provides proper development-time feedback on invali
     {
       name: "theme",
       description:
-        "Color theme of the button. Note: not all variants support themes.",
+        "Success and danger are supported by primary, secondary, outline, and ghost Buttons with text or icon-only content. AI, transparent, and link Buttons use default.",
       required: false,
       value: "'default' | 'success' | 'danger'",
       defaultValue: "'default'",
@@ -646,21 +689,23 @@ This ensures type safety and provides proper development-time feedback on invali
     {
       name: "size",
       description:
-        "Size of the button. '2xs' and '3xs' set iconOnly props to true.",
+        "Supported Button sizes. Use xs icon-only Buttons for the most compact action.",
       required: false,
-      value: "'md' | 'sm' | 'xs' | '2xs' | '3xs'",
+      value: "'md' | 'sm' | 'xs'",
       defaultValue: "'md'",
     },
     {
       name: "rounded",
-      description: "Applies rounded corners to the button.",
+      description:
+        "Supported with iconOnly in md, sm, and xs. Rounded text Buttons are deprecated; remove rounded to migrate them to the standard shape.",
       required: false,
       value: "boolean",
       defaultValue: "false",
     },
     {
       name: "iconOnly",
-      description: "Optimizes the button styling for displaying only an icon.",
+      description:
+        "Optimizes the button styling for displaying only an icon. Requires aria-label or aria-labelledby.",
       required: false,
       value: "boolean",
       defaultValue: "false",
@@ -681,7 +726,8 @@ This ensures type safety and provides proper development-time feedback on invali
     },
     {
       name: "asChild",
-      description: "Passes the component styling to a child element.",
+      description:
+        "Passes Button behavior and styling to a child for approved action-trigger composition. Do not use asChild to make Button perform ordinary navigation; use Link for destinations.",
       required: false,
       value: "boolean",
       defaultValue: "false",
@@ -701,7 +747,7 @@ This ensures type safety and provides proper development-time feedback on invali
     {
       name: "tooltipProps",
       description:
-        "If provided, wraps the Button in a tooltip with the specified properties.",
+        "If provided, wraps the Button in a tooltip with the specified properties. Tooltip content does not provide an accessible name.",
       required: false,
       defaultValue: "undefined",
       value: "Pick<TooltipProps, 'title' | 'content' | 'side'>",
@@ -709,10 +755,24 @@ This ensures type safety and provides proper development-time feedback on invali
     {
       name: "ignoreIconOnlyTooltip",
       description:
-        "Allows skipping the required tooltipProps when using iconOnly.",
+        "Allows skipping tooltipProps when using iconOnly. It does not bypass the aria-label or aria-labelledby requirement.",
       required: false,
       value: "boolean",
       defaultValue: "undefined",
+    },
+    {
+      name: "aria-label",
+      description:
+        "Provides the accessible name for an icon-only Button when no visible labeling element is available.",
+      required: false,
+      value: "string",
+    },
+    {
+      name: "aria-labelledby",
+      description:
+        "References the element that provides the accessible name for an icon-only Button.",
+      required: false,
+      value: "string",
     },
   ]}
 />

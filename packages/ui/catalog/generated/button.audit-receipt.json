@@ -1,0 +1,212 @@
+{
+  "formatVersion": 1,
+  "componentId": "canary.button",
+  "schemaVersion": "0.5.0",
+  "contractVersion": "0.9.0",
+  "evaluationProfileVersion": "1.0.0",
+  "evaluatedAt": "2026-08-14",
+  "sourceSha256": "3d4f5d6fbfede4f21106969a0a9ce1ef193614f33be88d55f344f07e8fca0008",
+  "verificationSourceSha256": "fd6bc2ac19a05b89fed598c5b3c4eb3cffc1cff78a804b19265b6ae89d5faa4a",
+  "evaluations": [
+    {
+      "requirementId": "button.contract-complete",
+      "dimension": "contractDefinition",
+      "severity": "critical",
+      "enforcement": "automated",
+      "result": "pass",
+      "verifiedAt": "2026-08-14",
+      "fresh": true,
+      "sourceIds": [
+        "button-tests"
+      ]
+    },
+    {
+      "requirementId": "button.library-identity",
+      "dimension": "figmaImplementation",
+      "severity": "critical",
+      "enforcement": "automated",
+      "result": "pass",
+      "verifiedAt": "2026-08-13",
+      "fresh": true,
+      "sourceIds": [
+        "button-figma"
+      ]
+    },
+    {
+      "requirementId": "button.property-values",
+      "dimension": "figmaImplementation",
+      "severity": "major",
+      "enforcement": "automated",
+      "result": "pass",
+      "verifiedAt": "2026-08-13",
+      "fresh": true,
+      "sourceIds": [
+        "button-figma",
+        "canary-copilot"
+      ]
+    },
+    {
+      "requirementId": "button.supported-combination",
+      "dimension": "figmaImplementation",
+      "severity": "critical",
+      "enforcement": "automated",
+      "result": "pass",
+      "verifiedAt": "2026-08-14",
+      "fresh": true,
+      "sourceIds": [
+        "button-figma",
+        "button-tests",
+        "canary-copilot"
+      ]
+    },
+    {
+      "requirementId": "button.required-content",
+      "dimension": "figmaImplementation",
+      "severity": "critical",
+      "enforcement": "automated",
+      "result": "pass",
+      "verifiedAt": "2026-08-13",
+      "fresh": true,
+      "sourceIds": [
+        "button-figma"
+      ]
+    },
+    {
+      "requirementId": "button.code-api",
+      "dimension": "codeImplementation",
+      "severity": "critical",
+      "enforcement": "automated",
+      "result": "pass",
+      "verifiedAt": "2026-08-14",
+      "fresh": true,
+      "sourceIds": [
+        "button-source",
+        "button-tests"
+      ]
+    },
+    {
+      "requirementId": "button.focus-visible",
+      "dimension": "codeImplementation",
+      "severity": "critical",
+      "enforcement": "automated",
+      "result": "pass",
+      "verifiedAt": "2026-08-13",
+      "fresh": true,
+      "sourceIds": [
+        "button-styles",
+        "button-tests"
+      ]
+    },
+    {
+      "requirementId": "button.native-type",
+      "dimension": "codeImplementation",
+      "severity": "major",
+      "enforcement": "automated",
+      "result": "pass",
+      "verifiedAt": "2026-08-14",
+      "fresh": true,
+      "sourceIds": [
+        "button-source",
+        "button-tests"
+      ]
+    },
+    {
+      "requirementId": "button.pending-state",
+      "dimension": "codeImplementation",
+      "severity": "major",
+      "enforcement": "automated",
+      "result": "pass",
+      "verifiedAt": "2026-08-14",
+      "fresh": true,
+      "sourceIds": [
+        "button-source",
+        "button-tests"
+      ]
+    },
+    {
+      "requirementId": "button.accessible-name",
+      "dimension": "codeImplementation",
+      "severity": "critical",
+      "enforcement": "manual",
+      "result": "pass",
+      "verifiedAt": "2026-08-14",
+      "fresh": true,
+      "sourceIds": [
+        "button-source",
+        "button-tests",
+        "button-docs"
+      ]
+    },
+    {
+      "requirementId": "button.not-color-only",
+      "dimension": "codeImplementation",
+      "severity": "major",
+      "enforcement": "manual",
+      "result": "pass",
+      "verifiedAt": "2026-08-14",
+      "fresh": true,
+      "sourceIds": [
+        "button-docs",
+        "button-ui-usages",
+        "button-product-usages",
+        "button-app-usages"
+      ]
+    },
+    {
+      "requirementId": "button.binding-parity",
+      "dimension": "designCodeParity",
+      "severity": "critical",
+      "enforcement": "automated",
+      "result": "pass",
+      "verifiedAt": "2026-08-14",
+      "fresh": true,
+      "sourceIds": [
+        "button-code-connect",
+        "button-figma",
+        "button-source"
+      ]
+    },
+    {
+      "requirementId": "button.intentional-differences",
+      "dimension": "designCodeParity",
+      "severity": "major",
+      "enforcement": "automated",
+      "result": "pass",
+      "verifiedAt": "2026-08-13",
+      "fresh": true,
+      "sourceIds": [
+        "button-code-connect",
+        "button-figma",
+        "button-styles"
+      ]
+    },
+    {
+      "requirementId": "button.evidence-current",
+      "dimension": "governanceEvidence",
+      "severity": "major",
+      "enforcement": "automated",
+      "result": "pass",
+      "verifiedAt": "2026-08-14",
+      "fresh": true,
+      "sourceIds": [
+        "button-source",
+        "button-tests",
+        "button-figma"
+      ]
+    },
+    {
+      "requirementId": "button.publication-current",
+      "dimension": "governanceEvidence",
+      "severity": "minor",
+      "enforcement": "manual",
+      "result": "pass",
+      "verifiedAt": "2026-08-14",
+      "fresh": true,
+      "sourceIds": [
+        "button-figma",
+        "button-code-connect",
+        "canary-copilot"
+      ]
+    }
+  ]
+}

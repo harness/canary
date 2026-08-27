@@ -27,7 +27,6 @@ return (
       size="sm"
       variant="outline"
       selectedVariant="primary"
-      rounded
       tooltipProps={{
         content: <p>This is a tooltip</p>
       }}
@@ -119,21 +118,27 @@ The `Toggle` component accepts a `size` prop to control its overall dimensions. 
 `}
 />
 
-## Rounded
+## Rounded icon-only Toggle
 
-The `Toggle` component accepts a `rounded` prop. When provided, the underlying button will have fully rounded corners.
+The `rounded` prop is supported when `iconOnly` is enabled. Rounded text Toggles are deprecated; remove `rounded` from those Toggles to use the supported standard shape.
 
 <DocsPage.ComponentExample
   client:only
   code={`
-    <Toggle text="Rounded" rounded />
+    <Toggle
+      iconOnly
+      rounded
+      prefixIcon="plus"
+      text="Add"
+      tooltipProps={{ content: 'Add' }}
+    />
 `}
 />
 
 ## Icon only
 
 The `Toggle` component accepts a `iconOnly` prop. When this prop is set, the `Toggle` is styled to fit the dimensions of an icon, making it suitable for icon-only buttons.
-Note that when `iconOnly` is set, the `text` prop will be used for the `area-label`, and the `prefixIcon` prop will be used as the only icon displayed.
+When `iconOnly` is set, `text` is required and becomes the underlying Button's `aria-label`. The `prefixIcon` prop is the only visible content.
 
 <DocsPage.ComponentExample
   client:only
@@ -203,7 +208,8 @@ The `Toggle` component is a button that can be toggled on and off.
     },
     {
       name: "rounded",
-      description: "Whether the toggle is rounded.",
+      description:
+        "Supported with iconOnly. Rounded text Toggles are deprecated; remove rounded to migrate them to the standard shape.",
       required: false,
       defaultValue: "false",
       value: "boolean",

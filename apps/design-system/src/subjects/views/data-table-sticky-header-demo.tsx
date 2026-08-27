@@ -187,7 +187,7 @@ export const DataTableStickyHeaderDemo: React.FC = () => {
                 onSortingChange={pinned.onSortingChange}
               />
             </div>
-            <Text variant="caption-light">
+            <Text variant="caption-normal">
               Column pinning: left [&quot;name&quot;], right [&quot;status&quot;] —{' '}
               <button
                 type="button"

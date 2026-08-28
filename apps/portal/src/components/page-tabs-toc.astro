@@ -1,0 +1,88 @@
+---
+// Makes the "On this page" table of contents follow page-level tabs.
+//
+// When a page wraps its body in page-level Starlight <Tabs> inside a
+// `#page-level-tabs` element, this keeps only the headings belonging to the
+// active tab visible in the TOC (both the desktop sidebar and the mobile
+// dropdown). It no-ops on any page without that wrapper.
+---
+
+<script>
+  function syncTabsToc() {
+    const root = document.getElementById("page-level-tabs");
+    if (!root) return;
+
+    const tabsEl = root.querySelector("starlight-tabs");
+    if (!tabsEl) return;
+
+    // Starlight renders a TOC for the desktop sidebar and one for the mobile
+    // dropdown; keep both in sync.
+    const tocNavs = Array.from(document.querySelectorAll("starlight-toc nav"));
+    if (!tocNavs.length) return;
+
+    // Only the page-level tabs/panels (direct children), not any nested tabs.
+    const panels = Array.from(
+      tabsEl.querySelectorAll(':scope > [role="tabpanel"]'),
+    );
+    const tabs = Array.from(
+      tabsEl.querySelectorAll(':scope > .tablist-wrapper [role="tab"]'),
+    );
+    if (!panels.length || !tabs.length) return;
+
+    const getActivePanel = () => {
+      // Prefer the selected tab — it is unambiguous, unlike the panels' `hidden`
+      // attribute, which is briefly true on both panels mid-switch.
+      const selected = tabs.find(
+        (tab) => tab.getAttribute("aria-selected") === "true",
+      );
+      const targetId = selected?.getAttribute("href")?.slice(1);
+      return (
+        (targetId && document.getElementById(targetId)) ||
+        panels.find((panel) => !panel.hasAttribute("hidden"))
+      );
+    };
+
+    const apply = () => {
+      const activePanel = getActivePanel();
+      if (!activePanel) return;
+
+      tocNavs.forEach((nav) => {
+        nav.querySelectorAll('a[href^="#"]').forEach((anchor) => {
+          const li = anchor.closest("li");
+          if (!li) return;
+
+          const id = decodeURIComponent(anchor.getAttribute("href").slice(1));
+          const heading =
+            id && id !== "_top" ? document.getElementById(id) : null;
+
+          // Keep the page-top link and any heading that lives outside the tabs.
+          const owningPanel = heading
+            ? panels.find((panel) => panel.contains(heading))
+            : null;
+          li.hidden = owningPanel ? owningPanel !== activePanel : false;
+        });
+      });
+    };
+
+    // Wire each tabs element once, even if this runs again on the same load
+    // (the initial script and `astro:page-load` can both fire).
+    if (tabsEl.dataset.tocSynced) {
+      apply();
+      return;
+    }
+    tabsEl.dataset.tocSynced = "true";
+
+    apply();
+
+    // Re-run whenever the active tab changes.
+    const observer = new MutationObserver(apply);
+    observer.observe(tabsEl, {
+      subtree: true,
+      attributes: true,
+      attributeFilter: ["aria-selected", "hidden"],
+    });
+  }
+
+  syncTabsToc();
+  document.addEventListener("astro:page-load", syncTabsToc);
+</script>

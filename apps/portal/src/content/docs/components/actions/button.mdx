@@ -27,11 +27,39 @@ Primary buttons are the most prominent buttons in the interface.
 
 <DocsPage.ComponentExample
   client:only
+<<<<<<< ours
   code={`<div className="space-y-cn-sm">
   <div className="flex items-center gap-cn-md border-b border-cn-borders-3 pb-cn-sm">
     <span className="text-cn-size-2 text-cn-3 w-32 shrink-0 font-mono">default</span>
     <Button variant="primary" theme="default">Primary Button</Button>
   </div>
+=======
+  code={`<div className="flex flex-col items-start min-w-[600px] gap-cn-2xl">
+  <Button variant="primary" theme="default">Primary Button</Button>
+
+<hr />
+
+<h4>Primary Button with Themes</h4>
+
+<div className="flex gap-cn-sm">
+  <Button variant="primary" theme="default">
+    Default
+  </Button>
+  <Button variant="primary" theme="success">
+    Success
+  </Button>
+  <Button variant="primary" theme="danger">
+    Danger
+  </Button>
+  <Button variant="primary" theme="warning">
+    Warning
+  </Button>
+</div>
+
+<hr />
+
+<h4>Primary Button with Sizes</h4>
+>>>>>>> theirs
 
 <div className="flex items-center gap-cn-md border-b border-cn-borders-3 pb-cn-sm">
   <span className="text-cn-size-2 text-cn-3 w-32 shrink-0 font-mono">
@@ -132,6 +160,7 @@ Secondary buttons can be styled with different themes for various contexts.
 
 <DocsPage.ComponentExample
   client:only
+<<<<<<< ours
   code={`<div className="space-y-cn-sm">
   <div className="flex items-center gap-cn-md border-b border-cn-borders-3 pb-cn-sm">
     <span className="text-cn-size-2 text-cn-3 w-32 shrink-0 font-mono">themes</span>
@@ -140,6 +169,14 @@ Secondary buttons can be styled with different themes for various contexts.
       <Button variant="secondary" theme="success">Secondary Success</Button>
       <Button variant="secondary" theme="danger">Secondary Danger</Button>
     </div>
+=======
+  code={`<div className="flex flex-col items-start min-w-[600px] gap-cn-2xl">
+  <div className="flex gap-cn-sm items-center">
+    <Button variant="secondary" theme="default">Secondary Default</Button>
+    <Button variant="secondary" theme="success">Secondary Success</Button>
+    <Button variant="secondary" theme="danger">Secondary Danger</Button>
+    <Button variant="secondary" theme="warning">Secondary Warning</Button>
+>>>>>>> theirs
   </div>
 
 <div className="flex items-center gap-cn-md border-b border-cn-borders-3 pb-cn-sm">
@@ -206,11 +243,39 @@ Outline buttons have a transparent background with a visible border.
 
 <DocsPage.ComponentExample
   client:only
+<<<<<<< ours
   code={`<div className="space-y-cn-sm">
   <div className="flex items-center gap-cn-md border-b border-cn-borders-3 pb-cn-sm">
     <span className="text-cn-size-2 text-cn-3 w-32 shrink-0 font-mono">default</span>
     <Button variant="outline" theme="default">Outline Button</Button>
   </div>
+=======
+  code={`<div className="flex flex-col items-start min-w-[600px] gap-cn-2xl">
+  <Button variant="outline" theme="default">Outline Button</Button>
+
+<hr />
+
+<h4>Outline Button with Themes</h4>
+
+<div className="flex gap-cn-sm">
+  <Button variant="outline" theme="default">
+    Default
+  </Button>
+  <Button variant="outline" theme="success">
+    Success
+  </Button>
+  <Button variant="outline" theme="danger">
+    Danger
+  </Button>
+  <Button variant="outline" theme="warning">
+    Warning
+  </Button>
+</div>
+
+<hr />
+
+<h4>Outline Button with Sizes</h4>
+>>>>>>> theirs
 
 <div className="flex items-center gap-cn-md border-b border-cn-borders-3 pb-cn-sm">
   <span className="text-cn-size-2 text-cn-3 w-32 shrink-0 font-mono">
@@ -280,6 +345,7 @@ Ghost buttons are minimally styled and blend into the background when not intera
     <Button variant="ghost">Ghost Button</Button>
   </div>
 
+<<<<<<< ours
 <div className="flex items-center gap-cn-md border-b border-cn-borders-3 pb-cn-sm">
   <span className="text-cn-size-2 text-cn-3 w-32 shrink-0 font-mono">
     themes
@@ -295,6 +361,25 @@ Ghost buttons are minimally styled and blend into the background when not intera
       Danger
     </Button>
   </div>
+=======
+<hr />
+
+<h4>Ghost Button with Themes</h4>
+
+<div className="flex gap-cn-sm">
+  <Button variant="ghost" theme="default">
+    Default
+  </Button>
+  <Button variant="ghost" theme="success">
+    Success
+  </Button>
+  <Button variant="ghost" theme="danger">
+    Danger
+  </Button>
+  <Button variant="ghost" theme="warning">
+    Warning
+  </Button>
+>>>>>>> theirs
 </div>
 
 <div className="flex items-center gap-cn-md border-b border-cn-borders-3 pb-cn-sm">
@@ -642,7 +727,7 @@ This ensures type safety and provides proper development-time feedback on invali
       description:
         "Color theme of the button. Note: not all variants support themes.",
       required: false,
-      value: "'default' | 'success' | 'danger'",
+      value: "'default' | 'success' | 'danger' | 'warning'",
       defaultValue: "'default'",
     },
     {

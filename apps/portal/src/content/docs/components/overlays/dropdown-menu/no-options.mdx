@@ -1,0 +1,56 @@
+---
+title: No Options
+description: Empty state in a DropdownMenu
+---
+
+import { DocsPage } from "@/components/docs-page";
+
+The `DropdownMenu` component supports empty states using the `DropdownMenu.NoOptions` component. This is useful when there are no items to display in the dropdown menu.
+
+<DocsPage.ComponentExample
+  client:only
+  code={`<DropdownMenu.Root>
+    <DropdownMenu.Trigger aria-label="options menu" asChild>
+      <Button variant="ghost" iconOnly>
+        <IconV2 name="more-horizontal" />
+      </Button>
+    </DropdownMenu.Trigger>
+    <DropdownMenu.Content>
+        <DropdownMenu.NoOptions />
+        <DropdownMenu.Separator />
+        <DropdownMenu.NoOptions>Custom 'No options' message</DropdownMenu.NoOptions>
+    </DropdownMenu.Content>
+  </DropdownMenu.Root>`}
+/>
+
+## Properties
+
+### `NoOptions`
+
+The `NoOptions` component displays a message when there are no menu items available.
+
+```typescript jsx
+<DropdownMenu.NoOptions
+  className="my-class" // [OPTIONAL] custom class
+>
+  {/* Custom message - defaults to "No options available" */}
+</DropdownMenu.NoOptions>
+```
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "className",
+      description: "Custom class name",
+      required: false,
+      value: "string",
+    },
+    {
+      name: "children",
+      description: "Custom message text",
+      required: false,
+      value: "ReactNode",
+      defaultValue: '"No options available"',
+    },
+  ]}
+/>

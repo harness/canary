@@ -9,15 +9,11 @@ The `SplitButton` component provides a flexible UI element combining a button wi
 - Radio button selection group (when `selectedValue` is provided)
 
 import { DocsPage } from "@/components/docs-page";
-import { Aside } from "@astrojs/starlight/components";
 
-<Aside>
-  The `SplitButton` component supports specific combinations of `variant` and `theme` props:
+The `SplitButton` component supports specific combinations of `variant` and `theme` props:
 
 - `variant="primary"` with `theme="default"`
-- `variant="outline"` with `theme="default" | "success" | "danger"`
-
-</Aside>
+- `variant="outline"` with `theme="default" | "success" | "danger" | "warning"`
 
 <DocsPage.ComponentExample
   client:only
@@ -71,6 +67,20 @@ import { Aside } from "@astrojs/starlight/components";
         >
           Primary + Danger
         </SplitButton>
+
+        <SplitButton
+          id="primary-warning"
+          variant="primary"
+          theme="warning"
+          handleButtonClick={() => {}}
+          options={[
+            { value: 'option1', label: 'Option 1', description: 'Description for option 1' },
+            { value: 'option2', label: 'Option 2', description: 'Description for option 2' },
+          ]}
+          handleOptionChange={() => {}}
+        >
+          Primary + Warning
+        </SplitButton>
       </div>
     </div>
 
@@ -119,6 +129,20 @@ import { Aside } from "@astrojs/starlight/components";
         >
           Secondary + Danger
         </SplitButton>
+
+        <SplitButton
+          id="secondary-warning"
+          variant="secondary"
+          theme="warning"
+          handleButtonClick={() => {}}
+          options={[
+            { value: 'option1', label: 'Option 1', description: 'Description for option 1' },
+            { value: 'option2', label: 'Option 2', description: 'Description for option 2' },
+          ]}
+          handleOptionChange={() => {}}
+        >
+          Secondary + Warning
+        </SplitButton>
       </div>
     </div>
 
@@ -166,6 +190,20 @@ import { Aside } from "@astrojs/starlight/components";
           handleOptionChange={() => {}}
         >
           Outline + Danger
+        </SplitButton>
+
+        <SplitButton
+          id="outline-warning"
+          variant="outline"
+          theme="warning"
+          handleButtonClick={() => {}}
+          options={[
+            { value: 'option1', label: 'Option 1', description: 'Description for option 1' },
+            { value: 'option2', label: 'Option 2', description: 'Description for option 2' },
+          ]}
+          handleOptionChange={() => {}}
+        >
+          Outline + Warning
         </SplitButton>
       </div>
     </div>
@@ -396,7 +434,7 @@ return (
     {
       name: "variant",
       description:
-        "Visual style of the button. Allowed combinations: primary+default, or outline+(default|success|danger).",
+        "Visual style of the button. Allowed combinations: primary+default, or outline+(default|success|danger|warning).",
       required: false,
       value: "'primary' | 'outline' | 'secondary'",
       defaultValue: "'primary'",
@@ -404,9 +442,9 @@ return (
     {
       name: "theme",
       description:
-        "Color theme of the button. Allowed combinations: primary+default, or outline+(default|success|danger).",
+        "Color theme of the button. Allowed combinations: primary+default, or outline+(default|success|danger|warning).",
       required: false,
-      value: "'default' | 'success' | 'danger'",
+      value: "'default' | 'success' | 'danger' | 'warning'",
       defaultValue: "'default'",
     },
     {

@@ -1,0 +1,181 @@
+---
+title: Checkbox items
+description: Checkbox items in a DropdownMenu
+---
+
+import { DocsPage } from "@/components/docs-page";
+
+The `DropdownMenu` component supports checkbox items using the `DropdownMenu.CheckboxItem` component. This allows you to create items with checkboxes that can be checked or unchecked.
+
+<DocsPage.ComponentExample
+  client:only
+  code={`() => {
+    const [checkedItems, setCheckedItems] = React.useState({
+        default: false,
+        checked: true,
+        disabled: false,
+        checkedDisabled: true,
+        withSubmenu: 'indeterminate',
+        subOption1: false,
+        subOption2: true
+    });
+
+    const handleCheckedChange = (itemKey, checked) => {
+        setCheckedItems(prev => ({
+            ...prev,
+            [itemKey]: checked
+        }));
+    };
+
+    return (
+        <DropdownMenu.Root>
+            <DropdownMenu.Trigger aria-label="options menu" asChild>
+                <Button variant="ghost" iconOnly>
+                    <IconV2 name="more-horizontal" />
+                </Button>
+            </DropdownMenu.Trigger>
+
+            <DropdownMenu.Content>
+                <DropdownMenu.Group label="Checkbox group">
+                    <DropdownMenu.CheckboxItem
+                        title="Default"
+                        checked={checkedItems.default}
+                        onCheckedChange={(checked) => handleCheckedChange('default', checked)}
+                    />
+                    <DropdownMenu.CheckboxItem
+                        title="Checked"
+                        checked={checkedItems.checked}
+                        onCheckedChange={(checked) => handleCheckedChange('checked', checked)}
+                    />
+                    <DropdownMenu.CheckboxItem
+                        title="Disabled"
+                        disabled
+                        checked={checkedItems.disabled}
+                        onCheckedChange={(checked) => handleCheckedChange('disabled', checked)}
+                    />
+                    <DropdownMenu.CheckboxItem
+                        title="Checked disabled"
+                        description="Item description"
+                        checked={checkedItems.checkedDisabled}
+                        onCheckedChange={(checked) => handleCheckedChange('checkedDisabled', checked)}
+                        disabled
+                    />
+                    <DropdownMenu.CheckboxItem
+                        title="With submenu"
+                        checked={checkedItems.withSubmenu}
+                        onCheckedChange={(checked) => handleCheckedChange('withSubmenu', checked)}
+                    >
+                        <DropdownMenu.CheckboxItem
+                            title="Sub Option 1"
+                            checked={checkedItems.subOption1}
+                            onCheckedChange={(checked) => handleCheckedChange('subOption1', checked)}
+                        />
+                        <DropdownMenu.CheckboxItem
+                            title="Sub Option 2"
+                            checked={checkedItems.subOption2}
+                            onCheckedChange={(checked) => handleCheckedChange('subOption2', checked)}
+                        />
+                    </DropdownMenu.CheckboxItem>
+                </DropdownMenu.Group>
+            </DropdownMenu.Content>
+        </DropdownMenu.Root>
+    );
+
+}`}/>
+
+## Properties
+
+### `CheckboxItem`
+
+The `CheckboxItem` component displays a checkbox next to the item. When the user interacts with the checkbox, the
+`onCheckedChange` prop is called. Setting the `checked` prop will set whether the checkbox is checked.
+
+```typescript jsx
+<DropdownMenu.CheckboxItem
+  title="Item title"         // title of the item
+  checked                    // [OPTIONAL] whether the checkbox is checked
+  onCheckedChange={onChange} // [OPTIONAL] callback when checked state changes
+  description="Description"  // [OPTIONAL] description text
+  label="Label"              // [OPTIONAL] right-aligned label
+  shortcut="⌘K"              // [OPTIONAL] keyboard shortcut
+  checkmark                  // [OPTIONAL] show checkmark icon
+  className="my-class"       // [OPTIONAL] custom class
+  disabled                   // [OPTIONAL] disable the item
+>
+  {/* Optional nested items for submenu */}
+</DropdownMenu.CheckboxItem>
+```
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "title",
+      description: "Title of the item",
+      required: true,
+      value: "ReactNode",
+    },
+    {
+      name: "checked",
+      description: "Whether the checkbox is checked",
+      required: false,
+      value: "boolean | 'indeterminate'",
+      defaultValue: "false",
+    },
+    {
+      name: "onCheckedChange",
+      description: "Callback called when the checked state changes",
+      required: false,
+      value: "(checked: boolean) => void",
+    },
+    {
+      name: "description",
+      description: "Description text shown below the title",
+      required: false,
+      value: "string",
+    },
+    {
+      name: "label",
+      description: "Right-aligned label text",
+      required: false,
+      value: "string",
+    },
+    {
+      name: "shortcut",
+      description: "Keyboard shortcut text",
+      required: false,
+      value: "string",
+    },
+    {
+      name: "checkmark",
+      description: "Show checkmark icon on the right",
+      required: false,
+      value: "boolean",
+      defaultValue: "false",
+    },
+    {
+      name: "tag",
+      description: "Tag to show after the title (e.g. 'New', 'Beta')",
+      required: false,
+      value: "TagProps",
+    },
+    {
+      name: "className",
+      description: "Custom class name",
+      required: false,
+      value: "string",
+    },
+    {
+      name: "disabled",
+      description: "Disable the item",
+      required: false,
+      value: "boolean",
+      defaultValue: "false",
+    },
+    {
+      name: "children",
+      description: "Nested items for creating a submenu",
+      required: false,
+      value: "ReactNode",
+    },
+  ]}
+/>

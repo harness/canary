@@ -1,0 +1,131 @@
+---
+title: Avatar items
+description: Avatar items in a DropdownMenu
+---
+
+import { DocsPage } from "@/components/docs-page";
+
+The `DropdownMenu` component supports avatar items using the `DropdownMenu.AvatarItem` component. This allows you to create items with avatars that can be used to represent users or other entities.
+
+<DocsPage.ComponentExample
+  client:only
+  code={`<DropdownMenu.Root>
+    <DropdownMenu.Trigger aria-label="options menu" asChild>
+        <Button variant="ghost" iconOnly>
+            <IconV2 name="more-horizontal" />
+        </Button>
+    </DropdownMenu.Trigger>
+
+    <DropdownMenu.Content>
+        <DropdownMenu.AvatarItem src="/avatar.png" title="With avatar" />
+        <DropdownMenu.AvatarItem src="/avatar.png" title="With squared avatar" rounded={false} />
+        <DropdownMenu.AvatarItem src="/avatar.png" title="With avatar and description" description="Item description" />
+        <DropdownMenu.AvatarItem title="With avatar fallback" />
+        <DropdownMenu.AvatarItem title="With group avatar fallback" isGroup />
+
+  </DropdownMenu.Content>
+</DropdownMenu.Root>`}
+/>
+
+## Properties
+
+### `AvatarItem`
+
+The `AvatarItem` component is a specialized item that displays an avatar.
+
+```typescript jsx
+<DropdownMenu.AvatarItem
+  src="/avatar.png"         // avatar image source
+  title="Item title"        // title of the item
+  rounded                   // [OPTIONAL] rounded avatar
+  description="Description" // [OPTIONAL] description text
+  label="Label"             // [OPTIONAL] right-aligned label
+  shortcut="⌘K"             // [OPTIONAL] keyboard shortcut
+  checkmark                 // [OPTIONAL] show checkmark icon
+  className="my-class"      // [OPTIONAL] custom class
+  disabled                  // [OPTIONAL] disable the item
+  onSelect={onSelect}       // [OPTIONAL] event handler
+>
+  {/* Optional nested items for submenu */}
+</DropdownMenu.AvatarItem>
+```
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "src",
+      description: "Avatar image source",
+      required: false,
+      value: "string",
+    },
+    {
+      name: "rounded",
+      description: "Whether the avatar should be rounded",
+      required: false,
+      value: "boolean",
+      defaultValue: "true",
+    },
+    {
+      name: "title",
+      description: "Title of the item",
+      required: true,
+      value: "ReactNode",
+    },
+    {
+      name: "description",
+      description: "Description text shown below the title",
+      required: false,
+      value: "string",
+    },
+    {
+      name: "label",
+      description: "Right-aligned label text",
+      required: false,
+      value: "string",
+    },
+    {
+      name: "shortcut",
+      description: "Keyboard shortcut text",
+      required: false,
+      value: "string",
+    },
+    {
+      name: "checkmark",
+      description: "Show checkmark icon on the right",
+      required: false,
+      value: "boolean",
+      defaultValue: "false",
+    },
+    {
+      name: "tag",
+      description: "Tag to show after the title (e.g. 'New', 'Beta')",
+      required: false,
+      value: "TagProps",
+    },
+    {
+      name: "className",
+      description: "Custom class name",
+      required: false,
+      value: "string",
+    },
+    {
+      name: "disabled",
+      description: "Disable the item",
+      required: false,
+      value: "boolean",
+      defaultValue: "false",
+    },
+    {
+      name: "onSelect",
+      description: "Event handler called when the item is selected",
+      required: false,
+      value: "(event: Event) => void",
+    },
+    {
+      name: "children",
+      description: "Nested items for creating a submenu",
+      required: false,
+      value: "ReactNode",
+    },
+  ]}
+/>

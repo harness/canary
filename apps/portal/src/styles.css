@@ -514,6 +514,25 @@ ul.top-level summary svg {
   @apply font-normal text-cn-4 text-cn-size-5;
 }
 
+/* CONTENT COLUMN WIDTH — keep it consistent across pages.
+   The doc content is a flex item (DocTemplate's `.flex-1.min-w-0`) sitting next to
+   the fixed 200px "On this page" TOC. A flex item's automatic minimum size is its
+   content's min-content width, so a single long, unwrapped code line (e.g. Button
+   Group's Usage example) can inflate the column — and the capped 1200px shell —
+   shoving the TOC toward the edge and making that page wider than its siblings.
+   Pin min-width:0 on the flex item so long code scrolls/clips inside it instead of
+   widening the column; every page's content column then stays the same width. */
+div:has(> main[data-pagefind-body]) {
+  min-width: 0 !important;
+}
+
+/* The DocTemplate row itself (max-width:1200px) is a flex item inside a
+   justify-center parent, so it too defaults to min-width:auto and can grow past
+   1200px when its content's min-content is large. Pin it to 0 so max-width wins. */
+div[style*="1200px"]:has(main[data-pagefind-body]) {
+  min-width: 0 !important;
+}
+
 .right-sidebar-panel {
   @apply px-cn-sm pl-cn-md py-cn-xl pt-cn-3xl;
 

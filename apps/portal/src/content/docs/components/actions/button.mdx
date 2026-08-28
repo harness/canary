@@ -17,6 +17,20 @@ import PageTabsToc from "@/components/page-tabs-toc.astro";
 
 The `Button` component allows users to trigger actions, submit forms, and navigate through the application. The button component supports various combinations of variants, themes, sizes, and states.
 
+## Default Button
+
+The default button with no specified variant or theme.
+
+<DocsPage.ComponentExample
+  client:only
+  code={`<div className="space-y-cn-sm">
+  <div className="flex items-center gap-cn-md">
+    <span className="text-cn-size-2 text-cn-3 w-32 shrink-0 font-mono">default</span>
+    <Button>Default Button</Button>
+  </div>
+</div>`}
+/>
+
 ## Usage
 
 ```tsx
@@ -69,20 +83,6 @@ import { Button } from '@harnessio/ui/components'
 // Disabled state
 <Button disabled>Disabled Button</Button>
 ```
-
-## Default Button
-
-The default button with no specified variant or theme.
-
-<DocsPage.ComponentExample
-  client:only
-  code={`<div className="space-y-cn-sm">
-  <div className="flex items-center gap-cn-md">
-    <span className="text-cn-size-2 text-cn-3 w-32 shrink-0 font-mono">default</span>
-    <Button>Default Button</Button>
-  </div>
-</div>`}
-/>
 
 ## Primary Button
 

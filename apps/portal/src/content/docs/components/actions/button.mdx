@@ -200,9 +200,15 @@ Secondary buttons can be styled with different themes for various contexts.
   client:only
   code={`<div className="space-y-cn-sm">
   <div className="flex items-center gap-cn-md border-b border-cn-borders-3 pb-cn-sm">
-    <span className="text-cn-size-2 text-cn-3 w-32 shrink-0 font-mono">themes</span>
+    <span className="text-cn-size-2 text-cn-3 w-32 shrink-0 font-mono">default</span>
     <div className="flex gap-cn-sm items-center">
       <Button variant="secondary" theme="default">Secondary Default</Button>
+    </div>
+  </div>
+
+  <div className="flex items-center gap-cn-md border-b border-cn-borders-3 pb-cn-sm">
+    <span className="text-cn-size-2 text-cn-3 w-32 shrink-0 font-mono">themes</span>
+    <div className="flex gap-cn-sm items-center">
       <Button variant="secondary" theme="success">Secondary Success</Button>
       <Button variant="secondary" theme="danger">Secondary Danger</Button>
       <Button variant="secondary" theme="warning">Secondary Warning</Button>

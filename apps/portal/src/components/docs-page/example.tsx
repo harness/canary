@@ -131,7 +131,7 @@ const Example: FC<ExampleProps> = ({
               >
                 <div
                   className={cn(
-                    "grid place-items-center p-cn-3xl live-provider-router-wrapper",
+                    "grid place-items-center p-[20px] live-provider-router-wrapper",
                     contentClassName,
                   )}
                 >

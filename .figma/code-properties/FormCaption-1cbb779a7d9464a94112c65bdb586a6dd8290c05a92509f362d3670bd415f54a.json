@@ -1,0 +1,34 @@
+{
+  "schemaVersion": 1,
+  "source": {
+    "componentName": "FormCaption",
+    "filePath": "packages/ui/src/components/form-primitives/form-caption.tsx"
+  },
+  "codeProperties": {
+    "theme": {
+      "type": "string",
+      "name": "Theme",
+      "defaultValue": "default",
+      "options": [
+        "default",
+        "success",
+        "danger",
+        "warning"
+      ],
+      "control": {
+        "type": "select",
+        "labels": {
+          "default": "Default",
+          "success": "Success",
+          "danger": "Danger",
+          "warning": "Warning"
+        }
+      }
+    },
+    "disabled": {
+      "type": "boolean",
+      "name": "Disabled",
+      "defaultValue": false
+    }
+  }
+}

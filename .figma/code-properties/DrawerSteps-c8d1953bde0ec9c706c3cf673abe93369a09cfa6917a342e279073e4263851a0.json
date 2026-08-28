@@ -1,0 +1,14 @@
+{
+  "schemaVersion": 1,
+  "source": {
+    "componentName": "DrawerSteps",
+    "filePath": "packages/ui/src/components/drawer/DrawerSteps.tsx"
+  },
+  "codeProperties": {
+    "value": {
+      "name": "Value",
+      "type": "string",
+      "description": "The currently active step value."
+    }
+  }
+}

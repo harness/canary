@@ -1,0 +1,83 @@
+{
+  "schemaVersion": 1,
+  "source": {
+    "componentName": "Tooltip",
+    "filePath": "packages/ui/src/components/tooltip.tsx"
+  },
+  "codeProperties": {
+    "title": {
+      "type": "string",
+      "name": "Title",
+      "description": "Optional title displayed at the top of the tooltip."
+    },
+    "hideArrow": {
+      "type": "boolean",
+      "name": "Hide Arrow",
+      "description": "When true, hides the tooltip arrow.",
+      "defaultValue": false
+    },
+    "delay": {
+      "type": "number",
+      "name": "Delay",
+      "description": "Delay in milliseconds before the tooltip appears.",
+      "defaultValue": 400
+    },
+    "side": {
+      "type": "string",
+      "name": "Side",
+      "description": "The side of the trigger the tooltip appears on.",
+      "defaultValue": "top",
+      "options": [
+        "top",
+        "bottom",
+        "left",
+        "right"
+      ],
+      "control": {
+        "type": "select",
+        "labels": {
+          "top": "Top",
+          "bottom": "Bottom",
+          "left": "Left",
+          "right": "Right"
+        }
+      }
+    },
+    "align": {
+      "type": "string",
+      "name": "Align",
+      "description": "Alignment of the tooltip relative to the trigger.",
+      "defaultValue": "center",
+      "options": [
+        "start",
+        "center",
+        "end"
+      ],
+      "control": {
+        "type": "select",
+        "labels": {
+          "start": "Start",
+          "center": "Center",
+          "end": "End"
+        }
+      }
+    },
+    "theme": {
+      "type": "string",
+      "name": "Theme",
+      "description": "Theme variant of the tooltip. 'default' uses high-contrast fixed colors; 'themed' follows the current theme palette.",
+      "defaultValue": "default",
+      "options": [
+        "default",
+        "themed"
+      ],
+      "control": {
+        "type": "select",
+        "labels": {
+          "default": "Default",
+          "themed": "Themed"
+        }
+      }
+    }
+  }
+}

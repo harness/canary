@@ -1,0 +1,14 @@
+{
+  "schemaVersion": 1,
+  "source": {
+    "componentName": "DrawerOverlay",
+    "filePath": "packages/ui/src/components/drawer/DrawerOverlay.tsx"
+  },
+  "codeProperties": {
+    "withCustomOverlay": {
+      "type": "boolean",
+      "name": "With Custom Overlay",
+      "defaultValue": false
+    }
+  }
+}

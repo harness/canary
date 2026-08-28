@@ -1,0 +1,97 @@
+{
+  "schemaVersion": 1,
+  "source": {
+    "componentName": "Select",
+    "filePath": "packages/ui/src/components/form-primitives/select.tsx"
+  },
+  "codeProperties": {
+    "label": {
+      "name": "Label",
+      "type": "string"
+    },
+    "placeholder": {
+      "name": "Placeholder",
+      "type": "string"
+    },
+    "caption": {
+      "name": "Caption",
+      "type": "string"
+    },
+    "error": {
+      "name": "Error",
+      "type": "string"
+    },
+    "warning": {
+      "name": "Warning",
+      "type": "string"
+    },
+    "theme": {
+      "name": "Theme",
+      "type": "string",
+      "defaultValue": "default",
+      "options": [
+        "default",
+        "danger",
+        "warning"
+      ],
+      "control": {
+        "type": "select",
+        "labels": {
+          "default": "Default",
+          "danger": "Danger",
+          "warning": "Warning"
+        }
+      }
+    },
+    "size": {
+      "name": "Size",
+      "type": "string",
+      "defaultValue": "md",
+      "options": [
+        "md",
+        "sm"
+      ],
+      "control": {
+        "type": "select",
+        "labels": {
+          "md": "Medium",
+          "sm": "Small"
+        }
+      }
+    },
+    "disabled": {
+      "name": "Disabled",
+      "type": "boolean"
+    },
+    "isLoading": {
+      "name": "Loading",
+      "type": "boolean",
+      "defaultValue": false
+    },
+    "allowSearch": {
+      "name": "Allow Search",
+      "type": "boolean",
+      "defaultValue": false
+    },
+    "optional": {
+      "name": "Optional",
+      "type": "boolean"
+    },
+    "contentWidth": {
+      "name": "Content Width",
+      "type": "string",
+      "defaultValue": "auto",
+      "options": [
+        "auto",
+        "triggerWidth"
+      ],
+      "control": {
+        "type": "select",
+        "labels": {
+          "auto": "Auto",
+          "triggerWidth": "Trigger Width"
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "schemaVersion": 1,
+  "source": {
+    "componentName": "FormSeparator",
+    "filePath": "packages/ui/src/components/form-primitives/separator.tsx"
+  },
+  "codeProperties": {
+    "dashed": {
+      "name": "Dashed",
+      "type": "boolean",
+      "defaultValue": false
+    },
+    "dotted": {
+      "name": "Dotted",
+      "type": "boolean",
+      "defaultValue": false
+    }
+  }
+}

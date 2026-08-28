@@ -1,0 +1,52 @@
+{
+  "schemaVersion": 1,
+  "source": {
+    "componentName": "StatsPanel",
+    "filePath": "packages/ui/src/components/stats-panel.tsx"
+  },
+  "codeProperties": {
+    "isLoading": {
+      "type": "boolean",
+      "name": "Is Loading",
+      "description": "When true, renders skeleton placeholders instead of stat values.",
+      "defaultValue": false
+    },
+    "gap": {
+      "type": "string",
+      "name": "Gap",
+      "description": "Vertical gap between the label and value within each stat item.",
+      "defaultValue": "3xs",
+      "options": [
+        "none",
+        "4xs",
+        "3xs",
+        "2xs",
+        "xs",
+        "sm",
+        "md",
+        "lg",
+        "xl",
+        "2xl",
+        "3xl",
+        "4xl"
+      ],
+      "control": {
+        "type": "select",
+        "labels": {
+          "none": "None",
+          "4xs": "4XS",
+          "3xs": "3XS",
+          "2xs": "2XS",
+          "xs": "XS",
+          "sm": "Small",
+          "md": "Medium",
+          "lg": "Large",
+          "xl": "XL",
+          "2xl": "2XL",
+          "3xl": "3XL",
+          "4xl": "4XL"
+        }
+      }
+    }
+  }
+}

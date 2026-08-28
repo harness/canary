@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 1,
+  "source": {
+    "componentName": "FileToolbarActions",
+    "filePath": "packages/ui/src/components/file-toolbar-actions.tsx"
+  },
+  "codeProperties": {
+    "showEdit": {
+      "name": "Show Edit",
+      "type": "boolean",
+      "defaultValue": false,
+      "description": "Whether to show the Edit button."
+    },
+    "size": {
+      "name": "Size",
+      "type": "string",
+      "defaultValue": "sm",
+      "options": [
+        "",
+        "xs",
+        "sm",
+        "md",
+        "lg"
+      ],
+      "control": {
+        "type": "select",
+        "labels": {
+          "": "Default",
+          "xs": "Extra Small",
+          "sm": "Small",
+          "md": "Medium",
+          "lg": "Large"
+        }
+      }
+    }
+  }
+}

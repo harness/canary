@@ -1,0 +1,82 @@
+{
+  "schemaVersion": 1,
+  "source": {
+    "componentName": "BranchTag",
+    "filePath": "packages/ui/src/components/branch-tag.tsx"
+  },
+  "codeProperties": {
+    "branchName": {
+      "type": "string",
+      "name": "Branch Name",
+      "description": "The name of the branch to display."
+    },
+    "spaceId": {
+      "type": "string",
+      "name": "Space ID",
+      "description": "Optional space identifier used to build the branch link."
+    },
+    "repoId": {
+      "type": "string",
+      "name": "Repo ID",
+      "description": "Optional repository identifier used to build the branch link."
+    },
+    "hideBranchIcon": {
+      "type": "boolean",
+      "name": "Hide Branch Icon",
+      "description": "When true, hides the git-branch icon from the tag."
+    },
+    "hideCopyButton": {
+      "type": "boolean",
+      "name": "Hide Copy Button",
+      "description": "When true, hides the copy button from the tag."
+    },
+    "theme": {
+      "type": "string",
+      "name": "Theme",
+      "defaultValue": "gray",
+      "options": [
+        "",
+        "gray"
+      ],
+      "control": {
+        "type": "select",
+        "labels": {
+          "": "Default",
+          "gray": "Gray"
+        }
+      }
+    },
+    "variant": {
+      "type": "string",
+      "name": "Variant",
+      "defaultValue": "secondary",
+      "options": [
+        "",
+        "secondary"
+      ],
+      "control": {
+        "type": "select",
+        "labels": {
+          "": "Default",
+          "secondary": "Secondary"
+        }
+      }
+    },
+    "size": {
+      "type": "string",
+      "name": "Size",
+      "defaultValue": "md",
+      "options": [
+        "",
+        "md"
+      ],
+      "control": {
+        "type": "select",
+        "labels": {
+          "": "Default",
+          "md": "Medium"
+        }
+      }
+    }
+  }
+}

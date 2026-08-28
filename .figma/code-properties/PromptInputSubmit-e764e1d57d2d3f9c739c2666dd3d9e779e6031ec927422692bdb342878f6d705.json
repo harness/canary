@@ -1,0 +1,30 @@
+{
+  "schemaVersion": 1,
+  "source": {
+    "componentName": "PromptInputSubmit",
+    "filePath": "packages/ui/src/components/chat/prompt-input.tsx"
+  },
+  "codeProperties": {
+    "status": {
+      "type": "string",
+      "name": "Status",
+      "description": "When set to 'streaming', shows a stop icon instead of the submit icon.",
+      "options": [
+        "",
+        "streaming"
+      ],
+      "control": {
+        "type": "select",
+        "labels": {
+          "": "Default",
+          "streaming": "Streaming"
+        }
+      }
+    },
+    "disabled": {
+      "type": "boolean",
+      "name": "Disabled",
+      "description": "When true, disables the submit button."
+    }
+  }
+}

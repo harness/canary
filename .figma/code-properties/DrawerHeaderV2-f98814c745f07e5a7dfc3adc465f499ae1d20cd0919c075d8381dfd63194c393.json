@@ -1,0 +1,36 @@
+{
+  "schemaVersion": 1,
+  "source": {
+    "componentName": "DrawerHeaderV2",
+    "filePath": "packages/ui/src/components/drawer/drawer-header-v2.tsx"
+  },
+  "codeProperties": {
+    "title": {
+      "type": "string",
+      "name": "Title",
+      "description": "The main title displayed in the drawer header."
+    },
+    "description": {
+      "type": "string",
+      "name": "Description",
+      "description": "Optional description displayed below the title."
+    },
+    "icon": {
+      "type": "string",
+      "name": "Icon",
+      "description": "Icon name displayed to the left of the title."
+    },
+    "hideClose": {
+      "type": "boolean",
+      "name": "Hide Close",
+      "defaultValue": false,
+      "description": "Whether to hide the close button."
+    },
+    "isLoading": {
+      "type": "boolean",
+      "name": "Is Loading",
+      "defaultValue": false,
+      "description": "Shows skeleton loaders in place of actions and children."
+    }
+  }
+}

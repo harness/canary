@@ -1,0 +1,39 @@
+{
+  "schemaVersion": 1,
+  "source": {
+    "componentName": "CommitCopyActions",
+    "filePath": "packages/ui/src/components/commit-copy-actions.tsx"
+  },
+  "codeProperties": {
+    "sha": {
+      "type": "string",
+      "name": "SHA",
+      "description": "The commit SHA to display and copy."
+    },
+    "size": {
+      "type": "string",
+      "name": "Size",
+      "defaultValue": "xs",
+      "options": [
+        "xs",
+        "sm",
+        "md",
+        "lg"
+      ],
+      "control": {
+        "type": "select",
+        "labels": {
+          "xs": "Extra Small",
+          "sm": "Small",
+          "md": "Medium",
+          "lg": "Large"
+        }
+      }
+    },
+    "pullRequestId": {
+      "type": "number",
+      "name": "Pull Request ID",
+      "description": "Optional pull request ID used for navigation."
+    }
+  }
+}

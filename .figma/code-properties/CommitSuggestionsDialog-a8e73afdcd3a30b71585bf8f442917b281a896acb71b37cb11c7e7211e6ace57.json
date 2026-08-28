@@ -1,0 +1,24 @@
+{
+  "schemaVersion": 1,
+  "source": {
+    "componentName": "CommitSuggestionsDialog",
+    "filePath": "packages/ui/src/components/commit-suggestions-dialog/commit-suggestions-dialog.tsx"
+  },
+  "codeProperties": {
+    "isOpen": {
+      "type": "boolean",
+      "name": "Is Open",
+      "description": "Controls whether the dialog is open."
+    },
+    "commitTitlePlaceHolder": {
+      "type": "string",
+      "name": "Commit Title Placeholder",
+      "description": "Placeholder text for the commit title field."
+    },
+    "isSubmitting": {
+      "type": "boolean",
+      "name": "Is Submitting",
+      "description": "When true, disables buttons and shows a loading state."
+    }
+  }
+}

@@ -1,0 +1,38 @@
+{
+  "schemaVersion": 1,
+  "source": {
+    "componentName": "SearchableDropdown",
+    "filePath": "packages/ui/src/components/searchable-dropdown/searchable-dropdown.tsx"
+  },
+  "codeProperties": {
+    "dropdownAlign": {
+      "name": "Dropdown Align",
+      "type": "string",
+      "defaultValue": "end",
+      "options": [
+        "start",
+        "end"
+      ],
+      "control": {
+        "type": "select",
+        "labels": {
+          "start": "Start",
+          "end": "End"
+        }
+      }
+    },
+    "inputPlaceholder": {
+      "name": "Input Placeholder",
+      "type": "string"
+    },
+    "buttonLabel": {
+      "name": "Button Label",
+      "type": "string"
+    },
+    "isSearchable": {
+      "name": "Is Searchable",
+      "type": "boolean",
+      "defaultValue": false
+    }
+  }
+}

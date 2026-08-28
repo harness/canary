@@ -1,0 +1,22 @@
+{
+  "schemaVersion": 1,
+  "source": {
+    "componentName": "ImageCarousel",
+    "filePath": "packages/ui/src/components/image-carousel.tsx"
+  },
+  "codeProperties": {
+    "isOpen": {
+      "name": "Is Open",
+      "type": "boolean",
+      "defaultValue": false
+    },
+    "title": {
+      "name": "Title",
+      "type": "string"
+    },
+    "initialSlide": {
+      "name": "Initial Slide",
+      "type": "number"
+    }
+  }
+}

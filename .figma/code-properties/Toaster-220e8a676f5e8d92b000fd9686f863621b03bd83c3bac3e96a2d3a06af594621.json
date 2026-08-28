@@ -1,0 +1,14 @@
+{
+  "schemaVersion": 1,
+  "source": {
+    "componentName": "Toaster",
+    "filePath": "packages/ui/src/components/toast/toaster.tsx"
+  },
+  "codeProperties": {
+    "duration": {
+      "type": "number",
+      "name": "Duration",
+      "defaultValue": 5000
+    }
+  }
+}

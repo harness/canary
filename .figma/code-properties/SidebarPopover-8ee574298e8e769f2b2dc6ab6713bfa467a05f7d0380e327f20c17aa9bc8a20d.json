@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "source": {
+    "componentName": "SidebarPopover",
+    "filePath": "packages/ui/src/components/sidebar/sidebar-popover.tsx"
+  },
+  "codeProperties": {
+    "open": {
+      "type": "boolean",
+      "name": "Open"
+    },
+    "defaultOpen": {
+      "type": "boolean",
+      "name": "Default Open"
+    },
+    "content": {
+      "type": {
+        "name": "other",
+        "value": "figma-reference"
+      },
+      "name": "Content",
+      "control": false
+    }
+  }
+}

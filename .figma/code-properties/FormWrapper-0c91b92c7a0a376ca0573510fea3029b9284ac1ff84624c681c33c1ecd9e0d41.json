@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "source": {
+    "componentName": "FormWrapper",
+    "filePath": "packages/ui/src/components/form-primitives/form-wrapper.tsx"
+  },
+  "codeProperties": {
+    "orientation": {
+      "type": "string",
+      "name": "Orientation",
+      "defaultValue": "vertical",
+      "options": [
+        "vertical",
+        "horizontal"
+      ],
+      "control": {
+        "type": "select",
+        "labels": {
+          "vertical": "Vertical",
+          "horizontal": "Horizontal"
+        }
+      }
+    }
+  }
+}

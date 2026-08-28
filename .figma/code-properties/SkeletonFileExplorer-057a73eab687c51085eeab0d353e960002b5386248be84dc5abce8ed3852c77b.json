@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 1,
+  "source": {
+    "componentName": "SkeletonFileExplorer",
+    "filePath": "packages/ui/src/components/skeletons/skeloton-file-explorer.tsx"
+  },
+  "codeProperties": {
+    "linesCount": {
+      "type": "number",
+      "name": "Lines Count",
+      "description": "Number of file explorer skeleton rows to render.",
+      "defaultValue": 1
+    }
+  }
+}

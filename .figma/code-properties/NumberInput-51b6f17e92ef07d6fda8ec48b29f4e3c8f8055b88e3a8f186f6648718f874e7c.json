@@ -1,0 +1,88 @@
+{
+  "schemaVersion": 1,
+  "source": {
+    "componentName": "NumberInput",
+    "filePath": "packages/ui/src/components/inputs/number-input.tsx"
+  },
+  "codeProperties": {
+    "label": {
+      "name": "Label",
+      "type": "string"
+    },
+    "disabled": {
+      "name": "Disabled",
+      "type": "boolean",
+      "defaultValue": false
+    },
+    "optional": {
+      "name": "Optional",
+      "type": "boolean"
+    },
+    "caption": {
+      "name": "Caption",
+      "type": "string"
+    },
+    "error": {
+      "name": "Error",
+      "type": "string"
+    },
+    "warning": {
+      "name": "Warning",
+      "type": "string"
+    },
+    "theme": {
+      "name": "Theme",
+      "type": "string",
+      "defaultValue": "default",
+      "options": [
+        "default",
+        "danger",
+        "warning",
+        "success"
+      ],
+      "control": {
+        "type": "select",
+        "labels": {
+          "default": "Default",
+          "danger": "Danger",
+          "warning": "Warning",
+          "success": "Success"
+        }
+      }
+    },
+    "hideStepper": {
+      "name": "Hide Stepper",
+      "type": "boolean",
+      "defaultValue": false
+    },
+    "integerOnly": {
+      "name": "Integer Only",
+      "type": "boolean",
+      "defaultValue": false
+    },
+    "orientation": {
+      "name": "Orientation",
+      "type": "string",
+      "options": [
+        "",
+        "horizontal"
+      ],
+      "control": {
+        "type": "select",
+        "labels": {
+          "": "Default",
+          "horizontal": "Horizontal"
+        }
+      }
+    },
+    "readOnly": {
+      "name": "Read Only",
+      "type": "boolean",
+      "defaultValue": false
+    },
+    "placeholder": {
+      "name": "Placeholder",
+      "type": "string"
+    }
+  }
+}

@@ -1,0 +1,20 @@
+{
+  "schemaVersion": 1,
+  "source": {
+    "componentName": "CalendarInputView",
+    "filePath": "packages/ui/src/components/calendar-input-view.tsx"
+  },
+  "codeProperties": {
+    "value": {
+      "type": "string",
+      "name": "Value",
+      "description": "The currently selected date as a string."
+    },
+    "placeholder": {
+      "type": "string",
+      "name": "Placeholder",
+      "defaultValue": "Select date",
+      "description": "Placeholder text shown when no date is selected."
+    }
+  }
+}

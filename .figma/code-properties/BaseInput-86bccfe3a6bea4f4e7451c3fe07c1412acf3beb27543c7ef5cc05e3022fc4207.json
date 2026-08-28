@@ -1,0 +1,63 @@
+{
+  "schemaVersion": 1,
+  "source": {
+    "componentName": "BaseInput",
+    "filePath": "packages/ui/src/components/inputs/base-input.tsx"
+  },
+  "codeProperties": {
+    "size": {
+      "name": "Size",
+      "type": "string",
+      "defaultValue": "md",
+      "options": [
+        "md",
+        "sm"
+      ],
+      "control": {
+        "type": "select",
+        "labels": {
+          "md": "Medium",
+          "sm": "Small"
+        }
+      }
+    },
+    "theme": {
+      "name": "Theme",
+      "type": "string",
+      "defaultValue": "default",
+      "options": [
+        "default",
+        "danger",
+        "warning",
+        "success"
+      ],
+      "control": {
+        "type": "select",
+        "labels": {
+          "default": "Default",
+          "danger": "Danger",
+          "warning": "Warning",
+          "success": "Success"
+        }
+      }
+    },
+    "label": {
+      "name": "Label",
+      "type": "string"
+    },
+    "disabled": {
+      "name": "Disabled",
+      "type": "boolean",
+      "defaultValue": false
+    },
+    "placeholder": {
+      "name": "Placeholder",
+      "type": "string"
+    },
+    "readOnly": {
+      "name": "Read Only",
+      "type": "boolean",
+      "defaultValue": false
+    }
+  }
+}

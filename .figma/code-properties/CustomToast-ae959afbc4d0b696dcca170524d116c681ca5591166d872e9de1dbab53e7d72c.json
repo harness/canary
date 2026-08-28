@@ -1,0 +1,48 @@
+{
+  "schemaVersion": 1,
+  "source": {
+    "componentName": "CustomToast",
+    "filePath": "packages/ui/src/components/toast/custom-toast.tsx"
+  },
+  "codeProperties": {
+    "variant": {
+      "type": "string",
+      "name": "Variant",
+      "defaultValue": "default",
+      "options": [
+        "default",
+        "loading",
+        "danger",
+        "info",
+        "success"
+      ],
+      "control": {
+        "type": "select",
+        "labels": {
+          "default": "Default",
+          "loading": "Loading",
+          "danger": "Danger",
+          "info": "Info",
+          "success": "Success"
+        }
+      }
+    },
+    "title": {
+      "type": "string",
+      "name": "Title"
+    },
+    "closeButton": {
+      "type": "boolean",
+      "name": "Close Button",
+      "defaultValue": true
+    },
+    "successMessage": {
+      "type": "string",
+      "name": "Success Message"
+    },
+    "errorMessage": {
+      "type": "string",
+      "name": "Error Message"
+    }
+  }
+}

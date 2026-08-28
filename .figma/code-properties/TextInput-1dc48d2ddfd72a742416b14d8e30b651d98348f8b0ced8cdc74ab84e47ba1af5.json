@@ -1,0 +1,72 @@
+{
+  "schemaVersion": 1,
+  "source": {
+    "componentName": "TextInput",
+    "filePath": "packages/ui/src/components/inputs/text-input.tsx"
+  },
+  "codeProperties": {
+    "label": {
+      "name": "Label",
+      "type": "string"
+    },
+    "placeholder": {
+      "name": "Placeholder",
+      "type": "string"
+    },
+    "caption": {
+      "name": "Caption",
+      "type": "string"
+    },
+    "error": {
+      "name": "Error",
+      "type": "string"
+    },
+    "warning": {
+      "name": "Warning",
+      "type": "string"
+    },
+    "disabled": {
+      "name": "Disabled",
+      "type": "boolean"
+    },
+    "optional": {
+      "name": "Optional",
+      "type": "boolean"
+    },
+    "type": {
+      "name": "Type",
+      "type": "string",
+      "options": [
+        "text",
+        "email",
+        "password",
+        "tel",
+        "url",
+        "date",
+        "time",
+        "datetime-local",
+        "month",
+        "week",
+        "color",
+        "file"
+      ],
+      "control": {
+        "type": "select",
+        "labels": {
+          "text": "Text",
+          "email": "Email",
+          "password": "Password",
+          "tel": "Tel",
+          "url": "URL",
+          "date": "Date",
+          "time": "Time",
+          "datetime-local": "Datetime Local",
+          "month": "Month",
+          "week": "Week",
+          "color": "Color",
+          "file": "File"
+        }
+      }
+    }
+  }
+}

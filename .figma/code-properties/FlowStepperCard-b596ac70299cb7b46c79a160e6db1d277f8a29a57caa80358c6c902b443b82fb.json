@@ -1,0 +1,24 @@
+{
+  "schemaVersion": 1,
+  "source": {
+    "componentName": "FlowStepperCard",
+    "filePath": "packages/ui/src/components/flow-stepper/flow-stepper-card.tsx"
+  },
+  "codeProperties": {
+    "title": {
+      "type": "string",
+      "name": "Title",
+      "description": "The title displayed in the card header."
+    },
+    "description": {
+      "type": "string",
+      "name": "Description",
+      "description": "Optional description text displayed below the title."
+    },
+    "blockedMessage": {
+      "type": "string",
+      "name": "Blocked Message",
+      "description": "When set, renders a warning icon and message above card content."
+    }
+  }
+}

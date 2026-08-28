@@ -1,0 +1,32 @@
+{
+  "schemaVersion": 1,
+  "source": {
+    "componentName": "CheckboxTreeRoot",
+    "filePath": "packages/ui/src/components/checkbox-tree/checkbox-tree-root.tsx"
+  },
+  "codeProperties": {
+    "showSelectAll": {
+      "type": "boolean",
+      "name": "Show Select All",
+      "defaultValue": false,
+      "description": "Whether to show a 'Select All' checkbox at the top."
+    },
+    "selectAllLabel": {
+      "type": "string",
+      "name": "Select All Label",
+      "defaultValue": "Select All",
+      "description": "Label for the 'Select All' checkbox."
+    },
+    "showCount": {
+      "type": "boolean",
+      "name": "Show Count",
+      "defaultValue": false,
+      "description": "Whether to show the leaf count next to group labels."
+    },
+    "disabled": {
+      "type": "boolean",
+      "name": "Disabled",
+      "description": "Disables all checkboxes in the tree."
+    }
+  }
+}

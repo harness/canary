@@ -1,0 +1,42 @@
+{
+  "schemaVersion": 1,
+  "source": {
+    "componentName": "GitCommitDialog",
+    "filePath": "packages/ui/src/components/git-commit-dialog/git-commit-dialog.tsx"
+  },
+  "codeProperties": {
+    "isOpen": {
+      "name": "Is Open",
+      "type": "boolean"
+    },
+    "isFileNameRequired": {
+      "name": "Is File Name Required",
+      "type": "boolean",
+      "defaultValue": false
+    },
+    "commitTitlePlaceHolder": {
+      "name": "Commit Title Placeholder",
+      "type": "string"
+    },
+    "currentBranch": {
+      "name": "Current Branch",
+      "type": "string"
+    },
+    "violation": {
+      "name": "Violation",
+      "type": "boolean"
+    },
+    "bypassable": {
+      "name": "Bypassable",
+      "type": "boolean"
+    },
+    "disableCTA": {
+      "name": "Disable CTA",
+      "type": "boolean"
+    },
+    "isSubmitting": {
+      "name": "Is Submitting",
+      "type": "boolean"
+    }
+  }
+}

@@ -1,0 +1,34 @@
+{
+  "schemaVersion": 1,
+  "source": {
+    "componentName": "Pagination",
+    "filePath": "packages/ui/src/components/pagination/pagination.tsx"
+  },
+  "codeProperties": {
+    "totalItems": {
+      "name": "Total Items",
+      "type": "number"
+    },
+    "pageSize": {
+      "name": "Page Size",
+      "type": "number"
+    },
+    "currentPage": {
+      "name": "Current Page",
+      "type": "number"
+    },
+    "hasNext": {
+      "name": "Has Next",
+      "type": "boolean"
+    },
+    "hasPrevious": {
+      "name": "Has Previous",
+      "type": "boolean"
+    },
+    "indeterminate": {
+      "name": "Indeterminate",
+      "type": "boolean",
+      "defaultValue": false
+    }
+  }
+}

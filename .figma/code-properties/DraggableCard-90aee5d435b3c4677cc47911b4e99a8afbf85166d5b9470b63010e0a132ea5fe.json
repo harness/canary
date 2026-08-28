@@ -1,0 +1,46 @@
+{
+  "schemaVersion": 1,
+  "source": {
+    "componentName": "DraggableCard",
+    "filePath": "packages/ui/src/components/draggable-card.tsx"
+  },
+  "codeProperties": {
+    "id": {
+      "type": "string",
+      "name": "ID",
+      "description": "Unique identifier for the draggable card."
+    },
+    "title": {
+      "type": "string",
+      "name": "Title",
+      "description": "Title content displayed in the card."
+    },
+    "description": {
+      "type": "string",
+      "name": "Description",
+      "description": "Optional description content displayed below the title."
+    },
+    "disableDragAndDrop": {
+      "type": "boolean",
+      "name": "Disable Drag And Drop",
+      "defaultValue": false,
+      "description": "Disables drag-and-drop interaction for this card."
+    },
+    "gripPosition": {
+      "type": "string",
+      "name": "Grip Position",
+      "defaultValue": "inside",
+      "options": [
+        "inside",
+        "outside"
+      ],
+      "control": {
+        "type": "select",
+        "labels": {
+          "inside": "Inside",
+          "outside": "Outside"
+        }
+      }
+    }
+  }
+}

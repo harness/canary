@@ -1,0 +1,63 @@
+{
+  "schemaVersion": 1,
+  "source": {
+    "componentName": "MarkdownViewer",
+    "filePath": "packages/ui/src/components/markdown-viewer/index.tsx"
+  },
+  "codeProperties": {
+    "source": {
+      "type": "string",
+      "name": "Source",
+      "description": "The markdown source string to render."
+    },
+    "speed": {
+      "type": "number",
+      "name": "Speed",
+      "description": "Typing animation speed in milliseconds per character. 0 disables animation.",
+      "defaultValue": 0
+    },
+    "withBorder": {
+      "type": "boolean",
+      "name": "With Border",
+      "description": "When true, wraps the viewer in a bordered container.",
+      "defaultValue": false
+    },
+    "showLineNumbers": {
+      "type": "boolean",
+      "name": "Show Line Numbers",
+      "description": "When true, shows line numbers in code blocks.",
+      "defaultValue": false
+    },
+    "isLoading": {
+      "type": "boolean",
+      "name": "Is Loading",
+      "description": "When true, disables checkbox interactions.",
+      "defaultValue": false
+    },
+    "muted": {
+      "type": "boolean",
+      "name": "Muted",
+      "description": "Use muted text color (text-cn-3) for markdown content.",
+      "defaultValue": false
+    },
+    "variant": {
+      "type": "string",
+      "name": "Variant",
+      "description": "Controls the visual size variant of the markdown viewer.",
+      "defaultValue": "default",
+      "options": [
+        "default",
+        "sm",
+        "xs"
+      ],
+      "control": {
+        "type": "select",
+        "labels": {
+          "default": "Default",
+          "sm": "Small",
+          "xs": "Extra Small"
+        }
+      }
+    }
+  }
+}

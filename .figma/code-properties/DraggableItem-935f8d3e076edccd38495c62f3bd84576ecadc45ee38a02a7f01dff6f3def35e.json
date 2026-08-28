@@ -1,0 +1,33 @@
+{
+  "schemaVersion": 1,
+  "source": {
+    "componentName": "DraggableItem",
+    "filePath": "packages/ui/src/components/manage-navigation/draggable-item.tsx"
+  },
+  "codeProperties": {
+    "id": {
+      "name": "ID",
+      "description": "Unique identifier for the draggable item.",
+      "type": "string"
+    },
+    "tag": {
+      "name": "Tag",
+      "description": "The HTML element tag to render as.",
+      "type": "string",
+      "defaultValue": "div",
+      "options": [
+        "button",
+        "div",
+        "li"
+      ],
+      "control": {
+        "type": "select",
+        "labels": {
+          "button": "Button",
+          "div": "Div",
+          "li": "List Item"
+        }
+      }
+    }
+  }
+}

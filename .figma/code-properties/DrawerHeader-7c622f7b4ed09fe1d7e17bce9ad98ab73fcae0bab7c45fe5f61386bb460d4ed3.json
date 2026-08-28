@@ -1,0 +1,24 @@
+{
+  "schemaVersion": 1,
+  "source": {
+    "componentName": "DrawerHeader",
+    "filePath": "packages/ui/src/components/drawer/DrawerHeader.tsx"
+  },
+  "codeProperties": {
+    "icon": {
+      "type": "string",
+      "name": "Icon",
+      "description": "Icon to display in the drawer header. Mutually exclusive with logo."
+    },
+    "logo": {
+      "type": "string",
+      "name": "Logo",
+      "description": "Logo to display in the drawer header. Mutually exclusive with icon."
+    },
+    "hideClose": {
+      "type": "boolean",
+      "name": "Hide Close",
+      "defaultValue": false
+    }
+  }
+}

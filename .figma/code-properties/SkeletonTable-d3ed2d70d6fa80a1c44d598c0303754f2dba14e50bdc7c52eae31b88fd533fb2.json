@@ -1,0 +1,27 @@
+{
+  "schemaVersion": 1,
+  "source": {
+    "componentName": "SkeletonTable",
+    "filePath": "packages/ui/src/components/skeletons/skeleton-table.tsx"
+  },
+  "codeProperties": {
+    "countRows": {
+      "type": "number",
+      "name": "Row Count",
+      "description": "Number of skeleton rows to render in the table body.",
+      "defaultValue": 12
+    },
+    "countColumns": {
+      "type": "number",
+      "name": "Column Count",
+      "description": "Number of skeleton columns to render per row.",
+      "defaultValue": 5
+    },
+    "hideHeader": {
+      "type": "boolean",
+      "name": "Hide Header",
+      "description": "When true, the table header row is not rendered.",
+      "defaultValue": false
+    }
+  }
+}

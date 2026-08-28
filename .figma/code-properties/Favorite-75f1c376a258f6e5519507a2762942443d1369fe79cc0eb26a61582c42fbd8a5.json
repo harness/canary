@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 1,
+  "source": {
+    "componentName": "Favorite",
+    "filePath": "packages/ui/src/components/favorite.tsx"
+  },
+  "codeProperties": {
+    "isFavorite": {
+      "name": "Is Favorite",
+      "type": "boolean",
+      "defaultValue": false,
+      "description": "Whether the item is currently favorited/pinned."
+    }
+  }
+}

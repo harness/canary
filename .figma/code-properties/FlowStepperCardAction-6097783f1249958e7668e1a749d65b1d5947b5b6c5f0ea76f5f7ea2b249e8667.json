@@ -1,0 +1,43 @@
+{
+  "schemaVersion": 1,
+  "source": {
+    "componentName": "FlowStepperCardAction",
+    "filePath": "packages/ui/src/components/flow-stepper/flow-stepper-card-action.tsx"
+  },
+  "codeProperties": {
+    "variant": {
+      "type": "string",
+      "name": "Variant",
+      "options": [
+        "warning",
+        "danger",
+        "info",
+        "success"
+      ],
+      "control": {
+        "type": "select",
+        "labels": {
+          "warning": "Warning",
+          "danger": "Danger",
+          "info": "Info",
+          "success": "Success"
+        }
+      }
+    },
+    "message": {
+      "type": "string",
+      "name": "Message",
+      "description": "The message text displayed in the action bar."
+    },
+    "actionLabel": {
+      "type": "string",
+      "name": "Action Label",
+      "description": "Label for the primary action button."
+    },
+    "secondaryLabel": {
+      "type": "string",
+      "name": "Secondary Label",
+      "description": "Label for the secondary action button."
+    }
+  }
+}

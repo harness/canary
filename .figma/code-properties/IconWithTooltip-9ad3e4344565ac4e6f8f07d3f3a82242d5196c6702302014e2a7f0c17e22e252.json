@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 1,
+  "source": {
+    "componentName": "IconWithTooltip",
+    "filePath": "packages/ui/src/components/icon-with-tooltip.tsx"
+  },
+  "codeProperties": {
+    "disabled": {
+      "name": "Disabled",
+      "description": "If disabled, the tooltip will not be shown.",
+      "type": "boolean",
+      "defaultValue": false
+    }
+  }
+}

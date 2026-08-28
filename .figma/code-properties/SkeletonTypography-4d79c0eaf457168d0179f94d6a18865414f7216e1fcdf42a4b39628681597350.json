@@ -1,0 +1,46 @@
+{
+  "schemaVersion": 1,
+  "source": {
+    "componentName": "SkeletonTypography",
+    "filePath": "packages/ui/src/components/skeletons/skeleton-typography.tsx"
+  },
+  "codeProperties": {
+    "variant": {
+      "type": "string",
+      "name": "Variant",
+      "description": "Typography variant that controls the skeleton's size and line height.",
+      "defaultValue": "body-normal",
+      "options": [
+        "body-normal",
+        "body-strong",
+        "caption-normal",
+        "caption-strong",
+        "heading-base",
+        "heading-1",
+        "heading-2",
+        "heading-3",
+        "heading-4",
+        "heading-5",
+        "heading-6",
+        "sub-heading"
+      ],
+      "control": {
+        "type": "select",
+        "labels": {
+          "body-normal": "Body Normal",
+          "body-strong": "Body Strong",
+          "caption-normal": "Caption Normal",
+          "caption-strong": "Caption Strong",
+          "heading-base": "Heading Base",
+          "heading-1": "Heading 1",
+          "heading-2": "Heading 2",
+          "heading-3": "Heading 3",
+          "heading-4": "Heading 4",
+          "heading-5": "Heading 5",
+          "heading-6": "Heading 6",
+          "sub-heading": "Sub Heading"
+        }
+      }
+    }
+  }
+}

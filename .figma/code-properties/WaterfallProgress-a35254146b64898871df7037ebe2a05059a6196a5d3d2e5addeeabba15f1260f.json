@@ -1,0 +1,62 @@
+{
+  "schemaVersion": 1,
+  "source": {
+    "componentName": "WaterfallProgress",
+    "filePath": "packages/ui/src/components/waterfall-progress.tsx"
+  },
+  "codeProperties": {
+    "value": {
+      "type": "number",
+      "name": "Value",
+      "control": {
+        "type": "range",
+        "min": 0,
+        "max": 100,
+        "step": 1
+      }
+    },
+    "startOffset": {
+      "type": "number",
+      "name": "Start Offset",
+      "defaultValue": 0,
+      "control": {
+        "type": "range",
+        "min": 0,
+        "max": 100,
+        "step": 1
+      }
+    },
+    "inProgress": {
+      "type": "boolean",
+      "name": "In Progress",
+      "defaultValue": false
+    },
+    "theme": {
+      "type": "string",
+      "name": "Theme",
+      "defaultValue": "muted",
+      "options": [
+        "muted",
+        "info",
+        "danger",
+        "success",
+        "warning"
+      ],
+      "control": {
+        "type": "select",
+        "labels": {
+          "muted": "Muted",
+          "info": "Info",
+          "danger": "Danger",
+          "success": "Success",
+          "warning": "Warning"
+        }
+      }
+    },
+    "label": {
+      "type": "string",
+      "name": "Label",
+      "defaultValue": ""
+    }
+  }
+}

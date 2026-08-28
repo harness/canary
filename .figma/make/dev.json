@@ -1,0 +1,168 @@
+{
+  "pointAndEdit": {
+    "priorityPaths": {
+      "prefer": [
+        "apps/gitness/src/pages-v2/**/*.{tsx,ts}",
+        "apps/gitness/src/components-v2/**/*.{tsx,ts}",
+        "apps/gitness/src/framework/**/*.{tsx,ts}",
+        "apps/gitness/src/hooks/**/*.{tsx,ts}",
+        "apps/gitness/src/App.tsx",
+        "apps/gitness/src/AppMFE.tsx",
+        "apps/design-system/src/**/*.{tsx,ts}",
+        "apps/sidebar-app/src/**/*.{tsx,ts}",
+        "packages/views/src/**/*.tsx"
+      ],
+      "deprioritize": [
+        "packages/ui/src/components/**/*.{tsx,ts}",
+        "packages/ui/src/hooks/**/*.{tsx,ts}",
+        "packages/filters/src/**/*.{tsx,ts}",
+        "packages/forms/src/**/*.{tsx,ts}",
+        "packages/pipeline-graph/src/**/*.{tsx,ts}",
+        "packages/yaml-editor/src/**/*.{tsx,ts}"
+      ],
+      "exclude": [
+        "**/*.figma.ts",
+        "**/*.figma.tsx",
+        "**/*.figma.js",
+        "**/*.figma.jsx",
+        "**/*.figma.template.*",
+        "**/dist/**",
+        "**/node_modules/**",
+        "**/__tests__/**",
+        "**/*.test.{ts,tsx}",
+        "**/*.spec.{ts,tsx}",
+        "**/tests/**",
+        "packages/ui/src/styles/**",
+        "packages/core-design-system/**",
+        "apps/portal/**",
+        ".github/**",
+        ".engops/**",
+        ".husky/**",
+        "scripts/**",
+        "packages/views/src/**/*.ts",
+        "packages/ui/src/components/__tests__/**",
+        "apps/gitness/src/pages-v2/**/__tests__/**",
+        "apps/gitness/src/pages-v2/**/*.test.{ts,tsx}",
+        "apps/gitness/src/framework/hooks/__tests__/**",
+        "apps/gitness/src/framework/rbac/__tests__/**"
+      ]
+    },
+    "libraryPaths": {
+      "local": [
+        "packages/ui/**",
+        "apps/design-system/**"
+      ],
+      "external": []
+    },
+    "pathClassification": {
+      "classifier": "sonnet"
+    },
+    "exclusions": [
+      {
+        "glob": "**/*.figma.ts",
+        "reason": "Figma mapping files are Code Connect templates, not UI source anchors for point-and-edit changes."
+      },
+      {
+        "glob": "**/*.figma.tsx",
+        "reason": "Figma mapping files are Code Connect templates, not UI source anchors for point-and-edit changes."
+      },
+      {
+        "glob": "**/*.figma.js",
+        "reason": "Figma mapping files are Code Connect templates, not UI source anchors for point-and-edit changes."
+      },
+      {
+        "glob": "**/*.figma.jsx",
+        "reason": "Figma mapping files are Code Connect templates, not UI source anchors for point-and-edit changes."
+      },
+      {
+        "glob": "**/*.figma.template.*",
+        "reason": "Figma mapping files are Code Connect templates, not UI source anchors for point-and-edit changes."
+      },
+      {
+        "glob": "**/dist/**",
+        "reason": "Build output artifacts should never be selected as source anchors; edits must target source files."
+      },
+      {
+        "glob": "**/node_modules/**",
+        "reason": "Third-party dependencies are not editable source for this project."
+      },
+      {
+        "glob": "**/__tests__/**",
+        "reason": "Test files are not UI source anchors and should not be selected as point-and-edit targets."
+      },
+      {
+        "glob": "**/*.test.{ts,tsx}",
+        "reason": "Test files are not UI source anchors and should not be selected as point-and-edit targets."
+      },
+      {
+        "glob": "**/*.spec.{ts,tsx}",
+        "reason": "Spec/test files are not UI source anchors and should not be selected as point-and-edit targets."
+      },
+      {
+        "glob": "**/tests/**",
+        "reason": "Test directories are not UI source anchors and should not be selected as point-and-edit targets."
+      },
+      {
+        "glob": "packages/ui/src/styles/**",
+        "reason": "Raw CSS theme/style files are not component source anchors; they are pure styling artifacts."
+      },
+      {
+        "glob": "packages/core-design-system/**",
+        "reason": "This package contains only compiled CSS design tokens and theme variables — no renderable React components."
+      },
+      {
+        "glob": "apps/portal/**",
+        "reason": "The portal app is a documentation/content site (MDX docs), not a UI app with interactive components to anchor."
+      },
+      {
+        "glob": ".github/**",
+        "reason": "CI/CD workflow configurations are not UI source anchors."
+      },
+      {
+        "glob": ".engops/**",
+        "reason": "Engineering operations scripts are not UI source anchors."
+      },
+      {
+        "glob": ".husky/**",
+        "reason": "Git hook scripts are not UI source anchors."
+      },
+      {
+        "glob": "scripts/**",
+        "reason": "Build/tooling scripts are not UI source anchors."
+      },
+      {
+        "glob": "packages/views/src/**/*.ts",
+        "reason": "Plain TypeScript files under packages/views/src are type definitions, utility functions, and barrel exports — not component rendering surfaces."
+      },
+      {
+        "glob": "packages/ui/src/components/__tests__/**",
+        "reason": "Component unit tests are not UI source anchors."
+      },
+      {
+        "glob": "apps/gitness/src/pages-v2/**/__tests__/**",
+        "reason": "Page-level unit tests are not UI source anchors."
+      },
+      {
+        "glob": "apps/gitness/src/pages-v2/**/*.test.{ts,tsx}",
+        "reason": "Test files co-located with pages are not UI source anchors."
+      },
+      {
+        "glob": "apps/gitness/src/framework/hooks/__tests__/**",
+        "reason": "Framework hook tests are not UI source anchors."
+      },
+      {
+        "glob": "apps/gitness/src/framework/rbac/__tests__/**",
+        "reason": "RBAC test files are not UI source anchors."
+      }
+    ],
+    "generated": {
+      "schemaVersion": 2,
+      "source": "setup-agent.point-and-edit-path-classifier",
+      "prompt": "same-turn-setup-subagent-v5",
+      "model": "claude-sonnet-4-6",
+      "createdAt": "2026-08-28T00:00:00.000Z",
+      "confidence": 0.88,
+      "explanation": "This is a well-structured pnpm monorepo with a clearly active app (apps/gitness) consuming local library packages (@harnessio/ui, @harnessio/views, @harnessio/filters, @harnessio/forms, @harnessio/pipeline-graph, @harnessio/yaml-editor); the active app's pages-v2 and components-v2 directories are unambiguous prefer targets while the shared published packages are deprioritized local library surfaces, yielding high confidence with minor uncertainty around the design-system catalog app's classification relative to the main gitness app."
+    }
+  }
+}

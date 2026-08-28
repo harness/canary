@@ -1,0 +1,49 @@
+{
+  "schemaVersion": 1,
+  "source": {
+    "componentName": "ExitConfirmDialog",
+    "filePath": "packages/ui/src/components/dialogs/exit-confirm-dialog.tsx"
+  },
+  "codeProperties": {
+    "open": {
+      "type": "boolean",
+      "name": "Open",
+      "description": "Controls whether the dialog is open."
+    },
+    "title": {
+      "type": "string",
+      "name": "Title",
+      "defaultValue": "Unsaved changes",
+      "description": "Title displayed in the dialog header."
+    },
+    "subtitle": {
+      "type": "string",
+      "name": "Subtitle",
+      "defaultValue": "You have unsaved changes that will be lost if you leave now.",
+      "description": "Description text in the dialog body."
+    },
+    "confirmText": {
+      "type": "string",
+      "name": "Confirm Text",
+      "defaultValue": "Leave anyway",
+      "description": "Label for the confirm/leave button."
+    },
+    "cancelText": {
+      "type": "string",
+      "name": "Cancel Text",
+      "defaultValue": "Keep editing",
+      "description": "Label for the cancel button."
+    },
+    "error": {
+      "type": "string",
+      "name": "Error",
+      "description": "Error message displayed in an alert at the bottom of the dialog."
+    },
+    "isLoading": {
+      "type": "boolean",
+      "name": "Is Loading",
+      "defaultValue": false,
+      "description": "Shows a loading state and disables buttons."
+    }
+  }
+}

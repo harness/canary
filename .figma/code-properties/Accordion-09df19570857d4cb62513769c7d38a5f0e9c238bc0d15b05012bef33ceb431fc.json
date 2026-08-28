@@ -1,0 +1,75 @@
+{
+  "schemaVersion": 1,
+  "source": {
+    "componentName": "Accordion",
+    "filePath": "packages/ui/src/components/accordion/accordion.tsx"
+  },
+  "codeProperties": {
+    "size": {
+      "name": "Size",
+      "type": "string",
+      "defaultValue": "sm",
+      "options": [
+        "sm",
+        "md"
+      ],
+      "control": {
+        "type": "select",
+        "labels": {
+          "sm": "Small",
+          "md": "Medium"
+        }
+      }
+    },
+    "variant": {
+      "name": "Variant",
+      "type": "string",
+      "defaultValue": "default",
+      "options": [
+        "default",
+        "card"
+      ],
+      "control": {
+        "type": "select",
+        "labels": {
+          "default": "Default",
+          "card": "Card"
+        }
+      }
+    },
+    "indicatorPosition": {
+      "name": "Indicator Position",
+      "type": "string",
+      "defaultValue": "right",
+      "options": [
+        "right",
+        "left"
+      ],
+      "control": {
+        "type": "select",
+        "labels": {
+          "right": "Right",
+          "left": "Left"
+        }
+      }
+    },
+    "cardSize": {
+      "name": "Card Size",
+      "type": "string",
+      "defaultValue": "md",
+      "options": [
+        "sm",
+        "md",
+        "lg"
+      ],
+      "control": {
+        "type": "select",
+        "labels": {
+          "sm": "Small",
+          "md": "Medium",
+          "lg": "Large"
+        }
+      }
+    }
+  }
+}

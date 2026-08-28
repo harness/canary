@@ -1,0 +1,24 @@
+{
+  "schemaVersion": 1,
+  "source": {
+    "componentName": "Illustration",
+    "filePath": "packages/ui/src/components/illustration/illustration.tsx"
+  },
+  "codeProperties": {
+    "name": {
+      "name": "Illustration Name",
+      "type": "string"
+    },
+    "size": {
+      "name": "Size",
+      "type": "number",
+      "defaultValue": 112
+    },
+    "themeDependent": {
+      "name": "Theme Dependent",
+      "description": "Set to true if the illustration has separate files for different color themes or needs to be inverted.",
+      "type": "boolean",
+      "defaultValue": false
+    }
+  }
+}

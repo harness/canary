@@ -1,0 +1,14 @@
+{
+  "schemaVersion": 1,
+  "source": {
+    "componentName": "SidebarMenuSkeleton",
+    "filePath": "packages/ui/src/components/sidebar/sidebar-units.tsx"
+  },
+  "codeProperties": {
+    "hideIcon": {
+      "type": "boolean",
+      "name": "Hide Icon",
+      "defaultValue": false
+    }
+  }
+}

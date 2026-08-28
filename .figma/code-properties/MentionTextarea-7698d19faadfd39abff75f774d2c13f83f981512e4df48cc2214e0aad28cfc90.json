@@ -1,0 +1,32 @@
+{
+  "schemaVersion": 1,
+  "source": {
+    "componentName": "MentionTextarea",
+    "filePath": "packages/ui/src/components/mention-textarea/mention-textarea.tsx"
+  },
+  "codeProperties": {
+    "value": {
+      "name": "Value",
+      "description": "Current textarea value.",
+      "type": "string"
+    },
+    "triggerChar": {
+      "name": "Trigger Character",
+      "description": "Character that triggers the mention dropdown.",
+      "type": "string",
+      "defaultValue": "@"
+    },
+    "isLoading": {
+      "name": "Is Loading",
+      "description": "Whether items are currently loading.",
+      "type": "boolean",
+      "defaultValue": false
+    },
+    "emptyMessage": {
+      "name": "Empty Message",
+      "description": "Message to show when no items match.",
+      "type": "string",
+      "defaultValue": "No results found"
+    }
+  }
+}

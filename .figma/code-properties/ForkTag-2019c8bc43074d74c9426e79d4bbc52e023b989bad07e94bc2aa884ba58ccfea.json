@@ -1,0 +1,78 @@
+{
+  "schemaVersion": 1,
+  "source": {
+    "componentName": "ForkTag",
+    "filePath": "packages/ui/src/components/branch-tag.tsx"
+  },
+  "codeProperties": {
+    "repoIdentifier": {
+      "type": "string",
+      "name": "Repo Identifier",
+      "description": "The repository identifier displayed as part of the tag label."
+    },
+    "repoPath": {
+      "type": "string",
+      "name": "Repo Path",
+      "description": "The repository path used to build the upstream repo URL."
+    },
+    "branchName": {
+      "type": "string",
+      "name": "Branch Name",
+      "description": "The branch name displayed in the tag."
+    },
+    "theme": {
+      "type": "string",
+      "name": "Theme",
+      "defaultValue": "gray",
+      "options": [
+        "",
+        "gray"
+      ],
+      "control": {
+        "type": "select",
+        "labels": {
+          "": "Default",
+          "gray": "Gray"
+        }
+      }
+    },
+    "variant": {
+      "type": "string",
+      "name": "Variant",
+      "defaultValue": "secondary",
+      "options": [
+        "",
+        "secondary"
+      ],
+      "control": {
+        "type": "select",
+        "labels": {
+          "": "Default",
+          "secondary": "Secondary"
+        }
+      }
+    },
+    "size": {
+      "type": "string",
+      "name": "Size",
+      "defaultValue": "md",
+      "options": [
+        "",
+        "md"
+      ],
+      "control": {
+        "type": "select",
+        "labels": {
+          "": "Default",
+          "md": "Medium"
+        }
+      }
+    },
+    "hideCopyButton": {
+      "type": "boolean",
+      "name": "Hide Copy Button",
+      "defaultValue": false,
+      "description": "When true, hides the copy button from the tag."
+    }
+  }
+}

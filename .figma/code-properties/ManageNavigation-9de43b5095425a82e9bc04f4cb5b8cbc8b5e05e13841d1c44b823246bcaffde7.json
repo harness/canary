@@ -1,0 +1,24 @@
+{
+  "schemaVersion": 1,
+  "source": {
+    "componentName": "ManageNavigation",
+    "filePath": "packages/ui/src/components/manage-navigation/index.tsx"
+  },
+  "codeProperties": {
+    "showManageNavigation": {
+      "type": "boolean",
+      "name": "Show Manage Navigation",
+      "description": "Controls whether the manage navigation dialog is open."
+    },
+    "isSubmitting": {
+      "type": "boolean",
+      "name": "Is Submitting",
+      "description": "When true, indicates the form is being submitted."
+    },
+    "submitted": {
+      "type": "boolean",
+      "name": "Submitted",
+      "description": "When true, shows the saved confirmation state."
+    }
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "schemaVersion": 1,
+  "source": {
+    "componentName": "SidebarToggleMenuButton",
+    "filePath": "packages/ui/src/components/sidebar/sidebar-toggle-menu-button.tsx"
+  },
+  "codeProperties": {
+    "title": {
+      "type": "string",
+      "name": "Title"
+    }
+  }
+}

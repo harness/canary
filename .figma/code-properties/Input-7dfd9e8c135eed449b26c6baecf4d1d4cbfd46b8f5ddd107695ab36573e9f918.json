@@ -1,0 +1,100 @@
+{
+  "schemaVersion": 1,
+  "source": {
+    "componentName": "Input",
+    "filePath": "packages/ui/src/components/input.tsx"
+  },
+  "codeProperties": {
+    "label": {
+      "name": "Label",
+      "type": "string"
+    },
+    "placeholder": {
+      "name": "Placeholder",
+      "type": "string"
+    },
+    "caption": {
+      "name": "Caption",
+      "type": "string"
+    },
+    "error": {
+      "name": "Error",
+      "type": "string"
+    },
+    "variant": {
+      "name": "Variant",
+      "type": "string",
+      "defaultValue": "default",
+      "options": [
+        "default",
+        "extended"
+      ],
+      "control": {
+        "type": "select",
+        "labels": {
+          "default": "Default",
+          "extended": "Extended"
+        }
+      }
+    },
+    "size": {
+      "name": "Size",
+      "type": "string",
+      "defaultValue": "sm",
+      "options": [
+        "sm",
+        "md"
+      ],
+      "control": {
+        "type": "select",
+        "labels": {
+          "sm": "Small",
+          "md": "Medium"
+        }
+      }
+    },
+    "theme": {
+      "name": "Theme",
+      "type": "string",
+      "defaultValue": "default",
+      "options": [
+        "default",
+        "danger",
+        "clean"
+      ],
+      "control": {
+        "type": "select",
+        "labels": {
+          "default": "Default",
+          "danger": "Danger",
+          "clean": "Clean"
+        }
+      }
+    },
+    "disabled": {
+      "name": "Disabled",
+      "type": "boolean"
+    },
+    "optional": {
+      "name": "Optional",
+      "type": "boolean"
+    },
+    "rightElementVariant": {
+      "name": "Right Element Variant",
+      "type": "string",
+      "options": [
+        "",
+        "default",
+        "filled"
+      ],
+      "control": {
+        "type": "select",
+        "labels": {
+          "": "Default",
+          "default": "Default",
+          "filled": "Filled"
+        }
+      }
+    }
+  }
+}

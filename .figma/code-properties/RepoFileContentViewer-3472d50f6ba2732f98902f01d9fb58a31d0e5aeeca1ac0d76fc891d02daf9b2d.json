@@ -1,0 +1,14 @@
+{
+  "schemaVersion": 1,
+  "source": {
+    "componentName": "RepoFileContentViewer",
+    "filePath": "apps/design-system/src/subjects/views/repo-files/components/repo-file-content-viewer.tsx"
+  },
+  "codeProperties": {
+    "isMarkdown": {
+      "type": "boolean",
+      "name": "Is Markdown",
+      "defaultValue": false
+    }
+  }
+}

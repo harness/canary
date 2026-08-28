@@ -1,0 +1,19 @@
+{
+  "schemaVersion": 1,
+  "source": {
+    "componentName": "ContainerHeader",
+    "filePath": "packages/ui/src/components/container-header/container-header.tsx"
+  },
+  "codeProperties": {
+    "title": {
+      "type": "string",
+      "name": "Title",
+      "description": "The main heading text displayed in the container header."
+    },
+    "description": {
+      "type": "string",
+      "name": "Description",
+      "description": "Optional secondary text displayed below the title."
+    }
+  }
+}

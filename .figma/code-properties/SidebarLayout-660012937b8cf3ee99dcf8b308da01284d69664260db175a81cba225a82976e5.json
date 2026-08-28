@@ -1,0 +1,36 @@
+{
+  "schemaVersion": 1,
+  "source": {
+    "componentName": "SidebarLayout",
+    "filePath": "packages/ui/src/components/nav/sidebar-layout.tsx"
+  },
+  "codeProperties": {
+    "sidebar": {
+      "type": {
+        "name": "other",
+        "value": "figma-reference"
+      },
+      "name": "Sidebar",
+      "description": "The sidebar element to render.",
+      "control": false
+    },
+    "chat": {
+      "type": {
+        "name": "other",
+        "value": "figma-reference"
+      },
+      "name": "Chat",
+      "description": "The chat element to render.",
+      "control": false
+    },
+    "mainContent": {
+      "type": {
+        "name": "other",
+        "value": "figma-reference"
+      },
+      "name": "Main Content",
+      "description": "The main content element to render.",
+      "control": false
+    }
+  }
+}

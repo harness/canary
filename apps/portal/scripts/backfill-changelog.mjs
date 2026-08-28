@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
-import { execSync } from "node:child_process";
-import { writeFileSync } from "node:fs";
+import { execFileSync } from "node:child_process";
+import { readFileSync, writeFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import { dirname, join } from "node:path";
 import {
@@ -9,6 +9,7 @@ import {
   authorHandle,
   buildPrUrl,
   parseCommitSubject,
+  shouldSkipChangelog,
 } from "./changelog-config.mjs";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
@@ -69,14 +70,46 @@ async function fetchFromHarnessApi() {
     throw new Error("Unexpected Harness API response");
   }
 
-  return pullRequests.map(mapHarnessPullReq);
+  return pullRequests
+    .map(mapHarnessPullReq)
+    .filter((entry) => !shouldSkipChangelog(entry.title));
+}
+
+function deepenGitHistory() {
+  try {
+    const shallow = execFileSync("git", ["rev-parse", "--is-shallow-repository"], {
+      cwd: CANARY_ROOT,
+      encoding: "utf-8",
+    }).trim();
+    if (shallow !== "true") return;
+
+    try {
+      execFileSync("git", ["fetch", "--unshallow"], { cwd: CANARY_ROOT, stdio: "inherit" });
+    } catch {
+      execFileSync("git", ["fetch", "--deepen=100"], { cwd: CANARY_ROOT, stdio: "inherit" });
+    }
+  } catch {
+    // Not a git checkout, or fetch is unavailable. git log uses whatever history we have.
+  }
+}
+
+function gitLog(ref) {
+  return execFileSync("git", ["log", ref, "-100", "--format=%aI|%an|%s"], {
+    cwd: CANARY_ROOT,
+    encoding: "utf-8",
+  });
 }
 
 function fetchFromGitLog() {
-  const output = execSync(
-    'git log origin/main -100 --format="%aI|%an|%s"',
-    { cwd: CANARY_ROOT, encoding: "utf-8" },
-  );
+  deepenGitHistory();
+
+  let output;
+  try {
+    // HEAD works in detached CI/Netlify clones. origin/main often does not exist there.
+    output = gitLog("HEAD");
+  } catch {
+    output = gitLog("origin/main");
+  }
 
   const entries = [];
 
@@ -89,6 +122,8 @@ function fetchFromGitLog() {
     if (!parsed) continue;
 
     const { prNumber, title } = parsed;
+    if (shouldSkipChangelog(title)) continue;
+
     entries.push({
       prNumber,
       title,
@@ -102,6 +137,36 @@ function fetchFromGitLog() {
   }
 
   return entries;
+}
+
+function readExistingEntries() {
+  try {
+    const parsed = JSON.parse(readFileSync(CHANGELOG_PATH, "utf-8"));
+    return Array.isArray(parsed) ? parsed : [];
+  } catch {
+    return [];
+  }
+}
+
+function writeEntries(entries) {
+  const existing = readExistingEntries();
+
+  if (entries.length === 0) {
+    throw new Error("No changelog entries found.");
+  }
+
+  // A shallow clone can look like "only a few PRs ever merged". Never shrink
+  // the committed changelog in that case.
+  if (existing.length > entries.length) {
+    console.warn(
+      `Refusing to overwrite changelog.json (${existing.length} entries) with ${entries.length} entries. Likely a shallow clone.`,
+    );
+    return false;
+  }
+
+  writeFileSync(CHANGELOG_PATH, JSON.stringify(entries, null, 2) + "\n");
+  console.log(`Wrote ${CHANGELOG_PATH}`);
+  return true;
 }
 
 async function main() {
@@ -121,16 +186,14 @@ async function main() {
     }
   }
 
-  if (entries.length === 0) {
-    console.error("No changelog entries found.");
-    process.exit(1);
-  }
-
-  writeFileSync(CHANGELOG_PATH, JSON.stringify(entries, null, 2) + "\n");
-  console.log(`Wrote ${CHANGELOG_PATH}`);
+  writeEntries(entries);
 }
 
-main().catch((error) => {
-  console.error(error.message);
-  process.exit(1);
-});
+const isDirectRun = process.argv[1] && fileURLToPath(import.meta.url) === process.argv[1];
+
+if (isDirectRun) {
+  main().catch((error) => {
+    console.error(error.message);
+    process.exit(1);
+  });
+}

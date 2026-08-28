@@ -7,8 +7,6 @@ pipeline:
   properties:
     ci:
       codebase:
-        # Built-in Harness Code repo. `build: <+input>` lets the trigger pass
-        # the merged commit; manual runs prompt for a branch/commit.
         build: <+input>
   stages:
     - stage:
@@ -21,42 +19,37 @@ pipeline:
             os: Linux
             arch: Amd64
           runtime:
-            # Harness-hosted infra. Swap to your K8s/VM infra if that's the
-            # project standard.
             type: Cloud
             spec: {}
           execution:
             steps:
               - step:
                   type: Run
-                  name: Regenerate changelog from merged PRs
-                  identifier: regenerate_changelog
+                  name: Append merged PR to changelog
+                  identifier: append_changelog
                   spec:
-                    # node:20 has git + node; the backfill script uses only
-                    # node builtins, so no `pnpm install` is needed.
                     image: node:20
                     shell: Sh
-                    command: |
+                    envVariables:
+                      PR_NUMBER: <+trigger.prNumber>
+                      PR_TITLE: <+trigger.prTitle>
+                      PR_AUTHOR: <+trigger.gitUser>
+                    command: |-
                       set -euo pipefail
 
-                      # Rebuild the changelog data from the latest merges on main.
-                      node apps/portal/scripts/backfill-changelog.mjs --from-git --limit=60
+                      export PR_MERGED_AT="$(date -u +%Y-%m-%dT%H:%M:%SZ)"
+                      node apps/portal/scripts/update-changelog.mjs
 
-                      # No content change → nothing to commit.
                       if git diff --quiet -- apps/portal/src/data/changelog.json; then
                         echo "Changelog already up to date."
                         exit 0
                       fi
 
-                      git config user.name  "harness-changelog-bot"
+                      git config user.name "harness-changelog-bot"
                       git config user.email "changelog-bot@harness.io"
                       git add apps/portal/src/data/changelog.json
-
-                      # The trailing "[skip changelog]" (and absence of a "(#NN)"
-                      # suffix) keeps this bot commit out of the changelog itself,
-                      # so it never triggers itself in a loop.
                       git commit -m "docs(portal): update changelog for PR #<+trigger.prNumber> [skip changelog]"
 
-                      # Push to main using a PAT stored as a Harness secret with
-                      # write access to the canary repo (see .harness/README.md).
-                      git push "https://token:<+secrets.getValue('changelog_bot_pat')>@git0.harness.io/l7B_kbSEQD2wjrM7PShm5w/PROD/Harness_Commons/canary.git" HEAD:main
+                      git fetch origin main
+                      git rebase origin/main
+                      git push origin HEAD:main

@@ -8,7 +8,6 @@ trigger:
   source:
     type: Webhook
     spec:
-      # Native Harness Code repo webhook — no external connector needed.
       type: Harness
       spec:
         type: PullRequest
@@ -17,7 +16,16 @@ trigger:
           actions:
             - Merge
           payloadConditions:
-            # Only PRs merged into main.
             - key: targetBranch
               operator: Equals
               value: main
+  inputYaml: |
+    pipeline:
+      identifier: update_changelog
+      properties:
+        ci:
+          codebase:
+            build:
+              type: branch
+              spec:
+                branch: main

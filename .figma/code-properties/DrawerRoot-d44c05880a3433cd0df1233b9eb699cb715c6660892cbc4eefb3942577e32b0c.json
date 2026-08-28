@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 1,
+  "source": {
+    "componentName": "DrawerRoot",
+    "filePath": "packages/ui/src/components/drawer/DrawerRoot.tsx"
+  },
+  "codeProperties": {
+    "direction": {
+      "name": "Direction",
+      "type": "string",
+      "defaultValue": "right",
+      "options": [
+        "top",
+        "bottom",
+        "left",
+        "right"
+      ],
+      "control": {
+        "type": "select",
+        "labels": {
+          "top": "Top",
+          "bottom": "Bottom",
+          "left": "Left",
+          "right": "Right"
+        }
+      }
+    },
+    "open": {
+      "name": "Open",
+      "type": "boolean"
+    },
+    "maxStackDepth": {
+      "name": "Max Stack Depth",
+      "type": "number"
+    }
+  }
+}

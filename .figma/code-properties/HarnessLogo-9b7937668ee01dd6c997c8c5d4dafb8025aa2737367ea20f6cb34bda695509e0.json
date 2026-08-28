@@ -1,0 +1,20 @@
+{
+  "schemaVersion": 1,
+  "source": {
+    "componentName": "HarnessLogo",
+    "filePath": "packages/ui/src/components/app-sidebar/harness-logo.tsx"
+  },
+  "codeProperties": {
+    "full": {
+      "name": "Full",
+      "type": "boolean",
+      "description": "When true, displays the full logo with text; otherwise shows only the icon"
+    },
+    "size": {
+      "name": "Size",
+      "type": "number",
+      "defaultValue": 24,
+      "description": "Size of the logo icon in pixels (used when full is false)"
+    }
+  }
+}

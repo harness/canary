@@ -1,0 +1,44 @@
+{
+  "schemaVersion": 1,
+  "source": {
+    "componentName": "SkeletonFormItem",
+    "filePath": "packages/ui/src/components/skeletons/skeleton-form.tsx"
+  },
+  "codeProperties": {
+    "withLabel": {
+      "type": "boolean",
+      "name": "With Label"
+    },
+    "size": {
+      "type": "string",
+      "name": "Size",
+      "defaultValue": "md",
+      "options": [
+        "sm",
+        "md"
+      ],
+      "control": {
+        "type": "select",
+        "labels": {
+          "sm": "Small",
+          "md": "Medium"
+        }
+      }
+    },
+    "orientation": {
+      "type": "string",
+      "name": "Orientation",
+      "options": [
+        "vertical",
+        "horizontal"
+      ],
+      "control": {
+        "type": "select",
+        "labels": {
+          "vertical": "Vertical",
+          "horizontal": "Horizontal"
+        }
+      }
+    }
+  }
+}

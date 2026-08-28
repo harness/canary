@@ -1,0 +1,42 @@
+{
+  "schemaVersion": 1,
+  "source": {
+    "componentName": "DiffViewer",
+    "filePath": "packages/ui/src/components/diff-viewer/diff-viewer.tsx"
+  },
+  "codeProperties": {
+    "oldCode": {
+      "name": "Old Code",
+      "type": "string"
+    },
+    "newCode": {
+      "name": "New Code",
+      "type": "string"
+    },
+    "lang": {
+      "name": "Language",
+      "type": "string",
+      "defaultValue": "yaml"
+    },
+    "diffViewWrap": {
+      "name": "Diff View Wrap",
+      "type": "boolean",
+      "defaultValue": false
+    },
+    "diffViewMode": {
+      "name": "Diff View Mode",
+      "type": "number",
+      "options": [
+        1,
+        2
+      ],
+      "control": {
+        "type": "select",
+        "labels": {
+          "1": "Split",
+          "2": "Unified"
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,62 @@
+{
+  "schemaVersion": 1,
+  "source": {
+    "componentName": "CopyButton",
+    "filePath": "packages/ui/src/components/copy-button/copy-button.tsx"
+  },
+  "codeProperties": {
+    "name": {
+      "type": "string",
+      "name": "Copy Data",
+      "description": "The text content to copy to the clipboard."
+    },
+    "buttonVariant": {
+      "type": "string",
+      "name": "Button Variant",
+      "description": "Visual variant of the button.",
+      "defaultValue": "outline",
+      "options": [
+        "",
+        "outline",
+        "primary",
+        "secondary",
+        "ghost",
+        "link",
+        "transparent"
+      ],
+      "control": {
+        "type": "select",
+        "labels": {
+          "": "Default",
+          "outline": "Outline",
+          "primary": "Primary",
+          "secondary": "Secondary",
+          "ghost": "Ghost",
+          "link": "Link",
+          "transparent": "Transparent"
+        }
+      }
+    },
+    "size": {
+      "type": "string",
+      "name": "Size",
+      "description": "Size of the button.",
+      "defaultValue": "sm",
+      "options": [
+        "xs",
+        "sm",
+        "md",
+        "lg"
+      ],
+      "control": {
+        "type": "select",
+        "labels": {
+          "xs": "Extra Small",
+          "sm": "Small",
+          "md": "Medium",
+          "lg": "Large"
+        }
+      }
+    }
+  }
+}

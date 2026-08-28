@@ -1,0 +1,55 @@
+{
+  "schemaVersion": 1,
+  "source": {
+    "componentName": "ViewOnly",
+    "filePath": "packages/ui/src/components/view-only.tsx"
+  },
+  "codeProperties": {
+    "title": {
+      "type": "string",
+      "name": "Title"
+    },
+    "layout": {
+      "type": "string",
+      "name": "Layout",
+      "defaultValue": "columns",
+      "options": [
+        "singleColumn",
+        "columns"
+      ],
+      "control": {
+        "type": "select",
+        "labels": {
+          "singleColumn": "Single Column",
+          "columns": "Columns"
+        }
+      }
+    },
+    "itemLayout": {
+      "type": "string",
+      "name": "Item Layout",
+      "defaultValue": "horizontal",
+      "options": [
+        "horizontal",
+        "vertical"
+      ],
+      "control": {
+        "type": "select",
+        "labels": {
+          "horizontal": "Horizontal",
+          "vertical": "Vertical"
+        }
+      }
+    },
+    "isLoading": {
+      "type": "boolean",
+      "name": "Is Loading",
+      "defaultValue": false
+    },
+    "forceColumns": {
+      "type": "boolean",
+      "name": "Force Columns",
+      "defaultValue": false
+    }
+  }
+}

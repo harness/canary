@@ -1,0 +1,52 @@
+{
+  "schemaVersion": 1,
+  "source": {
+    "componentName": "Slider",
+    "filePath": "packages/ui/src/components/slider.tsx"
+  },
+  "codeProperties": {
+    "label": {
+      "name": "Label",
+      "type": "string"
+    },
+    "caption": {
+      "name": "Caption",
+      "type": "string",
+      "defaultValue": "description",
+      "options": [
+        "description",
+        "min-max"
+      ],
+      "control": {
+        "type": "select",
+        "labels": {
+          "description": "Description",
+          "min-max": "Min / Max"
+        }
+      }
+    },
+    "description": {
+      "name": "Description",
+      "type": "string"
+    },
+    "minLabel": {
+      "name": "Min Label",
+      "type": "string",
+      "defaultValue": "0"
+    },
+    "maxLabel": {
+      "name": "Max Label",
+      "type": "string",
+      "defaultValue": "100"
+    },
+    "showValue": {
+      "name": "Show Value",
+      "type": "boolean",
+      "defaultValue": false
+    },
+    "disabled": {
+      "name": "Disabled",
+      "type": "boolean"
+    }
+  }
+}

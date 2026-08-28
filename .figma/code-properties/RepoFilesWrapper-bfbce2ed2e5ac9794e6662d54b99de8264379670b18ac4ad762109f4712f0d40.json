@@ -1,0 +1,18 @@
+{
+  "schemaVersion": 1,
+  "source": {
+    "componentName": "RepoFilesWrapper",
+    "filePath": "apps/design-system/src/subjects/views/repo-files/components/repo-files-wrapper.tsx"
+  },
+  "codeProperties": {
+    "isDir": {
+      "type": "boolean",
+      "name": "Is Directory"
+    },
+    "isMarkdown": {
+      "type": "boolean",
+      "name": "Is Markdown",
+      "defaultValue": false
+    }
+  }
+}

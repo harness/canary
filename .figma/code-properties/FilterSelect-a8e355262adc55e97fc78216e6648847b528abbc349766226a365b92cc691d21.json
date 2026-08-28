@@ -1,0 +1,35 @@
+{
+  "schemaVersion": 1,
+  "source": {
+    "componentName": "FilterSelect",
+    "filePath": "packages/ui/src/components/filters/filter-select.tsx"
+  },
+  "codeProperties": {
+    "dropdownAlign": {
+      "type": "string",
+      "name": "Dropdown Align",
+      "defaultValue": "end",
+      "options": [
+        "start",
+        "end"
+      ],
+      "control": {
+        "type": "select",
+        "labels": {
+          "start": "Start",
+          "end": "End"
+        }
+      }
+    },
+    "inputPlaceholder": {
+      "type": "string",
+      "name": "Input Placeholder",
+      "description": "Placeholder text for the search input inside the dropdown."
+    },
+    "buttonLabel": {
+      "type": "string",
+      "name": "Button Label",
+      "description": "Label for the reset button at the bottom of the dropdown."
+    }
+  }
+}

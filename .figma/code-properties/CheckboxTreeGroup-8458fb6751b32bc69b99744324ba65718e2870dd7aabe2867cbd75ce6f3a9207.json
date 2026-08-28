@@ -1,0 +1,30 @@
+{
+  "schemaVersion": 1,
+  "source": {
+    "componentName": "CheckboxTreeGroup",
+    "filePath": "packages/ui/src/components/checkbox-tree/checkbox-tree-group.tsx"
+  },
+  "codeProperties": {
+    "id": {
+      "type": "string",
+      "name": "ID",
+      "description": "Unique identifier for this group node."
+    },
+    "label": {
+      "type": "string",
+      "name": "Label",
+      "description": "Label displayed next to the group toggle."
+    },
+    "icon": {
+      "type": "string",
+      "name": "Icon",
+      "defaultValue": "folder",
+      "description": "Icon name displayed in the group trigger."
+    },
+    "disabled": {
+      "type": "boolean",
+      "name": "Disabled",
+      "description": "Disables the group checkbox and trigger."
+    }
+  }
+}

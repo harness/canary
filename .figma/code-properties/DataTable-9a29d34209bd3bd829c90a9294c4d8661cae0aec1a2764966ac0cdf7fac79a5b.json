@@ -1,0 +1,72 @@
+{
+  "schemaVersion": 1,
+  "source": {
+    "componentName": "DataTable",
+    "filePath": "packages/ui/src/components/data-table/data-table.tsx"
+  },
+  "codeProperties": {
+    "size": {
+      "name": "Size",
+      "type": "string",
+      "options": [
+        "",
+        "normal",
+        "compact"
+      ],
+      "defaultValue": "normal",
+      "control": {
+        "type": "select",
+        "labels": {
+          "": "Default",
+          "normal": "Normal",
+          "compact": "Compact"
+        }
+      }
+    },
+    "variant": {
+      "name": "Variant",
+      "type": "string",
+      "options": [
+        "",
+        "default",
+        "striped"
+      ],
+      "defaultValue": "default",
+      "control": {
+        "type": "select",
+        "labels": {
+          "": "Default",
+          "default": "Default",
+          "striped": "Striped"
+        }
+      }
+    },
+    "disableHighlightOnHover": {
+      "name": "Disable Highlight On Hover",
+      "type": "boolean",
+      "defaultValue": false
+    },
+    "manualSorting": {
+      "name": "Manual Sorting",
+      "description": "When enabled, you must sort the data yourself (such as on the server side).",
+      "type": "boolean",
+      "defaultValue": true
+    },
+    "enableRowSelection": {
+      "name": "Enable Row Selection",
+      "type": "boolean",
+      "defaultValue": false
+    },
+    "enableExpanding": {
+      "name": "Enable Expanding",
+      "type": "boolean",
+      "defaultValue": false
+    },
+    "initiallyExpandAllRows": {
+      "name": "Initially Expand All Rows",
+      "description": "When true, all rows are expanded initially.",
+      "type": "boolean",
+      "defaultValue": false
+    }
+  }
+}

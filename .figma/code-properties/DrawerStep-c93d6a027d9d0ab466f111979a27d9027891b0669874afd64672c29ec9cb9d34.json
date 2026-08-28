@@ -1,0 +1,14 @@
+{
+  "schemaVersion": 1,
+  "source": {
+    "componentName": "DrawerStep",
+    "filePath": "packages/ui/src/components/drawer/DrawerStep.tsx"
+  },
+  "codeProperties": {
+    "value": {
+      "name": "Value",
+      "type": "string",
+      "description": "Unique identifier for this step."
+    }
+  }
+}

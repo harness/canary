@@ -1,0 +1,93 @@
+{
+  "schemaVersion": 1,
+  "source": {
+    "componentName": "Button",
+    "filePath": "packages/ui/src/components/button.tsx"
+  },
+  "codeProperties": {
+    "variant": {
+      "name": "Variant",
+      "type": "string",
+      "defaultValue": "primary",
+      "options": [
+        "primary",
+        "secondary",
+        "outline",
+        "ai",
+        "ghost",
+        "link",
+        "transparent"
+      ],
+      "control": {
+        "type": "select",
+        "labels": {
+          "primary": "Primary",
+          "secondary": "Secondary",
+          "outline": "Outline",
+          "ai": "AI",
+          "ghost": "Ghost",
+          "link": "Link",
+          "transparent": "Transparent"
+        }
+      }
+    },
+    "size": {
+      "name": "Size",
+      "type": "string",
+      "defaultValue": "md",
+      "options": [
+        "md",
+        "sm",
+        "xs",
+        "2xs",
+        "3xs"
+      ],
+      "control": {
+        "type": "select",
+        "labels": {
+          "md": "Medium",
+          "sm": "Small",
+          "xs": "Extra Small",
+          "2xs": "2X Small",
+          "3xs": "3X Small"
+        }
+      }
+    },
+    "theme": {
+      "name": "Theme",
+      "type": "string",
+      "defaultValue": "default",
+      "options": [
+        "default",
+        "success",
+        "danger"
+      ],
+      "control": {
+        "type": "select",
+        "labels": {
+          "default": "Default",
+          "success": "Success",
+          "danger": "Danger"
+        }
+      }
+    },
+    "rounded": {
+      "name": "Rounded",
+      "type": "boolean",
+      "defaultValue": false
+    },
+    "disabled": {
+      "name": "Disabled",
+      "type": "boolean"
+    },
+    "loading": {
+      "name": "Loading",
+      "type": "boolean"
+    },
+    "iconOnly": {
+      "name": "Icon Only",
+      "type": "boolean",
+      "defaultValue": false
+    }
+  }
+}

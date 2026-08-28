@@ -1,0 +1,20 @@
+{
+  "schemaVersion": 1,
+  "source": {
+    "componentName": "AlertLink",
+    "filePath": "packages/ui/src/components/alert/AlertLink.tsx"
+  },
+  "codeProperties": {
+    "asChild": {
+      "name": "As Child",
+      "type": "boolean",
+      "defaultValue": false,
+      "description": "When true, renders the child element instead of an anchor tag"
+    },
+    "external": {
+      "name": "External",
+      "type": "boolean",
+      "description": "Whether the link opens an external URL"
+    }
+  }
+}

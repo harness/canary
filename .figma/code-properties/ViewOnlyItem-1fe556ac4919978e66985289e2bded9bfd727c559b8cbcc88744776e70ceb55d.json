@@ -1,0 +1,34 @@
+{
+  "schemaVersion": 1,
+  "source": {
+    "componentName": "ViewOnlyItem",
+    "filePath": "packages/ui/src/components/view-only.tsx"
+  },
+  "codeProperties": {
+    "label": {
+      "type": "string",
+      "name": "Label"
+    },
+    "isLoading": {
+      "type": "boolean",
+      "name": "Is Loading",
+      "defaultValue": false
+    },
+    "itemLayout": {
+      "type": "string",
+      "name": "Item Layout",
+      "defaultValue": "horizontal",
+      "options": [
+        "horizontal",
+        "vertical"
+      ],
+      "control": {
+        "type": "select",
+        "labels": {
+          "horizontal": "Horizontal",
+          "vertical": "Vertical"
+        }
+      }
+    }
+  }
+}

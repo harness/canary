@@ -1,0 +1,39 @@
+{
+  "schemaVersion": 1,
+  "source": {
+    "componentName": "AlertRoot",
+    "filePath": "packages/ui/src/components/alert/AlertRoot.tsx"
+  },
+  "codeProperties": {
+    "theme": {
+      "name": "Theme",
+      "type": "string",
+      "defaultValue": "info",
+      "options": [
+        "info",
+        "danger",
+        "warning",
+        "success"
+      ],
+      "control": {
+        "type": "select",
+        "labels": {
+          "info": "Info",
+          "danger": "Danger",
+          "warning": "Warning",
+          "success": "Success"
+        }
+      }
+    },
+    "dismissible": {
+      "name": "Dismissible",
+      "type": "boolean",
+      "description": "Whether the alert can be dismissed by the user"
+    },
+    "expandable": {
+      "name": "Expandable",
+      "type": "boolean",
+      "description": "Whether the alert content can be expanded when it overflows"
+    }
+  }
+}

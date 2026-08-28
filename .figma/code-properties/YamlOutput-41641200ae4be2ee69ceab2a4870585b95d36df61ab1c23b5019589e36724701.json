@@ -1,0 +1,46 @@
+{
+  "schemaVersion": 1,
+  "source": {
+    "componentName": "YamlOutput",
+    "filePath": "packages/ui/src/components/yaml-output/yaml-output.tsx"
+  },
+  "codeProperties": {
+    "value": {
+      "name": "Value",
+      "type": "string",
+      "description": "The YAML content to display in the editor"
+    },
+    "title": {
+      "name": "Title",
+      "type": "string",
+      "description": "Optional title displayed in the header"
+    },
+    "runLabel": {
+      "name": "Run Label",
+      "type": "string",
+      "defaultValue": "Run",
+      "description": "Label for the run button"
+    },
+    "runDisabled": {
+      "name": "Run Disabled",
+      "type": "boolean",
+      "description": "Whether the run button is disabled"
+    },
+    "runLoading": {
+      "name": "Run Loading",
+      "type": "boolean",
+      "description": "Whether the run button shows a loading state"
+    },
+    "readOnly": {
+      "name": "Read Only",
+      "type": "boolean",
+      "description": "Whether the editor is read-only"
+    },
+    "showModeToggle": {
+      "name": "Show Mode Toggle",
+      "type": "boolean",
+      "defaultValue": true,
+      "description": "Whether to show the YAML/Visual mode toggle"
+    }
+  }
+}

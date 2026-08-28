@@ -1,0 +1,28 @@
+{
+  "schemaVersion": 1,
+  "source": {
+    "componentName": "Message",
+    "filePath": "packages/ui/src/components/form-primitives/message.tsx"
+  },
+  "codeProperties": {
+    "theme": {
+      "name": "Theme",
+      "type": "string",
+      "options": [
+        "SUCCESS",
+        "WARNING",
+        "ERROR",
+        "DEFAULT"
+      ],
+      "control": {
+        "type": "select",
+        "labels": {
+          "SUCCESS": "Success",
+          "WARNING": "Warning",
+          "ERROR": "Error",
+          "DEFAULT": "Default"
+        }
+      }
+    }
+  }
+}

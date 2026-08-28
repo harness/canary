@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "source": {
+    "componentName": "SidebarRoot",
+    "filePath": "packages/ui/src/components/sidebar/sidebar-units.tsx"
+  },
+  "codeProperties": {
+    "side": {
+      "type": "string",
+      "name": "Side",
+      "defaultValue": "left",
+      "options": [
+        "left",
+        "right"
+      ],
+      "control": {
+        "type": "select",
+        "labels": {
+          "left": "Left",
+          "right": "Right"
+        }
+      }
+    }
+  }
+}

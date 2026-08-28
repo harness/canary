@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 1,
+  "source": {
+    "componentName": "FileEditorControlBar",
+    "filePath": "packages/ui/src/components/file-control-bars/file-editor-control-bar.tsx"
+  },
+  "codeProperties": {
+    "showPreview": {
+      "name": "Show Preview",
+      "type": "boolean",
+      "defaultValue": true,
+      "description": "Whether to show the Preview tab."
+    }
+  }
+}

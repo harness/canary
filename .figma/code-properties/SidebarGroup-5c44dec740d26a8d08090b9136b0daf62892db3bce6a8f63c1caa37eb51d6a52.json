@@ -1,0 +1,18 @@
+{
+  "schemaVersion": 1,
+  "source": {
+    "componentName": "SidebarGroup",
+    "filePath": "packages/ui/src/components/sidebar/sidebar-units.tsx"
+  },
+  "codeProperties": {
+    "label": {
+      "type": "string",
+      "name": "Label"
+    },
+    "actionIcon": {
+      "type": "string",
+      "name": "Action Icon",
+      "defaultValue": "list"
+    }
+  }
+}

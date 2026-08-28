@@ -1,0 +1,18 @@
+{
+  "schemaVersion": 1,
+  "source": {
+    "componentName": "SidebarRail",
+    "filePath": "packages/ui/src/components/sidebar/sidebar-units.tsx"
+  },
+  "codeProperties": {
+    "open": {
+      "type": "boolean",
+      "name": "Open"
+    },
+    "animate": {
+      "type": "boolean",
+      "name": "Animate",
+      "defaultValue": false
+    }
+  }
+}

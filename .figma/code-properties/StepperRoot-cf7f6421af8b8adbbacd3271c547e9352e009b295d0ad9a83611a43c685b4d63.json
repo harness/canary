@@ -1,0 +1,38 @@
+{
+  "schemaVersion": 1,
+  "source": {
+    "componentName": "StepperRoot",
+    "filePath": "packages/ui/src/components/stepper/stepper.tsx"
+  },
+  "codeProperties": {
+    "title": {
+      "name": "Title",
+      "type": "string",
+      "description": "Optional header title displayed above the stepper steps"
+    },
+    "showConnectors": {
+      "name": "Show Connectors",
+      "type": "boolean",
+      "defaultValue": true,
+      "description": "Whether to show connector lines between steps"
+    },
+    "completed": {
+      "name": "Completed",
+      "type": "boolean",
+      "defaultValue": false,
+      "description": "Marks the entire stepper as completed"
+    },
+    "collapsibleSubSteps": {
+      "name": "Collapsible Sub Steps",
+      "type": "boolean",
+      "defaultValue": false,
+      "description": "Whether sub-steps can be collapsed"
+    },
+    "skeletonCount": {
+      "name": "Skeleton Count",
+      "type": "number",
+      "defaultValue": 3,
+      "description": "Number of skeleton items to show when no children are provided"
+    }
+  }
+}

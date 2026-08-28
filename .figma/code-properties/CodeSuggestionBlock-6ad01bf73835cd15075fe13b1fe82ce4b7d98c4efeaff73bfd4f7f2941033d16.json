@@ -1,0 +1,14 @@
+{
+  "schemaVersion": 1,
+  "source": {
+    "componentName": "CodeSuggestionBlock",
+    "filePath": "packages/ui/src/components/markdown-viewer/CodeSuggestionBlock.tsx"
+  },
+  "codeProperties": {
+    "code": {
+      "type": "string",
+      "name": "Code",
+      "description": "The new code content to display in the suggestion block."
+    }
+  }
+}

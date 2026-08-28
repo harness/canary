@@ -1,0 +1,55 @@
+{
+  "schemaVersion": 1,
+  "source": {
+    "componentName": "StepperSubStep",
+    "filePath": "packages/ui/src/components/stepper/stepper-sub-step.tsx"
+  },
+  "codeProperties": {
+    "title": {
+      "type": "string",
+      "name": "Title",
+      "description": "The title displayed for this sub-step."
+    },
+    "description": {
+      "type": "string",
+      "name": "Description",
+      "description": "Optional secondary description text shown beneath the title."
+    },
+    "state": {
+      "type": "string",
+      "name": "State",
+      "description": "Explicit state of the sub-step. When omitted, state is derived from context.",
+      "options": [
+        "",
+        "active",
+        "completed",
+        "error",
+        "skipped",
+        "upcoming"
+      ],
+      "control": {
+        "type": "select",
+        "labels": {
+          "": "Default",
+          "active": "Active",
+          "completed": "Completed",
+          "error": "Error",
+          "skipped": "Skipped",
+          "upcoming": "Upcoming"
+        }
+      }
+    },
+    "visualCompleted": {
+      "type": "boolean",
+      "name": "Visual Completed",
+      "description": "When true, renders the sub-step as completed visually regardless of its actual state.",
+      "defaultValue": false
+    },
+    "contentOnly": {
+      "type": "boolean",
+      "name": "Content Only",
+      "description": "When true, renders only the children content without the interactive sub-step row.",
+      "defaultValue": false
+    }
+  }
+}

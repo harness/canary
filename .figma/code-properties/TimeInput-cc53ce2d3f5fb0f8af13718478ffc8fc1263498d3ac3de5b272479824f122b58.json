@@ -1,0 +1,57 @@
+{
+  "schemaVersion": 1,
+  "source": {
+    "componentName": "TimeInput",
+    "filePath": "packages/ui/src/components/time-input.tsx"
+  },
+  "codeProperties": {
+    "label": {
+      "type": "string",
+      "name": "Label",
+      "description": "Label text displayed above or beside the input."
+    },
+    "caption": {
+      "type": "string",
+      "name": "Caption",
+      "description": "Helper text displayed below the input."
+    },
+    "error": {
+      "type": "string",
+      "name": "Error",
+      "description": "Error message shown below the input; also applies danger theme."
+    },
+    "warning": {
+      "type": "string",
+      "name": "Warning",
+      "description": "Warning message shown below the input; also applies warning theme."
+    },
+    "optional": {
+      "type": "boolean",
+      "name": "Optional",
+      "description": "When true, appends an optional indicator to the label."
+    },
+    "disabled": {
+      "type": "boolean",
+      "name": "Disabled",
+      "description": "Disables the input and label."
+    },
+    "orientation": {
+      "type": "string",
+      "name": "Orientation",
+      "description": "Layout orientation of the label and input.",
+      "options": [
+        "",
+        "horizontal",
+        "vertical"
+      ],
+      "control": {
+        "type": "select",
+        "labels": {
+          "": "Default",
+          "horizontal": "Horizontal",
+          "vertical": "Vertical"
+        }
+      }
+    }
+  }
+}

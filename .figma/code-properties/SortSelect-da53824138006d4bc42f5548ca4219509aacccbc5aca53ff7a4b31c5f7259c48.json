@@ -1,0 +1,14 @@
+{
+  "schemaVersion": 1,
+  "source": {
+    "componentName": "SortSelect",
+    "filePath": "packages/ui/src/components/sorts/sort-select.tsx"
+  },
+  "codeProperties": {
+    "buttonLabel": {
+      "type": "string",
+      "name": "Button Label",
+      "description": "Label text for the action button inside the sort dropdown."
+    }
+  }
+}

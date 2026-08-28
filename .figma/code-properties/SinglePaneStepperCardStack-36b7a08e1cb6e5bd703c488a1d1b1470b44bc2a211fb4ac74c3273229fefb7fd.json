@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "source": {
+    "componentName": "SinglePaneStepperCardStack",
+    "filePath": "packages/ui/src/components/single-pane-stepper/single-pane-stepper-card-stack.tsx"
+  },
+  "codeProperties": {
+    "stepperTitle": {
+      "type": "string",
+      "name": "Stepper Title"
+    },
+    "showStepperHeader": {
+      "type": "boolean",
+      "name": "Show Stepper Header"
+    },
+    "contentTitle": {
+      "type": "string",
+      "name": "Content Title"
+    },
+    "contentSubtitle": {
+      "type": "string",
+      "name": "Content Subtitle"
+    }
+  }
+}

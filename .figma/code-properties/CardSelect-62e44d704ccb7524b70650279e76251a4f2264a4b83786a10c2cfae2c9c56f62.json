@@ -1,0 +1,81 @@
+{
+  "schemaVersion": 1,
+  "source": {
+    "componentName": "CardSelect",
+    "filePath": "packages/ui/src/components/card-select.tsx"
+  },
+  "codeProperties": {
+    "type": {
+      "type": "string",
+      "name": "Type",
+      "description": "Whether the card select allows single or multiple selections.",
+      "options": [
+        "single",
+        "multiple"
+      ],
+      "control": {
+        "type": "select",
+        "labels": {
+          "single": "Single",
+          "multiple": "Multiple"
+        }
+      }
+    },
+    "layout": {
+      "type": "string",
+      "name": "Layout",
+      "defaultValue": "vertical",
+      "description": "Layout direction of the card select.",
+      "options": [
+        "vertical",
+        "horizontal",
+        "grid"
+      ],
+      "control": {
+        "type": "select",
+        "labels": {
+          "vertical": "Vertical",
+          "horizontal": "Horizontal",
+          "grid": "Grid"
+        }
+      }
+    },
+    "gap": {
+      "type": "string",
+      "name": "Gap",
+      "defaultValue": "md",
+      "description": "Gap between card items.",
+      "options": [
+        "xs",
+        "sm",
+        "md",
+        "lg"
+      ],
+      "control": {
+        "type": "select",
+        "labels": {
+          "xs": "Extra Small",
+          "sm": "Small",
+          "md": "Medium",
+          "lg": "Large"
+        }
+      }
+    },
+    "disabled": {
+      "type": "boolean",
+      "name": "Disabled",
+      "defaultValue": false,
+      "description": "When true, disables all card select items."
+    },
+    "rows": {
+      "type": "number",
+      "name": "Rows",
+      "description": "Number of rows (used for grid layout)."
+    },
+    "cols": {
+      "type": "number",
+      "name": "Columns",
+      "description": "Number of columns (used for grid layout)."
+    }
+  }
+}

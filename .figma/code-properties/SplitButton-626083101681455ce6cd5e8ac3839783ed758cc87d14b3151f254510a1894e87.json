@@ -1,0 +1,98 @@
+{
+  "schemaVersion": 1,
+  "source": {
+    "componentName": "SplitButton",
+    "filePath": "packages/ui/src/components/split-button.tsx"
+  },
+  "codeProperties": {
+    "variant": {
+      "type": "string",
+      "name": "Variant",
+      "description": "Visual variant of the button.",
+      "defaultValue": "primary",
+      "options": [
+        "primary",
+        "solid",
+        "surface",
+        "transparent",
+        "ghost"
+      ],
+      "control": {
+        "type": "select",
+        "labels": {
+          "primary": "Primary",
+          "solid": "Solid",
+          "surface": "Surface",
+          "transparent": "Transparent",
+          "ghost": "Ghost"
+        }
+      }
+    },
+    "theme": {
+      "type": "string",
+      "name": "Theme",
+      "description": "Color theme applied to the button.",
+      "defaultValue": "default",
+      "options": [
+        "default",
+        "success",
+        "danger",
+        "muted",
+        "warning"
+      ],
+      "control": {
+        "type": "select",
+        "labels": {
+          "default": "Default",
+          "success": "Success",
+          "danger": "Danger",
+          "muted": "Muted",
+          "warning": "Warning"
+        }
+      }
+    },
+    "size": {
+      "type": "string",
+      "name": "Size",
+      "description": "Size of the split button.",
+      "defaultValue": "md",
+      "options": [
+        "xs",
+        "sm",
+        "md"
+      ],
+      "control": {
+        "type": "select",
+        "labels": {
+          "xs": "Extra Small",
+          "sm": "Small",
+          "md": "Medium"
+        }
+      }
+    },
+    "loading": {
+      "type": "boolean",
+      "name": "Loading",
+      "description": "Shows a loading state on the button and disables both the button and dropdown.",
+      "defaultValue": false
+    },
+    "disabled": {
+      "type": "boolean",
+      "name": "Disabled",
+      "description": "Disables both the button and the dropdown trigger.",
+      "defaultValue": false
+    },
+    "disableButton": {
+      "type": "boolean",
+      "name": "Disable Button",
+      "description": "Disables only the main button, leaving the dropdown active.",
+      "defaultValue": false
+    },
+    "disableDropdown": {
+      "type": "boolean",
+      "name": "Disable Dropdown",
+      "description": "Disables only the dropdown trigger, leaving the main button active.",
+      "defaultValue": false
+    }
+  }
+}

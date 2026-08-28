@@ -1,0 +1,85 @@
+{
+  "schemaVersion": 1,
+  "source": {
+    "componentName": "Textarea",
+    "filePath": "packages/ui/src/components/form-primitives/textarea.tsx"
+  },
+  "codeProperties": {
+    "label": {
+      "name": "Label",
+      "type": "string"
+    },
+    "placeholder": {
+      "name": "Placeholder",
+      "type": "string"
+    },
+    "caption": {
+      "name": "Caption",
+      "type": "string"
+    },
+    "error": {
+      "name": "Error",
+      "type": "string"
+    },
+    "warning": {
+      "name": "Warning",
+      "type": "string"
+    },
+    "theme": {
+      "name": "Theme",
+      "type": "string",
+      "defaultValue": "default",
+      "options": [
+        "default",
+        "danger",
+        "warning"
+      ],
+      "control": {
+        "type": "select",
+        "labels": {
+          "default": "Default",
+          "danger": "Danger",
+          "warning": "Warning"
+        }
+      }
+    },
+    "size": {
+      "name": "Size",
+      "type": "string",
+      "defaultValue": "md",
+      "options": [
+        "md",
+        "sm"
+      ],
+      "control": {
+        "type": "select",
+        "labels": {
+          "md": "Medium",
+          "sm": "Small"
+        }
+      }
+    },
+    "disabled": {
+      "name": "Disabled",
+      "type": "boolean"
+    },
+    "optional": {
+      "name": "Optional",
+      "type": "boolean"
+    },
+    "resizable": {
+      "name": "Resizable",
+      "type": "boolean",
+      "defaultValue": false
+    },
+    "autoResize": {
+      "name": "Auto Resize",
+      "type": "boolean",
+      "defaultValue": false
+    },
+    "maxCharacters": {
+      "name": "Max Characters",
+      "type": "number"
+    }
+  }
+}

@@ -1,0 +1,40 @@
+{
+  "schemaVersion": 1,
+  "source": {
+    "componentName": "SearchInput",
+    "filePath": "packages/ui/src/components/inputs/search-input.tsx"
+  },
+  "codeProperties": {
+    "placeholder": {
+      "name": "Placeholder",
+      "type": "string",
+      "defaultValue": "Search"
+    },
+    "searchValue": {
+      "name": "Search Value",
+      "description": "Controlled value of the search input.",
+      "type": "string"
+    },
+    "debounce": {
+      "name": "Debounce",
+      "description": "Debounce delay in milliseconds, or true for 300ms default, or false to disable.",
+      "type": "boolean",
+      "defaultValue": true
+    },
+    "showPrevNextButtons": {
+      "name": "Show Prev/Next Buttons",
+      "type": "boolean",
+      "defaultValue": false
+    },
+    "counter": {
+      "name": "Counter",
+      "description": "Counter text displayed as a leading suffix.",
+      "type": "string"
+    },
+    "disabled": {
+      "name": "Disabled",
+      "type": "boolean",
+      "defaultValue": false
+    }
+  }
+}

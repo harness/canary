@@ -1,0 +1,14 @@
+{
+  "schemaVersion": 1,
+  "source": {
+    "componentName": "DrawerBody",
+    "filePath": "packages/ui/src/components/drawer/DrawerBody.tsx"
+  },
+  "codeProperties": {
+    "scrollable": {
+      "type": "boolean",
+      "name": "Scrollable",
+      "defaultValue": true
+    }
+  }
+}

@@ -1,0 +1,33 @@
+{
+  "schemaVersion": 1,
+  "source": {
+    "componentName": "SeveritySlider",
+    "filePath": "packages/ui/src/components/slider.tsx"
+  },
+  "codeProperties": {
+    "label": {
+      "name": "Label",
+      "type": "string"
+    },
+    "min": {
+      "name": "Min",
+      "type": "number",
+      "defaultValue": 0
+    },
+    "max": {
+      "name": "Max",
+      "type": "number",
+      "defaultValue": 100
+    },
+    "step": {
+      "name": "Step",
+      "type": "number",
+      "defaultValue": 1
+    },
+    "disabled": {
+      "name": "Disabled",
+      "type": "boolean",
+      "defaultValue": false
+    }
+  }
+}

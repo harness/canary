@@ -1,0 +1,19 @@
+{
+  "schemaVersion": 1,
+  "source": {
+    "componentName": "InputCaption",
+    "filePath": "packages/ui/src/components/input-caption.tsx"
+  },
+  "codeProperties": {
+    "error": {
+      "name": "Error",
+      "description": "Error message to display. Takes priority over caption.",
+      "type": "string"
+    },
+    "caption": {
+      "name": "Caption",
+      "description": "Caption text to display when there is no error.",
+      "type": "string"
+    }
+  }
+}

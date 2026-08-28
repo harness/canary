@@ -1,0 +1,38 @@
+{
+  "schemaVersion": 1,
+  "source": {
+    "componentName": "AppSidebarItem",
+    "filePath": "packages/ui/src/components/app-sidebar/sidebar-item.tsx"
+  },
+  "codeProperties": {
+    "isRecent": {
+      "name": "Is Recent",
+      "type": "boolean",
+      "defaultValue": false,
+      "description": "Whether the item appears in the recent items list"
+    },
+    "disabled": {
+      "name": "Disabled",
+      "type": "boolean",
+      "defaultValue": false,
+      "description": "Whether the sidebar item is disabled"
+    },
+    "hideMenuItems": {
+      "name": "Hide Menu Items",
+      "type": "boolean",
+      "defaultValue": false,
+      "description": "Whether to hide the action menu items"
+    },
+    "active": {
+      "name": "Active",
+      "type": "boolean",
+      "defaultValue": false,
+      "description": "Whether the sidebar item is currently active"
+    },
+    "draggable": {
+      "name": "Draggable",
+      "type": "boolean",
+      "description": "Whether the sidebar item can be dragged to reorder"
+    }
+  }
+}

@@ -1,0 +1,69 @@
+{
+  "schemaVersion": 1,
+  "source": {
+    "componentName": "DeleteAlertDialog",
+    "filePath": "packages/ui/src/components/dialogs/delete-alert-dialog.tsx"
+  },
+  "codeProperties": {
+    "open": {
+      "type": "boolean",
+      "name": "Open",
+      "description": "Controls whether the dialog is open."
+    },
+    "identifier": {
+      "type": "string",
+      "name": "Identifier",
+      "description": "The identifier of the item to be deleted."
+    },
+    "type": {
+      "type": "string",
+      "name": "Type",
+      "description": "The type of the item being deleted, used in the description message."
+    },
+    "isLoading": {
+      "type": "boolean",
+      "name": "Is Loading",
+      "defaultValue": false,
+      "description": "Shows a loading state on the confirm button."
+    },
+    "withForm": {
+      "type": "boolean",
+      "name": "With Form",
+      "defaultValue": false,
+      "description": "Requires the user to type a keyword to confirm deletion."
+    },
+    "title": {
+      "type": "string",
+      "name": "Title",
+      "description": "Custom title for the dialog."
+    },
+    "deletionItemName": {
+      "type": "string",
+      "name": "Deletion Item Name",
+      "description": "Display name of the item being deleted."
+    },
+    "deletionKeyword": {
+      "type": "string",
+      "name": "Deletion Keyword",
+      "defaultValue": "DELETE",
+      "description": "The keyword the user must type to confirm deletion when withForm is true."
+    },
+    "deleteConfirmText": {
+      "type": "string",
+      "name": "Delete Confirm Text",
+      "description": "Custom label for the confirm button."
+    },
+    "violation": {
+      "type": "boolean",
+      "name": "Violation",
+      "defaultValue": false,
+      "description": "Indicates a rule violation exists for the deletion."
+    },
+    "bypassable": {
+      "type": "boolean",
+      "name": "Bypassable",
+      "defaultValue": false,
+      "description": "Whether the violation can be bypassed to proceed with deletion."
+    }
+  }
+}

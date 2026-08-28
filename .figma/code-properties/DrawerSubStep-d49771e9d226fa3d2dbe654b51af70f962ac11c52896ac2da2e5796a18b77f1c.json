@@ -1,0 +1,14 @@
+{
+  "schemaVersion": 1,
+  "source": {
+    "componentName": "DrawerSubStep",
+    "filePath": "packages/ui/src/components/drawer/DrawerSubStep.tsx"
+  },
+  "codeProperties": {
+    "value": {
+      "name": "Value",
+      "type": "string",
+      "description": "Unique identifier for this sub-step."
+    }
+  }
+}

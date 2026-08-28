@@ -1,0 +1,24 @@
+{
+  "schemaVersion": 1,
+  "source": {
+    "componentName": "DrawerRailShell",
+    "filePath": "packages/ui/src/components/drawer/DrawerRailShell.tsx"
+  },
+  "codeProperties": {
+    "as": {
+      "type": "string",
+      "name": "As",
+      "options": [
+        "aside",
+        "nav"
+      ],
+      "control": {
+        "type": "select",
+        "labels": {
+          "aside": "Aside",
+          "nav": "Nav"
+        }
+      }
+    }
+  }
+}

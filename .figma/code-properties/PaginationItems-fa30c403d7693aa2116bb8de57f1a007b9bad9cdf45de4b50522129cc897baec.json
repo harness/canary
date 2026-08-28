@@ -1,0 +1,24 @@
+{
+  "schemaVersion": 1,
+  "source": {
+    "componentName": "PaginationItems",
+    "filePath": "packages/ui/src/components/pagination/components/pagination-items.tsx"
+  },
+  "codeProperties": {
+    "totalPages": {
+      "type": "number",
+      "name": "Total Pages",
+      "description": "The total number of pages."
+    },
+    "currentPage": {
+      "type": "number",
+      "name": "Current Page",
+      "description": "The currently active page number."
+    },
+    "truncateLimit": {
+      "type": "number",
+      "name": "Truncate Limit",
+      "description": "The maximum number of page items to show before truncating with ellipses."
+    }
+  }
+}

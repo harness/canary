@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "source": {
+    "componentName": "ChatDiffViewer",
+    "filePath": "packages/ui/src/components/chat/chat-diff-viewer.tsx"
+  },
+  "codeProperties": {
+    "data": {
+      "type": "string",
+      "name": "Data",
+      "description": "The raw diff string to display."
+    },
+    "lang": {
+      "type": "string",
+      "name": "Language",
+      "defaultValue": "go",
+      "description": "The programming language for syntax highlighting."
+    },
+    "fileName": {
+      "type": "string",
+      "name": "File Name",
+      "description": "Optional file name displayed above the diff."
+    }
+  }
+}

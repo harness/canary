@@ -1,0 +1,22 @@
+{
+  "schemaVersion": 1,
+  "source": {
+    "componentName": "SkeletonList",
+    "filePath": "packages/ui/src/components/skeletons/skeleton-list.tsx"
+  },
+  "codeProperties": {
+    "linesCount": {
+      "type": "number",
+      "name": "Lines Count",
+      "defaultValue": 8
+    },
+    "hasActions": {
+      "type": "boolean",
+      "name": "Has Actions"
+    },
+    "onlyItems": {
+      "type": "boolean",
+      "name": "Only Items"
+    }
+  }
+}

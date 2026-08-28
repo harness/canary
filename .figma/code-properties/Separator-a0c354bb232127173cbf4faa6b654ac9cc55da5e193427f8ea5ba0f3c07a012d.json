@@ -1,0 +1,32 @@
+{
+  "schemaVersion": 1,
+  "source": {
+    "componentName": "Separator",
+    "filePath": "packages/ui/src/components/separator.tsx"
+  },
+  "codeProperties": {
+    "orientation": {
+      "type": "string",
+      "name": "Orientation",
+      "description": "The orientation of the separator line.",
+      "defaultValue": "horizontal",
+      "options": [
+        "horizontal",
+        "vertical"
+      ],
+      "control": {
+        "type": "select",
+        "labels": {
+          "horizontal": "Horizontal",
+          "vertical": "Vertical"
+        }
+      }
+    },
+    "decorative": {
+      "type": "boolean",
+      "name": "Decorative",
+      "description": "When true, the separator is purely visual and hidden from assistive technologies.",
+      "defaultValue": true
+    }
+  }
+}

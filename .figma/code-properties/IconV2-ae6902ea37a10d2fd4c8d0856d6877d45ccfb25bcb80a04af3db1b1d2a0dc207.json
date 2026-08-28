@@ -1,0 +1,71 @@
+{
+  "schemaVersion": 1,
+  "source": {
+    "componentName": "IconV2",
+    "filePath": "packages/ui/src/components/icon-v2/icon-v2.tsx"
+  },
+  "codeProperties": {
+    "name": {
+      "name": "Icon Name",
+      "type": "string"
+    },
+    "size": {
+      "name": "Size",
+      "type": "string",
+      "defaultValue": "sm",
+      "options": [
+        "2xs",
+        "xs",
+        "sm",
+        "md",
+        "lg",
+        "xl"
+      ],
+      "control": {
+        "type": "select",
+        "labels": {
+          "2xs": "2XS",
+          "xs": "XS",
+          "sm": "Small",
+          "md": "Medium",
+          "lg": "Large",
+          "xl": "XL"
+        }
+      }
+    },
+    "color": {
+      "name": "Color",
+      "type": "string",
+      "defaultValue": "inherit",
+      "options": [
+        "inherit",
+        "danger",
+        "warning",
+        "success",
+        "info",
+        "neutral",
+        "merged",
+        "risk"
+      ],
+      "control": {
+        "type": "select",
+        "labels": {
+          "inherit": "Inherit",
+          "danger": "Danger",
+          "warning": "Warning",
+          "success": "Success",
+          "info": "Info",
+          "neutral": "Neutral",
+          "merged": "Merged",
+          "risk": "Risk"
+        }
+      }
+    },
+    "skipSize": {
+      "name": "Skip Size",
+      "description": "Set to true if size will be added through CSS.",
+      "type": "boolean",
+      "defaultValue": false
+    }
+  }
+}

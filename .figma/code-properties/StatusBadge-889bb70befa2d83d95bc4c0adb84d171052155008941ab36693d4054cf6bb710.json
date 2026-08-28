@@ -1,0 +1,78 @@
+{
+  "schemaVersion": 1,
+  "source": {
+    "componentName": "StatusBadge",
+    "filePath": "packages/ui/src/components/status-badge/status-badge.tsx"
+  },
+  "codeProperties": {
+    "variant": {
+      "name": "Variant",
+      "type": "string",
+      "defaultValue": "primary",
+      "options": [
+        "primary",
+        "secondary",
+        "outline",
+        "ghost",
+        "status"
+      ],
+      "control": {
+        "type": "select",
+        "labels": {
+          "primary": "Primary",
+          "secondary": "Secondary",
+          "outline": "Outline",
+          "ghost": "Ghost",
+          "status": "Status"
+        }
+      }
+    },
+    "size": {
+      "name": "Size",
+      "type": "string",
+      "defaultValue": "md",
+      "options": [
+        "md",
+        "sm"
+      ],
+      "control": {
+        "type": "select",
+        "labels": {
+          "md": "Medium",
+          "sm": "Small"
+        }
+      }
+    },
+    "theme": {
+      "name": "Theme",
+      "type": "string",
+      "defaultValue": "muted",
+      "options": [
+        "muted",
+        "success",
+        "warning",
+        "danger",
+        "info",
+        "merged",
+        "risk"
+      ],
+      "control": {
+        "type": "select",
+        "labels": {
+          "muted": "Muted",
+          "success": "Success",
+          "warning": "Warning",
+          "danger": "Danger",
+          "info": "Info",
+          "merged": "Merged",
+          "risk": "Risk"
+        }
+      }
+    },
+    "pulse": {
+      "name": "Pulse",
+      "type": "boolean",
+      "description": "Animates the status indicator with a pulse effect (only available when variant is 'status')"
+    }
+  }
+}

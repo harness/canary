@@ -1,0 +1,30 @@
+{
+  "schemaVersion": 1,
+  "source": {
+    "componentName": "Radio",
+    "filePath": "packages/ui/src/components/radio.tsx"
+  },
+  "codeProperties": {
+    "label": {
+      "name": "Label",
+      "type": "string"
+    },
+    "caption": {
+      "name": "Caption",
+      "type": "string"
+    },
+    "error": {
+      "name": "Error",
+      "type": "boolean",
+      "defaultValue": false
+    },
+    "disabled": {
+      "name": "Disabled",
+      "type": "boolean"
+    },
+    "optional": {
+      "name": "Optional",
+      "type": "boolean"
+    }
+  }
+}

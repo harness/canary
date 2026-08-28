@@ -1,0 +1,29 @@
+{
+  "schemaVersion": 1,
+  "source": {
+    "componentName": "Switch",
+    "filePath": "packages/ui/src/components/switch.tsx"
+  },
+  "codeProperties": {
+    "label": {
+      "name": "Label",
+      "type": "string"
+    },
+    "caption": {
+      "name": "Caption",
+      "type": "string"
+    },
+    "showOptionalLabel": {
+      "name": "Show Optional Label",
+      "type": "boolean"
+    },
+    "captionTooltip": {
+      "name": "Caption Tooltip",
+      "type": "string"
+    },
+    "disabled": {
+      "name": "Disabled",
+      "type": "boolean"
+    }
+  }
+}

@@ -1,0 +1,43 @@
+{
+  "schemaVersion": 1,
+  "source": {
+    "componentName": "DraggableCardList",
+    "filePath": "packages/ui/src/components/draggable-card.tsx"
+  },
+  "codeProperties": {
+    "listGap": {
+      "type": "string",
+      "name": "List Gap",
+      "defaultValue": "md",
+      "options": [
+        "none",
+        "xs",
+        "sm",
+        "md",
+        "lg",
+        "xl"
+      ],
+      "control": {
+        "type": "select",
+        "labels": {
+          "none": "None",
+          "xs": "Extra Small",
+          "sm": "Small",
+          "md": "Medium",
+          "lg": "Large",
+          "xl": "Extra Large"
+        }
+      }
+    },
+    "sticky": {
+      "type": "boolean",
+      "name": "Sticky",
+      "description": "Whether the header is sticky when scrolling."
+    },
+    "contained": {
+      "type": "boolean",
+      "name": "Contained",
+      "description": "Whether the sticky list section is contained."
+    }
+  }
+}

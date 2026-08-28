@@ -1,0 +1,24 @@
+{
+  "schemaVersion": 1,
+  "source": {
+    "componentName": "ResetTag",
+    "filePath": "packages/ui/src/components/reset-tag.tsx"
+  },
+  "codeProperties": {
+    "label": {
+      "type": "string",
+      "name": "Label",
+      "description": "The main label text of the tag."
+    },
+    "value": {
+      "type": "string",
+      "name": "Value",
+      "description": "The value text displayed alongside the label."
+    },
+    "disabled": {
+      "type": "boolean",
+      "name": "Disabled",
+      "description": "Whether the tag is in a disabled state."
+    }
+  }
+}

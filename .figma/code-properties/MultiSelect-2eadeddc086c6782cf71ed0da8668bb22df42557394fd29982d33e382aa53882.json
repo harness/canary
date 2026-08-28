@@ -1,0 +1,93 @@
+{
+  "schemaVersion": 1,
+  "source": {
+    "componentName": "MultiSelect",
+    "filePath": "packages/ui/src/components/multi-select.tsx"
+  },
+  "codeProperties": {
+    "placeholder": {
+      "type": "string",
+      "name": "Placeholder",
+      "description": "Placeholder text displayed when no items are selected."
+    },
+    "disabled": {
+      "type": "boolean",
+      "name": "Disabled",
+      "description": "Whether the multi-select input is disabled."
+    },
+    "disallowCreation": {
+      "type": "boolean",
+      "name": "Disallow Creation",
+      "description": "When true, prevents users from creating new options by pressing Enter.",
+      "defaultValue": false
+    },
+    "isLoading": {
+      "type": "boolean",
+      "name": "Is Loading",
+      "description": "When true, displays a loading skeleton in the dropdown.",
+      "defaultValue": false
+    },
+    "theme": {
+      "type": "string",
+      "name": "Theme",
+      "description": "The visual theme of the multi-select container.",
+      "defaultValue": "default",
+      "options": [
+        "default",
+        "danger",
+        "warning"
+      ],
+      "control": {
+        "type": "select",
+        "labels": {
+          "default": "Default",
+          "danger": "Danger",
+          "warning": "Warning"
+        }
+      }
+    },
+    "label": {
+      "type": "string",
+      "name": "Label",
+      "description": "Label text displayed above the input."
+    },
+    "error": {
+      "type": "string",
+      "name": "Error",
+      "description": "Error message displayed below the input."
+    },
+    "warning": {
+      "type": "string",
+      "name": "Warning",
+      "description": "Warning message displayed below the input."
+    },
+    "caption": {
+      "type": "string",
+      "name": "Caption",
+      "description": "Helper text displayed below the input."
+    },
+    "optional": {
+      "type": "boolean",
+      "name": "Optional",
+      "description": "When true, marks the field as optional in the label."
+    },
+    "orientation": {
+      "type": "string",
+      "name": "Orientation",
+      "description": "The layout orientation of the label and input.",
+      "options": [
+        "",
+        "horizontal",
+        "vertical"
+      ],
+      "control": {
+        "type": "select",
+        "labels": {
+          "": "Default",
+          "horizontal": "Horizontal",
+          "vertical": "Vertical"
+        }
+      }
+    }
+  }
+}

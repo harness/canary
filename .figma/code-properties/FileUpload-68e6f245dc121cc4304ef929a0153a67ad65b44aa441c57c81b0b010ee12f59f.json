@@ -1,0 +1,19 @@
+{
+  "schemaVersion": 1,
+  "source": {
+    "componentName": "FileUpload",
+    "filePath": "packages/ui/src/components/file-upload.tsx"
+  },
+  "codeProperties": {
+    "error": {
+      "type": "string",
+      "name": "Error",
+      "description": "Error message displayed below the upload area."
+    },
+    "accept": {
+      "type": "string",
+      "name": "Accept",
+      "description": "File types accepted by the file input (e.g. '.pdf,.png')."
+    }
+  }
+}

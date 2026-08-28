@@ -1,0 +1,75 @@
+{
+  "schemaVersion": 1,
+  "source": {
+    "componentName": "MoreActionsTooltip",
+    "filePath": "packages/ui/src/components/more-actions-tooltip.tsx"
+  },
+  "codeProperties": {
+    "buttonVariant": {
+      "type": "string",
+      "name": "Button Variant",
+      "description": "The variant style of the trigger button.",
+      "defaultValue": "ghost",
+      "options": [
+        "",
+        "ghost",
+        "default",
+        "secondary",
+        "outline",
+        "destructive",
+        "link"
+      ],
+      "control": {
+        "type": "select",
+        "labels": {
+          "": "Default",
+          "ghost": "Ghost",
+          "default": "Default",
+          "secondary": "Secondary",
+          "outline": "Outline",
+          "destructive": "Destructive",
+          "link": "Link"
+        }
+      }
+    },
+    "buttonSize": {
+      "type": "string",
+      "name": "Button Size",
+      "description": "The size of the trigger button.",
+      "defaultValue": "md",
+      "options": [
+        "",
+        "sm",
+        "md",
+        "lg"
+      ],
+      "control": {
+        "type": "select",
+        "labels": {
+          "": "Default",
+          "sm": "Small",
+          "md": "Medium",
+          "lg": "Large"
+        }
+      }
+    },
+    "disabled": {
+      "type": "boolean",
+      "name": "Disabled",
+      "description": "Whether the trigger button is disabled.",
+      "defaultValue": false
+    },
+    "sideOffset": {
+      "type": "number",
+      "name": "Side Offset",
+      "description": "The offset of the dropdown menu from the trigger along the side axis.",
+      "defaultValue": 2
+    },
+    "alignOffset": {
+      "type": "number",
+      "name": "Align Offset",
+      "description": "The offset of the dropdown menu from the trigger along the alignment axis.",
+      "defaultValue": 0
+    }
+  }
+}

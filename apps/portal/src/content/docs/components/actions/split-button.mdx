@@ -3,12 +3,22 @@ title: Split Button
 description: Interactive split button with dropdown options
 ---
 
+import { DocsPage } from "@/components/docs-page";
+import { Tabs, TabItem } from "@astrojs/starlight/components";
+import PageTabsToc from "@/components/page-tabs-toc.astro";
+
+<PageTabsToc />
+
+<div id="page-level-tabs">
+
+<Tabs>
+
+<TabItem label="Overview">
+
 The `SplitButton` component provides a flexible UI element combining a button with a dropdown menu of options. It can be used in two different modes:
 
 - Regular dropdown menu (default behavior)
 - Radio button selection group (when `selectedValue` is provided)
-
-import { DocsPage } from "@/components/docs-page";
 
 The `SplitButton` component supports specific combinations of `variant` and `theme` props:
 
@@ -368,7 +378,13 @@ return (
 )
 ```
 
-## API Reference
+</TabItem>
+
+<TabItem label="Properties">
+
+{/* Visually hidden — anchors the section headings below in the TOC without showing a redundant title in the panel body (the tab already says "Properties"). Hidden via #page-level-tabs h2#properties in styles.css. */}
+
+## Properties
 
 <DocsPage.PropsTable
   props={[
@@ -473,3 +489,9 @@ return (
     },
   ]}
 />
+
+</TabItem>
+
+</Tabs>
+
+</div>

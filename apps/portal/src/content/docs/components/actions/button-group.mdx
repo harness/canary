@@ -3,10 +3,20 @@ title: Button Group
 description: ButtonGroup component
 ---
 
+import { DocsPage } from "@/components/docs-page";
+import { Tabs, TabItem } from "@astrojs/starlight/components";
+import PageTabsToc from "@/components/page-tabs-toc.astro";
+
+<PageTabsToc />
+
+<div id="page-level-tabs">
+
+<Tabs>
+
+<TabItem label="Overview">
+
 The `ButtonGroup` component allows you to group multiple buttons together, either horizontally or vertically. It is useful for organizing related actions.
 The button data is passed via the `buttonsProps` prop, which should contain an array of props for each individual button.
-
-import { DocsPage } from "@/components/docs-page";
 
 <DocsPage.ComponentExample
   client:only
@@ -234,7 +244,13 @@ Within `buttonsProps`, you can provide a `dropdownProps` property to define the 
 </div>`}
 />
 
-## API Reference
+</TabItem>
+
+<TabItem label="Properties">
+
+{/* Visually hidden — anchors the section headings below in the TOC without showing a redundant title in the panel body (the tab already says "Properties"). Hidden via #page-level-tabs h2#properties in styles.css. */}
+
+## Properties
 
 Type `ButtonGroupButtonProps`
 
@@ -304,3 +320,9 @@ type ButtonGroupButtonProps = ButtonWithTooltip | ButtonWithDropdown;
     },
   ]}
 />
+
+</TabItem>
+
+</Tabs>
+
+</div>

@@ -515,21 +515,16 @@ ul.top-level summary svg {
 }
 
 /* CONTENT COLUMN WIDTH — keep it consistent across pages.
-   The doc content is a flex item (DocTemplate's `.flex-1.min-w-0`) sitting next to
-   the fixed 200px "On this page" TOC. A flex item's automatic minimum size is its
-   content's min-content width, so a single long, unwrapped code line (e.g. Button
-   Group's Usage example) can inflate the column — and the capped 1200px shell —
-   shoving the TOC toward the edge and making that page wider than its siblings.
-   Pin min-width:0 on the flex item so long code scrolls/clips inside it instead of
-   widening the column; every page's content column then stays the same width. */
-div:has(> main[data-pagefind-body]) {
-  min-width: 0 !important;
-}
-
-/* The DocTemplate row itself (max-width:1200px) is a flex item inside a
-   justify-center parent, so it too defaults to min-width:auto and can grow past
-   1200px when its content's min-content is large. Pin it to 0 so max-width wins. */
-div[style*="1200px"]:has(main[data-pagefind-body]) {
+   DocTemplate nests flex items: [flex-1 justify-center wrapper] > [max-width:1200px
+   row] > [flex-1 content] + [200px TOC]. The wrapper is a flex-1 item with the
+   default min-width:auto, so its minimum size is its content's min-content width. A
+   page with a long, unwrapped code line (e.g. Button Group's Usage example) inflates
+   that min-content, letting the wrapper grow past its normal viewport share; the row
+   inside then expands to its 1200px cap, widening the flex-1 content column and
+   making that page wider than siblings whose code lines are short. Pinning
+   min-width:0 on the wrapper keeps it at its viewport share on every page, so the
+   content column is the same width regardless of code-line length. */
+div:has(> div[style*="1200px"] main[data-pagefind-body]) {
   min-width: 0 !important;
 }
 

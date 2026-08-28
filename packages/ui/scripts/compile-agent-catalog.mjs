@@ -306,13 +306,6 @@ function projectFallback(component, aliases, extra) {
     import: defaultImport(component.exportName),
     summary: extra.summary || `${component.exportName} in the ${component.family} family.`,
     confidence: 'fallback',
-    props: [
-      {
-        name: component.exportName,
-        type: 'see TypeScript',
-        description: `See ${component.sourcePath} for the public React API.`
-      }
-    ],
     examples: extra.examples ?? []
   })
 }

@@ -277,6 +277,8 @@ test('projects Dialog as fallback from Portal ComponentExample members', () => {
 
   expect(dialog.confidence).toBe('fallback')
   expect(dialog.import).toBe('import { Dialog } from "@harnessio/ui/components"')
+  expect(dialog.props).toEqual([])
+  expect(dialog.sourcePath).toBeTruthy()
   expect(exampleCode).toContain('Dialog.Root')
   expect(dialog.examples[0].id).toMatch(/^portal-example-/)
   expect(dialog.members).toEqual(expect.arrayContaining(['Root', 'Trigger', 'Content', 'Header', 'Title']))
@@ -288,6 +290,8 @@ test('projects Drawer as fallback when the named contract file is missing', () =
   const exampleCode = drawer.examples.map(example => example.code).join('\n')
 
   expect(drawer.confidence).toBe('fallback')
+  expect(drawer.props).toEqual([])
+  expect(drawer.sourcePath).toBeTruthy()
   expect(exampleCode).toContain('Drawer.Root')
   expect(drawer.members).toEqual(expect.arrayContaining(['Root', 'Trigger']))
   expect(drawer.do).toEqual([])
@@ -356,12 +360,15 @@ test('missing contract files and ComponentExample extraction work on a fixture p
   expect(button.confidence).toBe('stable')
   expect(button.examples[0].code).toContain("IconV2 name='plus'")
   expect(dialog.confidence).toBe('fallback')
+  expect(dialog.props).toEqual([])
   expect(dialog.examples[0].code).toContain('Dialog.Root')
   expect(dialog.examples.some(example => example.code?.includes('@/components'))).toBe(false)
   expect(dialog.members).toEqual(expect.arrayContaining(['Root', 'Trigger', 'Content']))
   expect(drawer.confidence).toBe('fallback')
+  expect(drawer.props).toEqual([])
   expect(drawer.examples[0].code).toContain('Drawer.Root')
   expect(mystery.confidence).toBe('unreviewed')
+  expect(mystery.props).toEqual([])
   expect(ids).not.toContain('canary.diff-mode-enum')
 })
 

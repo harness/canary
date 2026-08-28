@@ -611,7 +611,7 @@ ul.top-level summary svg {
    dominate the page; the code scrolls within a 600px frame.
    ============================================================ */
 .usage-code-scroll .expressive-code pre {
-  max-height: 600px;
+  max-height: 400px;
   overflow-y: auto;
 }
 

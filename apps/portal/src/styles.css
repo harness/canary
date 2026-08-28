@@ -618,6 +618,22 @@ ul.top-level summary svg {
 }
 
 /* ============================================================
+   ANATOMY CODE BLOCK — max-height scroll
+   Same treatment as the Usage block: caps the "Anatomy" snippet on
+   every component page at 400px so long composition trees don't
+   dominate the page; shorter blocks stay their natural height and
+   only taller ones scroll. Covers the two layouts used in the docs —
+   the code fence either directly follows the "## Anatomy" heading
+   (rendered as <h2 id="anatomy">) or follows a single description
+   paragraph.
+   ============================================================ */
+.sl-markdown-content h2#anatomy + .expressive-code pre,
+.sl-markdown-content h2#anatomy + p + .expressive-code pre {
+  max-height: 400px;
+  overflow-y: auto;
+}
+
+/* ============================================================
    SEARCH
    ============================================================ */
 

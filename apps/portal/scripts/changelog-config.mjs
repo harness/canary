@@ -17,6 +17,14 @@ export function buildPrUrl(prNumber) {
   return `${HARNESS_CODE_REPO_BASE}/pulls/${prNumber}`;
 }
 
+export function buildPrApiUrl(prNumber) {
+  return `https://harness0.harness.io/gateway/code/api/v1/repos/${HARNESS_ACCOUNT_ID}/${HARNESS_ORG}/${HARNESS_PROJECT}/${HARNESS_REPO}/+/pullreq/${prNumber}?routingId=${HARNESS_ACCOUNT_ID}`;
+}
+
+export function shouldSkipChangelog(title) {
+  return /\[skip changelog\]/i.test(title);
+}
+
 export function authorHandle(name) {
   return name
     .trim()

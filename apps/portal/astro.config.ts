@@ -1,7 +1,24 @@
+import { execFileSync } from "node:child_process";
+import { fileURLToPath } from "node:url";
 import starlight from "@astrojs/starlight";
 import tailwind from "@astrojs/tailwind";
 import { defineConfig } from "astro/config";
 import react from "@astrojs/react";
+
+// Netlify sets NETLIFY=true during site builds. Regenerate changelog.json from
+// git history so the live doc site picks up PRs merged since the last commit
+// of that file. Skip on local/CI `pnpm build` — CheckCleanGitTree fails if
+// portal build dirties the working tree.
+if (process.env.NETLIFY === "true" || process.env.CHANGELOG_REGENERATE === "true") {
+  try {
+    execFileSync("node", ["scripts/backfill-changelog.mjs", "--from-git", "--limit=60"], {
+      cwd: fileURLToPath(new URL(".", import.meta.url)),
+      stdio: "inherit",
+    });
+  } catch (error) {
+    console.warn("Changelog backfill failed; using committed changelog.json", error);
+  }
+}
 
 // if static building, mock `document` to prevent a bug triggered by a 3rd party dependency
 if (!("document" in globalThis)) {

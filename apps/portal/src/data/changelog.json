@@ -1,5 +1,325 @@
 [
   {
+    "prNumber": 11345,
+    "title": "feat: [UUI-3274]: add Growth Box PLG pattern",
+    "summary": "feat: [UUI-3274]: add Growth Box PLG pattern",
+    "url": "https://harness0.harness.io/ng/account/l7B_kbSEQD2wjrM7PShm5w/all/code/orgs/PROD/projects/Harness_Commons/repos/canary/pulls/11345",
+    "mergedAt": "2026-08-26T18:26:00Z",
+    "author": "john-weber"
+  },
+  {
+    "prNumber": 11370,
+    "title": "chore: [UUI-1350]: bump @harnessio/ui to 1.3.13",
+    "summary": "chore: [UUI-1350]: bump @harnessio/ui to 1.3.13",
+    "url": "https://harness0.harness.io/ng/account/l7B_kbSEQD2wjrM7PShm5w/all/code/orgs/PROD/projects/Harness_Commons/repos/canary/pulls/11370",
+    "mergedAt": "2026-08-26T17:45:05Z",
+    "author": "jacob-bassett"
+  },
+  {
+    "prNumber": 11369,
+    "title": "fix: [UUI-1350]: drop SinglePaneStepper scroll spacers",
+    "summary": "fix: [UUI-1350]: drop SinglePaneStepper scroll spacers",
+    "url": "https://harness0.harness.io/ng/account/l7B_kbSEQD2wjrM7PShm5w/all/code/orgs/PROD/projects/Harness_Commons/repos/canary/pulls/11369",
+    "mergedAt": "2026-08-26T17:03:56Z",
+    "author": "jacob-bassett"
+  },
+  {
+    "prNumber": 11368,
+    "title": "feat: [PL-74291]: add onClose and onAutoClose to toast",
+    "summary": "feat: [PL-74291]: add onClose and onAutoClose to toast",
+    "url": "https://harness0.harness.io/ng/account/l7B_kbSEQD2wjrM7PShm5w/all/code/orgs/PROD/projects/Harness_Commons/repos/canary/pulls/11368",
+    "mergedAt": "2026-08-26T10:19:56Z",
+    "author": "yash-rathore"
+  },
+  {
+    "prNumber": 11296,
+    "title": "fix: [CDS-130948]: fix stepper flow-control on restart",
+    "summary": "fix: [CDS-130948]: fix stepper flow-control on restart",
+    "url": "https://harness0.harness.io/ng/account/l7B_kbSEQD2wjrM7PShm5w/all/code/orgs/PROD/projects/Harness_Commons/repos/canary/pulls/11296",
+    "mergedAt": "2026-08-26T02:20:13Z",
+    "author": "jacob-bassett"
+  },
+  {
+    "prNumber": 11365,
+    "title": "feat: [CDS-130826]: DualPane stepper Root API parity",
+    "summary": "feat: [CDS-130826]: DualPane stepper Root API parity",
+    "url": "https://harness0.harness.io/ng/account/l7B_kbSEQD2wjrM7PShm5w/all/code/orgs/PROD/projects/Harness_Commons/repos/canary/pulls/11365",
+    "mergedAt": "2026-08-26T01:01:02Z",
+    "author": "jacob-bassett"
+  },
+  {
+    "prNumber": 11366,
+    "title": "feat: [UUI-3102]: allow copying text from cards and lists",
+    "summary": "feat: [UUI-3102]: allow copying text from cards and lists",
+    "url": "https://harness0.harness.io/ng/account/l7B_kbSEQD2wjrM7PShm5w/all/code/orgs/PROD/projects/Harness_Commons/repos/canary/pulls/11366",
+    "mergedAt": "2026-08-25T23:29:32Z",
+    "author": "radhakrishna-dodla"
+  },
+  {
+    "prNumber": 11357,
+    "title": "feat: [UUI-3270]: Remove and migrate single-line-tokens",
+    "summary": "feat: [UUI-3270]: Remove and migrate single-line-tokens",
+    "url": "https://harness0.harness.io/ng/account/l7B_kbSEQD2wjrM7PShm5w/all/code/orgs/PROD/projects/Harness_Commons/repos/canary/pulls/11357",
+    "mergedAt": "2026-08-25T20:20:13Z",
+    "author": "kathryn-grantier"
+  },
+  {
+    "prNumber": 11355,
+    "title": "feat: [CDS-130826]: seed flow engine from snapshot",
+    "summary": "feat: [CDS-130826]: seed flow engine from snapshot",
+    "url": "https://harness0.harness.io/ng/account/l7B_kbSEQD2wjrM7PShm5w/all/code/orgs/PROD/projects/Harness_Commons/repos/canary/pulls/11355",
+    "mergedAt": "2026-08-25T19:19:57Z",
+    "author": "jacob-bassett"
+  },
+  {
+    "prNumber": 11349,
+    "title": "feat: [CCM-34996]: logo and map update",
+    "summary": "feat: [CCM-34996]: logo and map update",
+    "url": "https://harness0.harness.io/ng/account/l7B_kbSEQD2wjrM7PShm5w/all/code/orgs/PROD/projects/Harness_Commons/repos/canary/pulls/11349",
+    "mergedAt": "2026-08-25T15:06:12Z",
+    "author": "sahil-jaiswal"
+  },
+  {
+    "prNumber": 11353,
+    "title": "fix: [PL-74005]: Alert Item Metadata Overflow",
+    "summary": "fix: [PL-74005]: Alert Item Metadata Overflow",
+    "url": "https://harness0.harness.io/ng/account/l7B_kbSEQD2wjrM7PShm5w/all/code/orgs/PROD/projects/Harness_Commons/repos/canary/pulls/11353",
+    "mergedAt": "2026-08-25T08:35:30Z",
+    "author": "manish-sharma"
+  },
+  {
+    "prNumber": 11318,
+    "title": "feat: [UUI-1350]: StepGroups-optional flat-mode flow stepper",
+    "summary": "feat: [UUI-1350]: StepGroups-optional flat-mode flow stepper",
+    "url": "https://harness0.harness.io/ng/account/l7B_kbSEQD2wjrM7PShm5w/all/code/orgs/PROD/projects/Harness_Commons/repos/canary/pulls/11318",
+    "mergedAt": "2026-08-24T20:56:00Z",
+    "author": "jacob-bassett"
+  },
+  {
+    "prNumber": 11351,
+    "title": "feat: [UUI-3378]: Added support for hideLineNumbers in YamlOutput component",
+    "summary": "feat: [UUI-3378]: Added support for hideLineNumbers in YamlOutput component",
+    "url": "https://harness0.harness.io/ng/account/l7B_kbSEQD2wjrM7PShm5w/all/code/orgs/PROD/projects/Harness_Commons/repos/canary/pulls/11351",
+    "mergedAt": "2026-08-24T13:20:44Z",
+    "author": "mayank-verma"
+  },
+  {
+    "prNumber": 11348,
+    "title": "fix: [UUI-3307]: restore verified-check in icon-v2 map",
+    "summary": "fix: [UUI-3307]: restore verified-check in icon-v2 map",
+    "url": "https://harness0.harness.io/ng/account/l7B_kbSEQD2wjrM7PShm5w/all/code/orgs/PROD/projects/Harness_Commons/repos/canary/pulls/11348",
+    "mergedAt": "2026-08-21T10:00:16Z",
+    "author": "igor-bogdanovski"
+  },
+  {
+    "prNumber": 11341,
+    "title": "feat: [UUI-3159]: Line-height 4px grid",
+    "summary": "feat: [UUI-3159]: Line-height 4px grid",
+    "url": "https://harness0.harness.io/ng/account/l7B_kbSEQD2wjrM7PShm5w/all/code/orgs/PROD/projects/Harness_Commons/repos/canary/pulls/11341",
+    "mergedAt": "2026-08-21T07:03:26Z",
+    "author": "kathryn-grantier"
+  },
+  {
+    "prNumber": 11347,
+    "title": "feat: [UUI-3288]: add a new emoji icon",
+    "summary": "feat: [UUI-3288]: add a new emoji icon",
+    "url": "https://harness0.harness.io/ng/account/l7B_kbSEQD2wjrM7PShm5w/all/code/orgs/PROD/projects/Harness_Commons/repos/canary/pulls/11347",
+    "mergedAt": "2026-08-20T16:30:33Z",
+    "author": "igor-bogdanovski"
+  },
+  {
+    "prNumber": 11298,
+    "title": "feat: [UUI-3023]: add alert toast",
+    "summary": "feat: [UUI-3023]: add alert toast",
+    "url": "https://harness0.harness.io/ng/account/l7B_kbSEQD2wjrM7PShm5w/all/code/orgs/PROD/projects/Harness_Commons/repos/canary/pulls/11298",
+    "mergedAt": "2026-08-20T09:07:57Z",
+    "author": "yash-rathore"
+  },
+  {
+    "prNumber": 11324,
+    "title": "feat: [PL-74005]: Add Alert Item Component",
+    "summary": "feat: [PL-74005]: Add Alert Item Component",
+    "url": "https://harness0.harness.io/ng/account/l7B_kbSEQD2wjrM7PShm5w/all/code/orgs/PROD/projects/Harness_Commons/repos/canary/pulls/11324",
+    "mergedAt": "2026-08-20T08:14:14Z",
+    "author": "manish-sharma"
+  },
+  {
+    "prNumber": 11342,
+    "title": "chore: [UUI-3263]: remove unused markdown-xs typography tokens",
+    "summary": "chore: [UUI-3263]: remove unused markdown-xs typography tokens",
+    "url": "https://harness0.harness.io/ng/account/l7B_kbSEQD2wjrM7PShm5w/all/code/orgs/PROD/projects/Harness_Commons/repos/canary/pulls/11342",
+    "mergedAt": "2026-08-20T06:05:51Z",
+    "author": "kathryn-grantier"
+  },
+  {
+    "prNumber": 11333,
+    "title": "fix: [UUI-3239]: gray.1000 adjustment and Pipeline Header bg",
+    "summary": "fix: [UUI-3239]: gray.1000 adjustment and Pipeline Header bg",
+    "url": "https://harness0.harness.io/ng/account/l7B_kbSEQD2wjrM7PShm5w/all/code/orgs/PROD/projects/Harness_Commons/repos/canary/pulls/11333",
+    "mergedAt": "2026-08-19T15:21:16Z",
+    "author": "kathryn-grantier"
+  },
+  {
+    "prNumber": 11340,
+    "title": "fix: [AIPLAT-1268]: fixed prompt input overflow issue",
+    "summary": "fix: [AIPLAT-1268]: fixed prompt input overflow issue",
+    "url": "https://harness0.harness.io/ng/account/l7B_kbSEQD2wjrM7PShm5w/all/code/orgs/PROD/projects/Harness_Commons/repos/canary/pulls/11340",
+    "mergedAt": "2026-08-19T10:14:07Z",
+    "author": "avinash-madhwani"
+  },
+  {
+    "prNumber": 11338,
+    "title": "chore: [CCM-34996]: package bump",
+    "summary": "chore: [CCM-34996]: package bump",
+    "url": "https://harness0.harness.io/ng/account/l7B_kbSEQD2wjrM7PShm5w/all/code/orgs/PROD/projects/Harness_Commons/repos/canary/pulls/11338",
+    "mergedAt": "2026-08-19T08:39:25Z",
+    "author": "sahil-jaiswal"
+  },
+  {
+    "prNumber": 11337,
+    "title": "chore: [CCM-34996]: update logos and maps",
+    "summary": "chore: [CCM-34996]: update logos and maps",
+    "url": "https://harness0.harness.io/ng/account/l7B_kbSEQD2wjrM7PShm5w/all/code/orgs/PROD/projects/Harness_Commons/repos/canary/pulls/11337",
+    "mergedAt": "2026-08-19T08:08:05Z",
+    "author": "sahil-jaiswal"
+  },
+  {
+    "prNumber": 11336,
+    "title": "feat: [UUI-2638]: Support outline variant for FilterField",
+    "summary": "feat: [UUI-2638]: Support outline variant for FilterField",
+    "url": "https://harness0.harness.io/ng/account/l7B_kbSEQD2wjrM7PShm5w/all/code/orgs/PROD/projects/Harness_Commons/repos/canary/pulls/11336",
+    "mergedAt": "2026-08-19T05:46:30Z",
+    "author": "avinash-madhwani"
+  },
+  {
+    "prNumber": 11331,
+    "title": "feat: [AIPLAT-1210]: Supersede open elicitations",
+    "summary": "feat: [AIPLAT-1210]: Supersede open elicitations",
+    "url": "https://harness0.harness.io/ng/account/l7B_kbSEQD2wjrM7PShm5w/all/code/orgs/PROD/projects/Harness_Commons/repos/canary/pulls/11331",
+    "mergedAt": "2026-08-18T15:37:56Z",
+    "author": "avinash-madhwani"
+  },
+  {
+    "prNumber": 11330,
+    "title": "fix: [UUI-2268]: Add tab classname prop to page headerv2 component",
+    "summary": "fix: [UUI-2268]: Add tab classname prop to page headerv2 component",
+    "url": "https://harness0.harness.io/ng/account/l7B_kbSEQD2wjrM7PShm5w/all/code/orgs/PROD/projects/Harness_Commons/repos/canary/pulls/11330",
+    "mergedAt": "2026-08-18T10:25:11Z",
+    "author": "pranesh-tg"
+  },
+  {
+    "prNumber": 11329,
+    "title": "fix: [UUI-3028]: Fix collapsed step group label truncation in Pipeline Studio",
+    "summary": "fix: [UUI-3028]: Fix collapsed step group label truncation in Pipeline Studio",
+    "url": "https://harness0.harness.io/ng/account/l7B_kbSEQD2wjrM7PShm5w/all/code/orgs/PROD/projects/Harness_Commons/repos/canary/pulls/11329",
+    "mergedAt": "2026-08-17T23:59:05Z",
+    "author": "radhakrishna-dodla"
+  },
+  {
+    "prNumber": 11327,
+    "title": "chore: [UUI-2039]: Bump @harnessio/ui to 1.2.7",
+    "summary": "chore: [UUI-2039]: Bump @harnessio/ui to 1.2.7",
+    "url": "https://harness0.harness.io/ng/account/l7B_kbSEQD2wjrM7PShm5w/all/code/orgs/PROD/projects/Harness_Commons/repos/canary/pulls/11327",
+    "mergedAt": "2026-08-17T20:48:00Z",
+    "author": "vardan-bansal"
+  },
+  {
+    "prNumber": 11326,
+    "title": "feat: [UUI-2039]: Add onOpenChange to MoreActionsTooltip",
+    "summary": "feat: [UUI-2039]: Add onOpenChange to MoreActionsTooltip",
+    "url": "https://harness0.harness.io/ng/account/l7B_kbSEQD2wjrM7PShm5w/all/code/orgs/PROD/projects/Harness_Commons/repos/canary/pulls/11326",
+    "mergedAt": "2026-08-17T20:28:35Z",
+    "author": "vardan-bansal"
+  },
+  {
+    "prNumber": 11325,
+    "title": "fix: [UUI-3186]: Hot Type Color Fix",
+    "summary": "fix: [UUI-3186]: Hot Type Color Fix",
+    "url": "https://harness0.harness.io/ng/account/l7B_kbSEQD2wjrM7PShm5w/all/code/orgs/PROD/projects/Harness_Commons/repos/canary/pulls/11325",
+    "mergedAt": "2026-08-17T19:41:14Z",
+    "author": "kathryn-grantier"
+  },
+  {
+    "prNumber": 11317,
+    "title": "fix: [UUI-3184]: Scope truncated Text title when children change",
+    "summary": "fix: [UUI-3184]: Scope truncated Text title when children change",
+    "url": "https://harness0.harness.io/ng/account/l7B_kbSEQD2wjrM7PShm5w/all/code/orgs/PROD/projects/Harness_Commons/repos/canary/pulls/11317",
+    "mergedAt": "2026-08-14T22:23:59Z",
+    "author": "radhakrishna-dodla"
+  },
+  {
+    "prNumber": 11315,
+    "title": "fix: [UUI-3124]: Fix borders disappearing on step nodes on hover",
+    "summary": "fix: [UUI-3124]: Fix borders disappearing on step nodes on hover",
+    "url": "https://harness0.harness.io/ng/account/l7B_kbSEQD2wjrM7PShm5w/all/code/orgs/PROD/projects/Harness_Commons/repos/canary/pulls/11315",
+    "mergedAt": "2026-08-14T14:01:36Z",
+    "author": "pranesh-tg"
+  },
+  {
+    "prNumber": 11314,
+    "title": "fix: [UUI-3134]: Fix multiple bugs in design system components",
+    "summary": "fix: [UUI-3134]: Fix multiple bugs in design system components",
+    "url": "https://harness0.harness.io/ng/account/l7B_kbSEQD2wjrM7PShm5w/all/code/orgs/PROD/projects/Harness_Commons/repos/canary/pulls/11314",
+    "mergedAt": "2026-08-14T12:02:25Z",
+    "author": "pranesh-tg"
+  },
+  {
+    "prNumber": 11313,
+    "title": "feat: [CCM-34996]: updated icons",
+    "summary": "feat: [CCM-34996]: updated icons",
+    "url": "https://harness0.harness.io/ng/account/l7B_kbSEQD2wjrM7PShm5w/all/code/orgs/PROD/projects/Harness_Commons/repos/canary/pulls/11313",
+    "mergedAt": "2026-08-14T06:26:03Z",
+    "author": "jyoti-arora"
+  },
+  {
+    "prNumber": 11311,
+    "title": "feat: [CCM-34996]: new SVGs + name maps",
+    "summary": "feat: [CCM-34996]: new SVGs + name maps",
+    "url": "https://harness0.harness.io/ng/account/l7B_kbSEQD2wjrM7PShm5w/all/code/orgs/PROD/projects/Harness_Commons/repos/canary/pulls/11311",
+    "mergedAt": "2026-08-14T05:35:42Z",
+    "author": "sahil-jaiswal"
+  },
+  {
+    "prNumber": 11312,
+    "title": "fix: [UUI-2916]: Adding bg classes with important to tailwindcss safelist",
+    "summary": "fix: [UUI-2916]: Adding bg classes with important to tailwindcss safelist",
+    "url": "https://harness0.harness.io/ng/account/l7B_kbSEQD2wjrM7PShm5w/all/code/orgs/PROD/projects/Harness_Commons/repos/canary/pulls/11312",
+    "mergedAt": "2026-08-14T01:06:46Z",
+    "author": "kathryn-grantier"
+  },
+  {
+    "prNumber": 11302,
+    "title": "feat: [UUI-3063]: Set-Text-Color-Cosolidation",
+    "summary": "feat: [UUI-3063]: Set-Text-Color-Cosolidation",
+    "url": "https://harness0.harness.io/ng/account/l7B_kbSEQD2wjrM7PShm5w/all/code/orgs/PROD/projects/Harness_Commons/repos/canary/pulls/11302",
+    "mergedAt": "2026-08-13T19:42:23Z",
+    "author": "kathryn-grantier"
+  },
+  {
+    "prNumber": 11309,
+    "title": "feat: [UUI-3095] add Reset and Fit to screen canvas controls",
+    "summary": "feat: [UUI-3095] add Reset and Fit to screen canvas controls",
+    "url": "https://harness0.harness.io/ng/account/l7B_kbSEQD2wjrM7PShm5w/all/code/orgs/PROD/projects/Harness_Commons/repos/canary/pulls/11309",
+    "mergedAt": "2026-08-13T15:29:27Z",
+    "author": "radhakrishna-dodla"
+  },
+  {
+    "prNumber": 11307,
+    "title": "fix: [UUI-3088]: Bump ui pkg version",
+    "summary": "fix: [UUI-3088]: Bump ui pkg version",
+    "url": "https://harness0.harness.io/ng/account/l7B_kbSEQD2wjrM7PShm5w/all/code/orgs/PROD/projects/Harness_Commons/repos/canary/pulls/11307",
+    "mergedAt": "2026-08-13T13:32:25Z",
+    "author": "harish-viswanathan"
+  },
+  {
+    "prNumber": 11310,
+    "title": "fix: [UUI-2993]:  sidebar item collapsed-state behavior",
+    "summary": "fix: [UUI-2993]:  sidebar item collapsed-state behavior",
+    "url": "https://harness0.harness.io/ng/account/l7B_kbSEQD2wjrM7PShm5w/all/code/orgs/PROD/projects/Harness_Commons/repos/canary/pulls/11310",
+    "mergedAt": "2026-08-12T23:08:49Z",
+    "author": "radhakrishna-dodla"
+  },
+  {
     "prNumber": 11304,
     "title": "fix: [UUI-3086]: BranchTag renders dead space beside truncated tag",
     "summary": "fix: [UUI-3086]: BranchTag renders dead space beside truncated tag",
@@ -158,325 +478,5 @@
     "url": "https://harness0.harness.io/ng/account/l7B_kbSEQD2wjrM7PShm5w/all/code/orgs/PROD/projects/Harness_Commons/repos/canary/pulls/11281",
     "mergedAt": "2026-07-30T21:23:10Z",
     "author": "radhakrishna-dodla"
-  },
-  {
-    "prNumber": 11277,
-    "title": "feat: [UUI-2741]: data table bottom row pinning",
-    "summary": "feat: [UUI-2741]: data table bottom row pinning",
-    "url": "https://harness0.harness.io/ng/account/l7B_kbSEQD2wjrM7PShm5w/all/code/orgs/PROD/projects/Harness_Commons/repos/canary/pulls/11277",
-    "mergedAt": "2026-07-30T13:14:11Z",
-    "author": "sandeep-sharma"
-  },
-  {
-    "prNumber": 11276,
-    "title": "feat: [UUI-2570]: add optional sticky header for data table",
-    "summary": "feat: [UUI-2570]: add optional sticky header for data table",
-    "url": "https://harness0.harness.io/ng/account/l7B_kbSEQD2wjrM7PShm5w/all/code/orgs/PROD/projects/Harness_Commons/repos/canary/pulls/11276",
-    "mergedAt": "2026-07-30T11:55:25Z",
-    "author": "sandeep-sharma"
-  },
-  {
-    "prNumber": 11279,
-    "title": "feat: [CCM-34394]: support custom Gauge description content",
-    "summary": "feat: [CCM-34394]: support custom Gauge description content",
-    "url": "https://harness0.harness.io/ng/account/l7B_kbSEQD2wjrM7PShm5w/all/code/orgs/PROD/projects/Harness_Commons/repos/canary/pulls/11279",
-    "mergedAt": "2026-07-30T10:44:32Z",
-    "author": "fardeen-kamal"
-  },
-  {
-    "prNumber": 11278,
-    "title": "fix: [UUI-2756]: Fix blank Code Editor on first open",
-    "summary": "fix: [UUI-2756]: Fix blank Code Editor on first open",
-    "url": "https://harness0.harness.io/ng/account/l7B_kbSEQD2wjrM7PShm5w/all/code/orgs/PROD/projects/Harness_Commons/repos/canary/pulls/11278",
-    "mergedAt": "2026-07-30T07:52:51Z",
-    "author": "harish-viswanathan"
-  },
-  {
-    "prNumber": 11274,
-    "title": "fix: [UUI-1350]: bump ui package version",
-    "summary": "fix: [UUI-1350]: bump ui package version",
-    "url": "https://harness0.harness.io/ng/account/l7B_kbSEQD2wjrM7PShm5w/all/code/orgs/PROD/projects/Harness_Commons/repos/canary/pulls/11274",
-    "mergedAt": "2026-07-28T23:37:45Z",
-    "author": "jacob-bassett"
-  },
-  {
-    "prNumber": 11269,
-    "title": "fix: [UUI-1350]: split terminal/visualCompleted, remove hover tooltip, add stepper maxwidth override",
-    "summary": "fix: [UUI-1350]: split terminal/visualCompleted, remove hover tooltip, add stepper maxwidth override",
-    "url": "https://harness0.harness.io/ng/account/l7B_kbSEQD2wjrM7PShm5w/all/code/orgs/PROD/projects/Harness_Commons/repos/canary/pulls/11269",
-    "mergedAt": "2026-07-28T21:19:21Z",
-    "author": "jacob-bassett"
-  },
-  {
-    "prNumber": 11271,
-    "title": "chore: add katie as design reviewer",
-    "summary": "chore: add katie as design reviewer",
-    "url": "https://harness0.harness.io/ng/account/l7B_kbSEQD2wjrM7PShm5w/all/code/orgs/PROD/projects/Harness_Commons/repos/canary/pulls/11271",
-    "mergedAt": "2026-07-28T16:35:33Z",
-    "author": "abhinav-rastogi"
-  },
-  {
-    "prNumber": 11270,
-    "title": "feat: [UUI-2250]: add delete saved filters support in ui and filters",
-    "summary": "feat: [UUI-2250]: add delete saved filters support in ui and filters",
-    "url": "https://harness0.harness.io/ng/account/l7B_kbSEQD2wjrM7PShm5w/all/code/orgs/PROD/projects/Harness_Commons/repos/canary/pulls/11270",
-    "mergedAt": "2026-07-28T14:47:58Z",
-    "author": "radhakrishna-dodla"
-  },
-  {
-    "prNumber": 11246,
-    "title": "fix: [UUI-2279]: Scale studio card tag scoop to match stage card corner radius",
-    "summary": "fix: [UUI-2279]: Scale studio card tag scoop to match stage card corner radius",
-    "url": "https://harness0.harness.io/ng/account/l7B_kbSEQD2wjrM7PShm5w/all/code/orgs/PROD/projects/Harness_Commons/repos/canary/pulls/11246",
-    "mergedAt": "2026-07-27T16:19:38Z",
-    "author": "kathryn-grantier"
-  },
-  {
-    "prNumber": 11266,
-    "title": "feat: [CCM-34715]: add gauge component for ccm budget listing page",
-    "summary": "feat: [CCM-34715]: add gauge component for ccm budget listing page",
-    "url": "https://harness0.harness.io/ng/account/l7B_kbSEQD2wjrM7PShm5w/all/code/orgs/PROD/projects/Harness_Commons/repos/canary/pulls/11266",
-    "mergedAt": "2026-07-27T05:58:06Z",
-    "author": "fardeen-kamal"
-  },
-  {
-    "prNumber": 11267,
-    "title": "feat: [UUI-2577]: add announcement icon and update icon map",
-    "summary": "feat: [UUI-2577]: add announcement icon and update icon map",
-    "url": "https://harness0.harness.io/ng/account/l7B_kbSEQD2wjrM7PShm5w/all/code/orgs/PROD/projects/Harness_Commons/repos/canary/pulls/11267",
-    "mergedAt": "2026-07-24T16:20:39Z",
-    "author": "igor-bogdanovski"
-  },
-  {
-    "prNumber": 11264,
-    "title": "fix: [UUI-2296]: Fix drawer header title overflow scroll issue",
-    "summary": "fix: [UUI-2296]: Fix drawer header title overflow scroll issue",
-    "url": "https://harness0.harness.io/ng/account/l7B_kbSEQD2wjrM7PShm5w/all/code/orgs/PROD/projects/Harness_Commons/repos/canary/pulls/11264",
-    "mergedAt": "2026-07-24T15:52:58Z",
-    "author": "pranesh-tg"
-  },
-  {
-    "prNumber": 11263,
-    "title": "chore: [UUI-2242]: add support for custom calendar props in FilterField",
-    "summary": "chore: [UUI-2242]: add support for custom calendar props in FilterField",
-    "url": "https://harness0.harness.io/ng/account/l7B_kbSEQD2wjrM7PShm5w/all/code/orgs/PROD/projects/Harness_Commons/repos/canary/pulls/11263",
-    "mergedAt": "2026-07-24T12:14:56Z",
-    "author": "yash-rathore"
-  },
-  {
-    "prNumber": 11166,
-    "title": "fix: [UUI-2575]: Bumping zod version while staying backward compatible",
-    "summary": "fix: [UUI-2575]: Bumping zod version while staying backward compatible",
-    "url": "https://harness0.harness.io/ng/account/l7B_kbSEQD2wjrM7PShm5w/all/code/orgs/PROD/projects/Harness_Commons/repos/canary/pulls/11166",
-    "mergedAt": "2026-07-24T08:03:58Z",
-    "author": "anand-prakash-tiwary"
-  },
-  {
-    "prNumber": 11265,
-    "title": "fix: [CODE-5552]: Use scoped principal listing APIs",
-    "summary": "fix: [CODE-5552]: Use scoped principal listing APIs",
-    "url": "https://harness0.harness.io/ng/account/l7B_kbSEQD2wjrM7PShm5w/all/code/orgs/PROD/projects/Harness_Commons/repos/canary/pulls/11265",
-    "mergedAt": "2026-07-24T05:06:48Z",
-    "author": "harish-viswanathan"
-  },
-  {
-    "prNumber": 11261,
-    "title": "fix: [CODE-5858]: remove required asterisk from optional commit dialog fields",
-    "summary": "fix: [CODE-5858]: remove required asterisk from optional commit dialog fields",
-    "url": "https://harness0.harness.io/ng/account/l7B_kbSEQD2wjrM7PShm5w/all/code/orgs/PROD/projects/Harness_Commons/repos/canary/pulls/11261",
-    "mergedAt": "2026-07-23T05:19:54Z",
-    "author": "codepulse"
-  },
-  {
-    "prNumber": 11262,
-    "title": "feat: [UUI-1350]: YAML panel header toggle + top-third stepper anchor",
-    "summary": "feat: [UUI-1350]: YAML panel header toggle + top-third stepper anchor",
-    "url": "https://harness0.harness.io/ng/account/l7B_kbSEQD2wjrM7PShm5w/all/code/orgs/PROD/projects/Harness_Commons/repos/canary/pulls/11262",
-    "mergedAt": "2026-07-22T21:43:49Z",
-    "author": "jacob-bassett"
-  },
-  {
-    "prNumber": 11239,
-    "title": "feat: [UUI-1928]: refine SinglePaneStepper for PLG flows",
-    "summary": "feat: [UUI-1928]: refine SinglePaneStepper for PLG flows",
-    "url": "https://harness0.harness.io/ng/account/l7B_kbSEQD2wjrM7PShm5w/all/code/orgs/PROD/projects/Harness_Commons/repos/canary/pulls/11239",
-    "mergedAt": "2026-07-22T20:47:10Z",
-    "author": "john-weber"
-  },
-  {
-    "prNumber": 11260,
-    "title": "fix: [UUI-2334]: bumped ui package version",
-    "summary": "fix: [UUI-2334]: bumped ui package version",
-    "url": "https://harness0.harness.io/ng/account/l7B_kbSEQD2wjrM7PShm5w/all/code/orgs/PROD/projects/Harness_Commons/repos/canary/pulls/11260",
-    "mergedAt": "2026-07-22T05:42:36Z",
-    "author": "yash-rathore"
-  },
-  {
-    "prNumber": 11258,
-    "title": "fix: [UUI-1721]: Fix studio card title increasing stage card width",
-    "summary": "fix: [UUI-1721]: Fix studio card title increasing stage card width",
-    "url": "https://harness0.harness.io/ng/account/l7B_kbSEQD2wjrM7PShm5w/all/code/orgs/PROD/projects/Harness_Commons/repos/canary/pulls/11258",
-    "mergedAt": "2026-07-22T04:36:06Z",
-    "author": "pranesh-tg"
-  },
-  {
-    "prNumber": 11257,
-    "title": "fix: [UUI-2334]: added prop to disable search input in filter-group",
-    "summary": "fix: [UUI-2334]: added prop to disable search input in filter-group",
-    "url": "https://harness0.harness.io/ng/account/l7B_kbSEQD2wjrM7PShm5w/all/code/orgs/PROD/projects/Harness_Commons/repos/canary/pulls/11257",
-    "mergedAt": "2026-07-22T04:04:33Z",
-    "author": "yash-rathore"
-  },
-  {
-    "prNumber": 11252,
-    "title": "feat: [UUI-2209]: Disable Dimmer Theme",
-    "summary": "feat: [UUI-2209]: Disable Dimmer Theme",
-    "url": "https://harness0.harness.io/ng/account/l7B_kbSEQD2wjrM7PShm5w/all/code/orgs/PROD/projects/Harness_Commons/repos/canary/pulls/11252",
-    "mergedAt": "2026-07-21T22:39:02Z",
-    "author": "kathryn-grantier"
-  },
-  {
-    "prNumber": 11249,
-    "title": "feat: [UUI-2375]: Add Change Log section to design system docs",
-    "summary": "feat: [UUI-2375]: Add Change Log section to design system docs",
-    "url": "https://harness0.harness.io/ng/account/l7B_kbSEQD2wjrM7PShm5w/all/code/orgs/PROD/projects/Harness_Commons/repos/canary/pulls/11249",
-    "mergedAt": "2026-07-21T19:24:17Z",
-    "author": "kathryn-grantier"
-  },
-  {
-    "prNumber": 11256,
-    "title": "feat: [AIPLAT-1151]: Avoid throwing context errors. Added noops instead",
-    "summary": "feat: [AIPLAT-1151]: Avoid throwing context errors. Added noops instead",
-    "url": "https://harness0.harness.io/ng/account/l7B_kbSEQD2wjrM7PShm5w/all/code/orgs/PROD/projects/Harness_Commons/repos/canary/pulls/11256",
-    "mergedAt": "2026-07-21T10:13:43Z",
-    "author": "avinash-madhwani"
-  },
-  {
-    "prNumber": 11250,
-    "title": "fix: [UUI-2405]: Enable font antialiasing in dark mode",
-    "summary": "fix: [UUI-2405]: Enable font antialiasing in dark mode",
-    "url": "https://harness0.harness.io/ng/account/l7B_kbSEQD2wjrM7PShm5w/all/code/orgs/PROD/projects/Harness_Commons/repos/canary/pulls/11250",
-    "mergedAt": "2026-07-20T19:19:00Z",
-    "author": "kathryn-grantier"
-  },
-  {
-    "prNumber": 11251,
-    "title": "fix: [UUI-2406]: High contrast modes broken in Appearance settings",
-    "summary": "fix: [UUI-2406]: High contrast modes broken in Appearance settings",
-    "url": "https://harness0.harness.io/ng/account/l7B_kbSEQD2wjrM7PShm5w/all/code/orgs/PROD/projects/Harness_Commons/repos/canary/pulls/11251",
-    "mergedAt": "2026-07-20T19:18:53Z",
-    "author": "kathryn-grantier"
-  },
-  {
-    "prNumber": 11247,
-    "title": "feat: [IR-3236]: Allow disabling manualSorting in <DataTable />",
-    "summary": "feat: [IR-3236]: Allow disabling manualSorting in <DataTable />",
-    "url": "https://harness0.harness.io/ng/account/l7B_kbSEQD2wjrM7PShm5w/all/code/orgs/PROD/projects/Harness_Commons/repos/canary/pulls/11247",
-    "mergedAt": "2026-07-17T20:22:17Z",
-    "author": "nicholas-lanam"
-  },
-  {
-    "prNumber": 11248,
-    "title": "feat: [UUI-2242]: Apply sentence case to buttons and labels",
-    "summary": "feat: [UUI-2242]: Apply sentence case to buttons and labels",
-    "url": "https://harness0.harness.io/ng/account/l7B_kbSEQD2wjrM7PShm5w/all/code/orgs/PROD/projects/Harness_Commons/repos/canary/pulls/11248",
-    "mergedAt": "2026-07-17T15:51:17Z",
-    "author": "radhakrishna-dodla"
-  },
-  {
-    "prNumber": 11243,
-    "title": "fix: [UUI-2072]: Drawers not stacking visually for some triggers",
-    "summary": "fix: [UUI-2072]: Drawers not stacking visually for some triggers",
-    "url": "https://harness0.harness.io/ng/account/l7B_kbSEQD2wjrM7PShm5w/all/code/orgs/PROD/projects/Harness_Commons/repos/canary/pulls/11243",
-    "mergedAt": "2026-07-15T20:27:32Z",
-    "author": "radhakrishna-dodla"
-  },
-  {
-    "prNumber": 11242,
-    "title": "chore: [UUI-2228]: App Shell and Nav bg fix",
-    "summary": "chore: [UUI-2228]: App Shell and Nav bg fix",
-    "url": "https://harness0.harness.io/ng/account/l7B_kbSEQD2wjrM7PShm5w/all/code/orgs/PROD/projects/Harness_Commons/repos/canary/pulls/11242",
-    "mergedAt": "2026-07-15T16:55:31Z",
-    "author": "kathryn-grantier"
-  },
-  {
-    "prNumber": 11238,
-    "title": "fix: [UUI-2205]: recolor app-shell to bg.2 in dark mode only",
-    "summary": "fix: [UUI-2205]: recolor app-shell to bg.2 in dark mode only",
-    "url": "https://harness0.harness.io/ng/account/l7B_kbSEQD2wjrM7PShm5w/all/code/orgs/PROD/projects/Harness_Commons/repos/canary/pulls/11238",
-    "mergedAt": "2026-07-14T22:09:50Z",
-    "author": "kathryn-grantier"
-  },
-  {
-    "prNumber": 11236,
-    "title": "feat: [UUI-2125]: Add studio items border color to tailwind design system",
-    "summary": "feat: [UUI-2125]: Add studio items border color to tailwind design system",
-    "url": "https://harness0.harness.io/ng/account/l7B_kbSEQD2wjrM7PShm5w/all/code/orgs/PROD/projects/Harness_Commons/repos/canary/pulls/11236",
-    "mergedAt": "2026-07-14T18:10:52Z",
-    "author": "pranesh-tg"
-  },
-  {
-    "prNumber": 11234,
-    "title": "feat: [UUI-2171]: Add agent-services icon",
-    "summary": "feat: [UUI-2171]: Add agent-services icon",
-    "url": "https://harness0.harness.io/ng/account/l7B_kbSEQD2wjrM7PShm5w/all/code/orgs/PROD/projects/Harness_Commons/repos/canary/pulls/11234",
-    "mergedAt": "2026-07-13T18:38:26Z",
-    "author": "aaron-palmer"
-  },
-  {
-    "prNumber": 11230,
-    "title": "feat: [UUI-2114]: Add PLG Patterns in sidebar and relocate stepper",
-    "summary": "feat: [UUI-2114]: Add PLG Patterns in sidebar and relocate stepper",
-    "url": "https://harness0.harness.io/ng/account/l7B_kbSEQD2wjrM7PShm5w/all/code/orgs/PROD/projects/Harness_Commons/repos/canary/pulls/11230",
-    "mergedAt": "2026-07-13T17:11:08Z",
-    "author": "john-weber"
-  },
-  {
-    "prNumber": 11228,
-    "title": "fix: [UUI-2081]: Pipelines Card/Group/Stage Border Colors",
-    "summary": "fix: [UUI-2081]: Pipelines Card/Group/Stage Border Colors",
-    "url": "https://harness0.harness.io/ng/account/l7B_kbSEQD2wjrM7PShm5w/all/code/orgs/PROD/projects/Harness_Commons/repos/canary/pulls/11228",
-    "mergedAt": "2026-07-13T15:00:11Z",
-    "author": "kathryn-grantier"
-  },
-  {
-    "prNumber": 11232,
-    "title": "fix: [UUI-2116]: Inner Pipelines Canvas shadow and dotes",
-    "summary": "fix: [UUI-2116]: Inner Pipelines Canvas shadow and dotes",
-    "url": "https://harness0.harness.io/ng/account/l7B_kbSEQD2wjrM7PShm5w/all/code/orgs/PROD/projects/Harness_Commons/repos/canary/pulls/11232",
-    "mergedAt": "2026-07-10T16:27:27Z",
-    "author": "kathryn-grantier"
-  },
-  {
-    "prNumber": 11231,
-    "title": "fix: [UUI-1851]: Fix page crash when clicking Save filter on list pages",
-    "summary": "fix: [UUI-1851]: Fix page crash when clicking Save filter on list pages",
-    "url": "https://harness0.harness.io/ng/account/l7B_kbSEQD2wjrM7PShm5w/all/code/orgs/PROD/projects/Harness_Commons/repos/canary/pulls/11231",
-    "mergedAt": "2026-07-09T22:49:23Z",
-    "author": "radhakrishna-dodla"
-  },
-  {
-    "prNumber": 11227,
-    "title": "fix: [UUI-2065]: studio card corner radius + shadow token updates",
-    "summary": "fix: [UUI-2065]: studio card corner radius + shadow token updates",
-    "url": "https://harness0.harness.io/ng/account/l7B_kbSEQD2wjrM7PShm5w/all/code/orgs/PROD/projects/Harness_Commons/repos/canary/pulls/11227",
-    "mergedAt": "2026-07-09T19:00:23Z",
-    "author": "kathryn-grantier"
-  },
-  {
-    "prNumber": 11225,
-    "title": "feat: [UUI-2046]: Add Nested Checkbox Component",
-    "summary": "feat: [UUI-2046]: Add Nested Checkbox Component",
-    "url": "https://harness0.harness.io/ng/account/l7B_kbSEQD2wjrM7PShm5w/all/code/orgs/PROD/projects/Harness_Commons/repos/canary/pulls/11225",
-    "mergedAt": "2026-07-09T08:59:46Z",
-    "author": "manish-sharma"
-  },
-  {
-    "prNumber": 11217,
-    "title": "feat: [UUI-1350]: add SinglePaneStepper + YamlOutput, extract shared flow-stepper engine",
-    "summary": "feat: [UUI-1350]: add SinglePaneStepper + YamlOutput, extract shared flow-stepper engine",
-    "url": "https://harness0.harness.io/ng/account/l7B_kbSEQD2wjrM7PShm5w/all/code/orgs/PROD/projects/Harness_Commons/repos/canary/pulls/11217",
-    "mergedAt": "2026-07-08T19:08:20Z",
-    "author": "jacob-bassett"
   }
 ]

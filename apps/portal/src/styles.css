@@ -607,10 +607,12 @@ ul.top-level summary svg {
 
 /* ============================================================
    USAGE CODE BLOCK — fixed-height scroll
-   Caps the tall Usage snippet (Button page Overview tab) so it doesn't
-   dominate the page; the code scrolls within a 600px frame.
+   Caps the "Usage" snippet on every component page so long import/
+   example blocks don't dominate the page; the code scrolls within a
+   400px frame. Targets the code block immediately following the
+   "## Usage" heading (rendered as <h2 id="usage">).
    ============================================================ */
-.usage-code-scroll .expressive-code pre {
+.sl-markdown-content h2#usage + .expressive-code pre {
   max-height: 400px;
   overflow-y: auto;
 }

@@ -100,6 +100,33 @@ function gitLog(ref) {
   });
 }
 
+function originMainExists() {
+  try {
+    execFileSync("git", ["rev-parse", "--verify", "origin/main"], {
+      cwd: CANARY_ROOT,
+      stdio: "ignore",
+    });
+    return true;
+  } catch {
+    return false;
+  }
+}
+
+function ensureOriginMain() {
+  if (originMainExists()) return true;
+
+  try {
+    // Detached CI clones often have `origin` but no origin/main tracking ref.
+    execFileSync("git", ["fetch", "origin", "main:refs/remotes/origin/main"], {
+      cwd: CANARY_ROOT,
+      stdio: "inherit",
+    });
+    return originMainExists();
+  } catch {
+    return false;
+  }
+}
+
 function fetchFromGitLog() {
   deepenGitHistory();
 
@@ -108,6 +135,9 @@ function fetchFromGitLog() {
     // HEAD works in detached CI/Netlify clones. origin/main often does not exist there.
     output = gitLog("HEAD");
   } catch {
+    if (!ensureOriginMain()) {
+      throw new Error("git log HEAD failed and origin/main is not available");
+    }
     output = gitLog("origin/main");
   }
 

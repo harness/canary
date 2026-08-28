@@ -4,8 +4,71 @@ description: Interactive button component for user actions
 ---
 
 import { DocsPage } from "@/components/docs-page";
+import { Tabs, TabItem } from "@astrojs/starlight/components";
+import PageTabsToc from "@/components/page-tabs-toc.astro";
+
+<PageTabsToc />
+
+<div id="page-level-tabs">
+
+<Tabs>
+
+<TabItem label="Overview">
 
 The `Button` component allows users to trigger actions, submit forms, and navigate through the application. The button component supports various combinations of variants, themes, sizes, and states.
+
+## Usage
+
+```tsx
+import { Button } from '@harnessio/ui/components'
+
+// Default button
+<Button>Default Button</Button>
+
+// Primary button with themes
+<Button variant="primary" theme="default">Primary Button</Button>
+<Button variant="primary" theme="success">Success Button</Button>
+<Button variant="primary" theme="danger">Danger Button</Button>
+
+// Secondary button
+<Button variant="secondary">Secondary Button</Button>
+
+// Outline button with themes
+<Button variant="outline">Outline Button</Button>
+<Button variant="outline" theme="success">Success Outline</Button>
+<Button variant="outline" theme="danger">Danger Outline</Button>
+
+// Ghost button
+<Button variant="ghost">Ghost Button</Button>
+
+// AI button (a special variant for AI-related actions)
+<Button variant="ai">AI Button</Button>
+
+// Link button (note: doesn't accept theme prop)
+<Button variant="link">Link Button</Button>
+
+// Transparent button (note: doesn't accept theme prop)
+<Button variant="transparent">Transparent Button</Button>
+
+// Button sizes
+<Button>Medium Size Button (default)</Button>
+<Button size="sm">Small Button</Button>
+<Button size="xs">Extra Small Button</Button>
+
+// Rounded button
+<Button rounded>Rounded Button</Button>
+
+// Icon only button
+<Button iconOnly tooltipProps={{ content: 'Add' }}>
+  <IconV2 name="plus" />
+</Button>
+
+// Loading state
+<Button loading>Loading Button</Button>
+
+// Disabled state
+<Button disabled>Disabled Button</Button>
+```
 
 ## Default Button
 
@@ -563,70 +626,13 @@ If you need to skip showing the tooltip, you should set `ignoreIconOnlyTooltip`.
 </div>`}
 />
 
-## Usage
+</TabItem>
 
-```tsx
-import { Button } from '@harnessio/ui/components'
+<TabItem label="Properties">
 
-// Default button
-<Button>Default Button</Button>
+{/* Visually hidden — anchors the section headings below in the TOC without showing a redundant title in the panel body (the tab already says "Properties"). Hidden via #page-level-tabs h2#properties in styles.css. */}
 
-// Primary button with themes
-<Button variant="primary" theme="default">Primary Button</Button>
-<Button variant="primary" theme="success">Success Button</Button>
-<Button variant="primary" theme="danger">Danger Button</Button>
-
-// Secondary button
-<Button variant="secondary">Secondary Button</Button>
-
-// Outline button with themes
-<Button variant="outline">Outline Button</Button>
-<Button variant="outline" theme="success">Success Outline</Button>
-<Button variant="outline" theme="danger">Danger Outline</Button>
-
-// Ghost button
-<Button variant="ghost">Ghost Button</Button>
-
-// AI button (a special variant for AI-related actions)
-<Button variant="ai">AI Button</Button>
-
-// Link button (note: doesn't accept theme prop)
-<Button variant="link">Link Button</Button>
-
-// Transparent button (note: doesn't accept theme prop)
-<Button variant="transparent">Transparent Button</Button>
-
-// Button sizes
-<Button>Medium Size Button (default)</Button>
-<Button size="sm">Small Button</Button>
-<Button size="xs">Extra Small Button</Button>
-
-// Rounded button
-<Button rounded>Rounded Button</Button>
-
-// Icon only button
-<Button iconOnly tooltipProps={{ content: 'Add' }}>
-  <IconV2 name="plus" />
-</Button>
-
-// Loading state
-<Button loading>Loading Button</Button>
-
-// Disabled state
-<Button disabled>Disabled Button</Button>
-```
-
-## Type Constraints
-
-The Button component implements a discriminated union pattern with conditional prop requirements:
-
-- When variant is "ghost" or "link", no theme is allowed
-- When variant is "ai", no theme is needed
-- When variant is "solid", themes "success" and "danger" are not allowed
-
-This ensures type safety and provides proper development-time feedback on invalid component usage.
-
-## Props
+## Properties
 
 <DocsPage.PropsTable
   props={[
@@ -726,3 +732,19 @@ This ensures type safety and provides proper development-time feedback on invali
     },
   ]}
 />
+
+## Type Constraints
+
+The Button component implements a discriminated union pattern with conditional prop requirements:
+
+- When variant is "ghost" or "link", no theme is allowed
+- When variant is "ai", no theme is needed
+- When variant is "solid", themes "success" and "danger" are not allowed
+
+This ensures type safety and provides proper development-time feedback on invalid component usage.
+
+</TabItem>
+
+</Tabs>
+
+</div>

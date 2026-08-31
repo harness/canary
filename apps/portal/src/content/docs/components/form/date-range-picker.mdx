@@ -1,0 +1,313 @@
+---
+title: Date Range Picker
+description: A timezone-aware picker for rolling, calendar, and fixed date ranges
+beta: true
+---
+
+import { DocsPage } from "@/components/docs-page";
+
+`DateRangePicker` is a controlled, standalone date-range control. It preserves the user's intent instead of immediately converting every selection into a pair of timestamps.
+
+<DocsPage.ComponentExample
+  client:only
+  code={`() => {
+    const [value, setValue] = React.useState({
+      kind: 'relative',
+      direction: 'past',
+      amount: 14,
+      unit: 'day',
+      timeZone: 'UTC',
+    });
+    const interpretQuery = async (query) => {
+      const normalized = query.trim().toLowerCase();
+      if (normalized === 'last 14 days') {
+        return {
+          kind: 'relative',
+          direction: 'past',
+          amount: 14,
+          unit: 'day',
+          timeZone: value.timeZone,
+        };
+      }
+      if (normalized === 'next month') {
+        return {
+          kind: 'calendar',
+          period: 'next_month',
+          timeZone: value.timeZone,
+        };
+      }
+      throw new Error('Try "last 14 days" or "next month".');
+    };
+
+    return (
+      <Layout.Flex direction="column" gapY="sm">
+        <DateRangePicker
+          value={value}
+          onChange={setValue}
+          enableOffset
+          enableExclusions
+          onInterpretQuery={interpretQuery}
+        />
+      </Layout.Flex>
+    );
+
+}`}
+/>
+
+## Semantic value model
+
+`DateRangeValue` is a discriminated union. Persist this semantic value, including `timeZone`, and resolve it only when constructing a query.
+
+```typescript
+type DateRangeValue =
+  | {
+      kind: 'relative'
+      direction: 'past' | 'future'
+      amount: number
+      unit: 'minute' | 'hour' | 'day' | 'week' | 'month' | 'quarter' | 'year'
+      timeZone: string
+      adjustment?: RelativeAdjustment
+    }
+  | {
+      kind: 'calendar'
+      period:
+        | 'this_week'
+        | 'last_week'
+        | 'next_week'
+        | 'this_month'
+        | 'last_month'
+        | 'next_month'
+        | 'this_quarter'
+        | 'last_quarter'
+        | 'next_quarter'
+        | 'this_year'
+        | 'last_year'
+        | 'next_year'
+      extent?: 'full' | 'to_now'
+      timeZone: string
+    }
+  | {
+      kind: 'absolute'
+      from: { date: \`\${number}-\${number}-\${number}\`; time?: \`\${number}:\${number}\` }
+      to: { date: \`\${number}-\${number}-\${number}\`; time?: \`\${number}:\${number}\` }
+      timeZone: string
+    }
+```
+
+- **Relative** values are live rolling windows. “Last 14 days” is recalculated against the `now` supplied to `resolveDateRange`, so it moves when a saved filter is reopened.
+- **Calendar** values retain a named period and resolve its boundaries in the selected timezone. For `this_*`, `extent: "full"` includes the complete period while `"to_now"` stops at the current instant.
+- **Absolute** values store civil dates and optional wall-clock times. They remain fixed instead of moving with `now`.
+
+UTC is the default timezone. Set `defaultTimeZone` to another valid IANA identifier when no value exists. Once selected, the IANA timezone is stored on the value, so URL and saved-filter round trips do not shift calendar days or daylight-saving boundaries.
+
+## Resolve values at query time
+
+`resolveDateRange` returns UTC `Date` bounds as a half-open interval: `from` is inclusive and `to` is exclusive (`[from, to)`). Use `instant >= from && instant < to`, or `isInstantExcluded`, when filtering.
+
+```typescript
+import { resolveDateRange } from "@harnessio/ui/components";
+
+const resolved = resolveDateRange(value, {
+  now: new Date(),
+  weekStartsOn: 1,
+});
+```
+
+All-day absolute ranges resolve from midnight at the start date to midnight after the end date in the stored timezone. If supplied, endpoint times are interpreted in that timezone; the exclusive end is one minute after the selected end minute.
+
+For display, `formatDateRangeLabel` renders the semantic name (`Last 7 days`, optionally with the resolved dates appended), while `formatResolvedDateRange` renders only the inclusive resolved bounds (`Aug 13, 2026 – Aug 19, 2026`). `formatDateRangeTriggerLabel` produces the compact, self-contained trigger summary with semantic intent, resolved dates, and timezone; pass `includeTimeZone: false` when the zone is rendered separately, as the picker trigger does with its badge (`formatTimeZoneBadge`).
+
+## Selection behavior and capabilities
+
+- The standalone picker renders one compact range chip. It opens on **Presets**, where **Today, Yesterday, Last/Next, 7D, 30D, 3M, 6M, and 12M** live without leaking into the other modes.
+- The trigger is self-contained: it always shows the timezone in a tinted offset badge (`UTC+05:30`), adds resolved dates to semantic Rolling and calendar ranges, and only shows fixed endpoint times when they were explicitly set. With no value it reads **Custom** beside the badge.
+- The timezone list pins the two zones people reach for most — **Universal Coordinated Time** and **Browser Time** — above a separator, with every other IANA zone listed below. `getPreferredTimeZones` returns that pair for consumers building their own zone controls.
+- Duration presets use a parent **Last/Next** dropdown followed by the 7D–12M toggle group. The direction only governs relative presets flagged with `supportsDirection`; Today and Yesterday keep their own direction.
+- Changing direction while a duration is applied re-applies that duration in the new direction.
+- Presets update the editor draft and commit with **Apply**. Use `quickPresets` to replace the built-in options; entries without a value are omitted from the editor.
+- The editor navigation is ordered **Presets, Rolling, Period to date, Previous period, Fixed**. Saved consumer presets also live under Presets.
+- Fixed keeps date selection in the inline two-month calendar and always exposes full-day endpoint times. Dates accept `Aug 19, 2026`, `8/19/2026` or `2026-08-19` and step by day with the arrow keys (Shift steps by month); times accept `7:15 AM` or `19:15` and step by hour. Unchanged `12:00 AM`–`11:59 PM` defaults remain implicit all-day boundaries.
+- Today is circled and underlined in the calendar. The calendar clear action returns to **Presets** with no selection, keeps the selected timezone, and disables Apply.
+- Future ranges and dates are allowed by default. Set `allowFuture={false}` to opt out, and use `calendarProps` for additional product-specific constraints.
+- A completed fixed range uses **range reset** behavior: the next calendar click starts a new range and clears its end until the second click.
+- Offset and exclusion controls are property-gated. Set `enableOffset` and/or `enableExclusions` to expose them; both are hidden by default.
+- Those controls render only at the top right of **Rolling** and update its draft, so the range and adjustment commit together with one **Apply** action.
+- The semantic `adjustment` union prevents an offset and exclusions from being active simultaneously. Offsets apply only to past rolling ranges. Exclusions can omit an incomplete interval and selected weekdays without changing the resolver's outer bounds.
+
+## Consumer-owned query action
+
+Supplying `onInterpretQuery` adds the natural-language query UI. Consumers can call the exported
+`parseDateRangeQuery(query, { timeZone })` for deterministic support across rolling ranges, named periods,
+fixed dates and times, offsets, and exclusions. Products that need unrestricted language understanding can
+replace it with an AI-backed interpreter returning a `Promise<DateRangeValue>`. Rejected promises are rendered as picker errors.
+
+Examples understood by `parseDateRangeQuery` include `last 20 days and exclude 2 days`,
+`last 8 weeks excluding weekends`, `month to date`, `Aug 1 to Aug 15`, and
+`from Aug 1 at 9am to Aug 15 at 5:30pm`.
+
+Omit the callback to omit the search field.
+
+## URL and saved-filter persistence
+
+Use `dateRangeValueParser` wherever a filters API expects a `{ parse, serialize }` pair. The versioned codec round-trips kind, timezone, fixed dates and times, and relative adjustments.
+
+```typescript
+import {
+  dateRangeValueParser,
+  FilterField,
+  FilterFieldTypes,
+} from "@harnessio/ui/components";
+
+const option = {
+  type: FilterFieldTypes.DateRange,
+  label: "Timeframe",
+  value: "timeframe",
+  parser: dateRangeValueParser,
+};
+```
+
+Legacy values shaped as `{ from, to, preset? }` and legacy presets shaped as `{ label, value, group, getRange }` are still accepted for compatibility, but they are deprecated. New integrations should store semantic values and semantic presets (`{ id, label, group, value }`) so live intent and timezone are preserved.
+
+## Standalone usage
+
+```typescript jsx
+import { useState } from 'react'
+import {
+  DateRangePicker,
+  type SemanticDateRangeValue,
+} from '@harnessio/ui/components'
+
+const initialValue: SemanticDateRangeValue = {
+  kind: 'calendar',
+  period: 'next_month',
+  timeZone: 'America/New_York',
+}
+
+export const ReportRange = () => {
+  const [value, setValue] = useState(initialValue)
+
+  return <DateRangePicker value={value} onChange={setValue} />
+}
+```
+
+Use `trigger` for a static custom trigger or `renderTrigger` when the trigger needs the current label, value, timezone, or open state. Either replaces the built-in range trigger.
+
+## Filter field usage
+
+`FilterFieldTypes.DateRange` is a thin filters-system integration over the same picker content and semantic model.
+
+```typescript jsx
+<FilterField
+  filterOption={{
+    type: FilterFieldTypes.DateRange,
+    label: 'Timeframe',
+    value: 'timeframe',
+    parser: dateRangeValueParser,
+    filterFieldConfig: {
+      defaultTimeZone: 'UTC',
+      allowFuture: true,
+      enableOffset: true,
+      enableExclusions: true,
+    },
+  }}
+  value={value}
+  onChange={setValue}
+  removeFilter={() => setValue(undefined)}
+  shouldOpenFilter={false}
+/>
+```
+
+## API reference
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "value",
+      description: "Controlled semantic or deprecated legacy date-range value.",
+      required: false,
+      value: "DateRangeInput",
+    },
+    {
+      name: "onChange",
+      description:
+        "Called with a semantic value on Apply, or undefined when cleared externally.",
+      required: true,
+      value: "(value?: DateRangeValue) => void",
+    },
+    {
+      name: "presets",
+      description: "Saved semantic presets shown in the Presets tab.",
+      required: false,
+      value: "DateRangePreset[]",
+    },
+    {
+      name: "quickPresets",
+      description:
+        "Presets shown in the Presets tab. Omit to use the Platform defaults. Flag a relative preset with supportsDirection to attach it to Last/Next.",
+      required: false,
+      value: "DateRangeQuickPreset[]",
+    },
+    {
+      name: "showQuickPresetBar",
+      description:
+        "Shows the compact Custom/range trigger. Set false for the legacy trigger button.",
+      required: false,
+      value: "boolean",
+      defaultValue: "true",
+    },
+    {
+      name: "defaultTimeZone",
+      description:
+        "Fallback IANA timezone used when the value is absent or invalid.",
+      required: false,
+      defaultValue: '"UTC"',
+      value: "string",
+    },
+    {
+      name: "allowFuture",
+      description: "Whether the calendar permits dates after today.",
+      required: false,
+      defaultValue: "true",
+      value: "boolean",
+    },
+    {
+      name: "enableOffset",
+      description: "Shows the past-rolling offset control.",
+      required: false,
+      defaultValue: "false",
+      value: "boolean",
+    },
+    {
+      name: "enableExclusions",
+      description: "Shows rolling incomplete-interval and weekday exclusions.",
+      required: false,
+      defaultValue: "false",
+      value: "boolean",
+    },
+    {
+      name: "onInterpretQuery",
+      description: "Consumer-owned asynchronous natural-language interpreter.",
+      required: false,
+      value: "(query: string) => Promise<DateRangeValue>",
+    },
+    {
+      name: "weekStartsOn",
+      description: "Week boundary used by week-based values.",
+      required: false,
+      defaultValue: "1",
+      value: "0 | 1 | 2 | 3 | 4 | 5 | 6",
+    },
+    {
+      name: "calendarProps",
+      description: "Additional range-calendar constraints and behavior.",
+      required: false,
+      value: "DateRangePickerCalendarProps",
+    },
+    {
+      name: "trigger / renderTrigger",
+      description: "Static or state-aware custom trigger.",
+      required: false,
+      value: "ReactElement | (context) => ReactElement",
+    },
+  ]}
+/>

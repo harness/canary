@@ -455,6 +455,19 @@ const tailwindDesignSystem: TailwindConfig = {
       opacity: {
         'cn-disabled': 'var(--cn-disabled-opacity)'
       },
+      // Token-backed line-height ramp (4px grid) → `leading-cn-8` … `leading-cn-40`.
+      // Additive under `extend`, so stock `leading-*` stay available during the remap.
+      lineHeight: {
+        'cn-8': 'var(--cn-line-height-8)',
+        'cn-12': 'var(--cn-line-height-12)',
+        'cn-16': 'var(--cn-line-height-16)',
+        'cn-20': 'var(--cn-line-height-20)',
+        'cn-24': 'var(--cn-line-height-24)',
+        'cn-28': 'var(--cn-line-height-28)',
+        'cn-32': 'var(--cn-line-height-32)',
+        'cn-36': 'var(--cn-line-height-36)',
+        'cn-40': 'var(--cn-line-height-40)'
+      },
       // Spreading props to keep the default tailwind values
       // @TODO Need to clean out width and height tokens coming via spacing
       // Adding sizeTokensMap for cn-1 to cn-96 tokens (only for width/height, not spacing)

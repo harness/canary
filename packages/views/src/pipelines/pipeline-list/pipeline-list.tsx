@@ -8,14 +8,14 @@ const Title = ({ status, title }: { status?: PipelineExecutionStatus; title: str
   return (
     <div className="flex items-center gap-cn-2xs">
       <ExecutionStatusIcon status={status} />
-      <span className="text-cn-size-3 truncate font-medium leading-snug">{title}</span>
+      <span className="text-cn-size-3 truncate font-medium leading-cn-16">{title}</span>
     </div>
   )
 }
 
 const Description = ({ sha, description, version }: { sha?: string; description?: string; version?: string }) => {
   return (
-    <div className="text-cn-size-2 inline-flex max-w-full items-center gap-cn-xs overflow-hidden pl-cn-xl leading-tight">
+    <div className="text-cn-size-2 inline-flex max-w-full items-center gap-cn-xs overflow-hidden pl-cn-xl leading-cn-16">
       {description && <span className="text-cn-3 w-full overflow-hidden break-words">{description}</span>}
       {version && (
         <div className="flex items-center gap-cn-3xs">

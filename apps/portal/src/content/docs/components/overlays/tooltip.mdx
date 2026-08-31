@@ -54,32 +54,11 @@ import { withTooltip } from "@harnessio/ui/components";
 const comp = withTooltip(yourComp);
 ```
 
-## Themes
+## Appearance
 
-The tooltip supports `default` and `themed` themes. The default theme provides high-contrast appearance with fixed colors and is used by default. The themed theme follows the current theme's color palette.
+The tooltip surface is always dark, including nested content, regardless of whether the app is in light or dark mode. Color and contrast variants from the current theme are preserved.
 
-<DocsPage.ComponentExample
-  client:only
-  code={`
-    <TooltipProvider>
-      <ButtonLayout className="justify-center">
-        <Tooltip
-          content="High-contrast tooltip styling"
-        >
-          <Button variant="secondary">Default Theme</Button>
-        </Tooltip>
-
-        <Tooltip
-          theme="themed"
-          content="Follows current theme colors"
-        >
-          <Button variant="secondary">Themed</Button>
-        </Tooltip>
-      </ButtonLayout>
-    </TooltipProvider>
-
-`}
-/>
+The drop shadow uses the lighter elevation (`--cn-shadow-1`) so it does not pick up the dark-mode 60% black halo when the tooltip is forced dark over a light page.
 
 ## Hide Arrow
 
@@ -336,13 +315,6 @@ The provider component that manages tooltips. Typically wrapped around the entir
         "Optional footer displayed below the scrollable content. Stays fixed when content scrolls.",
       required: false,
       value: "ReactNode",
-    },
-    {
-      name: "theme",
-      description: "Visual theme of the tooltip.",
-      required: false,
-      value: "'default' | 'themed'",
-      defaultValue: "'default'",
     },
     {
       name: "side",

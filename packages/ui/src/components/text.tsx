@@ -178,7 +178,15 @@ const TextWithRef = forwardRef<HTMLElement, TextProps>(
 
     const Comp = getTextNode({ as, variant, asChild })
     const isHeading = !as && !!variant?.startsWith('heading')
-    const color = _color ?? textVariantToElement[variant ?? 'body-normal'].color
+
+    /**
+     * To prevent breaking Text component when a wrong variant is passed.
+     *
+     * Some variants are removed and those changes might not get updated in all places.
+     * In that case, we fallback to the default variant.
+     */
+    const fallback = textVariantToElement[variant ?? 'body-normal'] ?? textVariantToElement['body-normal']
+    const color = _color ?? fallback.color
 
     useEffect(() => {
       if (elementRef.current && (truncate || lineClamp)) {

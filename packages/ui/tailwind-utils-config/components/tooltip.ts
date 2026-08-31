@@ -8,7 +8,7 @@ export default {
     background: 'var(--cn-bg-3)',
     padding: 'var(--cn-tooltip-py) var(--cn-tooltip-px)',
     color: 'var(--cn-text-1)',
-    boxShadow: 'var(--cn-shadow-4)',
+    boxShadow: 'var(--cn-shadow-1)',
     willChange: 'transform, opacity',
     '@apply z-50 flex flex-col select-none overflow-visible font-caption-normal': '',
 
@@ -44,20 +44,5 @@ export default {
       right: 'var(--cn-spacing-2) !important',
       left: 'auto !important'
     },
-
-    '&-default': {
-      border: 'var(--cn-tooltip-border) solid var(--cn-comp-tooltip-border)',
-      background: 'var(--cn-comp-tooltip-bg)',
-      color: 'var(--cn-comp-tooltip-text)',
-
-      '& .cn-tooltip-arrow': {
-        color: 'var(--cn-comp-tooltip-bg)',
-        stroke: 'var(--cn-comp-tooltip-border)'
-      },
-
-      '& .cn-tooltip-content-footer': {
-        color: 'var(--cn-comp-tooltip-text)'
-      }
-    }
   }
 }

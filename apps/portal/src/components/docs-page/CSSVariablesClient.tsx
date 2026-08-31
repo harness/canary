@@ -250,10 +250,7 @@ export const CSSVariablesClient = ({
                               />
                             )}
                             {v.description ? (
-                              <Tooltip
-                                content={v.description.split("\n")[0]}
-                                theme="themed"
-                              >
+                              <Tooltip content={v.description.split("\n")[0]}>
                                 <span
                                   className="cursor-help"
                                   style={{

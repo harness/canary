@@ -10,7 +10,7 @@ import {
 } from 'react'
 
 import { usePortal } from '@/context'
-import { ColorType, ContrastType, FullTheme, ModeType, useTheme } from '@/context/theme'
+import { ColorType, ContrastType, defaultTheme, FullTheme, ModeType, useTheme } from '@/context/theme'
 import * as TooltipPrimitive from '@radix-ui/react-tooltip'
 import { cn } from '@utils/cn'
 
@@ -20,27 +20,17 @@ type TooltipPrimitiveRootType = ComponentProps<typeof TooltipPrimitive.Root>
 type TooltipPrimitiveContentType = ComponentProps<typeof TooltipPrimitive.Content>
 
 /**
- * Swaps the mode (light ↔ dark) while preserving color and contrast variants
+ * Forces the dark mode while preserving color and contrast variants
  */
-function swapMode(theme: FullTheme): FullTheme {
+function toDarkMode(theme: FullTheme): FullTheme | ModeType.Dark {
   const parts = theme.split('-')
-  if (parts.length !== 3) return theme
+  if (parts.length !== 3) return ModeType.Dark
 
   const [, color, contrast] = parts as [string, ColorType, ContrastType]
-  const currentMode = parts[0] as ModeType
 
-  // Swap light ↔ dark
-  const swappedMode = currentMode === ModeType.Light ? ModeType.Dark : ModeType.Light
+  if (!theme || !color || !contrast) return ModeType.Dark
 
-  return `${swappedMode}-${color}-${contrast}` as FullTheme
-}
-
-/**
- * Detects if content is custom (not just a simple string)
- */
-function isCustomContent(content: ReactNode): boolean {
-  // If content is not a string, it's custom (React components, JSX, etc.)
-  return typeof content !== 'string'
+  return `${ModeType.Dark}-${color}-${contrast}` as FullTheme
 }
 
 export type TooltipProps = {
@@ -51,13 +41,6 @@ export type TooltipProps = {
   hideArrow?: boolean
   delay?: TooltipPrimitiveRootType['delayDuration']
   open?: boolean
-  /**
-   * Theme variant of the tooltip
-   * - 'default': High-contrast appearance with fixed colors
-   * - 'themed': Follows the current theme's color palette
-   * @default 'default'
-   */
-  theme?: 'default' | 'themed'
 } & Pick<TooltipPrimitiveContentType, 'side' | 'align' | 'className' | 'sideOffset'>
 
 export const Tooltip = forwardRef<HTMLDivElement, TooltipProps>(
@@ -72,7 +55,6 @@ export const Tooltip = forwardRef<HTMLDivElement, TooltipProps>(
       side = 'top',
       align = 'center',
       open,
-      theme = 'default',
       className,
       sideOffset
     },
@@ -84,27 +66,8 @@ export const Tooltip = forwardRef<HTMLDivElement, TooltipProps>(
     // Automatically increase sideOffset when arrow is hidden
     const computedSideOffset = sideOffset ?? (hideArrow ? 6 : 2)
 
-    // Auto-swap mode for custom content in default theme
-    const shouldSwapMode = useMemo(() => {
-      return theme === 'default' && isCustomContent(content) && currentTheme
-    }, [theme, content, currentTheme])
-
-    const tooltipTheme = useMemo(() => {
-      if (shouldSwapMode && currentTheme) {
-        return swapMode(currentTheme)
-      }
-      return currentTheme
-    }, [shouldSwapMode, currentTheme])
-
-    // Wrap content/footer in theme container when using default theme with custom content.
-    const wrapWithTheme = (node: ReactNode) =>
-      shouldSwapMode && tooltipTheme ? <div className={tooltipTheme}>{node}</div> : node
-
-    const wrappedContent = useMemo(() => wrapWithTheme(content), [shouldSwapMode, tooltipTheme, content])
-    const wrappedFooter = useMemo(
-      () => (footer ? wrapWithTheme(footer) : footer),
-      [footer, shouldSwapMode, tooltipTheme]
-    )
+    // The tooltip surface is always dark, so its subtree resolves dark-mode tokens.
+    const tooltipTheme = useMemo(() => toDarkMode(currentTheme ?? defaultTheme), [currentTheme])
 
     return (
       <TooltipPrimitive.Root delayDuration={delay} open={open}>
@@ -114,15 +77,13 @@ export const Tooltip = forwardRef<HTMLDivElement, TooltipProps>(
             ref={ref}
             className={cn(
               'cn-tooltip',
+              tooltipTheme,
               'animate-in fade-in-50 zoom-in-97 duration-150 ease-out',
               'data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=closed]:zoom-out-97',
               'data-[side=bottom]:slide-in-from-top-slide-offset',
               'data-[side=left]:slide-in-from-right-slide-offset',
               'data-[side=right]:slide-in-from-left-slide-offset',
               'data-[side=top]:slide-in-from-bottom-slide-offset',
-              {
-                ['cn-tooltip-default']: theme === 'default'
-              },
               className
             )}
             side={side}
@@ -131,8 +92,8 @@ export const Tooltip = forwardRef<HTMLDivElement, TooltipProps>(
           >
             <div className="cn-tooltip-content">
               {!!title && <span className="cn-tooltip-title">{title}</span>}
-              <div className="cn-tooltip-content-body">{wrappedContent}</div>
-              {!!footer && <div className="cn-tooltip-content-footer">{wrappedFooter}</div>}
+              <div className="cn-tooltip-content-body">{content}</div>
+              {!!footer && <div className="cn-tooltip-content-footer">{footer}</div>}
             </div>
             {!hideArrow && (
               <TooltipPrimitive.Arrow width={20} height={8} asChild>

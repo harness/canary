@@ -1,5 +1,6 @@
 import { forwardRef } from 'react'
 
+import { FullTheme, ThemeProvider } from '@/context'
 import { render, RenderResult, screen } from '@testing-library/react'
 import { vi } from 'vitest'
 
@@ -438,6 +439,43 @@ describe('Tooltip - Additional Tests', () => {
 
       const title = document.querySelector('.cn-tooltip-title')
       expect(title).toBeFalsy()
+    })
+  })
+
+  describe('Dark mode', () => {
+    const renderWithTheme = (theme: FullTheme, ui: React.ReactElement): RenderResult =>
+      render(
+        <ThemeProvider theme={theme} setTheme={() => void 0} isLightTheme={theme.startsWith('light')}>
+          <TooltipProvider>{ui}</TooltipProvider>
+        </ThemeProvider>
+      )
+
+    test.each<[FullTheme, string]>([
+      ['light-std-std', 'dark-std-std'],
+      ['dark-std-std', 'dark-std-std'],
+      ['light-pro-high', 'dark-pro-high']
+    ])('should force dark mode on the tooltip when theme is %s', (theme, expectedClass) => {
+      renderWithTheme(
+        theme,
+        <Tooltip content="Tooltip content" open={true}>
+          <button>Trigger</button>
+        </Tooltip>
+      )
+
+      const tooltip = document.querySelector('.cn-tooltip')
+      expect(tooltip).toHaveClass(expectedClass)
+    })
+
+    test('should not wrap custom content in a theme container', () => {
+      renderWithTheme(
+        'light-std-std',
+        <Tooltip content={<span data-testid="custom-content">Custom</span>} open={true}>
+          <button>Trigger</button>
+        </Tooltip>
+      )
+
+      const body = document.querySelector('.cn-tooltip-content-body')
+      expect(body?.firstElementChild).toHaveAttribute('data-testid', 'custom-content')
     })
   })
 

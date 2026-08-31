@@ -1,17 +1,23 @@
 ---
 title: Date Range Filter
-description: A filter component for selecting date ranges via presets or a custom calendar picker
+description: Use the semantic DateRangePicker model in filters, URLs, and saved filters
 beta: true
 ---
 
-The `DateRangeFilter` is a new filter field type (`FilterFieldTypes.DateRange`) in the filters system. It presents a dropdown with grouped preset date ranges (Recommended, Relative dates, Calendar months) and a "Select custom range" option. Clicking "Select custom range" reveals a two-month calendar alongside the preset list for picking an arbitrary date range.
-
 import { DocsPage } from "@/components/docs-page";
+
+`FilterFieldTypes.DateRange` integrates the standalone [`DateRangePicker`](./date-range-picker/) with the filters system. It uses the same controlled semantic value, presets, timezone behavior, and optional capabilities while adding filter trigger and remove-filter behavior.
 
 <DocsPage.ComponentExample
   client:only
   code={`() => {
-    const [value, setValue] = React.useState(undefined);
+    const [value, setValue] = React.useState({
+      kind: 'relative',
+      direction: 'past',
+      amount: 7,
+      unit: 'day',
+      timeZone: 'UTC',
+    });
 
     return (
       <FilterField
@@ -19,12 +25,15 @@ import { DocsPage } from "@/components/docs-page";
           type: FilterFieldTypes.DateRange,
           label: 'Timeframe',
           value: 'timeframe',
+          parser: dateRangeValueParser,
+          filterFieldConfig: {
+            defaultTimeZone: 'UTC',
+            allowFuture: true,
+          },
         }}
-        removeFilter={() => {
-          setValue(undefined);
-        }}
+        removeFilter={() => setValue(undefined)}
         shouldOpenFilter={false}
-        onChange={(val) => setValue(val)}
+        onChange={setValue}
         value={value}
       />
     );
@@ -35,11 +44,16 @@ import { DocsPage } from "@/components/docs-page";
 ## Usage
 
 ```typescript jsx
-import { FilterField, FilterFieldTypes } from '@harnessio/ui/components'
-import type { DateRangeValue } from '@harnessio/ui/components'
+import { useState } from 'react'
+import {
+  dateRangeValueParser,
+  FilterField,
+  FilterFieldTypes,
+  type SemanticDateRangeValue,
+} from '@harnessio/ui/components'
 
-const MyComponent = () => {
-  const [value, setValue] = useState<DateRangeValue | undefined>();
+export const Filters = () => {
+  const [value, setValue] = useState<SemanticDateRangeValue>()
 
   return (
     <FilterField
@@ -47,213 +61,165 @@ const MyComponent = () => {
         type: FilterFieldTypes.DateRange,
         label: 'Timeframe',
         value: 'timeframe',
+        parser: dateRangeValueParser,
+        filterFieldConfig: {
+          defaultTimeZone: 'UTC',
+          weekStartsOn: 1,
+        },
       }}
-      removeFilter={() => {}}
+      removeFilter={() => setValue(undefined)}
       shouldOpenFilter={false}
-      onChange={(val) => setValue(val)}
+      onChange={setValue}
       value={value}
     />
-  );
+  )
+}
+```
+
+The controlled value is the same semantic union used by the standalone picker:
+
+- `relative` stores a live past or future rolling window.
+- `calendar` stores a named period such as `last_week` or `next_month`.
+- `absolute` stores fixed civil dates and optional times.
+
+UTC is the default. The selected IANA timezone persists on every semantic value so reloading a URL or saved filter preserves local calendar boundaries. `resolveDateRange` converts the value to inclusive `from` and exclusive `to` UTC instants (`[from, to)`) when the product constructs its query.
+
+## Configure picker capabilities
+
+```typescript jsx
+const filterFieldConfig = {
+  allowFuture: true,
+  enableOffset: true,
+  enableExclusions: true,
+  defaultTimeZone: "America/New_York",
+  weekStartsOn: 1,
 };
 ```
 
-## With Custom Presets
+- Future dates are enabled by default. Set `allowFuture: false` to opt out, or pass additional constraints through `calendarProps`.
+- Fixed ranges always show editable full-day endpoint times. Rolling and calendar values retain derived boundaries.
+- Offset and exclusion controls are hidden unless `enableOffset` or `enableExclusions` is set. They appear only in Rolling and commit with the range through the same Apply action. Their semantic adjustment is mutually exclusive, and offsets additionally require a past/Last direction.
+- After a complete fixed range, the next date click resets the range and starts a new selection.
 
-You can provide your own set of presets via `filterFieldConfig.presets`. Each preset defines a `label`, a unique `value`, a `group` for visual grouping, and a `getRange` function that returns `{ from: Date, to: Date }`.
+## Queries
 
-<DocsPage.ComponentExample
-  client:only
-  code={`() => {
-    const [value, setValue] = React.useState(undefined);
+`onInterpretQuery` is an optional asynchronous extension point owned by the consuming product. The component provides loading and error UI but does not choose an AI/query service.
 
-    const now = new Date();
-    const customPresets = [
-      {
-        label: 'Today',
-        value: 'today',
-        group: 'recommended',
-        getRange: () => {
-          const start = new Date(now);
-          start.setHours(0, 0, 0, 0);
-          return { from: start, to: now };
-        },
-      },
-      {
-        label: 'Yesterday',
-        value: 'yesterday',
-        group: 'recommended',
-        getRange: () => {
-          const start = new Date(now);
-          start.setDate(start.getDate() - 1);
-          start.setHours(0, 0, 0, 0);
-          const end = new Date(start);
-          end.setHours(23, 59, 59, 999);
-          return { from: start, to: end };
-        },
-      },
-      {
-        label: 'Last 14 Days',
-        value: 'last_14_days',
-        group: 'relative',
-        getRange: () => {
-          const start = new Date(now);
-          start.setDate(start.getDate() - 14);
-          return { from: start, to: now };
-        },
-      },
-    ];
+```typescript jsx
+const filterFieldConfig = {
+  onInterpretQuery: async (query) => {
+    if (query.trim().toLowerCase() === "next month") {
+      return {
+        kind: "calendar",
+        period: "next_month",
+        timeZone: "UTC",
+      };
+    }
+    throw new Error("Unsupported date-range query");
+  },
+};
+```
 
-    return (
-      <FilterField
-        filterOption={{
-          type: FilterFieldTypes.DateRange,
-          label: 'Period',
-          value: 'period',
-          filterFieldConfig: {
-            presets: customPresets,
-            showCustomRange: true,
-          },
-        }}
-        removeFilter={() => setValue(undefined)}
-        shouldOpenFilter={false}
-        onChange={(val) => setValue(val)}
-        value={value}
-      />
-    );
+Omit the callback to hide the search field.
 
-}`}
-/>
+## URL and saved-filter persistence
 
-## Without Custom Range
+Assign `dateRangeValueParser` to the filter option's `parser`. Its versioned format round-trips semantic kind, timezone, absolute dates and times, and relative adjustments. The parser throws for invalid persisted input; use `parseDateRangeValue` directly when a non-throwing `undefined` result is preferable.
 
-Set `showCustomRange: false` to hide the "Select custom range" option and only show presets.
+Legacy `{ from, to, preset? }` values and `{ label, value, group, getRange }` presets remain accepted to avoid breaking existing filters, but both forms are deprecated. Legacy snapshots cannot fully preserve live intent. Prefer semantic values and presets shaped as `{ id, label, group, value }`.
 
-<DocsPage.ComponentExample
-  client:only
-  code={`() => {
-    const [value, setValue] = React.useState(undefined);
+## Custom semantic presets
 
-    return (
-      <FilterField
-        filterOption={{
-          type: FilterFieldTypes.DateRange,
-          label: 'Timeframe',
-          value: 'timeframe',
-          filterFieldConfig: {
-            showCustomRange: false,
-          },
-        }}
-        removeFilter={() => setValue(undefined)}
-        shouldOpenFilter={false}
-        onChange={(val) => setValue(val)}
-        value={value}
-      />
-    );
+```typescript jsx
+const presets = [
+  {
+    id: "next-14-days",
+    label: "Next 14 days",
+    group: "recommended",
+    value: {
+      kind: "relative",
+      direction: "future",
+      amount: 14,
+      unit: "day",
+      timeZone: "UTC",
+    },
+  },
+];
 
-}`}
-/>
+const filterFieldConfig = { presets };
+```
 
-## API Reference
+Preset values are semantic and therefore stay live. The picker applies its currently selected timezone when a user chooses a preset.
 
-### FilterFieldTypes.DateRange
+## API reference
 
-Use `FilterFieldTypes.DateRange` as the `type` in a `FilterOptionConfig` to render a date range filter.
+Use these properties inside `filterOption.filterFieldConfig`.
 
 <DocsPage.PropsTable
   props={[
     {
-      name: "type",
-      description: "Must be FilterFieldTypes.DateRange",
-      required: true,
-      value: "FilterFieldTypes.DateRange",
-    },
-    {
-      name: "label",
-      description: "The display label shown on the filter trigger button.",
-      required: true,
-      value: "string",
-    },
-    {
-      name: "value",
-      description: "The filter key used to identify this filter.",
-      required: true,
-      value: "string",
-    },
-    {
-      name: "filterFieldConfig.presets",
+      name: "presets",
       description:
-        "Custom preset date ranges. If not provided, a default set of presets is used (Last 7 Days, This Month, Last 30 Days, etc.).",
+        "Additional semantic presets. Deprecated legacy presets are also accepted.",
       required: false,
-      value: "DateRangePreset[]",
+      value: "DateRangeFilterPreset[]",
     },
     {
-      name: "filterFieldConfig.showCustomRange",
+      name: "showCustomRange",
       description:
-        "Whether to show the 'Select custom range' option. When clicked, a two-month calendar appears alongside the preset list.",
+        "Whether Fixed mode and custom calendar selection are available.",
       required: false,
       defaultValue: "true",
       value: "boolean",
     },
-  ]}
-/>
-
-### DateRangeValue
-
-The value emitted by the filter when a range is selected.
-
-<DocsPage.PropsTable
-  props={[
     {
-      name: "from",
-      description: "The start date of the range.",
-      required: true,
-      value: "Date",
-    },
-    {
-      name: "to",
-      description: "The end date of the range.",
-      required: true,
-      value: "Date",
-    },
-    {
-      name: "preset",
-      description:
-        "The preset key if a preset was selected, undefined for custom ranges.",
+      name: "defaultTimeZone",
+      description: "Fallback IANA timezone when a value is absent or invalid.",
       required: false,
-      value: "string",
-    },
-  ]}
-/>
-
-### DateRangePreset
-
-Defines a preset date range option.
-
-<DocsPage.PropsTable
-  props={[
-    {
-      name: "label",
-      description: "Display text for the preset.",
-      required: true,
+      defaultValue: '"UTC"',
       value: "string",
     },
     {
-      name: "value",
-      description: "Unique identifier for the preset.",
-      required: true,
-      value: "string",
+      name: "allowFuture",
+      description: "Whether dates after today can be selected.",
+      required: false,
+      defaultValue: "true",
+      value: "boolean",
     },
     {
-      name: "getRange",
-      description: "Function returning the from/to dates for this preset.",
-      required: true,
-      value: "() => { from: Date; to: Date }",
+      name: "enableOffset",
+      description: "Shows the offset control for past rolling ranges.",
+      required: false,
+      defaultValue: "false",
+      value: "boolean",
     },
     {
-      name: "group",
-      description: "Visual group the preset belongs to.",
-      required: true,
-      value: "'recommended' | 'relative' | 'calendar'",
+      name: "enableExclusions",
+      description:
+        "Shows incomplete-interval and weekday exclusions for rolling ranges.",
+      required: false,
+      defaultValue: "false",
+      value: "boolean",
+    },
+    {
+      name: "onInterpretQuery",
+      description: "Consumer-owned asynchronous date-range query interpreter.",
+      required: false,
+      value: "(query: string) => Promise<DateRangeValue>",
+    },
+    {
+      name: "calendarProps / calendarClassNames",
+      description:
+        "Additional calendar constraints, behavior, and style slots.",
+      required: false,
+      value: "DateRangePickerCalendarProps / ClassNames",
+    },
+    {
+      name: "weekStartsOn",
+      description: "Week boundary used by week-based values.",
+      required: false,
+      defaultValue: "1",
+      value: "0 | 1 | 2 | 3 | 4 | 5 | 6",
     },
   ]}
 />

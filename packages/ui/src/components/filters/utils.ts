@@ -2,6 +2,12 @@ import { ReactNode } from 'react'
 
 import { format } from 'date-fns'
 
+import {
+  formatDateRangeLabel,
+  formatDateRangeTriggerLabel,
+  type DateRangeInput,
+  type Weekday
+} from '../date-range-picker'
 import { ComboBoxOptions } from './filters-bar/actions/variants/combo-box'
 import {
   CheckboxOptions,
@@ -11,6 +17,26 @@ import {
   FilterOptionConfig,
   FilterValueTypes
 } from './types'
+
+export const getDateRangeFilterLabels = (
+  value: DateRangeInput | undefined,
+  weekStartsOn?: Weekday
+): { compact: string; full: string } => {
+  if (!value) return { compact: '', full: '' }
+
+  try {
+    return {
+      compact: formatDateRangeTriggerLabel(value, { weekStartsOn }),
+      full: formatDateRangeLabel(value, {
+        includeResolvedRange: true,
+        includeTimeZone: true,
+        weekStartsOn
+      })
+    }
+  } catch {
+    return { compact: '', full: '' }
+  }
+}
 
 export const getFilterLabelValue = <
   T extends string,
@@ -35,22 +61,7 @@ export const getFilterLabelValue = <
     }
     case FilterFieldTypes.DateRange: {
       const filterValue = filter.value as DateRangeValue | undefined
-      if (!filterValue) return ''
-
-      const currentYear = new Date().getFullYear()
-      const fromDate = new Date(filterValue.from)
-      const toDate = new Date(filterValue.to)
-      const sameYear = fromDate.getFullYear() === toDate.getFullYear() && fromDate.getFullYear() === currentYear
-
-      if (sameYear) {
-        return `${format(fromDate, 'MMM d')} - ${format(toDate, 'MMM d')}`
-      }
-
-      if (fromDate.getFullYear() === toDate.getFullYear()) {
-        return `${format(fromDate, 'MMM d')} - ${format(toDate, 'MMM d, yyyy')}`
-      }
-
-      return `${format(fromDate, 'MMM d, yyyy')} - ${format(toDate, 'MMM d, yyyy')}`
+      return getDateRangeFilterLabels(filterValue, filterOption.filterFieldConfig?.weekStartsOn).compact
     }
     case FilterFieldTypes.ComboBox: {
       const filterValue = filter.value as ComboBoxOptions | undefined

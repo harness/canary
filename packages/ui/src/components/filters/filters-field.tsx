@@ -20,7 +20,7 @@ import {
   FilterOptionConfig,
   FilterValueTypes
 } from './types'
-import { getFilterLabelValue } from './utils'
+import { getDateRangeFilterLabels, getFilterLabelValue } from './utils'
 
 export interface FiltersFieldProps<
   T extends string,
@@ -73,14 +73,12 @@ const FilterFieldInternal = <T extends string, V extends FilterValueTypes, Custo
       return (
         <DateRangeField
           filter={dateRangeFilter}
-          presets={filterOption.filterFieldConfig?.presets}
-          showCustomRange={filterOption.filterFieldConfig?.showCustomRange}
-          calendarProps={filterOption.filterFieldConfig?.calendarProps}
-          calendarClassNames={filterOption.filterFieldConfig?.calendarClassNames}
+          {...filterOption.filterFieldConfig}
           onUpdateFilter={values => {
             onUpdateFilter(values as V)
-            values && setIsOpen(false)
+            setIsOpen(false)
           }}
+          onCancel={() => setIsOpen(false)}
         />
       )
     }
@@ -190,6 +188,13 @@ const FiltersField = <T extends string, V extends FilterValueTypes, CustomValue 
   }
 
   const valueLabel = getFilterLabelValue(filterOption, activeFilterOption)
+  const tooltipContent =
+    filterOption.type === FilterFieldTypes.DateRange
+      ? getDateRangeFilterLabels(
+          activeFilterOption.value as DateRangeValue | undefined,
+          filterOption.filterFieldConfig?.weekStartsOn
+        ).full
+      : valueLabel
 
   return (
     <FilterBoxWrapper
@@ -205,7 +210,7 @@ const FiltersField = <T extends string, V extends FilterValueTypes, CustomValue 
       defaultOpen={shouldOpenFilter}
       filterLabel={filterOption.label}
       valueLabel={valueLabel}
-      tooltipContent={valueLabel}
+      tooltipContent={tooltipContent}
     >
       <FilterFieldInternal<T, V, CustomValue>
         filter={activeFilterOption}

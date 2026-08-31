@@ -9,6 +9,7 @@ import { RepoSettingsViewWrapper } from '@/pages/view-preview/repo-settings-view
 import { SideNavWrapper } from '@/pages/view-preview/side-nav-wrapper'
 import DataTableDemo from '@subjects/views/data-table-demo'
 import DataTableGroupedHeadersDemo from '@subjects/views/data-table-grouped-headers-demo'
+import DateRangePickerDemo from '@subjects/views/date-range-picker-demo'
 import DraggableCardsDemo from '@subjects/views/draggable-cards-demo'
 import ExecutionListWrapper from '@subjects/views/execution-list/execution-list'
 import GaugeDemo from '@subjects/views/gauge-demo'
@@ -590,6 +591,14 @@ export const viewPreviews: Record<string, ViewPreviewGroup> = {
   components: {
     label: 'Components',
     items: {
+      'date-range-picker-demo': {
+        label: 'Date Range Picker',
+        element: (
+          <RootViewWrapper>
+            <DateRangePickerDemo />
+          </RootViewWrapper>
+        )
+      },
       'hello-world': {
         label: 'Hello World',
         element: <HelloWorld />

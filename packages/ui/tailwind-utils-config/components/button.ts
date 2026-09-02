@@ -3,7 +3,7 @@ import { CSSRuleObject } from 'tailwindcss/types/config'
 /** Variants */
 const variants = ['primary', 'secondary', 'outline', 'ghost'] as const
 
-const themes = ['success', 'danger', 'default'] as const
+const themes = ['success', 'danger', 'warning', 'default'] as const
 
 const sizes = ['3xs', '2xs', 'xs', 'sm', 'md'] as const
 
@@ -14,6 +14,7 @@ const BUTTON_TRANSITION_EASING = 'ease-in-out'
 const themeStyleMapper: Record<(typeof themes)[number], string> = {
   success: 'success',
   danger: 'danger',
+  warning: 'warning',
   default: 'gray'
 }
 

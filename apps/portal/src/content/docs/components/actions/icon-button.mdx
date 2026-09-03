@@ -1,0 +1,212 @@
+---
+title: Icon Button
+description: Button rendered with only an icon
+---
+
+import { DocsPage } from "@/components/docs-page";
+import { Tabs, TabItem } from "@astrojs/starlight/components";
+import PageTabsToc from "@/components/page-tabs-toc.astro";
+
+<PageTabsToc />
+
+<div id="page-level-tabs">
+
+<Tabs>
+
+<TabItem label="Overview">
+
+An icon button is the `Button` component rendered with only an icon and no text label. Set the `iconOnly` prop to optimize the button's styling for a single icon.
+
+Because an icon button has no visible label, you must provide `tooltipProps` so the action stays accessible. If you intentionally want to skip the tooltip, set `ignoreIconOnlyTooltip`.
+
+## Default Icon Button
+
+<DocsPage.ComponentExample
+  client:only
+  code={`<div className="space-y-cn-sm">
+  <div className="flex items-center gap-cn-md">
+    <span className="text-cn-size-2 text-cn-3 w-32 shrink-0 font-mono">default</span>
+    <Button iconOnly tooltipProps={{ content: 'Add' }}>
+      <IconV2 name="plus" />
+    </Button>
+  </div>
+</div>`}
+/>
+
+## Usage
+
+```tsx
+import { Button, IconV2 } from '@harnessio/ui/components'
+
+// Icon only button — provide tooltipProps for accessibility
+<Button iconOnly tooltipProps={{ content: 'Add' }}>
+  <IconV2 name="plus" />
+</Button>
+
+// Skip the tooltip explicitly
+<Button variant="secondary" size="sm" iconOnly ignoreIconOnlyTooltip>
+  <IconV2 name="git-branch" />
+</Button>
+
+// The 2xs and 3xs sizes set iconOnly automatically
+<Button variant="outline" size="2xs" ignoreIconOnlyTooltip>
+  <IconV2 name="check" />
+</Button>
+```
+
+## Variants and Sizes
+
+Icon buttons support the same variants and sizes as a regular `Button`. The `2xs` and `3xs` sizes enable `iconOnly` automatically.
+
+<DocsPage.ComponentExample
+  client:only
+  code={`<div className="space-y-cn-sm">
+  <div className="flex items-center gap-cn-md">
+    <span className="text-cn-size-2 text-cn-3 w-32 shrink-0 font-mono">icon-only</span>
+    <div className="flex gap-cn-sm items-center">
+      <Button iconOnly tooltipProps={{ content: "Add" }}>
+        <IconV2 name="plus" skipSize />
+      </Button>
+      <Button variant="secondary" size="sm" iconOnly ignoreIconOnlyTooltip>
+        <IconV2 name="git-branch" skipSize />
+      </Button>
+      <Button variant="transparent" size="sm" iconOnly ignoreIconOnlyTooltip>
+        <IconV2 name="xmark" skipSize />
+      </Button>
+      <Button variant="outline" size="xs" iconOnly ignoreIconOnlyTooltip>
+        <IconV2 name="check" skipSize />
+      </Button>
+      <Button variant="outline" size="2xs" iconOnly ignoreIconOnlyTooltip>
+        <IconV2 name="check" skipSize />
+      </Button>
+      <Button variant="outline" size="3xs" iconOnly ignoreIconOnlyTooltip>
+        <IconV2 name="check" skipSize />
+      </Button>
+      <Button variant="outline" size="2xs" iconOnly ignoreIconOnlyTooltip>
+        <IconV2 name="xmark" skipSize />
+      </Button>
+      <Button variant="outline" size="3xs" iconOnly ignoreIconOnlyTooltip>
+        <IconV2 name="xmark" skipSize />
+      </Button>
+    </div>
+  </div>
+</div>`}
+/>
+
+## AI Icon Button
+
+The `ai` variant pairs with `iconOnly` for AI-related actions, including the automatic loading state from a promise `onClick`.
+
+<DocsPage.ComponentExample
+  client:only
+  code={`<div className="space-y-cn-sm">
+  <div className="flex items-center gap-cn-md">
+    <span className="text-cn-size-2 text-cn-3 w-32 shrink-0 font-mono">ai</span>
+    <Button
+      iconOnly
+      variant="ai"
+      tooltipProps={{ content: "Ask AI" }}
+      onClick={async () => {
+        await new Promise(resolve => setTimeout(resolve, 1000))
+      }}
+    >
+      <IconV2 name="ai-solid" skipSize />
+    </Button>
+  </div>
+</div>`}
+/>
+
+</TabItem>
+
+<TabItem label="Properties">
+
+{/* Visually hidden — anchors the section headings below in the TOC without showing a redundant title in the panel body (the tab already says "Properties"). Hidden via #page-level-tabs h2#properties in styles.css. */}
+
+## Properties
+
+Icon buttons use the `Button` component. These are the props most relevant to icon-only usage — see the [Button](/components/actions/button/) page for the full API.
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "iconOnly",
+      description: "Optimizes the button styling for displaying only an icon.",
+      required: false,
+      value: "boolean",
+      defaultValue: "false",
+    },
+    {
+      name: "tooltipProps",
+      description:
+        "Wraps the button in a tooltip. Required for icon-only buttons unless ignoreIconOnlyTooltip is set.",
+      required: false,
+      defaultValue: "undefined",
+      value: "Pick<TooltipProps, 'title' | 'content' | 'side'>",
+    },
+    {
+      name: "ignoreIconOnlyTooltip",
+      description:
+        "Allows skipping the required tooltipProps when using iconOnly.",
+      required: false,
+      value: "boolean",
+      defaultValue: "undefined",
+    },
+    {
+      name: "variant",
+      description: "Visual style of the button.",
+      required: false,
+      value:
+        "'primary' | 'secondary' | 'outline' | 'ghost' | 'link' | 'transparent'",
+      defaultValue: "'primary'",
+    },
+    {
+      name: "theme",
+      description:
+        "Color theme of the button. Note: not all variants support themes.",
+      required: false,
+      value: "'default' | 'success' | 'danger' | 'warning'",
+      defaultValue: "'default'",
+    },
+    {
+      name: "size",
+      description:
+        "Size of the button. '2xs' and '3xs' set iconOnly to true automatically.",
+      required: false,
+      value: "'md' | 'sm' | 'xs' | '2xs' | '3xs'",
+      defaultValue: "'md'",
+    },
+    {
+      name: "rounded",
+      description: "Applies rounded corners to the button.",
+      required: false,
+      value: "boolean",
+      defaultValue: "false",
+    },
+    {
+      name: "loading",
+      description: "Shows a loading spinner and disables the button.",
+      required: false,
+      value: "boolean",
+      defaultValue: "false",
+    },
+    {
+      name: "disabled",
+      description: "Disables the button.",
+      required: false,
+      value: "boolean",
+      defaultValue: "false",
+    },
+    {
+      name: "children",
+      description: "The icon to display inside the button.",
+      required: true,
+      value: "ReactNode",
+    },
+  ]}
+/>
+
+</TabItem>
+
+</Tabs>
+
+</div>

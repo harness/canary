@@ -156,9 +156,19 @@ export default defineConfig({
                   slug: "components/actions/button",
                   label: "Button",
                 },
-                "components/actions/button-group",
                 "components/actions/button-layout",
                 "components/actions/split-button",
+              ],
+            },
+            {
+              label: "Icon Button",
+              items: [
+                {
+                  slug: "components/actions/icon-button",
+                  label: "Icon Button",
+                },
+                "components/actions/copy-button",
+                "components/actions/button-group",
               ],
             },
             "components/form/calendar",
@@ -168,7 +178,6 @@ export default defineConfig({
             "components/visual/carousel",
             "components/form/checkbox",
             "components/form/checkbox-tree",
-            "components/actions/copy-button",
             "components/feedback/counter-badge",
             "components/data-display/data-table",
             "components/form/date-range-filter",

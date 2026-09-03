@@ -72,11 +72,6 @@ import { Button } from '@harnessio/ui/components'
 // Rounded button
 <Button rounded>Rounded Button</Button>
 
-// Icon only button
-<Button iconOnly tooltipProps={{ content: 'Add' }}>
-  <IconV2 name="plus" />
-</Button>
-
 // Loading state
 <Button loading>Loading Button</Button>
 
@@ -546,54 +541,24 @@ When the `onClick` prop returns a promise, the button automatically shows a load
 </div>`}
 />
 
-## Additional Features
+## Rounded
 
-When the `iconOnly` prop is used, you must also provide `tooltipProps` to display content in the tooltip.
-
-If you need to skip showing the tooltip, you should set `ignoreIconOnlyTooltip`.
+Rounded buttons apply fully rounded corners via the `rounded` prop.
 
 <DocsPage.ComponentExample
   client:only
   code={`<div className="space-y-cn-sm">
-  <div className="flex items-center gap-cn-md border-b border-cn-borders-3 pb-cn-sm">
-    <span className="text-cn-size-2 text-cn-3 w-32 shrink-0 font-mono">icon-only</span>
+  <div className="flex items-center gap-cn-md">
+    <span className="text-cn-size-2 text-cn-3 w-32 shrink-0 font-mono">rounded</span>
     <div className="flex gap-cn-sm items-center">
-      <Button iconOnly tooltipProps={{ content: "Add" }}>
-        <IconV2 name="plus" skipSize />
-      </Button>
-      <Button variant="secondary" size="sm" iconOnly ignoreIconOnlyTooltip>
-        <IconV2 name="git-branch" skipSize />
-      </Button>
-      <Button variant="transparent" size="sm" iconOnly ignoreIconOnlyTooltip>
-        <IconV2 name="xmark" skipSize />
-      </Button>
-      <Button variant="outline" size="xs" iconOnly ignoreIconOnlyTooltip>
-        <IconV2 name="check" skipSize />
-      </Button>
-      <Button variant="outline" size="2xs" iconOnly ignoreIconOnlyTooltip>
-        <IconV2 name="check" skipSize />
-      </Button>
-      <Button variant="outline" size="3xs" iconOnly ignoreIconOnlyTooltip>
-        <IconV2 name="check" skipSize />
-      </Button>
-      <Button variant="outline" size="2xs" iconOnly ignoreIconOnlyTooltip>
-        <IconV2 name="xmark" skipSize />
-      </Button>
-      <Button variant="outline" size="3xs" iconOnly ignoreIconOnlyTooltip>
-        <IconV2 name="xmark" skipSize />
-      </Button>
+      <Button rounded>Rounded Button</Button>
+      <Button rounded variant="outline">Rounded Outline</Button>
     </div>
   </div>
-
-<div className="flex items-center gap-cn-md">
-  <span className="text-cn-size-2 text-cn-3 w-32 shrink-0 font-mono">rounded</span>
-  <div className="flex gap-cn-sm items-center">
-    <Button rounded>Rounded Button</Button>
-    <Button rounded variant="outline">Rounded Outline</Button>
-  </div>
-</div>
 </div>`}
 />
+
+Looking for icon-only buttons? See [Icon Button](/components/actions/icon-button/).
 
 </TabItem>
 

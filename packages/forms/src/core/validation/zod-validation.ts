@@ -123,10 +123,30 @@ function buildTupleSchema(
     .optional()
 }
 
+/**
+ * Internal meta markers set on a schema-tree node to describe that node itself
+ * (its input, whether it is a list/array/tuple, etc.). They are not child field
+ * paths, so `generateSchemaRec` must skip them when recursing into a node's children.
+ */
+const RESERVED_SCHEMA_KEYS = new Set([
+  '_requiredOnly',
+  '_schemaObj',
+  '_input',
+  '_isList',
+  '_isArrayItem',
+  '_isTuple',
+  '_schema'
+])
+
 function generateSchemaRec(schemaObj: SchemaTreeNode, values: AnyFormValue, options?: IGetValidationSchemaOptions) {
   const objectSchemas: { [key: string]: zod.Schema<unknown> } = {}
 
   Object.keys(schemaObj).forEach(key => {
+    // Skip internal meta markers; they describe the current node, not child fields.
+    if (RESERVED_SCHEMA_KEYS.has(key)) {
+      return
+    }
+
     const { _requiredOnly, _schemaObj, _input, _isList, _isArrayItem, _isTuple, _schema /*...nestedSchemaObj*/ } =
       schemaObj[key]
 
@@ -183,7 +203,14 @@ function generateSchemaRec(schemaObj: SchemaTreeNode, values: AnyFormValue, opti
       //   ? addNestedSchema(nestedSchemaObj, requiredSchema, options)
       //   : requiredSchema
     } else {
-      objectSchemas[key] = zod.object(generateSchemaRec(schemaObj[key], values, options)).optional()
+      const objectSchema = zod.object(generateSchemaRec(schemaObj[key], values, options)).optional()
+      // For object/group container inputs, also accept a runtime/expression string value
+      // (e.g. the whole object switched to `<+input>`). `globalValidation` decides whether the
+      // string is acceptable — mirroring the list branch above, which unions its array schema
+      // with a string schema rather than hard-failing with "Expected object, received string".
+      objectSchemas[key] = _input
+        ? zod.union([objectSchema, createStringSchemaWithGlobalValidation(_input, options)])
+        : objectSchema
     }
   })
 
@@ -395,6 +422,11 @@ function populateSchemaTreeRec<T = any>(
         set(schemaObj, input.path, merge(existingSchema, { _requiredOnly: true, _input: input }))
       }
       if (input.inputs) {
+        // Record the container input on its own node so its object schema can also accept a
+        // runtime/expression string value (see the object-container union in `generateSchemaRec`).
+        if (input.path) {
+          set(schemaObj, input.path, merge(get(schemaObj, input.path), { _input: input }))
+        }
         populateSchemaTreeRec(schemaObj, input.inputs, values, options, utils)
       }
 

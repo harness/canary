@@ -1,10 +1,5 @@
 {
   "tracking": {
-    "tighter": {
-      "$type": "letterSpacing",
-      "$value": "-0.05em",
-      "$description": "Very tight, display text"
-    },
     "tight": {
       "$type": "letterSpacing",
       "$value": "-0.02em",
@@ -19,11 +14,6 @@
       "$type": "letterSpacing",
       "$value": "0.025em",
       "$description": "Improved readability"
-    },
-    "wider": {
-      "$type": "letterSpacing",
-      "$value": "0.05em",
-      "$description": "Spaced text"
     }
   },
   "fontWeight": {

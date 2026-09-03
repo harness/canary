@@ -75,7 +75,7 @@ export const typography = {
     },
     '&-micro-normal': {
       font: 'var(--cn-micro-normal)',
-      letterSpacing: 'var(--cn-tracking-wider)'
+      letterSpacing: 'var(--cn-tracking-wide)'
     }
   }
 }

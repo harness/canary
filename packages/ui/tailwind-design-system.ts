@@ -435,12 +435,9 @@ const tailwindDesignSystem: TailwindConfig = {
     },
 
     letterSpacing: {
-      'cn-tighter': 'var(--cn-tracking-tighter)',
       'cn-tight': 'var(--cn-tracking-tight)',
       'cn-normal': 'var(--cn-tracking-normal)',
-      'cn-wide': 'var(--cn-tracking-wide)',
-      'cn-wider': 'var(--cn-tracking-wider)',
-      'cn-widest': 'var(--cn-tracking-widest)'
+      'cn-wide': 'var(--cn-tracking-wide)'
     },
     extend: {
       backgroundImage: {

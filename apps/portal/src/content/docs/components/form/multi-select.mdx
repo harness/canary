@@ -194,6 +194,7 @@ interface MultiSelectOption {
   id: string | number; // Required - the unique identifier for the option
   key: string; // Required - the main identifier for the option
   value?: string; // Optional - used for key-value pairs
+  label?: ReactNode; // Optional - custom dropdown content; selected tags still use `key`
   disable?: boolean; // Optional - disables the option in the dropdown
   onReset?: () => void; // Optional - custom reset handler for the option
 }

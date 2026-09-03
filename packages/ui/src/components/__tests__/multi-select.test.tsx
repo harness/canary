@@ -520,7 +520,11 @@ describe('MultiSelect', () => {
     })
 
     test('should show custom creationLabel when provided', async () => {
-      renderComponent({ options: [], disallowCreation: false, creationLabel: 'Press Enter to filter' })
+      renderComponent({
+        options: [],
+        disallowCreation: false,
+        creationLabel: 'Press Enter to filter'
+      })
 
       const input = screen.getByPlaceholderText('Select items')
       await userEvent.click(input)
@@ -629,6 +633,30 @@ describe('MultiSelect', () => {
       expect(screen.getByText('option3')).toBeInTheDocument()
       const icon = document.querySelector('.cn-icon')
       expect(icon).toBeInTheDocument()
+    })
+
+    test('should render custom label in dropdown but keep key on selected tag', async () => {
+      const optionWithLabel = {
+        id: 'custom',
+        key: 'alice',
+        label: <span data-testid="custom-dropdown-label">Alice (admin)</span>
+      }
+      renderComponent({ options: [optionWithLabel] })
+
+      const input = screen.getByPlaceholderText('Select items')
+      await userEvent.click(input)
+
+      await waitFor(() => {
+        expect(screen.getByTestId('custom-dropdown-label')).toBeInTheDocument()
+      })
+      expect(screen.queryByText('alice')).not.toBeInTheDocument()
+
+      await userEvent.click(screen.getByTestId('custom-dropdown-label'))
+
+      await waitFor(() => {
+        expect(screen.getByText('alice')).toBeInTheDocument()
+        expect(screen.queryByTestId('custom-dropdown-label')).not.toBeInTheDocument()
+      })
     })
 
     test('should handle disabled options', async () => {

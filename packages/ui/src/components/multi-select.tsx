@@ -49,6 +49,8 @@ export interface MultiSelectOption {
   id: string | number
   key: string
   value?: string
+  /** Custom dropdown content. Selected tags still use `key`. */
+  label?: ReactNode
   icon?: IconV2NamesType
   title?: string
   disable?: boolean
@@ -452,7 +454,7 @@ export const MultiSelect = forwardRef<MultiSelectRef, MultiSelectProps>(
                           >
                             <Layout.Flex align="center" gap="xs">
                               {option.icon && <IconV2 name={option.icon} />}
-                              {option.key}
+                              {option.label ?? option.key}
                             </Layout.Flex>
                           </Command.Item>
                         ))}

@@ -1529,13 +1529,14 @@
             }
           },
           "$type": "color",
-          "$value": "{bg.3}",
+          "$value": "{pure.white}",
           "$description": "Semi-transparent background for pipeline stage cards. Creates layered visual hierarchy."
         }
       },
       "bg": {
         "$type": "color",
-        "$value": "{gray.50}"
+        "$value": "{pure.white}",
+        "$description": "Background for the pipeline page chrome — the header and footer bars in Studio, Executions, and Templates."
       },
       "card": {
         "border": {
@@ -1545,20 +1546,20 @@
         },
         "bg": {
           "$type": "color",
-          "$value": "{bg.3}",
+          "$value": "{pure.white}",
           "$description": "Background surface for pipeline studio cards, expand button, and stack layers."
-        },
-        "footer": {
-          "bg": {
-            "$type": "color",
-            "$value": "{comp.pipeline.card.bg}",
-            "$description": "Background for the pipeline studio card footer. Matches the card body."
-          }
         },
         "shadow": {
           "$type": "boxShadow",
           "$value": "{shadow.3}",
           "$description": "Drop shadow for pipeline studio cards. shadow-3 in light, shadow-4 in dark."
+        }
+      },
+      "canvas": {
+        "bg": {
+          "$type": "color",
+          "$value": "{gray.50}",
+          "$description": "Background for the pipeline graph canvas — the dotted workspace backdrop."
         }
       }
     },

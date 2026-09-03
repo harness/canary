@@ -253,7 +253,7 @@
             "fontWeight": "{fontWeight.default.normal.600}",
             "fontSize": "{fontSize.15}",
             "lineHeight": "{lineHeight.chart.15.none}",
-            "letterSpacing": "{tracking.tighter}"
+            "letterSpacing": "{tracking.tight}"
           },
           "$description": "Typography for large donut center value"
         }

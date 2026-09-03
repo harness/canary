@@ -215,13 +215,13 @@ export default {
       '@apply absolute inset-y-0 right-0 w-8': '',
       content: '""',
       zIndex: '1',
-      background: `linear-gradient(to right, color-mix(in lch, var(--cn-comp-pipeline-card-footer-bg) 0%, transparent), var(--cn-comp-pipeline-card-footer-bg))`
+      background: `linear-gradient(to right, color-mix(in lch, var(--cn-comp-pipeline-card-bg) 0%, transparent), var(--cn-comp-pipeline-card-bg))`
     },
     '&::after': {
       '@apply absolute  absolute inset-x-0 bottom-0 h-8': '',
       content: '""',
       zIndex: '2',
-      background: `linear-gradient(to bottom, color-mix(in lch, var(--cn-comp-pipeline-card-footer-bg) 0%, transparent), var(--cn-comp-pipeline-card-footer-bg))`
+      background: `linear-gradient(to bottom, color-mix(in lch, var(--cn-comp-pipeline-card-bg) 0%, transparent), var(--cn-comp-pipeline-card-bg))`
     },
 
     // Allow pre tags to wrap and prevent width expansion
@@ -330,7 +330,7 @@ export default {
   '.cn-studio-card-footer': {
     minHeight: 'var(--cn-size-29)',
     borderTop: '1px solid var(--cn-comp-pipeline-card-border)',
-    backgroundColor: 'var(--cn-comp-pipeline-card-footer-bg)',
+    backgroundColor: 'var(--cn-comp-pipeline-card-bg)',
     '@apply flex flex-col px-cn-md py-cn-md font-caption-normal': '',
 
     // Default: line-clamp-4 for regular cards
@@ -407,7 +407,7 @@ export default {
 
   '.cn-studio-card-expand-button-bottom': {
     '@apply flex items-center justify-end gap-cn-2xs py-cn-xs px-cn-md flex-1 border-t border-cn-2': '',
-    backgroundColor: 'var(--cn-comp-pipeline-card-footer-bg)'
+    backgroundColor: 'var(--cn-comp-pipeline-card-bg)'
   },
 
   // Expand Button Component

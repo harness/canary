@@ -27,7 +27,7 @@ const Description = ({
   version?: string
 }) => {
   return (
-    <div className="inline-flex max-w-full items-center gap-cn-xs overflow-hidden pl-cn-xl text-cn-size-2 leading-tight">
+    <div className="inline-flex max-w-full items-center gap-cn-xs overflow-hidden pl-cn-xl text-cn-size-2 leading-cn-16">
       {description && <span className="w-full overflow-hidden break-words text-cn-3">{description}</span>}
       {version && (
         <div className="flex items-center gap-cn-3xs">

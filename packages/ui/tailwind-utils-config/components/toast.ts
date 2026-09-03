@@ -1,7 +1,8 @@
 export default {
   '.cn-toast-wrapper': {
     right: 'var(--cn-toast-offset-right)',
-    bottom: 'var(--cn-toast-offset-bottom)'
+    bottom: 'var(--cn-toast-offset-bottom)',
+    pointerEvents: 'auto'
   },
 
   '.cn-toast': {

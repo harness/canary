@@ -155,7 +155,7 @@ export const LineTitle: React.FC<LineTitleProps> = ({
                 path: `files/${currentRefForDiff || sourceBranch}/~/${encodeResourcePath(linkPath)}`
               }) ?? ''
             }
-            className="text-cn-1 min-w-0 break-all font-medium leading-tight"
+            className="text-cn-1 min-w-0 break-all font-medium leading-cn-16"
           >
             {displayText}
           </Link>

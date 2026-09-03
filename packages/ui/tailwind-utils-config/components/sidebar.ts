@@ -184,13 +184,7 @@ export default {
 
     '&-submenu': {
       '&-group': {
-        paddingLeft: 'var(--cn-layout-xl)',
-        paddingTop: 'var(--cn-sidebar-group-py)',
-        paddingBottom: 'var(--cn-sidebar-group-py)',
-        gap: 'var(--cn-spacing-2)',
-        overflow: 'hidden',
-        '&[data-state="open"]': { '@apply animate-accordion-down': '' },
-        '&[data-state="closed"]': { '@apply animate-accordion-up': '' }
+        display: 'grid'
       },
 
       '&-item': {

@@ -31,6 +31,9 @@ export const backgroundColor = {
     backgroundSize: '12px 12px',
     backgroundRepeat: 'repeat',
     opacity: '1',
+    backgroundColor: 'var(--cn-comp-pipeline-canvas-bg)'
+  },
+  '.bg-cn-pipeline': {
     backgroundColor: 'var(--cn-comp-pipeline-bg)'
   }
 }

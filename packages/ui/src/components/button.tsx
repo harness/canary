@@ -35,7 +35,8 @@ const buttonVariants = cva('cn-button', {
     theme: {
       default: 'cn-button-default',
       success: 'cn-button-success',
-      danger: 'cn-button-danger'
+      danger: 'cn-button-danger',
+      warning: 'cn-button-warning'
     }
   },
   defaultVariants: {

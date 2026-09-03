@@ -281,7 +281,7 @@
             "fontWeight": "{fontWeight.default.normal.500}",
             "fontSize": "{fontSize.10}",
             "lineHeight": "{lineHeight.40}",
-            "letterSpacing": "{tracking.tighter}"
+            "letterSpacing": "{tracking.tight}"
           },
           "$description": "Primary document heading that establishes the main topic with prominent visual weight and size. Creates the top level in document hierarchy.\n\nCommon uses: Document titles, Main article headings, Tutorial titles, Report titles."
         },
@@ -292,7 +292,7 @@
             "fontWeight": "{fontWeight.default.normal.500}",
             "fontSize": "{fontSize.9}",
             "lineHeight": "{lineHeight.36}",
-            "letterSpacing": "{tracking.tighter}"
+            "letterSpacing": "{tracking.tight}"
           },
           "$description": "Secondary heading for major content divisions. Creates clear breaks between primary sections while maintaining hierarchical relationship with H1.\n\nCommon uses: Chapter divisions, Major content sections, Topic groups, Process divisions."
         },
@@ -467,7 +467,7 @@
         "fontWeight": "{fontWeight.default.normal.500}",
         "fontSize": "0.6875rem",
         "lineHeight": "{lineHeight.16}",
-        "letterSpacing": "{tracking.wider}"
+        "letterSpacing": "{tracking.wide}"
       },
       "$description": "The smallest service text (labels, signatures, technical information)"
     }

@@ -1,0 +1,209 @@
+---
+title: Button Group
+description: ButtonGroup rendered with icon-only buttons
+---
+
+import { DocsPage } from "@/components/docs-page";
+import { Tabs, TabItem } from "@astrojs/starlight/components";
+import PageTabsToc from "@/components/page-tabs-toc.astro";
+
+<PageTabsToc />
+
+<div id="page-level-tabs">
+
+<Tabs>
+
+<TabItem label="Overview">
+
+Set the `iconOnly` prop on `ButtonGroup` to style each button for a single icon. This is useful for compact toolbars where a row of icon buttons act as related actions. Each button is configured through the `buttonsProps` array, and can carry a tooltip or a dropdown.
+
+For the full API and general (text) button groups, see [Button Group](/components/actions/button-group/).
+
+<DocsPage.ComponentExample
+  client:only
+  code={`<div className="space-y-cn-sm w-full">
+  <div className="flex items-center gap-cn-md">
+    <span className="text-cn-size-2 text-cn-3 w-32 shrink-0 font-mono">icon group</span>
+    <ButtonGroup
+      iconOnly
+      size="sm"
+      buttonsProps={[
+        { children: <IconV2 name="info-circle" />, onClick: () => { console.log('Button icon') } },
+        { children: <IconV2 name="key-back" />, tooltipProps: { title: 'Title', content: <p>This is a tooltip</p> }, onClick: () => { console.log('Button with tooltip') } },
+        { children:
+          <IconV2 name="more-vert" />,
+          dropdownProps: {
+            content: (
+              <>
+                <DropdownMenu.Item title="Item title" />
+                <DropdownMenu.Item title="With description" description="Item description" />
+                <DropdownMenu.Separator />
+                <DropdownMenu.Item title="With label" label="Label" />
+                <DropdownMenu.Item title="With checkmark" checkmark />
+                <DropdownMenu.Item title="With shortcut" shortcut="⇧⌘P" />
+              </>
+            )
+          }
+        }
+      ]}
+    />
+  </div>
+</div>`}
+/>
+
+## Usage
+
+```typescript jsx
+import { ButtonGroup, IconV2, DropdownMenu } from '@harnessio/ui/components'
+
+return (
+  <ButtonGroup
+      iconOnly
+      size="sm"
+      buttonsProps={[
+        { children: <IconV2 name="info-circle" />, onClick: () => { console.log('Button icon') } },
+        { children: <IconV2 name="key-back" />, tooltipProps: { title: 'Title', content: <p>This is a tooltip</p> }, onClick: () => { console.log('Button with tooltip') } },
+        {
+            children: <IconV2 name="more-vert" />,
+            dropdownProps: {
+              content: (
+                <>
+                  <DropdownMenu.Item title="Item title" />
+                  <DropdownMenu.Item title="With description" description="Item description" />
+                  <DropdownMenu.Separator />
+                  <DropdownMenu.Item title="With label" label="Label" />
+                  <DropdownMenu.Item title="With checkmark" checkmark />
+                  <DropdownMenu.Item title="With shortcut" shortcut="⇧⌘P" />
+                </>
+              )
+          }
+        }
+      ]}
+    />
+)
+```
+
+## Icon only
+
+The `ButtonGroup` component accepts an `iconOnly` prop. When this prop is set, each button is styled to fit the dimensions of an icon, making it suitable for icon-only buttons.
+
+<DocsPage.ComponentExample
+  client:only
+  code={`<div className="space-y-cn-sm w-full">
+  <div className="flex items-center gap-cn-md">
+    <span className="text-cn-size-2 text-cn-3 w-32 shrink-0 font-mono">icon-only</span>
+    <ButtonGroup
+      iconOnly
+      buttonsProps={[
+        { children: <IconV2 name="info-circle" />, onClick: () => { console.log('Button icon 1') } },
+        { children: <IconV2 name="key-back" />, onClick: () => { console.log('Button icon 2') } },
+        { children: <IconV2 name="more-vert" />, onClick: () => { console.log('Button icon 3') } }
+      ]}
+    />
+  </div>
+</div>`}
+/>
+
+## With tooltip
+
+Within `buttonsProps`, you can provide `tooltipProps` to define tooltip data for a specific button.
+
+<DocsPage.ComponentExample
+  client:only
+  code={`<div className="space-y-cn-sm w-full">
+  <div className="flex items-center gap-cn-md">
+    <span className="text-cn-size-2 text-cn-3 w-32 shrink-0 font-mono">tooltip</span>
+    <ButtonGroup
+      iconOnly
+      buttonsProps={[
+        { children: <IconV2 name="info-circle" />, onClick: () => { console.log('Button icon 1') }, tooltipProps: { title: 'Title', content: <p>This is a tooltip</p> } },
+        { children: <IconV2 name="key-back" />, onClick: () => { console.log('Button icon 2') }, tooltipProps: { title: 'Title', content: <p>This is a tooltip</p> } },
+        { children: <IconV2 name="more-vert" />, onClick: () => { console.log('Button icon 3') }, tooltipProps: { title: 'Title', content: <p>This is a tooltip</p> } }
+      ]}
+    />
+  </div>
+</div>`}
+/>
+
+</TabItem>
+
+<TabItem label="Properties">
+
+{/* Visually hidden — anchors the section headings below in the TOC without showing a redundant title in the panel body (the tab already says "Properties"). Hidden via #page-level-tabs h2#properties in styles.css. */}
+
+## Properties
+
+Type `ButtonGroupButtonProps`
+
+```typescript
+type ButtonGroupTooltipProps = Pick<
+  TooltipProps,
+  "title" | "content" | "side" | "align"
+>;
+
+type BaseButtonProps = Omit<
+  ButtonProps,
+  "variant" | "size" | "theme" | "asChild" | "iconOnly" | "rounded" | "type"
+>;
+
+type DropdownPropsType = {
+  content: ReactNode;
+  contentProps?: typeof DropdownMenu.Content;
+};
+
+type ButtonWithTooltip = BaseButtonProps & {
+  tooltipProps: ButtonGroupTooltipProps;
+  dropdownProps?: undefined;
+};
+
+type ButtonWithDropdown = BaseButtonProps & {
+  dropdownProps: DropdownPropsType;
+  tooltipProps?: undefined;
+};
+
+type ButtonGroupButtonProps = ButtonWithTooltip | ButtonWithDropdown;
+```
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "iconOnly",
+      description: "Optimizes the buttons styling for displaying only an icon.",
+      required: false,
+      value: "boolean",
+    },
+    {
+      name: "buttonsProps",
+      description:
+        "Contains an array of button data, with support for either tooltipProps or dropdownProps for each button.",
+      required: true,
+      value: "ButtonGroupButtonProps[]",
+    },
+    {
+      name: "orientation",
+      description: "Whether to display stacked.",
+      required: false,
+      value: "'horizontal' | 'vertical'",
+      defaultValue: "horizontal",
+    },
+    {
+      name: "size",
+      description: "The size of the buttons.",
+      required: false,
+      value: "'md' | 'sm' | 'xs'",
+      defaultValue: "md",
+    },
+    {
+      name: "className",
+      description: "Additional class names.",
+      required: false,
+      value: "string",
+    },
+  ]}
+/>
+
+</TabItem>
+
+</Tabs>
+
+</div>

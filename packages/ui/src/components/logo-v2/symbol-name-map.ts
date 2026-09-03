@@ -38,6 +38,7 @@ import Chainguard from './symbols/chainguard.svg'
 import ChatGpt from './symbols/chat-gpt.svg'
 import Checkmarx from './symbols/checkmarx.svg'
 import Checkov from './symbols/checkov.svg'
+import CircleCi from './symbols/circle-ci.svg'
 import Claude from './symbols/claude.svg'
 import Codecov from './symbols/codecov.svg'
 import Composer from './symbols/composer.svg'
@@ -78,6 +79,7 @@ import Github from './symbols/github.svg'
 import Gitlab from './symbols/gitlab.svg'
 import Gitleaks from './symbols/gitleaks.svg'
 import Go from './symbols/go.svg'
+import Gocd from './symbols/gocd.svg'
 import Google from './symbols/google.svg'
 import Grafana from './symbols/grafana.svg'
 import Group from './symbols/group.svg'
@@ -134,6 +136,8 @@ import Queue from './symbols/queue.svg'
 import Qwiet from './symbols/qwiet.svg'
 import Rancher from './symbols/rancher.svg'
 import Redhat from './symbols/redhat.svg'
+import RegistryGeneric from './symbols/registry-generic.svg'
+import RegistryRaw from './symbols/registry-raw.svg'
 import Ruby from './symbols/ruby.svg'
 import RunTest from './symbols/run-test.svg'
 import Run from './symbols/run.svg'
@@ -160,10 +164,12 @@ import Sysdig from './symbols/sysdig.svg'
 import Tanzu from './symbols/tanzu.svg'
 import TasVars from './symbols/tas-vars.svg'
 import Tas from './symbols/tas.svg'
+import Teamcity from './symbols/teamcity.svg'
 import Tenable from './symbols/tenable.svg'
 import Terraform from './symbols/terraform.svg'
 import Terragrunt from './symbols/terragrunt.svg'
 import Traceable from './symbols/traceable.svg'
+import TravisCi from './symbols/travis-ci.svg'
 import Veracode from './symbols/veracode.svg'
 import VueJs from './symbols/vue-js.svg'
 import Windows from './symbols/windows.svg'
@@ -209,6 +215,7 @@ export const SymbolNameMap = {
   'chat-gpt': ChatGpt,
   checkmarx: Checkmarx,
   checkov: Checkov,
+  'circle-ci': CircleCi,
   claude: Claude,
   codecov: Codecov,
   composer: Composer,
@@ -249,6 +256,7 @@ export const SymbolNameMap = {
   gitlab: Gitlab,
   gitleaks: Gitleaks,
   go: Go,
+  gocd: Gocd,
   google: Google,
   grafana: Grafana,
   group: Group,
@@ -305,6 +313,8 @@ export const SymbolNameMap = {
   qwiet: Qwiet,
   rancher: Rancher,
   redhat: Redhat,
+  'registry-generic': RegistryGeneric,
+  'registry-raw': RegistryRaw,
   ruby: Ruby,
   'run-test': RunTest,
   run: Run,
@@ -331,10 +341,12 @@ export const SymbolNameMap = {
   tanzu: Tanzu,
   'tas-vars': TasVars,
   tas: Tas,
+  teamcity: Teamcity,
   tenable: Tenable,
   terraform: Terraform,
   terragrunt: Terragrunt,
   traceable: Traceable,
+  'travis-ci': TravisCi,
   veracode: Veracode,
   'vue-js': VueJs,
   windows: Windows,

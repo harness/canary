@@ -1,4 +1,5 @@
 import { render, screen } from '@testing-library/react'
+import userEvent from '@testing-library/user-event'
 import { vi } from 'vitest'
 
 import { Toaster } from '../toaster'
@@ -8,6 +9,20 @@ vi.mock('sonner', () => ({
 }))
 
 describe('Toaster', () => {
+  test('keeps pointer events enabled while preventing them from propagating to modal ancestors', () => {
+    const onPointerDown = vi.fn()
+
+    render(
+      <div onPointerDown={onPointerDown}>
+        <Toaster />
+      </div>
+    )
+
+    userEvent.click(screen.getByTestId('sonner-toaster'))
+
+    expect(onPointerDown).not.toHaveBeenCalled()
+  })
+
   test('renders a single sonner toaster when several are mounted', () => {
     render(
       <>

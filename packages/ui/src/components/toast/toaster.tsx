@@ -49,23 +49,25 @@ export function Toaster({ duration = 5000, className }: ToasterProps) {
   if (!isOwner) return null
 
   return (
-    <SonnerToaster
-      richColors={false}
-      position="bottom-right"
-      duration={duration}
-      visibleToasts={3}
-      className={cn('cn-toast-wrapper', className)}
-      toastOptions={{
-        style: {
-          background: 'transparent',
-          border: 'none',
-          padding: 0,
-          boxShadow: 'none',
-          right: 0,
-          height: 'auto',
-          overflow: 'hidden'
-        }
-      }}
-    />
+    <div onPointerDown={event => event.stopPropagation()}>
+      <SonnerToaster
+        richColors={false}
+        position="bottom-right"
+        duration={duration}
+        visibleToasts={3}
+        className={cn('cn-toast-wrapper', className)}
+        toastOptions={{
+          style: {
+            background: 'transparent',
+            border: 'none',
+            padding: 0,
+            boxShadow: 'none',
+            right: 0,
+            height: 'auto',
+            overflow: 'hidden'
+          }
+        }}
+      />
+    </div>
   )
 }

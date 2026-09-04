@@ -1207,4 +1207,35 @@ describe('Stepper', () => {
       expect(container.querySelector('[data-tooltip-content]')).not.toBeInTheDocument()
     })
   })
+
+  describe('UUI-3585 default chrome', () => {
+    test('head pad, connector inset, open-step panel, active badge, and completed mute are defaults', () => {
+      const step = stepperStyles['.cn-stepper-step']
+      expect(step.paddingBlock).toBe('var(--cn-spacing-3)')
+      expect(step.paddingInline).toBe('0')
+
+      const connector = stepperStyles['.cn-stepper-connector']
+      expect(connector.top).toBe('calc(var(--cn-spacing-3) + var(--cn-size-5) + var(--cn-spacing-half))')
+      expect(connector.bottom).toBe('calc(var(--cn-spacing-half) - var(--cn-spacing-3))')
+
+      const lastChild = stepperStyles['.cn-stepper-step-item']['&:last-child'] as {
+        '& .cn-stepper-connector': { bottom: string }
+      }
+      expect(lastChild['& .cn-stepper-connector'].bottom).toBe('var(--cn-spacing-half)')
+
+      expect(stepperStyles['.cn-stepper-step-panel'].marginTop).toBe('0')
+
+      const activeBadge = stepperStyles['.cn-stepper-step-active .cn-stepper-step-badge']
+      expect(activeBadge.borderColor).toBe('var(--cn-set-blue-outline-border)')
+      expect(activeBadge.background).toBe('var(--cn-set-blue-outline-bg)')
+      expect(activeBadge.color).toBe('var(--cn-set-blue-outline-text)')
+
+      const completedItem = stepperStyles['.cn-stepper-step-item']['&:has(.cn-stepper-step-completed)'] as {
+        opacity: string
+        '&:hover': { opacity: string }
+      }
+      expect(completedItem.opacity).toBe('0.6')
+      expect(completedItem['&:hover'].opacity).toBe('1')
+    })
+  })
 })

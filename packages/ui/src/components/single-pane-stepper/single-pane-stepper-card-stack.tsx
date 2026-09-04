@@ -5,7 +5,6 @@ import { FlowStepperRestartButton } from '../flow-stepper/flow-stepper-card'
 import { FlowStepperRail } from '../flow-stepper/flow-stepper-rail'
 import { useFlowStepperRailModel } from '../flow-stepper/use-flow-stepper-rail-model'
 import { Layout } from '../layout'
-import { Text } from '../text'
 
 interface SinglePaneStepperCardStackProps {
   stepperTitle?: string
@@ -72,17 +71,10 @@ export function SinglePaneStepperCardStack({
     <div ref={containerRef} className="cn-single-pane-stepper-card-stack">
       <div className="cn-single-pane-stepper-card-stack-inner">
         {(contentTitle || contentSubtitle) && (
-          <Layout.Vertical gap="2xs" className="cn-single-pane-stepper-content-header">
-            {contentTitle && (
-              <Text as="h2" variant="heading-subsection" color="foreground-1" className="!m-0">
-                {contentTitle}
-              </Text>
-            )}
-            {contentSubtitle && (
-              <Text as="p" variant="body-normal" color="foreground-1" className="!m-0">
-                {contentSubtitle}
-              </Text>
-            )}
+          <Layout.Vertical className="cn-single-pane-stepper-content-header">
+            {/* Native heading/p — Text's font-* utilities would force !important on the CSS. */}
+            {contentTitle && <h2 className="cn-single-pane-stepper-content-title">{contentTitle}</h2>}
+            {contentSubtitle && <p className="cn-single-pane-stepper-content-subtitle">{contentSubtitle}</p>}
           </Layout.Vertical>
         )}
 

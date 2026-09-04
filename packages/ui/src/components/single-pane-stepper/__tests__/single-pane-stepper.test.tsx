@@ -4,6 +4,7 @@ import { render, screen, waitFor } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { describe, expect, test, vi } from 'vitest'
 
+import flowStepperCardStyles from '../../../../tailwind-utils-config/components/flow-stepper-card'
 import singlePaneStepperStyles from '../../../../tailwind-utils-config/components/single-pane-stepper'
 import { CardContextProvider, FlowEngineProvider, useEngineContext } from '../../flow-stepper/engine'
 import { FlowStepperCard } from '../../flow-stepper/flow-stepper-card'
@@ -231,11 +232,37 @@ describe('SinglePaneStepper', () => {
       expect(Object.hasOwn(inner, '&::after')).toBe(false)
     })
 
-    test('card stack inner matches YAML header vertical padding and keeps side padding', () => {
-      // YAML header uses --cn-spacing-3 (12px) top/bottom. Uniform --cn-spacing-6
-      // (24px) sat the contentTitle a step below the YAML pane title.
+    test('card stack inner uses v5 stack padding', () => {
+      // UUI-3566 — 40px sides (`--cn-spacing-10`). Vertical 16px (`--cn-spacing-4`) lines up
+      // with YAML chrome top.
       const inner = singlePaneStepperStyles['.cn-single-pane-stepper-card-stack-inner']
-      expect(inner.padding).toBe('var(--cn-spacing-3) var(--cn-spacing-6)')
+      expect(inner.padding).toBe('var(--cn-spacing-4) var(--cn-spacing-10) var(--cn-spacing-4)')
+    })
+
+    test('pane surface, title/intro type, and intro-to-first-card gap match v5', () => {
+      expect(singlePaneStepperStyles['.cn-single-pane-stepper-root'].background).toBe('var(--cn-bg-2)')
+
+      const header = singlePaneStepperStyles['.cn-single-pane-stepper-content-header']
+      expect(header.gap).toBe('var(--cn-spacing-3)')
+      expect(header.marginBottom).toBe('var(--cn-spacing-2)')
+
+      const title = singlePaneStepperStyles['.cn-single-pane-stepper-content-title']
+      expect(title.fontSize).toBe('var(--cn-font-size-6)')
+      expect(title.fontWeight).toBe('var(--cn-font-weight-default-normal-600)')
+      expect(title.lineHeight).toBe('var(--cn-line-height-6-normal)')
+      expect(title.color).toBe('var(--cn-text-1)')
+
+      const subtitle = singlePaneStepperStyles['.cn-single-pane-stepper-content-subtitle']
+      expect(subtitle.color).toBe('var(--cn-text-2)')
+      expect(subtitle.lineHeight).toBe('var(--cn-line-height-6-tight)')
+    })
+
+    test('completed item mute does not double-fade inert card body', () => {
+      const reset =
+        flowStepperCardStyles[
+          '.cn-stepper-step-item:has(.cn-stepper-step-completed) .cn-flow-stepper-card-content[inert]'
+        ]
+      expect(reset.opacity).toBe('1')
     })
 
     test('does not render stepper header when stepperTitle provided without showStepperHeader', () => {

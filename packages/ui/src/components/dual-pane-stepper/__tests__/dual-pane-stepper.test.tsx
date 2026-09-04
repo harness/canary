@@ -4,6 +4,7 @@ import { render, screen, waitFor } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { describe, expect, test, vi } from 'vitest'
 
+import dualPaneStepperStyles from '../../../../tailwind-utils-config/components/dual-pane-stepper'
 import { useEngineContext } from '../../flow-stepper/engine'
 import type { FlowConfig } from '../dual-pane-stepper-types'
 import { DualPaneStepper, useFlowCard } from '../index'
@@ -135,6 +136,13 @@ describe('DualPaneStepper', () => {
     test('renders contentSubtitle when provided', () => {
       render(<DualPaneStepper.Root flow={testFlow} title="Test Flow" contentSubtitle="A test subtitle" />)
       expect(screen.getByText('A test subtitle')).toBeInTheDocument()
+    })
+
+    test('title and intro line-heights use emitted tokens', () => {
+      const title = dualPaneStepperStyles['.cn-dual-pane-stepper-content-title']
+      expect(title.lineHeight).toBe('var(--cn-line-height-6-normal)')
+      const subtitle = dualPaneStepperStyles['.cn-dual-pane-stepper-content-subtitle']
+      expect(subtitle.lineHeight).toBe('var(--cn-line-height-6-tight)')
     })
 
     test('renders stepper with correct steps', () => {

@@ -107,6 +107,12 @@ export default {
     }
   },
 
+  // Completed items already fade to 0.6 (see stepper.ts). inert is also 0.6, so without this
+  // reset the body is 0.6×0.6. Hover-restore on the item would still leave the body darker.
+  '.cn-stepper-step-item:has(.cn-stepper-step-completed) .cn-flow-stepper-card-content[inert]': {
+    opacity: '1'
+  },
+
   '.cn-flow-stepper-card-description': {
     paddingLeft: 'calc(var(--cn-size-4) + var(--cn-spacing-3))',
     marginTop: 'var(--cn-spacing-1)'

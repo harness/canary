@@ -92,17 +92,10 @@ function DualPaneStepperContent({
           <Resizable.Panel>
             <div className="cn-dual-pane-stepper-right-pane">
               {(contentTitle || contentSubtitle) && (
-                <Layout.Vertical gap="2xs" className="cn-dual-pane-stepper-content-header">
-                  {contentTitle && (
-                    <Text as="h2" variant="heading-subsection" color="foreground-1" className="!m-0">
-                      {contentTitle}
-                    </Text>
-                  )}
-                  {contentSubtitle && (
-                    <Text as="p" variant="body-normal" color="foreground-1" className="!m-0">
-                      {contentSubtitle}
-                    </Text>
-                  )}
+                <Layout.Vertical className="cn-dual-pane-stepper-content-header">
+                  {/* Native heading/p — Text's font-* utilities would force !important on the CSS. */}
+                  {contentTitle && <h2 className="cn-dual-pane-stepper-content-title">{contentTitle}</h2>}
+                  {contentSubtitle && <p className="cn-dual-pane-stepper-content-subtitle">{contentSubtitle}</p>}
                 </Layout.Vertical>
               )}
               <DualPaneStepperCardStack />

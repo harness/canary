@@ -222,7 +222,7 @@ export const DataTable = function DataTable<TData>({
               />
             )
           },
-          size: 20
+          size: 50
         },
         ...cols
       ]
@@ -294,7 +294,7 @@ export const DataTable = function DataTable<TData>({
                 </Button>
               ) : null
             },
-            size: 20
+            size: 48
           },
           ...cols
         ]

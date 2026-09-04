@@ -3,14 +3,10 @@ import { ComponentProps, createContext, forwardRef, useCallback, useContext, use
 import { cn } from '@utils/cn'
 
 import { SIDEBAR_COOKIE_MAX_AGE, SIDEBAR_COOKIE_NAME } from './sidebar-constants'
-import { useIsMobile } from './use-is-mobile'
 
 type SidebarContextType = {
   state: 'expanded' | 'collapsed'
   setOpen: (open: boolean) => void
-  openMobile: boolean
-  setOpenMobile: (open: boolean) => void
-  isMobile: boolean
   toggleSidebar: () => void
 }
 
@@ -29,11 +25,12 @@ export function useSidebar() {
 
 export const SidebarProvider = forwardRef<
   HTMLDivElement,
-  ComponentProps<'div'> & { defaultOpen?: boolean; open?: boolean; onOpenChange?: (open: boolean) => void }
+  ComponentProps<'div'> & {
+    defaultOpen?: boolean
+    open?: boolean
+    onOpenChange?: (open: boolean) => void
+  }
 >(({ defaultOpen = true, open: openProp, onOpenChange: setOpenProp, className, children, ...props }, ref) => {
-  const isMobile = useIsMobile()
-  const [openMobile, setOpenMobile] = useState(false)
-
   // This is the internal state of the sidebar.
   // We use openProp and setOpenProp for control from outside the component.
   const [_open, _setOpen] = useState(defaultOpen)
@@ -55,8 +52,8 @@ export const SidebarProvider = forwardRef<
 
   // Helper to toggle the sidebar.
   const toggleSidebar = useCallback(() => {
-    return isMobile ? setOpenMobile(open => !open) : setOpen(open => !open)
-  }, [isMobile, setOpen, setOpenMobile])
+    return setOpen(open => !open)
+  }, [setOpen])
 
   // Discussed with @praneshg239, decided to discuss it with the team before implementing.
   // https://github.com/harness/canary/pull/1799#discussion_r2200474044
@@ -78,8 +75,8 @@ export const SidebarProvider = forwardRef<
   const state = open ? 'expanded' : 'collapsed'
 
   const contextValue = useMemo<SidebarContextType>(
-    () => ({ state, setOpen, isMobile, openMobile, setOpenMobile, toggleSidebar }),
-    [state, setOpen, isMobile, openMobile, setOpenMobile, toggleSidebar]
+    () => ({ state, setOpen, toggleSidebar }),
+    [state, setOpen, toggleSidebar]
   )
 
   return (

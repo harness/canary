@@ -3,12 +3,6 @@ import userEvent from '@testing-library/user-event'
 import { vi } from 'vitest'
 
 import { SidebarProvider, useSidebar } from '../sidebar-context'
-import * as useIsMobileModule from '../use-is-mobile'
-
-// Mock useIsMobile hook
-vi.mock('../use-is-mobile', () => ({
-  useIsMobile: vi.fn(() => false)
-}))
 
 describe('useSidebar', () => {
   describe('Hook Usage', () => {
@@ -34,9 +28,6 @@ describe('useSidebar', () => {
           <div>
             <span data-testid="has-state">{String(!!context.state)}</span>
             <span data-testid="has-setOpen">{String(!!context.setOpen)}</span>
-            <span data-testid="has-openMobile">{String(typeof context.openMobile === 'boolean')}</span>
-            <span data-testid="has-setOpenMobile">{String(!!context.setOpenMobile)}</span>
-            <span data-testid="has-isMobile">{String(typeof context.isMobile === 'boolean')}</span>
             <span data-testid="has-toggleSidebar">{String(!!context.toggleSidebar)}</span>
           </div>
         )
@@ -50,9 +41,6 @@ describe('useSidebar', () => {
 
       expect(screen.getByTestId('has-state')).toHaveTextContent('true')
       expect(screen.getByTestId('has-setOpen')).toHaveTextContent('true')
-      expect(screen.getByTestId('has-openMobile')).toHaveTextContent('true')
-      expect(screen.getByTestId('has-setOpenMobile')).toHaveTextContent('true')
-      expect(screen.getByTestId('has-isMobile')).toHaveTextContent('true')
       expect(screen.getByTestId('has-toggleSidebar')).toHaveTextContent('true')
     })
   })
@@ -62,7 +50,6 @@ describe('SidebarProvider', () => {
   beforeEach(() => {
     vi.clearAllMocks()
     document.cookie = ''
-    vi.mocked(useIsMobileModule.useIsMobile).mockReturnValue(false)
   })
 
   describe('Basic Rendering', () => {
@@ -147,38 +134,6 @@ describe('SidebarProvider', () => {
       )
 
       expect(screen.getByTestId('state')).toHaveTextContent('collapsed')
-    })
-
-    test('should initialize with openMobile=false', () => {
-      const TestComponent = () => {
-        const { openMobile } = useSidebar()
-        return <span data-testid="openMobile">{String(openMobile)}</span>
-      }
-
-      render(
-        <SidebarProvider>
-          <TestComponent />
-        </SidebarProvider>
-      )
-
-      expect(screen.getByTestId('openMobile')).toHaveTextContent('false')
-    })
-
-    test('should initialize isMobile from hook', () => {
-      vi.mocked(useIsMobileModule.useIsMobile).mockReturnValue(true)
-
-      const TestComponent = () => {
-        const { isMobile } = useSidebar()
-        return <span data-testid="isMobile">{String(isMobile)}</span>
-      }
-
-      render(
-        <SidebarProvider>
-          <TestComponent />
-        </SidebarProvider>
-      )
-
-      expect(screen.getByTestId('isMobile')).toHaveTextContent('true')
     })
   })
 
@@ -312,35 +267,8 @@ describe('SidebarProvider', () => {
     })
   })
 
-  describe('setOpenMobile Function', () => {
-    test('should update openMobile state', async () => {
-      const TestComponent = () => {
-        const { openMobile, setOpenMobile } = useSidebar()
-        return (
-          <div>
-            <span data-testid="mobile">{String(openMobile)}</span>
-            <button onClick={() => setOpenMobile(true)}>Open Mobile</button>
-          </div>
-        )
-      }
-
-      render(
-        <SidebarProvider>
-          <TestComponent />
-        </SidebarProvider>
-      )
-
-      expect(screen.getByTestId('mobile')).toHaveTextContent('false')
-
-      await userEvent.click(screen.getByText('Open Mobile'))
-      expect(screen.getByTestId('mobile')).toHaveTextContent('true')
-    })
-  })
-
   describe('toggleSidebar Function', () => {
-    test('should toggle sidebar state on desktop', async () => {
-      vi.mocked(useIsMobileModule.useIsMobile).mockReturnValue(false)
-
+    test('should toggle sidebar state', async () => {
       const TestComponent = () => {
         const { state, toggleSidebar } = useSidebar()
         return (
@@ -361,31 +289,6 @@ describe('SidebarProvider', () => {
 
       await userEvent.click(screen.getByText('Toggle'))
       expect(screen.getByTestId('state')).toHaveTextContent('collapsed')
-    })
-
-    test('should toggle openMobile state on mobile', async () => {
-      vi.mocked(useIsMobileModule.useIsMobile).mockReturnValue(true)
-
-      const TestComponent = () => {
-        const { openMobile, toggleSidebar } = useSidebar()
-        return (
-          <div>
-            <span data-testid="mobile">{String(openMobile)}</span>
-            <button onClick={toggleSidebar}>Toggle</button>
-          </div>
-        )
-      }
-
-      render(
-        <SidebarProvider>
-          <TestComponent />
-        </SidebarProvider>
-      )
-
-      expect(screen.getByTestId('mobile')).toHaveTextContent('false')
-
-      await userEvent.click(screen.getByText('Toggle'))
-      expect(screen.getByTestId('mobile')).toHaveTextContent('true')
     })
 
     test('should toggle multiple times', async () => {
@@ -540,48 +443,6 @@ describe('SidebarProvider', () => {
       expect(screen.getByText('Child 1')).toBeInTheDocument()
       expect(screen.getByText('Child 2')).toBeInTheDocument()
       expect(screen.getByText('Child 3')).toBeInTheDocument()
-    })
-  })
-
-  describe('Integration with Mobile', () => {
-    test('should track mobile state changes', () => {
-      vi.mocked(useIsMobileModule.useIsMobile).mockReturnValue(true)
-
-      const TestComponent = () => {
-        const { isMobile } = useSidebar()
-        return <span data-testid="isMobile">{String(isMobile)}</span>
-      }
-
-      render(
-        <SidebarProvider>
-          <TestComponent />
-        </SidebarProvider>
-      )
-
-      expect(screen.getByTestId('isMobile')).toHaveTextContent('true')
-    })
-
-    test('should toggle correct state based on device', async () => {
-      vi.mocked(useIsMobileModule.useIsMobile).mockReturnValue(true)
-
-      const TestComponent = () => {
-        const { openMobile, toggleSidebar } = useSidebar()
-        return (
-          <div>
-            <span data-testid="mobile">{String(openMobile)}</span>
-            <button onClick={toggleSidebar}>Toggle</button>
-          </div>
-        )
-      }
-
-      render(
-        <SidebarProvider>
-          <TestComponent />
-        </SidebarProvider>
-      )
-
-      await userEvent.click(screen.getByText('Toggle'))
-      expect(screen.getByTestId('mobile')).toHaveTextContent('true')
     })
   })
 })

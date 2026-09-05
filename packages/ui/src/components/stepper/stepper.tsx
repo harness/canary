@@ -108,7 +108,9 @@ function StepperConfirmDialog() {
       onCancel={cancelNavigation}
       theme="warning"
     >
-      <AlertDialog.Content title="Go back?">{pendingNavigation.message}</AlertDialog.Content>
+      <AlertDialog.Content title="Go back?">
+        <p className="cn-stepper-go-back-body">{pendingNavigation.message}</p>
+      </AlertDialog.Content>
     </AlertDialog.Root>
   )
 }

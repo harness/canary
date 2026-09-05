@@ -6,8 +6,9 @@ import { deriveFullPredictedPath, useEngineContext } from './engine'
  * Path-scoped badge totals and rail click handling shared by SinglePane's embedded timeline
  * and DualPane's default left rail. Card placement stays in the callers.
  */
-export function useFlowStepperRailModel() {
-  const { flow, cardHistory, activeStepId, scrollToCard } = useEngineContext()
+export function useFlowStepperRailModel(options?: { rewindCompletedClicks?: boolean }) {
+  const rewindCompletedClicks = options?.rewindCompletedClicks ?? false
+  const { flow, cardHistory, activeStepId, scrollToCard, requestReactivation } = useEngineContext()
 
   // Badge denominators below must reflect only the path THIS run will actually walk, not every
   // step configured in the flow. `flow.steps` is a flat map of EVERY step across EVERY branch —
@@ -95,6 +96,15 @@ export function useFlowStepperRailModel() {
   const handleStepperClick = (value: string) => {
     const historyEntry = cardHistory.find(e => e.stepId === value)
     if (historyEntry) {
+      const isTerminal = historyEntry.status === 'completed' || historyEntry.status === 'skipped'
+      const isLastCard = cardHistory[cardHistory.length - 1]?.stepId === historyEntry.stepId
+      const isFlowComplete = !cardHistory.some(e => e.status === 'active' || e.status === 'error')
+      // Single-pane nested titles share this handler: completed clicks rewind.
+      // Dual-pane left rail stays scroll-only (v5 chat stepper only toggles preview).
+      if (rewindCompletedClicks && isTerminal && !(isLastCard && isFlowComplete)) {
+        requestReactivation(historyEntry.stepId)
+        return
+      }
       scrollToCard(historyEntry.stepId)
       return
     }

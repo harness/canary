@@ -38,9 +38,25 @@ function shouldShowRestart(status: CardStatus, cardHistory: { stepId: string; st
   return isTerminal && !isFinished
 }
 
-/** Restart control for a terminal (not finished) step. Single-pane slots this into the step header
+function GoBackHit({ stepId }: { stepId: string }) {
+  const { requestReactivation } = useEngineContext()
+
+  return (
+    <button
+      type="button"
+      className="cn-flow-stepper-card-go-back-hit"
+      aria-label="Go back to this step"
+      onClick={event => {
+        event.stopPropagation()
+        requestReactivation(stepId)
+      }}
+    />
+  )
+}
+
+/** Edit control for a terminal (not finished) step. Single-pane slots this into the step header
  *  beside the collapse caret so card content keeps full width. DualPane still renders it in the
- *  card title row. Hover reveal is CSS on the whole step item (or DualPane card). */
+ *  card title row. Always visible on completed/skipped, matching v5 `.pq-card__pencil`. */
 export function FlowStepperRestartButton({ stepId, status }: { stepId: string; status: CardStatus }) {
   const { requestReactivation, cardHistory } = useEngineContext()
 
@@ -54,9 +70,9 @@ export function FlowStepperRestartButton({ stepId, status }: { stepId: string; s
         event.stopPropagation()
         requestReactivation(stepId)
       }}
-      aria-label="Redo this step"
+      aria-label="Go back to this step"
     >
-      <IconV2 name="restart" size="sm" />
+      <IconV2 name="edit-pencil" size="sm" />
     </button>
   )
 }
@@ -69,6 +85,7 @@ export function FlowStepperCard({ title, description, blockedMessage, children, 
   const isLastCard = cardHistory[cardHistory.length - 1]?.stepId === stepId
   const isFlowComplete = !cardHistory.some(e => INTERACTIVE_STATES.has(e.status))
   const isFinished = isTerminal && isLastCard && isFlowComplete
+  const showGoBackHit = isTerminal && !isFinished
 
   const cardClassName = cn(
     'cn-flow-stepper-card',
@@ -102,6 +119,7 @@ export function FlowStepperCard({ title, description, blockedMessage, children, 
           {blockedMessage && <BlockedMessage message={blockedMessage} />}
           {children}
         </div>
+        {showGoBackHit && <GoBackHit stepId={stepId} />}
       </div>
     )
   }
@@ -138,6 +156,7 @@ export function FlowStepperCard({ title, description, blockedMessage, children, 
         {blockedMessage && <BlockedMessage message={blockedMessage} />}
         {children}
       </div>
+      {showGoBackHit && <GoBackHit stepId={stepId} />}
     </div>
   )
 }

@@ -115,7 +115,9 @@ function DualPaneStepperContent({
         onCancel={cancelReactivation}
         theme="warning"
       >
-        <AlertDialog.Content title={prompt.title}>{prompt.description}</AlertDialog.Content>
+        <AlertDialog.Content title={prompt.title}>
+          <p className="cn-stepper-go-back-body">{prompt.description}</p>
+        </AlertDialog.Content>
       </AlertDialog.Root>
     </>
   )

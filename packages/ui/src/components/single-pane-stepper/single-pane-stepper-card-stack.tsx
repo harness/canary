@@ -29,7 +29,7 @@ export function SinglePaneStepperCardStack({
 }: SinglePaneStepperCardStackProps) {
   const { flow, cardHistory, activeStepId, predictedPath, registerScrollToCard, disableAutoScroll } = useEngineContext()
   const { totalOverride, stepNumberOverrides, stepNumberOverridesComplete, handleStepperClick } =
-    useFlowStepperRailModel()
+    useFlowStepperRailModel({ rewindCompletedClicks: true })
   const containerRef = useRef<HTMLDivElement>(null)
   const activeRef = useRef(activeStepId)
   activeRef.current = activeStepId

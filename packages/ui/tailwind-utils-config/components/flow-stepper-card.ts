@@ -67,34 +67,34 @@ export default {
     cursor: 'pointer',
     padding: '0',
     flexShrink: '0',
-    // Same two-tone as the collapse caret: subdued until the pointer is on this control.
+    // v5 `.pq-card__pencil` is always on for done/skipped. Card mute (0.6) still fades it.
     color: 'var(--cn-text-3)',
-    opacity: '0',
-    transition: 'opacity 150ms ease',
+    opacity: '1',
+    transition: 'background-color 120ms ease, color 120ms ease',
+    position: 'relative',
+    zIndex: '2',
 
     '&:hover': {
-      color: 'var(--cn-text-1)'
+      color: 'var(--cn-text-1)',
+      backgroundColor: 'var(--cn-state-hover)'
     },
 
     '&:focus-visible': {
-      opacity: '1',
       color: 'var(--cn-text-1)',
       outline: 'var(--cn-focus)',
       outlineOffset: 'var(--cn-outline-offset-tight)'
     }
   },
 
-  '.cn-flow-stepper-card:hover .cn-flow-stepper-card-edit': {
-    opacity: '1'
+  '.cn-flow-stepper-card-go-back-hit': {
+    position: 'absolute',
+    inset: '0',
+    zIndex: '1',
+    border: 'none',
+    background: 'transparent',
+    cursor: 'pointer',
+    padding: '0'
   },
-
-  // Whole step item (header or tiles). Completing a step while the pointer is still on the tiles
-  // will briefly reveal Restart before collapse. Header-only hover would hide that flash but also
-  // hide Restart on tile hover, which is too hard to discover.
-  '.cn-stepper-step-item:hover .cn-flow-stepper-card-edit, .cn-stepper-nested-step-item:hover .cn-flow-stepper-card-edit':
-    {
-      opacity: '1'
-    },
 
   '.cn-flow-stepper-card-content': {
     marginTop: 'var(--cn-spacing-6)',

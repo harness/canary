@@ -684,6 +684,11 @@ export default {
     marginLeft: 'var(--cn-spacing-4)'
   },
 
+  '.cn-stepper-nested-step-item:has(.cn-stepper-nested-step-completed):hover .cn-stepper-nested-step-title, .cn-stepper-nested-step-item:has(.cn-stepper-nested-step-skipped):hover .cn-stepper-nested-step-title':
+    {
+      fontWeight: 'var(--cn-font-weight-default-normal-700)'
+    },
+
   '.cn-stepper-nested-step-description': {
     gridColumn: '3',
     marginTop: 'var(--cn-spacing-half)',
@@ -852,6 +857,15 @@ export default {
     width: '40%',
     height: 'var(--cn-size-3)',
     borderRadius: 'var(--cn-rounded-2)'
+  },
+
+  // AlertDialog body is primary (`--cn-text-1`). Subdued copy is `--cn-text-2` + `font-body-normal`.
+  // Prototype go-back is custom CSS (20px icon, 10px gap, body indented under the title). That is
+  // not AlertDialog. Do not recreate that chrome here.
+  '.cn-stepper-go-back-body': {
+    margin: '0',
+    color: 'var(--cn-text-2)',
+    '@apply font-body-normal': ''
   },
 
   /* Reduced Motion */

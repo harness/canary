@@ -309,6 +309,16 @@ export default defineConfig({
             },
           ],
         },
+        {
+          label: "Data Viz",
+          items: [
+            {
+              slug: "data-viz/overview",
+              label: "Overview",
+              attrs: { "data-icon": "circle-with-sector" },
+            },
+          ],
+        },
       ],
       customCss: [
         "./src/tailwind.css",

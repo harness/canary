@@ -45,6 +45,13 @@ export const NAV_CATEGORIES: NavCategory[] = [
     segments: ["growth-patterns"],
     groups: ["PLG Patterns"],
   },
+  {
+    id: "data-viz",
+    label: "Data Viz",
+    href: "/data-viz/overview",
+    segments: ["data-viz"],
+    groups: ["Data Viz"],
+  },
 ];
 
 /** Extract the first path segment, ignoring leading/trailing slashes. */

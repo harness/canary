@@ -190,7 +190,24 @@ export default defineConfig({
             "components/overlays/dialog",
             "components/markdown-display/diff-viewer",
             "components/data-display/draggable-card",
-            "components/overlays/drawer",
+            {
+              label: "Drawer",
+              collapsed: true,
+              items: [
+                {
+                  slug: "components/overlays/drawer",
+                  label: "Overview",
+                },
+                {
+                  slug: "components/overlays/drawer/header-v2",
+                  label: "HeaderV2",
+                },
+                {
+                  slug: "components/overlays/drawer/dual-pane",
+                  label: "Dual Pane",
+                },
+              ],
+            },
             {
               label: "Dropdown Menu",
               collapsed: true,

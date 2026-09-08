@@ -151,6 +151,7 @@ export default defineConfig({
             "components/navigation/breadcrumb",
             {
               label: "Button",
+              collapsed: true,
               items: [
                 {
                   slug: "components/actions/button",
@@ -163,6 +164,7 @@ export default defineConfig({
             },
             {
               label: "Icon Button",
+              collapsed: true,
               items: [
                 {
                   slug: "components/actions/icon-button",
@@ -191,6 +193,7 @@ export default defineConfig({
             "components/overlays/drawer",
             {
               label: "Dropdown Menu",
+              collapsed: true,
               items: [
                 {
                   slug: "components/overlays/dropdown-menu",

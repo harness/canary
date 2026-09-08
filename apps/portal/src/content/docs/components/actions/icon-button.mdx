@@ -61,35 +61,61 @@ Icon buttons support the same variants and sizes as a regular `Button`. The `2xs
 <DocsPage.ComponentExample
   client:only
   code={`<div className="space-y-cn-sm">
-  <div className="flex items-center gap-cn-md">
-    <span className="text-cn-size-2 text-cn-3 w-32 shrink-0 font-mono">icon-only</span>
-    <div className="flex gap-cn-sm items-center">
-      <Button iconOnly tooltipProps={{ content: "Add" }}>
-        <IconV2 name="plus" skipSize />
-      </Button>
-      <Button variant="secondary" size="sm" iconOnly ignoreIconOnlyTooltip>
-        <IconV2 name="git-branch" skipSize />
-      </Button>
-      <Button variant="transparent" size="sm" iconOnly ignoreIconOnlyTooltip>
-        <IconV2 name="xmark" skipSize />
-      </Button>
-      <Button variant="outline" size="xs" iconOnly ignoreIconOnlyTooltip>
-        <IconV2 name="check" skipSize />
-      </Button>
-      <Button variant="outline" size="2xs" iconOnly ignoreIconOnlyTooltip>
-        <IconV2 name="check" skipSize />
-      </Button>
-      <Button variant="outline" size="3xs" iconOnly ignoreIconOnlyTooltip>
-        <IconV2 name="check" skipSize />
-      </Button>
-      <Button variant="outline" size="2xs" iconOnly ignoreIconOnlyTooltip>
-        <IconV2 name="xmark" skipSize />
-      </Button>
-      <Button variant="outline" size="3xs" iconOnly ignoreIconOnlyTooltip>
-        <IconV2 name="xmark" skipSize />
-      </Button>
-    </div>
+  <div className="flex items-center gap-cn-md border-b border-cn-borders-3 pb-cn-sm">
+    <span className="text-cn-size-2 text-cn-3 w-32 shrink-0 font-mono">default</span>
+    <Button iconOnly tooltipProps={{ content: "Add" }}>
+      <IconV2 name="plus" skipSize />
+    </Button>
   </div>
+
+<div className="flex items-center gap-cn-md border-b border-cn-borders-3 pb-cn-sm">
+  <span className="text-cn-size-2 text-cn-3 w-32 shrink-0 font-mono">
+    variants
+  </span>
+  <div className="flex gap-cn-sm items-center">
+    <Button iconOnly ignoreIconOnlyTooltip>
+      <IconV2 name="plus" skipSize />
+    </Button>
+    <Button variant="secondary" iconOnly ignoreIconOnlyTooltip>
+      <IconV2 name="plus" skipSize />
+    </Button>
+    <Button variant="outline" iconOnly ignoreIconOnlyTooltip>
+      <IconV2 name="plus" skipSize />
+    </Button>
+    <Button variant="ghost" iconOnly ignoreIconOnlyTooltip>
+      <IconV2 name="plus" skipSize />
+    </Button>
+    <Button variant="transparent" iconOnly ignoreIconOnlyTooltip>
+      <IconV2 name="plus" skipSize />
+    </Button>
+    <Button variant="ai" iconOnly ignoreIconOnlyTooltip>
+      <IconV2 name="plus" skipSize />
+    </Button>
+  </div>
+</div>
+
+<div className="flex items-center gap-cn-md">
+  <span className="text-cn-size-2 text-cn-3 w-32 shrink-0 font-mono">
+    sizes
+  </span>
+  <div className="flex gap-cn-sm items-end">
+    <Button iconOnly ignoreIconOnlyTooltip>
+      <IconV2 name="plus" skipSize />
+    </Button>
+    <Button size="sm" iconOnly ignoreIconOnlyTooltip>
+      <IconV2 name="plus" skipSize />
+    </Button>
+    <Button size="xs" iconOnly ignoreIconOnlyTooltip>
+      <IconV2 name="plus" skipSize />
+    </Button>
+    <Button size="2xs" ignoreIconOnlyTooltip>
+      <IconV2 name="plus" skipSize />
+    </Button>
+    <Button size="3xs" ignoreIconOnlyTooltip>
+      <IconV2 name="plus" skipSize />
+    </Button>
+  </div>
+</div>
 </div>`}
 />
 

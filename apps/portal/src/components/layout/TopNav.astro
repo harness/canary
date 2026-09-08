@@ -1,0 +1,58 @@
+---
+import SocialIcons from "@astrojs/starlight/components/SocialIcons.astro";
+import SidebarLogo from "./SidebarLogo.astro";
+import ThemeSelect from "./ThemeSelect.astro";
+import { NAV_CATEGORIES, getActiveCategory } from "../../lib/nav-categories";
+
+const active = getActiveCategory(Astro.url.pathname);
+---
+
+<header
+  class="cn-topnav sticky top-0 z-30 flex items-center gap-cn-lg h-14 px-cn-lg border-b border-cn-3 bg-cn-1"
+>
+  <div class="cn-topnav-logo flex-shrink-0">
+    <SidebarLogo />
+  </div>
+
+  <nav class="cn-topnav-tabs flex items-center gap-cn-xs" aria-label="Primary">
+    {
+      NAV_CATEGORIES.map((category) => (
+        <a
+          href={category.href}
+          class:list={["cn-topnav-tab", { active: category.id === active.id }]}
+          aria-current={category.id === active.id ? "page" : undefined}
+        >
+          {category.label}
+        </a>
+      ))
+    }
+  </nav>
+
+  <div class="cn-topnav-actions flex items-center gap-cn-sm ml-auto">
+    <SocialIcons />
+    <ThemeSelect />
+  </div>
+</header>
+
+<style>
+  .cn-topnav-tab {
+    padding: 0.375rem 0.75rem;
+    border-radius: 6px;
+    font-size: var(--sl-text-sm);
+    font-weight: 500;
+    line-height: 1.2;
+    color: var(--sl-color-gray-2);
+    text-decoration: none;
+    border: 1px solid transparent;
+    white-space: nowrap;
+  }
+
+  .cn-topnav-tab:hover {
+    color: var(--sl-color-white);
+  }
+
+  .cn-topnav-tab.active {
+    color: var(--sl-color-white);
+    border-color: var(--sl-color-gray-5);
+  }
+</style>

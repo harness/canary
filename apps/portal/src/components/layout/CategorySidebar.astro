@@ -1,0 +1,22 @@
+---
+import SidebarPersister from "@astrojs/starlight/components/SidebarPersister.astro";
+import SidebarSublist from "@astrojs/starlight/components/SidebarSublist.astro";
+import { getActiveCategory } from "../../lib/nav-categories";
+
+const { sidebar } = Astro.locals.starlightRoute;
+const active = getActiveCategory(Astro.url.pathname);
+
+// Keep only the sidebar groups that belong to the active top-nav category.
+const groups = sidebar.filter(
+  (entry: any) => entry.type === "group" && active.groups.includes(entry.label),
+);
+
+// When a category maps to a single group, drop the redundant group heading
+// (the top-nav tab already names it) and show its entries directly. Multi-group
+// categories (e.g. Docs) keep their headings to stay distinguishable.
+const sublist = groups.length === 1 ? groups[0].entries : groups;
+---
+
+<SidebarPersister>
+  <SidebarSublist sublist={sublist} />
+</SidebarPersister>

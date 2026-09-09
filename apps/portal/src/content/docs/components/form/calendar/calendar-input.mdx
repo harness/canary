@@ -1,0 +1,163 @@
+---
+title: Calendar Input
+description: A read-only text field that opens a Calendar in a popover for picking a single date
+---
+
+import { DocsPage } from "@/components/docs-page";
+import { Tabs, TabItem } from "@astrojs/starlight/components";
+import PageTabsToc from "@/components/page-tabs-toc.astro";
+
+<PageTabsToc />
+
+<div id="page-level-tabs">
+
+<Tabs>
+
+<TabItem label="Overview">
+
+`CalendarInputView` pairs a read-only [text input](/components/form/text-input/) with a [Calendar](/components/form/calendar/) in a [popover](/components/overlays/popover/). Clicking the field opens the calendar; picking a day fills the field with the formatted date. It's a convenience wrapper for the common "date field" pattern where the value is always chosen from the calendar rather than typed.
+
+<DocsPage.ComponentExample
+  client:only
+  code={`() => {
+    const [value, setValue] = React.useState("");
+    return (
+      <div className="w-64">
+        <CalendarInputView
+          value={value}
+          setValue={(date) => setValue(date.toISOString())}
+          placeholder="Select a date"
+        />
+      </div>
+    );
+  }`}
+/>
+
+## Installation
+
+```typescript jsx
+import { useState } from 'react';
+import { CalendarInputView } from '@harnessio/ui/components';
+
+const DateField = () => {
+  const [value, setValue] = useState<string>('');
+
+  return (
+    <CalendarInputView
+      value={value}
+      setValue={(date) => setValue(date.toISOString())}
+      placeholder="Select a date"
+    />
+  );
+};
+
+export default DateField;
+```
+
+The field stores its value as a string that you own. `setValue` hands you a `Date` when a day is picked — convert and store it however you like (an ISO string above), and pass it back in through `value`.
+
+</TabItem>
+
+<TabItem label="Usage">
+
+## Anatomy
+
+`CalendarInputView` is a single, self-contained component — you don't compose its parts. Internally it wires together three design-system components:
+
+```typescript jsx
+<Popover.Root>
+  <Popover.Trigger asChild>
+    <TextInput readOnly />   {/* the field you click */}
+  </Popover.Trigger>
+  <Popover.Content hideArrow>
+    <Calendar mode="single" />  {/* the picker */}
+  </Popover.Content>
+</Popover.Root>
+```
+
+- **Field** — a read-only `TextInput` that acts as the popover trigger. It shows the selected date via `toLocaleDateString()` (or the `placeholder` when empty) and uses a pointer cursor to signal it's clickable.
+- **Popover** — opens on click and holds the calendar; it renders without the arrow (`hideArrow`).
+- **Calendar** — a single-select `Calendar`. Choosing a day calls `setValue` with that `Date`.
+
+The field is **read-only by design** — there's no free-text entry, so every value comes from the calendar. Reach for the plain [Calendar](/components/form/calendar/) when you need range or multi-date selection, or an inline picker without the input.
+
+## Best practices
+
+{/* TODO: editorial — please review against product guidance. */}
+
+**Do**
+
+- Use `CalendarInputView` for a compact single-date field where the calendar is the only way to enter a value.
+- Pair it with a visible [Label](/components/form/label/) so the field's purpose is clear (see the accessibility note below — it has no built-in labelling).
+- Store the returned `Date` in whatever format your backend expects, and feed a matching string back through `value`.
+
+**Don't**
+
+- Don't use it when people need to pick a range or several dates — use [Calendar](/components/form/calendar/) directly.
+- Don't rely on it for free-typed dates; the field is read-only and can't be typed into.
+- Don't expect to clear the field through the calendar — see the known limitations.
+
+## Content
+
+{/* TODO: editorial — please review against product guidance. */}
+
+- Write a `placeholder` that names the date being collected ("Select a start date"), not just "Select date".
+- Keep the surrounding label short and specific ("Due date", "Effective date").
+
+## Accessibility
+
+The field is a real `TextInput` and the popover/calendar bring their own semantics, so the control is focusable and the picker is operable by keyboard once open.
+
+### Keyboard
+
+- The field is in the tab order; opening the popover surfaces the `Calendar`, whose days are navigable with the arrow keys and selectable with **Enter**/**Space** (see the [Calendar](/components/form/calendar/) accessibility notes).
+- Because the field is `readOnly`, typing does nothing — the value only changes through the calendar.
+
+### Labeling
+
+- The selected date is rendered as the input's value using the browser locale's `toLocaleDateString()`.
+
+### Known limitations
+
+- **There's no built-in label and no way to add one.** `CalendarInputView` only accepts `value`, `setValue`, and `placeholder` — it doesn't forward `id`, `aria-label`, or `className`, so it can't be programmatically associated with a `<label>`. The placeholder is the field's only text, and a placeholder isn't a reliable accessible name. Until the component forwards these props, wrap it so a visible label sits adjacent, and treat the missing association as a gap to raise with the component's owners.
+- **The calendar can't clear the field.** Deselecting a day calls `setValue(date ?? new Date())`, which falls back to *today* — so there's no path back to an empty value through the UI. Reset `value` from your own state if you need a clear action.
+- **The display format isn't configurable.** The value always renders via `toLocaleDateString()` in the browser's locale; there's no prop to control the format shown in the field.
+
+</TabItem>
+
+<TabItem label="Properties">
+
+{/* Visually hidden — anchors the section headings below in the TOC without showing a redundant title in the panel body (the tab already says "Properties"). Hidden via #page-level-tabs h2#properties in styles.css. */}
+
+## Properties
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "value",
+      description:
+        "The selected date as a string. Rendered in the field via toLocaleDateString() when set.",
+      required: false,
+      value: "string",
+    },
+    {
+      name: "setValue",
+      description: "Called with the picked Date when a day is selected in the calendar.",
+      required: true,
+      value: "(date: Date) => void",
+    },
+    {
+      name: "placeholder",
+      description: "Text shown in the field when no date is selected.",
+      required: false,
+      value: "string",
+      defaultValue: "'Select date'",
+    },
+  ]}
+/>
+
+</TabItem>
+
+</Tabs>
+
+</div>

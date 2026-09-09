@@ -172,7 +172,20 @@ export default defineConfig({
                 },
               ],
             },
-            "components/form/calendar",
+            {
+              label: "Calendar",
+              collapsed: true,
+              items: [
+                {
+                  slug: "components/form/calendar",
+                  label: "Overview",
+                },
+                {
+                  slug: "components/form/calendar/calendar-input",
+                  label: "Calendar Input",
+                },
+              ],
+            },
             "components/form/caption",
             "components/data-display/card",
             "components/data-display/card-select",

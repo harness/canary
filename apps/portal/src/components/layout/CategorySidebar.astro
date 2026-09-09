@@ -14,14 +14,13 @@ const groups = sidebar.filter(
     entry.type === "group" && active?.groups.includes(entry.label),
 );
 
-// When a category has a single group whose heading just repeats the top-nav tab
-// (Components, Foundations, Data Viz), that collapsible heading is redundant and
-// lets people collapse the whole section. We keep the items inside their group
-// (so they retain the nested link/icon styling) but hide the heading and lock it
-// open via the `category-sidebar--flat` class below. Multi-group sections (Docs)
-// and ones with a distinct heading name (Patterns → "PLG Patterns") are untouched.
-const isRedundantHeading =
-  groups.length === 1 && groups[0].label === active?.label;
+// When a category has a single sidebar group (Components, Foundations, Data Viz,
+// Patterns), its heading is redundant with the top-nav tab and — being a
+// collapsible <details> — lets people collapse the whole section to nothing. We
+// keep the items inside their group (so they retain the nested link/icon styling)
+// but hide the heading and lock it open via the `category-sidebar--flat` class
+// below. Multi-group sections (Docs) keep their headings, which distinguish groups.
+const isRedundantHeading = groups.length === 1;
 ---
 
 <div class:list={["category-sidebar", { "category-sidebar--flat": isRedundantHeading }]}>

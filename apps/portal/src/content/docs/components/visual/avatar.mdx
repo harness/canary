@@ -3,9 +3,19 @@ title: Avatar
 description: Avatar component
 ---
 
-The `Avatar` component provides a way to represent an image with a fallback for when the image cannot be loaded. It supports displaying initials derived from the `name` prop or an Avatar Icon if no `name` or `src` is provided.
-
 import { DocsPage } from "@/components/docs-page";
+import { Tabs, TabItem } from "@astrojs/starlight/components";
+import PageTabsToc from "@/components/page-tabs-toc.astro";
+
+<PageTabsToc />
+
+<div id="page-level-tabs">
+
+<Tabs>
+
+<TabItem label="Overview">
+
+The `Avatar` component provides a way to represent an image with a fallback for when the image cannot be loaded. It supports displaying initials derived from the `name` prop or an Avatar Icon if no `name` or `src` is provided.
 
 <DocsPage.ComponentExample
   client:only
@@ -104,7 +114,7 @@ import { DocsPage } from "@/components/docs-page";
 </div>`}
 />
 
-## Usage
+## Installation
 
 ```typescript jsx
 import { Avatar } from '@harnessio/ui'
@@ -144,7 +154,7 @@ The `Avatar` component supports four sizes: `xs`, `sm`, `md`, and `lg`. The defa
 
 ## Shapes
 
-The `Avatar` component supports two visual shapes: `md` and `rounded`.
+By default the `Avatar` is a rounded square. Pass `rounded` to render it as a circle.
 
 <DocsPage.ComponentExample
   client:only
@@ -231,7 +241,81 @@ Use `AvatarWithTooltip` to display a tooltip on hover.
 </div>`}
 />
 
-## API Reference
+</TabItem>
+
+<TabItem label="Usage">
+
+## Anatomy
+
+`Avatar` is built on the Radix avatar primitive — an image with a graceful fallback:
+
+```typescript jsx
+<Avatar name="John Doe" src="/avatar.png" />
+```
+
+- **Root** — a non-interactive `<span>` container. `size` (`xs`/`sm`/`md`/`lg`) sets the dimensions and `rounded` switches it from a rounded square to a circle.
+- **Image** — when `src` is provided, the photo fills the avatar; its `alt` text is taken from `name`.
+- **Fallback** — shown when there's no `src`, or while/if the image fails to load. It resolves in priority order: a custom `icon`, then a group icon (`isGroup`), then the initials from `name`, and finally a default user icon when nothing else is available.
+
+Pass `noInitials` to show the `name` string as-is instead of reducing it to initials — handy for overflow counts like `+22`.
+
+## Best practices
+
+{/* TODO: editorial — please review against product guidance. */}
+
+**Do**
+
+- Always pass a `name`, even when you also pass `src` — it supplies the image's alt text and the initials fallback if the image fails to load.
+- Pick the `size` from the four supported steps rather than overriding dimensions, so avatars line up with the surrounding text and controls.
+- Use `rounded` consistently within a given surface — mixing squares and circles in the same list reads as inconsistent.
+- Use `isGroup` for avatars that stand in for a team or organization, and a custom `icon` for non-person entities like a project or folder.
+
+**Don't**
+
+- Don't rely on an icon-only or initials-only avatar as the sole label for a person or entity — pair it with a visible name where identity matters (see Accessibility).
+- Don't put essential, non-decorative meaning in the avatar alone; it's a visual accent, not an interactive control.
+- Don't stuff long strings into `name` expecting them to fit — use `noInitials` for short counts, and keep everything else to a name.
+
+## Content
+
+{/* TODO: editorial — please review against product guidance. */}
+
+- Pass the person's full name to `name` (e.g. "John Doe"); the component derives the initials for you.
+- For overflow indicators, use `noInitials` with a short string like `+22`; keep it to a couple of characters so it stays legible at small sizes.
+- Reserve custom icons for clear, recognizable entity types (folder, organization, branch) so the glyph reads at a glance.
+
+## Accessibility
+
+`Avatar` renders a decorative `<span>`, not an interactive control, so most of the accessibility work is about making sure the identity it represents is available as text.
+
+### Keyboard
+
+- The avatar itself is not focusable and isn't a tab stop — there's nothing to activate. If you make an avatar actionable (a menu trigger, a link), wrap it in a real [Button](/components/actions/button/) or link that carries the label and focus behavior.
+
+### Labeling
+
+- With `src`, the image's `alt` is set from `name`, so an image avatar with a name is labeled for screen readers.
+- Without an image, the initials fallback renders the initials as visible text — so assistive tech reads the initials (e.g. "JD"), not the full name.
+- The icon fallbacks — custom `icon`, the `isGroup` icon, and the default user icon — are decorative and carry no text alternative.
+
+### Focus & states
+
+- There are no interactive states; the avatar doesn't receive focus or respond to input on its own.
+- `AvatarWithTooltip` adds a tooltip (defaulting to `name`) that appears on hover.
+
+### Known limitations
+
+- **Icon and group fallbacks are announced as nothing.** When an avatar shows a custom `icon`, the group icon, or the default user icon, there's no `alt` or `aria-label`, so screen readers get no text. If the avatar identifies something, put that identity in nearby visible text or add your own label.
+- **The initials fallback exposes only the initials.** A screen reader reads "JD" rather than "John Doe", since the fallback text is the initials themselves. Don't rely on it as the only way the name is conveyed.
+- **`AvatarWithTooltip` is effectively hover-only.** Because the avatar is a non-focusable `<span>`, the tooltip can't be reached by keyboard focus — so it's a mouse affordance, not a reliable accessible name. Provide the name in accessible text as well.
+
+</TabItem>
+
+<TabItem label="Properties">
+
+{/* Visually hidden — anchors the section headings below in the TOC without showing a redundant title in the panel body (the tab already says "Properties"). Hidden via #page-level-tabs h2#properties in styles.css. */}
+
+## Properties
 
 The `Avatar` component has several props to control its appearance:
 
@@ -242,27 +326,27 @@ The `Avatar` component has several props to control its appearance:
       description:
         "Full name of the subject of the avatar. Used to generate initials for the fallback and alt text. If not provided, an Avatar Icon will be rendered if no `src` is provided.",
       required: false,
-      type: "string",
+      value: "string",
     },
     {
       name: "src",
       description:
         "The source URL of the image. If not provided, initials or an Avatar Icon will be rendered.",
       required: false,
-      type: "string",
+      value: "string",
     },
     {
       name: "size",
       description: "The size of the avatar.",
       required: false,
-      type: "'xs' | 'sm' | 'md' | 'lg'",
+      value: "'xs' | 'sm' | 'md' | 'lg'",
       defaultValue: "'sm'",
     },
     {
       name: "rounded",
       description: "Whether to display the avatar as a circle.",
       required: false,
-      type: "boolean",
+      value: "boolean",
       defaultValue: "false",
     },
     {
@@ -270,13 +354,13 @@ The `Avatar` component has several props to control its appearance:
       description:
         "Custom icon to display instead of initials or default user icon.",
       required: false,
-      type: "IconV2NamesType",
+      value: "IconV2NamesType",
     },
     {
       name: "isGroup",
       description: "Whether to display a group icon instead of user icon.",
       required: false,
-      type: "boolean",
+      value: "boolean",
       defaultValue: "false",
     },
     {
@@ -284,13 +368,13 @@ The `Avatar` component has several props to control its appearance:
       description:
         "Whether to display fallback string without converting to initials.",
       required: false,
-      type: "boolean",
+      value: "boolean",
       defaultValue: "false",
     },
   ]}
 />
 
-### AvatarWithTooltip
+### `AvatarWithTooltip`
 
 The `AvatarWithTooltip` component wraps `Avatar` with a tooltip. It accepts all `Avatar` props plus:
 
@@ -301,7 +385,13 @@ The `AvatarWithTooltip` component wraps `Avatar` with a tooltip. It accepts all 
       description:
         "Props to pass to the Tooltip component (title, content, side, align).",
       required: false,
-      type: "AvatarTooltipProps",
+      value: "AvatarTooltipProps",
     },
   ]}
 />
+
+</TabItem>
+
+</Tabs>
+
+</div>

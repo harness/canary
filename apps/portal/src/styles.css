@@ -497,6 +497,24 @@ code:not(.expressive-code code) {
   }
 }
 
+/* Single-group sections (Components, Foundations, Data Viz) repeat their top-nav
+   tab name as the only sidebar group heading. Hide that redundant heading and
+   keep its items always visible, so the section can't be collapsed to nothing.
+   Items stay inside the group, so they keep their normal nested link/icon styles.
+   Scoped by `.category-sidebar--flat` (set in CategorySidebar.astro), so
+   multi-group sections and nested sub-groups (Button, Icon Button) are untouched. */
+.cn-portal-sidebar .category-sidebar--flat ul.top-level > li > details > summary {
+  display: none;
+}
+.cn-portal-sidebar .category-sidebar--flat ul.top-level > li > details {
+  @apply py-0;
+  margin-inline: 0;
+  padding-inline: 0;
+}
+.cn-portal-sidebar .category-sidebar--flat ul.top-level > li > details > ul {
+  display: flex !important;
+}
+
 /* ============================================================
    RIGHT SIDEBAR (Table of Contents)
    ============================================================ */

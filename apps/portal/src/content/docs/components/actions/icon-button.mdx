@@ -33,7 +33,7 @@ Because an icon button has no visible label, you must provide `tooltipProps` so 
 </div>`}
 />
 
-## Usage
+## Installation
 
 ```tsx
 import { Button, IconV2 } from '@harnessio/ui/components'
@@ -141,6 +141,68 @@ The `ai` variant pairs with `iconOnly` for AI-related actions, including the aut
   </div>
 </div>`}
 />
+
+</TabItem>
+
+<TabItem label="Usage">
+
+## Anatomy
+
+An icon button is the [Button](/components/actions/button/) rendered with `iconOnly`, so it's composed of:
+
+- **Container** — the button itself, styled for a single icon (square, centered) via `iconOnly`. It takes the same `variant`, `theme`, and `size` as any button.
+- **Icon** — one `IconV2` as the button's only child, carrying the meaning of the action.
+- **Tooltip** — the short label surfaced on hover and focus from `tooltipProps`, since there's no visible text.
+- **Loading spinner** _(optional)_ — replaces the icon while `loading` is set (or while an async `onClick` is pending).
+
+The `2xs` and `3xs` sizes turn on `iconOnly` automatically.
+
+## Best practices
+
+**Do**
+
+- Use icon buttons for common, universally-recognized actions — close, add, edit, delete, search — where the icon alone is unambiguous.
+- Always give the action a label via `tooltipProps` (and see Accessibility below for `aria-label`), so it's identifiable by sight and by assistive tech.
+- Reach for icon buttons in dense or repeated spots — toolbars, table rows, card corners — where a full text button would crowd the layout.
+- Pick an icon whose meaning is obvious for the action; when in doubt, use a regular button with a text label instead.
+
+**Don't**
+
+- Don't use an icon button for rare or ambiguous actions where the icon isn't self-evident — the tooltip only appears on hover/focus, so the meaning is hidden until then.
+- Don't set `ignoreIconOnlyTooltip` just to quiet the type error; only skip the tooltip when an adjacent visible label already names the action.
+- Don't place more than one icon in a single button, and don't pair an icon button with a nearby text button for the same action.
+
+## Content
+
+- Give every icon button a label — in `tooltipProps.content` (and `aria-label`) — that names the action with a verb: "Add", "Copy link", "Delete".
+- Use sentence case; capitalize only the first word, along with any proper nouns or product names.
+- Keep it to the action itself, and write the same words you'd use on a text button for the action.
+
+## Accessibility
+
+An icon button has no visible text, so its accessible name has to come from somewhere other than its content — this is the main thing to get right.
+
+### Keyboard
+
+- It's a native `<button>`: a tab stop that activates with **Enter** and **Space**.
+- The tooltip opens on focus (not just hover), so keyboard users see the label when they reach the button.
+
+### Labeling
+
+- `tooltipProps` shows a visible label and, through the underlying Radix tooltip, associates that text as the button's **description** (`aria-describedby`) while it's focused.
+- For a reliable accessible **name**, also pass `aria-label` (it's forwarded straight to the `<button>`); match it to the tooltip text.
+- The icon itself carries no text, so it should not be the only source of meaning.
+
+### Focus & states
+
+- The standard keyboard focus ring (`:focus-visible`) shows via the `--cn-focus` token.
+- `loading` and `disabled` both set the `disabled` attribute, removing the button from the tab order while inactive.
+
+### Known limitations
+
+- **A tooltip is a description, not a name.** Even though the types require `tooltipProps` for icon-only buttons, the component doesn't turn that text into an `aria-label` — Radix exposes it as a description, and tooltips aren't a substitute for an accessible name. For anything important, add an explicit `aria-label`.
+- **`ignoreIconOnlyTooltip` removes the label entirely.** A button using it has neither a visible tooltip nor a programmatic name unless you supply `aria-label`, so reserve it for buttons whose action is already named by an adjacent visible label.
+- **Loading isn't announced.** The loading state sets `data-loading` and disables the button but adds no `aria-busy` or live region, so screen-reader users aren't told the action is in progress — same limitation as the base [Button](/components/actions/button/).
 
 </TabItem>
 

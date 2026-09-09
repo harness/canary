@@ -33,7 +33,7 @@ The `ButtonLayout` component allows you to group multiple buttons together, eith
 </div>`}
 />
 
-## Usage
+## Installation
 
 ```typescript jsx
 import { Button, ButtonLayout } from '@harnessio/ui/components'
@@ -60,17 +60,6 @@ return (
     </ButtonLayout.Secondary>
   </ButtonLayout.Root>
 )
-```
-
-## Anatomy
-
-All parts of the `ButtonLayout` component can be imported and composed as required.
-
-```typescript jsx
-<ButtonLayout.Root>
-  <ButtonLayout.Primary />
-  <ButtonLayout.Secondary />
-</ButtonLayout.Root>
 ```
 
 ## Layout Orientation
@@ -183,6 +172,70 @@ When `orientation` is set to `vertical`:
   </div>
 </div>`}
 />
+
+</TabItem>
+
+<TabItem label="Usage">
+
+## Anatomy
+
+`ButtonLayout` is a layout wrapper — it positions and spaces a set of buttons, but has no visuals of its own. All parts can be imported and composed as needed:
+
+```typescript jsx
+<ButtonLayout.Root>
+  <ButtonLayout.Primary />
+  <ButtonLayout.Secondary />
+</ButtonLayout.Root>
+```
+
+- **Root** — the container. Sets the `orientation` (`horizontal` by default, or `vertical`) and, when horizontal, the `horizontalAlign` (`end` by default, or `start`). Buttons passed directly to `Root` are laid out in order.
+- **Primary** _(optional)_ — a slot for the main action. When horizontal it sits on the far side of the alignment (right by default); when vertical it sits on top.
+- **Secondary** _(optional)_ — a slot for supporting actions. It sits opposite `Primary` — left when horizontal, bottom when vertical.
+
+Using the `Primary` / `Secondary` slots is what pins actions to opposite ends of the row; passing buttons straight to `Root` simply flows them together.
+
+## Best practices
+
+**Do**
+
+- Use `ButtonLayout` anywhere you have a set of related actions to place — dialog footers, form actions, toolbars.
+- Keep one clear primary action. Put it in `ButtonLayout.Primary` (or last, when passing buttons directly) so it lands in the emphasized position.
+- Follow the default right-aligned, primary-last order for confirming flows like dialogs and forms; it matches where people expect the confirm action.
+- Switch to `orientation="vertical"` in narrow columns or stacked mobile layouts instead of letting a horizontal row wrap.
+
+**Don't**
+
+- Don't stack multiple primary buttons in one layout; competing emphasis makes the main action harder to find.
+- Don't rely on `ButtonLayout` for grouping semantics — it only positions buttons. If the buttons form a connected set of choices, reach for [Button Group](/components/actions/button-group/) instead.
+- Don't hand-space buttons with margins to fake this layout; use the `orientation` and `horizontalAlign` props so spacing stays consistent.
+
+## Content
+
+- `ButtonLayout` has no text of its own — label writing lives with the [Button](/components/actions/button/) inside it.
+- Use sentence case for every button label — capitalize only the first word, along with any proper nouns or product names.
+- Order buttons by importance and keep the primary action's label specific to the outcome ("Save changes", "Delete") rather than a generic "OK".
+
+## Accessibility
+
+`ButtonLayout` renders plain `<div>` elements with no ARIA roles — it is purely presentational. The accessibility of the group therefore comes entirely from the [Button](/components/actions/button/) components placed inside it.
+
+### Keyboard
+
+- Each button inside the layout is a native `<button>` and an individual stop in the tab order, activated with **Enter** and **Space**.
+- `ButtonLayout` adds no keyboard behavior of its own — there is no arrow-key movement between the buttons.
+
+### Labeling
+
+- Buttons are named by their own text or, for icon-only buttons, their tooltip/`aria-label`. `ButtonLayout` neither adds nor overrides any accessible name.
+
+### Focus & states
+
+- Focus order follows the **DOM order** of the buttons, not their visual position (see the limitation below). Each button shows the standard focus ring (`:focus-visible`) via the `--cn-focus` token.
+
+### Known limitations
+
+- **Visual order can diverge from focus order.** `ButtonLayout.Primary` is moved to the far end visually with CSS (`order` + `margin`), so a `Primary` slot authored first in the markup still renders on the right but is focused *first*. For predictable keyboard flow, author the buttons in the reading order you want people to tab through, and let the slots handle visual placement.
+- **No group semantics.** All parts are plain `<div>`s with no `role="group"` or group label, so assistive tech announces the buttons individually rather than as a named set. If the grouping carries meaning, add your own `role="group"` and `aria-label` around it.
 
 </TabItem>
 

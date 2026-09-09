@@ -161,6 +161,26 @@ Secondary buttons are less prominent than primary buttons.
 
 <div className="flex items-center gap-cn-md border-b border-cn-borders-3 pb-cn-sm">
   <span className="text-cn-size-2 text-cn-3 w-32 shrink-0 font-mono">
+    themes
+  </span>
+  <div className="flex gap-cn-sm items-center">
+    <Button variant="secondary" theme="default">
+      Default
+    </Button>
+    <Button variant="secondary" theme="success">
+      Success
+    </Button>
+    <Button variant="secondary" theme="danger">
+      Danger
+    </Button>
+    <Button variant="secondary" theme="warning">
+      Warning
+    </Button>
+  </div>
+</div>
+
+<div className="flex items-center gap-cn-md border-b border-cn-borders-3 pb-cn-sm">
+  <span className="text-cn-size-2 text-cn-3 w-32 shrink-0 font-mono">
     sizes
   </span>
   <div className="flex gap-cn-sm items-end">
@@ -179,48 +199,6 @@ Secondary buttons are less prominent than primary buttons.
   <div className="flex gap-cn-sm items-center">
     <Button variant="secondary" disabled>Default Disabled</Button>
     <Button variant="secondary" loading>Loading</Button>
-  </div>
-</div>
-</div>`}
-/>
-
-## Secondary Button with Themes
-
-Secondary buttons can be styled with different themes for various contexts.
-
-<DocsPage.ComponentExample
-  client:only
-  code={`<div className="space-y-cn-sm">
-  <div className="flex items-center gap-cn-md border-b border-cn-borders-3 pb-cn-sm">
-    <span className="text-cn-size-2 text-cn-3 w-32 shrink-0 font-mono">default</span>
-    <div className="flex gap-cn-sm items-center">
-      <Button variant="secondary" theme="default">Secondary Default</Button>
-    </div>
-  </div>
-
-  <div className="flex items-center gap-cn-md border-b border-cn-borders-3 pb-cn-sm">
-    <span className="text-cn-size-2 text-cn-3 w-32 shrink-0 font-mono">themes</span>
-    <div className="flex gap-cn-sm items-center">
-      <Button variant="secondary" theme="success">Secondary Success</Button>
-      <Button variant="secondary" theme="danger">Secondary Danger</Button>
-      <Button variant="secondary" theme="warning">Secondary Warning</Button>
-    </div>
-  </div>
-
-<div className="flex items-center gap-cn-md border-b border-cn-borders-3 pb-cn-sm">
-  <span className="text-cn-size-2 text-cn-3 w-32 shrink-0 font-mono">
-    sizes
-  </span>
-  <a href="#secondary-button" className="text-cn-size-2 text-cn-3 underline underline-offset-2 hover:text-cn-1">
-    See Secondary Button sizes
-  </a>
-</div>
-
-<div className="flex items-center gap-cn-md">
-  <span className="text-cn-size-2 text-cn-3 w-32 shrink-0 font-mono">states</span>
-  <div className="flex gap-cn-sm items-center">
-    <Button variant="secondary" theme="danger" disabled>Disabled</Button>
-    <Button variant="secondary" theme="danger" loading>Loading</Button>
   </div>
 </div>
 </div>`}

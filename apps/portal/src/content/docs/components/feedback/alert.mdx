@@ -3,9 +3,19 @@ title: Alert
 description: Alert component
 ---
 
-The `Alert` component provides a flexible UI element for displaying alert messages. It is composed of several subcomponents such as `Alert.Root`, `Alert.Title`, `Alert.Description`, and `Alert.Link` to offer a structured and customizable interface.
-
 import { DocsPage } from "@/components/docs-page";
+import { Tabs, TabItem } from "@astrojs/starlight/components";
+import PageTabsToc from "@/components/page-tabs-toc.astro";
+
+<PageTabsToc />
+
+<div id="page-level-tabs">
+
+<Tabs>
+
+<TabItem label="Overview">
+
+The `Alert` component provides a flexible UI element for displaying alert messages. It is composed of several subcomponents such as `Alert.Root`, `Alert.Title`, `Alert.Description`, and `Alert.Link` to offer a structured and customizable interface.
 
 <DocsPage.ComponentExample
   client:only
@@ -94,7 +104,7 @@ import { DocsPage } from "@/components/docs-page";
 </div>`}
 />
 
-## Usage
+## Installation
 
 ```typescript jsx
 import { Alert } from '@harnessio/ui/components'
@@ -118,9 +128,13 @@ return (
 )
 ```
 
+</TabItem>
+
+<TabItem label="Usage">
+
 ## Anatomy
 
-All parts of the `Alert` component can be imported and composed as required.
+All parts of the `Alert` can be imported and composed as required:
 
 ```typescript jsx
 <Alert.Root>
@@ -130,7 +144,68 @@ All parts of the `Alert` component can be imported and composed as required.
 </Alert.Root>
 ```
 
-## API Reference
+- **Root** — the container. Its `theme` (`info` default, `success`, `warning`, `danger`) sets the color and the leading status icon automatically. Add `dismissible` for a close button, or `expandable` to collapse long content behind a "Show more" toggle.
+- **Title** _(optional)_ — a short heading for the alert.
+- **Description** — the alert's message; the main body text.
+- **Link** _(optional)_ — a single action link, rendered with a trailing icon, for a follow-up like "Learn more".
+
+The status icon is chosen from the theme (info, success, warning, danger) — you don't pass it yourself.
+
+## Best practices
+
+**Do**
+
+- Use `Alert` for a message tied to the surrounding content or a recent action — inline, in place, and staying until it's resolved or dismissed.
+- Match the `theme` to the message: `danger` for errors and blocked actions, `warning` for risks, `success` for confirmations, `info` for neutral context.
+- Lead with the outcome and, when there's a fix, point to it — a clear `Alert.Description` and, if useful, one `Alert.Link` to the next step.
+- Use `expandable` for long messages (like policy text or stack traces) so the alert doesn't dominate the layout, and `dismissible` for advisories people can safely clear.
+
+**Don't**
+
+- Don't use `Alert` for transient, auto-dismissing feedback — use a toast — or for a feed of past notifications, where [Alert Item](/components/data-display/alert-item/) fits better.
+- Don't stack several alerts competing for attention; consolidate or prioritize the most important one.
+- Don't rely on the theme color alone to carry meaning — the text should state the situation clearly.
+- Don't make an error alert `dismissible` if the underlying problem still blocks the user.
+
+## Content
+
+- Write the `Description` in plain language: what happened, why it matters, and what to do next.
+- Keep the `Title` short and specific when you use one; it's optional and often the description alone is enough.
+- Use sentence case throughout, and give any `Alert.Link` a verb-led label ("Learn more", "View repository").
+- For long technical detail (URLs, tokens, policy text), rely on `expandable` rather than trimming information people may need to copy.
+
+## Accessibility
+
+`Alert.Root` renders with `role="alert"`, so assistive tech announces it as soon as it appears — this makes it well suited to conveying important, time-sensitive messages.
+
+### Keyboard
+
+- The alert body itself isn't focusable; its interactive parts are.
+- The `Alert.Link`, the `dismissible` close button, and the `expandable` "Show more" toggle are each native controls in the tab order, activated with **Enter** (and **Space** for the buttons).
+
+### Labeling
+
+- The close button carries a translated `aria-label` ("Close alert") and the expandable toggle uses `aria-expanded` to expose its open/closed state.
+- The content sits in a labeled region (`role="region"`, "Alert content"), and the leading status icon is decorative — meaning comes from the text, so state the situation in the `Description`.
+
+### Focus & states
+
+- The link, close, and expand controls each show the standard focus ring (`:focus-visible`) via the `--cn-focus` token.
+- Dismissing an alert removes it from the DOM entirely; expanding/collapsing toggles a fade overlay over the clipped content.
+
+### Known limitations
+
+- **`role="alert"` announces on mount, not on update.** An alert rendered on page load may be announced immediately or missed, depending on timing; for a message that must be heard, render the alert in response to the action rather than having it already present.
+- **Focus isn't moved to the alert.** When an alert appears after an action, focus stays where it was; if the alert blocks progress, move focus to it (or its first control) yourself.
+- **Dismissing doesn't manage focus.** After the close button removes the alert, focus is not returned to a sensible neighbor, so keyboard users can lose their place.
+
+</TabItem>
+
+<TabItem label="Properties">
+
+{/* Visually hidden — anchors the section headings below in the TOC without showing a redundant title in the panel body (the tab already says "Properties"). Hidden via #page-level-tabs h2#properties in styles.css. */}
+
+## Properties
 
 ### `Root`
 
@@ -154,9 +229,10 @@ The `Root` component serves as the main container for all alert elements.
     {
       name: "theme",
       description:
-        "Theme of the alert. Can be one of 'info', 'warning', or 'danger'.",
+        "Theme of the alert, which sets the color and status icon.",
       required: false,
-      value: "'info' | 'warning' | 'danger'",
+      value: "'info' | 'success' | 'warning' | 'danger'",
+      defaultValue: "'info'",
     },
     {
       name: "dismissible",
@@ -278,3 +354,9 @@ The `Link` component is used to create a link within the alert.
     },
   ]}
 />
+
+</TabItem>
+
+</Tabs>
+
+</div>

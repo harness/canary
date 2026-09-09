@@ -4,11 +4,21 @@ description: Theme-accented notification row with read/unread state
 beta: true
 ---
 
+import { DocsPage } from "@/components/docs-page";
+import { Tabs, TabItem } from "@astrojs/starlight/components";
+import PageTabsToc from "@/components/page-tabs-toc.astro";
+
+<PageTabsToc />
+
+<div id="page-level-tabs">
+
+<Tabs>
+
+<TabItem label="Overview">
+
 The `AlertItem` component renders a single alert or notification row: a theme-colored left accent, title, relative timestamp, optional unread indicator, metadata line, and optional action link. Rows support full-row navigation via `to`/`onClick` while keeping nested action links independently clickable.
 
 `AlertItem` deliberately ships without a list container. Render items inside any container you already use — a `Card`, a plain `Layout.Vertical`, or your own wrapper — and the row handles its own accent and corner rounding based on its position.
-
-import { DocsPage } from "@/components/docs-page";
 
 <DocsPage.ComponentExample
   client:only
@@ -48,7 +58,7 @@ import { DocsPage } from "@/components/docs-page";
   `}
 />
 
-## Usage
+## Installation
 
 ```typescript jsx
 import { AlertItem } from '@harnessio/ui/components'
@@ -68,9 +78,13 @@ return (
 
 To show several alerts, render multiple `AlertItem`s inside any container of your choice.
 
+</TabItem>
+
+<TabItem label="Usage">
+
 ## Anatomy
 
-All parts of the `AlertItem` component can be imported and composed as required.
+All parts of the `AlertItem` can be imported and composed as required:
 
 ```typescript jsx
 <AlertItem theme="info" read timestamp={timestamp}>
@@ -80,7 +94,67 @@ All parts of the `AlertItem` component can be imported and composed as required.
 </AlertItem>
 ```
 
-## API Reference
+- **Row** (`AlertItem`) — the container for a single notification. A required `theme` sets the left accent color (`info`, `success`, `warning`, `danger`), `read` controls the read/unread styling (unread rows get a tinted background and a dot), and `timestamp` renders a relative time on the right.
+- **Title** — the row's primary line; also supplies the accessible name for full-row navigation.
+- **Description** _(optional)_ — a secondary line of supporting detail, truncated to fit the row.
+- **Link** _(optional)_ — an action link below the text that stays clickable on its own, even when the whole row is navigable.
+
+Make the whole row navigate by passing `to` (renders a link overlay) or `onClick` (renders a button overlay). `AlertItem` ships without a list wrapper — place rows inside whatever container you're already using.
+
+## Best practices
+
+**Do**
+
+- Use `AlertItem` for a feed of notifications or alerts — things that happened and may need follow-up — rather than for inline, in-context messaging (use [Alert](/components/feedback/alert/) for that).
+- Match the `theme` to the severity: `danger` for failures and outages, `warning` for risks, `success` for completions, `info` for neutral updates.
+- Give every row a clear `Title`; it doubles as the accessible name when the row is navigable.
+- Use `to`/`onClick` to make the whole row navigate to the relevant detail, and reserve `AlertItem.Link` for a distinct secondary action.
+
+**Don't**
+
+- Don't overload a row with multiple action links; keep one clear next step.
+- Don't rely on the `theme` accent color alone to convey severity — the title text should make the meaning clear too.
+- Don't use `AlertItem` for transient, auto-dismissing feedback; reach for a toast instead.
+
+## Content
+
+- Write titles as short, specific summaries of what happened — "Pipeline failed", "New feature release".
+- Keep descriptions to one line of essential detail; they truncate, so front-load the important words.
+- Use sentence case for titles, descriptions, and link labels; label links with a verb ("View status page", "View invite").
+
+## Accessibility
+
+Full-row navigation is backed by a real interactive element — a `Link` when you pass `to`, or a `<button>` when you pass `onClick` — so the row is reachable and operable by keyboard, not just the mouse.
+
+### Keyboard
+
+- The row overlay is a genuine tab stop: a link activates with **Enter**, a button with **Enter** and **Space**.
+- A nested `AlertItem.Link` is a separate tab stop layered above the overlay, so people can reach the secondary action independently of the row.
+- Modifier clicks (**Cmd/Ctrl/Shift + click**) on a row with `onClick` are left to the browser, so a row backed by a link still opens in a new tab as expected.
+
+### Labeling
+
+- The row overlay takes its accessible name from the `AlertItem.Title` text automatically; override it with `linkProps.aria-label` when the title alone isn't descriptive enough.
+- The relative timestamp comes from `TimeAgoCard` and sits above the overlay so it can expose its own full date on hover/focus.
+
+### Focus & states
+
+- The row link/button and any nested link each show the standard focus ring (`:focus-visible`) via the `--cn-focus` token.
+- Unread rows are distinguished by a tinted background and an indicator dot in addition to the theme accent.
+
+### Known limitations
+
+- **The read/unread dot is a plain `<span>`.** It carries an `aria-label` of "Read"/"Unread", but because it's a span with no role, screen readers may not announce that state reliably — don't rely on it as the only signal that a row is unread.
+- **A row isn't a live region.** Unlike [Alert](/components/feedback/alert/) (which uses `role="alert"`), an `AlertItem` added to a feed isn't announced automatically; if new alerts arrive dynamically, manage focus or an announcement yourself.
+- **No list semantics.** Because `AlertItem` ships without a container, a stack of rows has no `role="list"`/`listitem` grouping. If the grouping matters, add your own list roles on the wrapper.
+
+</TabItem>
+
+<TabItem label="Properties">
+
+{/* Visually hidden — anchors the section headings below in the TOC without showing a redundant title in the panel body (the tab already says "Properties"). Hidden via #page-level-tabs h2#properties in styles.css. */}
+
+## Properties
 
 ### `AlertItem`
 
@@ -206,3 +280,9 @@ Optional action link rendered below the metadata line. Uses Alert link styling.
     },
   ]}
 />
+
+</TabItem>
+
+</Tabs>
+
+</div>

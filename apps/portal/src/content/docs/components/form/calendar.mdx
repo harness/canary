@@ -3,9 +3,19 @@ title: Calendar
 description: Calendar component documentation
 ---
 
-The `Calendar` component provides a flexible UI element for displaying a date picker. It includes several customizations for styling and functionality.
-
 import { DocsPage } from "@/components/docs-page";
+import { Tabs, TabItem } from "@astrojs/starlight/components";
+import PageTabsToc from "@/components/page-tabs-toc.astro";
+
+<PageTabsToc />
+
+<div id="page-level-tabs">
+
+<Tabs>
+
+<TabItem label="Overview">
+
+The `Calendar` component provides a flexible UI element for displaying a date picker. It's a styled wrapper around [`react-day-picker`](https://react-day-picker.js.org/), so it supports single-date, multi-date, and range selection along with bounds and disabled days.
 
 <DocsPage.ComponentExample
   client:only
@@ -29,7 +39,72 @@ import { DocsPage } from "@/components/docs-page";
 `}
 />
 
-## Usage
+## Variations
+
+### Single
+
+Pick one date with `mode="single"`.
+
+<DocsPage.ComponentExample
+  client:only
+  code={`() => {
+    const [selected, setSelected] = React.useState(new Date());
+    return (
+      <Calendar
+        mode="single"
+        selected={selected}
+        onSelect={setSelected}
+        weekStartsOn={1}
+      />
+    );
+  }`}
+/>
+
+### Multiple
+
+Collect several individual dates with `mode="multiple"`.
+
+<DocsPage.ComponentExample
+  client:only
+  code={`() => {
+    const [selected, setSelected] = React.useState([new Date()]);
+    return (
+      <Calendar
+        mode="multiple"
+        selected={selected}
+        onSelect={setSelected}
+        weekStartsOn={1}
+      />
+    );
+  }`}
+/>
+
+### Bounded range
+
+Clamp the selectable window with `fromDate` / `toDate`; days outside it are disabled.
+
+<DocsPage.ComponentExample
+  client:only
+  code={`() => {
+    const [selected, setSelected] = React.useState(new Date());
+    const from = new Date();
+    from.setDate(from.getDate() - 5);
+    const to = new Date();
+    to.setDate(to.getDate() + 5);
+    return (
+      <Calendar
+        mode="single"
+        selected={selected}
+        onSelect={setSelected}
+        fromDate={from}
+        toDate={to}
+        weekStartsOn={1}
+      />
+    );
+  }`}
+/>
+
+## Installation
 
 ```typescript jsx
 import { useState } from 'react';
@@ -54,7 +129,94 @@ const CalendarExample = () => {
 export default CalendarExample;
 ```
 
-## API Reference
+</TabItem>
+
+<TabItem label="Usage">
+
+## Anatomy
+
+`Calendar` is a single component — there are no sub-parts to compose. Configure it entirely through props:
+
+```typescript jsx
+<Calendar
+  mode="single"        // 'single' | 'multiple' | 'range'
+  selected={selected}
+  onSelect={setSelected}
+  showOutsideDays       // include muted adjacent-month days
+  weekStartsOn={1}      // 0 (Sun) – 6 (Sat)
+  fromDate={min}        // clamp the selectable window
+  toDate={max}
+/>
+```
+
+The rendered calendar has three regions:
+
+- **Caption & navigation** — a centered month/year label with previous/next arrow buttons.
+- **Weekday header** — a row of weekday abbreviations; `weekStartsOn` sets which day is the first column.
+- **Day grid** — the selectable days. `mode` decides whether one day, several separate days, or a contiguous range can be picked, and `showOutsideDays` toggles the muted days that spill in from the adjacent months.
+
+Bounds and exclusions are also props: `fromDate`/`toDate` clamp the range of selectable days, and `disabled` greys out specific dates. Because `Calendar` is a thin wrapper over `react-day-picker`'s `DayPicker`, any `DayPicker` prop (e.g. `month`, `onMonthChange`, `numberOfMonths`, `locale`) passes straight through.
+
+## Best practices
+
+{/* TODO: editorial — please review against product guidance. */}
+
+**Do**
+
+- Match `mode` to the task: `single` for one date, `multiple` for a set of discrete dates, `range` for a start/end span.
+- Constrain the selectable window with `fromDate`/`toDate` (or `disabled`) whenever some dates aren't valid, so people can't pick an unusable date.
+- Set `weekStartsOn` to match the user's locale conventions rather than leaving it to chance.
+- Pair the calendar with a text input or a clear label so the current selection is always visible, especially for ranges.
+
+**Don't**
+
+- Don't use a full calendar for coarse choices like a month or a year — a simpler select is faster.
+- Don't rely on the calendar alone to explain an invalid range; surface the reason a date is disabled nearby.
+- Don't override the calendar's `classNames`/`components` wholesale just for a small tweak — you'll lose the design-system styling and built-in affordances.
+
+## Content
+
+{/* TODO: editorial — please review against product guidance. */}
+
+- Label the field with the kind of date it collects ("Start date", "Due date"), not just "Date".
+- When a range is required, make the start/end expectation explicit in the surrounding copy.
+- If dates are disabled, say why close to the calendar ("Bookings open 10 days out") rather than leaving people to discover the limit by clicking.
+
+## Accessibility
+
+`Calendar` is built on `react-day-picker`, which ships grid semantics and keyboard support out of the box.
+
+### Keyboard
+
+- Arrow keys move focus between days; **Home**/**End** jump to the start/end of a week and **PageUp**/**PageDown** change months.
+- The focused day is the single tab stop within the grid; **Enter**/**Space** selects it.
+- The previous/next month buttons are in the tab order and activate with **Enter**/**Space**.
+
+### Labeling
+
+- The days render as a `role="grid"` table, and each day is a button whose accessible name is its full date; selected days expose `aria-selected`.
+- The navigation arrows are icon-only but keep `react-day-picker`'s built-in labels ("Go to previous/next month") — the wrapper only swaps the arrow glyph, not the label.
+
+### Focus & states
+
+- Days and the nav buttons reuse the standard button styles, so they show the normal keyboard focus ring.
+- Disabled and out-of-range days are dimmed and skipped by keyboard navigation.
+
+### Known limitations
+
+- **Selection is conveyed largely by color.** Selected days, the range start/end, and the range middle are distinguished mainly by background and text color, with no non-color cue at the range boundaries. Assistive tech still gets `aria-selected`, but low-vision sighted users may find a long range hard to read.
+- **"Today" is bold only.** The current day is styled with bold weight and nothing else, so it can be easy to miss visually against the other days.
+- **Overrides pass straight through to `react-day-picker`.** `classNames` and `components` are merged into the underlying `DayPicker`, so replacing `components.IconLeft`/`IconRight` or core `classNames` can drop the design-system styling and the built-in nav labels. Override sparingly.
+
+</TabItem>
+
+<TabItem label="Properties">
+
+{/* Visually hidden — anchors the section headings below in the TOC without showing a redundant title in the panel body (the tab already says "Properties"). Hidden via #page-level-tabs h2#properties in styles.css. */}
+
+## Properties
+
+`Calendar` accepts every `react-day-picker` `DayPicker` prop; the most commonly used ones are listed below.
 
 <DocsPage.PropsTable
   props={[
@@ -94,11 +256,13 @@ export default CalendarExample;
       name: "classNames",
       description: "Custom class names for various parts of the calendar",
       required: false,
+      value: "ClassNames",
     },
     {
       name: "components",
       description: "Custom components for various parts of the calendar",
       required: false,
+      value: "CustomComponents",
     },
     {
       name: "disabled",
@@ -132,3 +296,9 @@ export default CalendarExample;
     },
   ]}
 />
+
+</TabItem>
+
+</Tabs>
+
+</div>

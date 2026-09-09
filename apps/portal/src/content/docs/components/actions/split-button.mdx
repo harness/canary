@@ -78,7 +78,7 @@ The `SplitButton` component supports specific combinations of `variant` and `the
 </div>`}
 />
 
-## Usage
+## Installation
 
 ```typescript jsx
 import { SplitButton } from '@harnessio/ui/components'
@@ -129,6 +129,68 @@ return (
   </>
 )
 ```
+
+</TabItem>
+
+<TabItem label="Usage">
+
+## Anatomy
+
+A split button pairs one main action with a menu of related choices. It is composed of:
+
+- **Action button** — a native `<button>` on the left showing the label and firing `handleButtonClick`. It carries the primary action and takes the `variant` / `theme` styling.
+- **Dropdown trigger** — the attached button on the right (a chevron, `nav-arrow-down`). It opens the menu and shares the action button's styling so the two read as one control.
+- **Menu** — the list revealed on open, built from `options`. Each option has a `label` and an optional `description`.
+- **Loading spinner** _(optional)_ — replaces the action button's content while `loading` is set.
+
+Passing `selectedValue` switches the menu from a list of one-off actions to a **radio group**, where opening the menu shows the current selection and picking an option changes it.
+
+## Best practices
+
+**Do**
+
+- Use a split button when there is one clear default action plus a few closely-related variations of it — for example "Save" with "Save and close" or "Save as draft".
+- Put the most common action on the main button so most people never need to open the menu.
+- Use the radio mode (`selectedValue`) when the options are modes of the same action and you want to show which is currently chosen.
+- Keep the option list short and the labels parallel, so the menu stays quick to scan.
+
+**Don't**
+
+- Don't fill the menu with actions unrelated to the main button; if the items aren't variations of the primary action, use a [Button Group](/components/actions/button-group/) or a standalone menu instead.
+- Don't hide the action people reach for most inside the menu — that defeats the point of the attached main button.
+- Don't reach for unsupported `variant` / `theme` pairs; stick to `primary + default` or `outline + (default | success | danger | warning)`.
+
+## Content
+
+- Use sentence case for the button label and every option — capitalize only the first word, along with any proper nouns or product names.
+- Keep the main button label to the specific action ("Deploy", "Merge") rather than a generic "Actions".
+- Start option labels with a verb and keep them parallel; use the optional `description` for the extra detail instead of a long label.
+
+## Accessibility
+
+The split button is two focusable controls — the action button and the dropdown trigger — joined visually. The menu is a [Dropdown Menu](/components/data-display/dropdown-menu/), so it inherits Radix's menu accessibility.
+
+### Keyboard
+
+- The **action button** is a native `<button>`: an individual tab stop, activated with **Enter** and **Space**.
+- The **dropdown trigger** is the next tab stop. Open the menu with **Enter**, **Space**, or **Arrow Down**; move through options with the **arrow keys**; select with **Enter**; and close with **Esc**, which returns focus to the trigger.
+- In radio mode (`selectedValue`), the menu is a radio group — arrow keys move between and select options.
+
+### Labeling
+
+- The action button is named by its text (`children`).
+- Each option is named by its `label`; the optional `description` is read as supporting text.
+- The dropdown trigger exposes its expanded/collapsed state through the Radix menu trigger (`aria-haspopup` / `aria-expanded`).
+
+### Focus & states
+
+- Both the action button and the dropdown trigger show the standard keyboard focus ring (`:focus-visible`) via the `--cn-focus` token.
+- `disabled` disables both halves; `disableButton` and `disableDropdown` disable just one, and the disabled half is correctly removed from the tab order.
+
+### Known limitations
+
+- **The dropdown trigger has no accessible name.** It renders only the chevron icon with no `aria-label` or tooltip, so assistive tech announces it as an unnamed button (only its "has popup" state comes through). There is currently no prop to label it — a consumer can't fix this without patching the component.
+- **Loading isn't announced.** While `loading` is set, the change isn't surfaced to screen readers (no `aria-busy` / live region), so non-visual users don't hear that the action is in progress — same limitation as the base [Button](/components/actions/button/).
 
 </TabItem>
 

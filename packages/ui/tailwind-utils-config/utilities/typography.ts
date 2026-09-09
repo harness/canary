@@ -8,6 +8,10 @@ export const typography = {
       font: 'var(--cn-heading-section)',
       letterSpacing: 'var(--cn-tracking-tight)'
     },
+    '&-heading-default': {
+      font: 'var(--cn-heading-default)',
+      letterSpacing: 'var(--cn-tracking-tight)'
+    },
     '&-heading-subsection': {
       font: 'var(--cn-heading-subsection)',
       letterSpacing: 'var(--cn-tracking-tight)'

@@ -748,9 +748,13 @@ return (
 )}`}
 />
 
-## HeaderV2
+## Structured header (props API)
 
-`Drawer.HeaderV2` is a structured, opinionated header that consolidates icon/logo, title, description, actions, metadata (children), and tabs into a single component. It replaces the compositional pattern of `Drawer.Header` > `Drawer.Title` > `Drawer.Description` when you want a standardized layout with optional loading state.
+`Drawer.Header` accepts a structured, opinionated set of props that consolidate tagline/breadcrumb, icon/logo, title, description, actions, metadata (children), and tabs into a single standardized layout with optional loading state. Pass a `title` prop to opt into this layout; pass children (`Drawer.Title`, `Drawer.Tagline`, `Drawer.Description`) to use the legacy compositional layout instead. Both are supported on the same component so existing usage keeps working.
+
+> **Deprecated:** `Drawer.HeaderV2` is now an alias of `Drawer.Header` with these props. Prefer `Drawer.Header` for new usage.
+
+### Basic
 
 ### Basic
 
@@ -846,8 +850,9 @@ Wrap the drawer content in a `Tabs.Root` to enable tab switching. `Drawer.Header
 
         <Drawer.Content size="md">
           <Tabs.Root value={tab} onValueChange={setTab}>
-            <Drawer.HeaderV2
+            <Drawer.Header
               title="Build #1234"
+              tagline="Pipelines / main"
               description="Triggered by push to main"
               icon="pipeline"
               tabs={[

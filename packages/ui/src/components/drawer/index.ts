@@ -41,6 +41,10 @@ export const Drawer = {
   Trigger: DrawerTrigger,
   Content: DrawerContent,
   Header: DrawerHeader,
+  /**
+   * @deprecated Use `Drawer.Header` with the structured props (`title`, `tagline`,
+   * `description`, `actions`, `tabs`, `isLoading`) instead — it now embeds this layout.
+   */
   HeaderV2: DrawerHeaderV2,
   Body: DrawerBody,
   Footer: DrawerFooter,

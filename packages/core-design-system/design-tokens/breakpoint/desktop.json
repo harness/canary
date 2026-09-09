@@ -50,6 +50,17 @@
       },
       "$description": "Primary organizational heading that creates clear content boundaries. Establishes consistent rhythm through proper spacing relationships with surrounding elements. Maintains sufficient contrast with body text while creating a harmonious scale progression.\n\nCommon uses: Main topic dividers in articles, Dashboard section headers, Product category headers, Page-level navigation anchors, Form section dividers."
     },
+    "default": {
+      "$type": "typography",
+      "$value": {
+        "fontFamily": "{fontFamily.default}",
+        "fontWeight": "{fontWeight.default.normal.600}",
+        "fontSize": "{fontSize.8}",
+        "lineHeight": "{lineHeight.28}",
+        "letterSpacing": "{tracking.tight}"
+      },
+      "$description": "General-purpose heading and the default choice for most content headings. Provides clear hierarchy without the visual weight of larger section headings, striking a balance suited to the majority of interface contexts.\n\nCommon uses: Panel and card titles, Form and settings section headers, Dashboard widget titles, Detail-page headings, Dialog and drawer content headings."
+    },
     "subsection": {
       "$type": "typography",
       "$value": {
@@ -251,7 +262,7 @@
         "$value": {
           "fontFamily": "{fontFamily.default}",
           "fontWeight": "{fontWeight.default.normal.500}",
-          "fontSize": "{fontSize.4}",
+          "fontSize": "{fontSize.3}",
           "lineHeight": "{lineHeight.20}",
           "letterSpacing": "{tracking.normal}",
           "textDecoration": "{textDecoration.none}"

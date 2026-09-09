@@ -114,8 +114,8 @@
     },
     "3": {
       "$type": "fontSizes",
-      "$value": "0.788rem",
-      "$description": "12.6px"
+      "$value": "0.75rem",
+      "$description": "12px"
     },
     "4": {
       "$type": "fontSizes",
@@ -232,13 +232,6 @@
         "none": {
           "$type": "lineHeights",
           "$value": "{fontSize.3}*{lineHeight.multiplier.none}",
-          "$description": "Chart-only legacy token (retire with chart migration)"
-        }
-      },
-      "4": {
-        "none": {
-          "$type": "lineHeights",
-          "$value": "{fontSize.4}*{lineHeight.multiplier.none}",
           "$description": "Chart-only legacy token (retire with chart migration)"
         }
       },

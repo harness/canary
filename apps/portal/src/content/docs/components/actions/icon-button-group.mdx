@@ -51,7 +51,7 @@ For the full API and general (text) button groups, see [Button Group](/component
 </div>`}
 />
 
-## Usage
+## Installation
 
 ```typescript jsx
 import { ButtonGroup, IconV2, DropdownMenu } from '@harnessio/ui/components'
@@ -124,6 +124,69 @@ Within `buttonsProps`, you can provide `tooltipProps` to define tooltip data for
   </div>
 </div>`}
 />
+
+</TabItem>
+
+<TabItem label="Usage">
+
+## Anatomy
+
+An icon button group is [Button Group](/components/actions/button-group/) rendered with `iconOnly`, so it's a row (or column) of joined icon-only [Button](/components/actions/button/)s. It's composed of:
+
+- **Container** — a wrapper that joins the buttons visually into one connected unit, laid out `horizontal` by default or `vertical`. The first and last buttons get the group's outer rounded corners.
+- **Buttons** — each entry in `buttonsProps` renders one icon-only button, styled `outline` by default and sharing the group's `size`. Every button holds a single `IconV2`.
+- **Tooltip** _(per button)_ — supply `tooltipProps` on a button to surface a label on hover and focus; its side follows the orientation (top when horizontal, right when vertical).
+- **Dropdown** _(per button, optional)_ — supply `dropdownProps` instead of `tooltipProps` to make a button open a `DropdownMenu` of further actions.
+
+Each button takes _either_ `tooltipProps` _or_ `dropdownProps`, not both.
+
+## Best practices
+
+**Do**
+
+- Use an icon button group for a small set of closely-related actions that belong together — a formatting cluster, a view switcher, a row of table actions.
+- Give every button a `tooltipProps` label so each icon's meaning is discoverable on hover and focus.
+- Use the last button's `dropdownProps` for an overflow or "more" menu when there are secondary actions that don't warrant their own icon.
+- Keep the set short; a handful of icons reads as a group, a dozen reads as a toolbar.
+
+**Don't**
+
+- Don't mix unrelated actions into one group — the joined styling signals the buttons belong together.
+- Don't rely on `dropdownProps` buttons alone for their label; a dropdown button takes no tooltip, so give it an `aria-label` (see Accessibility).
+- Don't reach for a group when a single [Icon Button](/components/actions/icon-button/) will do; the connected styling only makes sense for two or more.
+
+## Content
+
+- Icon button groups have no text of their own — each button's label lives in its `tooltipProps` (and `aria-label`).
+- Name each action with a verb and sentence case — "Bold", "Align left", "More actions".
+- Keep the labels parallel across the group so the set reads consistently.
+
+## Accessibility
+
+An icon button group is a set of icon-only buttons, so the accessibility work is the same as a single [Icon Button](/components/actions/icon-button/), repeated per button — plus one gap in how the group itself is announced.
+
+### Keyboard
+
+- Each button is a native `<button>`: an individual tab stop, activated with **Enter** and **Space**.
+- There's no arrow-key roving between the buttons — every button is its own tab stop, and a button carrying `dropdownProps` opens its menu with **Enter**/**Space** like any dropdown trigger.
+- Tooltips open on focus as well as hover, so keyboard users see each label as they tab through.
+
+### Labeling
+
+- For buttons with `tooltipProps`, the tooltip text is associated as a **description** (`aria-describedby`) through the underlying Radix tooltip — it is not turned into an accessible name.
+- For a reliable **name**, pass `aria-label` on each button in `buttonsProps` (it's forwarded to the `<button>`); match it to the tooltip text.
+- The icons carry no text, so they can't be the only source of meaning.
+
+### Focus & states
+
+- Each button shows the standard keyboard focus ring (`:focus-visible`) via the `--cn-focus` token.
+- The joined styling is purely visual; focus moves button to button in DOM order.
+
+### Known limitations
+
+- **A tooltip is a description, not a name.** As with the base [Icon Button](/components/actions/icon-button/), `tooltipProps` gives a description rather than an accessible name, so add an explicit `aria-label` to each button for anything important.
+- **Dropdown buttons have no label unless you add one.** A button with `dropdownProps` can't take `tooltipProps`, so it has neither a tooltip nor an automatic name — always give these buttons an `aria-label` (e.g. "More actions").
+- **The group isn't announced as a set.** The container is a plain `<div>` with no `role="group"` or group label, so assistive tech reads the buttons individually rather than as one named group. If the grouping carries meaning, wrap it with your own `role="group"` and `aria-label`.
 
 </TabItem>
 

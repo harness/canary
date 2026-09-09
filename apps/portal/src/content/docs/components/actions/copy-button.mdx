@@ -88,7 +88,7 @@ return (
 </div>
 ) }`} />
 
-## Usage
+## Installation
 
 ### Basic Usage
 
@@ -138,6 +138,67 @@ return (
 ```
 
 When an error occurs, a toast with the title "Failed to copy" and the error message will be shown to the user.
+
+</TabItem>
+
+<TabItem label="Usage">
+
+## Anatomy
+
+`CopyButton` is the [Button](/components/actions/button/) rendered `iconOnly`, wired to the clipboard. It's composed of:
+
+- **Container** — the button itself, styled for a single icon via `iconOnly`. Its look comes from `buttonVariant` (`outline` by default) and `size` (`sm`).
+- **Icon** — one `IconV2` that carries the state: the `copy` glyph at rest, swapping to a `check` in the success color for about a second right after a copy.
+- **Tooltip** — a "Copy" label surfaced on hover and focus, since there's no visible text.
+- **Toast** _(on error)_ — if resolving the text to copy throws, a danger toast titled "Failed to copy" appears with the error message.
+
+The text to copy comes from `name`, which is either a string or a function evaluated on click — use the function form when the value is dynamic.
+
+## Best practices
+
+**Do**
+
+- Place a `CopyButton` right next to the value it copies — a token, ID, URL, or code snippet — so it's clear what will be copied.
+- Use the function form of `name` when the value changes or is computed at click time, so the latest value is always what lands on the clipboard.
+- Rely on the built-in success feedback (the check icon) rather than adding your own "Copied!" messaging next to it.
+- Keep it for copy actions only; if the action does more than copy, use a regular [Button](/components/actions/button/) with a clear label.
+
+**Don't**
+
+- Don't use a `CopyButton` on its own with no nearby context — the icon and its fixed "Copy" label don't say _what_ gets copied.
+- Don't stack several `CopyButton`s together without labels beside each one; they're indistinguishable to sight and to assistive tech.
+- Don't lean on it to copy large or complex payloads where the user should see a preview first.
+
+## Content
+
+- `CopyButton` has no visible text of its own — its tooltip and accessible name are both fixed to "Copy".
+- Provide the context in the surrounding UI instead: label the value beside it ("API key", "Commit SHA") so the copy target is named on screen.
+- Keep any adjacent helper text short and specific to what's being copied.
+
+## Accessibility
+
+`CopyButton` builds on the icon-only [Button](/components/actions/button/), and unlike a bare icon button it sets both a tooltip and an `aria-label` for you — but both are the fixed word "Copy".
+
+### Keyboard
+
+- It's a native `<button>`: a tab stop that activates with **Enter** and **Space**.
+- The tooltip opens on focus as well as hover, so keyboard users see the "Copy" label when they reach it.
+
+### Labeling
+
+- The component always sets `aria-label="Copy"` and a "Copy" tooltip, so it has a reliable accessible name out of the box — no extra props needed for a name to exist.
+- Because that name is just "Copy", the surrounding UI has to convey _what_ is being copied; name the adjacent value on screen.
+
+### Focus & states
+
+- The standard keyboard focus ring (`:focus-visible`) shows via the `--cn-focus` token.
+- After a successful copy the icon changes to a check for about a second — this is a purely visual cue.
+
+### Known limitations
+
+- **The accessible name is always "Copy".** Both the tooltip and `aria-label` are hardcoded, with no prop to customize them, so a screen reader announces only "Copy" with no indication of the target. When the target isn't obvious from context, name it in nearby visible text.
+- **The success state isn't announced.** The icon swaps to a check for about a second, but there's no `aria-live` region or status text, so screen-reader users aren't told the copy succeeded.
+- **Errors surface only as a toast.** If the `name` function throws, the feedback is a "Failed to copy" toast; whether that reaches assistive tech depends on the toast implementation, and there's no inline error on the button itself.
 
 </TabItem>
 

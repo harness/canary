@@ -3,168 +3,236 @@ title: Alert Dialog
 description: An opinionated dialog overlay for confirming destructive or irreversible actions
 ---
 
-The `AlertDialog` component is a specialized variant of `Dialog` designed for scenarios where users need to confirm or cancel potentially destructive or irreversible actions. It provides a consistent and accessible interface with built-in support for different themes and loading states.
-
 import { DocsPage } from "@/components/docs-page";
-import { Aside } from "@astrojs/starlight/components";
+import { Tabs, TabItem } from "@astrojs/starlight/components";
+import PageTabsToc from "@/components/page-tabs-toc.astro";
+
+<PageTabsToc />
+
+<div id="page-level-tabs">
+
+<Tabs>
+
+<TabItem label="Overview">
+
+The `AlertDialog` component is a specialized variant of `Dialog` designed for scenarios where users need to confirm or cancel potentially destructive or irreversible actions. It provides a consistent, accessible interface with built-in support for different themes and a loading state.
+
+Each `AlertDialog` is opened by its own `AlertDialog.Trigger` — the button in each row below opens the dialog. The `theme` sets both the header icon and the confirm button's color, and `loading` keeps the dialog open with a spinner while the confirm action runs.
 
 <DocsPage.ComponentExample
   client:only
-  code={`
-    <AlertDialog.Root
-      onCancel={() => console.log('Cancel clicked')}
-      onConfirm={() => console.log('Confirmed')}
-      theme="danger"
-    >
-      <AlertDialog.Trigger asChild>
-        <Button>Delete Pipeline</Button>
+  code={`<div className="space-y-cn-sm w-full">
+  <div className="flex items-center gap-cn-md">
+    <span className="text-cn-size-2 text-cn-3 w-32 shrink-0 font-mono">default</span>
+    <AlertDialog.Root onConfirm={() => console.log('Confirmed')} onCancel={() => console.log('Cancelled')}>
+      <AlertDialog.Trigger>
+        <Button>Publish changes</Button>
       </AlertDialog.Trigger>
-
-      <AlertDialog.Content title="Delete pipeline">
-          <Text>Are you sure you want to delete this pipeline? This action cannot be undone.</Text>
+      <AlertDialog.Content title="Publish changes">
+        Your changes will be visible to everyone with access to this project.
       </AlertDialog.Content>
     </AlertDialog.Root>
-
-`}
+  </div>
+  <div className="flex items-center gap-cn-md">
+    <span className="text-cn-size-2 text-cn-3 w-32 shrink-0 font-mono">warning</span>
+    <AlertDialog.Root theme="warning" onConfirm={() => console.log('Confirmed')} onCancel={() => console.log('Cancelled')}>
+      <AlertDialog.Trigger>
+        <Button>Discard draft</Button>
+      </AlertDialog.Trigger>
+      <AlertDialog.Content title="Discard draft?">
+        This draft has unsaved edits. Discarding it will lose those changes.
+      </AlertDialog.Content>
+    </AlertDialog.Root>
+  </div>
+  <div className="flex items-center gap-cn-md">
+    <span className="text-cn-size-2 text-cn-3 w-32 shrink-0 font-mono">danger</span>
+    <AlertDialog.Root theme="danger" onConfirm={() => console.log('Confirmed')} onCancel={() => console.log('Cancelled')}>
+      <AlertDialog.Trigger>
+        <Button>Delete pipeline</Button>
+      </AlertDialog.Trigger>
+      <AlertDialog.Content title="Delete pipeline">
+        Are you sure you want to delete this pipeline? This action cannot be undone.
+        <AlertDialog.Confirm>Delete</AlertDialog.Confirm>
+      </AlertDialog.Content>
+    </AlertDialog.Root>
+  </div>
+  <div className="flex items-center gap-cn-md">
+    <span className="text-cn-size-2 text-cn-3 w-32 shrink-0 font-mono">loading</span>
+    <AlertDialog.Root theme="danger" loading onConfirm={() => console.log('Confirmed')}>
+      <AlertDialog.Trigger>
+        <Button>Delete (loading)</Button>
+      </AlertDialog.Trigger>
+      <AlertDialog.Content title="Deleting…">
+        The confirm and cancel buttons are disabled and the confirm button shows a spinner while the action runs.
+      </AlertDialog.Content>
+    </AlertDialog.Root>
+  </div>
+</div>`}
 />
 
-## Usage
+## Installation
 
 ```typescript jsx
-import { AlertDialog } from "@harnessio/ui/components";
+import { AlertDialog, Button } from "@harnessio/ui/components";
 
 // ...
 
 return (
-  <AlertDialog.Root
-    onConfirm={() => handleDelete()}
-    theme="danger"
-  >
-    <AlertDialog.Trigger asChild>
-      <Button>Delete Item</Button>
+  <AlertDialog.Root onConfirm={() => handleDelete()} theme="danger">
+    <AlertDialog.Trigger>
+      <Button>Delete item</Button>
     </AlertDialog.Trigger>
 
-    <AlertDialog.Content title="Confirm Deletion">
-      Are you sure you want to delete this item?
+    <AlertDialog.Content title="Delete item">
+      Are you sure you want to delete this item? This action cannot be undone.
       <AlertDialog.Cancel>Cancel</AlertDialog.Cancel>
       <AlertDialog.Confirm>Delete</AlertDialog.Confirm>
     </AlertDialog.Content>
   </AlertDialog.Root>
-)
+);
 ```
 
-### Themes
+The `Trigger` wraps whatever control should open the dialog — pass a `Button` (or any interactive element) as its single child. If you omit `AlertDialog.Cancel` and `AlertDialog.Confirm`, a default "Cancel" and "Confirm" pair is rendered for you.
 
-<DocsPage.ComponentExample
-  client:only
-  code={`<div className="flex items-center justify-center gap-cn-md">
-    <AlertDialog.Root onConfirm={() => {}}>
-      <AlertDialog.Trigger asChild>
-        <Button>Default Theme</Button>
-      </AlertDialog.Trigger>
-      <AlertDialog.Content title="Confirm Action">
-        This is a standard confirmation dialog.
-      </AlertDialog.Content>
-    </AlertDialog.Root>
-    
-    <AlertDialog.Root onConfirm={() => {}} theme="warning">
-      <AlertDialog.Trigger asChild>
-        <Button>Warning Theme</Button>
-      </AlertDialog.Trigger>
-      <AlertDialog.Content title="Warning">
-        This action might have consequences.
-      </AlertDialog.Content>
-    </AlertDialog.Root>
-    
-    <AlertDialog.Root onConfirm={() => {}} theme="danger">
-      <AlertDialog.Trigger asChild>
-        <Button>Danger Theme</Button>
-      </AlertDialog.Trigger>
-      <AlertDialog.Content title="Delete Resource">
-        This action cannot be undone.
-      </AlertDialog.Content>
-    </AlertDialog.Root>
-  </div>`}
-/>
+</TabItem>
 
-### Loading State
-
-<DocsPage.ComponentExample
-  client:only
-  code={`<AlertDialog.Root
-    onConfirm={() => {}}
-    theme="danger"
-    loading
-  >
-    <AlertDialog.Trigger asChild>
-      <Button>Show Loading</Button>
-    </AlertDialog.Trigger>
-    <AlertDialog.Content title="Processing">
-      The dialog buttons will be disabled and show a loading spinner.
-    </AlertDialog.Content>
-  </AlertDialog.Root>`}
-/>
+<TabItem label="Usage">
 
 ## Anatomy
 
-All parts of the `AlertDialog` component can be imported and composed as required.
+All parts of the `AlertDialog` can be imported and composed as required:
 
-```tsx
-<AlertDialog.Root>
-  <AlertDialog.Trigger />
+```typescript jsx
+<AlertDialog.Root onConfirm={() => {}}>
+  <AlertDialog.Trigger>
+    <Button>Open</Button>
+  </AlertDialog.Trigger>
   <AlertDialog.Content title="Title">
-    {/* Dialog content */}
+    {/* Message */}
     <AlertDialog.Cancel />
     <AlertDialog.Confirm />
   </AlertDialog.Content>
 </AlertDialog.Root>
 ```
 
-## API Reference
+- **Root** (`AlertDialog.Root`) — wraps the whole thing and holds the shared state: `theme`, `loading`, and the `onConfirm`/`onCancel` handlers. It can be left uncontrolled or driven with `open`/`onOpenChange`.
+- **Trigger** — the control that opens the dialog. It renders its single child as the trigger (typically a [Button](/components/actions/button/)) and registers it so focus returns there when the dialog closes.
+- **Content** — the modal itself. It builds the header (title plus a theme icon), the body from whatever message you pass, and a footer holding the cancel and confirm buttons. It also renders a close "✕" in the top corner.
+- **Cancel** _(optional)_ — the secondary button; it closes the dialog and calls `onCancel`. If you don't provide one, a default "Cancel" button is rendered.
+- **Confirm** _(optional)_ — the primary button; it calls `onConfirm`. If you don't provide one, a default "Confirm" button is rendered.
+
+The `theme` drives two things at once: the header icon (a warning triangle for `warning`, a circled ✕ for `danger`, none for `default`) and the confirm button's color (red for `danger`, standard primary otherwise).
+
+**Confirming does not close the dialog on its own.** Cancel, the ✕, Esc, and the backdrop all dismiss it, but `AlertDialog.Confirm` only calls `onConfirm` — you close it yourself once the action finishes. That's what makes the `loading` state useful: keep the dialog open with a spinner while the work runs, then close it on success.
+
+## Best practices
+
+{/* TODO: editorial — please review against product guidance. */}
+
+**Do**
+
+- Reserve `AlertDialog` for moments that genuinely need a decision — destructive, irreversible, or high-consequence actions — where stopping the user is worth the interruption.
+- Match the `theme` to the stakes: `danger` for deleting or destroying, `warning` for losing unsaved work, `default` for a neutral confirmation.
+- Name the confirm button after the action (`Delete`, `Discard`, `Publish`) rather than a generic "OK", so the choice is clear without reading the body.
+- Use `loading` for actions that take a moment, so the dialog stays put and the user sees progress instead of a frozen button.
+
+**Don't**
+
+- Don't use an `AlertDialog` for routine, low-risk confirmations or for messages that only need acknowledging — a toast or inline message interrupts less.
+- Don't stack an `AlertDialog` on top of another dialog; resolve one decision before asking for the next.
+- Don't put form fields or long content inside it — reach for a full [Dialog](/components/overlays/dialog/) when the task is more than a yes/no decision.
+
+## Content
+
+{/* TODO: editorial — please review against product guidance. */}
+
+- Write the title as the question or the action — "Delete pipeline?", "Discard draft?" — not a vague label like "Are you sure?".
+- Keep the body to a sentence or two: say what will happen and call out anything irreversible ("This action cannot be undone.").
+- Label the buttons with verbs that name the outcome; keep cancel as the safe, non-committal option.
+
+## Accessibility
+
+`AlertDialog` is built on the Radix dialog primitive, so it comes with modal semantics out of the box: opening it traps focus, marks the rest of the page inert, and closing it returns focus to the trigger.
+
+### Keyboard
+
+- The trigger is a normal control in the tab order and opens the dialog with **Enter**/**Space**.
+- While open, **Tab**/**Shift+Tab** cycle only through the dialog's controls; focus can't leave the dialog.
+- **Esc** closes the dialog (as does clicking the backdrop or the ✕), and focus returns to the element that opened it.
+
+### Labeling
+
+- The dialog is a labeled modal (`role="dialog"`, `aria-modal`) whose accessible name comes from the required `title`.
+- The trigger exposes `aria-haspopup="dialog"` and `aria-expanded`, so assistive tech announces that it opens a dialog and whether it's currently open.
+
+### Focus & states
+
+- On open, focus moves into the dialog; on close it's restored to the trigger by the dialog's focus manager.
+- In the `loading` state both footer buttons are disabled and the confirm button shows a spinner, so the pending action is conveyed visually and the controls can't be re-triggered.
+
+### Known limitations
+
+- **The message isn't wired up as the dialog's description.** Body content renders in the dialog body, but nothing is registered as its `aria-describedby` — the header falls back to a hidden "No description available". Screen readers reliably announce the title, but may not read the body as the description, so keep the essential meaning in the `title` too.
+- **The theme icon is decorative.** The warning/danger icon in the header has no text alternative, so severity is conveyed only by color and icon. Don't rely on the theme alone — state the consequence in the title or body text.
+- **Esc, the backdrop, and the ✕ don't call `onCancel`.** Those dismissals fire `onOpenChange(false)` only; `onCancel` runs solely from the Cancel button. If you need cleanup on every dismissal, handle it in `onOpenChange` rather than `onCancel`.
+
+</TabItem>
+
+<TabItem label="Properties">
+
+{/* Visually hidden — anchors the section headings below in the TOC without showing a redundant title in the panel body (the tab already says "Properties"). Hidden via #page-level-tabs h2#properties in styles.css. */}
+
+## Properties
 
 ### `Root`
 
-Controls the dialog behavior and provides context for theme and action handlers.
+Controls the dialog behavior and provides context for theme, loading, and action handlers.
 
 <DocsPage.PropsTable
   props={[
     {
       name: "onConfirm",
       value: "() => void",
-      description: "Called when the confirm button is clicked",
+      description: "Called when the confirm button is clicked. Does not close the dialog on its own.",
       required: true,
     },
     {
       name: "onCancel",
       value: "() => void",
-      description: "Called when cancel button or backdrop/esc is triggered",
+      description:
+        "Called when the Cancel button is clicked. Not called for Esc, backdrop, or ✕ dismissals — use onOpenChange for those.",
+      required: false,
     },
     {
       name: "theme",
       value: "'default' | 'warning' | 'danger'",
-      description: "Sets icon and confirm button style",
-      default: "'default'",
+      description: "Sets the header icon and the confirm button's color.",
+      required: false,
+      defaultValue: "'default'",
     },
     {
       name: "open",
       value: "boolean",
-      description: "Controls dialog visibility",
+      description: "Controls dialog visibility (controlled mode).",
+      required: false,
     },
     {
       name: "onOpenChange",
       value: "(open: boolean) => void",
-      description: "Called when the open state changes",
+      description: "Called whenever the open state changes, including Esc, backdrop, and ✕ dismissals.",
+      required: false,
     },
     {
       name: "loading",
       value: "boolean",
-      description: "Disables confirm/cancel buttons and shows loading spinner",
-      default: "false",
+      description: "Disables the footer buttons and shows a spinner on the confirm button.",
+      required: false,
+      defaultValue: "false",
     },
     {
       name: "children",
       value: "ReactNode",
-      description: "Must include Trigger and Content components",
+      description: "Must include Trigger and Content.",
       required: true,
     },
   ]}
@@ -172,40 +240,35 @@ Controls the dialog behavior and provides context for theme and action handlers.
 
 ### `Content`
 
-The main container for the alert dialog content.
+The main container for the alert dialog. Renders the header (title + theme icon), the body, a footer with the cancel/confirm buttons, and a close ✕.
 
 <DocsPage.PropsTable
   props={[
     {
       name: "title",
       value: "string",
-      description: "Title shown in the dialog header",
+      description: "Title shown in the dialog header; also the dialog's accessible name.",
       required: true,
     },
     {
       name: "children",
       value: "ReactNode",
-      description: "Body content + optional Cancel/Confirm children",
+      description: "Body message, plus optional AlertDialog.Cancel / AlertDialog.Confirm.",
+      required: false,
     },
   ]}
 />
 
 ### `Trigger`
 
-Wraps a control element that opens the dialog. Use `asChild` prop to customize the trigger element.
+Wraps the control that opens the dialog. Renders its single child as the trigger and registers it so focus returns there on close.
 
 <DocsPage.PropsTable
   props={[
     {
-      name: "asChild",
-      value: "boolean",
-      description:
-        "When true, component will render its child instead of a button",
-    },
-    {
       name: "children",
       value: "ReactNode",
-      description: "Button or custom trigger element",
+      description: "A single element to render as the trigger, e.g. a Button.",
       required: true,
     },
   ]}
@@ -213,28 +276,36 @@ Wraps a control element that opens the dialog. Use `asChild` prop to customize t
 
 ### `Cancel`
 
-Optional cancel button. If not provided, a default "Cancel" button will be rendered.
+Optional cancel button. Closes the dialog and calls `onCancel`. If not provided, a default "Cancel" button is rendered.
 
 <DocsPage.PropsTable
   props={[
     {
       name: "children",
       value: "ReactNode",
-      description: "Custom button text, defaults to 'Cancel'",
+      description: "Custom button text; defaults to 'Cancel'.",
+      required: false,
     },
   ]}
 />
 
 ### `Confirm`
 
-Optional confirm button. If not provided, a default "Confirm" button will be rendered.
+Optional confirm button. Calls `onConfirm` (and shows a spinner while `loading`). If not provided, a default "Confirm" button is rendered.
 
 <DocsPage.PropsTable
   props={[
     {
       name: "children",
       value: "ReactNode",
-      description: "Custom button text, defaults to 'Confirm'",
+      description: "Custom button text; defaults to 'Confirm'.",
+      required: false,
     },
   ]}
 />
+
+</TabItem>
+
+</Tabs>
+
+</div>

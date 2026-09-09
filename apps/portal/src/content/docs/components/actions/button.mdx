@@ -31,7 +31,7 @@ The default button with no specified variant or theme.
 </div>`}
 />
 
-## Usage
+## Installation
 
 ```tsx
 import { Button } from '@harnessio/ui/components'
@@ -539,6 +539,67 @@ When the `onClick` prop returns a promise, the button automatically shows a load
 />
 
 Looking for icon-only buttons? See [Icon Button](/components/actions/icon-button/).
+
+</TabItem>
+
+<TabItem label="Usage">
+
+## Anatomy
+
+A button is composed of a few parts:
+
+- **Container** — the interactive surface. Its background, border, and radius are set by the `variant` and `theme`.
+- **Label** — the text describing the action. This is also the button's accessible name.
+- **Icon** _(optional)_ — an `IconV2` placed alongside the label, or on its own for icon-only buttons.
+- **Loading spinner** — replaces (or joins) the label while an action is in progress.
+
+The `size` prop scales all of these together. The `2xs` and `3xs` sizes are icon-only by design and automatically drop the text label.
+
+## Best practices
+
+**Do**
+
+- Lead with one clear primary button per view so the main action is obvious.
+- Write labels as specific actions — "Save changes", "Delete project" — not vague ones like "OK" or "Submit".
+- Use `theme="danger"` for destructive actions so the consequence reads at a glance.
+- Reach for `secondary`, `outline`, or `ghost` for supporting actions that shouldn't compete with the primary one.
+- Return a promise from `onClick` for async work — the button handles its own loading state and prevents double-clicks.
+
+**Don't**
+
+- Don't stack multiple primary buttons next to each other; it removes the visual hierarchy.
+- Don't use a button for plain navigation to another page — use a [Link](/components/navigation/link/) (or `asChild` with an `<a>`) so it stays a real link.
+- Don't rely on an icon alone without a label or tooltip to convey meaning.
+- Don't disable a button without making it clear why, or how the user can enable it.
+
+## Content
+
+- Keep labels short — ideally one or two words, in sentence case.
+- Start with a verb: "Add member", "Copy link", "Run pipeline".
+- Match the label to the outcome so it reads as a promise of what happens next.
+- Avoid punctuation and articles ("a", "the") unless they're needed for clarity.
+
+## Accessibility
+
+### Keyboard
+
+- The button is a native `<button>`, so it's focusable in tab order and activates with both **Enter** and **Space** — no extra wiring needed.
+- Disabled and loading buttons are removed from interaction (they can't be clicked or activated).
+
+### Labeling
+
+- The text inside the button is its accessible name. For icon-only buttons there's no text, so an accessible name is **required** — the component enforces this at the type level by requiring `tooltipProps` when `iconOnly` is set. You can opt out with `ignoreIconOnlyTooltip` if you provide your own `aria-label`.
+- Any ARIA attributes you pass (`aria-label`, `aria-describedby`, `aria-expanded`, `aria-pressed`, …) are forwarded to the underlying element.
+
+### Focus & states
+
+- A visible focus ring appears only for keyboard focus (`:focus-visible`), not on mouse click, using the `--cn-focus` token.
+- The disabled state uses the native `disabled` attribute rather than styling alone, so assistive tech reports it correctly.
+
+### Known limitations
+
+- The loading state is not announced to screen readers — it sets `disabled` and shows a spinner, but there's no `aria-busy` or live-region text. If it's important that a screen-reader user knows an action is in progress, add your own `aria-live` messaging.
+- The icon-only label requirement is enforced by TypeScript only; a plain-JavaScript consumer can still render an icon-only button with no accessible name.
 
 </TabItem>
 

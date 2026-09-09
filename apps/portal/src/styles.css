@@ -624,9 +624,11 @@ div:has(> div[style*="1200px"] main[data-pagefind-body]) {
    Caps the "Usage" snippet on every component page so long import/
    example blocks don't dominate the page; the code scrolls within a
    400px frame. Targets the code block immediately following the
-   "## Usage" heading (rendered as <h2 id="usage">).
+   "## Usage" heading (rendered as <h2 id="usage">), or the renamed
+   "## Installation" heading on pages that split usage into its own tab.
    ============================================================ */
-.sl-markdown-content h2#usage + .expressive-code pre {
+.sl-markdown-content h2#usage + .expressive-code pre,
+.sl-markdown-content h2#installation + .expressive-code pre {
   max-height: 400px;
   overflow-y: auto;
 }

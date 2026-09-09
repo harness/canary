@@ -36,7 +36,7 @@ For a group of icon-only buttons, see the icon-only [Button Group](/components/a
 </div>`}
 />
 
-## Usage
+## Installation
 
 ```typescript jsx
 import { ButtonGroup } from '@harnessio/ui/components'
@@ -171,6 +171,62 @@ Within `buttonsProps`, you can provide a `dropdownProps` property to define the 
   </div>
 </div>`}
 />
+
+</TabItem>
+
+<TabItem label="Usage">
+
+## Anatomy
+
+A button group is composed of:
+
+- **Container** — a wrapper that lays the buttons out as a single connected unit, either `horizontal` (default) or `vertical`.
+- **Buttons** — two or more buttons built from `buttonsProps`. They default to the `outline` variant, and the first and last buttons get the group's rounded outer corners.
+- **Dropdown affordance** _(optional)_ — any button given `dropdownProps` opens a menu instead of firing a direct action.
+
+The `size` prop scales every button in the group together.
+
+## Best practices
+
+**Do**
+
+- Group actions that are related and belong to the same task — a set of parallel choices or closely-linked commands.
+- Keep the group small; a handful of buttons stays scannable, a long row does not.
+- Switch to `orientation="vertical"` in narrow columns or menus rather than letting a horizontal group overflow.
+- Keep the buttons visually consistent — the group is designed to read as one unit, so avoid mixing variants or themes across it.
+
+**Don't**
+
+- Don't collect unrelated actions into one group just to save space; it implies a relationship that isn't there.
+- Don't use a button group as a set of mutually-exclusive options — that's a job for a segmented control or radio group, which carry selection semantics.
+- Don't overload a single group with both direct actions and multiple dropdowns; split them up if the intent gets muddy.
+
+## Content
+
+- Use sentence case for every button label — capitalize only the first word, along with any proper nouns or product names.
+- Keep labels short and start with a verb: "Merge", "Copy link", "Run".
+- Keep labels parallel in structure so the grouped actions read as a set.
+
+## Accessibility
+
+### Keyboard
+
+- Each button in the group is a native `<button>`, so every one is an individual stop in the tab order and activates with **Enter** and **Space**.
+- Buttons configured with `dropdownProps` open a Radix dropdown menu, which brings its own keyboard support — open with **Enter** / **Space**, move through items with the arrow keys, and close with **Esc**.
+
+### Labeling
+
+- A text label is each button's accessible name. For icon-only groups (`iconOnly`), each button requires `tooltipProps`, which supplies the accessible name — this is enforced at the type level by the underlying [Button](/components/actions/button/).
+- Buttons with a dropdown expose their expanded/collapsed state through the Radix menu trigger.
+
+### Focus & states
+
+- Each button shows the standard keyboard focus ring (`:focus-visible`) using the `--cn-focus` token, so the focused button in the group is always clear.
+
+### Known limitations
+
+- The group container is a plain styled `<div>` — it does not set `role="group"` or a group label, so assistive tech announces the buttons individually rather than as a named set. If the grouping itself carries meaning, wrap it with your own `role="group"` and `aria-label`.
+- There is no roving focus or arrow-key navigation _between_ the grouped buttons; they are separate tab stops. If you need single-tab-stop behavior with arrow-key movement (toolbar semantics), that has to be added by the consumer.
 
 </TabItem>
 

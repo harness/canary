@@ -3,9 +3,19 @@ title: Accordion
 description: Accordion component
 ---
 
-The `Accordion` allows content to be hidden or displayed by clicking a trigger. Multiple items can be shown simultaneously, or restricted to a single item using the `type` prop.
-
 import { DocsPage } from "@/components/docs-page";
+import { Tabs, TabItem } from "@astrojs/starlight/components";
+import PageTabsToc from "@/components/page-tabs-toc.astro";
+
+<PageTabsToc />
+
+<div id="page-level-tabs">
+
+<Tabs>
+
+<TabItem label="Overview">
+
+The `Accordion` allows content to be hidden or displayed by clicking a trigger. Multiple items can be shown simultaneously, or restricted to a single item using the `type` prop.
 
 <DocsPage.ComponentExample
   client:only
@@ -146,7 +156,7 @@ import { DocsPage } from "@/components/docs-page";
 </div>`}
 />
 
-## Usage
+## Installation
 
 ```typescript jsx
 import { Accordion } from '@harnessio/ui/components'
@@ -165,9 +175,13 @@ return (
 )
 ```
 
+</TabItem>
+
+<TabItem label="Usage">
+
 ## Anatomy
 
-All parts of the `Accordion` component can be imported and composed as required.
+All parts of the `Accordion` can be imported and composed as required:
 
 ```typescript jsx
 <Accordion.Root>
@@ -178,7 +192,70 @@ All parts of the `Accordion` component can be imported and composed as required.
 </Accordion.Root>
 ```
 
-## API Reference
+- **Root** — the container that wraps and controls the items. It sets whether one item (`type="single"`) or several (`type="multiple"`) can be open, the `size` (`sm` default or `md`), the `variant` (`default` or `card`), and the `indicatorPosition` (`right` default or `left`). It can be uncontrolled (`defaultValue`) or controlled (`value` + `onValueChange`).
+- **Item** — one collapsible panel, identified by a required, unique `value`. Set `disabled` to lock an individual item.
+- **Trigger** — the header row that toggles its item. It shows the label (`children`), an optional `prefix` for an icon or logo, an optional `suffix` for supporting text, and a chevron indicator that rotates on open.
+- **Content** — the region revealed when the item is expanded; it holds whatever you nest inside it.
+
+The `card` variant wraps each item in a [Card](/components/data-display/card/), using `cardSize` for its padding.
+
+## Best practices
+
+**Do**
+
+- Use an accordion to break a long page into scannable sections, or to tuck secondary detail out of the way until it's needed.
+- Give every item a short, descriptive trigger label so people can tell what's inside without opening it.
+- Use `type="single"` when only one section is relevant at a time (e.g. a settings wizard), and `type="multiple"` when people may want to compare open sections.
+- Set a sensible `defaultValue` so the most useful section is already open on load, when there is one.
+
+**Don't**
+
+- Don't hide essential or time-sensitive content behind an accordion — anything people always need should stay visible.
+- Don't nest accordions more than one level deep; the disclosure pattern gets hard to follow.
+- Don't put a single item in an accordion when a plain heading and body would read more directly.
+- Don't place primary page actions inside a collapsed panel where people won't find them.
+
+## Content
+
+- Write trigger labels as short noun phrases that name the section — "Billing details", "Advanced options".
+- Use sentence case; capitalize only the first word, along with any proper nouns or product names.
+- Keep labels parallel across items so the set reads as a consistent list.
+- Use the `suffix` for a brief status or count ("3 items"), not for a second sentence.
+
+## Accessibility
+
+`Accordion` is built on [Radix UI's accordion](https://www.radix-ui.com/primitives/docs/components/accordion), so it follows the WAI-ARIA disclosure pattern: each trigger is a native `<button>` inside a heading element, wired to its content region with `aria-expanded` and `aria-controls`.
+
+### Keyboard
+
+- **Tab** moves focus to a trigger; **Enter** or **Space** toggles that item open or closed.
+- With focus on a trigger, **Arrow Down** / **Arrow Up** move between triggers, and **Home** / **End** jump to the first and last.
+- A `disabled` item (or a disabled `Root`) is skipped and can't be toggled.
+
+### Labeling
+
+- Each trigger sits inside a Radix heading element, so assistive tech announces the items as a list of headings you can jump between.
+- Give each item a clear text label in the `Trigger` so its button has a meaningful name (see the limitation below about label placement).
+- The chevron indicator is decorative (`pointer-events-none`) and adds no announced text; open/closed state is conveyed by `aria-expanded`.
+
+### Focus & states
+
+- Triggers show the standard keyboard focus ring (`:focus-visible`) via the `--cn-focus` token.
+- Expanded/collapsed state is exposed through `data-state` and `aria-expanded`, so it's available to both styling and assistive tech.
+
+### Known limitations
+
+- **The label sits outside the trigger button.** The trigger is rendered as an empty button stretched across the whole header (`position: absolute; inset: 0`), while the visible label, prefix, and suffix sit in a sibling element on top of it. This makes the entire header clickable, but it means the button's accessible name doesn't come from the visible text — for anything important, verify the announced name and add an explicit `aria-label` on the `Trigger` if it's missing.
+- **`clickable={false}` removes the trigger entirely.** Turning off `clickable` (used so interactive children like a [Copy Button](/components/actions/copy-button/) in the header stay usable) renders no trigger button at all, so that item can't be expanded or collapsed by keyboard or pointer. Only use it on items you don't need to toggle from the header.
+- **Motion isn't reduced automatically.** The expand/collapse height animation doesn't currently respect `prefers-reduced-motion`.
+
+</TabItem>
+
+<TabItem label="Properties">
+
+{/* Visually hidden — anchors the section headings below in the TOC without showing a redundant title in the panel body (the tab already says "Properties"). Hidden via #page-level-tabs h2#properties in styles.css. */}
+
+## Properties
 
 ### `Root`
 
@@ -334,3 +411,9 @@ The `Accordion.Content` component displays the item contents when triggered usin
     },
   ]}
 />
+
+</TabItem>
+
+</Tabs>
+
+</div>

@@ -10,7 +10,8 @@ const active = getActiveCategory(Astro.url.pathname);
 // Render them as-is (with their group headings) so items keep the same nested
 // link styling they have under Docs, rather than being promoted to top-level.
 const groups = sidebar.filter(
-  (entry: any) => entry.type === "group" && active.groups.includes(entry.label),
+  (entry: any) =>
+    entry.type === "group" && active?.groups.includes(entry.label),
 );
 ---
 

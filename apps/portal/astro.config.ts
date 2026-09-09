@@ -53,11 +53,6 @@ export default defineConfig({
           collapsed: false,
           items: [
             {
-              slug: "getting-started/introduction",
-              label: "Introduction",
-              attrs: { "data-icon": "view-grid" },
-            },
-            {
               slug: "design-system/architecture-overview",
               label: "Architecture Overview",
               attrs: { "data-icon": "delegates" },
@@ -342,7 +337,8 @@ export default defineConfig({
     react(),
   ],
   redirects: {
-    "/": "/getting-started/introduction",
+    // Old Introduction page now lives at the homepage.
+    "/getting-started/introduction": "/",
     "/components/navigation/single-pane-stepper":
       "/growth-patterns/single-pane-stepper",
     "/components/navigation/dual-pane-stepper":

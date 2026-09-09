@@ -1018,6 +1018,86 @@ button[aria-label="Search"] {
   min-width: 0;
 }
 
+/* Home hero (full-width landing) */
+.cn-home-hero {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: var(--cn-spacing-4);
+  padding: var(--cn-layout-2xl) 0 var(--cn-layout-xl);
+}
+
+.cn-home-hero-title {
+  font-size: var(--cn-font-size-11);
+  font-weight: 600;
+  line-height: 1.05;
+  letter-spacing: -0.03em;
+  color: var(--cn-text-1);
+  max-width: 20ch;
+  margin: 0;
+}
+
+.cn-home-hero-subtitle {
+  font-size: var(--cn-font-size-5);
+  line-height: 1.5;
+  color: var(--cn-text-2);
+  max-width: 68ch;
+  margin: 0;
+}
+
+.cn-home-hero-subtitle code {
+  font-size: 0.9em;
+  padding: 1px 5px;
+  border-radius: var(--cn-rounded-4);
+  background: var(--cn-bg-0);
+  border: 1px solid var(--cn-border-3);
+}
+
+.cn-home-cta-row {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--cn-spacing-3);
+  margin-top: var(--cn-spacing-3);
+}
+
+.cn-home-cta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.625rem 1.25rem;
+  border-radius: var(--cn-rounded-4);
+  font-size: var(--cn-font-size-3);
+  font-weight: 500;
+  line-height: 1.2;
+  text-decoration: none !important;
+  border: 1px solid transparent;
+  transition:
+    background 0.15s ease,
+    border-color 0.15s ease,
+    opacity 0.15s ease;
+}
+
+.cn-home-cta-primary {
+  background: var(--cn-text-1);
+  color: var(--cn-bg-0);
+}
+
+.cn-home-cta-primary:hover {
+  opacity: 0.85;
+}
+
+.cn-home-cta-secondary {
+  background: transparent;
+  color: var(--cn-text-1);
+  border-color: var(--cn-border-3);
+}
+
+.cn-home-cta-secondary:hover {
+  background: var(--cn-bg-0);
+}
+
 /* Feature Grid (Introduction hero) */
 .cn-feature-grid {
   display: grid;

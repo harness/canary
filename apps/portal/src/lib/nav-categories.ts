@@ -20,7 +20,7 @@ export const NAV_CATEGORIES: NavCategory[] = [
   {
     id: "docs",
     label: "Docs",
-    href: "/getting-started/introduction",
+    href: "/design-system/architecture-overview",
     segments: ["getting-started", "design-system", "changelog"],
     groups: ["Getting Started", "Change Log"],
   },
@@ -59,11 +59,11 @@ export function getFirstSegment(pathname: string): string {
   return pathname.replace(/^\/+/, "").split("/")[0] ?? "";
 }
 
-/** Resolve the active category for a pathname, defaulting to the first (Docs). */
-export function getActiveCategory(pathname: string): NavCategory {
+/**
+ * Resolve the active category for a pathname, or `undefined` when none matches
+ * (e.g. the homepage) so no top-nav tab is highlighted there.
+ */
+export function getActiveCategory(pathname: string): NavCategory | undefined {
   const segment = getFirstSegment(pathname);
-  return (
-    NAV_CATEGORIES.find((category) => category.segments.includes(segment)) ??
-    NAV_CATEGORIES[0]
-  );
+  return NAV_CATEGORIES.find((category) => category.segments.includes(segment));
 }

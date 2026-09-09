@@ -22,8 +22,8 @@ const active = getActiveCategory(Astro.url.pathname);
       NAV_CATEGORIES.map((category) => (
         <a
           href={category.href}
-          class:list={["cn-topnav-tab", { active: category.id === active.id }]}
-          aria-current={category.id === active.id ? "page" : undefined}
+          class:list={["cn-topnav-tab", { active: category.id === active?.id }]}
+          aria-current={category.id === active?.id ? "page" : undefined}
         >
           {category.label}
         </a>

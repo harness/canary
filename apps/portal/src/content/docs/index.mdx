@@ -1,14 +1,39 @@
 ---
-title: Introduction
-description: Explore the Harness Design System components, built on a token-based architecture with support for multiple themes
+title: Harness Design System
+description: A unified component library built on design tokens, with support for multiple themes and accessibility variants
 template: splash
 tableOfContents: false
+home: true
 ---
 
 import ShowcaseGrid from "@/components/showcase-grid";
 import ComponentGrid from "@/components/component-grid";
 
-The Harness Design System provides a unified component library built on design tokens. Every component uses `cn-` prefixed tokens for colors, spacing, and typography — enabling seamless theme switching across light, dark, and high-contrast modes with accessibility variants.
+<div className="cn-home-hero not-content">
+  <h1 className="cn-home-hero-title">
+    A unified design system, ready for every theme.
+  </h1>
+  <p className="cn-home-hero-subtitle">
+    The Harness Design System provides a component library built on design
+    tokens. Every component uses <code>cn-</code> prefixed tokens for colors,
+    spacing, and typography — enabling seamless theme switching across light,
+    dark, and high-contrast modes with accessibility variants.
+  </p>
+  <div className="cn-home-cta-row">
+    <a
+      className="cn-home-cta cn-home-cta-primary"
+      href="/design-system/architecture-overview"
+    >
+      Get started
+    </a>
+    <a
+      className="cn-home-cta cn-home-cta-secondary"
+      href="/components/data-display/accordion"
+    >
+      Browse components
+    </a>
+  </div>
+</div>
 
 <div className="cn-feature-grid not-content">
   <div className="cn-feature-item">

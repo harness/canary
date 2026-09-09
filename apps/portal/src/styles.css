@@ -507,7 +507,9 @@ code:not(.expressive-code code) {
   display: none;
 }
 .cn-portal-sidebar .category-sidebar--flat ul.top-level > li > details {
-  @apply py-0;
+  /* Restore the breathing room the hidden heading used to provide, so the first
+     item doesn't crowd the search box above it. */
+  @apply pt-cn-md pb-0;
   margin-inline: 0;
   padding-inline: 0;
 }

@@ -149,6 +149,7 @@ export function StepperRoot({
   onBeforeChange,
   showConnectors = true,
   completed = false,
+  disableCompletedFade = false,
   collapsibleNestedSteps = false,
   skeletonCount = 3,
   className,
@@ -168,7 +169,12 @@ export function StepperRoot({
           providers nest safely, so this is a no-op if the consumer already has its own. */}
       <TooltipProvider>
         <nav
-          className={cn('cn-stepper', collapsibleNestedSteps && 'cn-stepper-collapsible-nested-steps', className)}
+          className={cn(
+            'cn-stepper',
+            collapsibleNestedSteps && 'cn-stepper-collapsible-nested-steps',
+            disableCompletedFade && 'cn-stepper-disable-completed-fade',
+            className
+          )}
           aria-label="Progress steps"
         >
           {title && (

@@ -32,12 +32,14 @@ function BasicStepper({
   value = 'step1',
   onValueChange = vi.fn(),
   completed = false,
+  disableCompletedFade = false,
   showConnectors = false,
   title
 }: {
   value?: string
   onValueChange?: (v: string) => void
   completed?: boolean
+  disableCompletedFade?: boolean
   showConnectors?: boolean
   title?: React.ReactNode
 }) {
@@ -46,6 +48,7 @@ function BasicStepper({
       value={value}
       onValueChange={onValueChange}
       completed={completed}
+      disableCompletedFade={disableCompletedFade}
       showConnectors={showConnectors}
       title={title}
     >
@@ -1230,12 +1233,29 @@ describe('Stepper', () => {
       expect(activeBadge.background).toBe('var(--cn-set-blue-outline-bg)')
       expect(activeBadge.color).toBe('var(--cn-set-blue-outline-text)')
 
-      const completedItem = stepperStyles['.cn-stepper-step-item']['&:has(.cn-stepper-step-completed)'] as {
-        opacity: string
-        '&:hover': { opacity: string }
+      const completedItem = stepperStyles[
+        '.cn-stepper:not(.cn-stepper-disable-completed-fade) .cn-stepper-step-item'
+      ] as {
+        '&:has(.cn-stepper-step-completed)': { opacity: string; '&:hover': { opacity: string } }
       }
-      expect(completedItem.opacity).toBe('0.6')
-      expect(completedItem['&:hover'].opacity).toBe('1')
+      expect(completedItem['&:has(.cn-stepper-step-completed)'].opacity).toBe('0.6')
+      expect(completedItem['&:has(.cn-stepper-step-completed)']['&:hover'].opacity).toBe('1')
+    })
+  })
+
+  describe('UUI-3726 disableCompletedFade', () => {
+    test('omitting the prop does not add the opt-out class', () => {
+      const { container } = render(<BasicStepper value="step2" />)
+      expect(container.querySelector('nav.cn-stepper')).not.toHaveClass('cn-stepper-disable-completed-fade')
+    })
+
+    test('true adds the opt-out class on root', () => {
+      const { container } = render(<BasicStepper value="step2" disableCompletedFade />)
+      expect(container.querySelector('nav.cn-stepper')).toHaveClass('cn-stepper-disable-completed-fade')
+    })
+
+    test('completed mute does not apply on the ungated step item', () => {
+      expect('&:has(.cn-stepper-step-completed)' in stepperStyles['.cn-stepper-step-item']).toBe(false)
     })
   })
 })

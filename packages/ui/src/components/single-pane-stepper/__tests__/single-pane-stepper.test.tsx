@@ -183,6 +183,16 @@ describe('SinglePaneStepper', () => {
       expect(onClose).toHaveBeenCalledTimes(1)
     })
 
+    test('omitting disableCompletedFade does not add the opt-out class', () => {
+      const { container } = render(<SinglePaneStepper.Root flow={testFlow} />)
+      expect(container.querySelector('nav.cn-stepper')).not.toHaveClass('cn-stepper-disable-completed-fade')
+    })
+
+    test('disableCompletedFade adds the opt-out class on the inner stepper', () => {
+      const { container } = render(<SinglePaneStepper.Root flow={testFlow} disableCompletedFade />)
+      expect(container.querySelector('nav.cn-stepper')).toHaveClass('cn-stepper-disable-completed-fade')
+    })
+
     test('showRootHeader=false hides header even when title provided', () => {
       render(<SinglePaneStepper.Root flow={testFlow} title="Test Flow" showRootHeader={false} />)
       expect(screen.queryByText('Test Flow')).not.toBeInTheDocument()

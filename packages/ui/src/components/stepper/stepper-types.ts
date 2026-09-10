@@ -9,6 +9,11 @@ export interface StepperProps {
   onBeforeChange?: (from: string, to: string) => boolean | string
   showConnectors?: boolean
   completed?: boolean
+  /**
+   * When true, completed steps stay at full opacity with no hover/focus restore.
+   * Omit or false keeps the default 0.6 mute. UUI-3726.
+   */
+  disableCompletedFade?: boolean
   /** When true, nested steps with panel content show a collapse chevron (SinglePaneStepper). */
   collapsibleNestedSteps?: boolean
   skeletonCount?: number

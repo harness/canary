@@ -253,7 +253,7 @@ Use the `onBeforeChange` prop to confirm navigation (e.g., warn users about losi
 
 ## Completed State
 
-When all steps are done, pass `completed` to show a "Complete" badge instead of the step counter.
+When all steps are done, pass `completed` to show a "Complete" badge instead of the step counter. Completed steps still fade to 60% opacity by default so an in-progress step stays visually focused. For a finished flow that should stay fully opaque (no hover flash), pass `disableCompletedFade`.
 
 <DocsPage.ComponentExample
   client:only
@@ -262,7 +262,7 @@ When all steps are done, pass `completed` to show a "Complete" badge instead of 
 
     return (
         <div className="w-[300px]">
-            <Stepper.Root value={step} onValueChange={setStep} title="All Done" completed>
+            <Stepper.Root value={step} onValueChange={setStep} title="All Done" completed disableCompletedFade>
                 <Stepper.Step value="connect" title="Connect" description="Provider selected" />
                 <Stepper.Step value="configure" title="Configure" description="Pipeline configured" />
                 <Stepper.Step value="review" title="Review" description="Confirmed" />
@@ -318,6 +318,7 @@ The root container that manages stepper state, provides context to children, and
   onValueChange={setStep}        // callback when step changes
   title="Setup"                  // [OPTIONAL] displayed in the header
   completed={false}              // [OPTIONAL] shows "Complete" instead of counter
+  disableCompletedFade={false}   // [OPTIONAL] skip the 0.6 completed-step mute
   showConnectors={true}          // [OPTIONAL] show connector lines between steps
   onBeforeChange={guardFn}       // [OPTIONAL] navigation guard
   skeletonCount={3}              // [OPTIONAL] skeleton items when no children
@@ -350,6 +351,14 @@ The root container that manages stepper state, provides context to children, and
     {
       name: "completed",
       description: "When true, shows 'Complete' instead of step counter",
+      required: false,
+      value: "boolean",
+      defaultValue: "false",
+    },
+    {
+      name: "disableCompletedFade",
+      description:
+        "When true, completed steps stay at full opacity with no hover/focus restore. Omit or false keeps the default 0.6 mute.",
       required: false,
       value: "boolean",
       defaultValue: "false",

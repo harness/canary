@@ -37,7 +37,8 @@ function DualPaneStepperContent({
   style,
   showStepBadge,
   hideUpcomingGroups,
-  hidePredictedSteps
+  hidePredictedSteps,
+  disableCompletedFade
 }: Omit<DualPaneStepperRootProps, 'flow' | 'onComplete' | 'onReactivate' | 'children' | 'initialEngineState'>) {
   const { drawerState, closeDrawer, pendingReactivation, confirmReactivation, cancelReactivation } = useEngineContext()
 
@@ -59,6 +60,7 @@ function DualPaneStepperContent({
       showStepBadge={showStepBadge}
       hideUpcomingGroups={hideUpcomingGroups}
       hidePredictedSteps={hidePredictedSteps}
+      disableCompletedFade={disableCompletedFade}
     />
   )
 
@@ -128,13 +130,15 @@ function DefaultStepperPane({
   showStepperHeader,
   showStepBadge,
   hideUpcomingGroups,
-  hidePredictedSteps
+  hidePredictedSteps,
+  disableCompletedFade
 }: {
   stepperTitle?: string
   showStepperHeader?: boolean
   showStepBadge?: boolean
   hideUpcomingGroups?: boolean
   hidePredictedSteps?: boolean
+  disableCompletedFade?: boolean
 }) {
   const { flow, cardHistory, activeStepId, predictedPath } = useEngineContext()
   const { totalOverride, stepNumberOverrides, stepNumberOverridesComplete, handleStepperClick } =
@@ -157,6 +161,7 @@ function DefaultStepperPane({
       collapsibleNestedSteps
       hideUpcomingGroups={hideUpcomingGroups}
       hidePredictedSteps={hidePredictedSteps}
+      disableCompletedFade={disableCompletedFade}
     />
   )
 }

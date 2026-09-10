@@ -1229,13 +1229,6 @@ describe('Stepper', () => {
       expect(activeBadge.borderColor).toBe('var(--cn-set-blue-outline-border)')
       expect(activeBadge.background).toBe('var(--cn-set-blue-outline-bg)')
       expect(activeBadge.color).toBe('var(--cn-set-blue-outline-text)')
-
-      const completedItem = stepperStyles['.cn-stepper-step-item']['&:has(.cn-stepper-step-completed)'] as {
-        opacity: string
-        '&:hover': { opacity: string }
-      }
-      expect(completedItem.opacity).toBe('0.6')
-      expect(completedItem['&:hover'].opacity).toBe('1')
     })
   })
 })

@@ -94,22 +94,6 @@ export default {
       '&:has(.cn-stepper-nested-step-placeholder) .cn-stepper-connector': {
         bottom: 'calc(var(--cn-size-8) + var(--cn-rounded-5))'
       }
-    },
-
-    // UUI-3585 — v5 `.pq-card[data-state="done"]` is opacity ~0.58 on the whole card. Canary used
-    // to dim only `[inert]` card body. Opacity on `.cn-stepper-step-content` is a no-op because
-    // that box is `display: contents`. Fade the item (rail head + body). No 0.58 token; 0.6
-    // matches the inert opacity. Hover / completed-head focus-visible restore the way v5 does.
-    '&:has(.cn-stepper-step-completed)': {
-      opacity: '0.6',
-
-      '&:hover': {
-        opacity: '1'
-      },
-
-      '&:has(.cn-stepper-step-completed:focus-visible)': {
-        opacity: '1'
-      }
     }
   },
 

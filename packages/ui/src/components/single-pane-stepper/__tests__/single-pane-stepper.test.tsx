@@ -258,14 +258,6 @@ describe('SinglePaneStepper', () => {
       expect(subtitle.lineHeight).toBe('var(--cn-line-height-6-tight)')
     })
 
-    test('completed item mute does not double-fade inert card body', () => {
-      const reset =
-        flowStepperCardStyles[
-          '.cn-stepper-step-item:has(.cn-stepper-step-completed) .cn-flow-stepper-card-content[inert]'
-        ]
-      expect(reset.opacity).toBe('1')
-    })
-
     test('completed-step pencil is always visible, not hover-only', () => {
       // v5 `.pq-card__pencil` is `display: inline-flex` on done/skipped at rest.
       // Card mute (0.6) still applies. Hover-only opacity hid the affordance.

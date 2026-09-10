@@ -482,7 +482,8 @@ const tailwindDesignSystem: TailwindConfig = {
       },
       maxWidth: {
         ...defaultTheme.spacing,
-        ...sizeTokensMap
+        ...sizeTokensMap,
+        'cn-page': 'var(--cn-page-container-max-width)'
       },
       width: {
         ...defaultTheme.spacing,

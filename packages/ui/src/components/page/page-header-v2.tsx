@@ -5,7 +5,7 @@ import { IconV2, type IconV2NamesType } from '../icon-v2'
 import { Layout } from '../layout'
 import { Tabs } from '../tabs'
 import { Text } from '../text'
-import { usePageScrollable } from './page'
+import { usePageMaxWidth, usePageScrollable } from './page'
 
 export interface HeaderV2TabItem {
   label: string
@@ -132,6 +132,7 @@ export const HeaderV2: FC<PageHeaderV2Props> = ({
   className
 }) => {
   const scrollable = usePageScrollable()
+  const maxWidth = usePageMaxWidth()
   const hasTabs = tabs && tabs.length > 0
   const showInlineTabs = hasTabs && tabsVariant === 'ghost' && !contentTabs
   const showSeparateTabs = hasTabs && !showInlineTabs
@@ -144,6 +145,7 @@ export const HeaderV2: FC<PageHeaderV2Props> = ({
         // In scrollable mode, Page.Root uses `display: contents` on the wrapper,
         // so this header must own its own padding and sticky positioning.
         scrollable && 'sticky top-0 z-10 bg-cn-1 cn-page-content cn-page-content-pt',
+        scrollable && maxWidth === 'page' && 'max-w-cn-page mx-auto',
         className
       )}
     >

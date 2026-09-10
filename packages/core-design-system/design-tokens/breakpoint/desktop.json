@@ -8,12 +8,21 @@
       "$type": "number",
       "$value": "1080"
     },
+    "viewportXl": {
+      "$type": "number",
+      "$value": "1280"
+    },
     "viewportMax": {
       "$type": "number",
-      "$value": "1919"
+      "$value": "1920"
     }
   },
   "page-container": {
+    "max-width": {
+      "$type": "sizing",
+      "$value": "1280",
+      "$description": "Maximum content width for constrained pages."
+    },
     "spacing-px": {
       "$type": "number",
       "$value": "{spacing.4}",

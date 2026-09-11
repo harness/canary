@@ -95,7 +95,7 @@ describe('DateRangePicker', () => {
 
     await openPicker()
     await userEvent.click(screen.getByRole('menuitem', { name: 'Fixed' }))
-    expect(screen.getByText('Starts')).toBeInTheDocument()
+    expect(screen.getByLabelText('Start date')).toBeInTheDocument()
 
     await userEvent.click(screen.getByRole('button', { name: 'Cancel' }))
     expect(onChange).not.toHaveBeenCalled()

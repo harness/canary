@@ -497,7 +497,9 @@ export const DateRangePickerContent = ({
   const selected = previewSelection
   const disabledMatchers = getDisabledMatchers(allowFuture, calendarProps?.disabled)
   const presetActions = visibleQuickPresets.length > 0 && (
-    <div className="flex flex-wrap items-center gap-cn-sm">
+    // Match the ToggleGroup's own internal item gap (cn-3xs) so the space between
+    // Today/Yesterday and the space before the Last/duration group reads as one rhythm.
+    <div className="flex flex-wrap items-center gap-cn-3xs">
       {regularQuickPresets.length > 0 && (
         <ToggleGroup.Root
           type="single"
@@ -516,13 +518,15 @@ export const DateRangePickerContent = ({
       )}
 
       {directionalQuickPresets.length > 0 && (
-        <div className="border-cn-2 flex min-w-0 items-center overflow-hidden rounded-cn-3 border border-solid">
+        // h-8 matches the sm Button's own height (var(--cn-btn-size-sm)) so this pill's
+        // own border doesn't add extra height on top of the buttons it wraps.
+        <div className="border-cn-2 flex h-8 min-w-0 items-center overflow-hidden rounded-cn-3 border border-solid">
           <DropdownMenu.Root>
             <DropdownMenu.Trigger asChild>
               <Button
                 size="sm"
                 variant="secondary"
-                className="rounded-none border-0"
+                className="rounded-cn-none border-0"
                 aria-label={`Duration direction: ${presetDirection === 'past' ? 'Last' : 'Next'}`}
                 tooltipProps={{ content: 'Choose whether durations look back or ahead' }}
               >
@@ -568,7 +572,7 @@ export const DateRangePickerContent = ({
                     aria-checked={isSelected}
                     tabIndex={isSelected || (!hasSelectedDuration && index === 0) ? 0 : -1}
                     variant={isSelected ? 'primary' : 'ghost'}
-                    className="rounded-none border-0"
+                    className="rounded-cn-none border-0"
                     onClick={() => applyQuickDraft(preset.id)}
                     onKeyDown={moveDurationFocus}
                   >
@@ -648,7 +652,16 @@ export const DateRangePickerContent = ({
         </aside>
 
         <div className="min-w-0 flex-1">
-          <div className="flex min-h-[88px] items-start justify-between gap-cn-md p-cn-md">
+          <div
+            className={cn('flex items-start justify-between gap-cn-md p-cn-md', {
+              // Other sections reserve a consistent 88px so switching sections in the sidebar
+              // doesn't jump the calendar up/down. Fixed skips that: its row now sizes to its
+              // own content, so the p-cn-md padding above the fields, below them (before the
+              // separator), and below the separator (calendar's pt-cn-md) all match—an even
+              // rhythm instead of a forced 88px box pushing the fields down.
+              'min-h-[88px]': section !== 'fixed'
+            })}
+          >
             <div className="min-w-0 flex-1">
               {section === 'presets' && (
                 <div className="space-y-cn-md">
@@ -685,9 +698,12 @@ export const DateRangePickerContent = ({
               )}
 
               {section === 'fixed' && draft.kind === 'absolute' && (
-                <div className="grid grid-cols-[1fr_auto_1fr] items-end gap-cn-sm">
-                  <div className="min-w-0 space-y-cn-xs">
-                    <Text variant="body-strong">Starts</Text>
+                // No arrow between the two fields: it read as "Start comes from the left
+                // month, End from the right month," which isn't true—either endpoint can
+                // land in either visible month. The border above the calendar does the
+                // job of separating this row instead.
+                <div className="grid grid-cols-2 items-end gap-cn-sm">
+                  <div className="min-w-0">
                     <DateTimeEndpointField
                       label="Start"
                       date={draft.from.date}
@@ -696,9 +712,7 @@ export const DateRangePickerContent = ({
                       onTimeChange={time => setDraft({ ...draft, from: { ...draft.from, time } })}
                     />
                   </div>
-                  <IconV2 name="arrow-right" size="sm" className="mb-cn-xs text-cn-3" />
-                  <div className="min-w-0 space-y-cn-xs">
-                    <Text variant="body-strong">Ends</Text>
+                  <div className="min-w-0">
                     <DateTimeEndpointField
                       label="End"
                       date={draft.to.date}
@@ -712,17 +726,35 @@ export const DateRangePickerContent = ({
 
               {section === 'last' && draft.kind === 'relative' && (
                 <div className="flex items-end gap-cn-xs">
-                  <ToggleGroup.Root
-                    type="single"
-                    size="sm"
-                    value={draft.direction}
-                    onChange={(direction: string) => updateRolling({ direction: direction as 'past' | 'future' })}
-                    unselectable
+                  {/* Joined segmented control (shared border, no gap between options) instead of
+                      the spaced ToggleGroup, so Last/Next reads as one either/or control. */}
+                  <div
+                    role="radiogroup"
                     aria-label="Rolling direction"
+                    className="border-cn-2 flex h-8 items-center overflow-hidden rounded-cn-3 border border-solid"
                   >
-                    <ToggleGroup.Item value="past" text="Last" />
-                    <ToggleGroup.Item value="future" text="Next" />
-                  </ToggleGroup.Root>
+                    <Button
+                      size="sm"
+                      role="radio"
+                      aria-checked={draft.direction === 'past'}
+                      variant={draft.direction === 'past' ? 'primary' : 'ghost'}
+                      className="rounded-cn-none border-0"
+                      onClick={() => updateRolling({ direction: 'past' })}
+                    >
+                      Last
+                    </Button>
+                    <Separator orientation="vertical" className="h-5" />
+                    <Button
+                      size="sm"
+                      role="radio"
+                      aria-checked={draft.direction === 'future'}
+                      variant={draft.direction === 'future' ? 'primary' : 'ghost'}
+                      className="rounded-cn-none border-0"
+                      onClick={() => updateRolling({ direction: 'future' })}
+                    >
+                      Next
+                    </Button>
+                  </div>
                   <PositiveAmountInput
                     aria-label="Rolling amount"
                     value={draft.amount}
@@ -774,7 +806,22 @@ export const DateRangePickerContent = ({
               )}
           </div>
 
-          <div className="flex min-h-[320px] items-start justify-center px-cn-md pb-cn-lg pt-cn-sm">
+          {section === 'fixed' && (
+            // Only Fixed pairs a Start/End row with the calendar right below it, so only
+            // Fixed needs the separator that keeps the two from reading as one control.
+            // Equal padding above (header's p-cn-md) and below (pt-cn-md on the calendar
+            // row) keeps the line centered in the gap instead of hugging the calendar.
+            <div className="px-cn-md">
+              <Separator />
+            </div>
+          )}
+
+          <div
+            className={cn(
+              'flex min-h-[320px] items-start justify-center px-cn-md pb-cn-lg',
+              section === 'fixed' ? 'pt-cn-md' : 'pt-cn-sm'
+            )}
+          >
             <Calendar
               {...calendarProps}
               className={cn('!p-0', calendarProps?.className)}
@@ -883,17 +930,11 @@ export const DateRangePicker = ({
   const useQuickPresetBar = showQuickPresetBar && !trigger && !renderTrigger
 
   // The zone rides along in its own tinted chip so it reads apart from the dates.
-  // On the filled primary trigger the chip sits on a plain surface instead.
-  const triggerBody = (onPrimary: boolean) => (
+  const triggerBody = (
     <>
       <IconV2 name="calendar" size="sm" />
       <span className="truncate">{rangeLabel}</span>
-      <span
-        className={cn(
-          'shrink-0 rounded-cn-1 px-cn-3xs py-cn-4xs font-caption-normal',
-          onPrimary ? 'bg-cn-1/25 text-inherit' : 'bg-cn-3 text-cn-2'
-        )}
-      >
+      <span className="bg-cn-3 text-cn-2 shrink-0 rounded-cn-1 px-cn-3xs py-cn-4xs font-caption-normal">
         {zoneBadge}
       </span>
     </>
@@ -908,7 +949,7 @@ export const DateRangePicker = ({
       className={cn('max-w-[560px] justify-start', className)}
       tooltipProps={{ content: fullLabel }}
     >
-      {triggerBody(false)}
+      {triggerBody}
     </Button>
   )
   const triggerContent =
@@ -928,14 +969,14 @@ export const DateRangePicker = ({
           <div className={className}>
             <Popover.Trigger asChild>
               <Button
-                variant={normalizedValue ? 'primary' : 'outline'}
+                variant={normalizedValue ? 'secondary' : 'outline'}
                 size="sm"
                 disabled={disabled}
                 className="max-w-[560px] justify-start"
                 aria-label={`Date range: ${fullLabel}`}
                 tooltipProps={{ content: fullLabel }}
               >
-                {triggerBody(Boolean(normalizedValue))}
+                {triggerBody}
               </Button>
             </Popover.Trigger>
           </div>

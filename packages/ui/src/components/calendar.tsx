@@ -43,9 +43,9 @@ function Calendar({ className, classNames, showOutsideDays = true, ...props }: C
           'bg-cn-brand-primary text-cn-brand-primary hover:!bg-cn-brand-primary-hover hover:text-cn-brand-primary focus:bg-cn-brand focus:text-cn-brand-primary',
         day_today: cn(
           'day-today relative font-medium',
+          // Underline only—no circle/ring, so today doesn't read as "selected".
           // Underline stays visible when today also falls inside the selected range.
-          'after:absolute after:inset-x-[30%] after:bottom-[5px] after:h-px after:rounded-cn-full after:bg-current after:content-[""]',
-          '[&:not([aria-selected])]:!rounded-cn-full [&:not([aria-selected])]:border [&:not([aria-selected])]:border-cn-3 [&:not([aria-selected])]:text-cn-1'
+          'after:absolute after:inset-x-[30%] after:bottom-[5px] after:h-px after:rounded-cn-full after:bg-current after:content-[""]'
         ),
         day_outside:
           'day-outside text-cn-3 opacity-50  aria-selected:bg-cn-3/50 aria-selected:text-cn-3 aria-selected:opacity-30',

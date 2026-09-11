@@ -52,7 +52,9 @@ export const PositiveAmountInput = ({ value, onChange, 'aria-label': ariaLabel }
         setText(String(next))
         if (next !== value) onChange(next)
       }}
-      className="px-cn-xs text-center"
+      // `rounded` (Input's default) resolves to an unset token, so the field renders
+      // square next to the Select beside it. Force the same radius Select/Button use.
+      className="!rounded-cn-3 px-cn-xs text-center"
       // shrink-0 keeps the digits readable when the row runs out of room.
       wrapperClassName="w-16 shrink-0"
     />

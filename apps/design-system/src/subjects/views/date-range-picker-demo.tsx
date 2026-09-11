@@ -46,8 +46,6 @@ const DateRangePickerDemo = () => {
           <DateRangePicker
             value={value}
             onChange={setValue}
-            enableOffset
-            enableExclusions
             onInterpretQuery={interpretQuery(timeZone)}
           />
         </div>
@@ -109,9 +107,7 @@ const DateRangePickerDemo = () => {
                 value: 'timeframe',
                 filterFieldConfig: {
                   defaultTimeZone: 'UTC',
-                  allowFuture: true,
-                  enableOffset: true,
-                  enableExclusions: true
+                  allowFuture: true
                 }
               }}
               removeFilter={() => setFilterValue(undefined)}

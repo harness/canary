@@ -19,10 +19,7 @@ import {
 
 // Shared mocks
 let sidebarState = {
-  isMobile: false,
   state: 'expanded' as 'expanded' | 'collapsed',
-  openMobile: false,
-  setOpenMobile: vi.fn(),
   toggleSidebar: vi.fn()
 }
 
@@ -96,17 +93,6 @@ vi.mock('@/components', () => {
 
   const mockScrollArea = vi.fn((props: any) => <div data-testid="scroll-area" {...props} />)
 
-  const sheetRoot = ({ children, open, onOpenChange }: any) => (
-    <button type="button" data-testid="sheet-root" data-open={open} onClick={() => onOpenChange(!open)}>
-      {children}
-    </button>
-  )
-  const sheetContent = ({ children, side, ...props }: any) => (
-    <div data-testid="sheet-content" data-side={side} {...props}>
-      {children}
-    </div>
-  )
-
   const separator = forwardRef<HTMLDivElement, any>(({ className, ...props }, ref) => (
     <div data-testid="separator" ref={ref} className={className} {...props} />
   ))
@@ -120,10 +106,6 @@ vi.mock('@/components', () => {
     },
     ScrollArea: mockScrollArea,
     Separator: separator,
-    Sheet: {
-      Root: sheetRoot,
-      Content: sheetContent
-    },
     Text: mockText,
     useScrollArea: (props: any) => mockUseScrollArea(props)
   }
@@ -135,10 +117,7 @@ describe('SidebarRoot', () => {
   beforeEach(() => {
     vi.clearAllMocks()
     sidebarState = {
-      isMobile: false,
       state: 'expanded',
-      openMobile: false,
-      setOpenMobile: vi.fn(),
       toggleSidebar: vi.fn()
     }
   })
@@ -157,20 +136,6 @@ describe('SidebarRoot', () => {
     const inner = outer.querySelector('.cn-sidebar-desktop') as HTMLElement
     expect(inner).toHaveClass('custom')
     expect(inner.textContent).toContain('Content')
-  })
-
-  test('renders mobile sheet when isMobile true', () => {
-    sidebarState.isMobile = true
-    sidebarState.openMobile = true
-
-    renderWith(
-      <SidebarRoot side="left">
-        <span>Mobile</span>
-      </SidebarRoot>
-    )
-
-    expect(screen.getByTestId('sheet-root')).toHaveAttribute('data-open', 'true')
-    expect(screen.getByTestId('sheet-content')).toHaveAttribute('data-side', 'left')
   })
 })
 

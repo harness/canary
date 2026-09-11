@@ -15,9 +15,15 @@ const selected = [
 const hash = value => createHash('sha256').update(value).digest('hex')
 const records = selected.map(([name, page, source]) => {
   const document = readFileSync(resolve(docsRoot, `components/${page}.mdx`), 'utf8')
-  const match = document.match(/code=\{`([\s\S]*?)`\}/)
+  const start = '{/* agent-example:start */}'
+  const end = '{/* agent-example:end */}'
+  if (document.split(start).length !== 2 || document.split(end).length !== 2)
+    throw new Error(`Expected one agent-example marker pair in ${page}`)
+  const section = document.slice(document.indexOf(start) + start.length, document.indexOf(end))
+  const matches = [...section.matchAll(/code=\{`([\s\S]*?)`\}/g)]
+  const match = matches.length === 1 ? matches[0] : undefined
   if (!match || match[1].includes('${'))
-    throw new Error(`Unsupported example in ${page}; select a literal example explicitly`)
+    throw new Error(`Unsupported example in ${page}; keep one literal code example inside the agent-example markers`)
   const example = match[1].trim()
   const description = document.match(/^description: (.+)$/m)?.[1] || name
   const implementation = readFileSync(resolve(packageRoot, 'src/components', source), 'utf8')
@@ -41,7 +47,7 @@ for (const record of records) {
   )
   writeFileSync(
     resolve(output, `components/${record.name}.md`),
-    `# ${record.name}\n\n${header}${record.description}\n\nImport from \`@harnessio/ui/components\`. Read [setup](../setup.md) first.\n\n## Canonical example\n\n\`\`\`tsx\n${record.example}\n\`\`\`\n\n[Compilable example](../examples/${record.name}.tsx)\n\nCoverage: this document supplies the first canonical example, not the complete API. Resolve additional props against this package's dist/components.d.ts. Missing coverage is not evidence that a component or prop is unavailable.\n\nSource: apps/portal/src/content/docs/components/${record.page}.mdx\n`
+    `# ${record.name}\n\n${header}${record.description}\n\nImport from \`@harnessio/ui/components\`. Read [setup](../setup.md) first.\n\n## Canonical example\n\n\`\`\`tsx\n${record.example}\n\`\`\`\n\n[Compilable example](../examples/${record.name}.tsx)\n\nCoverage: this document supplies the explicitly marked canonical example, not the complete API. Resolve additional props against this package's dist/components.d.ts. Missing coverage is not evidence that a component or prop is unavailable.\n\nSource: apps/portal/src/content/docs/components/${record.page}.mdx\n`
   )
 }
 writeFileSync(

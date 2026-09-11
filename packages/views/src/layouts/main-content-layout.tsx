@@ -27,14 +27,10 @@ type MainContentLayoutProps = PropsWithChildren<{
 
 export function MainContentLayout({
   children,
-  useSidebar,
   className,
   withBreadcrumbs,
   enableInset = false
 }: MainContentLayoutProps) {
-  const sidebarData = useSidebar?.()
-  const isMobile = sidebarData?.isMobile
-
   return (
     <Layout.Flex
       id="main-content-layout"
@@ -42,7 +38,7 @@ export function MainContentLayout({
       className={cn(
         'min-h-[calc(100vh-var(--cn-inset-layout-indent)*2)] mx-[var(--cn-inset-layout-indent)] my-[var(--cn-inset-layout-indent)] border-[var(--cn-inset-border-width)] bg-cn-1',
         {
-          'rounded-cn-3': isMobile || enableInset,
+          'rounded-cn-3': enableInset,
           'min-h-[calc(100vh-var(--cn-breadcrumbs-height)-var(--cn-inset-layout-indent))] mb-[var(--cn-inset-layout-indent)] mt-0':
             withBreadcrumbs,
           'cn-with-legacy-breadcrumb-band': withBreadcrumbs

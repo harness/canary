@@ -30,13 +30,13 @@
     "./context": "./dist/context.js",
     "./types": "./dist/types.js",
     "./yaml-output": "./dist/yaml-output.js",
-    "./.claude/manifest.json": "./.claude/manifest.json"
+    "./agent/manifest.json": "./agent/manifest.json"
   },
   "files": [
     "dist",
     "src/shared-style-variables.css",
     "src/components/markdown-viewer/style.css",
-    ".claude"
+    "agent"
   ],
   "scripts": {
     "dev": "vite",
@@ -57,7 +57,9 @@
     "typecheck": "tsc -b",
     "extract": "i18next --config './i18n.config.ts'",
     "update:icons": "node scripts/icons.js",
-    "update:logos": "node scripts/logos.js"
+    "update:logos": "node scripts/logos.js",
+    "guidance:build": "node scripts/build-agent-guidance.mjs",
+    "prepack": "node scripts/build-agent-guidance.mjs"
   },
   "types": "./dist/index.d.ts",
   "style": "./dist/styles.css",

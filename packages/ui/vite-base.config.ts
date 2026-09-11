@@ -1,5 +1,6 @@
 import { createHash } from 'crypto'
 import { mkdirSync, readdirSync, readFileSync, writeFileSync } from 'fs'
+import { execFileSync } from 'node:child_process'
 import { basename, extname, join, resolve } from 'path'
 
 import react from '@vitejs/plugin-react-swc'
@@ -139,7 +140,13 @@ export default defineConfig({
     tsConfigPaths(),
     dts({ rollupTypes: true }),
     extractCssFontsPlugin(resolve(__dirname, 'src/fonts')),
-    buildThemesPlugin()
+    buildThemesPlugin(),
+    {
+      name: 'package-agent-guidance',
+      closeBundle() {
+        execFileSync(process.execPath, [resolve(__dirname, 'scripts/build-agent-guidance.mjs')], { stdio: 'inherit' })
+      }
+    }
   ],
   resolve: {
     alias: {

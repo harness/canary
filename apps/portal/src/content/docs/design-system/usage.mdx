@@ -6,6 +6,34 @@ description: Quick-start guide for using the Harness Design System in code
 import { Aside } from "@astrojs/starlight/components";
 import LinkCard from "@/components/LinkCard.astro";
 
+<!-- package-guidance:start -->
+
+## Installed-package consumers
+
+Import components from `@harnessio/ui/components`. Keep the package's declared
+React peer range; do not install a second React copy to satisfy an example.
+In an existing application, reuse its styles, theme loader and provider tree.
+The monorepo setup commands below are for working on Canary itself.
+
+The UI package exports `@harnessio/ui/styles.css` and a theme manifest at
+`@harnessio/ui/themes/theme-manifest.json`. A standalone consumer must load the
+matching styles and theme assets; a theme context alone does not load CSS.
+Use `ThemeProvider` from `@harnessio/ui/context` where controls need theme context,
+and `TooltipProvider` from `@harnessio/ui/components` for tooltip-enabled controls.
+Do not nest duplicate providers in an application that already supplies them.
+
+Use documented component variants and semantic design tokens. Check the actual
+text child, SVG dimensions and focus state after composition. For forms, retain
+the consumer's validation integration and verify labels, required semantics and
+error-message associations; visible styling alone does not establish accessibility.
+
+The packaged examples demonstrate component APIs, not an application bootstrap,
+a complete form workflow or a universal page layout. Portal demonstration widths
+are not design-system layout requirements. Resolve additional APIs from the
+installed declarations, and verify the rendered composition in the consumer.
+
+<!-- package-guidance:end -->
+
 ## Setup
 
 Install dependencies and build all packages (tokens → CSS → components):

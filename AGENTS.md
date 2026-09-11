@@ -1,5 +1,17 @@
 # Canary — Agent Guide
 
+## Delivery and investigation guardrails
+
+- Start with the user-visible outcome, the smallest useful deliverable and a concrete done condition. Preparation artifacts alone are not delivery unless the user requested them.
+- Default to no more than 10 minutes of initial investigation before making a useful change or stating the specific blocker. This is a reassessment checkpoint, not permission to skip necessary verification.
+- At each 15-minute checkpoint during sustained work, assess what usable result exists and whether the current investigation still serves the outcome. Narrow or abandon low-value branches autonomously. Do not make the user manage routine scope decisions.
+- Reuse existing instructions, examples, scripts and evidence. Read documentation on demand; do not load entire documentation trees or benchmark archives for ordinary implementation tasks.
+- Run checks appropriate to the change and required repository checks. After they pass, repeat or broaden verification only for a new change, failure or concrete unresolved risk. Do not build a validation framework for a small documentation change.
+- Do not start another benchmark, reference-freezing cycle, MCP server, CLI or documentation hierarchy by default. State the decision it would unlock and why existing tools cannot answer it; obtain scope authorization before substantial additional work.
+- Keep incidental findings separate from the requested deliverable. Record unrelated defects as follow-ups instead of letting them block adoption. Preserve explicitly agreed acceptance standards; never silently waive defects to declare success.
+- Report delivered changes, verification, remaining blockers and measured outcomes. Label hypotheses and unknown costs. Never claim speed, token or accuracy improvements without supporting measurements.
+- These checkpoints are not requests for repeated approval. Continue authorized work independently; ask only for a material scope change or a decision that requires the user's judgment.
+
 PNPM monorepo containing shared component libraries and packages for the Harness Unified UI. Consumed primarily by `frontend/platformUI`.
 
 ## Tech Stack

@@ -10,24 +10,25 @@ const docsRoot = resolve(packageRoot, '../../apps/portal/src/content/docs')
 const output = resolve(packageRoot, 'agent')
 const pkg = JSON.parse(readFileSync(resolve(packageRoot, 'package.json'), 'utf8'))
 const selected = [
-  ['Button', 'actions/button', 'button.tsx', 'Default Button'],
-  ['TextInput', 'form/text-input', 'inputs/text-input.tsx', ''],
-  ['Select', 'form/select', 'form-primitives/select.tsx', '']
+  ['Button', 'actions/button', 'button.tsx', 'Default Button', []],
+  ['TextInput', 'form/text-input', 'inputs/text-input.tsx', '', ['Layout']],
+  ['Select', 'form/select', 'form-primitives/select.tsx', '', []]
 ]
 const hash = value => createHash('sha256').update(value).digest('hex')
-const records = selected.map(([name, page, source, exampleSection]) => {
+const records = selected.map(([name, page, source, exampleSection, additionalImports]) => {
   const document = readFileSync(resolve(docsRoot, `components/${page}.mdx`), 'utf8')
   const exported = exportComponentMarkdown(document, exampleSection)
   const { example, description } = exported
   const implementation = readFileSync(resolve(packageRoot, 'src/components', source), 'utf8')
   const body = example.startsWith('() =>')
-    ? `export const Example = ${example}\n`
-    : `export function Example(): JSX.Element { return (${example}) }\n`
+    ? `export const Example: () => React.ReactElement = ${example}\n`
+    : `export function Example(): React.ReactElement { return (${example}) }\n`
   return {
     ...exported,
     name,
     page,
     exampleSection,
+    imports: [name, ...additionalImports],
     description,
     documentHash: hash(document),
     sourceHash: hash(implementation),
@@ -36,7 +37,9 @@ const records = selected.map(([name, page, source, exampleSection]) => {
   }
 })
 const setupSource = readFileSync(resolve(docsRoot, 'design-system/usage.mdx'), 'utf8')
-const setup = setupSource.match(/<!-- package-guidance:start -->\n([\s\S]*?)\n<!-- package-guidance:end -->/)?.[1]
+const setup = setupSource.match(
+  /\{\/\* package-guidance:start \*\/\}\n([\s\S]*?)\n\{\/\* package-guidance:end \*\/\}/
+)?.[1]
 if (!setup) throw new Error('Missing canonical package setup section')
 rmSync(output, { recursive: true, force: true })
 mkdirSync(resolve(output, 'components'), { recursive: true })
@@ -46,7 +49,7 @@ writeFileSync(resolve(output, 'setup.md'), header + setup + '\n')
 for (const record of records) {
   writeFileSync(
     resolve(output, `examples/${record.name}.tsx`),
-    `import React from 'react'\nimport { ${record.name}, Layout } from '@harnessio/ui/components'\n\n${record.body}`
+    `import React from 'react'\nimport { ${record.imports.join(', ')} } from '@harnessio/ui/components'\n\n${record.body}`
   )
   writeFileSync(
     resolve(output, `components/${record.name}.md`),

@@ -6,6 +6,10 @@ import { dirname, resolve } from 'node:path'
 import { test } from 'node:test'
 import { fileURLToPath } from 'node:url'
 
+import remarkMdx from 'remark-mdx'
+import remarkParse from 'remark-parse'
+import { unified } from 'unified'
+
 import { exportComponentMarkdown } from './export-component-markdown.mjs'
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '../../..')
@@ -69,6 +73,12 @@ test('starter selection follows a named section and rejects ambiguous selection'
   assert.throws(() => exportComponentMarkdown(page(example + '\n\n' + example), ''), /exactly one example/)
 })
 
+test('canonical setup is valid MDX for the documentation site', () => {
+  const source = readFileSync(resolve(root, 'apps/portal/src/content/docs/design-system/usage.mdx'), 'utf8')
+  const body = source.replace(/^---\n[\s\S]*?\n---\n/, '')
+  assert.doesNotThrow(() => unified().use(remarkParse).use(remarkMdx).parse(body))
+})
+
 test('exports all three real pages and preserves an existing output if conversion fails', () => {
   const fixture = mkdtempSync(resolve(tmpdir(), 'canary-guidance-export-'))
   try {
@@ -98,6 +108,9 @@ test('exports all three real pages and preserves an existing output if conversio
       for (const heading of source.match(/^## .+$/gm)) assert.ok(md.includes(heading), `${name}: ${heading}`)
       assert.doesNotMatch(md, /<DocsPage\.|<Aside/)
     }
+    const setup = readFileSync(resolve(fixture, 'packages/ui/agent/setup.md'), 'utf8')
+    assert.match(setup, /## Installed-package consumers/)
+    assert.doesNotMatch(setup, /package-guidance:|## Setup/)
     const select = readFileSync(resolve(fixture, 'packages/ui/agent/components/Select.md'), 'utf8')
     assert.ok(select.includes('Dropdown opened ${openCount} time(s)'))
     assert.ok(select.includes('> **Note**'))

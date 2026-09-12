@@ -143,6 +143,7 @@ export default defineConfig({
     buildThemesPlugin(),
     {
       name: 'package-agent-guidance',
+      apply: 'build',
       closeBundle() {
         execFileSync(process.execPath, [resolve(__dirname, 'scripts/build-agent-guidance.mjs')], { stdio: 'inherit' })
       }

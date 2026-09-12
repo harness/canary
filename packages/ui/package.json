@@ -50,7 +50,7 @@
     "shadcn:update": "npx shadcn-ui@latest add -a -o -y",
     "prepublishOnly": "pnpm build",
     "pre-commit": "lint-staged",
-    "test": "vitest --run",
+    "test": "node --test scripts/build-agent-guidance.test.mjs && vitest --run",
     "test:coverage": "vitest --run --coverage",
     "test:watch": "vitest",
     "test:changed": "vitest --run --changed=origin/main",

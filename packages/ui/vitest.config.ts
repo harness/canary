@@ -1,11 +1,12 @@
 import { resolve } from 'path'
 
-import { mergeConfig } from 'vitest/config'
+import { configDefaults, mergeConfig } from 'vitest/config'
 
 import viteConfig from './vite.config'
 
 export default mergeConfig(viteConfig, {
   test: {
+    exclude: [...configDefaults.exclude, 'scripts/build-agent-guidance.test.mjs'],
     environment: 'jsdom',
     setupFiles: ['./config/vitest-setup.ts'],
     globals: true,

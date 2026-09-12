@@ -3,34 +3,37 @@ import { mkdirSync, readFileSync, rmSync, writeFileSync } from 'node:fs'
 import { dirname, resolve } from 'node:path'
 import { fileURLToPath } from 'node:url'
 
+import { exportComponentMarkdown } from './export-component-markdown.mjs'
+
 const packageRoot = resolve(dirname(fileURLToPath(import.meta.url)), '..')
 const docsRoot = resolve(packageRoot, '../../apps/portal/src/content/docs')
 const output = resolve(packageRoot, 'agent')
 const pkg = JSON.parse(readFileSync(resolve(packageRoot, 'package.json'), 'utf8'))
 const selected = [
-  ['Button', 'actions/button', 'button.tsx'],
-  ['TextInput', 'form/text-input', 'inputs/text-input.tsx'],
-  ['Select', 'form/select', 'form-primitives/select.tsx']
+  ['Button', 'actions/button', 'button.tsx', 'Default Button'],
+  ['TextInput', 'form/text-input', 'inputs/text-input.tsx', ''],
+  ['Select', 'form/select', 'form-primitives/select.tsx', '']
 ]
 const hash = value => createHash('sha256').update(value).digest('hex')
-const records = selected.map(([name, page, source]) => {
+const records = selected.map(([name, page, source, exampleSection]) => {
   const document = readFileSync(resolve(docsRoot, `components/${page}.mdx`), 'utf8')
-  const start = '{/* agent-example:start */}'
-  const end = '{/* agent-example:end */}'
-  if (document.split(start).length !== 2 || document.split(end).length !== 2)
-    throw new Error(`Expected one agent-example marker pair in ${page}`)
-  const section = document.slice(document.indexOf(start) + start.length, document.indexOf(end))
-  const matches = [...section.matchAll(/code=\{`([\s\S]*?)`\}/g)]
-  const match = matches.length === 1 ? matches[0] : undefined
-  if (!match || match[1].includes('${'))
-    throw new Error(`Unsupported example in ${page}; keep one literal code example inside the agent-example markers`)
-  const example = match[1].trim()
-  const description = document.match(/^description: (.+)$/m)?.[1] || name
+  const exported = exportComponentMarkdown(document, exampleSection)
+  const { example, description } = exported
   const implementation = readFileSync(resolve(packageRoot, 'src/components', source), 'utf8')
   const body = example.startsWith('() =>')
     ? `export const Example = ${example}\n`
     : `export function Example(): JSX.Element { return (${example}) }\n`
-  return { name, page, description, documentHash: hash(document), sourceHash: hash(implementation), example, body }
+  return {
+    ...exported,
+    name,
+    page,
+    exampleSection,
+    description,
+    documentHash: hash(document),
+    sourceHash: hash(implementation),
+    example,
+    body
+  }
 })
 const setupSource = readFileSync(resolve(docsRoot, 'design-system/usage.mdx'), 'utf8')
 const setup = setupSource.match(/<!-- package-guidance:start -->\n([\s\S]*?)\n<!-- package-guidance:end -->/)?.[1]
@@ -47,12 +50,12 @@ for (const record of records) {
   )
   writeFileSync(
     resolve(output, `components/${record.name}.md`),
-    `# ${record.name}\n\n${header}${record.description}\n\nImport from \`@harnessio/ui/components\`. Read [setup](../setup.md) first.\n\n## Canonical example\n\n\`\`\`tsx\n${record.example}\n\`\`\`\n\n[Compilable example](../examples/${record.name}.tsx)\n\nCoverage: this document supplies the explicitly marked canonical example, not the complete API. Resolve additional props against this package's dist/components.d.ts. Missing coverage is not evidence that a component or prop is unavailable.\n\nSource: apps/portal/src/content/docs/components/${record.page}.mdx\n`
+    `# ${record.name}\n\n${header}${record.description}\n\nImport from \`@harnessio/ui/components\`. Read [setup](../setup.md) first.\n\n${record.markdown}\n\n## Package verification scope\n\n[Standalone starter example](../examples/${record.name}.tsx). Export includes ${record.exampleCount} live-example snippets and ${record.propCount} documented prop rows from this page. Exported snippets retain the documentation site's shared scope; they are not all standalone or type-checked. The packaged starter is selected from ${record.exampleSection ? `the "${record.exampleSection}" section` : 'the introductory section'}. Consult installed dist/components.d.ts for the complete contract; export does not certify documentation accuracy or runtime behavior.\n\nSource: apps/portal/src/content/docs/components/${record.page}.mdx\n`
   )
 }
 writeFileSync(
   resolve(output, 'index.md'),
-  `# Canary package guidance\n\n${header}Read only the relevant document. [Setup](setup.md) describes consumer prerequisites.\n\n${records.map(r => `- [${r.name}](components/${r.name}.md): ${r.description}`).join('\n')}\n\nCoverage is limited to setup and these three examples. For other components, inspect the installed declarations and existing consumer patterns. Do not substitute documentation from an unrelated checkout or release. These examples are not a full accessibility or application-integration certification.\n`
+  `# Canary package guidance\n\n${header}Read only the relevant document. [Setup](setup.md) describes consumer prerequisites.\n\n${records.map(r => `- [${r.name}](components/${r.name}.md): ${r.description}`).join('\n')}\n\nCoverage is limited to setup and these three component pages, with one standalone starter example each. For other components, inspect the installed declarations and existing consumer patterns. Do not substitute documentation from an unrelated checkout or release. These examples are not a full accessibility or application-integration certification.\n`
 )
 writeFileSync(
   resolve(output, 'manifest.json'),
@@ -71,6 +74,9 @@ writeFileSync(
           {
             document: `components/${r.name}.md`,
             example: `examples/${r.name}.tsx`,
+            liveExampleCount: r.exampleCount,
+            documentedPropCount: r.propCount,
+            starterExampleSection: r.exampleSection || 'introduction',
             canonicalSource: `apps/portal/src/content/docs/components/${r.page}.mdx`,
             documentSourceSha256: r.documentHash,
             implementationSourceSha256: r.sourceHash

@@ -1073,6 +1073,12 @@ importers:
       react-router-dom:
         specifier: ^6.26.0
         version: 6.30.0(react-dom@17.0.2(react@17.0.2))(react@17.0.2)
+      remark-mdx:
+        specifier: 3.1.0
+        version: 3.1.0
+      remark-parse:
+        specifier: 11.0.0
+        version: 11.0.0
       rimraf:
         specifier: ^6.0.1
         version: 6.0.1
@@ -1082,6 +1088,9 @@ importers:
       tailwindcss:
         specifier: ^3.4.14
         version: 3.4.17(ts-node@10.9.2(@types/node@22.13.9)(typescript@5.9.2))
+      unified:
+        specifier: 11.0.5
+        version: 11.0.5
       vite:
         specifier: ^6.1.1
         version: 6.2.0(@types/node@22.13.9)(jiti@1.21.7)(terser@5.39.0)(yaml@2.7.0)

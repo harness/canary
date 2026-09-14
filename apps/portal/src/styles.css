@@ -1048,7 +1048,9 @@ button[aria-label="Search"] {
 /* Home dot-grid background */
 .cn-home-bg {
   position: relative;
-  background-color: lch(98% 3 240);
+  /* Gray.50 base with a Blue.25 wash fading up from the bottom */
+  background-color: lch(97% 0 272);
+  background-image: linear-gradient(to top, lch(98% 3 240) 0%, transparent 100%);
 }
 
 /* Square dots, masked so the color stays theme-driven */
@@ -1063,16 +1065,6 @@ button[aria-label="Search"] {
   mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16'%3E%3Crect width='2' height='2' fill='%23000'/%3E%3C/svg%3E");
   -webkit-mask-size: 16px 16px;
   mask-size: 16px 16px;
-}
-
-/* Fade the dots out toward the bottom so content stays legible */
-.cn-home-bg::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  z-index: 0;
-  pointer-events: none;
-  background: linear-gradient(to bottom, transparent 0%, lch(98% 3 240) 90%);
 }
 
 .cn-home-bg > * {

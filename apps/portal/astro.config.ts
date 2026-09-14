@@ -281,6 +281,24 @@ export default defineConfig({
             },
             "components/visual/icon",
             "components/visual/illustration",
+            {
+              label: "Input",
+              collapsed: true,
+              items: [
+                {
+                  slug: "components/form/text-input",
+                  label: "Text Input",
+                },
+                {
+                  slug: "components/form/time-input",
+                  label: "Time Input",
+                },
+                {
+                  slug: "components/form/number-input",
+                  label: "Number Input",
+                },
+              ],
+            },
             "components/form/label",
             "components/foundations/layout",
             "components/navigation/link",
@@ -288,7 +306,6 @@ export default defineConfig({
             "components/markdown-display/markdown-viewer",
             "components/chat/message-bubble",
             "components/data-display/no-data",
-            "components/form/number-input",
             "components/foundations/page",
             "components/navigation/pagination",
             "components/overlays/popover",
@@ -342,13 +359,23 @@ export default defineConfig({
             },
             "components/feedback/tag",
             "components/foundations/text",
-            "components/form/text-input",
             "components/form/textarea",
-            "components/form/time-input",
             "components/overlays/time-ago-card",
             "components/feedback/toast",
-            "components/actions/toggle",
-            "components/actions/toggle-group",
+            {
+              label: "Toggle",
+              collapsed: true,
+              items: [
+                {
+                  slug: "components/actions/toggle",
+                  label: "Toggle",
+                },
+                {
+                  slug: "components/actions/toggle-group",
+                  label: "Toggle Group",
+                },
+              ],
+            },
             "components/overlays/tooltip",
             "components/navigation/tree-view",
             "components/chat/typing-animation",

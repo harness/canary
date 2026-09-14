@@ -287,7 +287,6 @@ export default defineConfig({
             "components/visual/logo",
             "components/markdown-display/markdown-viewer",
             "components/chat/message-bubble",
-            "components/form/multi-select",
             "components/data-display/no-data",
             "components/form/number-input",
             "components/foundations/page",
@@ -300,7 +299,20 @@ export default defineConfig({
             "components/foundations/sandbox-layout",
             "components/utilities/scroll-area",
             "components/form/search-input",
-            "components/form/select",
+            {
+              label: "Select",
+              collapsed: true,
+              items: [
+                {
+                  slug: "components/form/select",
+                  label: "Select",
+                },
+                {
+                  slug: "components/form/multi-select",
+                  label: "Multi Select",
+                },
+              ],
+            },
             "components/overlays/sheet",
             "components/chat/shimmer",
             "components/navigation/sidebar",

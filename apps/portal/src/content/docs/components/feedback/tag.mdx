@@ -72,18 +72,6 @@ The `Tag` component displays a small label with an optional icon, an optional ke
     </div>
   </div>
   <div className="flex items-start gap-cn-md border-b border-cn-borders-3 pb-cn-sm">
-    <span className="text-cn-size-2 text-cn-3 w-40 shrink-0 font-mono pt-cn-3xs">rounded</span>
-    <div className="flex-1 min-w-0 flex flex-wrap items-center gap-cn-sm">
-      <Tag value="Rounded Outline Tag" variant="outline" rounded theme="pink" />
-      <Tag
-        value="Rounded Secondary Tag"
-        variant="secondary"
-        rounded
-        theme="orange"
-      />
-    </div>
-  </div>
-  <div className="flex items-start gap-cn-md border-b border-cn-borders-3 pb-cn-sm">
     <span className="text-cn-size-2 text-cn-3 w-40 shrink-0 font-mono pt-cn-3xs">split</span>
     <div className="flex-1 min-w-0 flex flex-wrap items-center gap-cn-sm">
       <Tag
@@ -109,20 +97,6 @@ The `Tag` component displays a small label with an optional icon, an optional ke
     <div className="flex-1 min-w-0 flex flex-wrap items-center gap-cn-sm">
       <Tag value="Outline Icon" variant="outline" icon="label" theme="yellow" />
       <Tag value="Secondary Icon" variant="secondary" icon="label" theme="violet" />
-      <Tag
-        value="Rounded Outline Icon"
-        variant="outline"
-        rounded
-        icon="label"
-        theme="brown"
-      />
-      <Tag
-        value="Rounded Secondary Icon"
-        variant="secondary"
-        rounded
-        icon="label"
-        theme="indigo"
-      />
     </div>
   </div>
   <div className="flex items-start gap-cn-md border-b border-cn-borders-3 pb-cn-sm">
@@ -139,20 +113,6 @@ The `Tag` component displays a small label with an optional icon, an optional ke
         variant="secondary"
         icon="plus"
         theme="cyan"
-      />
-      <Tag
-        value="Rounded Custom Icon"
-        variant="outline"
-        rounded
-        icon="plus"
-        theme="orange"
-      />
-      <Tag
-        value="Rounded Custom Icon Secondary"
-        variant="secondary"
-        rounded
-        icon="plus"
-        theme="pink"
       />
     </div>
   </div>
@@ -174,22 +134,6 @@ The `Tag` component displays a small label with an optional icon, an optional ke
         onActionClick={() => alert("Reset clicked")}
         theme="green"
       />
-      <Tag
-        value="Rounded Outline Reset"
-        variant="outline"
-        rounded
-        actionIcon="xmark"
-        onActionClick={() => alert("Reset clicked")}
-        theme="purple"
-      />
-      <Tag
-        value="Rounded Secondary Reset"
-        variant="secondary"
-        rounded
-        actionIcon="xmark"
-        onActionClick={() => alert("Reset clicked")}
-        theme="red"
-      />
     </div>
   </div>
   <div className="flex items-start gap-cn-md">
@@ -210,25 +154,6 @@ The `Tag` component displays a small label with an optional icon, an optional ke
         actionIcon="xmark"
         onActionClick={() => alert("Reset clicked")}
         theme="violet"
-      />
-      <Tag
-        value="Rounded Outline Icon Reset"
-        variant="outline"
-        rounded
-        icon="label"
-        actionIcon="xmark"
-        onActionClick={() => alert("Reset clicked")}
-        theme="brown"
-      />
-      <Tag
-        value="Rounded Secondary Icon Reset"
-        variant="secondary"
-        rounded
-        icon="label"
-        onClick={() => alert("Tag clicked")}
-        actionIcon="xmark"
-        onActionClick={() => alert("Reset clicked")}
-        theme="indigo"
       />
     </div>
   </div>

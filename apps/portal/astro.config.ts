@@ -178,7 +178,7 @@ export default defineConfig({
               items: [
                 {
                   slug: "components/form/calendar",
-                  label: "Overview",
+                  label: "Calendar",
                 },
                 {
                   slug: "components/form/calendar/calendar-input",

@@ -1048,7 +1048,7 @@ button[aria-label="Search"] {
 /* Home dot-grid background */
 .cn-home-bg {
   position: relative;
-  background-color: lch(97% 6 240);
+  background-color: lch(98% 3 240);
 }
 
 /* Square dots, masked so the color stays theme-driven */
@@ -1059,10 +1059,10 @@ button[aria-label="Search"] {
   z-index: 0;
   pointer-events: none;
   background-color: var(--cn-border-2);
-  -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20'%3E%3Crect width='1.5' height='1.5' fill='%23000'/%3E%3C/svg%3E");
-  mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20'%3E%3Crect width='1.5' height='1.5' fill='%23000'/%3E%3C/svg%3E");
-  -webkit-mask-size: 20px 20px;
-  mask-size: 20px 20px;
+  -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16'%3E%3Crect width='2' height='2' fill='%23000'/%3E%3C/svg%3E");
+  mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16'%3E%3Crect width='2' height='2' fill='%23000'/%3E%3C/svg%3E");
+  -webkit-mask-size: 16px 16px;
+  mask-size: 16px 16px;
 }
 
 /* Fade the dots out toward the bottom so content stays legible */
@@ -1072,7 +1072,7 @@ button[aria-label="Search"] {
   inset: 0;
   z-index: 0;
   pointer-events: none;
-  background: linear-gradient(to bottom, transparent 0%, lch(97% 6 240) 90%);
+  background: linear-gradient(to bottom, transparent 0%, lch(98% 3 240) 90%);
 }
 
 .cn-home-bg > * {

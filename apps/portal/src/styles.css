@@ -1048,25 +1048,31 @@ button[aria-label="Search"] {
 /* Home dot-grid background */
 .cn-home-bg {
   position: relative;
-  background-image: radial-gradient(
-    var(--cn-border-2, var(--cn-border-3)) 1px,
-    transparent 1px
-  );
-  background-size: 24px 24px;
-  background-position: -1px -1px;
+  background-color: lch(97% 6 240);
 }
 
-/* Fade the dots out toward the bottom so content stays legible */
+/* Square dots, masked so the color stays theme-driven */
 .cn-home-bg::before {
   content: "";
   position: absolute;
   inset: 0;
+  z-index: 0;
   pointer-events: none;
-  background: linear-gradient(
-    to bottom,
-    transparent 0%,
-    var(--cn-bg-1, #fff) 90%
-  );
+  background-color: var(--cn-border-2);
+  -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20'%3E%3Crect width='1.5' height='1.5' fill='%23000'/%3E%3C/svg%3E");
+  mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20'%3E%3Crect width='1.5' height='1.5' fill='%23000'/%3E%3C/svg%3E");
+  -webkit-mask-size: 20px 20px;
+  mask-size: 20px 20px;
+}
+
+/* Fade the dots out toward the bottom so content stays legible */
+.cn-home-bg::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background: linear-gradient(to bottom, transparent 0%, lch(97% 6 240) 90%);
 }
 
 .cn-home-bg > * {

@@ -187,8 +187,24 @@ export default defineConfig({
               ],
             },
             "components/form/caption",
-            "components/data-display/card",
-            "components/data-display/card-select",
+            {
+              label: "Card",
+              collapsed: true,
+              items: [
+                {
+                  slug: "components/data-display/card",
+                  label: "Card",
+                },
+                {
+                  slug: "components/data-display/card-select",
+                  label: "Card Select",
+                },
+                {
+                  slug: "components/data-display/draggable-card",
+                  label: "Draggable Card",
+                },
+              ],
+            },
             "components/visual/carousel",
             {
               label: "Checkbox",
@@ -208,7 +224,6 @@ export default defineConfig({
             "components/form/date-range-filter",
             "components/overlays/dialog",
             "components/markdown-display/diff-viewer",
-            "components/data-display/draggable-card",
             {
               label: "Drawer",
               collapsed: true,

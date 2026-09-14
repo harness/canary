@@ -14,15 +14,17 @@ const active = getActiveCategory(Astro.url.pathname);
     <SidebarLogo />
   </div>
 
-  <nav
-    class="cn-topnav-tabs flex items-center gap-cn-xs ml-auto"
-    aria-label="Primary"
-  >
+  <nav class="cn-topnav-tabs cn-tabs-list cn-tabs-list-ghost ml-auto" aria-label="Primary">
     {
       NAV_CATEGORIES.map((category) => (
         <a
           href={category.href}
-          class:list={["cn-topnav-tab", { active: category.id === active?.id }]}
+          role="tab"
+          class:list={[
+            "cn-tabs-trigger",
+            "cn-tabs-trigger-ghost",
+            { "cn-tabs-trigger-active": category.id === active?.id },
+          ]}
           aria-current={category.id === active?.id ? "page" : undefined}
         >
           {category.label}
@@ -36,26 +38,3 @@ const active = getActiveCategory(Astro.url.pathname);
     <ThemeSelect />
   </div>
 </header>
-
-<style>
-  .cn-topnav-tab {
-    padding: 0.375rem 0.75rem;
-    border-radius: 6px;
-    font-size: var(--sl-text-sm);
-    font-weight: 500;
-    line-height: 1.2;
-    color: var(--sl-color-gray-2);
-    text-decoration: none;
-    border: 1px solid transparent;
-    white-space: nowrap;
-  }
-
-  .cn-topnav-tab:hover {
-    color: var(--sl-color-white);
-  }
-
-  .cn-topnav-tab.active {
-    color: var(--sl-color-white);
-    border-color: var(--sl-color-gray-5);
-  }
-</style>

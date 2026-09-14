@@ -1198,10 +1198,11 @@ button[aria-label="Search"] {
   color: var(--cn-text-2);
 }
 
-/* Principles Grid (3 columns × 2 rows of cards) */
+/* Principles Grid — mosaic / bento layout across a 6-column grid */
 .cn-principles-grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(6, 1fr);
+  grid-auto-rows: minmax(150px, auto);
   gap: var(--cn-spacing-4);
   margin-bottom: var(--cn-layout-md);
 }
@@ -1214,6 +1215,26 @@ button[aria-label="Search"] {
   border: 1px solid var(--cn-border-2);
   border-radius: var(--cn-rounded-6);
   background: var(--cn-bg-2);
+}
+
+/* Mosaic spans: 1 tall feature card, 2 wide cards, 3 compact cards */
+.cn-principle-card:nth-child(1) {
+  grid-column: span 3;
+  grid-row: span 2;
+  justify-content: space-between;
+}
+.cn-principle-card:nth-child(2),
+.cn-principle-card:nth-child(3) {
+  grid-column: span 3;
+}
+.cn-principle-card:nth-child(4),
+.cn-principle-card:nth-child(5),
+.cn-principle-card:nth-child(6) {
+  grid-column: span 2;
+}
+
+.cn-principle-card:nth-child(1) .cn-principle-title {
+  font-size: var(--cn-font-size-8);
 }
 
 .cn-principle-title {

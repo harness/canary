@@ -138,6 +138,11 @@ export default defineConfig({
         {
           label: "Components",
           items: [
+            {
+              slug: "components/examples",
+              label: "Examples",
+              attrs: { "data-divider-after": "true" },
+            },
             "components/data-display/accordion",
             "components/data-display/alert-item",
             "components/feedback/alert",

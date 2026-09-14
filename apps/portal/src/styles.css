@@ -239,6 +239,14 @@ code:not(.expressive-code code) {
     li {
       @apply border-l-0 pl-0;
 
+      /* Divider line under a flagged sidebar item (e.g. Examples at the top of
+         the Components list). Border sits on the li so it spans the full width. */
+      &:has(> a[data-divider-after]) {
+        margin-bottom: var(--cn-layout-2xs);
+        padding-bottom: var(--cn-layout-2xs);
+        border-bottom: 1px solid var(--cn-border-3);
+      }
+
       a {
         @apply text-cn-2 text-cn-size-5 transition-colors duration-150;
         padding: var(--cn-layout-2xs) var(--cn-layout-xs) var(--cn-layout-2xs)

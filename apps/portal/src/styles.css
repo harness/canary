@@ -1214,7 +1214,7 @@ button[aria-label="Search"] {
   padding: var(--cn-layout-md);
   border: 1px solid var(--cn-border-2);
   border-radius: var(--cn-rounded-6);
-  background: var(--cn-bg-2);
+  background: var(--cn-blue-50);
 }
 
 /* Mosaic widths (12-col grid): 5 / 4 / 3 on top, mirrored 3 / 4 / 5 below */

@@ -1,10 +1,19 @@
 ---
 title: Button
 description: Interactive button component for user actions
-beta: true
 ---
 
 import { DocsPage } from "@/components/docs-page";
+import { Tabs, TabItem } from "@astrojs/starlight/components";
+import PageTabsToc from "@/components/page-tabs-toc.astro";
+
+<PageTabsToc />
+
+<div id="page-level-tabs">
+
+<Tabs>
+
+<TabItem label="Overview">
 
 The `Button` component allows users to trigger actions, submit forms, and navigate through the application. The button component supports various combinations of variants, themes, sizes, and states.
 
@@ -14,546 +23,15 @@ The default button with no specified variant or theme.
 
 <DocsPage.ComponentExample
   client:only
-  code={`<div className="flex flex-col items-start min-w-[600px] gap-cn-2xl">
-  <Button>Default Button</Button>
+  code={`<div className="space-y-cn-sm">
+  <div className="flex items-center gap-cn-md">
+    <span className="text-cn-size-2 text-cn-3 w-32 shrink-0 font-mono">default</span>
+    <Button>Default Button</Button>
+  </div>
 </div>`}
 />
 
-## Primary Button
-
-Primary buttons are the most prominent buttons in the interface.
-
-<DocsPage.ComponentExample
-  client:only
-  code={`<div className="flex flex-col items-start min-w-[600px] gap-cn-2xl">
-  <Button variant="primary" theme="default">Primary Button</Button>
-
-<hr />
-
-<h4>Primary Button with Themes</h4>
-
-<div className="flex gap-cn-sm">
-  <Button variant="primary" theme="default">
-    Default
-  </Button>
-  <Button variant="primary" theme="success">
-    Success
-  </Button>
-  <Button variant="primary" theme="danger">
-    Danger
-  </Button>
-</div>
-
-<hr />
-
-<h4>Primary Button with Sizes</h4>
-
-<div className="flex gap-cn-sm items-end">
-  <Button variant="primary">Medium</Button>
-  <Button variant="primary" size="sm">
-    Small
-  </Button>
-  <Button variant="primary" size="xs">
-    Extra Small
-  </Button>
-</div>
-
-<hr />
-
-<h4>Primary Button with States</h4>
-
-<div className="flex flex-col gap-cn-sm">
-  <div className="flex gap-cn-sm">
-    <Button variant="primary" disabled>
-      Default Disabled
-    </Button>
-    <Button variant="primary" theme="success" disabled>
-      Success Disabled
-    </Button>
-    <Button variant="primary" theme="danger" disabled>
-      Danger Disabled
-    </Button>
-  </div>
-  <div className="flex gap-cn-sm">
-    <Button variant="primary" loading>
-      Loading
-    </Button>
-  </div>
-</div>
-</div>`}
-/>
-
-## Secondary Button
-
-Secondary buttons are less prominent than primary buttons.
-
-<DocsPage.ComponentExample
-  client:only
-  code={`<div className="flex flex-col items-start min-w-[600px] gap-cn-2xl">
-  <Button variant="secondary" theme="default">Secondary Button</Button>
-
-<hr />
-
-<h4>Secondary Button with Sizes</h4>
-
-<div className="flex gap-cn-sm items-end">
-  <Button variant="secondary">Medium</Button>
-  <Button variant="secondary" size="sm">
-    Small
-  </Button>
-  <Button variant="secondary" size="xs">
-    Extra Small
-  </Button>
-</div>
-
-<hr />
-
-<h4>Secondary Button with States</h4>
-
-<div className="flex flex-col gap-cn-sm">
-  <div className="flex gap-cn-sm">
-    <Button variant="secondary" disabled>
-      Default Disabled
-    </Button>
-    <Button variant="secondary" loading>
-      Loading
-    </Button>
-  </div>
-</div>
-</div>`}
-/>
-
-## Secondary Button with Themes
-
-Secondary buttons can be styled with different themes for various contexts.
-
-<DocsPage.ComponentExample
-  client:only
-  code={`<div className="flex flex-col items-start min-w-[600px] gap-cn-2xl">
-  <div className="flex gap-cn-sm items-center">
-    <Button variant="secondary" theme="default">Secondary Default</Button>
-    <Button variant="secondary" theme="success">Secondary Success</Button>
-    <Button variant="secondary" theme="danger">Secondary Danger</Button>
-  </div>
-
-<hr />
-
-<h4>Secondary Button Themes with Sizes</h4>
-
-<div className="flex flex-col gap-cn-md">
-  <div className="flex gap-cn-sm items-end">
-    <Button variant="secondary" theme="success">
-      Medium
-    </Button>
-    <Button variant="secondary" theme="success" size="sm">
-      Small
-    </Button>
-    <Button variant="secondary" theme="success" size="xs">
-      Extra Small
-    </Button>
-  </div>
-
-  <div className="flex gap-cn-sm items-end">
-    <Button variant="secondary" theme="danger">
-      Medium
-    </Button>
-    <Button variant="secondary" theme="danger" size="sm">
-      Small
-    </Button>
-    <Button variant="secondary" theme="danger" size="xs">
-      Extra Small
-    </Button>
-  </div>
-</div>
-
-<hr />
-
-<h4>Secondary Button Themes with States</h4>
-
-<div className="flex flex-col gap-cn-sm">
-  <div className="flex gap-cn-sm">
-    <Button variant="secondary" theme="success" disabled>
-      Success Disabled
-    </Button>
-    <Button variant="secondary" theme="success" loading>
-      Success Loading
-    </Button>
-  </div>
-
-  <div className="flex gap-cn-sm">
-    <Button variant="secondary" theme="danger" disabled>
-      Danger Disabled
-    </Button>
-    <Button variant="secondary" theme="danger" loading>
-      Danger Loading
-    </Button>
-  </div>
-</div>
-</div>`}
-/>
-
-## Outline Button
-
-Outline buttons have a transparent background with a visible border.
-
-<DocsPage.ComponentExample
-  client:only
-  code={`<div className="flex flex-col items-start min-w-[600px] gap-cn-2xl">
-  <Button variant="outline" theme="default">Outline Button</Button>
-
-<hr />
-
-<h4>Outline Button with Themes</h4>
-
-<div className="flex gap-cn-sm">
-  <Button variant="outline" theme="default">
-    Default
-  </Button>
-  <Button variant="outline" theme="success">
-    Success
-  </Button>
-  <Button variant="outline" theme="danger">
-    Danger
-  </Button>
-</div>
-
-<hr />
-
-<h4>Outline Button with Sizes</h4>
-
-<div className="flex gap-cn-sm items-end">
-  <Button variant="outline">Medium</Button>
-  <Button variant="outline" size="sm">
-    Small
-  </Button>
-  <Button variant="outline" size="xs">
-    Extra Small
-  </Button>
-</div>
-
-<hr />
-
-<h4>Outline Button with States</h4>
-
-<div className="flex flex-col gap-cn-sm">
-  <div className="flex gap-cn-sm">
-    <Button variant="outline" disabled>
-      Default Disabled
-    </Button>
-    <Button variant="outline" theme="success" disabled>
-      Success Disabled
-    </Button>
-    <Button variant="outline" theme="danger" disabled>
-      Danger Disabled
-    </Button>
-  </div>
-  <div className="flex gap-cn-sm">
-    <Button variant="outline" loading>
-      Loading
-    </Button>
-  </div>
-</div>
-</div>`}
-/>
-
-## Ghost Button
-
-Ghost buttons are minimally styled and blend into the background when not interacted with.
-
-<DocsPage.ComponentExample
-  client:only
-  code={`<div className="flex flex-col items-start min-w-[600px] gap-cn-2xl">
-  <div>
-    <Button variant="ghost">Ghost Button</Button>
-  </div>
-
-<hr />
-
-<h4>Ghost Button with Themes</h4>
-
-<div className="flex gap-cn-sm">
-  <Button variant="ghost" theme="default">
-    Default
-  </Button>
-  <Button variant="ghost" theme="success">
-    Success
-  </Button>
-  <Button variant="ghost" theme="danger">
-    Danger
-  </Button>
-</div>
-
-<hr />
-
-<h4>Ghost Button with Sizes</h4>
-
-<div className="flex gap-cn-sm items-end">
-  <Button variant="ghost">Medium</Button>
-  <Button variant="ghost" size="sm">
-    Small
-  </Button>
-  <Button variant="ghost" size="xs">
-    Extra Small
-  </Button>
-</div>
-
-<hr />
-
-<h4>Ghost Button with States</h4>
-
-<div className="flex gap-cn-sm">
-  <Button variant="ghost" disabled>
-    Disabled
-  </Button>
-  <Button variant="ghost" loading>
-    Loading
-  </Button>
-</div>
-</div>`}
-/>
-
-## AI Button
-
-AI variant buttons are used specifically for AI-related actions.
-
-<DocsPage.ComponentExample
-  client:only
-  code={`<div className="flex flex-col items-start min-w-[600px] gap-cn-2xl">
-  <Button variant="ai">AI Button</Button>
-
-<hr />
-
-<h4>AI Button with Sizes</h4>
-
-<div className="flex gap-cn-sm items-end">
-  <Button variant="ai">Medium</Button>
-  <Button variant="ai" size="sm">
-    Small
-  </Button>
-  <Button variant="ai" size="xs">
-    Extra Small
-  </Button>
-</div>
-
-<hr />
-
-<h4>AI Button with States</h4>
-
-<div className="flex gap-cn-sm">
-  <Button variant="ai" disabled>
-    Disabled
-  </Button>
-  <Button variant="ai" loading>
-    Loading
-  </Button>
-</div>
-</div>`}
-/>
-
-## Link Button
-
-Link buttons appear as text links and don't accept theme props.
-
-<DocsPage.ComponentExample
-  client:only
-  code={`<div className="flex flex-col items-start min-w-[600px] gap-cn-2xl">
-  <Button variant="link">Link Button</Button>
-
-<hr />
-
-<h4>Link Button with Sizes</h4>
-
-<div className="flex gap-cn-sm items-end">
-  <Button variant="link">Medium</Button>
-  <Button variant="link" size="sm">
-    Small
-  </Button>
-  <Button variant="link" size="xs">
-    Extra Small
-  </Button>
-</div>
-
-<hr />
-
-<h4>Link Button with States</h4>
-
-<div className="flex gap-cn-sm">
-  <Button variant="link" disabled>
-    Disabled
-  </Button>
-  <Button variant="link" loading>
-    Loading
-  </Button>
-</div>
-</div>`}
-/>
-
-## Transparent Button
-
-Transparent buttons have no background or border and don't accept theme props.
-
-<DocsPage.ComponentExample
-  client:only
-  code={`<div className="flex flex-col items-start min-w-[600px] gap-cn-2xl">
-  <Button variant="transparent">Transparent Button</Button>
-
-<hr />
-
-<h4>Transparent Button with Sizes</h4>
-
-<div className="flex gap-cn-sm items-end">
-  <Button variant="transparent">Medium</Button>
-  <Button variant="transparent" size="sm">
-    Small
-  </Button>
-  <Button variant="transparent" size="xs">
-    Extra Small
-  </Button>
-</div>
-
-<hr />
-
-<h4>Transparent Button with States</h4>
-
-<div className="flex gap-cn-sm">
-  <Button variant="transparent" disabled>
-    Disabled
-  </Button>
-  <Button variant="transparent" loading>
-    Loading
-  </Button>
-</div>
-</div>`}
-/>
-
-## Promise callback
-
-When the `onClick` prop returns a promise, the button automatically shows a loading state until the promise resolves or rejects.
-
-<DocsPage.ComponentExample
-  client:only
-  code={`<div className="flex flex-col items-start min-w-[600px] gap-cn-2xl">
-<h4>Promise-based onClick Handlers</h4>
-
-<div className="flex gap-cn-sm">
-  <Button
-    onClick={async () => {
-      // Simulate API call
-      await new Promise((resolve) => setTimeout(resolve, 2000));
-      console.log("API call completed");
-    }}
-  >
-    Save Data (2s)
-  </Button>
-
-<Button
-  variant="secondary"
-  onClick={() => {
-    // Return a promise directly
-    return fetch("/api/endpoint")
-      .then((response) => response.json())
-      .then((data) => console.log("Data:", data))
-      .catch((error) => console.error("Error:", error));
-  }}
->
-  Fetch Data
-</Button>
-
-  <Button
-    variant="outline"
-    onClick={() => {
-      // Promise that might reject
-      return new Promise((resolve, reject) => {
-        setTimeout(() => {
-          Math.random() > 0.5 ? resolve("Success!") : reject("Failed!");
-        }, 1500);
-      });
-    }}
-  >
-    Random Result (1.5s)
-  </Button>
-</div>
-
-<hr />
-
-<h4>Combined with Manual Loading State</h4>
-
-<div className="flex gap-cn-sm">
-  <Button 
-    loading={true}
-    onClick={async () => {
-      await new Promise(resolve => setTimeout(resolve, 1000))
-    }}
-  >
-    Always Loading
-  </Button>
-  
-  <Button 
-    iconOnly
-    variant="ai"
-    tooltipProps={{ content: "Ask AI" }}
-    onClick={async () => {
-      await new Promise(resolve => setTimeout(resolve, 1000))
-    }}
-  >
-    <IconV2 name="ai-solid" skipSize />
-  </Button>
-</div>
-</div>`}
-/>
-
-## Additional Features
-
-When the `iconOnly` prop is used, you must also provide `tooltipProps` to display content in the tooltip.
-
-If you need to skip showing the tooltip, you should set `ignoreIconOnlyTooltip`.
-
-<DocsPage.ComponentExample
-  client:only
-  code={`<div className="flex flex-col items-start min-w-[600px] gap-cn-2xl">
-<h4>Icon Only Buttons</h4>
-
-<div className="flex gap-cn-sm">
-  <Button iconOnly tooltipProps={{ content: "Add" }}>
-    <IconV2 name="plus" skipSize />
-  </Button>
-  <Button variant="secondary" size="sm" iconOnly ignoreIconOnlyTooltip>
-    <IconV2 name="git-branch" skipSize />
-  </Button>
-  <Button variant="transparent" size="sm" iconOnly ignoreIconOnlyTooltip>
-    <IconV2 name="xmark" skipSize />
-  </Button>
-  <Button variant="outline" size="xs" iconOnly ignoreIconOnlyTooltip>
-    <IconV2 name="check" skipSize />
-  </Button>
-  <Button variant="outline" size="2xs" iconOnly ignoreIconOnlyTooltip>
-    <IconV2 name="check" skipSize />
-  </Button>
-  <Button variant="outline" size="3xs" iconOnly ignoreIconOnlyTooltip>
-    <IconV2 name="check" skipSize />
-  </Button>
-  <Button variant="outline" size="2xs" iconOnly ignoreIconOnlyTooltip>
-    <IconV2 name="xmark" skipSize />
-  </Button>
-  <Button variant="outline" size="3xs" iconOnly ignoreIconOnlyTooltip>
-    <IconV2 name="xmark" skipSize />
-  </Button>
-</div>
-
-<hr />
-
-<h4>Rounded Buttons</h4>
-
-<div className="flex gap-cn-sm">
-  <Button rounded>Rounded Button</Button>
-  <Button rounded variant="outline">
-    Rounded Outline
-  </Button>
-</div>
-</div>`}
-/>
-
-## Usage
+## Installation
 
 ```tsx
 import { Button } from '@harnessio/ui/components'
@@ -591,14 +69,6 @@ import { Button } from '@harnessio/ui/components'
 <Button size="sm">Small Button</Button>
 <Button size="xs">Extra Small Button</Button>
 
-// Rounded button
-<Button rounded>Rounded Button</Button>
-
-// Icon only button
-<Button iconOnly tooltipProps={{ content: 'Add' }}>
-  <IconV2 name="plus" />
-</Button>
-
 // Loading state
 <Button loading>Loading Button</Button>
 
@@ -606,17 +76,517 @@ import { Button } from '@harnessio/ui/components'
 <Button disabled>Disabled Button</Button>
 ```
 
-## Type Constraints
+## Primary Button
 
-The Button component implements a discriminated union pattern with conditional prop requirements:
+Primary buttons are the most prominent buttons in the interface.
 
-- When variant is "ghost" or "link", no theme is allowed
-- When variant is "ai", no theme is needed
-- When variant is "solid", themes "success" and "danger" are not allowed
+<DocsPage.ComponentExample
+  client:only
+  code={`<div className="space-y-cn-sm">
+  <div className="flex items-center gap-cn-md border-b border-cn-borders-3 pb-cn-sm">
+    <span className="text-cn-size-2 text-cn-3 w-32 shrink-0 font-mono">default</span>
+    <Button variant="primary" theme="default">Primary Button</Button>
+  </div>
 
-This ensures type safety and provides proper development-time feedback on invalid component usage.
+<div className="flex items-center gap-cn-md border-b border-cn-borders-3 pb-cn-sm">
+  <span className="text-cn-size-2 text-cn-3 w-32 shrink-0 font-mono">
+    themes
+  </span>
+  <div className="flex gap-cn-sm items-center">
+    <Button variant="primary" theme="default">
+      Default
+    </Button>
+    <Button variant="primary" theme="success">
+      Success
+    </Button>
+    <Button variant="primary" theme="danger">
+      Danger
+    </Button>
+    <Button variant="primary" theme="warning">
+      Warning
+    </Button>
+  </div>
+</div>
 
-## Props
+<div className="flex items-center gap-cn-md border-b border-cn-borders-3 pb-cn-sm">
+  <span className="text-cn-size-2 text-cn-3 w-32 shrink-0 font-mono">
+    sizes
+  </span>
+  <div className="flex gap-cn-sm items-end">
+    <Button variant="primary">Medium</Button>
+    <Button variant="primary" size="sm">
+      Small
+    </Button>
+    <Button variant="primary" size="xs">
+      Extra Small
+    </Button>
+  </div>
+</div>
+
+<div className="flex items-center gap-cn-md border-b border-cn-borders-3 pb-cn-sm">
+  <span className="text-cn-size-2 text-cn-3 w-32 shrink-0 font-mono">
+    disabled
+  </span>
+  <div className="flex gap-cn-sm items-center">
+    <Button variant="primary" disabled>
+      Default Disabled
+    </Button>
+    <Button variant="primary" theme="success" disabled>
+      Success Disabled
+    </Button>
+    <Button variant="primary" theme="danger" disabled>
+      Danger Disabled
+    </Button>
+  </div>
+</div>
+
+<div className="flex items-center gap-cn-md">
+  <span className="text-cn-size-2 text-cn-3 w-32 shrink-0 font-mono">loading</span>
+  <Button variant="primary" loading>Loading</Button>
+</div>
+</div>`}
+/>
+
+## Secondary Button
+
+Secondary buttons are less prominent than primary buttons.
+
+<DocsPage.ComponentExample
+  client:only
+  code={`<div className="space-y-cn-sm">
+  <div className="flex items-center gap-cn-md border-b border-cn-borders-3 pb-cn-sm">
+    <span className="text-cn-size-2 text-cn-3 w-32 shrink-0 font-mono">default</span>
+    <Button variant="secondary" theme="default">Secondary Button</Button>
+  </div>
+
+<div className="flex items-center gap-cn-md border-b border-cn-borders-3 pb-cn-sm">
+  <span className="text-cn-size-2 text-cn-3 w-32 shrink-0 font-mono">
+    themes
+  </span>
+  <div className="flex gap-cn-sm items-center">
+    <Button variant="secondary" theme="default">
+      Default
+    </Button>
+    <Button variant="secondary" theme="success">
+      Success
+    </Button>
+    <Button variant="secondary" theme="danger">
+      Danger
+    </Button>
+    <Button variant="secondary" theme="warning">
+      Warning
+    </Button>
+  </div>
+</div>
+
+<div className="flex items-center gap-cn-md border-b border-cn-borders-3 pb-cn-sm">
+  <span className="text-cn-size-2 text-cn-3 w-32 shrink-0 font-mono">
+    sizes
+  </span>
+  <div className="flex gap-cn-sm items-end">
+    <Button variant="secondary">Medium</Button>
+    <Button variant="secondary" size="sm">
+      Small
+    </Button>
+    <Button variant="secondary" size="xs">
+      Extra Small
+    </Button>
+  </div>
+</div>
+
+<div className="flex items-center gap-cn-md">
+  <span className="text-cn-size-2 text-cn-3 w-32 shrink-0 font-mono">states</span>
+  <div className="flex gap-cn-sm items-center">
+    <Button variant="secondary" disabled>Default Disabled</Button>
+    <Button variant="secondary" loading>Loading</Button>
+  </div>
+</div>
+</div>`}
+/>
+
+## Outline Button
+
+Outline buttons have a transparent background with a visible border.
+
+<DocsPage.ComponentExample
+  client:only
+  code={`<div className="space-y-cn-sm">
+  <div className="flex items-center gap-cn-md border-b border-cn-borders-3 pb-cn-sm">
+    <span className="text-cn-size-2 text-cn-3 w-32 shrink-0 font-mono">default</span>
+    <Button variant="outline" theme="default">Outline Button</Button>
+  </div>
+
+<div className="flex items-center gap-cn-md border-b border-cn-borders-3 pb-cn-sm">
+  <span className="text-cn-size-2 text-cn-3 w-32 shrink-0 font-mono">
+    themes
+  </span>
+  <div className="flex gap-cn-sm items-center">
+    <Button variant="outline" theme="default">
+      Default
+    </Button>
+    <Button variant="outline" theme="success">
+      Success
+    </Button>
+    <Button variant="outline" theme="danger">
+      Danger
+    </Button>
+    <Button variant="outline" theme="warning">
+      Warning
+    </Button>
+  </div>
+</div>
+
+<div className="flex items-center gap-cn-md border-b border-cn-borders-3 pb-cn-sm">
+  <span className="text-cn-size-2 text-cn-3 w-32 shrink-0 font-mono">
+    sizes
+  </span>
+  <div className="flex gap-cn-sm items-end">
+    <Button variant="outline">Medium</Button>
+    <Button variant="outline" size="sm">
+      Small
+    </Button>
+    <Button variant="outline" size="xs">
+      Extra Small
+    </Button>
+  </div>
+</div>
+
+<div className="flex items-center gap-cn-md border-b border-cn-borders-3 pb-cn-sm">
+  <span className="text-cn-size-2 text-cn-3 w-32 shrink-0 font-mono">
+    disabled
+  </span>
+  <div className="flex gap-cn-sm items-center">
+    <Button variant="outline" disabled>
+      Default Disabled
+    </Button>
+    <Button variant="outline" theme="success" disabled>
+      Success Disabled
+    </Button>
+    <Button variant="outline" theme="danger" disabled>
+      Danger Disabled
+    </Button>
+  </div>
+</div>
+
+<div className="flex items-center gap-cn-md">
+  <span className="text-cn-size-2 text-cn-3 w-32 shrink-0 font-mono">loading</span>
+  <Button variant="outline" loading>Loading</Button>
+</div>
+</div>`}
+/>
+
+## Ghost Button
+
+Ghost buttons are minimally styled and blend into the background when not interacted with.
+
+<DocsPage.ComponentExample
+  client:only
+  code={`<div className="space-y-cn-sm">
+  <div className="flex items-center gap-cn-md border-b border-cn-borders-3 pb-cn-sm">
+    <span className="text-cn-size-2 text-cn-3 w-32 shrink-0 font-mono">default</span>
+    <Button variant="ghost">Ghost Button</Button>
+  </div>
+
+<div className="flex items-center gap-cn-md border-b border-cn-borders-3 pb-cn-sm">
+  <span className="text-cn-size-2 text-cn-3 w-32 shrink-0 font-mono">
+    themes
+  </span>
+  <div className="flex gap-cn-sm items-center">
+    <Button variant="ghost" theme="default">
+      Default
+    </Button>
+    <Button variant="ghost" theme="success">
+      Success
+    </Button>
+    <Button variant="ghost" theme="danger">
+      Danger
+    </Button>
+    <Button variant="ghost" theme="warning">
+      Warning
+    </Button>
+  </div>
+</div>
+
+<div className="flex items-center gap-cn-md border-b border-cn-borders-3 pb-cn-sm">
+  <span className="text-cn-size-2 text-cn-3 w-32 shrink-0 font-mono">
+    sizes
+  </span>
+  <div className="flex gap-cn-sm items-end">
+    <Button variant="ghost">Medium</Button>
+    <Button variant="ghost" size="sm">
+      Small
+    </Button>
+    <Button variant="ghost" size="xs">
+      Extra Small
+    </Button>
+  </div>
+</div>
+
+<div className="flex items-center gap-cn-md">
+  <span className="text-cn-size-2 text-cn-3 w-32 shrink-0 font-mono">states</span>
+  <div className="flex gap-cn-sm items-center">
+    <Button variant="ghost" disabled>Disabled</Button>
+    <Button variant="ghost" loading>Loading</Button>
+  </div>
+</div>
+</div>`}
+/>
+
+## AI Button
+
+AI variant buttons are used specifically for AI-related actions.
+
+<DocsPage.ComponentExample
+  client:only
+  code={`<div className="space-y-cn-sm">
+  <div className="flex items-center gap-cn-md border-b border-cn-borders-3 pb-cn-sm">
+    <span className="text-cn-size-2 text-cn-3 w-32 shrink-0 font-mono">default</span>
+    <Button variant="ai">AI Button</Button>
+  </div>
+
+<div className="flex items-center gap-cn-md border-b border-cn-borders-3 pb-cn-sm">
+  <span className="text-cn-size-2 text-cn-3 w-32 shrink-0 font-mono">
+    sizes
+  </span>
+  <div className="flex gap-cn-sm items-end">
+    <Button variant="ai">Medium</Button>
+    <Button variant="ai" size="sm">
+      Small
+    </Button>
+    <Button variant="ai" size="xs">
+      Extra Small
+    </Button>
+  </div>
+</div>
+
+<div className="flex items-center gap-cn-md">
+  <span className="text-cn-size-2 text-cn-3 w-32 shrink-0 font-mono">states</span>
+  <div className="flex gap-cn-sm items-center">
+    <Button variant="ai" disabled>Disabled</Button>
+    <Button variant="ai" loading>Loading</Button>
+  </div>
+</div>
+</div>`}
+/>
+
+## Link Button
+
+Link buttons appear as text links and don't accept theme props.
+
+<DocsPage.ComponentExample
+  client:only
+  code={`<div className="space-y-cn-sm">
+  <div className="flex items-center gap-cn-md border-b border-cn-borders-3 pb-cn-sm">
+    <span className="text-cn-size-2 text-cn-3 w-32 shrink-0 font-mono">default</span>
+    <Button variant="link">Link Button</Button>
+  </div>
+
+<div className="flex items-center gap-cn-md border-b border-cn-borders-3 pb-cn-sm">
+  <span className="text-cn-size-2 text-cn-3 w-32 shrink-0 font-mono">
+    sizes
+  </span>
+  <div className="flex gap-cn-sm items-end">
+    <Button variant="link">Medium</Button>
+    <Button variant="link" size="sm">
+      Small
+    </Button>
+    <Button variant="link" size="xs">
+      Extra Small
+    </Button>
+  </div>
+</div>
+
+<div className="flex items-center gap-cn-md">
+  <span className="text-cn-size-2 text-cn-3 w-32 shrink-0 font-mono">states</span>
+  <div className="flex gap-cn-sm items-center">
+    <Button variant="link" disabled>Disabled</Button>
+    <Button variant="link" loading>Loading</Button>
+  </div>
+</div>
+</div>`}
+/>
+
+## Transparent Button
+
+Transparent buttons have no background or border and don't accept theme props.
+
+<DocsPage.ComponentExample
+  client:only
+  code={`<div className="space-y-cn-sm">
+  <div className="flex items-center gap-cn-md border-b border-cn-borders-3 pb-cn-sm">
+    <span className="text-cn-size-2 text-cn-3 w-32 shrink-0 font-mono">default</span>
+    <Button variant="transparent">Transparent Button</Button>
+  </div>
+
+<div className="flex items-center gap-cn-md border-b border-cn-borders-3 pb-cn-sm">
+  <span className="text-cn-size-2 text-cn-3 w-32 shrink-0 font-mono">
+    sizes
+  </span>
+  <div className="flex gap-cn-sm items-end">
+    <Button variant="transparent">Medium</Button>
+    <Button variant="transparent" size="sm">
+      Small
+    </Button>
+    <Button variant="transparent" size="xs">
+      Extra Small
+    </Button>
+  </div>
+</div>
+
+<div className="flex items-center gap-cn-md">
+  <span className="text-cn-size-2 text-cn-3 w-32 shrink-0 font-mono">states</span>
+  <div className="flex gap-cn-sm items-center">
+    <Button variant="transparent" disabled>Disabled</Button>
+    <Button variant="transparent" loading>Loading</Button>
+  </div>
+</div>
+</div>`}
+/>
+
+## Promise callback
+
+When the `onClick` prop returns a promise, the button automatically shows a loading state until the promise resolves or rejects.
+
+<DocsPage.ComponentExample
+  client:only
+  code={`<div className="space-y-cn-sm">
+  <div className="flex items-center gap-cn-md border-b border-cn-borders-3 pb-cn-sm">
+    <span className="text-cn-size-2 text-cn-3 w-32 shrink-0 font-mono">promise</span>
+    <div className="flex gap-cn-sm items-center">
+      <Button
+        onClick={async () => {
+          // Simulate API call
+          await new Promise((resolve) => setTimeout(resolve, 2000));
+          console.log("API call completed");
+        }}
+      >
+        Save Data (2s)
+      </Button>
+      <Button
+        variant="secondary"
+        onClick={() => {
+          // Return a promise directly
+          return fetch("/api/endpoint")
+            .then((response) => response.json())
+            .then((data) => console.log("Data:", data))
+            .catch((error) => console.error("Error:", error));
+        }}
+      >
+        Fetch Data
+      </Button>
+      <Button
+        variant="outline"
+        onClick={() => {
+          // Promise that might reject
+          return new Promise((resolve, reject) => {
+            setTimeout(() => {
+              Math.random() > 0.5 ? resolve("Success!") : reject("Failed!");
+            }, 1500);
+          });
+        }}
+      >
+        Random Result (1.5s)
+      </Button>
+    </div>
+  </div>
+
+<div className="flex items-center gap-cn-md">
+  <span className="text-cn-size-2 text-cn-3 w-32 shrink-0 font-mono">manual loading</span>
+  <div className="flex gap-cn-sm items-center">
+    <Button
+      loading={true}
+      onClick={async () => {
+        await new Promise(resolve => setTimeout(resolve, 1000))
+      }}
+    >
+      Always Loading
+    </Button>
+    <Button
+      iconOnly
+      variant="ai"
+      tooltipProps={{ content: "Ask AI" }}
+      onClick={async () => {
+        await new Promise(resolve => setTimeout(resolve, 1000))
+      }}
+    >
+      <IconV2 name="ai-solid" skipSize />
+    </Button>
+  </div>
+</div>
+</div>`}
+/>
+
+Looking for icon-only buttons? See [Icon Button](/components/actions/icon-button/).
+
+</TabItem>
+
+<TabItem label="Usage">
+
+## Anatomy
+
+A button is composed of a few parts:
+
+- **Container** — the interactive surface. Its background, border, and radius are set by the `variant` and `theme`.
+- **Label** — the text describing the action. This is also the button's accessible name.
+- **Icon** _(optional)_ — an `IconV2` placed alongside the label, or on its own for icon-only buttons.
+- **Loading spinner** — replaces (or joins) the label while an action is in progress.
+
+The `size` prop scales all of these together. The `2xs` and `3xs` sizes are icon-only by design and automatically drop the text label.
+
+## Best practices
+
+**Do**
+
+- Lead with one clear primary button per view so the main action is obvious.
+- Write labels as specific actions — "Save changes", "Delete project" — not vague ones like "OK" or "Submit".
+- Use `theme="danger"` for destructive actions so the consequence reads at a glance.
+- Reach for `secondary`, `outline`, or `ghost` for supporting actions that shouldn't compete with the primary one.
+- Return a promise from `onClick` for async work — the button handles its own loading state and prevents double-clicks.
+
+**Don't**
+
+- Don't stack multiple primary buttons next to each other; it removes the visual hierarchy.
+- Don't use a button for plain navigation to another page — use a [Link](/components/navigation/link/) (or `asChild` with an `<a>`) so it stays a real link.
+- Don't rely on an icon alone without a label or tooltip to convey meaning.
+- Don't disable a button without making it clear why, or how the user can enable it.
+
+## Content
+
+- Use sentence case for every button label — capitalize only the first word, along with any proper nouns or product names.
+- Keep labels short — ideally one or two words.
+- Start with a verb: "Add member", "Copy link", "Run pipeline".
+- Match the label to the outcome so it reads as a promise of what happens next.
+- Avoid punctuation and articles ("a", "the") unless they're needed for clarity.
+
+## Accessibility
+
+### Keyboard
+
+- The button is a native `<button>`, so it's focusable in tab order and activates with both **Enter** and **Space** — no extra wiring needed.
+- Disabled and loading buttons are removed from interaction (they can't be clicked or activated).
+
+### Labeling
+
+- The text inside the button is its accessible name. For icon-only buttons there's no text, so an accessible name is **required** — the component enforces this at the type level by requiring `tooltipProps` when `iconOnly` is set. You can opt out with `ignoreIconOnlyTooltip` if you provide your own `aria-label`.
+- Any ARIA attributes you pass (`aria-label`, `aria-describedby`, `aria-expanded`, `aria-pressed`, …) are forwarded to the underlying element.
+
+### Focus & states
+
+- A visible focus ring appears only for keyboard focus (`:focus-visible`), not on mouse click, using the `--cn-focus` token.
+- The disabled state uses the native `disabled` attribute rather than styling alone, so assistive tech reports it correctly.
+
+### Known limitations
+
+- The loading state is not announced to screen readers — it sets `disabled` and shows a spinner, but there's no `aria-busy` or live-region text. If it's important that a screen-reader user knows an action is in progress, add your own `aria-live` messaging.
+- The icon-only label requirement is enforced by TypeScript only; a plain-JavaScript consumer can still render an icon-only button with no accessible name.
+
+</TabItem>
+
+<TabItem label="Properties">
+
+{/* Visually hidden — anchors the section headings below in the TOC without showing a redundant title in the panel body (the tab already says "Properties"). Hidden via #page-level-tabs h2#properties in styles.css. */}
+
+## Properties
 
 <DocsPage.PropsTable
   props={[
@@ -640,7 +610,7 @@ This ensures type safety and provides proper development-time feedback on invali
       description:
         "Color theme of the button. Note: not all variants support themes.",
       required: false,
-      value: "'default' | 'success' | 'danger'",
+      value: "'default' | 'success' | 'danger' | 'warning'",
       defaultValue: "'default'",
     },
     {
@@ -716,3 +686,19 @@ This ensures type safety and provides proper development-time feedback on invali
     },
   ]}
 />
+
+## Type Constraints
+
+The Button component implements a discriminated union pattern with conditional prop requirements:
+
+- When variant is "ghost" or "link", no theme is allowed
+- When variant is "ai", no theme is needed
+- When variant is "solid", themes "success" and "danger" are not allowed
+
+This ensures type safety and provides proper development-time feedback on invalid component usage.
+
+</TabItem>
+
+</Tabs>
+
+</div>

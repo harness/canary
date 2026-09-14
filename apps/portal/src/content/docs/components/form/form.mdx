@@ -3,21 +3,24 @@ title: Form
 description: Form component
 ---
 
+import { DocsPage } from "@/components/docs-page";
+import { Tabs, TabItem } from "@astrojs/starlight/components";
+import PageTabsToc from "@/components/page-tabs-toc.astro";
+
+<PageTabsToc />
+
+<div id="page-level-tabs">
+
+<Tabs>
+
+<TabItem label="Overview">
+
 The form system consists of two main components:
 
-- `FormWrapper` - A container component that wraps form inputs, handles form submission, and sets the input layout orientation to either `vertical` or `horizontal`
-- `FormInput` - A set of input components for different data types
+- `FormWrapper` — a container component that wraps form inputs, handles form submission, and sets the input layout orientation to either `vertical` or `horizontal`
+- `FormInput` — a set of input components for different data types
 
-### Usage
-
-The `FormInput` components generate fields with the correct:
-
-- Labels
-- Input types
-- Validation feedback
-- Accessibility attributes
-
-import { DocsPage } from "@/components/docs-page";
+The `FormInput` components generate fields with the correct labels, input types, validation feedback, and accessibility attributes.
 
 <DocsPage.ComponentExampleWithZodAndForm
   client:only
@@ -129,7 +132,9 @@ placeholder="Enter at least 3 characters"
 `}
 />
 
-### Form with Zod and React Hook Form
+## Installation
+
+Compose a form from three pieces: a zod schema for validation, `useForm` from react-hook-form wired up with `zodResolver`, and `FormWrapper` + `FormInput.*` for the fields.
 
 ```typescript jsx
 import { useForm } from "react-hook-form";
@@ -190,10 +195,29 @@ function FormWithZodAndReactHookForm() {
 }
 ```
 
-### Form in Dialog
+</TabItem>
 
-The `FormWrapper` should be placed inside the `Dialog.Body` and contain an `id`.
-The submit button should be in the `Dialog.Footer` with `type="submit"` and a `form` attribute set to the form’s `id`.
+<TabItem label="Usage">
+
+## Anatomy
+
+A form is composed of a `FormWrapper` container and one or more `FormInput.*` fields, driven by react-hook-form and validated with zod.
+
+```tsx
+<FormWrapper {...formMethods} onSubmit={handleSubmit(onSubmit)}>
+  <FormInput.Text {...register("name")} label="Name" />
+  <FormInput.Number {...register("age")} label="Age" />
+  <Button type="submit">Submit</Button>
+</FormWrapper>
+```
+
+- **FormWrapper** — renders react-hook-form's `FormProvider` around a `<form>` element (`noValidate`, so validation is handled by zod, not the browser). Spread the full `useForm` return value into it so its inputs can read and write form state. It also sets the `orientation` (`vertical` by default, or `horizontal`) that every field inside inherits.
+- **FormInput.\*** — the field primitives: `Text`, `Textarea`, `Number`, `Time`, `Radio`, `Checkbox`, `Select`, and `MultiSelect`. Each is bound to the form with `register("fieldName")`, and each generates its own label, input type, validation feedback, and accessibility wiring. Because they read form state from context, `FormInput.*` must be rendered inside a `FormWrapper` — using one outside throws.
+- **Validation feedback** — a field's error comes from the zod resolver via react-hook-form; the input displays it automatically. For errors that don't attach to a single input (like the checkbox terms error above), render a `FormCaption theme="danger"` yourself.
+
+### Form in a dialog
+
+To put a form inside a [Dialog](/components/overlays/dialog/), place the `FormWrapper` inside `Dialog.Body` and give it an `id`. Put the submit button in `Dialog.Footer` with `type="submit"` and a `form` attribute matching that `id`, so the button submits the form across the dialog's body/footer boundary.
 
 ```typescript jsx
 import { useForm } from "react-hook-form";
@@ -216,7 +240,7 @@ const formSchema = z.object({
 /** 2️⃣ Infer the type from the schema */
 const FormValuesType = z.infer<typeof formSchema>;
 
-function FormWithZodAndReactHookForm() {
+function FormInDialog() {
   /** 3️⃣ Initialize react-hook-form with zod resolver */
   const formMethods = useForm<FormValuesType>({
     resolver: zodResolver(formSchema),
@@ -262,3 +286,153 @@ function FormWithZodAndReactHookForm() {
   );
 }
 ```
+
+## Best practices
+
+{/* TODO: editorial — please review against product guidance. */}
+
+**Do**
+
+- Pass **all** of `useForm`'s return values into `FormWrapper` (spread `{...formMethods}`) — the fields depend on that context to read and write state.
+- Use `z.coerce.number()` for number fields so the string value from the input is coerced before validation.
+- Call `trim()` in string schemas so leading and trailing whitespace doesn't slip past a `min` length check.
+- Define validation in the zod schema and let each field surface its own error, rather than wiring error messages by hand.
+
+**Don't**
+
+- Don't render a `FormInput.*` outside a `FormWrapper` — it reads form context and will throw.
+- Don't rely on native browser validation; the form is `noValidate` and validation runs through zod.
+
+## Content
+
+{/* TODO: editorial — please review against product guidance. */}
+
+- Write labels that name the field ("Meeting time", "Age"), not an instruction.
+- Keep validation messages specific and actionable ("Input must be at least 3 characters"), so people know exactly how to fix the field.
+- Use captions for supplementary guidance, and reserve the danger caption for errors.
+
+## Accessibility
+
+`FormWrapper` renders a real `<form>` and each `FormInput.*` generates its own label, input type, and validation wiring, so fields are labeled and their errors are associated automatically.
+
+### Keyboard
+
+- Fields are standard inputs: **Tab** / **Shift+Tab** move between them, and the submit `Button` activates with **Enter** or **Space**.
+- Radio groups move between options with the **Arrow** keys; checkboxes toggle with **Space**.
+
+### Labeling
+
+- Each field's `label` is associated with its control, and validation messages are tied to the field so assistive tech announces the error with the input.
+- For errors that aren't bound to a single field, render a `FormCaption` so the message is still visible and read in context.
+
+### Focus & states
+
+- Invalid fields show their error state and message inline; keep the submit button's `disabled`/submitting state in sync with `formState` so the form's status is clear.
+
+</TabItem>
+
+<TabItem label="Properties">
+
+{/* Visually hidden — anchors the section headings below in the TOC without showing a redundant title in the panel body (the tab already says "Properties"). Hidden via #page-level-tabs h2#properties in styles.css. */}
+
+## Properties
+
+### FormWrapper
+
+`FormWrapper` accepts every value returned by `useForm` (spread with `{...formMethods}`), the standard `<form>` HTML attributes, plus the props below.
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "children",
+      description: "The form fields (FormInput.* components) and controls.",
+      required: true,
+      value: "React.ReactNode",
+    },
+    {
+      name: "onSubmit",
+      description:
+        "Submit handler, typically handleSubmit(onSubmit) from useForm so validation runs before your handler.",
+      required: false,
+      value: "React.FormEventHandler<HTMLFormElement>",
+    },
+    {
+      name: "orientation",
+      description:
+        "Layout orientation inherited by every field inside the wrapper.",
+      required: false,
+      defaultValue: "'vertical'",
+      value: "'vertical' | 'horizontal'",
+    },
+    {
+      name: "id",
+      description:
+        "The form's id. Set this when the submit button lives outside the form (e.g. in a Dialog.Footer) so it can reference the form via its `form` attribute.",
+      required: false,
+      value: "string",
+    },
+    {
+      name: "className",
+      description: "Additional CSS classes merged onto the form element.",
+      required: false,
+      value: "string",
+    },
+  ]}
+/>
+
+### FormInput
+
+`FormInput` is a set of field components, each bound to the form with `register("fieldName")`. Every field takes a `name` (from `register`) and an optional `error`, alongside the props of the underlying input it wraps.
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "FormInput.Text",
+      description: "Single-line text input.",
+      value: "Component",
+    },
+    {
+      name: "FormInput.Textarea",
+      description: "Multi-line text input.",
+      value: "Component",
+    },
+    {
+      name: "FormInput.Number",
+      description:
+        "Numeric input. Use z.coerce.number() in the schema for the bound field.",
+      value: "Component",
+    },
+    {
+      name: "FormInput.Time",
+      description: "Time input.",
+      value: "Component",
+    },
+    {
+      name: "FormInput.Radio",
+      description:
+        "Radio group. Contains Radio.Item children with value / label / caption.",
+      value: "Component",
+    },
+    {
+      name: "FormInput.Checkbox",
+      description: "Single checkbox.",
+      value: "Component",
+    },
+    {
+      name: "FormInput.Select",
+      description: "Single-select dropdown.",
+      value: "Component",
+    },
+    {
+      name: "FormInput.MultiSelect",
+      description: "Multi-select dropdown.",
+      value: "Component",
+    },
+  ]}
+/>
+
+</TabItem>
+
+</Tabs>
+
+</div>

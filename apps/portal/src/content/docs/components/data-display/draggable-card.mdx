@@ -1,13 +1,22 @@
 ---
 title: Draggable Card
 description: Draggable card component with drag and drop capabilities
-beta: true
 ---
 
-The `Draggable Card` component provides a powerful way to display and interact with cards, featuring drag and drop functionality. Built using dnd-kit, it offers a comprehensive solution for complex drag and drop interactions.
-
 import { DocsPage } from "@/components/docs-page";
+import { Tabs, TabItem } from "@astrojs/starlight/components";
 import { Aside } from "@astrojs/starlight/components";
+import PageTabsToc from "@/components/page-tabs-toc.astro";
+
+<PageTabsToc />
+
+<div id="page-level-tabs">
+
+<Tabs>
+
+<TabItem label="Overview">
+
+The `Draggable Card` component provides a powerful way to display and interact with cards, featuring drag and drop functionality. Built using dnd-kit, it offers a comprehensive solution for complex drag and drop interactions.
 
 <DocsPage.ComponentExample
   client:only
@@ -27,67 +36,26 @@ import { Aside } from "@astrojs/starlight/components";
 
 return (
 
-<DraggableCardList cards={cards} setCards={setCards} />) } `} />
+<div className="space-y-cn-sm w-full">
+  <div className="flex items-start gap-cn-md">
+    <span className="text-cn-size-2 text-cn-3 w-40 shrink-0 font-mono pt-cn-xs">
+      default
+    </span>
+    <div className="flex-1 min-w-0">
+      <DraggableCardList cards={cards} setCards={setCards} />
+    </div>
+  </div>
+</div>
+) } `} />
 
 <Aside type="tip">
   Try dragging the cards to reorder them. The component handles all the drag and
   drop interactions for you.
 </Aside>
 
-## Usage
+## Variations
 
-```typescript jsx
-import { DraggableCard, DraggableCardList, CardData } from '@harnessio/ui/components'
-
-// Define your cards
-const [cards, setCards] = useState<CardData[]>([
-  {
-    id: '1',
-    title: 'First Card',
-    description: 'This is the first card description',
-    disabled: false // Optional: disable dragging for this card
-  },
-  {
-    id: '2',
-    title: 'Second Card',
-    description: 'This is the second card description'
-  }
-])
-
-// Use the DraggableCardList to render and manage the cards
-return (
-  <DraggableCardList
-    cards={cards}
-    setCards={setCards}
-  />
-)
-```
-
-### Advanced Example
-
-You can customize the card titles and descriptions with React components:
-
-```typescript jsx
-const [cards, setCards] = useState<CardData[]>([
-  {
-    id: '1',
-    title: (
-      <div className="flex items-center justify-between w-full">
-        <span>Card with Custom Title</span>
-        <IconV2 name="settings" size="sm" />
-      </div>
-    ),
-    description: (
-      <div className="space-y-cn-xs">
-        <p>This card has a custom description component</p>
-        <Button>Action Button</Button>
-      </div>
-    )
-  }
-])
-```
-
-## Example with Actions
+### With actions
 
 This example shows how to add interactive elements like close buttons to your draggable cards:
 
@@ -181,11 +149,21 @@ This example shows how to add interactive elements like close buttons to your dr
     }
   ])
 
-return <DraggableCardList cards={cards} setCards={setCards} />
-}`}
-/>
+return (
 
-## Grip Position Outside
+<div className="space-y-cn-sm w-full">
+  <div className="flex items-start gap-cn-md">
+    <span className="text-cn-size-2 text-cn-3 w-40 shrink-0 font-mono pt-cn-xs">
+      with actions
+    </span>
+    <div className="flex-1 min-w-0">
+      <DraggableCardList cards={cards} setCards={setCards} />
+    </div>
+  </div>
+</div>
+) }`} />
+
+### Grip outside
 
 The draggable card supports placing the grip handle outside the card container using `gripPosition="outside"`. This creates a cleaner card appearance with the drag handle positioned to the left of the card.
 
@@ -282,11 +260,21 @@ The draggable card supports placing the grip handle outside the card container u
     }
   ])
 
-return <DraggableCardList cards={cards} setCards={setCards} />
-}`}
-/>
+return (
 
-## Sticky Headers
+<div className="space-y-cn-sm w-full">
+  <div className="flex items-start gap-cn-md">
+    <span className="text-cn-size-2 text-cn-3 w-40 shrink-0 font-mono pt-cn-xs">
+      grip outside
+    </span>
+    <div className="flex-1 min-w-0">
+      <DraggableCardList cards={cards} setCards={setCards} />
+    </div>
+  </div>
+</div>
+) }`} />
+
+### Sticky headers
 
 Use the `sticky` and `header` props on `DraggableCardList` for the common pattern of a pinned header above a draggable list inside a scrollable drawer. These props wrap the list in a [`StickyListSection`](/components/utilities/sticky-list-section) internally.
 
@@ -332,40 +320,47 @@ const SectionHeader = ({ label }) => (
 
 return (
 
-<Drawer.Root>
-  <Drawer.Trigger>
-    <Button>Open Drawer</Button>
-  </Drawer.Trigger>
-  <Drawer.Content size="sm">
-    <Drawer.Header>
-      <Drawer.Title>Configure stage</Drawer.Title>
-    </Drawer.Header>
-    <Drawer.Body>
-      <Layout.Vertical gap="md">
-        <DraggableCardList
-          sticky
-          header={<SectionHeader label="Service" />}
-          cards={serviceCards}
-          setCards={setServiceCards}
-          listGap="sm"
-        />
-        <DraggableCardList
-          sticky
-          header={<SectionHeader label="Environment" />}
-          cards={envCards}
-          setCards={setEnvCards}
-          listGap="sm"
-        />
-      </Layout.Vertical>
-    </Drawer.Body>
-    <Drawer.Footer>
-      <Button>Submit</Button>
-    </Drawer.Footer>
-  </Drawer.Content>
-</Drawer.Root>
+<div className="space-y-cn-sm w-full">
+  <div className="flex items-center gap-cn-md">
+    <span className="text-cn-size-2 text-cn-3 w-40 shrink-0 font-mono">
+      sticky headers
+    </span>
+    <Drawer.Root>
+      <Drawer.Trigger>
+        <Button>Open Drawer</Button>
+      </Drawer.Trigger>
+      <Drawer.Content size="sm">
+        <Drawer.Header>
+          <Drawer.Title>Configure stage</Drawer.Title>
+        </Drawer.Header>
+        <Drawer.Body>
+          <Layout.Vertical gap="md">
+            <DraggableCardList
+              sticky
+              header={<SectionHeader label="Service" />}
+              cards={serviceCards}
+              setCards={setServiceCards}
+              listGap="sm"
+            />
+            <DraggableCardList
+              sticky
+              header={<SectionHeader label="Environment" />}
+              cards={envCards}
+              setCards={setEnvCards}
+              listGap="sm"
+            />
+          </Layout.Vertical>
+        </Drawer.Body>
+        <Drawer.Footer>
+          <Button>Submit</Button>
+        </Drawer.Footer>
+      </Drawer.Content>
+    </Drawer.Root>
+  </div>
+</div>
 ) }`} />
 
-### Contained Mode (inside form wrappers)
+### Contained mode
 
 Use `contained` when the `DraggableCardList` is nested inside form input wrappers or other intermediate elements, but the drawer body is still the scroll container. Set `--cn-sticky-container-padding` on an ancestor to control how far the header bleeds horizontally.
 
@@ -406,7 +401,10 @@ const [envCards, setEnvCards] = React.useState([
 
 return (
 
-<Drawer.Root>
+<div className="space-y-cn-sm w-full">
+  <div className="flex items-center gap-cn-md">
+    <span className="text-cn-size-2 text-cn-3 w-40 shrink-0 font-mono">contained</span>
+    <Drawer.Root>
 <Drawer.Trigger>
 <Button>Open Form Drawer</Button>
 </Drawer.Trigger>
@@ -478,6 +476,9 @@ return (
       </Drawer.Content>
     </Drawer.Root>
 
+  </div>
+</div>
+
 )
 }`} />
 
@@ -487,9 +488,64 @@ return (
   `ControlGroup` and `Layout.Vertical` wrappers.
 </Aside>
 
+## Installation
+
+```typescript jsx
+import { DraggableCard, DraggableCardList, CardData } from '@harnessio/ui/components'
+
+// Define your cards
+const [cards, setCards] = useState<CardData[]>([
+  {
+    id: '1',
+    title: 'First Card',
+    description: 'This is the first card description',
+    disableDragAndDrop: false // Optional: disable dragging for this card
+  },
+  {
+    id: '2',
+    title: 'Second Card',
+    description: 'This is the second card description'
+  }
+])
+
+// Use the DraggableCardList to render and manage the cards
+return (
+  <DraggableCardList
+    cards={cards}
+    setCards={setCards}
+  />
+)
+```
+
+Both `title` and `description` accept React components, not just strings, so you can render richer content:
+
+```typescript jsx
+const [cards, setCards] = useState<CardData[]>([
+  {
+    id: '1',
+    title: (
+      <div className="flex items-center justify-between w-full">
+        <span>Card with Custom Title</span>
+        <IconV2 name="settings" size="sm" />
+      </div>
+    ),
+    description: (
+      <div className="space-y-cn-xs">
+        <p>This card has a custom description component</p>
+        <Button>Action Button</Button>
+      </div>
+    )
+  }
+])
+```
+
+</TabItem>
+
+<TabItem label="Usage">
+
 ## Anatomy
 
-The draggable card system consists of two main components:
+The draggable card system is two components working together:
 
 ```typescript jsx
 // Individual card component
@@ -497,7 +553,7 @@ The draggable card system consists of two main components:
   id="unique-id"
   title="Card Title"
   description="Card Description"
-  disabled={false}
+  disableDragAndDrop={false}
 />
 
 // List component that manages multiple cards
@@ -507,11 +563,61 @@ The draggable card system consists of two main components:
 />
 ```
 
-## API Reference
+- **DraggableCardList** — the container you'll usually reach for. It owns the drag context (dnd-kit's `DndContext` + `SortableContext`), renders each entry in `cards` as a `DraggableCard`, and calls `setCards` with the new order when a drag ends. `listGap` controls the spacing between cards.
+- **DraggableCard** — a single [Card](/components/data-display/card/) with a grip handle. By default (`gripPosition="inside"`) the grip sits inline at the start of the title row; `gripPosition="outside"` moves it to the left of the card for a cleaner surface. Setting `disableDragAndDrop` on a card makes it static.
+- **Grip handle** — a `grip-dots` icon that shows a grab cursor; it's the drag affordance dnd-kit's pointer sensor listens to.
+- **Sticky header** — passing `header` renders content above the list; adding `sticky` wraps the whole thing in a [`StickyListSection`](/components/utilities/sticky-list-section) so the header pins while the list scrolls.
 
-### `DraggableCard`
+## Best practices
 
-The individual card component that can be dragged and reordered.
+{/* TODO: editorial — please review against product guidance. */}
+
+**Do**
+
+- Give every card a stable, unique `id` — reordering relies on it.
+- Use `gripPosition="outside"` when the card content is dense or already has its own actions, so the drag affordance stays distinct.
+- Reach for `sticky` + `header` when a reorderable list lives inside a scrollable drawer or panel and the group needs a label.
+- Set `disableDragAndDrop` on cards that must stay in place rather than hiding the grip yourself.
+
+**Don't**
+
+- Don't put the only copy of a critical action behind drag — provide buttons (like the remove button in the examples) for anything a keyboard or touch user must reach.
+- Don't nest draggable lists so deeply that it's unclear which list an item belongs to.
+
+## Content
+
+{/* TODO: editorial — please review against product guidance. */}
+
+- Keep card titles short and scannable; a reorderable list is easier to manage when each row reads at a glance.
+- Put secondary details in `description`, and keep row actions (remove, settings) compact and clearly labeled with tooltips.
+
+## Accessibility
+
+Reordering is powered by dnd-kit. The list is configured with a pointer sensor, so dragging works with mouse and touch.
+
+### Labeling
+
+- The grip is an icon-only affordance. Any interactive content you place in a card (buttons, links) must carry its own accessible label — the examples use `tooltipProps` on the remove buttons for this.
+
+### Focus & states
+
+- While a card is being dragged it dims (reduced opacity) and lifts above its siblings, giving a clear visual cue for the item in motion.
+
+### Known limitations
+
+- **Reordering is pointer/touch-only.** The list registers a pointer sensor but no keyboard sensor, so cards can't be reordered from the keyboard. Where order matters for keyboard or assistive-technology users, provide an alternative way to change it (for example, up/down controls).
+
+</TabItem>
+
+<TabItem label="Properties">
+
+{/* Visually hidden — anchors the section headings below in the TOC without showing a redundant title in the panel body (the tab already says "Properties"). Hidden via #page-level-tabs h2#properties in styles.css. */}
+
+## Properties
+
+### DraggableCard
+
+The individual card component that can be dragged and reordered. It also accepts [Card](/components/data-display/card/) root props (such as `size` and `className`).
 
 <DocsPage.PropsTable
   props={[
@@ -534,15 +640,24 @@ The individual card component that can be dragged and reordered.
       value: "string | ReactNode",
     },
     {
-      name: "disabled",
-      description: "If true, the card cannot be dragged. Default is false.",
+      name: "disableDragAndDrop",
+      description: "If true, the card cannot be dragged.",
       required: false,
       value: "boolean",
+      defaultValue: "false",
+    },
+    {
+      name: "gripPosition",
+      description:
+        "Where the drag handle sits: 'inside' places it inline in the title row, 'outside' places it to the left of the card.",
+      required: false,
+      value: "'inside' | 'outside'",
+      defaultValue: "'inside'",
     },
   ]}
 />
 
-### `DraggableCardList`
+### DraggableCardList
 
 A container component that manages a list of draggable cards.
 
@@ -584,20 +699,29 @@ A container component that manages a list of draggable cards.
       name: "listGap",
       description: "Gap between cards in the list",
       required: false,
-      value: "'xs' | 'sm' | 'md'",
+      value: "GapSize",
+      defaultValue: "'md'",
     },
   ]}
 />
 
-### `CardData` Interface
+### CardData
 
-The interface for the card data objects used by the DraggableCardList component.
+The interface for the card data objects used by the `DraggableCardList` component. It extends the [Card](/components/data-display/card/) root props (minus `title` / `children`).
 
 ```typescript
 interface CardData {
   id: string;
   title: string | React.ReactNode;
   description?: string | React.ReactNode;
-  disabled?: boolean;
+  disableDragAndDrop?: boolean;
+  gripPosition?: "inside" | "outside";
+  // ...plus Card root props such as size, className
 }
 ```
+
+</TabItem>
+
+</Tabs>
+
+</div>

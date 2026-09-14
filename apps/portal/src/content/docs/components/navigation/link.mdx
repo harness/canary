@@ -3,73 +3,97 @@ title: Link
 description: Link component
 ---
 
-The `Link` component provides styled links for navigation within and outside the application. It offers two size options and distinguishes between internal and external links with appropriate visual indicator. The component ensures consistent styling while maintaining accessibility standards.
-
 import { DocsPage } from "@/components/docs-page";
+import { Tabs, TabItem } from "@astrojs/starlight/components";
+import PageTabsToc from "@/components/page-tabs-toc.astro";
+
+<PageTabsToc />
+
+<div id="page-level-tabs">
+
+<Tabs>
+
+<TabItem label="Overview">
+
+The `Link` component provides styled links for navigation within and outside the application. It offers two size options and distinguishes between internal and external links with appropriate visual indicator. The component ensures consistent styling while maintaining accessibility standards.
 
 <DocsPage.ComponentExample
   client:only
-  code={`<div className="grid grid-cols-2 gap-cn-md">
-    <div className="flex flex-col gap-cn-xs">
-        <h5 className="mb-cn-3xs">Default</h5>
-        <Link to="#1">Link</Link>
-        <Link to="#2" data-hovered="true">Link (hovered)</Link>
-        <Link to="#4" disabled>Link (disabled)</Link>
+  code={`<div className="space-y-cn-sm w-full">
+  <div className="flex gap-cn-md pb-cn-3xs">
+    <span className="text-cn-size-1 text-cn-4 w-48 shrink-0 font-mono uppercase tracking-wide">Variant</span>
+    <span className="text-cn-size-1 text-cn-4 flex-1 min-w-0 font-mono uppercase tracking-wide">Default Size</span>
+    <span className="text-cn-size-1 text-cn-4 flex-1 min-w-0 font-mono uppercase tracking-wide">Small Size</span>
+  </div>
+  <div className="flex items-start gap-cn-md border-b border-cn-borders-3 pb-cn-sm">
+    <span className="text-cn-size-2 text-cn-3 w-48 shrink-0 font-mono pt-cn-3xs">default</span>
+    <div className="flex-1 min-w-0 flex flex-col gap-cn-xs">
+      <Link to="#1">Link</Link>
+      <Link to="#2" data-hovered="true">Link (hovered)</Link>
+      <Link to="#4" disabled>Link (disabled)</Link>
     </div>
-
-    <div className="flex flex-col gap-cn-xs">
-        <h5 className="mb-cn-3xs">Default sm</h5>
-        <Link size="sm" to="#1">Link</Link>
-        <Link size="sm" to="#2" data-hovered="true">Link (hovered)</Link>
-        <Link size="sm" to="#4" disabled>Link (disabled)</Link>
+    <div className="flex-1 min-w-0 flex flex-col gap-cn-xs">
+      <Link size="sm" to="#1">Link</Link>
+      <Link size="sm" to="#2" data-hovered="true">Link (hovered)</Link>
+      <Link size="sm" to="#4" disabled>Link (disabled)</Link>
     </div>
-
-    <div className="flex flex-col gap-cn-xs">
-        <h5 className="mb-cn-3xs">Secondary</h5>
-        <Link variant="secondary" to="#1">Link</Link>
-        <Link variant="secondary" to="#2" data-hovered="true">Link (hovered)</Link>
-        <Link variant="secondary" to="#4" disabled>Link (disabled)</Link>
+  </div>
+  <div className="flex items-start gap-cn-md border-b border-cn-borders-3 pb-cn-sm">
+    <span className="text-cn-size-2 text-cn-3 w-48 shrink-0 font-mono pt-cn-3xs">secondary</span>
+    <div className="flex-1 min-w-0 flex flex-col gap-cn-xs">
+      <Link variant="secondary" to="#1">Link</Link>
+      <Link variant="secondary" to="#2" data-hovered="true">Link (hovered)</Link>
+      <Link variant="secondary" to="#4" disabled>Link (disabled)</Link>
     </div>
-
-    <div className="flex flex-col gap-cn-xs">
-        <h5 className="mb-cn-3xs">Secondary sm</h5>
-        <Link size="sm" variant="secondary" to="#1">Link</Link>
-        <Link size="sm" variant="secondary" to="#2" data-hovered="true">Link (hovered)</Link>
-        <Link size="sm" variant="secondary" to="#4" disabled>Link (disabled)</Link>
+    <div className="flex-1 min-w-0 flex flex-col gap-cn-xs">
+      <Link size="sm" variant="secondary" to="#1">Link</Link>
+      <Link size="sm" variant="secondary" to="#2" data-hovered="true">Link (hovered)</Link>
+      <Link size="sm" variant="secondary" to="#4" disabled>Link (disabled)</Link>
     </div>
-
-    <div className="flex flex-col gap-cn-xs">
-        <h5 className="mb-cn-3xs">Default with icons</h5>
-        <Link prefixIcon suffixIcon to="#1">Link</Link>
-        <Link prefixIcon suffixIcon to="#2" data-hovered="true">Link (hovered)</Link>
-        <Link prefixIcon suffixIcon to="#4" disabled>Link (disabled)</Link>
+  </div>
+  <div className="flex items-start gap-cn-md border-b border-cn-borders-3 pb-cn-sm">
+    <span className="text-cn-size-2 text-cn-3 w-48 shrink-0 font-mono pt-cn-3xs">default + icons</span>
+    <div className="flex-1 min-w-0 flex flex-col gap-cn-xs">
+      <Link prefixIcon suffixIcon to="#1">Link</Link>
+      <Link prefixIcon suffixIcon to="#2" data-hovered="true">Link (hovered)</Link>
+      <Link prefixIcon suffixIcon to="#4" disabled>Link (disabled)</Link>
     </div>
-
-    <div className="flex flex-col gap-cn-xs">
-        <h5 className="mb-cn-3xs">Default sm with icons</h5>
-        <Link size="sm" prefixIcon suffixIcon to="#1">Link</Link>
-        <Link size="sm" prefixIcon suffixIcon to="#2" data-hovered="true">Link (hovered)</Link>
-        <Link size="sm" prefixIcon suffixIcon to="#4" disabled>Link (disabled)</Link>
+    <div className="flex-1 min-w-0 flex flex-col gap-cn-xs">
+      <Link size="sm" prefixIcon suffixIcon to="#1">Link</Link>
+      <Link size="sm" prefixIcon suffixIcon to="#2" data-hovered="true">Link (hovered)</Link>
+      <Link size="sm" prefixIcon suffixIcon to="#4" disabled>Link (disabled)</Link>
     </div>
-
-    <div className="flex flex-col gap-cn-xs">
-        <h5 className="mb-cn-3xs">Secondary with icons</h5>
-        <Link prefixIcon suffixIcon variant="secondary" to="#1">Link</Link>
-        <Link prefixIcon suffixIcon variant="secondary" to="#2" data-hovered="true">Link (hovered)</Link>
-        <Link prefixIcon suffixIcon variant="secondary" to="#4" disabled>Link (disabled)</Link>
+  </div>
+  <div className="flex items-start gap-cn-md border-b border-cn-borders-3 pb-cn-sm">
+    <span className="text-cn-size-2 text-cn-3 w-48 shrink-0 font-mono pt-cn-3xs">secondary + icons</span>
+    <div className="flex-1 min-w-0 flex flex-col gap-cn-xs">
+      <Link prefixIcon suffixIcon variant="secondary" to="#1">Link</Link>
+      <Link prefixIcon suffixIcon variant="secondary" to="#2" data-hovered="true">Link (hovered)</Link>
+      <Link prefixIcon suffixIcon variant="secondary" to="#4" disabled>Link (disabled)</Link>
     </div>
-
-    <div className="flex flex-col gap-cn-xs">
-        <h5 className="mb-cn-3xs">Secondary sm with icons + external</h5>
-        <Link size="sm" prefixIcon suffixIcon variant="secondary" external href="#1">Link</Link>
-        <Link size="sm" prefixIcon suffixIcon variant="secondary" external href="#2" data-hovered="true">Link (hovered)</Link>
-        <Link size="sm" prefixIcon suffixIcon variant="secondary" external href="#4" disabled>Link (disabled)</Link>
+    <div className="flex-1 min-w-0 flex flex-col gap-cn-xs">
+      <Link size="sm" prefixIcon suffixIcon variant="secondary" to="#1">Link</Link>
+      <Link size="sm" prefixIcon suffixIcon variant="secondary" to="#2" data-hovered="true">Link (hovered)</Link>
+      <Link size="sm" prefixIcon suffixIcon variant="secondary" to="#4" disabled>Link (disabled)</Link>
     </div>
-
+  </div>
+  <div className="flex items-start gap-cn-md">
+    <span className="text-cn-size-2 text-cn-3 w-48 shrink-0 font-mono pt-cn-3xs">secondary + icons + external</span>
+    <div className="flex-1 min-w-0 flex flex-col gap-cn-xs">
+      <Link prefixIcon suffixIcon variant="secondary" external href="#1">Link</Link>
+      <Link prefixIcon suffixIcon variant="secondary" external href="#2" data-hovered="true">Link (hovered)</Link>
+      <Link prefixIcon suffixIcon variant="secondary" external href="#4" disabled>Link (disabled)</Link>
+    </div>
+    <div className="flex-1 min-w-0 flex flex-col gap-cn-xs">
+      <Link size="sm" prefixIcon suffixIcon variant="secondary" external href="#1">Link</Link>
+      <Link size="sm" prefixIcon suffixIcon variant="secondary" external href="#2" data-hovered="true">Link (hovered)</Link>
+      <Link size="sm" prefixIcon suffixIcon variant="secondary" external href="#4" disabled>Link (disabled)</Link>
+    </div>
+  </div>
 </div>`}
 />
 
-## Usage
+## Installation
 
 ```typescript jsx
 import { Link } from '@harnessio/ui/components'
@@ -81,42 +105,97 @@ return (
 )
 ```
 
-## API Reference
+</TabItem>
 
-The `Link` component allows for the creation of accessible hyperlinks with consistent styling. It supports multiple visual variants, sizes, and icon placements to enhance navigation experiences throughout the application.
+<TabItem label="Usage">
 
-```typescript jsx
-<Link
-  to="/your-url-here"
-  className="additional-classes" // [OPTIONAL] Additional CSS classes to apply to the link
-  variant="secondary" // [OPTIONAL] The style variant of the link
-  prefixIcon // [OPTIONAL] Displays an icon before the link text
-  suffixIcon // [OPTIONAL] Displays an icon after the link text
-  disabled // [OPTIONAL] Disables the link, preventing clicks and changing its appearance
-  size="sm" // [OPTIONAL] The size of the link
->
-  Link Text
-</Link>
+## Anatomy
+
+`Link` renders an anchor whose underlying element depends on whether it's internal or external.
+
+```tsx
+<Link to="/settings">Settings</Link>
+<Link external href="https://harness.io">Harness</Link>
 ```
+
+- **Internal vs. external** — the `external` prop is a discriminated union. By default (`external` unset/`false`) the component renders the app router's link and takes a `to` prop. With `external`, it renders a plain `<a>` and takes an `href` plus any standard anchor attributes.
+- **Variants and size** — `variant` (`default` / `secondary`) and `size` (`md` / `sm`) map to `cn-link-*` classes on the base `cn-link` element.
+- **Icons** — `prefixIcon` and `suffixIcon` accept `true` or an icon name. When `true`, they render the defaults: `nav-arrow-left` (prefix) and `arrow-up-right` (suffix), both as an `IconV2` at size `2xs`. Pass a name to override.
+- **Disabled** — `disabled` doesn't change the element; it sets `data-disabled` / `aria-disabled` and intercepts clicks (calling `preventDefault`/`stopPropagation` so `onClick` never fires).
+- **Underline** — `noHoverUnderline` opts out of the hover underline.
+
+## Best practices
+
+{/* TODO: editorial — please review against product guidance. */}
+
+**Do**
+
+- Use an internal `Link` (`to`) for in-app navigation and `external` (`href`) for links that leave the app.
+- Add a `suffixIcon` to external links so users can see the link leaves the current context.
+- Keep link text descriptive of its destination — it doubles as the accessible name.
+
+**Don't**
+
+- Don't use a `Link` to trigger an action with no navigation; use a Button for that.
+- Don't write "click here" — the link text should make sense on its own.
+
+## Content
+
+{/* TODO: editorial — please review against product guidance. */}
+
+- Write link text that names the destination ("View pipeline settings"), not the mechanic ("click here").
+- Keep links short; if the surrounding sentence already explains the target, link just the key phrase.
+
+## Accessibility
+
+### Keyboard
+
+- Links are focusable and activate with Enter, matching native anchor behavior.
+
+### Labeling
+
+- The link's text content is its accessible name — make it meaningful out of context. For an external link, consider indicating that it opens elsewhere.
+
+### Focus & states
+
+- `disabled` sets `aria-disabled` and blocks activation, but the anchor remains in the DOM. Where a disabled link shouldn't be reachable at all, also remove it from the tab order or render it as non-interactive text.
+
+### Known limitations
+
+- **External links don't auto-set `target`/`rel` or add an external-link icon.** Pass `target`/`rel` yourself when opening a new tab, and use `suffixIcon` to signal the link leaves the app.
+
+</TabItem>
+
+<TabItem label="Properties">
+
+{/* Visually hidden — anchors the section headings below in the TOC without showing a redundant title in the panel body (the tab already says "Properties"). Hidden via #page-level-tabs h2#properties in styles.css. */}
+
+## Properties
+
+### Internal link
+
+The default. Renders the app router link and accepts its props.
 
 <DocsPage.PropsTable
   props={[
     {
-      name: "external",
-      description: "Indicates that the link is external.",
-      required: false,
-      value: "false",
-    },
-    {
       name: "to",
-      description: "The URL that the link points to",
+      description: "The URL that the link points to.",
       required: true,
       value: "string",
+    },
+    {
+      name: "external",
+      description: "Indicates the link is internal.",
+      required: false,
+      value: "false",
     },
   ]}
 />
 
-Also, the `Link` component can be `external` — in that case, the types will be different.
+### External link
+
+Set `external` to render a plain `<a>` and accept standard anchor attributes (`target`, `rel`, …).
 
 <DocsPage.PropsTable
   props={[
@@ -128,14 +207,16 @@ Also, the `Link` component can be `external` — in that case, the types will be
     },
     {
       name: "href",
-      description: "The URL that the link points to",
+      description: "The URL that the link points to.",
       required: true,
       value: "string",
     },
   ]}
 />
 
-Common types
+### Common props
+
+Shared by both variants.
 
 <DocsPage.PropsTable
   props={[
@@ -155,22 +236,31 @@ Common types
     },
     {
       name: "prefixIcon",
-      description: "Displays an icon before the link text",
-      defaultValue: "'chevron-left'",
+      description:
+        "Displays an icon before the link text. Pass true for the default, or an icon name.",
+      defaultValue: "'nav-arrow-left' (when true)",
       required: false,
-      value: "'boolean' | IconProps['name']",
+      value: "boolean | IconPropsV2['name']",
     },
     {
       name: "suffixIcon",
-      description: "Displays an icon after the link text",
-      defaultValue: "'arrow-to-top-right'",
+      description:
+        "Displays an icon after the link text. Pass true for the default, or an icon name.",
+      defaultValue: "'arrow-up-right' (when true)",
       required: false,
-      value: "'boolean' | IconProps['name']",
+      value: "boolean | IconPropsV2['name']",
     },
     {
       name: "disabled",
       description:
         "Disables the link, preventing clicks and changing its appearance",
+      defaultValue: "false",
+      required: false,
+      value: "boolean",
+    },
+    {
+      name: "noHoverUnderline",
+      description: "Removes the underline shown on hover.",
       defaultValue: "false",
       required: false,
       value: "boolean",
@@ -183,3 +273,9 @@ Common types
     },
   ]}
 />
+
+</TabItem>
+
+</Tabs>
+
+</div>

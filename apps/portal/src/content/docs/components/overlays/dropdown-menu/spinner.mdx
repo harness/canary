@@ -1,0 +1,53 @@
+---
+title: Spinner
+description: Loading spinner in a DropdownMenu
+---
+
+import { DocsPage } from "@/components/docs-page";
+
+The `DropdownMenu` component supports loading states using the `DropdownMenu.Spinner` component. This is useful when the dropdown content is being loaded asynchronously.
+
+<DocsPage.ComponentExample
+  client:only
+  code={`<DropdownMenu.Root>
+    <DropdownMenu.Trigger aria-label="options menu" asChild>
+      <Button variant="ghost" iconOnly>
+        <IconV2 name="more-horizontal" />
+      </Button>
+    </DropdownMenu.Trigger>
+    <DropdownMenu.Content>
+        <DropdownMenu.Spinner />
+    </DropdownMenu.Content>
+  </DropdownMenu.Root>`}
+/>
+
+## Properties
+
+### `Spinner`
+
+The `Spinner` component displays a loading indicator within the dropdown menu.
+
+```typescript jsx
+<DropdownMenu.Spinner
+  className="my-class" // [OPTIONAL] custom class
+>
+  {/* Optional children content */}
+</DropdownMenu.Spinner>
+```
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "className",
+      description: "Custom class name",
+      required: false,
+      value: "string",
+    },
+    {
+      name: "children",
+      description: "Optional content to display alongside the spinner",
+      required: false,
+      value: "ReactNode",
+    },
+  ]}
+/>

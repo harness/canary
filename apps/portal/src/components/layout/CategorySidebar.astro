@@ -1,0 +1,36 @@
+---
+import SidebarPersister from "@astrojs/starlight/components/SidebarPersister.astro";
+import SidebarSublist from "@astrojs/starlight/components/SidebarSublist.astro";
+import { getActiveCategory } from "../../lib/nav-categories";
+
+const { sidebar } = Astro.locals.starlightRoute;
+const active = getActiveCategory(Astro.url.pathname);
+
+// Keep only the sidebar groups that belong to the active top-nav category.
+// Render them as-is (with their group headings) so items keep the same nested
+// link styling they have under Docs, rather than being promoted to top-level.
+const groups = sidebar.filter(
+  (entry: any) =>
+    entry.type === "group" && active?.groups.includes(entry.label),
+);
+
+// When a category has a single group whose heading just repeats the top-nav tab
+// (Components, Foundations, Data Viz), that collapsible heading is redundant and
+// lets people collapse the whole section. We keep the items inside their group
+// (so they retain the nested link/icon styling) but hide the heading and lock it
+// open via the `category-sidebar--flat` class below. Multi-group sections (Docs)
+// and ones with a distinct heading name (Patterns → "PLG Patterns") are untouched.
+const isRedundantHeading =
+  groups.length === 1 && groups[0].label === active?.label;
+---
+
+<div
+  class:list={[
+    "category-sidebar",
+    { "category-sidebar--flat": isRedundantHeading },
+  ]}
+>
+  <SidebarPersister>
+    <SidebarSublist sublist={groups} />
+  </SidebarPersister>
+</div>

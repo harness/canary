@@ -1,17 +1,29 @@
 ---
 title: Dialog
 description: A dialog overlay that appears above the page content
-beta: true
 ---
+
+import { DocsPage } from "@/components/docs-page";
+import { Tabs, TabItem } from "@astrojs/starlight/components";
+import { Aside } from "@astrojs/starlight/components";
+import PageTabsToc from "@/components/page-tabs-toc.astro";
+
+<PageTabsToc />
+
+<div id="page-level-tabs">
+
+<Tabs>
+
+<TabItem label="Overview">
 
 The `Dialog` component provides an accessible and customizable dialog overlay for displaying important content or requesting user input. It supports different sizes, themes, and can include an icon or logo in the header.
 
-import { DocsPage } from "@/components/docs-page";
-import { Aside } from "@astrojs/starlight/components";
-
 <DocsPage.ComponentExample
   client:only
-  code={`<Dialog.Root>
+  code={`<div className="space-y-cn-sm w-full">
+  <div className="flex items-center gap-cn-md">
+    <span className="text-cn-size-2 text-cn-3 w-40 shrink-0 font-mono">default</span>
+    <Dialog.Root>
       <Dialog.Trigger>
         <Button>Open Dialog</Button>
       </Dialog.Trigger>
@@ -57,41 +69,13 @@ import { Aside } from "@astrojs/starlight/components";
           </ButtonLayout>
         </Dialog.Footer>
       </Dialog.Content>
-    </Dialog.Root>`}
+    </Dialog.Root>
 
+  </div>
+</div>`}
 />
 
-## Usage
-
-```typescript jsx
-import { Dialog } from "@harnessio/ui/components";
-
-// ...
-
-return (
-  <Dialog.Root>
-    <Dialog.Trigger>
-      <Button>Open Dialog</Button>
-    </Dialog.Trigger>
-
-    <Dialog.Content size="md">
-      <Dialog.Header icon="plus-circle">
-        <Dialog.Title>Dialog Title</Dialog.Title>
-        <Dialog.Description>Optional description text</Dialog.Description>
-      </Dialog.Header>
-
-      <Dialog.Body>
-        Dialog content goes here
-      </Dialog.Body>
-
-      <Dialog.Footer>
-        <Dialog.Close>Cancel</Dialog.Close>
-        <Button variant="primary">Confirm</Button>
-      </Dialog.Footer>
-    </Dialog.Content>
-  </Dialog.Root>
-)
-```
+## Variations
 
 ### Sizes
 
@@ -99,9 +83,9 @@ The `Dialog` component offers four size options: `sm`, `md`, `lg`, and `max` (wh
 
 <DocsPage.ComponentExample
   client:only
-  code={`<div className="space-y-cn-md">
-  <div className="space-y-cn-xs">
-    <Text variant="heading-subsection" as="h4">Small (Default)</Text>
+  code={`<div className="space-y-cn-md w-full">
+  <div className="flex items-center gap-cn-md border-b border-cn-borders-3 pb-cn-md">
+    <span className="text-cn-size-2 text-cn-3 w-40 shrink-0 font-mono">sm</span>
     <Dialog.Root>
       <Dialog.Trigger>
         <Button>Small Dialog</Button>
@@ -118,10 +102,8 @@ The `Dialog` component offers four size options: `sm`, `md`, `lg`, and `max` (wh
     </Dialog.Root>
   </div>
 
-<div className="space-y-cn-xs">
-  <Text variant="heading-subsection" as="h4">
-    Medium
-  </Text>
+<div className="flex items-center gap-cn-md border-b border-cn-borders-3 pb-cn-md">
+  <span className="text-cn-size-2 text-cn-3 w-40 shrink-0 font-mono">md</span>
   <Dialog.Root>
     <Dialog.Trigger>
       <Button>Medium Dialog</Button>
@@ -138,10 +120,8 @@ The `Dialog` component offers four size options: `sm`, `md`, `lg`, and `max` (wh
   </Dialog.Root>
 </div>
 
-<div className="space-y-cn-xs">
-  <Text variant="heading-subsection" as="h4">
-    Large
-  </Text>
+<div className="flex items-center gap-cn-md border-b border-cn-borders-3 pb-cn-md">
+  <span className="text-cn-size-2 text-cn-3 w-40 shrink-0 font-mono">lg</span>
   <Dialog.Root>
     <Dialog.Trigger>
       <Button>Large Dialog</Button>
@@ -158,8 +138,8 @@ The `Dialog` component offers four size options: `sm`, `md`, `lg`, and `max` (wh
   </Dialog.Root>
 </div>
 
-  <div className="space-y-cn-xs">
-    <Text variant="heading-subsection" as="h4">Maximized</Text>
+  <div className="flex items-center gap-cn-md">
+    <span className="text-cn-size-2 text-cn-3 w-40 shrink-0 font-mono">max</span>
     <Dialog.Root>
       <Dialog.Trigger>
         <Button>Maximized Dialog</Button>
@@ -200,9 +180,9 @@ Headers can have themes `default`, `warning` and `danger` with matching icons:
 
 <DocsPage.ComponentExample
   client:only
-  code={`<div className="space-y-cn-md">
-  <div className="space-y-cn-xs">
-    <Text variant="heading-subsection" as="h4">Default Theme</Text>
+  code={`<div className="space-y-cn-md w-full">
+  <div className="flex items-center gap-cn-md border-b border-cn-borders-3 pb-cn-md">
+    <span className="text-cn-size-2 text-cn-3 w-40 shrink-0 font-mono">default</span>
     <Dialog.Root>
       <Dialog.Trigger>
         <Button>Default</Button>
@@ -218,29 +198,29 @@ Headers can have themes `default`, `warning` and `danger` with matching icons:
       </Dialog.Content>
     </Dialog.Root>
   </div>
-  
-  <div className="space-y-cn-xs">
-    <Text variant="heading-subsection" as="h4">Warning Theme</Text>
-    <Dialog.Root>
-      <Dialog.Trigger>
-        <Button>Warning</Button>
-      </Dialog.Trigger>
-      <Dialog.Content>
-        <Dialog.Header icon="warning-triangle" theme="warning">
-          <Dialog.Title>Warning</Dialog.Title>
-          <Dialog.Description>
-            Warning theme with caution icon
-          </Dialog.Description>
-        </Dialog.Header>
-        <Dialog.Footer>
-          <Dialog.Close>Cancel</Dialog.Close>
-        </Dialog.Footer>
-      </Dialog.Content>
-    </Dialog.Root>
-  </div>
-  
-  <div className="space-y-cn-xs">
-    <Text variant="heading-subsection" as="h4">Danger Theme</Text>
+
+<div className="flex items-center gap-cn-md border-b border-cn-borders-3 pb-cn-md">
+  <span className="text-cn-size-2 text-cn-3 w-40 shrink-0 font-mono">
+    warning
+  </span>
+  <Dialog.Root>
+    <Dialog.Trigger>
+      <Button>Warning</Button>
+    </Dialog.Trigger>
+    <Dialog.Content>
+      <Dialog.Header icon="warning-triangle" theme="warning">
+        <Dialog.Title>Warning</Dialog.Title>
+        <Dialog.Description>Warning theme with caution icon</Dialog.Description>
+      </Dialog.Header>
+      <Dialog.Footer>
+        <Dialog.Close>Cancel</Dialog.Close>
+      </Dialog.Footer>
+    </Dialog.Content>
+  </Dialog.Root>
+</div>
+
+  <div className="flex items-center gap-cn-md">
+    <span className="text-cn-size-2 text-cn-3 w-40 shrink-0 font-mono">danger</span>
     <Dialog.Root>
       <Dialog.Trigger>
         <Button>Danger</Button>
@@ -262,135 +242,150 @@ Headers can have themes `default`, `warning` and `danger` with matching icons:
 </div>`}
 />
 
-### With Logo/Icon
+### Logo and icon
 
 Headers can display a logo or an icon:
 
 <DocsPage.ComponentExample
   client:only
-  code={`<div className="flex flex-col gap-cn-md">
+  code={`<div className="space-y-cn-md w-full">
+  <div className="flex items-center gap-cn-md border-b border-cn-borders-3 pb-cn-md">
+    <span className="text-cn-size-2 text-cn-3 w-40 shrink-0 font-mono">logo</span>
     <Dialog.Root>
-    <Dialog.Trigger>
-      <Button>With Logo</Button>
-    </Dialog.Trigger>
-    <Dialog.Content>
-      <Dialog.Header logo="jira">
-        <Dialog.Title>Connect to Jira</Dialog.Title>
-        <Dialog.Description>Set up your Jira integration</Dialog.Description>
-      </Dialog.Header>
-      <Dialog.Footer>
-        <ButtonLayout>
-          <Dialog.Close>Cancel</Dialog.Close>
-          <Button variant="primary">Connect</Button>
-        </ButtonLayout>
-      </Dialog.Footer>
-    </Dialog.Content>
-  </Dialog.Root>
+      <Dialog.Trigger>
+        <Button>With Logo</Button>
+      </Dialog.Trigger>
+      <Dialog.Content>
+        <Dialog.Header logo="jira">
+          <Dialog.Title>Connect to Jira</Dialog.Title>
+          <Dialog.Description>Set up your Jira integration</Dialog.Description>
+        </Dialog.Header>
+        <Dialog.Footer>
+          <ButtonLayout>
+            <Dialog.Close>Cancel</Dialog.Close>
+            <Button variant="primary">Connect</Button>
+          </ButtonLayout>
+        </Dialog.Footer>
+      </Dialog.Content>
+    </Dialog.Root>
+  </div>
 
-  <Dialog.Root>
-    <Dialog.Trigger>
-      <Button>With Icon</Button>
-    </Dialog.Trigger>
-    <Dialog.Content>
-      <Dialog.Header icon="git-branch">
-        <Dialog.Title>Create Branch</Dialog.Title>
-        <Dialog.Description>Create a new Git branch from main</Dialog.Description>
-      </Dialog.Header>
-      <Dialog.Footer>
-        <ButtonLayout>
-          <Dialog.Close>Cancel</Dialog.Close>
-          <Button variant="primary">Create Branch</Button>
-        </ButtonLayout>
-      </Dialog.Footer>
-    </Dialog.Content>
-  </Dialog.Root>
+  <div className="flex items-center gap-cn-md">
+    <span className="text-cn-size-2 text-cn-3 w-40 shrink-0 font-mono">icon</span>
+    <Dialog.Root>
+      <Dialog.Trigger>
+        <Button>With Icon</Button>
+      </Dialog.Trigger>
+      <Dialog.Content>
+        <Dialog.Header icon="git-branch">
+          <Dialog.Title>Create Branch</Dialog.Title>
+          <Dialog.Description>Create a new Git branch from main</Dialog.Description>
+        </Dialog.Header>
+        <Dialog.Footer>
+          <ButtonLayout>
+            <Dialog.Close>Cancel</Dialog.Close>
+            <Button variant="primary">Create Branch</Button>
+          </ButtonLayout>
+        </Dialog.Footer>
+      </Dialog.Content>
+    </Dialog.Root>
+  </div>
 </div>`}
 />
 
-### Hidden Close Button
+### Hidden close button
 
 You can hide the close button in the top-right corner using the `hideClose` prop:
 
 <DocsPage.ComponentExample
   client:only
-  code={`<div className="flex flex-col space-y-cn-md">
-  <Dialog.Root>
-    <Dialog.Trigger>
-      <Button>Open Dialog</Button>
-    </Dialog.Trigger>
-    <Dialog.Content hideClose>
-      <Dialog.Header>
-        <Dialog.Title>Hidden Close Button</Dialog.Title>
-        <Dialog.Description>This dialog has no close button in the top-right corner</Dialog.Description>
-      </Dialog.Header>
-      <Dialog.Footer>
-        <Dialog.Close>Close</Dialog.Close>
-      </Dialog.Footer>
-    </Dialog.Content>
-  </Dialog.Root>
+  code={`<div className="space-y-cn-sm w-full">
+  <div className="flex items-center gap-cn-md">
+    <span className="text-cn-size-2 text-cn-3 w-40 shrink-0 font-mono">hide close</span>
+    <Dialog.Root>
+      <Dialog.Trigger>
+        <Button>Open Dialog</Button>
+      </Dialog.Trigger>
+      <Dialog.Content hideClose>
+        <Dialog.Header>
+          <Dialog.Title>Hidden Close Button</Dialog.Title>
+          <Dialog.Description>This dialog has no close button in the top-right corner</Dialog.Description>
+        </Dialog.Header>
+        <Dialog.Footer>
+          <Dialog.Close>Close</Dialog.Close>
+        </Dialog.Footer>
+      </Dialog.Content>
+    </Dialog.Root>
+  </div>
 </div>`}
 />
 
-### Scrollable Content
+### Scrollable content
 
 The Body component automatically handles scrolling for long content:
 
 <DocsPage.ComponentExample
   client:only
-  code={`<div className="flex flex-col space-y-cn-md">
-  <Dialog.Root>
-    <Dialog.Trigger>
-      <Button>Default</Button>
-    </Dialog.Trigger>
-    <Dialog.Content>
-      <Dialog.Header icon="plus-circle">
-        <Dialog.Title>Long Content</Dialog.Title>
-        <Dialog.Description>Dialog with scrollable content</Dialog.Description>
-      </Dialog.Header>
-      <Dialog.Body>
-        <div className="space-y-cn-md">
-          {Array.from({ length: 20 }).map((_, i) => (
-            <div key={i}>
-              <Text variant="heading-subsection" as="h4"n {i + 1}</Text>
-              <p className="font-body-normal">Lorem ipsum dolor sit amet, consectetur adipiscing elit</p>
-            </div>
-          ))}
-        </div>
-      </Dialog.Body>
-      <Dialog.Footer>
-        <Dialog.Close>Close</Dialog.Close>
-      </Dialog.Footer>
-    </Dialog.Content>
-  </Dialog.Root>
+  code={`<div className="space-y-cn-md w-full">
+  <div className="flex items-center gap-cn-md border-b border-cn-borders-3 pb-cn-md">
+    <span className="text-cn-size-2 text-cn-3 w-40 shrink-0 font-mono">scrollable</span>
+    <Dialog.Root>
+      <Dialog.Trigger>
+        <Button>Default</Button>
+      </Dialog.Trigger>
+      <Dialog.Content>
+        <Dialog.Header icon="plus-circle">
+          <Dialog.Title>Long Content</Dialog.Title>
+          <Dialog.Description>Dialog with scrollable content</Dialog.Description>
+        </Dialog.Header>
+        <Dialog.Body>
+          <div className="space-y-cn-md">
+            {Array.from({ length: 20 }).map((_, i) => (
+              <div key={i}>
+                <Text variant="heading-subsection" as="h4">Section {i + 1}</Text>
+                <p className="font-body-normal">Lorem ipsum dolor sit amet, consectetur adipiscing elit</p>
+              </div>
+            ))}
+          </div>
+        </Dialog.Body>
+        <Dialog.Footer>
+          <Dialog.Close>Close</Dialog.Close>
+        </Dialog.Footer>
+      </Dialog.Content>
+    </Dialog.Root>
+  </div>
 
-  <Dialog.Root>
-    <Dialog.Trigger>
-      <Button>Fixed Height</Button>
-    </Dialog.Trigger>
-    <Dialog.Content className="h-1/2">
-      <Dialog.Header icon="plus-circle">
-        <Dialog.Title>Long Content</Dialog.Title>
-        <Dialog.Description>Dialog with scrollable content</Dialog.Description>
-      </Dialog.Header>
-      <Dialog.Body>
-        <div className="space-y-cn-md">
-          {Array.from({ length: 20 }).map((_, i) => (
-            <div key={i}>
-              <Text variant="heading-subsection" as="h4"n {i + 1}</Text>
-              <p className="font-body-normal">Lorem ipsum dolor sit amet, consectetur adipiscing elit</p>
-            </div>
-          ))}
-        </div>
-      </Dialog.Body>
-      <Dialog.Footer>
-        <Dialog.Close>Close</Dialog.Close>
-      </Dialog.Footer>
-    </Dialog.Content>
-  </Dialog.Root>
+  <div className="flex items-center gap-cn-md">
+    <span className="text-cn-size-2 text-cn-3 w-40 shrink-0 font-mono">fixed height</span>
+    <Dialog.Root>
+      <Dialog.Trigger>
+        <Button>Fixed Height</Button>
+      </Dialog.Trigger>
+      <Dialog.Content className="h-1/2">
+        <Dialog.Header icon="plus-circle">
+          <Dialog.Title>Long Content</Dialog.Title>
+          <Dialog.Description>Dialog with scrollable content</Dialog.Description>
+        </Dialog.Header>
+        <Dialog.Body>
+          <div className="space-y-cn-md">
+            {Array.from({ length: 20 }).map((_, i) => (
+              <div key={i}>
+                <Text variant="heading-subsection" as="h4">Section {i + 1}</Text>
+                <p className="font-body-normal">Lorem ipsum dolor sit amet, consectetur adipiscing elit</p>
+              </div>
+            ))}
+          </div>
+        </Dialog.Body>
+        <Dialog.Footer>
+          <Dialog.Close>Close</Dialog.Close>
+        </Dialog.Footer>
+      </Dialog.Content>
+    </Dialog.Root>
+  </div>
 </div>`}
 />
 
-### Keep focus on the custom trigger element
+### Custom trigger focus
 
 If a dialog is opened without the `Trigger` component (e.g., a dropdown item), focus will not return to the trigger element when the dialog is closed. To address this use `useCustomDialogTrigger` hook to register your custom trigger element.
 
@@ -407,43 +402,84 @@ If a dialog is opened without the `Trigger` component (e.g., a dropdown item), f
 
 return (
 
-  <>
-    <DropdownMenu.Root>
-      <DropdownMenu.Trigger aria-label="options menu" ref={triggerRef} asChild>
-        <Button>Open Menu</Button>
-      </DropdownMenu.Trigger>
+  <div className="space-y-cn-sm w-full">
+    <div className="flex items-center gap-cn-md">
+      <span className="text-cn-size-2 text-cn-3 w-40 shrink-0 font-mono">custom trigger</span>
+      <div className="flex-1 min-w-0">
+        <DropdownMenu.Root>
+          <DropdownMenu.Trigger aria-label="options menu" ref={triggerRef} asChild>
+            <Button>Open Menu</Button>
+          </DropdownMenu.Trigger>
 
-      <DropdownMenu.Content>
-          <DropdownMenu.Item title="Open dialog" onSelect={handleOpenDialog} />
-      </DropdownMenu.Content>
+          <DropdownMenu.Content>
+              <DropdownMenu.Item title="Open dialog" onSelect={handleOpenDialog} />
+          </DropdownMenu.Content>
 
-    </DropdownMenu.Root>
+        </DropdownMenu.Root>
 
-    <Dialog.Root open={open} onOpenChange={setOpen}>
-      <Dialog.Content>
-        <Dialog.Header icon="plus-circle">
-          <Dialog.Title>Content</Dialog.Title>
-          <Dialog.Description>Dialog opened from the custom trigger</Dialog.Description>
-        </Dialog.Header>
-        <Dialog.Body>
-          <p className="font-body-normal">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit
-          </p>
-        </Dialog.Body>
-        <Dialog.Footer>
-          <Dialog.Close>Close</Dialog.Close>
-        </Dialog.Footer>
-      </Dialog.Content>
+        <Dialog.Root open={open} onOpenChange={setOpen}>
+          <Dialog.Content>
+            <Dialog.Header icon="plus-circle">
+              <Dialog.Title>Content</Dialog.Title>
+              <Dialog.Description>Dialog opened from the custom trigger</Dialog.Description>
+            </Dialog.Header>
+            <Dialog.Body>
+              <p className="font-body-normal">
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit
+              </p>
+            </Dialog.Body>
+            <Dialog.Footer>
+              <Dialog.Close>Close</Dialog.Close>
+            </Dialog.Footer>
+          </Dialog.Content>
 
-    </Dialog.Root>
+        </Dialog.Root>
+      </div>
+    </div>
 
-</>
+  </div>
 )}`}
 />
 
-## `Anatomy`
+## Installation
 
-All parts of the `Dialog` component can be imported and composed as required.
+```typescript jsx
+import { Dialog } from "@harnessio/ui/components";
+
+// ...
+
+return (
+  <Dialog.Root>
+    <Dialog.Trigger>
+      <Button>Open Dialog</Button>
+    </Dialog.Trigger>
+
+    <Dialog.Content size="md">
+      <Dialog.Header icon="plus-circle">
+        <Dialog.Title>Dialog Title</Dialog.Title>
+        <Dialog.Description>Optional description text</Dialog.Description>
+      </Dialog.Header>
+
+      <Dialog.Body>
+        Dialog content goes here
+      </Dialog.Body>
+
+      <Dialog.Footer>
+        <Dialog.Close>Cancel</Dialog.Close>
+        <Button variant="primary">Confirm</Button>
+      </Dialog.Footer>
+    </Dialog.Content>
+  </Dialog.Root>
+)
+```
+
+</TabItem>
+
+<TabItem label="Usage">
+
+## Anatomy
+
+All parts of the `Dialog` are composed together. It's built on Radix UI's dialog primitive, so it comes with a focus trap, an overlay, and Escape-to-close out of the box.
 
 ```tsx
 <Dialog.Root>
@@ -461,9 +497,70 @@ All parts of the `Dialog` component can be imported and composed as required.
 </Dialog.Root>
 ```
 
-## API Reference
+- **Root** — controls the open state; use it uncontrolled, or drive it with `open` / `onOpenChange`.
+- **Trigger** — wraps the element that opens the dialog and registers it so focus returns there on close.
+- **Content** — the modal surface, rendered in a portal over an overlay. It draws a close (✕) button in the top-right unless `hideClose` is set, and `size` scales it (`sm` → `max`). The `Footer` is pulled to the bottom outside the scrolling area automatically.
+- **Header / Title / Description** — the top section. `Title` labels the dialog and `Description` describes it. `Header` takes an `icon` _or_ a `logo` (not both) and a `theme` (`default` / `warning` / `danger`). If you omit a `Description`, a visually-hidden placeholder is inserted so the dialog always has an accessible description.
+- **Body** — the main content region; it scrolls on overflow by default (set `scrollable={false}` to opt out).
+- **Footer / Close** — the action row. `Close` renders a secondary button that dismisses the dialog and can sit in the footer or stand alone.
 
-### `Root`
+## Best practices
+
+{/* TODO: editorial — please review against product guidance. */}
+
+**Do**
+
+- Keep a dialog focused on a single task or decision; move anything larger to a full page.
+- Pair a `theme="danger"` header with a clearly-labeled destructive action ("Delete"), and keep "Cancel" as the safe default.
+- Choose the smallest `size` that fits the content — reserve `max` for genuinely large forms, tables, or dashboards.
+- Always give the dialog a `Title`, and a `Description` when the purpose isn't obvious from the title alone.
+
+**Don't**
+
+- Don't hide the close button (`hideClose`) unless the flow requires an explicit choice, and always leave another way out (a Cancel button).
+- Don't pass both `icon` and `logo` to a header — only one is allowed and passing both renders nothing.
+- Don't stack dialogs; resolve one before opening the next.
+
+## Content
+
+{/* TODO: editorial — please review against product guidance. */}
+
+- Write titles as a short noun phrase or clear action ("Delete item", "Generate clone credential"), in sentence case.
+- Keep descriptions to a sentence or two of supporting context — not a place for long instructions.
+- Label footer buttons with the action they perform ("Connect", "Create branch") rather than generic "OK".
+
+## Accessibility
+
+`Dialog` is built on Radix UI's dialog, which provides the modal semantics: `role="dialog"`, `aria-modal`, a focus trap, and an overlay that blocks the rest of the page.
+
+### Keyboard
+
+- Opening the dialog moves focus into it; **Tab** / **Shift+Tab** cycle through focusable elements and are trapped inside while it's open.
+- **Escape** closes the dialog, and closing returns focus to the element that opened it.
+
+### Labeling
+
+- `Dialog.Title` is wired as the dialog's accessible name (`aria-labelledby`) and `Dialog.Description` as its accessible description (`aria-describedby`).
+- The top-right close button is icon-only but carries an accessible label so it's announced as a close control.
+
+### Focus & states
+
+- Focus returns to the `Trigger` on close. When you open a dialog without `Dialog.Trigger` (e.g. from a dropdown item), register the opener with the `useCustomDialogTrigger` hook so focus still returns to it.
+
+### Known limitations
+
+- **A missing description is filled with a placeholder.** If you don't provide a `Dialog.Description`, a visually-hidden "No description available" is inserted to satisfy the accessible-description requirement — screen-reader users will hear that generic text. Provide a real `Description` (or your own `aria-describedby`) whenever the dialog needs context.
+- **Icon and logo are mutually exclusive.** Passing both `icon` and `logo` to `Header` logs a warning and renders nothing — choose one.
+
+</TabItem>
+
+<TabItem label="Properties">
+
+{/* Visually hidden — anchors the section headings below in the TOC without showing a redundant title in the panel body (the tab already says "Properties"). Hidden via #page-level-tabs h2#properties in styles.css. */}
+
+## Properties
+
+### Root
 
 Controls the open/close behavior of the modal.
 
@@ -490,17 +587,33 @@ Controls the open/close behavior of the modal.
   ]}
 />
 
-### `Content`
+### Trigger
 
-The main content container of the dialog.
+Used to open the dialog. Essential for registering the trigger element with the dialog focus manager. If a dialog is opened without the `Trigger` component (e.g., a dropdown item), focus will not return to the trigger element when the dialog is closed. To address this use the `useCustomDialogTrigger` hook to register your custom trigger element.
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "children",
+      description: "Trigger element (only one child allowed)",
+      required: true,
+      value: "ReactNode",
+    },
+  ]}
+/>
+
+### Content
+
+The main content container of the dialog. Also forwards the underlying Radix `Dialog.Content` props (e.g. `onEscapeKeyDown`, `onInteractOutside`, `onCloseAutoFocus`).
 
 <DocsPage.PropsTable
   props={[
     {
       name: "size",
-      description: "Controls the width of the dialog",
+      description:
+        "Controls the width of the dialog. 'max' sets it to 80% of the viewport width and height.",
       required: false,
-      value: "'sm' | 'md' | 'lg'",
+      value: "'sm' | 'md' | 'lg' | 'max'",
       defaultValue: "'sm'",
     },
     {
@@ -522,18 +635,10 @@ The main content container of the dialog.
       required: true,
       value: "ReactNode",
     },
-    {
-      name: "scrollable",
-      description:
-        "Prevents the dialog content from being scrollable when set to false.",
-      required: false,
-      value: "boolean",
-      defaultValue: "true",
-    },
   ]}
 />
 
-### `Header`
+### Header
 
 The header section of the dialog, containing the title and optional description.
 
@@ -543,13 +648,13 @@ The header section of the dialog, containing the title and optional description.
       name: "icon",
       description: "Icon to display in the header (cannot be used with logo)",
       required: false,
-      value: "string",
+      value: "IconV2NamesType",
     },
     {
       name: "logo",
       description: "Logo to display in the header (cannot be used with icon)",
       required: false,
-      value: "string",
+      value: "LogoV2NamesType",
     },
     {
       name: "theme",
@@ -573,7 +678,7 @@ The header section of the dialog, containing the title and optional description.
   ]}
 />
 
-### `Title`
+### Title
 
 The title text component for the dialog header.
 
@@ -594,7 +699,7 @@ The title text component for the dialog header.
   ]}
 />
 
-### `Description`
+### Description
 
 Optional description text below the title.
 
@@ -623,49 +728,29 @@ Optional description text below the title.
   ]}
 />
 
+### Body
+
+Main content area of the dialog. Scrolls on overflow by default.
+
 <DocsPage.PropsTable
   props={[
     {
+      name: "scrollable",
+      description:
+        "Whether the body scrolls on overflow. Set to false to render the content without an internal scroll area.",
+      required: false,
+      value: "boolean",
+      defaultValue: "true",
+    },
+    {
       name: "className",
-      description: "Custom class name",
+      description: "Custom class name for the body wrapper",
       required: false,
       value: "string",
     },
     {
-      name: "children",
-      description: "Description content",
-      required: true,
-      value: "ReactNode",
-    },
-  ]}
-/>
-
-### `Body`
-
-Main scrollable content area of the dialog.
-
-<DocsPage.PropsTable
-  props={[
-    {
-      name: "className",
-      description: "Custom class name",
-      required: false,
-      value: "string",
-    },
-    {
-      name: "children",
-      description: "Body content",
-      required: true,
-      value: "ReactNode",
-    },
-  ]}
-/>
-
-<DocsPage.PropsTable
-  props={[
-    {
-      name: "className",
-      description: "Custom class name",
+      name: "classNameContent",
+      description: "Custom class name for the inner content element",
       required: false,
       value: "string",
     },
@@ -678,7 +763,7 @@ Main scrollable content area of the dialog.
   ]}
 />
 
-### `Footer`
+### Footer
 
 Footer section for actions (e.g., buttons).
 
@@ -699,26 +784,9 @@ Footer section for actions (e.g., buttons).
   ]}
 />
 
-<DocsPage.PropsTable
-  props={[
-    {
-      name: "className",
-      description: "Custom class name",
-      required: false,
-      value: "string",
-    },
-    {
-      name: "children",
-      description: "Footer content",
-      required: true,
-      value: "ReactNode",
-    },
-  ]}
-/>
+### Close
 
-### `Close`
-
-Can be used inside `Footer` or as a standalone button to close the modal.
+Can be used inside `Footer` or as a standalone button to close the modal. Renders a secondary [Button](/components/actions/button/) and accepts its props.
 
 <DocsPage.PropsTable
   props={[
@@ -737,18 +805,8 @@ Can be used inside `Footer` or as a standalone button to close the modal.
   ]}
 />
 
-### `Trigger`
+</TabItem>
 
-Used to open the dialog. Essential for registering the trigger element with the dialog focus manager.
-If a dialog is opened without the `Trigger` component (e.g., a dropdown item), focus will not return to the trigger element when the dialog is closed. To address this use `useCustomDialogTrigger` hook to register your custom trigger element.
+</Tabs>
 
-<DocsPage.PropsTable
-  props={[
-    {
-      name: "children",
-      description: "Trigger element (only one child allowed)",
-      required: true,
-      value: "ReactNode",
-    },
-  ]}
-/>
+</div>

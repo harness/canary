@@ -1,0 +1,215 @@
+---
+title: Form Input
+description: React Hook Form–bound wrappers over the input primitives
+---
+
+import { DocsPage } from "@/components/docs-page";
+import { Tabs, TabItem } from "@astrojs/starlight/components";
+import PageTabsToc from "@/components/page-tabs-toc.astro";
+
+<PageTabsToc />
+
+<div id="page-level-tabs">
+
+<Tabs>
+
+<TabItem label="Overview">
+
+`FormInput` is a set of thin wrappers that bind the input primitives to [React Hook Form](https://react-hook-form.com/). Each wrapper reads the surrounding form context, so you pass a `name` (the field path) plus the underlying input's props — value, `onChange`, and validation wiring are handled for you.
+
+Use these instead of the raw inputs whenever a field lives inside a form, so state, errors, and submission stay consistent.
+
+Because these require a form context to function, they're documented here with usage code rather than a standalone live preview. For a full, runnable form see the [Form](/components/form/form/) page.
+
+## Available inputs
+
+`FormInput.Text`, `FormInput.Textarea`, `FormInput.Number`, `FormInput.Time`, `FormInput.Radio`, `FormInput.Checkbox`, `FormInput.Select`, `FormInput.MultiSelect` — each maps to its corresponding primitive (`TextInput`, `Textarea`, `NumberInput`, `TimeInput`, `Radio`, `Checkbox`, `Select`, `MultiSelect`).
+
+## Installation
+
+```tsx
+import { FormProvider, useForm } from "react-hook-form";
+import { FormInput, Button } from "@harnessio/ui/components";
+
+function ConnectorForm() {
+  const methods = useForm({
+    defaultValues: { name: "", type: "", enabled: false },
+  });
+
+  return (
+    <FormProvider {...methods}>
+      <form onSubmit={methods.handleSubmit(console.log)}>
+        <FormInput.Text name="name" label="Name" placeholder="my-connector" />
+
+        <FormInput.Select
+          name="type"
+          label="Type"
+          options={[
+            { label: "GitHub", value: "github" },
+            { label: "GitLab", value: "gitlab" },
+          ]}
+        />
+
+        <FormInput.Checkbox name="enabled" label="Enabled" />
+
+        <Button type="submit">Save</Button>
+      </form>
+    </FormProvider>
+  );
+}
+```
+
+Each wrapper forwards the full prop set of its underlying primitive — see the individual input pages ([Text Input](/components/form/input), [Select](/components/form/multi-select), [Checkbox](/components/form/checkbox), etc.) for the available props.
+
+</TabItem>
+
+<TabItem label="Usage">
+
+## Anatomy
+
+Each `FormInput.*` is its matching primitive wrapped by a `withForm` higher-order component that connects it to React Hook Form.
+
+```tsx
+<FormProvider {...methods}>
+  <form onSubmit={methods.handleSubmit(onSubmit)}>
+    <FormInput.Text name="name" label="Name" />
+  </form>
+</FormProvider>
+```
+
+- **Form binding** — the wrapper renders a React Hook Form `Controller` for the field named by `name`, reading the form's `control` from context. The field's `value`, `onChange`, `onBlur`, and `ref` are wired in for you, so you only pass `name` plus the primitive's own presentational props.
+- **Context requirement** — the wrapper calls `useFormContext()` and **throws if it's not inside a `FormProvider`/[FormWrapper](/components/form/form/)**. When a field doesn't need form integration, use the standalone primitive instead.
+- **Orientation** — the wrapper reads `orientation` from the surrounding `FormWrapper`, so fields line up vertically or horizontally to match the form.
+- **Errors** — the displayed error is the field's validation message from the resolver, falling back to an explicit `error` prop if you pass one.
+- **Special fields** — `Radio` and `Checkbox` map the form field onto their own value/toggle props (`onValueChange` for Radio; `checked` + `onCheckedChange` for Checkbox), so they behave like every other bound field.
+
+## Best practices
+
+{/* TODO: editorial — please review against product guidance. */}
+
+**Do**
+
+- Reach for `FormInput.*` for any field inside a form, and the raw primitive only when a control lives outside form context.
+- Match each `name` to the corresponding key in your validation schema so errors attach to the right field.
+- Let the wrapper surface validation messages rather than wiring `error` by hand — pass `error` only for messages that don't come from the resolver.
+
+**Don't**
+
+- Don't render a `FormInput.*` outside a `FormProvider`/`FormWrapper` — it will throw.
+- Don't manage a field's `value`/`onChange` yourself; the `Controller` owns them once you provide `name`.
+
+## Content
+
+{/* TODO: editorial — please review against product guidance. */}
+
+- Give every field a `label` that names it clearly; the wrapped primitive renders and associates it for you.
+- Keep placeholder text as an example of the expected value, not as a replacement for the label.
+
+## Accessibility
+
+Each wrapper is presentationally identical to its underlying primitive — labels, input types, and validation wiring come from the wrapped [Text Input](/components/form/input), [Select](/components/form/multi-select), [Checkbox](/components/form/checkbox), and so on.
+
+### Labeling
+
+- The `label` and error message are associated with the control by the underlying primitive, so assistive tech announces the field and its error together.
+
+### Known limitations
+
+- **Behavior depends on the wrapped primitive.** `FormInput` adds form binding, not new interaction semantics — keyboard and focus behavior are exactly those of the underlying input.
+
+</TabItem>
+
+<TabItem label="Properties">
+
+{/* Visually hidden — anchors the section headings below in the TOC without showing a redundant title in the panel body (the tab already says "Properties"). Hidden via #page-level-tabs h2#properties in styles.css. */}
+
+## Properties
+
+### Common props
+
+Every `FormInput.*` accepts these, plus all props of the primitive it wraps.
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "name",
+      description:
+        "Field path in the form. Binds the input's value and validation to this key.",
+      required: true,
+      value: "string",
+    },
+    {
+      name: "error",
+      description:
+        "Explicit error message. Used only as a fallback when the field has no resolver validation message.",
+      required: false,
+      value: "string",
+    },
+    {
+      name: "label",
+      description: "Field label rendered by the underlying input.",
+      required: false,
+      value: "string",
+    },
+    {
+      name: "...inputProps",
+      description:
+        "All remaining props are forwarded to the wrapped primitive (placeholder, options, disabled, etc.).",
+      required: false,
+      value: "props of the underlying input",
+    },
+  ]}
+/>
+
+### Available inputs
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "FormInput.Text",
+      description: "Wraps TextInput.",
+      value: "Component",
+    },
+    {
+      name: "FormInput.Textarea",
+      description: "Wraps Textarea.",
+      value: "Component",
+    },
+    {
+      name: "FormInput.Number",
+      description: "Wraps NumberInput.",
+      value: "Component",
+    },
+    {
+      name: "FormInput.Time",
+      description: "Wraps TimeInput.",
+      value: "Component",
+    },
+    {
+      name: "FormInput.Radio",
+      description: "Wraps Radio.Root (maps field to onValueChange).",
+      value: "Component",
+    },
+    {
+      name: "FormInput.Checkbox",
+      description: "Wraps Checkbox (maps field to checked / onCheckedChange).",
+      value: "Component",
+    },
+    {
+      name: "FormInput.Select",
+      description: "Wraps Select (generic over the value type).",
+      value: "Component",
+    },
+    {
+      name: "FormInput.MultiSelect",
+      description: "Wraps MultiSelect.",
+      value: "Component",
+    },
+  ]}
+/>
+
+</TabItem>
+
+</Tabs>
+
+</div>

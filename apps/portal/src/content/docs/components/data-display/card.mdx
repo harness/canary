@@ -1,49 +1,205 @@
 ---
 title: Card
-description: Card component
-beta: true
+description: A flexible container for grouping an image, title, and content into a card
 ---
 
-The `Card` component provides a flexible UI element for displaying content within a card layout. It supports various configurations such as sizes, orientations, and the position of the image relative to the content.
-
 import { DocsPage } from "@/components/docs-page";
+import { Tabs, TabItem } from "@astrojs/starlight/components";
+import PageTabsToc from "@/components/page-tabs-toc.astro";
+
+<PageTabsToc />
+
+<div id="page-level-tabs">
+
+<Tabs>
+
+<TabItem label="Overview">
+
+The `Card` component provides a flexible container for displaying content within a card layout. It's composed from four parts — `Root`, `Image`, `Title`, and `Content` — and supports various configurations such as sizes, orientations, and the position of the image relative to the content.
 
 <DocsPage.ComponentExample
   client:only
-  code={`<div className="flex flex-col gap-cn-2xl">
-
-    <Card.Root>
-      <Card.Image src="/card-image.png" />
-      <Card.Title>Complete Card</Card.Title>
-      <Card.Content>A card showcasing all elements: image, title, and content.</Card.Content>
-    </Card.Root>
-
-    <Card.Root>
-      <Card.Title>Title Only</Card.Title>
-    </Card.Root>
-
-    <Card.Root>
-      <Card.Content>A card with just content text, without any title or image.</Card.Content>
-    </Card.Root>
-
-    <Card.Root>
-      <Card.Title>Title and Content</Card.Title>
-      <Card.Content>The most common card type with both a title and content.</Card.Content>
-    </Card.Root>
-
-  </div>`}
+  code={`<div className="space-y-cn-md w-full">
+  <div className="flex items-start gap-cn-md border-b border-cn-borders-3 pb-cn-md">
+    <span className="text-cn-size-2 text-cn-3 w-40 shrink-0 font-mono pt-cn-xs">complete</span>
+    <div className="flex-1 min-w-0">
+      <Card.Root>
+        <Card.Image src="/card-image.png" />
+        <Card.Title>Complete Card</Card.Title>
+        <Card.Content>A card showcasing all elements: image, title, and content.</Card.Content>
+      </Card.Root>
+    </div>
+  </div>
+  <div className="flex items-start gap-cn-md border-b border-cn-borders-3 pb-cn-md">
+    <span className="text-cn-size-2 text-cn-3 w-40 shrink-0 font-mono pt-cn-xs">title only</span>
+    <div className="flex-1 min-w-0">
+      <Card.Root>
+        <Card.Title>Title Only</Card.Title>
+      </Card.Root>
+    </div>
+  </div>
+  <div className="flex items-start gap-cn-md border-b border-cn-borders-3 pb-cn-md">
+    <span className="text-cn-size-2 text-cn-3 w-40 shrink-0 font-mono pt-cn-xs">content only</span>
+    <div className="flex-1 min-w-0">
+      <Card.Root>
+        <Card.Content>A card with just content text, without any title or image.</Card.Content>
+      </Card.Root>
+    </div>
+  </div>
+  <div className="flex items-start gap-cn-md">
+    <span className="text-cn-size-2 text-cn-3 w-40 shrink-0 font-mono pt-cn-xs">title + content</span>
+    <div className="flex-1 min-w-0">
+      <Card.Root>
+        <Card.Title>Title and Content</Card.Title>
+        <Card.Content>The most common card type with both a title and content.</Card.Content>
+      </Card.Root>
+    </div>
+  </div>
+</div>`}
 />
 
-## Usage
+## Variations
+
+### Sizes
+
+The `Card` component supports three sizes: `sm`, `md`, and `lg`. The size prop does not actually change the size of the card, but rather the padding and border radius.
+
+<DocsPage.ComponentExample
+  client:only
+  code={`<div className="space-y-cn-md w-full">
+  <div className="flex items-start gap-cn-md border-b border-cn-borders-3 pb-cn-md">
+    <span className="text-cn-size-2 text-cn-3 w-40 shrink-0 font-mono pt-cn-xs">sm</span>
+    <div className="flex-1 min-w-0">
+      <Card.Root size="sm">
+        <Card.Title>Small Card</Card.Title>
+        <Card.Content>Compact size</Card.Content>
+      </Card.Root>
+    </div>
+  </div>
+  <div className="flex items-start gap-cn-md border-b border-cn-borders-3 pb-cn-md">
+    <span className="text-cn-size-2 text-cn-3 w-40 shrink-0 font-mono pt-cn-xs">md</span>
+    <div className="flex-1 min-w-0">
+      <Card.Root>
+        <Card.Title>Medium Card</Card.Title>
+        <Card.Content>Standard size</Card.Content>
+      </Card.Root>
+    </div>
+  </div>
+  <div className="flex items-start gap-cn-md">
+    <span className="text-cn-size-2 text-cn-3 w-40 shrink-0 font-mono pt-cn-xs">lg</span>
+    <div className="flex-1 min-w-0">
+      <Card.Root size="lg">
+        <Card.Title>Large Card</Card.Title>
+        <Card.Content>Larger size</Card.Content>
+      </Card.Root>
+    </div>
+  </div>
+</div>`}
+/>
+
+### Orientation
+
+The `Card` component supports two orientations: `vertical` and `horizontal`. The orientation determines how the card's content is laid out.
+
+<DocsPage.ComponentExample
+  client:only
+  code={`<div className="space-y-cn-md w-full">
+  <div className="flex items-start gap-cn-md border-b border-cn-borders-3 pb-cn-md">
+    <span className="text-cn-size-2 text-cn-3 w-40 shrink-0 font-mono pt-cn-xs">vertical</span>
+    <div className="flex-1 min-w-0">
+      <Card.Root orientation="vertical">
+        <Card.Image src="/card-image.png" />
+        <Card.Title>Vertical Layout</Card.Title>
+        <Card.Content>Content stacks vertically below the image</Card.Content>
+      </Card.Root>
+    </div>
+  </div>
+  <div className="flex items-start gap-cn-md">
+    <span className="text-cn-size-2 text-cn-3 w-40 shrink-0 font-mono pt-cn-xs">horizontal</span>
+    <div className="w-[440px] max-w-full">
+      <Card.Root orientation="horizontal">
+        <Card.Image src="/card-image.png" width={180} />
+        <Card.Title>Horizontal Layout</Card.Title>
+        <Card.Content>Content appears side-by-side with the image</Card.Content>
+      </Card.Root>
+    </div>
+  </div>
+</div>`}
+/>
+
+### Image position
+
+The `position` prop controls where the image is placed within the card layout. It supports two values: `start` and `end`.
+
+<DocsPage.ComponentExample
+  client:only
+  code={`<div className="space-y-cn-md w-full">
+  <div className="flex items-start gap-cn-md border-b border-cn-borders-3 pb-cn-md">
+    <span className="text-cn-size-2 text-cn-3 w-40 shrink-0 font-mono pt-cn-xs">start</span>
+    <div className="w-[440px] max-w-full">
+      <Card.Root orientation="horizontal" position="start">
+        <Card.Image src="/card-image.png" width={180} />
+        <Card.Title>Image at Start</Card.Title>
+      </Card.Root>
+    </div>
+  </div>
+  <div className="flex items-start gap-cn-md">
+    <span className="text-cn-size-2 text-cn-3 w-40 shrink-0 font-mono pt-cn-xs">end</span>
+    <div className="w-[440px] max-w-full">
+      <Card.Root orientation="horizontal" position="end">
+        <Card.Title>Image at End</Card.Title>
+        <Card.Image src="/card-image.png" width={180} />
+      </Card.Root>
+    </div>
+  </div>
+</div>`}
+/>
+
+### States
+
+The `Card` component supports `selected`, `disabled`, and `interactive` states:
+
+<DocsPage.ComponentExample
+  client:only
+  code={`<div className="space-y-cn-md w-full">
+  <div className="flex items-start gap-cn-md border-b border-cn-borders-3 pb-cn-md">
+    <span className="text-cn-size-2 text-cn-3 w-40 shrink-0 font-mono pt-cn-xs">selected</span>
+    <div className="flex-1 min-w-0">
+      <Card.Root selected>
+        <Card.Title>Selected Card</Card.Title>
+        <Card.Content>Active state</Card.Content>
+      </Card.Root>
+    </div>
+  </div>
+  <div className="flex items-start gap-cn-md border-b border-cn-borders-3 pb-cn-md">
+    <span className="text-cn-size-2 text-cn-3 w-40 shrink-0 font-mono pt-cn-xs">disabled</span>
+    <div className="flex-1 min-w-0">
+      <Card.Root disabled>
+        <Card.Title>Disabled Card</Card.Title>
+        <Card.Content>Inactive state</Card.Content>
+      </Card.Root>
+    </div>
+  </div>
+  <div className="flex items-start gap-cn-md">
+    <span className="text-cn-size-2 text-cn-3 w-40 shrink-0 font-mono pt-cn-xs">non-interactive</span>
+    <div className="flex-1 min-w-0">
+      <Card.Root interactive={false}>
+        <Card.Title>Interactive Card</Card.Title>
+        <Card.Content>Not interactive state</Card.Content>
+      </Card.Root>
+    </div>
+  </div>
+</div>`}
+/>
+
+## Installation
 
 ```typescript jsx
-import { Card } from '@harnessio/ui'
-
-// ...
+import { Card } from '@harnessio/ui/components'
 
 return (
   <Card.Root orientation="vertical" position="start">
-    <Card.Image src="/card-image.png" />
+    <Card.Image src="/card-image.png" alt="" />
     <Card.Title>Card Title</Card.Title>
     <Card.Content>
       Card content goes here
@@ -52,106 +208,88 @@ return (
 )
 ```
 
-## Sizes
+</TabItem>
 
-The `Card` component supports three sizes: `sm`, `md`, and `lg`. The size prop does not actually change the size of the card, but rather the padding and border radius.
+<TabItem label="Usage">
 
-<DocsPage.ComponentExample
-  client:only
-  code={`<div className="flex flex-col gap-cn-md">
-    <Card.Root size="sm">
-      <Card.Title>Small Card</Card.Title>
-      <Card.Content>Compact size</Card.Content>
-    </Card.Root>
-    <Card.Root>
-      <Card.Title>Medium Card</Card.Title>
-      <Card.Content>Standard size</Card.Content>
-    </Card.Root>
-    <Card.Root size="lg">
-      <Card.Title>Large Card</Card.Title>
-      <Card.Content>Larger size</Card.Content>
-    </Card.Root>
-  </div>`}
-/>
+## Anatomy
 
-## Orientation
-
-The `Card` component supports two orientations: `vertical` and `horizontal`. The orientation determines how the card's content is laid out.
-
-<DocsPage.ComponentExample
-  client:only
-  code={`<div className="flex flex-col gap-cn-md">
-    <Card.Root orientation="vertical">
-      <Card.Image src="/card-image.png" />
-      <Card.Title>Vertical Layout</Card.Title>
-      <Card.Content>Content stacks vertically below the image</Card.Content>
-    </Card.Root>
-    <Card.Root orientation="horizontal">
-      <Card.Image src="/card-image.png" />
-      <Card.Title>Horizontal Layout</Card.Title>
-      <Card.Content>Content appears side-by-side with the image</Card.Content>
-    </Card.Root>
-  </div>`}
-/>
-
-## Image Position
-
-The `position` prop controls where the image is placed within the card layout. It supports two values: `start` and `end`.
-
-<DocsPage.ComponentExample
-  client:only
-  code={`<div className="flex flex-col gap-cn-md">
-    <Card.Root orientation="horizontal" position="start">
-      <Card.Image src="/card-image.png" />
-      <Card.Title>Image at Start</Card.Title>
-    </Card.Root>
-    <Card.Root orientation="horizontal" position="end">
-      <Card.Title>Image at End</Card.Title>
-      <Card.Image src="/card-image.png" />
-    </Card.Root>
-  </div>`}
-/>
-
-## States
-
-The `Card` component supports `selected`, `disabled` and `interactive` states:
-
-<DocsPage.ComponentExample
-  client:only
-  code={`<div className="flex gap-cn-md">
-    <Card.Root selected>
-      <Card.Title>Selected Card</Card.Title>
-      <Card.Content>Active state</Card.Content>
-    </Card.Root>
-    <Card.Root disabled>
-      <Card.Title>Disabled Card</Card.Title>
-      <Card.Content>Inactive state</Card.Content>
-    </Card.Root>
-    <Card.Root interactive={false}>
-      <Card.Title>Interactive Card</Card.Title>
-      <Card.Content>Not interactive state</Card.Content>
-    </Card.Root>
-  </div>`}
-/>
-
-## API Reference
-
-### `Root`
-
-The root component for the card.
+`Card` is a compound component: a `Card.Root` container that you fill with any combination of `Card.Image`, `Card.Title`, and `Card.Content`.
 
 ```typescript jsx
-<Card.Root
-  orientation="vertical"              // [OPTIONAL] Orientation of the card
-  position="start"                    // [OPTIONAL] Position of the image
-  size="md"                           // [OPTIONAL] Size of the card
-  selected={false}                    // [OPTIONAL] Whether the card is selected
-  disabled={false}                    // [OPTIONAL] Whether the card is disabled
-  className="custom-class"            // [OPTIONAL] Custom class name
->
-  {/* Card content */}
+<Card.Root>
+  <Card.Image src="…" alt="…" />          {/* optional */}
+  <Card.Title>Title</Card.Title>          {/* optional */}
+  <Card.Content>Body text</Card.Content>  {/* optional */}
 </Card.Root>
 ```
+
+- **Root** — a plain `<div>` that lays out the card. It picks the **first** `Card.Image` child out of the children and renders it as the card's image, then wraps everything else in an internal content wrapper. `size`, `orientation`, `position`, `selected`, `disabled`, and `interactive` are all styling variants applied here.
+- **Image** — an `<img>`. Pass `width`/`height` as numbers (rendered as pixels) or CSS strings. Its `alt` comes straight from the `alt` you pass.
+- **Title** — a heading, rendered as `<h3>` by default. Use `as` to set the correct level for the surrounding document outline (`h1`–`h6`).
+- **Content** — a `<div>` for the card's body text or other content.
+
+A few things to know about how Root arranges its children:
+
+- Only the **first** `Card.Image` is treated as the image; any additional images fall into the content wrapper alongside the title and content.
+- The image always renders **before** the content wrapper in the DOM. The visual placement (above/below, left/right) is controlled by `orientation` and `position` through CSS — not by where you put `Card.Image` in the source.
+- All three children are optional — a card can be image-only, title-only, content-only, or any mix.
+
+## Best practices
+
+{/* TODO: editorial — please review against product guidance. */}
+
+**Do**
+
+- Keep each card focused on a single subject — one image, one title, one short block of content.
+- Set `Card.Title`'s `as` prop so the heading level fits the page's outline, rather than always leaving it at `h3`.
+- Use `orientation`/`position` for layout instead of reordering children — the DOM order stays fixed regardless.
+- Give every meaningful `Card.Image` a descriptive `alt`, and use `alt=""` for purely decorative images.
+
+**Don't**
+
+- Don't rely on `selected`, `disabled`, or `interactive` to make the card behave like a control — they're visual styles only (see the accessibility notes).
+- Don't put more than one `Card.Image` in a card expecting both to appear as images — only the first is placed as the image.
+- Don't pack long-form content or many actions into a card; it's a summary surface, not a page.
+
+## Content
+
+{/* TODO: editorial — please review against product guidance. */}
+
+- Write titles as short, scannable labels (a name or subject), not full sentences.
+- Keep content to a sentence or two that supports the title; link out for detail rather than expanding the card.
+- Use sentence case for both title and content.
+
+## Accessibility
+
+`Card` is a presentational container. `Card.Root` renders a plain `<div>` with no ARIA role, and its variant props change appearance only — they don't add behavior or semantics.
+
+### Labeling
+
+- `Card.Title` renders a real heading (`<h3>` by default). Set `as` so the level is correct in context, since a wrong heading level disrupts the document outline for screen-reader users.
+- `Card.Image` needs an accessible name: pass a descriptive `alt` for informative images, or `alt=""` to mark it decorative so it's skipped. If you omit `alt` entirely, the image has no `alt` attribute and assistive tech may announce the file name.
+
+### Focus & states
+
+- Root, Image, Title, and Content all forward the standard HTML attributes you pass them onto their rendered elements, so you can add `id`, `aria-*`, `role`, etc. yourself when a card needs richer semantics.
+- The card itself is not focusable and has no keyboard handling. Any interactivity has to come from focusable elements you place inside it (a link, a button).
+
+### Known limitations
+
+- **`interactive` is visual only.** It applies a hover/interaction style but doesn't make the card focusable, doesn't give it a `button`/`link` role, and adds no keyboard handling. If the whole card should be clickable, nest a real interactive element (e.g. a link that covers the card) and manage focus and keyboard activation yourself.
+- **`selected` and `disabled` don't reach assistive tech.** They toggle styling classes but set no `aria-selected` or `aria-disabled`, and `disabled` does not actually prevent interaction with anything inside the card. Convey those states with the appropriate ARIA attributes (and real disabling) on the interactive element, not with the card variant alone.
+
+</TabItem>
+
+<TabItem label="Properties">
+
+{/* Visually hidden — anchors the section headings below in the TOC without showing a redundant title in the panel body (the tab already says "Properties"). Hidden via #page-level-tabs h2#properties in styles.css. */}
+
+## Properties
+
+### Root
+
+The root container for the card.
 
 <DocsPage.PropsTable
   props={[
@@ -172,147 +310,141 @@ The root component for the card.
     },
     {
       name: "size",
-      description: "The size of the card.",
+      description:
+        "The size of the card (controls padding and border radius, not overall dimensions).",
       required: false,
       value: "'sm' | 'md' | 'lg'",
       defaultValue: "'md'",
     },
     {
       name: "selected",
-      description: "Whether the card is selected.",
+      description:
+        "Applies the selected styling. Visual only — sets no aria-selected.",
       required: false,
       value: "boolean",
       defaultValue: "false",
     },
     {
       name: "disabled",
-      description: "Whether the card is disabled.",
+      description:
+        "Applies the disabled styling. Visual only — sets no aria-disabled and does not block interaction with content inside the card.",
       required: false,
       value: "boolean",
       defaultValue: "false",
     },
     {
       name: "interactive",
-      description: "Whether the card is interactive or not.",
+      description:
+        "Applies interactive (hover) styling. Visual only — does not make the card focusable or keyboard-operable.",
       required: false,
       value: "boolean",
       defaultValue: "true",
     },
     {
       name: "className",
-      description: "Custom class name",
+      description: "Custom class name applied to the root element.",
       required: false,
       value: "string",
     },
     {
       name: "wrapperClassname",
-      description: "Custom class name for the internal content wrapper div",
+      description: "Custom class name for the internal content wrapper div.",
       required: false,
       value: "string",
     },
   ]}
 />
 
-### `Image`
+`Card.Root` also forwards any other `HTMLAttributes<HTMLDivElement>` (e.g. `id`, `onClick`, `aria-*`) onto the underlying `<div>`.
 
-The image component for the card.
+### Image
 
-```typescript jsx
-<Card.Image
-  src="/path/to/image.jpg"
-  alt="Image description"
-  width={300}              // [OPTIONAL] Image width
-  height={200}             // [OPTIONAL] Image height
-  className="custom-class" // [OPTIONAL] Custom class name
-/>
-```
+The image element for the card.
 
 <DocsPage.PropsTable
   props={[
     {
       name: "src",
-      description: "The image source URL",
+      description: "The image source URL.",
       required: true,
       value: "string",
     },
     {
       name: "alt",
       description:
-        "Alternative text for the image (important for accessibility)",
+        "Alternative text for the image. Provide a description for informative images, or an empty string for decorative ones.",
       required: false,
       value: "string",
     },
     {
       name: "width",
-      description: "Width of the image",
+      description:
+        "Width of the image. Numbers are treated as pixels; strings pass through as CSS.",
       required: false,
       value: "number | string",
     },
     {
       name: "height",
-      description: "Height of the image",
+      description:
+        "Height of the image. Numbers are treated as pixels; strings pass through as CSS.",
       required: false,
       value: "number | string",
     },
     {
       name: "className",
-      description: "Custom class name",
+      description: "Custom class name applied to the image.",
       required: false,
       value: "string",
     },
   ]}
 />
 
-### `Title`
+`Card.Image` also forwards any other `ImgHTMLAttributes<HTMLImageElement>` onto the underlying `<img>`.
 
-The title component for the card.
+### Title
 
-```typescript jsx
-<Card.Title
-  as="h3"                  // [OPTIONAL] Heading level (h1-h6)
-  className="custom-class" // [OPTIONAL] Custom class name
->
-  Card Title
-</Card.Title>
-```
+The title element for the card, rendered as a heading.
 
 <DocsPage.PropsTable
   props={[
     {
       name: "as",
-      description: "HTML heading element to render as",
+      description:
+        "HTML heading element to render as. Set this to fit the surrounding document outline.",
       required: false,
       value: "'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6'",
       defaultValue: "'h3'",
     },
     {
       name: "className",
-      description: "Custom class name",
+      description: "Custom class name applied to the heading.",
       required: false,
       value: "string",
     },
   ]}
 />
 
-### `Content`
+`Card.Title` also forwards any other `HTMLAttributes<HTMLHeadingElement>` onto the underlying heading.
 
-The content component for the card.
+### Content
 
-```typescript jsx
-<Card.Content
-  className="custom-class" // [OPTIONAL] Custom class name
->
-  {/* Card content */}
-</Card.Content>
-```
+The content element for the card.
 
 <DocsPage.PropsTable
   props={[
     {
       name: "className",
-      description: "Custom class name",
+      description: "Custom class name applied to the content element.",
       required: false,
       value: "string",
     },
   ]}
 />
+
+`Card.Content` also forwards any other `HTMLAttributes<HTMLDivElement>` onto the underlying `<div>`.
+
+</TabItem>
+
+</Tabs>
+
+</div>

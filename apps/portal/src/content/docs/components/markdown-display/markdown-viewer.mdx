@@ -1,16 +1,21 @@
 ---
 title: Markdown Viewer
 description: A powerful component for rendering markdown content with syntax highlighting, interactive checkboxes, and code suggestions
-beta: true
 ---
 
-The `MarkdownViewer` component provides a comprehensive solution for rendering markdown content with advanced features like syntax highlighting, interactive task lists, code suggestions, and customizable image handling. Perfect for displaying documentation, comments, READMEs, and code review content.
-
 import { DocsPage } from "@/components/docs-page";
+import { Tabs, TabItem } from "@astrojs/starlight/components";
+import PageTabsToc from "@/components/page-tabs-toc.astro";
 
-## Basic Usage
+<PageTabsToc />
 
-The `MarkdownViewer` renders standard markdown syntax including headings, lists, links, images, and code blocks.
+<div id="page-level-tabs">
+
+<Tabs>
+
+<TabItem label="Overview">
+
+The `MarkdownViewer` component renders markdown content with syntax highlighting, interactive task lists, code suggestions, and customizable image handling. It's suited to documentation, comments, READMEs, and code-review content. It renders standard markdown syntax including headings, lists, links, images, tables, blockquotes, and code blocks.
 
 <DocsPage.ComponentExample
   client:only
@@ -43,21 +48,9 @@ greet('World');
 `}
 />
 
-## Usage
+## Variations
 
-```typescript jsx
-import { MarkdownViewer } from '@harnessio/ui/components'
-
-//...
-
-return (
-  <MarkdownViewer
-    source="# Hello World\n\nThis is **markdown** content."
-  />
-)
-```
-
-## With Border
+### With border
 
 Add a bordered container around the markdown content using the `withBorder` prop.
 
@@ -77,7 +70,7 @@ This markdown is displayed with a border and padding.
   `}
   />
 
-## Max Height
+### Max height
 
 Control the maximum height of the markdown container to create scrollable content.
 
@@ -110,9 +103,9 @@ More content to demonstrate scrolling behavior when maxHeight is applied.\`}
 `}
 />
 
-## Code Blocks with Syntax Highlighting
+### Code blocks with syntax highlighting
 
-Code blocks automatically receive syntax highlighting based on the language specified.
+Code blocks receive syntax highlighting based on the language specified in the fence.
 
 <DocsPage.ComponentExample
   client:only
@@ -166,9 +159,9 @@ cpu: "0.5"
 `}
 />
 
-## Code Blocks with Line Numbers
+### Code blocks with line numbers
 
-Enable line numbers for code blocks using the `showLineNumbers` prop. This is especially useful for code reviews and documentation.
+Enable line numbers for code blocks using the `showLineNumbers` prop. This is especially useful for code reviews and documentation. Line numbers appear only when a code block has more than one line.
 
 <DocsPage.ComponentExample
   client:only
@@ -195,9 +188,9 @@ const total = calculateTotal(cart);
 `}
 />
 
-## Interactive Task Lists
+### Interactive task lists
 
-The MarkdownViewer supports interactive checkboxes in task lists. Use the `onCheckboxChange` prop to handle state updates.
+The MarkdownViewer supports interactive checkboxes in task lists. Use the `onCheckboxChange` prop to handle state updates — it receives the full updated markdown source.
 
 <DocsPage.ComponentExample
   client:only
@@ -252,7 +245,7 @@ The MarkdownViewer supports interactive checkboxes in task lists. Use the `onChe
   }`}
   />
 
-## Variant Sizes
+### Variant sizes
 
 The MarkdownViewer supports two variants: `default` and `sm` for different typography scales.
 
@@ -277,7 +270,7 @@ Compact body text with smaller sizing.\`}
 </Layout.Flex>`}
 />
 
-## Code Suggestions
+### Code suggestions
 
 The MarkdownViewer can render special code suggestion blocks with custom headers and footers. Use the `suggestionBlock`, `suggestionTitle`, and `suggestionFooter` props.
 
@@ -325,7 +318,7 @@ return (
 />
 ); }`} />
 
-## Image URL Transform
+### Image URL transform
 
 Transform image URLs before rendering using the `imageUrlTransform` prop. Useful for handling relative paths or proxying images.
 
@@ -350,7 +343,7 @@ withBorder
 `}
 />
 
-## Tables and Blockquotes
+### Tables and blockquotes
 
 The MarkdownViewer fully supports markdown tables and blockquotes.
 
@@ -377,7 +370,7 @@ The MarkdownViewer fully supports markdown tables and blockquotes.
 `}
 />
 
-## External Links
+### External links
 
 External links automatically open in a new tab with security attributes (`nofollow`, `noreferrer`, `noopener`).
 
@@ -398,7 +391,7 @@ withBorder
 `}
 />
 
-## Video Embeds
+### Video embeds
 
 The MarkdownViewer supports video file embeds for common video formats.
 
@@ -416,7 +409,7 @@ withBorder
 `}
 />
 
-## Loading State
+### Loading state
 
 Display a loading state to disable interactive elements while content is being updated.
 
@@ -432,9 +425,9 @@ Display a loading state to disable interactive elements while content is being u
       />`}
       />
 
-## Real-World Example: Comment System
+### Comment system example
 
-Here's a practical example combining multiple features for a comment/discussion system.
+A practical example combining multiple features for a comment/discussion system.
 
 <DocsPage.ComponentExample
   client:only
@@ -475,7 +468,94 @@ return await response.json();
 </Card.Root>`}
 />
 
-## API Reference
+## Installation
+
+```typescript jsx
+import { MarkdownViewer } from '@harnessio/ui/components'
+
+//...
+
+return (
+  <MarkdownViewer
+    source="# Hello World\n\nThis is **markdown** content."
+  />
+)
+```
+
+</TabItem>
+
+<TabItem label="Usage">
+
+## Anatomy
+
+`MarkdownViewer` takes a markdown string via `source` and renders it. It's built on `@uiw/react-markdown-preview`, with a set of remark/rehype plugins layered on for line breaks, sanitization, video embeds, and external-link handling.
+
+```tsx
+<MarkdownViewer source="# Hello" withBorder />
+```
+
+- **Source** — `source` (required) is the markdown string to render. Standard syntax is supported: headings, lists, links, images, emphasis, tables, blockquotes, and fenced code blocks.
+- **Container** — `withBorder` wraps the content in a bordered, padded container. `maxHeight` caps the container height for scrollable content. `className` styles the outer wrapper; `markdownClassName` styles the rendered markdown element.
+- **Typography** — `variant` (`default` / `sm`) selects the typography scale; `muted` renders the text in a muted color.
+- **Code blocks** — fenced code is syntax-highlighted by the underlying previewer. `showLineNumbers` adds line numbers, but only for blocks with more than one line.
+- **Task lists** — `- [ ]` / `- [x]` items render as real, focusable checkboxes. When you pass `onCheckboxChange`, toggling a checkbox calls it with the **full updated markdown source** string (not an event), so you can persist the change. `isLoading` disables the checkboxes while content is updating.
+- **Code suggestions** — a ` ```suggestion ` fence renders through a dedicated suggestion block. `suggestionTitle` sets its header and `suggestionFooter` supplies footer content (e.g. Accept / Reject buttons); `suggestionBlock` supplies the diff source.
+- **Images** — `imageUrlTransform` rewrites each image `src` before render (useful for relative paths or proxying). Clicking an image opens it in a new tab.
+- **Typewriter** — `speed` (ms per character) reveals the source progressively instead of all at once.
+
+### Plugins & security
+
+- **Plugins** — `remark-breaks` (line breaks → `<br>`), `rehype-sanitize` (HTML sanitization), `rehype-video` (video-file embeds), and `rehype-external-links` (external-link attributes).
+- **Sanitization** — output is sanitized; image event handlers and unsafe attributes are stripped as XSS hardening.
+- **External links** — get `target="_blank"` and `rel="nofollow noreferrer noopener"`. Internal links and `#` anchors are intercepted and routed/scrolled instead of doing a full navigation.
+
+## Best practices
+
+{/* TODO: editorial — please review against product guidance. */}
+
+**Do**
+
+- Use `withBorder` when the markdown is a distinct block in the UI (a comment, a README preview); leave it off when the content flows inline with the page.
+- Set `maxHeight` for long, user-generated content so it doesn't dominate the layout.
+- Use `variant="sm"` in dense contexts like comment threads and inline review notes.
+
+**Don't**
+
+- Don't hand `MarkdownViewer` untrusted HTML expecting it to pass through — HTML is sanitized by design.
+- Don't rely on `showLineNumbers` for single-line snippets; line numbers only appear when a block has multiple lines.
+
+## Content
+
+{/* TODO: editorial — please review against product guidance. */}
+
+- Write the `source` as plain markdown — keep headings meaningful and lists parallel, since the viewer renders structure faithfully.
+- For task lists, keep item text short and action-oriented ("Add unit tests"), and persist toggles through `onCheckboxChange` rather than treating them as read-only.
+
+## Accessibility
+
+### Labeling
+
+- The viewer renders whatever semantics the markdown implies (headings, lists, tables). Author the `source` with a sensible heading hierarchy so the rendered output is navigable.
+- Images use their markdown `alt` text; provide meaningful alt text in the source.
+
+### Focus & states
+
+- Task-list checkboxes are genuine native inputs — they're keyboard-focusable and toggleable, and are disabled when `isLoading` is set.
+
+### Known limitations
+
+- **No added ARIA.** Beyond native element semantics and the sanitize schema, the component doesn't add roles or `aria-*`. There's no live-region announcement when content updates (e.g. during typewriter reveal or loading).
+- **Decorative alert icons.** Markdown alert blocks (`> [!NOTE]` etc.) render a decorative icon with no accessible label; the meaning comes from the adjacent text.
+
+</TabItem>
+
+<TabItem label="Properties">
+
+{/* Visually hidden — anchors the section headings below in the TOC without showing a redundant title in the panel body (the tab already says "Properties"). Hidden via #page-level-tabs h2#properties in styles.css. */}
+
+## Properties
+
+### MarkdownViewer
 
 <DocsPage.PropsTable
   props={[
@@ -491,6 +571,13 @@ return await response.json();
       required: false,
       defaultValue: "'default'",
       value: "'default' | 'sm'",
+    },
+    {
+      name: "muted",
+      description: "Render the markdown text in a muted color",
+      required: false,
+      defaultValue: "false",
+      value: "boolean",
     },
     {
       name: "maxHeight",
@@ -519,7 +606,8 @@ return await response.json();
     },
     {
       name: "showLineNumbers",
-      description: "Display line numbers in code blocks",
+      description:
+        "Display line numbers in code blocks (only for blocks with more than one line)",
       required: false,
       defaultValue: "false",
       value: "boolean",
@@ -527,7 +615,7 @@ return await response.json();
     {
       name: "onCheckboxChange",
       description:
-        "Callback fired when a task list checkbox is toggled. Receives the updated markdown source.",
+        "Callback fired when a task list checkbox is toggled. Receives the full updated markdown source.",
       required: false,
       value: "(source: string) => void",
     },
@@ -540,6 +628,14 @@ return await response.json();
       value: "boolean",
     },
     {
+      name: "speed",
+      description:
+        "Typewriter speed in ms per character. When greater than 0, the source is revealed progressively.",
+      required: false,
+      defaultValue: "0",
+      value: "number",
+    },
+    {
       name: "imageUrlTransform",
       description:
         "Transform image URLs before rendering. Useful for handling relative paths or proxying.",
@@ -548,15 +644,9 @@ return await response.json();
     },
     {
       name: "suggestionBlock",
-      description: "Configuration for code suggestion blocks",
+      description: "Source configuration for code suggestion blocks",
       required: false,
       value: "SuggestionBlock",
-    },
-    {
-      name: "suggestionCheckSum",
-      description: "Checksum for validating suggestion blocks",
-      required: false,
-      value: "string",
     },
     {
       name: "suggestionTitle",
@@ -571,44 +661,27 @@ return await response.json();
       required: false,
       value: "ReactNode",
     },
+    {
+      name: "suggestionCheckSum",
+      description:
+        "Checksum for suggestion blocks. Currently accepted but not used by the component.",
+      required: false,
+      value: "string",
+    },
   ]}
 />
 
-## Features Summary
+### SuggestionBlock
 
-### Markdown Support
+```typescript
+interface SuggestionBlock {
+  source: string; // The suggestion diff source
+  lang?: string; // Optional language for highlighting
+}
+```
 
-- **Standard Syntax**: Headings, paragraphs, lists, links, emphasis
-- **Tables**: Full table rendering with alignment
-- **Blockquotes**: Styled quote blocks
-- **Code Blocks**: Syntax highlighting with copy button
-- **Images**: Click to open in new tab
-- **Videos**: Embedded video support for common formats
+</TabItem>
 
-### Interactive Features
+</Tabs>
 
-- **Task Lists**: Clickable checkboxes with state management
-- **Code Suggestions**: Special rendering for code review suggestions
-- **Line Numbers**: Optional line numbering for code blocks
-
-### Security
-
-- **Sanitization**: Content is sanitized using rehype-sanitize
-- **External Links**: Automatically configured with security attributes
-- **XSS Protection**: Image props and event handlers are sanitized
-
-### Customization
-
-- **Typography Variants**: Default and small size options
-- **Image Transforms**: Custom URL transformation for images
-- **Styling**: Customizable with className props
-- **Layout**: Border and height constraints
-
-### Plugins
-
-The component uses several rehype and remark plugins:
-
-- `remark-breaks` - Convert line breaks to `<br>` tags
-- `rehype-sanitize` - Sanitize HTML output
-- `rehype-video` - Embed video files
-- `rehype-external-links` - Configure external link behavior
+</div>

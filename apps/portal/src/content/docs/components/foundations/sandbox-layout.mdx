@@ -1,0 +1,319 @@
+---
+title: Sandbox Layout
+description: Page-level scaffold for the app shell — panels, header, and content
+---
+
+import { DocsPage } from "@/components/docs-page";
+import { Tabs, TabItem } from "@astrojs/starlight/components";
+import PageTabsToc from "@/components/page-tabs-toc.astro";
+
+<PageTabsToc />
+
+<div id="page-level-tabs">
+
+<Tabs>
+
+<TabItem label="Overview">
+
+The `SandboxLayout` component is the outer scaffold used by most full-page screens. It provides a stable grid shell with an optional left navigation panel, a fixed header, and a scrollable main content area. It's a set of compound layout primitives — you compose the pieces you need.
+
+Because it establishes full-viewport structure (`min-height: 100vh`, a fixed header, sticky panels), it's documented here with its anatomy and code rather than an inline live preview.
+
+```tsx
+import { SandboxLayout } from "@harnessio/ui/components";
+
+<SandboxLayout.Root>
+  {/* Optional left navigation column (sticky, full height) */}
+  <SandboxLayout.LeftPanel>{/* nav */}</SandboxLayout.LeftPanel>
+
+  {/* Optional secondary nav column */}
+  <SandboxLayout.LeftSubPanel>{/* sub-nav */}</SandboxLayout.LeftSubPanel>
+
+  <SandboxLayout.Main>
+    <SandboxLayout.Header>{/* breadcrumbs / top bar */}</SandboxLayout.Header>
+    <SandboxLayout.SubHeader>{/* tabs */}</SandboxLayout.SubHeader>
+
+    <SandboxLayout.Content maxWidth="5xl">
+      {/* page content */}
+    </SandboxLayout.Content>
+  </SandboxLayout.Main>
+</SandboxLayout.Root>;
+```
+
+## Variations
+
+### Columns
+
+Use `SandboxLayout.Columns` / `SandboxLayout.Column` to split content into a grid. `columnWidths` accepts any CSS `grid-template-columns` value (default `'repeat(2, 1fr)'`).
+
+```tsx
+<SandboxLayout.Columns columnWidths="1fr 320px">
+  <SandboxLayout.Column>{/* primary */}</SandboxLayout.Column>
+  <SandboxLayout.Column>{/* sidebar */}</SandboxLayout.Column>
+</SandboxLayout.Columns>
+```
+
+## Installation
+
+```tsx
+import { SandboxLayout } from "@harnessio/ui/components";
+
+<SandboxLayout.Root>
+  <SandboxLayout.Main>
+    <SandboxLayout.Content maxWidth="5xl">
+      {/* page content */}
+    </SandboxLayout.Content>
+  </SandboxLayout.Main>
+</SandboxLayout.Root>;
+```
+
+</TabItem>
+
+<TabItem label="Usage">
+
+## Anatomy
+
+`SandboxLayout` is a set of compound primitives. `SandboxLayout.Root` is a full-height grid (`auto | 1fr`); a navigation column sits in the first track and `SandboxLayout.Main` fills the second.
+
+- **`SandboxLayout.Root`** — the full-height grid shell (`min-height: 100vh`), rendered as `<main role="main">`. It takes `children` only.
+- **`SandboxLayout.LeftPanel`** — the primary navigation column (fixed 220px, sticky, full height). It's a `<nav>` and is hidden below the `md` breakpoint.
+- **`SandboxLayout.LeftSubPanel`** — an optional secondary nav column (fixed 300px) with a right border and its own scroll. Unlike `LeftPanel`, it stays visible on small screens and is not sticky.
+- **`SandboxLayout.Main`** — the main content section (`<section>`). Pass `fullWidth` to let it flex to fill available space.
+- **`SandboxLayout.Header`** — a fixed top header (`<header role="banner">`) sized to the breadcrumbs height.
+- **`SandboxLayout.SubHeader`** — a secondary header row sized to the tabs-nav height, for section tabs.
+- **`SandboxLayout.Content`** — the page body. `maxWidth` (`sm`–`7xl`) constrains and centers the content; leave it off for full-bleed.
+- **`SandboxLayout.Columns` / `SandboxLayout.Column`** — a grid container and its cells for multi-column content.
+
+## Best practices
+
+{/* TODO: editorial — please review against product guidance. */}
+
+**Do**
+
+- Use one `SandboxLayout.Root` per screen as the outermost element of the page.
+- Put primary navigation in `LeftPanel` and reserve `LeftSubPanel` for a secondary, context-specific nav.
+- Set `Content maxWidth` on reading-heavy pages so lines don't stretch across very wide viewports; leave it off for dashboards and tables that want the full width.
+
+**Don't**
+
+- Don't nest a second `Root` inside the layout — it establishes the viewport grid once.
+- Don't rely on `LeftSubPanel` for critical navigation on small screens if it would crowd the content; it isn't hidden below `md` the way `LeftPanel` is.
+
+## Accessibility
+
+### Landmarks
+
+- The parts render as real landmarks: `Root` is `<main role="main">`, `Header` is `<header role="banner">`, `LeftPanel` is a `<nav aria-label="Left Navigation Panel">`, `LeftSubPanel` is a labelled `<section>`, and `Main` is a labelled `<section>`. This gives assistive tech a navigable page structure out of the box.
+- `Columns` exposes `role="grid"` with `Column` as `role="gridcell"`.
+
+### Focus & states
+
+- `Header` is fixed and `LeftPanel` is sticky, so they stay in view as `Content` scrolls. Keep interactive elements inside these regions reachable and not obscured by the fixed header.
+
+</TabItem>
+
+<TabItem label="Properties">
+
+{/* Visually hidden — anchors the section headings below in the TOC without showing a redundant title in the panel body (the tab already says "Properties"). Hidden via #page-level-tabs h2#properties in styles.css. */}
+
+## Properties
+
+### SandboxLayout.Root
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "children",
+      description: "The navigation column(s) and the Main section.",
+      required: false,
+      value: "ReactNode",
+    },
+  ]}
+/>
+
+### SandboxLayout.LeftPanel
+
+Sticky, full-height left navigation column (220px), hidden below `md`.
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "children",
+      description: "Navigation content.",
+      required: false,
+      value: "ReactNode",
+    },
+    {
+      name: "className",
+      description: "Additional CSS classes.",
+      required: false,
+      value: "string",
+    },
+  ]}
+/>
+
+### SandboxLayout.LeftSubPanel
+
+Scrollable secondary nav column (300px) with a right border.
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "children",
+      description: "Secondary navigation content.",
+      required: false,
+      value: "ReactNode",
+    },
+    {
+      name: "className",
+      description: "Additional CSS classes.",
+      required: false,
+      value: "string",
+    },
+  ]}
+/>
+
+### SandboxLayout.Main
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "children",
+      description: "The header rows and content.",
+      required: false,
+      value: "ReactNode",
+    },
+    {
+      name: "fullWidth",
+      description: "Makes the main section flex to fill available space.",
+      required: false,
+      value: "boolean",
+    },
+    {
+      name: "className",
+      description: "Additional CSS classes.",
+      required: false,
+      value: "string",
+    },
+  ]}
+/>
+
+### SandboxLayout.Header
+
+Fixed top header, sized to the breadcrumbs height.
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "children",
+      description: "Header content (breadcrumbs, top bar).",
+      required: false,
+      value: "ReactNode",
+    },
+    {
+      name: "className",
+      description: "Additional CSS classes.",
+      required: false,
+      value: "string",
+    },
+  ]}
+/>
+
+### SandboxLayout.SubHeader
+
+Secondary header row, sized to the tabs-nav height.
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "children",
+      description: "Sub-header content (section tabs).",
+      required: false,
+      value: "ReactNode",
+    },
+    {
+      name: "className",
+      description: "Additional CSS classes.",
+      required: false,
+      value: "string",
+    },
+  ]}
+/>
+
+### SandboxLayout.Content
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "children",
+      description: "The page content.",
+      required: false,
+      value: "ReactNode",
+    },
+    {
+      name: "maxWidth",
+      description:
+        "Constrains and centers the content. Full-bleed when omitted.",
+      required: false,
+      value:
+        "'sm' | 'md' | 'lg' | 'xl' | '2xl' | '3xl' | '4xl' | '5xl' | '6xl' | '7xl'",
+    },
+    {
+      name: "className",
+      description: "Additional CSS classes.",
+      required: false,
+      value: "string",
+    },
+  ]}
+/>
+
+### SandboxLayout.Columns
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "children",
+      description: "One or more Column cells.",
+      required: false,
+      value: "ReactNode",
+    },
+    {
+      name: "columnWidths",
+      description: "Sets grid-template-columns.",
+      required: false,
+      defaultValue: "'repeat(2, 1fr)'",
+      value: "string",
+    },
+    {
+      name: "className",
+      description: "Additional CSS classes.",
+      required: false,
+      value: "string",
+    },
+  ]}
+/>
+
+### SandboxLayout.Column
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "children",
+      description: "Cell content.",
+      required: false,
+      value: "ReactNode",
+    },
+    {
+      name: "className",
+      description: "Additional CSS classes.",
+      required: false,
+      value: "string",
+    },
+  ]}
+/>
+
+</TabItem>
+
+</Tabs>
+
+</div>

@@ -1,68 +1,147 @@
 ---
 title: Icon
 description: IconV2 component
-beta: true
 ---
+
+import { DocsPage } from "@/components/docs-page";
+import { Tabs, TabItem } from "@astrojs/starlight/components";
+import PageTabsToc from "@/components/page-tabs-toc.astro";
+import LinkCard from "@/components/LinkCard.astro";
+
+<PageTabsToc />
+
+<div id="page-level-tabs">
+
+<Tabs>
+
+<TabItem label="Overview">
 
 The `IconV2` component allows you to render various icons with customizable properties such as size, color theme, and name. It will soon replace the old `Icon` component.
 
-import { DocsPage } from "@/components/docs-page";
-import LinkCard from "@/components/LinkCard.astro";
-
 <DocsPage.ComponentExample
   client:only
-  code={`<IconV2 name="check" size="lg" />`}
+  code={`<div className="space-y-cn-sm w-full">
+  <div className="flex items-center gap-cn-md">
+    <span className="text-cn-size-2 text-cn-3 w-32 shrink-0 font-mono">default</span>
+    <IconV2 name="check" size="lg" />
+  </div>
+</div>`}
 />
 
-## Size Variants
+## Variations
+
+### Sizes
 
 IconV2 supports multiple predefined size variants: `2xs`, `xs`, `sm`, `md`, `lg` and `xl`. The default size is `sm`.
 
 <DocsPage.ComponentExample
   client:only
-  code={`<Layout.Flex gap="md" align="center">
+  code={`<div className="space-y-cn-sm w-full">
+  <div className="flex items-center gap-cn-md border-b border-cn-borders-3 pb-cn-sm">
+    <span className="text-cn-size-2 text-cn-3 w-32 shrink-0 font-mono">2xs</span>
     <IconV2 name="star" size="2xs" />
+  </div>
+  <div className="flex items-center gap-cn-md border-b border-cn-borders-3 pb-cn-sm">
+    <span className="text-cn-size-2 text-cn-3 w-32 shrink-0 font-mono">xs</span>
     <IconV2 name="star" size="xs" />
+  </div>
+  <div className="flex items-center gap-cn-md border-b border-cn-borders-3 pb-cn-sm">
+    <span className="text-cn-size-2 text-cn-3 w-32 shrink-0 font-mono">sm</span>
     <IconV2 name="star" size="sm" />
+  </div>
+  <div className="flex items-center gap-cn-md border-b border-cn-borders-3 pb-cn-sm">
+    <span className="text-cn-size-2 text-cn-3 w-32 shrink-0 font-mono">md</span>
     <IconV2 name="star" size="md" />
+  </div>
+  <div className="flex items-center gap-cn-md border-b border-cn-borders-3 pb-cn-sm">
+    <span className="text-cn-size-2 text-cn-3 w-32 shrink-0 font-mono">lg</span>
     <IconV2 name="star" size="lg" />
+  </div>
+  <div className="flex items-center gap-cn-md">
+    <span className="text-cn-size-2 text-cn-3 w-32 shrink-0 font-mono">xl</span>
     <IconV2 name="star" size="xl" />
-  </Layout.Flex>`}
+  </div>
+</div>`}
 />
 
-## Color Variants
+### Colors
 
 IconV2 supports predefined color variants through the `color` prop: `inherit`, `danger`, `warning`, `success`, `info`, `neutral`, `risk`, and `disabled`. The default color is `inherit`.
 
 <DocsPage.ComponentExample
   client:only
-  code={`<Layout.Flex gap="md" align="center">
+  code={`<div className="space-y-cn-sm w-full">
+  <div className="flex items-center gap-cn-md border-b border-cn-borders-3 pb-cn-sm">
+    <span className="text-cn-size-2 text-cn-3 w-32 shrink-0 font-mono">inherit</span>
     <IconV2 name="check" size="md" color="inherit" />
+  </div>
+  <div className="flex items-center gap-cn-md border-b border-cn-borders-3 pb-cn-sm">
+    <span className="text-cn-size-2 text-cn-3 w-32 shrink-0 font-mono">danger</span>
     <IconV2 name="warning-triangle-solid" size="md" color="danger" />
+  </div>
+  <div className="flex items-center gap-cn-md border-b border-cn-borders-3 pb-cn-sm">
+    <span className="text-cn-size-2 text-cn-3 w-32 shrink-0 font-mono">warning</span>
     <IconV2 name="warning-triangle-solid" size="md" color="warning" />
+  </div>
+  <div className="flex items-center gap-cn-md border-b border-cn-borders-3 pb-cn-sm">
+    <span className="text-cn-size-2 text-cn-3 w-32 shrink-0 font-mono">success</span>
     <IconV2 name="check" size="md" color="success" />
-    <IconV2 name="info" size="md" color="info" />
+  </div>
+  <div className="flex items-center gap-cn-md border-b border-cn-borders-3 pb-cn-sm">
+    <span className="text-cn-size-2 text-cn-3 w-32 shrink-0 font-mono">info</span>
+    <IconV2 name="info-circle-solid" size="md" color="info" />
+  </div>
+  <div className="flex items-center gap-cn-md border-b border-cn-borders-3 pb-cn-sm">
+    <span className="text-cn-size-2 text-cn-3 w-32 shrink-0 font-mono">risk</span>
     <IconV2 name="warning-triangle-solid" size="md" color="risk" />
+  </div>
+  <div className="flex items-center gap-cn-md">
+    <span className="text-cn-size-2 text-cn-3 w-32 shrink-0 font-mono">neutral</span>
     <IconV2 name="check" size="md" color="neutral" />
-  </Layout.Flex>`}
+  </div>
+</div>`}
 />
 
-## Custom Colors
+### Custom colors
 
 You can also set custom colors using the `className` prop to override the default styling.
 
 <DocsPage.ComponentExample
   client:only
-  code={`<Layout.Flex gap="md">
-    <div className="text-cn-success">
-      <IconV2 name="check" size="md" />
-    </div>
-    
-    <IconV2 name="xmark" size="md" color="danger" />
-  </Layout.Flex>`}
+  code={`<div className="space-y-cn-sm w-full">
+  <div className="flex items-center gap-cn-md">
+    <span className="text-cn-size-2 text-cn-3 w-32 shrink-0 font-mono">custom</span>
+    <Layout.Flex gap="md">
+      <div className="text-cn-success">
+        <IconV2 name="check" size="md" />
+      </div>
+
+      <IconV2 name="xmark" size="md" color="danger" />
+    </Layout.Flex>
+
+  </div>
+</div>`}
 />
 
-## Usage
+### With tooltip
+
+`IconWithTooltip` pairs an icon with a tooltip — useful for inline "informer" affordances. Pass tooltip `content` and, optionally, `iconProps` to control the icon it renders.
+
+<DocsPage.ComponentExample
+  client:only
+  code={`<div className="space-y-cn-sm w-full">
+  <div className="flex items-center gap-cn-md">
+    <span className="text-cn-size-2 text-cn-3 w-32 shrink-0 font-mono">tooltip</span>
+    <Layout.Flex gap="md">
+      <IconWithTooltip content="Tooltip content" />
+      <IconWithTooltip content="Tooltip content" iconProps={{ name: 'warning-triangle', color: 'danger' }} />
+      <IconWithTooltip content="Tooltip content" iconProps={{ name: 'warning-triangle', color: 'warning', size: 'xl' }} />
+    </Layout.Flex>
+  </div>
+</div>`}
+/>
+
+## Installation
 
 ```typescript jsx
 import { IconV2 } from '@harnessio/ui/components'
@@ -72,32 +151,80 @@ import { IconV2 } from '@harnessio/ui/components'
 return <IconV2 name="check" size="lg" />
 ```
 
-## API Reference
+## Related pages
 
-The `IconV2` component can be sized using the `size` prop, which applies predefined size classes.
+<div className="not-content grid grid-cols-1 sm:grid-cols-2 gap-cn-xs">
+  <LinkCard
+    href="/foundations/icons"
+    title="All Icons"
+    description="Explore the comprehensive icon library"
+  />
+  <LinkCard
+    href="/components/logo"
+    title="Logos"
+    description="Logo component reference"
+  />
+</div>
 
-```typescript jsx
-<IconV2
-  name="double-tick"   // name of the icon
-  size="md"           // [OPTIONAL] size variant (2xs, xs, sm, md, lg, xl)
-  color="inherit"     // [OPTIONAL] color variant (inherit, danger, warning, success, info, risk, neutral, disabled)
-  className="my-class" // [OPTIONAL] custom class name
-  skipSize={false}    // [OPTIONAL] skip size classes if custom styling is applied
-/>
+</TabItem>
+
+<TabItem label="Usage">
+
+## Anatomy
+
+`IconV2` renders a single inline SVG. You give it a `name`, and it looks that name up in the icon set and draws the matching glyph.
+
+```tsx
+<IconV2 name="double-tick" size="md" color="success" />
 ```
 
-## Icon with Tooltip
+- **Name lookup** — `name` selects the glyph from the icon set. If the name isn't found, the component warns in the console and renders nothing (unless you provide a `fallback` name).
+- **Sizing** — `size` applies a predefined size class (`2xs` through `xl`). Set `skipSize` when you're sizing the icon yourself via `className` and want to opt out of the built-in size classes.
+- **Color** — `color` maps to a semantic icon-color token (`text-cn-icon-*`). `inherit` (the default) takes the surrounding text color, so an icon inside colored text matches it automatically.
+- **Tooltip helper** — `IconWithTooltip` composes `IconV2` inside a `<button>` wrapped by a `Tooltip`, giving you a focusable, hoverable icon with explanatory content.
 
-<DocsPage.ComponentExample
-  client:only
-  code={`
-  <Layout.Flex gap="md">
-    <IconWithTooltip content="Tooltip content" />
-    <IconWithTooltip content="Tooltip content" iconProps={{ name: 'warning-triangle', color: 'danger' }} />
-    <IconWithTooltip content="Tooltip content" iconProps={{ name: 'warning-triangle', color: 'warning', size: 'xl' }} />
-  </Layout.Flex>
-  `}
-/>
+## Best practices
+
+{/* TODO: editorial — please review against product guidance. */}
+
+**Do**
+
+- Reach for a semantic `color` variant (`danger`, `warning`, `success`, …) before overriding color by hand, so status meaning stays consistent.
+- Let `color="inherit"` carry the icon color when the icon sits alongside text.
+- Keep icon sizes consistent within a group (e.g. all `sm` in a toolbar) so they read as a set.
+
+**Don't**
+
+- Don't rely on an icon alone to convey meaning in interactive controls — pair it with a text label or an accessible name.
+- Don't hard-code pixel sizes with `className` while leaving the size classes on; use `skipSize` when you take over sizing.
+
+## Content
+
+{/* TODO: editorial — please review against product guidance. */}
+
+- Choose the icon whose conventional meaning matches the action or status — browse the full set on the [All Icons](/foundations/icons) page.
+- Use `IconWithTooltip` when an icon needs a short explanation, and keep that tooltip text to a phrase.
+
+## Accessibility
+
+### Labeling
+
+- `IconV2` renders a decorative SVG with no accessible name of its own. When an icon stands alone in an interactive control, give that control a label (e.g. `aria-label` on the button) so its purpose is announced.
+- `IconWithTooltip` renders the icon inside a real `<button>`, so the tooltip trigger is focusable and reachable by keyboard.
+
+### Known limitations
+
+- **No built-in text alternative.** `IconV2` doesn't add a `title` or `aria-label`; supply meaning through surrounding text or the parent control.
+
+</TabItem>
+
+<TabItem label="Properties">
+
+{/* Visually hidden — anchors the section headings below in the TOC without showing a redundant title in the panel body (the tab already says "Properties"). Hidden via #page-level-tabs h2#properties in styles.css. */}
+
+## Properties
+
+### IconV2
 
 <DocsPage.PropsTable
   props={[
@@ -138,17 +265,40 @@ The `IconV2` component can be sized using the `size` prop, which applies predefi
   ]}
 />
 
-## Related pages
+### IconWithTooltip
 
-<div className="not-content grid grid-cols-1 sm:grid-cols-2 gap-cn-xs">
-  <LinkCard
-    href="/foundations/icons"
-    title="All Icons"
-    description="Explore the comprehensive icon library"
-  />
-  <LinkCard
-    href="/components/logo"
-    title="Logos"
-    description="Logo component reference"
-  />
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "content",
+      description: "Content shown in the tooltip.",
+      required: false,
+      value: "ReactNode (from TooltipProps)",
+    },
+    {
+      name: "iconProps",
+      description:
+        "Props forwarded to the underlying IconV2 (name, size, color, …). Defaults to the info-circle icon at size md.",
+      required: false,
+      value: "IconPropsV2",
+    },
+    {
+      name: "disabled",
+      description: "When true, the tooltip is not shown.",
+      required: false,
+      value: "boolean",
+    },
+    {
+      name: "className",
+      description: "Custom class name",
+      required: false,
+      value: "string",
+    },
+  ]}
+/>
+
+</TabItem>
+
+</Tabs>
+
 </div>

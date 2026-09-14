@@ -1,12 +1,21 @@
 ---
 title: Date Range Filter
 description: A filter component for selecting date ranges via presets or a custom calendar picker
-beta: true
 ---
 
-The `DateRangeFilter` is a new filter field type (`FilterFieldTypes.DateRange`) in the filters system. It presents a dropdown with grouped preset date ranges (Recommended, Relative dates, Calendar months) and a "Select custom range" option. Clicking "Select custom range" reveals a two-month calendar alongside the preset list for picking an arbitrary date range.
-
 import { DocsPage } from "@/components/docs-page";
+import { Tabs, TabItem } from "@astrojs/starlight/components";
+import PageTabsToc from "@/components/page-tabs-toc.astro";
+
+<PageTabsToc />
+
+<div id="page-level-tabs">
+
+<Tabs>
+
+<TabItem label="Overview">
+
+The `DateRangeFilter` is a filter field type (`FilterFieldTypes.DateRange`) in the filters system. It presents a dropdown with grouped preset date ranges (Recommended, Relative dates, Calendar months) and a "Select custom range" option. Clicking "Select custom range" reveals a two-month calendar alongside the preset list for picking an arbitrary date range.
 
 <DocsPage.ComponentExample
   client:only
@@ -32,32 +41,9 @@ import { DocsPage } from "@/components/docs-page";
 }`}
 />
 
-## Usage
+## Variations
 
-```typescript jsx
-import { FilterField, FilterFieldTypes } from '@harnessio/ui/components'
-import type { DateRangeValue } from '@harnessio/ui/components'
-
-const MyComponent = () => {
-  const [value, setValue] = useState<DateRangeValue | undefined>();
-
-  return (
-    <FilterField
-      filterOption={{
-        type: FilterFieldTypes.DateRange,
-        label: 'Timeframe',
-        value: 'timeframe',
-      }}
-      removeFilter={() => {}}
-      shouldOpenFilter={false}
-      onChange={(val) => setValue(val)}
-      value={value}
-    />
-  );
-};
-```
-
-## With Custom Presets
+### Custom presets
 
 You can provide your own set of presets via `filterFieldConfig.presets`. Each preset defines a `label`, a unique `value`, a `group` for visual grouping, and a `getRange` function that returns `{ from: Date, to: Date }`.
 
@@ -124,7 +110,7 @@ You can provide your own set of presets via `filterFieldConfig.presets`. Each pr
 }`}
 />
 
-## Without Custom Range
+### Presets only
 
 Set `showCustomRange: false` to hide the "Select custom range" option and only show presets.
 
@@ -153,7 +139,115 @@ Set `showCustomRange: false` to hide the "Select custom range" option and only s
 }`}
 />
 
-## API Reference
+## Installation
+
+```typescript jsx
+import { FilterField, FilterFieldTypes } from '@harnessio/ui/components'
+import type { DateRangeValue } from '@harnessio/ui/components'
+
+const MyComponent = () => {
+  const [value, setValue] = useState<DateRangeValue | undefined>();
+
+  return (
+    <FilterField
+      filterOption={{
+        type: FilterFieldTypes.DateRange,
+        label: 'Timeframe',
+        value: 'timeframe',
+      }}
+      removeFilter={() => {}}
+      shouldOpenFilter={false}
+      onChange={(val) => setValue(val)}
+      value={value}
+    />
+  );
+};
+```
+
+</TabItem>
+
+<TabItem label="Usage">
+
+## Anatomy
+
+The date range filter isn't a standalone component — it's a `FilterField` configured with `type: FilterFieldTypes.DateRange`. That field renders a trigger button that opens a dropdown of preset ranges:
+
+```tsx
+<FilterField
+  filterOption={{
+    type: FilterFieldTypes.DateRange,
+    label: "Timeframe",
+    value: "timeframe",
+    filterFieldConfig: {
+      presets, // optional — defaults to a built-in set
+      showCustomRange: true, // optional — defaults to true
+    },
+  }}
+  value={value}
+  onChange={setValue}
+  removeFilter={() => setValue(undefined)}
+  shouldOpenFilter={false}
+/>
+```
+
+- **Trigger** — a button showing the filter's `label`; once a range is chosen it appends the formatted range (e.g. `Timeframe: Jan 3 – Jan 10`) and carries a tooltip with the same text, plus a chevron.
+- **Dropdown** — opening the trigger reveals the preset list. Presets are grouped into **Recommended**, **Relative dates**, and **Calendar months** sections (only groups that have presets are shown), and each item shows its label alongside the concrete dates it resolves to.
+- **Select custom range** — when `showCustomRange` is left on, a highlighted "Select custom range" item sits below the recommended group; opening it reveals a two-month range calendar for picking arbitrary `from`/`to` dates.
+- **Delete filter** — the dropdown header holds a trash button that removes the filter entirely (calls `removeFilter`).
+
+If you don't pass `presets`, a default set is used (Last 7 Days, This Month, Last 30 Days, quarters, years, and so on).
+
+## Best practices
+
+{/* TODO: editorial — please review against product guidance. */}
+
+**Do**
+
+- Lead with the ranges people pick most and put them in the **Recommended** group so they're reachable first.
+- Keep preset labels short and unambiguous ("Last 30 days", "This quarter") and let the resolved dates underneath supply the specifics.
+- Turn off `showCustomRange` when an arbitrary range doesn't make sense for the data, so the menu stays focused on the presets that do.
+
+**Don't**
+
+- Don't overload a single filter with a long, ungrouped list of presets — use the three groups to give the list structure.
+- Don't rely on the filter to validate business rules (e.g. a maximum span); enforce those where you consume the emitted range.
+
+## Content
+
+{/* TODO: editorial — please review against product guidance. */}
+
+- Give the filter a `label` that names the thing being filtered ("Timeframe", "Created", "Period"), not the action.
+- Write preset labels in sentence case and keep the vocabulary consistent across filters ("Last 7 days" everywhere, not "Past week" in one place).
+
+## Accessibility
+
+The trigger is a standard [Button](/components/actions/button/) and the menu is built on the [Dropdown Menu](/components/overlays/dropdown-menu/) primitive, so it inherits their semantics.
+
+### Keyboard
+
+- The trigger opens with **Enter** or **Space**. Inside the menu, **Arrow** keys move between preset items, **Enter** selects, and **Escape** closes and returns focus to the trigger.
+- "Select custom range" opens a submenu; the calendar inside is keyboard-navigable (arrow keys between days, **Enter** to pick the start then the end of the range).
+
+### Labeling
+
+- The trigger reads out the filter `label` and, once set, the selected range. Each preset item announces its label together with the concrete dates it resolves to.
+- The delete control in the dropdown header is icon-only but carries an accessible "Delete filter" label.
+
+### Focus & states
+
+- Focus is trapped within the open menu and returns to the trigger on close. The selected range is reflected in the calendar's highlighted days when you reopen "Select custom range".
+
+### Known limitations
+
+- **Selection is conveyed visually in the calendar.** The picked range shows through highlighted day cells; there's no separate textual announcement of the range as you build it in the calendar, so confirm the resulting range from the trigger label.
+
+</TabItem>
+
+<TabItem label="Properties">
+
+{/* Visually hidden — anchors the section headings below in the TOC without showing a redundant title in the panel body (the tab already says "Properties"). Hidden via #page-level-tabs h2#properties in styles.css. */}
+
+## Properties
 
 ### FilterFieldTypes.DateRange
 
@@ -194,6 +288,20 @@ Use `FilterFieldTypes.DateRange` as the `type` in a `FilterOptionConfig` to rend
       defaultValue: "true",
       value: "boolean",
     },
+    {
+      name: "filterFieldConfig.calendarProps",
+      description:
+        "Props forwarded to the underlying range Calendar (react-day-picker), excluding those the field controls (mode, selection, month, classNames).",
+      required: false,
+      value: "DateRangeCalendarProps",
+    },
+    {
+      name: "filterFieldConfig.calendarClassNames",
+      description:
+        "Class name overrides merged into the Calendar's classNames.",
+      required: false,
+      value: "ClassNames",
+    },
   ]}
 />
 
@@ -218,7 +326,7 @@ The value emitted by the filter when a range is selected.
     {
       name: "preset",
       description:
-        "The preset key if a preset was selected, undefined for custom ranges.",
+        "The preset key if a preset was selected, 'CUSTOM' for calendar-picked ranges, undefined when unset.",
       required: false,
       value: "string",
     },
@@ -257,3 +365,9 @@ Defines a preset date range option.
     },
   ]}
 />
+
+</TabItem>
+
+</Tabs>
+
+</div>

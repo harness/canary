@@ -1,0 +1,388 @@
+---
+title: Page (Page Header)
+description: Page header and content primitives used inside the app shell
+---
+
+import { DocsPage } from "@/components/docs-page";
+import { Tabs, TabItem } from "@astrojs/starlight/components";
+import PageTabsToc from "@/components/page-tabs-toc.astro";
+
+<PageTabsToc />
+
+<div id="page-level-tabs">
+
+<Tabs>
+
+<TabItem label="Overview">
+
+The `Page` component provides the header + content structure that sits inside the [Sandbox Layout](/components/foundations/sandbox-layout) main area. It's a compound component — `Page.Root` establishes the page context, `Page.Header` (or `Page.HeaderV2`) standardizes the title, back navigation, and actions, and `Page.Content` holds the scrollable body.
+
+`Page.Header` composes a back link, an icon or logo, the page title, a description, and header-right actions into a single standardized header.
+
+<DocsPage.ComponentExample
+  client:only
+  code={`
+    <div className="w-full">
+      <Page.Header
+        title="Pipelines"
+        iconName="empty-page"
+        description="Define, run, and monitor your CI/CD pipelines."
+        backLink={{ linkText: 'Back to project', linkProps: { to: '#' } }}
+        actions={
+          <>
+            <Button variant="outline">Settings</Button>
+            <Button>New pipeline</Button>
+          </>
+        }
+      />
+    </div>
+`}
+/>
+
+## Variations
+
+### Header with tabs (Page.HeaderV2)
+
+`Page.HeaderV2` is the newer header variant that supports a title row plus a tab strip for section navigation. The tabs are router-driven — each `value` is a route the tab links to, and the active tab is derived from the current URL.
+
+<DocsPage.ComponentExample
+  client:only
+  code={`
+    <div className="w-full">
+      <Page.HeaderV2
+        title="Repository"
+        iconName="git-branch"
+        description="Browse files, commits, and branches."
+        breadcrumbs={
+          <Breadcrumb.Root>
+            <Breadcrumb.List>
+              <Breadcrumb.Item>
+                <Breadcrumb.Link href="#">Lorem ipsum page</Breadcrumb.Link>
+              </Breadcrumb.Item>
+              <Breadcrumb.Separator />
+              <Breadcrumb.Item>
+                <Breadcrumb.Link href="#">Lorem ipsum page</Breadcrumb.Link>
+              </Breadcrumb.Item>
+              <Breadcrumb.Separator />
+              <Breadcrumb.Page>Lorem ipsum page</Breadcrumb.Page>
+            </Breadcrumb.List>
+          </Breadcrumb.Root>
+        }
+        tabs={[
+          { label: 'Summary', value: '/', exact: true },
+          { label: 'Files', value: '/files', icon: 'empty-page' },
+          { label: 'Commits', value: '/commits', icon: 'git-commit', counter: 12 },
+          { label: 'Branches', value: '/branches', icon: 'git-branch' },
+        ]}
+        actions={<Button>Clone</Button>}
+      />
+    </div>
+`}
+/>
+
+## Installation
+
+```tsx
+import { Page } from "@harnessio/ui/components";
+
+<Page.Root>
+  <Page.Header
+    title="Pipelines"
+    backLink={{ linkText: "Back to project", linkProps: { to: "/project" } }}
+    actions={<Button>New pipeline</Button>}
+  />
+  <Page.Content>{/* page body */}</Page.Content>
+</Page.Root>;
+```
+
+</TabItem>
+
+<TabItem label="Usage">
+
+## Anatomy
+
+`Page` is a compound component. Wrap the page in `Page.Root`, put a header (`Page.Header` or `Page.HeaderV2`) at the top, and render the body inside `Page.Content`.
+
+```tsx
+<Page.Root>
+  <Page.Header
+    title="Pipelines"
+    backLink={{ linkText: "Back to project", linkProps: { to: "/project" } }}
+  >
+    {/* optional content rendered below the description */}
+  </Page.Header>
+
+  <Page.Content>{/* page body */}</Page.Content>
+</Page.Root>
+```
+
+- **`Page.Root`** — establishes the header + content context inside the Sandbox Layout main area. Pass `scrollable` to make the content region scroll (and the header stick).
+- **`Page.Header`** — the standard header: `title` (rendered as an `<h1>` when it's a string), optional `iconName` / `logoName`, `description`, `backLink`, and header-right `actions`. Any `children` render below the description.
+- **`Page.HeaderV2`** — the header variant with a `title` row plus a router-driven `tabs` strip; also takes `breadcrumbs`, `description`, `iconName`, and `actions`.
+- **`Page.Content`** — the page body region; fills the remaining space, and scrolls when `Page.Root` is `scrollable`.
+
+In `Page.HeaderV2`, each entry in `tabs` links to a route — the active tab is resolved from the current URL, and `exact` controls exact-path matching (used for the index route).
+
+## Best practices
+
+{/* TODO: editorial — please review against product guidance. */}
+
+**Do**
+
+- Use one `Page.Header` (or one `Page.HeaderV2`) per page, at the top of `Page.Root`, so the title and back navigation are consistent across screens.
+- Reach for `Page.HeaderV2` when the page has sub-sections that map to routes; use `Page.Header` for a single-view page.
+- Put page-level actions in the header's `actions` slot rather than inside the content.
+
+**Don't**
+
+- Don't nest a second header inside `Page.Content` — the header belongs directly under `Page.Root`.
+- Don't use the header tabs for in-page state that isn't reflected in the URL; they're built for route navigation.
+
+## Accessibility
+
+### Keyboard
+
+- `Page.HeaderV2` tabs are rendered as router links, so they're reachable and activatable with standard link keyboard behavior; the active tab follows the URL.
+
+### Labeling
+
+- When `title` is a string, both `Page.Header` and `Page.HeaderV2` render it as a semantic `<h1>`, giving each page a top-level heading. If you pass a non-string node, provide the heading semantics yourself.
+- `backLink` renders a real link labeled by `linkText` — keep that text descriptive of where it goes.
+
+### Focus & states
+
+- In a `scrollable` `Page.Root`, the header becomes sticky (pinned to the top with a solid background) while the content scrolls beneath it.
+
+</TabItem>
+
+<TabItem label="Properties">
+
+{/* Visually hidden — anchors the section headings below in the TOC without showing a redundant title in the panel body (the tab already says "Properties"). Hidden via #page-level-tabs h2#properties in styles.css. */}
+
+## Properties
+
+### Page.Root
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "children",
+      description:
+        "The header and content (Page.Header / Page.HeaderV2 and Page.Content).",
+      required: true,
+      value: "ReactNode",
+    },
+    {
+      name: "scrollable",
+      description:
+        "Makes the content region the scroll container and pins the header sticky.",
+      required: false,
+      defaultValue: "false",
+      value: "boolean",
+    },
+    {
+      name: "mainClassName",
+      description: "Additional CSS classes for the main wrapper.",
+      required: false,
+      value: "string",
+    },
+    {
+      name: "contentClassName",
+      description: "Additional CSS classes for the content wrapper.",
+      required: false,
+      value: "string",
+    },
+  ]}
+/>
+
+### Page.Header
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "title",
+      description: "Page title. Rendered as an <h1> when passed a string.",
+      required: true,
+      value: "ReactNode",
+    },
+    {
+      name: "description",
+      description: "Supporting text shown below the title.",
+      required: false,
+      value: "ReactNode",
+    },
+    {
+      name: "iconName",
+      description: "Icon shown before the title.",
+      required: false,
+      value: "IconV2 name",
+    },
+    {
+      name: "iconSize",
+      description: "Size of the leading icon.",
+      required: false,
+      defaultValue: "'lg'",
+      value: "'2xs' | 'xs' | 'sm' | 'md' | 'lg' | 'xl'",
+    },
+    {
+      name: "logoName",
+      description: "Logo shown before the title (alternative to iconName).",
+      required: false,
+      value: "LogoV2 name",
+    },
+    {
+      name: "backLink",
+      description: "Back navigation link rendered above the title.",
+      required: false,
+      value: "{ linkText: string; linkProps: LinkProps }",
+    },
+    {
+      name: "actions",
+      description: "Header-right actions rendered in the title row.",
+      required: false,
+      value: "ReactNode",
+    },
+    {
+      name: "headerActions",
+      description: "Actions rendered in the top row alongside the back link.",
+      required: false,
+      value: "ReactNode",
+    },
+    {
+      name: "favoriteProps",
+      description: "Configures a favorite (star) toggle next to the title.",
+      required: false,
+      value: "Omit<FavoriteIconProps, 'className'>",
+    },
+    {
+      name: "isLoading",
+      description: "Shows skeleton placeholders for the logo and typography.",
+      required: false,
+      defaultValue: "false",
+      value: "boolean",
+    },
+    {
+      name: "children",
+      description:
+        "Content rendered at the bottom of the header, below the description.",
+      required: false,
+      value: "ReactNode",
+    },
+  ]}
+/>
+
+### Page.HeaderV2
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "title",
+      description:
+        "Page title. Rendered as an <h1> (hero variant) when passed a string.",
+      required: true,
+      value: "string | ReactNode",
+    },
+    {
+      name: "description",
+      description: "Supporting text shown below the title.",
+      required: false,
+      value: "string",
+    },
+    {
+      name: "iconName",
+      description: "Icon shown before the title.",
+      required: false,
+      value: "IconV2 name",
+    },
+    {
+      name: "breadcrumbs",
+      description: "Breadcrumb node rendered at the top of the header.",
+      required: false,
+      value: "ReactNode",
+    },
+    {
+      name: "tabs",
+      description: "Router-driven tabs for section navigation.",
+      required: false,
+      value: "HeaderV2TabItem[]",
+    },
+    {
+      name: "tabsVariant",
+      description:
+        "Tab appearance. 'ghost' renders tabs inline in the title row; 'underlined' renders them below.",
+      required: false,
+      defaultValue: "'underlined'",
+      value: "'underlined' | 'ghost'",
+    },
+    {
+      name: "tabsClassName",
+      description: "Additional CSS classes for the tab list.",
+      required: false,
+      value: "string",
+    },
+    {
+      name: "contentTabs",
+      description:
+        "Renders state-driven (non-router) tabs instead of navigation tabs.",
+      required: false,
+      defaultValue: "false",
+      value: "boolean",
+    },
+    {
+      name: "actions",
+      description: "Header-right actions rendered in the title row.",
+      required: false,
+      value: "ReactNode",
+    },
+    {
+      name: "children",
+      description: "Content rendered between the title section and the tabs.",
+      required: false,
+      value: "ReactNode",
+    },
+    {
+      name: "className",
+      description: "Additional CSS classes for the header wrapper.",
+      required: false,
+      value: "string",
+    },
+  ]}
+/>
+
+The `tabs` array uses the `HeaderV2TabItem` shape:
+
+```typescript
+interface HeaderV2TabItem {
+  label: string;
+  value: string;
+  icon?: IconV2NamesType;
+  counter?: number;
+  disabled?: boolean;
+  exact?: boolean;
+}
+```
+
+### Page.Content
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "children",
+      description: "The page body.",
+      required: true,
+      value: "ReactNode",
+    },
+    {
+      name: "className",
+      description: "Additional CSS classes for the content region.",
+      required: false,
+      value: "string",
+    },
+  ]}
+/>
+
+</TabItem>
+
+</Tabs>
+
+</div>

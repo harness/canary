@@ -1,12 +1,17 @@
 ---
 import DocTemplate from "./DocTemplate.astro";
 import SplashTemplate from "./SplashTemplate.astro";
+import HomeTemplate from "./HomeTemplate.astro";
 
-const { template } = Astro.locals.starlightRoute.entry.data;
+const { template, home } = Astro.locals.starlightRoute.entry.data;
 ---
 
 {
-  template === "doc" ? (
+  home ? (
+    <HomeTemplate>
+      <slot />
+    </HomeTemplate>
+  ) : template === "doc" ? (
     <DocTemplate>
       <slot />
     </DocTemplate>

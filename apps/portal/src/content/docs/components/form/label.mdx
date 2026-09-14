@@ -1,12 +1,21 @@
 ---
 title: Label
 description: Label component
-beta: true
 ---
 
-The `Label` component is a customizable label for form elements. It includes an optional required indicator and follows consistent styling across the design system.
-
 import { DocsPage } from "@/components/docs-page";
+import { Tabs, TabItem } from "@astrojs/starlight/components";
+import PageTabsToc from "@/components/page-tabs-toc.astro";
+
+<PageTabsToc />
+
+<div id="page-level-tabs">
+
+<Tabs>
+
+<TabItem label="Overview">
+
+The `Label` component is a customizable label for form elements. It shows a required indicator by default, supports an optional tooltip and suffix, and follows consistent styling across the design system.
 
 <DocsPage.ComponentExample
   client:only
@@ -18,22 +27,11 @@ import { DocsPage } from "@/components/docs-page";
 `}
 />
 
-## Usage
+## Variations
 
-```typescript jsx
-import { Label } from '@harnessio/ui/components'
+### Optional
 
-// ...
-
-return (
-  <>
-    <Label htmlFor="username">Username</Label>
-    <TextInput id="username" type="text" />
-  </>
-)
-```
-
-## Optional
+By default a label shows a required indicator (`*`). Set `optional` to mark the field as not required — this hides the indicator.
 
 <DocsPage.ComponentExample
   client:only
@@ -45,7 +43,7 @@ return (
   `}
 />
 
-## With tooltip (Informer)
+### With tooltip (Informer)
 
 The `Label` component supports displaying a tooltip with additional information.
 Use the `tooltipContent` prop to provide the tooltip content, and pass additional configuration via the `tooltipProps` prop.
@@ -83,7 +81,9 @@ Use the `tooltipContent` prop to provide the tooltip content, and pass additiona
 `}
 />
 
-## Suffix
+### Suffix
+
+Use the `suffix` prop to place an element — such as an action button — on the right side of the label.
 
 <DocsPage.ComponentExample
   client:only
@@ -105,7 +105,147 @@ Use the `tooltipContent` prop to provide the tooltip content, and pass additiona
   `}
 />
 
-## API Reference
+## Installation
+
+```typescript jsx
+import { Label } from '@harnessio/ui/components'
+
+// ...
+
+return (
+  <>
+    <Label htmlFor="username">Username</Label>
+    <TextInput id="username" type="text" />
+  </>
+)
+```
+
+</TabItem>
+
+<TabItem label="Usage">
+
+## Anatomy
+
+`Label` wraps Radix's label primitive and renders the label text plus, when configured, a required indicator, a tooltip, and a suffix.
+
+```tsx
+<Label htmlFor="username" tooltipContent="Shown on hover">
+  Username
+</Label>
+```
+
+- **Association** — `htmlFor` ties the label to a form control by its `id`, so clicking the label focuses the control.
+- **Required indicator** — the label shows a required asterisk **by default**. Passing `optional` removes it; there is no "(optional)" text — the absence of the asterisk is the only visual difference.
+- **Tooltip** — when you pass `tooltipContent`, the label renders an [`IconWithTooltip`](/components/visual/icon) informer next to the text; `tooltipProps` configures that icon and tooltip.
+- **Suffix** — a `suffix` element is laid out to the right of the label text, alongside any tooltip, for actions like "add".
+- **Empty guard** — the label renders nothing when it has no `children`.
+
+## Best practices
+
+{/* TODO: editorial — please review against product guidance. */}
+
+**Do**
+
+- Always set `htmlFor` to the control's `id` so the label and field are programmatically linked.
+- Use `optional` to signal non-required fields rather than adding "(optional)" text yourself.
+- Keep label text to a short noun phrase; move supplementary explanation into `tooltipContent`.
+
+**Don't**
+
+- Don't rely on the asterisk alone to communicate that a field is required — also mark the field itself (see Accessibility).
+- Don't overload the `suffix` with multiple actions; keep it to a single, clear control.
+
+## Content
+
+{/* TODO: editorial — please review against product guidance. */}
+
+- Name the field for what it collects ("Email", "Repository name"), not how it's used internally.
+- Keep tooltip content to a sentence or two of genuinely helpful context.
+
+## Accessibility
+
+### Keyboard
+
+- The tooltip informer and any `suffix` control render as real buttons, so they're reachable and operable by keyboard.
+
+### Labeling
+
+- `htmlFor` associates the label with its control, so assistive tech announces the field's name and clicking the label moves focus to the control.
+
+### Known limitations
+
+- **The required asterisk is aria-hidden.** It's visual only, so also convey the required state on the field itself (e.g. `required` / `aria-required` on the input) for assistive tech.
+
+</TabItem>
+
+<TabItem label="Properties">
+
+{/* Visually hidden — anchors the section headings below in the TOC without showing a redundant title in the panel body (the tab already says "Properties"). Hidden via #page-level-tabs h2#properties in styles.css. */}
+
+## Properties
+
+### Label
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "children",
+      description:
+        "The content of the label. The label renders nothing when empty.",
+      required: true,
+      value: "ReactNode",
+    },
+    {
+      name: "htmlFor",
+      description: "The id of the form control this label is associated with.",
+      required: false,
+      value: "string",
+    },
+    {
+      name: "optional",
+      description:
+        "When true, hides the required indicator. Labels show the required asterisk by default.",
+      defaultValue: "false",
+      required: false,
+      value: "boolean",
+    },
+    {
+      name: "disabled",
+      description: "Renders the label in a disabled style.",
+      required: false,
+      value: "boolean",
+    },
+    {
+      name: "tooltipContent",
+      description: "Content to display in the tooltip informer.",
+      required: false,
+      value: "Exclude<ReactNode, boolean | null | undefined>",
+    },
+    {
+      name: "tooltipProps",
+      description: "Additional props for configuring the tooltip informer.",
+      required: false,
+      value: "IconWithTooltipProps",
+    },
+    {
+      name: "suffix",
+      description:
+        "Element that appears on the right side of the label, e.g. an action button.",
+      required: false,
+      value: "ReactNode",
+    },
+    {
+      name: "className",
+      description: "Additional CSS classes to apply to the label.",
+      required: false,
+      value: "string",
+    },
+  ]}
+/>
+
+### IconWithTooltipProps
+
+`tooltipProps` accepts the same shape as [`IconWithTooltip`](/components/visual/icon):
 
 ```typescript
 interface IconWithTooltipProps extends Omit<TooltipProps, "children"> {
@@ -118,51 +258,8 @@ interface IconWithTooltipProps extends Omit<TooltipProps, "children"> {
 }
 ```
 
-<DocsPage.PropsTable
-  props={[
-    {
-      name: "htmlFor",
-      description: "The id of the form control this label is associated with.",
-      required: false,
-      value: "string",
-    },
-    {
-      name: "optional",
-      description: "Indicates if the associated form field is optional.",
-      defaultValue: "false",
-      required: false,
-      value: "boolean",
-    },
-    {
-      name: "className",
-      description: "Additional CSS classes to apply to the label.",
-      required: false,
-      value: "string",
-    },
-    {
-      name: "children",
-      description: "The content of the label.",
-      required: true,
-      value: "ReactNode",
-    },
-    {
-      name: "tooltipContent",
-      description: "Content to display in the tooltip.",
-      required: false,
-      value: "Exclude<ReactNode, boolean | null | undefined>",
-    },
-    {
-      name: "tooltipProps",
-      description: "Additional props for configuring the tooltip.",
-      required: false,
-      value: "IconWithTooltipProps",
-    },
-    {
-      name: "suffix",
-      description:
-        "Customized with a suffix element that appears on the right side of the label.",
-      required: false,
-      value: "ReactNode",
-    },
-  ]}
-/>
+</TabItem>
+
+</Tabs>
+
+</div>

@@ -1,26 +1,39 @@
 ---
 title: Button Layout
 description: ButtonLayout component
-beta: true
 ---
+
+import { DocsPage } from "@/components/docs-page";
+import { Tabs, TabItem } from "@astrojs/starlight/components";
+import PageTabsToc from "@/components/page-tabs-toc.astro";
+
+<PageTabsToc />
+
+<div id="page-level-tabs">
+
+<Tabs>
+
+<TabItem label="Overview">
 
 The `ButtonLayout` component allows you to group multiple buttons together, either horizontally or vertically. It is useful for organizing related actions.
 
-import { DocsPage } from "@/components/docs-page";
-
 <DocsPage.ComponentExample
   client:only
-  contentClassName={"!block ![place-items:normal]"}
-  code={`
-    <ButtonLayout>
-      <Button variant="outline">Button outline</Button>
-      <Button variant="secondary">Button secondary</Button>
-      <Button>Button primary</Button>
-    </ButtonLayout>
-  `}
+  code={`<div className="space-y-cn-sm w-full">
+  <div className="flex items-start gap-cn-md">
+    <span className="text-cn-size-2 text-cn-3 w-40 shrink-0 font-mono pt-cn-xs">default</span>
+    <div className="flex-1 min-w-0">
+      <ButtonLayout>
+        <Button variant="outline">Button outline</Button>
+        <Button variant="secondary">Button secondary</Button>
+        <Button>Button primary</Button>
+      </ButtonLayout>
+    </div>
+  </div>
+</div>`}
 />
 
-## Usage
+## Installation
 
 ```typescript jsx
 import { Button, ButtonLayout } from '@harnessio/ui/components'
@@ -49,40 +62,34 @@ return (
 )
 ```
 
-## Anatomy
-
-All parts of the `ButtonLayout` component can be imported and composed as required.
-
-```typescript jsx
-<ButtonLayout.Root>
-  <ButtonLayout.Primary />
-  <ButtonLayout.Secondary />
-</ButtonLayout.Root>
-```
-
 ## Layout Orientation
 
 The `ButtonLayout` component accepts an `orientation` prop, which defines the layout direction: either `horizontal` or `vertical`.
 
 <DocsPage.ComponentExample
   client:only
-  contentClassName={"!block ![place-items:normal]"}
-  code={`
-    <div className="flex flex-col gap-cn-3xl">
+  code={`<div className="space-y-cn-md w-full">
+  <div className="flex items-start gap-cn-md border-b border-cn-borders-3 pb-cn-md">
+    <span className="text-cn-size-2 text-cn-3 w-40 shrink-0 font-mono pt-cn-xs">horizontal</span>
+    <div className="flex-1 min-w-0">
       <ButtonLayout>
         <Button variant="outline">Button outline</Button>
         <Button variant="secondary">Button secondary</Button>
         <Button>Button primary</Button>
       </ButtonLayout>
-
+    </div>
+  </div>
+  <div className="flex items-start gap-cn-md">
+    <span className="text-cn-size-2 text-cn-3 w-40 shrink-0 font-mono pt-cn-xs">vertical</span>
+    <div className="flex-1 min-w-0">
       <ButtonLayout orientation="vertical">
         <Button>Button primary</Button>
         <Button variant="secondary">Button secondary</Button>
         <Button variant="outline">Button outline</Button>
       </ButtonLayout>
     </div>
-
-`}
+  </div>
+</div>`}
 />
 
 ## Horizontal Alignment
@@ -91,23 +98,28 @@ When `orientation` is `horizontal`, the `horizontalAlign` prop controls alignmen
 
 <DocsPage.ComponentExample
   client:only
-  contentClassName={"!block ![place-items:normal]"}
-  code={`
-    <div className="flex flex-col gap-cn-3xl">
+  code={`<div className="space-y-cn-md w-full">
+  <div className="flex items-start gap-cn-md border-b border-cn-borders-3 pb-cn-md">
+    <span className="text-cn-size-2 text-cn-3 w-40 shrink-0 font-mono pt-cn-xs">end</span>
+    <div className="flex-1 min-w-0">
       <ButtonLayout>
         <Button variant="outline">Button outline</Button>
         <Button variant="secondary">Button secondary</Button>
         <Button>Button primary</Button>
       </ButtonLayout>
-
+    </div>
+  </div>
+  <div className="flex items-start gap-cn-md">
+    <span className="text-cn-size-2 text-cn-3 w-40 shrink-0 font-mono pt-cn-xs">start</span>
+    <div className="flex-1 min-w-0">
       <ButtonLayout horizontalAlign="start">
         <Button>Button primary</Button>
         <Button variant="secondary">Button secondary</Button>
         <Button variant="outline">Button outline</Button>
       </ButtonLayout>
     </div>
-
-`}
+  </div>
+</div>`}
 />
 
 ## Primary and secondary button groups
@@ -131,9 +143,10 @@ When `orientation` is set to `vertical`:
 
 <DocsPage.ComponentExample
   client:only
-  contentClassName={"!block ![place-items:normal]"}
-  code={`
-    <div className="flex flex-col gap-cn-3xl">
+  code={`<div className="space-y-cn-md w-full">
+  <div className="flex items-start gap-cn-md border-b border-cn-borders-3 pb-cn-md">
+    <span className="text-cn-size-2 text-cn-3 w-40 shrink-0 font-mono pt-cn-xs">horizontal</span>
+    <div className="flex-1 min-w-0">
       <ButtonLayout.Root>
         <ButtonLayout.Primary>
           <Button>Button primary</Button>
@@ -142,7 +155,11 @@ When `orientation` is set to `vertical`:
           <Button variant="secondary">Button secondary</Button>
         </ButtonLayout.Secondary>
       </ButtonLayout.Root>
-
+    </div>
+  </div>
+  <div className="flex items-start gap-cn-md">
+    <span className="text-cn-size-2 text-cn-3 w-40 shrink-0 font-mono pt-cn-xs">vertical</span>
+    <div className="flex-1 min-w-0">
       <ButtonLayout.Root orientation="vertical">
         <ButtonLayout.Primary>
           <Button>Button primary</Button>
@@ -152,11 +169,81 @@ When `orientation` is set to `vertical`:
         </ButtonLayout.Secondary>
       </ButtonLayout.Root>
     </div>
-
-`}
+  </div>
+</div>`}
 />
 
-## API Reference
+</TabItem>
+
+<TabItem label="Usage">
+
+## Anatomy
+
+`ButtonLayout` is a layout wrapper — it positions and spaces a set of buttons, but has no visuals of its own. All parts can be imported and composed as needed:
+
+```typescript jsx
+<ButtonLayout.Root>
+  <ButtonLayout.Primary />
+  <ButtonLayout.Secondary />
+</ButtonLayout.Root>
+```
+
+- **Root** — the container. Sets the `orientation` (`horizontal` by default, or `vertical`) and, when horizontal, the `horizontalAlign` (`end` by default, or `start`). Buttons passed directly to `Root` are laid out in order.
+- **Primary** _(optional)_ — a slot for the main action. When horizontal it sits on the far side of the alignment (right by default); when vertical it sits on top.
+- **Secondary** _(optional)_ — a slot for supporting actions. It sits opposite `Primary` — left when horizontal, bottom when vertical.
+
+Using the `Primary` / `Secondary` slots is what pins actions to opposite ends of the row; passing buttons straight to `Root` simply flows them together.
+
+## Best practices
+
+**Do**
+
+- Use `ButtonLayout` anywhere you have a set of related actions to place — dialog footers, form actions, toolbars.
+- Keep one clear primary action. Put it in `ButtonLayout.Primary` (or last, when passing buttons directly) so it lands in the emphasized position.
+- Follow the default right-aligned, primary-last order for confirming flows like dialogs and forms; it matches where people expect the confirm action.
+- Switch to `orientation="vertical"` in narrow columns or stacked mobile layouts instead of letting a horizontal row wrap.
+
+**Don't**
+
+- Don't stack multiple primary buttons in one layout; competing emphasis makes the main action harder to find.
+- Don't rely on `ButtonLayout` for grouping semantics — it only positions buttons. If the buttons form a connected set of choices, reach for [Button Group](/components/actions/button-group/) instead.
+- Don't hand-space buttons with margins to fake this layout; use the `orientation` and `horizontalAlign` props so spacing stays consistent.
+
+## Content
+
+- `ButtonLayout` has no text of its own — label writing lives with the [Button](/components/actions/button/) inside it.
+- Use sentence case for every button label — capitalize only the first word, along with any proper nouns or product names.
+- Order buttons by importance and keep the primary action's label specific to the outcome ("Save changes", "Delete") rather than a generic "OK".
+
+## Accessibility
+
+`ButtonLayout` renders plain `<div>` elements with no ARIA roles — it is purely presentational. The accessibility of the group therefore comes entirely from the [Button](/components/actions/button/) components placed inside it.
+
+### Keyboard
+
+- Each button inside the layout is a native `<button>` and an individual stop in the tab order, activated with **Enter** and **Space**.
+- `ButtonLayout` adds no keyboard behavior of its own — there is no arrow-key movement between the buttons.
+
+### Labeling
+
+- Buttons are named by their own text or, for icon-only buttons, their tooltip/`aria-label`. `ButtonLayout` neither adds nor overrides any accessible name.
+
+### Focus & states
+
+- Focus order follows the **DOM order** of the buttons, not their visual position (see the limitation below). Each button shows the standard focus ring (`:focus-visible`) via the `--cn-focus` token.
+
+### Known limitations
+
+- **Visual order can diverge from focus order.** `ButtonLayout.Primary` is moved to the far end visually with CSS (`order` + `margin`), so a `Primary` slot authored first in the markup still renders on the right but is focused _first_. For predictable keyboard flow, author the buttons in the reading order you want people to tab through, and let the slots handle visual placement.
+- **No group semantics.** All parts are plain `<div>`s with no `role="group"` or group label, so assistive tech announces the buttons individually rather than as a named set. If the grouping carries meaning, add your own `role="group"` and `aria-label` around it.
+
+</TabItem>
+
+<TabItem label="Properties">
+
+{/* Visually hidden — anchors the section headings below in the TOC without showing a redundant title in the panel body (the tab already says "Properties"). Hidden via #page-level-tabs h2#properties in styles.css. */}
+
+## Properties
 
 ### `Root`
 
@@ -243,3 +330,9 @@ The `Root` component serves as the main container for `Button`, `ButtonLayout.Pr
     },
   ]}
 />
+
+</TabItem>
+
+</Tabs>
+
+</div>

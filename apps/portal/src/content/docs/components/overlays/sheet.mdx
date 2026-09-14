@@ -1,12 +1,21 @@
 ---
 title: Sheet
 description: Sheet component documentation
-beta: true
 ---
 
-The Sheet component provides a flexible UI element for displaying overlaid content, often used for dialogs or side panels. It is composed of several subcomponents such as SheetHeader, SheetFooter, SheetTitle, and SheetDescription to offer a structured and customizable interface.
-
 import { DocsPage } from "@/components/docs-page";
+import { Tabs, TabItem } from "@astrojs/starlight/components";
+import PageTabsToc from "@/components/page-tabs-toc.astro";
+
+<PageTabsToc />
+
+<div id="page-level-tabs">
+
+<Tabs>
+
+<TabItem label="Overview">
+
+The `Sheet` component is a panel that slides in from an edge of the screen for overlaid content — settings, details, or a focused task off to the side. It's a compound component built on Radix Dialog, composed from `Sheet.Root`, `Sheet.Trigger`, `Sheet.Content`, and the structural parts `Sheet.Header`, `Sheet.Footer`, `Sheet.Title`, and `Sheet.Description`.
 
 <DocsPage.ComponentExample
   client:only
@@ -27,7 +36,68 @@ import { DocsPage } from "@/components/docs-page";
 </Sheet.Root>`}
 />
 
-## Usage
+## Variations
+
+### Sides
+
+`Sheet.Content` slides in from the `right` by default. Set `side` to `left`, `top`, or `bottom` to change the edge it appears from.
+
+<DocsPage.ComponentExample
+  client:only
+  code={`<div className="flex flex-wrap gap-cn-md">
+  <Sheet.Root>
+    <Sheet.Trigger asChild>
+      <Button>Left</Button>
+    </Sheet.Trigger>
+    <Sheet.Content side="left">
+      <Sheet.Header>
+        <Sheet.Title>Left sheet</Sheet.Title>
+        <Sheet.Description>Slides in from the left edge.</Sheet.Description>
+      </Sheet.Header>
+    </Sheet.Content>
+  </Sheet.Root>
+
+<Sheet.Root>
+  <Sheet.Trigger asChild>
+    <Button>Right</Button>
+  </Sheet.Trigger>
+  <Sheet.Content side="right">
+    <Sheet.Header>
+      <Sheet.Title>Right sheet</Sheet.Title>
+      <Sheet.Description>
+        Slides in from the right edge (default).
+      </Sheet.Description>
+    </Sheet.Header>
+  </Sheet.Content>
+</Sheet.Root>
+
+<Sheet.Root>
+  <Sheet.Trigger asChild>
+    <Button>Top</Button>
+  </Sheet.Trigger>
+  <Sheet.Content side="top">
+    <Sheet.Header>
+      <Sheet.Title>Top sheet</Sheet.Title>
+      <Sheet.Description>Slides in from the top edge.</Sheet.Description>
+    </Sheet.Header>
+  </Sheet.Content>
+</Sheet.Root>
+
+  <Sheet.Root>
+    <Sheet.Trigger asChild>
+      <Button>Bottom</Button>
+    </Sheet.Trigger>
+    <Sheet.Content side="bottom">
+      <Sheet.Header>
+        <Sheet.Title>Bottom sheet</Sheet.Title>
+        <Sheet.Description>Slides in from the bottom edge.</Sheet.Description>
+      </Sheet.Header>
+    </Sheet.Content>
+  </Sheet.Root>
+</div>`}
+/>
+
+## Installation
 
 ```typescript jsx
 import { Sheet } from '@harnessio/ui/components'
@@ -51,11 +121,15 @@ return (
 )
 ```
 
+</TabItem>
+
+<TabItem label="Usage">
+
 ## Anatomy
 
 All parts of the `Sheet` component can be imported and composed as required.
 
-```typescript jsx
+```tsx
 <Sheet.Root>
   <Sheet.Trigger />
   <Sheet.Content>
@@ -63,161 +137,263 @@ All parts of the `Sheet` component can be imported and composed as required.
       <Sheet.Title />
       <Sheet.Description />
     </Sheet.Header>
+    {/* body content */}
     <Sheet.Footer />
   </Sheet.Content>
 </Sheet.Root>
 ```
 
-## API Reference
+- **`Sheet.Root`** — the Radix Dialog root that holds open state. Control it with `open` / `onOpenChange`, or leave it uncontrolled with `defaultOpen`.
+- **`Sheet.Trigger`** — the element that opens the sheet. Use `asChild` to render your own `Button` as the trigger.
+- **`Sheet.Content`** — the sliding panel. Sets the `side`, renders a built-in close button (unless `hideCloseButton`), and portals itself above the page with an overlay.
+- **`Sheet.Header`** / **`Sheet.Footer`** — layout regions for the title/description and for actions.
+- **`Sheet.Title`** / **`Sheet.Description`** — the accessible name and supporting text; Radix wires them to the dialog automatically.
 
-### Root
+## Best practices
 
-The `Root` component serves as the main container for all sheet elements.
+{/* TODO: editorial — please review against product guidance. */}
+
+**Do**
+
+- Always include a `Sheet.Title` — it names the dialog for assistive tech (Radix warns when it's missing). Use `Sheet.Description` for a short supporting line.
+- Put confirming/cancelling actions in `Sheet.Footer` so they sit in a predictable place.
+- Choose `side` to match the mental model: side panels for supporting detail, `bottom` for mobile-style actions.
+
+**Don't**
+
+- Don't stack multiple sheets on top of each other; open one focused panel at a time.
+- Don't hide the close button (`hideCloseButton`) unless you provide another obvious way to dismiss the sheet.
+
+## Content
+
+{/* TODO: editorial — please review against product guidance. */}
+
+- Keep the title a short noun phrase describing what the sheet is for ("Filters", "Pipeline settings").
+- Use the description for a single clarifying sentence — move longer guidance into the body.
+
+## Accessibility
+
+### Keyboard
+
+- Built on Radix Dialog: `Esc` closes the sheet, focus moves into the panel on open and returns to the trigger on close, and focus is trapped within the panel while it's open.
+
+### Labeling
+
+- `Sheet.Title` and `Sheet.Description` are wired to the dialog's `aria-labelledby` / `aria-describedby` automatically. The built-in close button carries an `sr-only` "Close" label.
+
+### Focus & states
+
+- The panel opens as a `role="dialog"` with `aria-modal`. With `modal` (the default) the rest of the page is inert behind the overlay; set `modal={false}` for a non-blocking panel.
+
+</TabItem>
+
+<TabItem label="Properties">
+
+{/* Visually hidden — anchors the section headings below in the TOC without showing a redundant title in the panel body (the tab already says "Properties"). Hidden via #page-level-tabs h2#properties in styles.css. */}
+
+## Properties
+
+### Sheet.Root
+
+Radix Dialog root — it renders no DOM of its own, so styling props don't apply here.
 
 <DocsPage.PropsTable
   props={[
     {
       name: "children",
-      description:
-        "You can pass in your `Sheet.Trigger` and `Sheet.Content` as children",
+      description: "Your Sheet.Trigger and Sheet.Content.",
       required: true,
-    },
-    { name: "className", required: false },
-  ]}
-/>
-
-### Trigger
-
-The `Trigger` component is used to open the sheet.
-
-```typescript jsx
-<Sheet.Trigger>
-  <Button>Open Sheet</Button>
-</Sheet.Trigger>
-```
-
-<DocsPage.PropsTable
-  props={[
-    { name: "children", description: "Content to display", required: true },
-    { name: "className", required: false },
-  ]}
-/>
-
-### Content
-
-The `Content` component defines the main content area of the sheet.
-
-```typescript jsx
-<Sheet.Content>
-  <Sheet.Header>
-    <Sheet.Title>Sheet Title</Sheet.Title>
-    <Sheet.Description>This is the sheet description.</Sheet.Description>
-  </Sheet.Header>
-  <Sheet.Content>
-    <p>Sheet content goes here.</p>
-  </Sheet.Content>
-  <Sheet.Footer>
-    <Button>Footer Action</Button>
-  </Sheet.Footer>
-</Sheet.Content>
-```
-
-<DocsPage.PropsTable
-  props={[
-    { name: "children", description: "Content to display", required: true },
-    { name: "className", required: false },
-    {
-      name: "side",
-      description: "Side from which the sheet appears",
-      defaultValue: "'right'",
-      required: false,
+      value: "ReactNode",
     },
     {
-      name: "hideCloseButton",
-      description: "Hide the close button",
-      defaultValue: "false",
+      name: "open",
+      description: "Controlled open state.",
       required: false,
+      value: "boolean",
+    },
+    {
+      name: "defaultOpen",
+      description: "Initial open state (uncontrolled).",
+      required: false,
+      value: "boolean",
+    },
+    {
+      name: "onOpenChange",
+      description: "Called when the open state changes.",
+      required: false,
+      value: "(open: boolean) => void",
     },
     {
       name: "modal",
-      description: "Enable modal behavior",
-      defaultValue: "true",
+      description:
+        "Whether the dialog blocks interaction with the rest of the page.",
       required: false,
+      defaultValue: "true",
+      value: "boolean",
+    },
+  ]}
+/>
+
+### Sheet.Trigger
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "children",
+      description: "The element that opens the sheet.",
+      required: true,
+      value: "ReactNode",
+    },
+    {
+      name: "asChild",
+      description:
+        "Merge props onto the child instead of rendering a button wrapper.",
+      required: false,
+      defaultValue: "false",
+      value: "boolean",
+    },
+  ]}
+/>
+
+### Sheet.Content
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "children",
+      description: "The panel content (header, body, footer).",
+      required: true,
+      value: "ReactNode",
+    },
+    {
+      name: "side",
+      description: "The edge the sheet slides in from.",
+      required: false,
+      defaultValue: "'right'",
+      value: "'top' | 'bottom' | 'left' | 'right'",
+    },
+    {
+      name: "hideCloseButton",
+      description: "Hides the built-in close button.",
+      required: false,
+      defaultValue: "false",
+      value: "boolean",
+    },
+    {
+      name: "modal",
+      description:
+        "Renders a modal overlay that blocks the page. When false, a non-blocking overlay is used.",
+      required: false,
+      defaultValue: "true",
+      value: "boolean",
     },
     {
       name: "handleClose",
-      description: "Function to handle close action",
+      description: "Called when the overlay is clicked to dismiss the sheet.",
       required: false,
+      value: "() => void",
     },
     {
       name: "overlayClassName",
-      description: "Additional class names for overlay",
+      description: "Additional CSS classes for the overlay.",
       required: false,
+      value: "string",
+    },
+    {
+      name: "closeClassName",
+      description: "Additional CSS classes for the built-in close button.",
+      required: false,
+      value: "string",
+    },
+    {
+      name: "className",
+      description: "Additional CSS classes for the panel.",
+      required: false,
+      value: "string",
     },
   ]}
 />
 
-### Header
+The content also accepts the underlying Radix Dialog `Content` props, such as `onEscapeKeyDown`, `onInteractOutside`, and `onOpenAutoFocus`.
 
-The `Header` component is used to define the header section of the sheet.
-
-```typescript jsx
-<Sheet.Header>
-  <Sheet.Title>Sheet Title</Sheet.Title>
-  <Sheet.Description>This is the sheet description.</Sheet.Description>
-</Sheet.Header>
-```
+### Sheet.Header
 
 <DocsPage.PropsTable
   props={[
-    { name: "children", description: "Content to display", required: true },
-    { name: "className", required: false },
+    {
+      name: "children",
+      description: "Header content (typically Title and Description).",
+      required: true,
+      value: "ReactNode",
+    },
+    {
+      name: "className",
+      description: "Additional CSS classes.",
+      required: false,
+      value: "string",
+    },
   ]}
 />
 
-### Footer
-
-The `Footer` component is used to define the footer section of the sheet.
-
-```typescript jsx
-<Sheet.Footer>
-  <Button>Footer Action</Button>
-</Sheet.Footer>
-```
+### Sheet.Footer
 
 <DocsPage.PropsTable
   props={[
-    { name: "children", description: "Footer content", required: true },
-    { name: "className", required: false },
+    {
+      name: "children",
+      description: "Footer content (typically actions).",
+      required: true,
+      value: "ReactNode",
+    },
+    {
+      name: "className",
+      description: "Additional CSS classes.",
+      required: false,
+      value: "string",
+    },
   ]}
 />
 
-### Title
-
-The `Title` component displays the title of the sheet.
-
-```typescript jsx
-<Sheet.Title>Sheet Title</Sheet.Title>
-```
+### Sheet.Title
 
 <DocsPage.PropsTable
   props={[
-    { name: "children", description: "Title content", required: true },
-    { name: "className", required: false },
+    {
+      name: "children",
+      description: "The sheet's accessible title.",
+      required: true,
+      value: "ReactNode",
+    },
+    {
+      name: "className",
+      description: "Additional CSS classes.",
+      required: false,
+      value: "string",
+    },
   ]}
 />
 
-### Description
-
-The `Description` component displays the description of the sheet.
-
-```typescript jsx
-<Sheet.Description>This is the sheet description.</Sheet.Description>
-```
+### Sheet.Description
 
 <DocsPage.PropsTable
   props={[
-    { name: "children", description: "Description content", required: true },
-    { name: "className" },
+    {
+      name: "children",
+      description: "Supporting description text.",
+      required: true,
+      value: "ReactNode",
+    },
+    {
+      name: "className",
+      description: "Additional CSS classes.",
+      required: false,
+      value: "string",
+    },
   ]}
 />
+
+</TabItem>
+
+</Tabs>
+
+</div>

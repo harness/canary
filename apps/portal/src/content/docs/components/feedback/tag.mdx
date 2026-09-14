@@ -1,241 +1,204 @@
 ---
 title: Tag
-description: Interactive tag component for displaying labels and actions
-beta: true
+description: Compact label for metadata, categories, and removable selections
 ---
 
-The `Tag` component is used to display small, interactive elements with optional icons, reset functionality, and customizable styles.
-
 import { DocsPage } from "@/components/docs-page";
+import { Tabs, TabItem } from "@astrojs/starlight/components";
+import { Aside } from "@astrojs/starlight/components";
+import PageTabsToc from "@/components/page-tabs-toc.astro";
+
+<PageTabsToc />
+
+<div id="page-level-tabs">
+
+<Tabs>
+
+<TabItem label="Overview">
+
+The `Tag` component displays a small label with an optional icon, an optional key/value split, and an optional removable action. Use it for metadata, categories, and filter chips.
 
 <DocsPage.ComponentExample
   client:only
-  code={`<div className="flex flex-col gap-cn-2xl">
-  
-{/* Themes */}
-
-<div>
-  <Text variant="heading-subsection" as="h4" className="mb-cn-sm">
-    Themes
-  </Text>
-  <div className="flex flex-wrap items-end gap-cn-sm">
-    {[
-      "gray",
-      "blue",
-      "brown",
-      "cyan",
-      "green",
-      "indigo",
-      "forest-green",
-      "mint",
-      "orange",
-      "pink",
-      "purple",
-      "red",
-      "violet",
-      "yellow",
-    ].map((theme) => (
+  code={`<div className="space-y-cn-sm w-full">
+  <div className="flex items-start gap-cn-md border-b border-cn-borders-3 pb-cn-sm">
+    <span className="text-cn-size-2 text-cn-3 w-40 shrink-0 font-mono pt-cn-3xs">themes</span>
+    <div className="flex-1 min-w-0 flex flex-wrap items-center gap-cn-sm">
+      {[
+        "gray",
+        "blue",
+        "brown",
+        "cyan",
+        "green",
+        "indigo",
+        "forest-green",
+        "mint",
+        "orange",
+        "pink",
+        "purple",
+        "red",
+        "violet",
+        "yellow",
+      ].map((theme) => (
+        <Tag
+          key={theme}
+          value={theme.charAt(0).toUpperCase() + theme.slice(1)}
+          theme={theme}
+        />
+      ))}
+    </div>
+  </div>
+  <div className="flex items-start gap-cn-md border-b border-cn-borders-3 pb-cn-sm">
+    <span className="text-cn-size-2 text-cn-3 w-40 shrink-0 font-mono pt-cn-3xs">variants</span>
+    <div className="flex-1 min-w-0 flex flex-wrap items-center gap-cn-sm">
+      <Tag value="Outline Tag" variant="outline" theme="blue" />
+      <Tag value="Secondary Tag" variant="secondary" theme="green" />
+    </div>
+  </div>
+  <div className="flex items-start gap-cn-md border-b border-cn-borders-3 pb-cn-sm">
+    <span className="text-cn-size-2 text-cn-3 w-40 shrink-0 font-mono pt-cn-3xs">sizes</span>
+    <div className="flex-1 min-w-0 flex flex-wrap items-center gap-cn-sm">
+      <Tag value="Default Size" theme="blue" />
+      <Tag value="Small Size" size="sm" theme="blue" />
+      <Tag value="Small Size" size="sm" theme="blue" icon="label" />
       <Tag
-        key={theme}
-        value={theme.charAt(0).toUpperCase() + theme.slice(1)}
-        theme={theme}
+        value="Small Size"
+        size="sm"
+        theme="blue"
+        icon="label"
+        actionIcon="xmark"
+        onActionClick={() => alert("Reset clicked")}
       />
-    ))}
+    </div>
   </div>
-</div>
-
-{/* Variants */}
-
-<div>
-  <Text variant="heading-subsection" as="h4" className="mb-cn-sm">
-    Variants
-  </Text>
-  <div className="flex flex-wrap items-end gap-cn-sm">
-    <Tag value="Outline Tag" variant="outline" theme="blue" />
-    <Tag value="Secondary Tag" variant="secondary" theme="green" />
+  <div className="flex items-start gap-cn-md border-b border-cn-borders-3 pb-cn-sm">
+    <span className="text-cn-size-2 text-cn-3 w-40 shrink-0 font-mono pt-cn-3xs">rounded</span>
+    <div className="flex-1 min-w-0 flex flex-wrap items-center gap-cn-sm">
+      <Tag value="Rounded Outline Tag" variant="outline" rounded theme="pink" />
+      <Tag
+        value="Rounded Secondary Tag"
+        variant="secondary"
+        rounded
+        theme="orange"
+      />
+    </div>
   </div>
-</div>
-
-{/* Sizes */}
-
-<div>
-  <Text variant="heading-subsection" as="h4" className="mb-cn-sm">
-    Sizes
-  </Text>
-  <div className="flex flex-wrap items-end gap-cn-sm">
-    <Tag value="Default Size" theme="blue" />
-    <Tag value="Small Size" size="sm" theme="blue" />
-    <Tag value="Small Size" size="sm" theme="blue" icon="label" />
-    <Tag
-      value="Small Size"
-      size="sm"
-      theme="blue"
-      icon="label"
-      actionIcon="xmark"
-      onActionClick={() => alert("Reset clicked")}
-    />
+  <div className="flex items-start gap-cn-md border-b border-cn-borders-3 pb-cn-sm">
+    <span className="text-cn-size-2 text-cn-3 w-40 shrink-0 font-mono pt-cn-3xs">split</span>
+    <div className="flex-1 min-w-0 flex flex-wrap items-center gap-cn-sm">
+      <Tag
+        label="Split"
+        value="Forest-green"
+        variant="secondary"
+        theme="forest-green"
+      />
+      <Tag label="Split" value="Pink" variant="secondary" theme="pink" />
+      <Tag label="Split" value="Blue" variant="secondary" theme="blue" />
+      <Tag
+        label="Split"
+        value="Reset"
+        variant="secondary"
+        theme="orange"
+        actionIcon="xmark"
+        onActionClick={() => alert("Reset clicked")}
+      />
+    </div>
   </div>
-</div>
-
-{/* Rounded Tags */}
-
-<div>
-  <Text variant="heading-subsection" as="h4" className="mb-cn-sm">
-    Rounded Tags
-  </Text>
-  <div className="flex flex-wrap items-end gap-cn-sm">
-    <Tag value="Rounded Outline Tag" variant="outline" rounded theme="pink" />
-    <Tag
-      value="Rounded Secondary Tag"
-      variant="secondary"
-      rounded
-      theme="orange"
-    />
+  <div className="flex items-start gap-cn-md border-b border-cn-borders-3 pb-cn-sm">
+    <span className="text-cn-size-2 text-cn-3 w-40 shrink-0 font-mono pt-cn-3xs">with icon</span>
+    <div className="flex-1 min-w-0 flex flex-wrap items-center gap-cn-sm">
+      <Tag value="Outline Icon" variant="outline" icon="label" theme="yellow" />
+      <Tag value="Secondary Icon" variant="secondary" icon="label" theme="violet" />
+      <Tag
+        value="Rounded Outline Icon"
+        variant="outline"
+        rounded
+        icon="label"
+        theme="brown"
+      />
+      <Tag
+        value="Rounded Secondary Icon"
+        variant="secondary"
+        rounded
+        icon="label"
+        theme="indigo"
+      />
+    </div>
   </div>
-</div>
-
-{/* Split Tags */}
-
-<div>
-  <Text variant="heading-subsection" as="h4" className="mb-cn-sm">
-    Split Tags
-  </Text>
-  <div className="flex flex-wrap items-end gap-cn-sm">
-    <Tag
-      label="Split"
-      value="Forest-green"
-      variant="secondary"
-      theme="forest-green"
-    />
-    <Tag label="Split" value="Pink" variant="secondary" theme="pink" />
-    <Tag label="Split" value="Blue" variant="secondary" theme="blue" />
-    <Tag
-      label="Split"
-      value="Reset"
-      variant="secondary"
-      theme="orange"
-      actionIcon="xmark"
-      onActionClick={() => alert("Reset clicked")}
-    />
+  <div className="flex items-start gap-cn-md border-b border-cn-borders-3 pb-cn-sm">
+    <span className="text-cn-size-2 text-cn-3 w-40 shrink-0 font-mono pt-cn-3xs">custom icon</span>
+    <div className="flex-1 min-w-0 flex flex-wrap items-center gap-cn-sm">
+      <Tag
+        value="Custom Icon"
+        variant="outline"
+        icon="plus"
+        theme="mint"
+      />
+      <Tag
+        value="Custom Icon Secondary"
+        variant="secondary"
+        icon="plus"
+        theme="cyan"
+      />
+      <Tag
+        value="Rounded Custom Icon"
+        variant="outline"
+        rounded
+        icon="plus"
+        theme="orange"
+      />
+      <Tag
+        value="Rounded Custom Icon Secondary"
+        variant="secondary"
+        rounded
+        icon="plus"
+        theme="pink"
+      />
+    </div>
   </div>
-</div>
-
-{/* Tags with Icon */}
-
-<div>
-  <Text variant="heading-subsection" as="h4" className="mb-cn-sm">
-    Tags with Icon
-  </Text>
-  <div className="flex flex-wrap items-end gap-cn-sm">
-    <Tag value="Outline Icon" variant="outline" showIcon theme="yellow" />
-    <Tag value="Secondary Icon" variant="secondary" showIcon theme="violet" />
-    <Tag
-      value="Rounded Outline Icon"
-      variant="outline"
-      rounded
-      showIcon
-      theme="brown"
-    />
-    <Tag
-      value="Rounded Secondary Icon"
-      variant="secondary"
-      rounded
-      showIcon
-      theme="indigo"
-    />
+  <div className="flex items-start gap-cn-md border-b border-cn-borders-3 pb-cn-sm">
+    <span className="text-cn-size-2 text-cn-3 w-40 shrink-0 font-mono pt-cn-3xs">with reset</span>
+    <div className="flex-1 min-w-0 flex flex-wrap items-center gap-cn-sm">
+      <Tag
+        value="Outline Reset"
+        variant="outline"
+        actionIcon="xmark"
+        onActionClick={() => alert("Reset clicked")}
+        theme="blue"
+      />
+      <Tag
+        value="Secondary Reset"
+        variant="secondary"
+        icon="label"
+        actionIcon="xmark"
+        onActionClick={() => alert("Reset clicked")}
+        theme="green"
+      />
+      <Tag
+        value="Rounded Outline Reset"
+        variant="outline"
+        rounded
+        actionIcon="xmark"
+        onActionClick={() => alert("Reset clicked")}
+        theme="purple"
+      />
+      <Tag
+        value="Rounded Secondary Reset"
+        variant="secondary"
+        rounded
+        actionIcon="xmark"
+        onActionClick={() => alert("Reset clicked")}
+        theme="red"
+      />
+    </div>
   </div>
-</div>
-
-{/* Tags with Custom Icon */}
-
-<div>
-  <Text variant="heading-subsection" as="h4" className="mb-cn-sm">
-    Tags with Custom Icon
-  </Text>
-  <div className="flex flex-wrap items-end gap-cn-sm">
-    <Tag
-      value="Custom Icon"
-      variant="outline"
-      showIcon
-      icon="plus"
-      theme="mint"
-    />
-    <Tag
-      value="Custom Icon Secondary"
-      variant="secondary"
-      showIcon
-      icon="plus"
-      theme="cyan"
-    />
-    <Tag
-      value="Rounded Custom Icon"
-      variant="outline"
-      rounded
-      showIcon
-      icon="plus"
-      theme="orange"
-    />
-    <Tag
-      value="Rounded Custom Icon Secondary"
-      variant="secondary"
-      rounded
-      showIcon
-      icon="plus"
-      theme="pink"
-    />
-  </div>
-</div>
-
-{/* Tags with Reset */}
-
-<div>
-  <Text variant="heading-subsection" as="h4" className="mb-cn-sm">
-    Tags with Reset
-  </Text>
-  <div className="flex flex-wrap items-end gap-cn-sm">
-    <Tag
-      value="Outline Reset"
-      variant="outline"
-      actionIcon="xmark"
-      onActionClick={() => alert("Reset clicked")}
-      theme="blue"
-    />
-    <Tag
-      value="Secondary Reset"
-      variant="secondary"
-      icon="label"
-      actionIcon="xmark"
-      onActionClick={() => alert("Reset clicked")}
-      theme="green"
-    />
-    <Tag
-      value="Rounded Outline Reset"
-      variant="outline"
-      rounded
-      actionIcon="xmark"
-      onActionClick={() => alert("Reset clicked")}
-      theme="purple"
-    />
-    <Tag
-      value="Rounded Secondary Reset"
-      variant="secondary"
-      rounded
-      actionIcon="xmark"
-      onActionClick={() => alert("Reset clicked")}
-      theme="red"
-    />
-  </div>
-</div>
-
-{/* Tags with Icon and Reset */}
-
-  <div>
-    <Text variant="heading-subsection" as="h4" className="mb-cn-sm">Tags with Icon and Reset</Text>
-    <div className="flex flex-wrap items-end gap-cn-sm">
+  <div className="flex items-start gap-cn-md">
+    <span className="text-cn-size-2 text-cn-3 w-40 shrink-0 font-mono pt-cn-3xs">icon + reset</span>
+    <div className="flex-1 min-w-0 flex flex-wrap items-center gap-cn-sm">
       <Tag
         value="Outline Icon Reset"
         variant="outline"
-        showIcon
+        icon="label"
         actionIcon="xmark"
         onActionClick={() => alert("Reset clicked")}
         theme="yellow"
@@ -243,7 +206,7 @@ import { DocsPage } from "@/components/docs-page";
       <Tag
         value="Secondary Icon Reset"
         variant="secondary"
-        showIcon
+        icon="label"
         actionIcon="xmark"
         onActionClick={() => alert("Reset clicked")}
         theme="violet"
@@ -252,7 +215,7 @@ import { DocsPage } from "@/components/docs-page";
         value="Rounded Outline Icon Reset"
         variant="outline"
         rounded
-        showIcon
+        icon="label"
         actionIcon="xmark"
         onActionClick={() => alert("Reset clicked")}
         theme="brown"
@@ -261,7 +224,7 @@ import { DocsPage } from "@/components/docs-page";
         value="Rounded Secondary Icon Reset"
         variant="secondary"
         rounded
-        showIcon
+        icon="label"
         onClick={() => alert("Tag clicked")}
         actionIcon="xmark"
         onActionClick={() => alert("Reset clicked")}
@@ -272,143 +235,217 @@ import { DocsPage } from "@/components/docs-page";
 </div>`}
 />
 
-## Usage
+## Installation
 
-```typescript jsx
-import { Tag } from '@harnessio/ui/components'
+```tsx
+import { Tag } from "@harnessio/ui/components";
 
-// Basic usage
+// Basic
 <Tag value="Default Tag" />
 
-// Theme
-<Tag value="Blue Tag" theme="blue" />
-
-// Variant
+// Theme and variant
 <Tag value="Outline Tag" variant="outline" theme="blue" />
 
-// Rounded tag
-<Tag
-  value="Rounded Outline Tag"
-  variant="outline"
-  rounded
-  theme="pink"
-/>
+// Split (key / value)
+<Tag label="Env" value="Production" variant="secondary" theme="green" />
 
-// Split tag
-<Tag
-  label="Split"
-  value="Lime"
-  variant="secondary"
-  theme="lime"
-/>
+// With a leading icon
+<Tag value="Labelled" icon="label" theme="yellow" />
 
-// Tag with icon
+// Removable (reset action)
 <Tag
-  value="Outline Icon"
-  variant="outline"
-  showIcon
-  theme="yellow"
-/>
-
-// Tag with custom icon
-<Tag
-  value="Custom Icon"
-  variant="outline"
-  showIcon
-  icon="plus"
-  theme="mint"
-/>
-
-// Tag with reset
-<Tag
-  value="Outline Reset"
-  variant="outline"
+  value="Removable"
   actionIcon="xmark"
-  onActionClick={() => alert('Reset clicked')}
+  onActionClick={() => remove()}
   theme="blue"
-/>
-
-// Tag with icon and reset
-<Tag
-  value="Outline Icon Reset"
-  variant="outline"
-  showIcon
-  actionIcon="xmark"
-  onActionClick={() => alert('Reset clicked')}
-  theme="yellow"
 />
 ```
 
-## Props
+</TabItem>
+
+<TabItem label="Usage">
+
+## Anatomy
+
+`Tag` renders a compact pill built from a root container plus a few optional parts.
+
+- The root is a `<div>` that holds the tag's `value` text. Passing an `icon` adds a small leading icon before the text.
+- Providing both a `label` and a `value` turns the tag into a **split tag**: the `label` renders as a key segment on the left (with the `icon`, if any) and the `value` renders as a segment on the right.
+- `actionIcon` adds a trailing icon-only button. Its click is isolated from the tag's own `onClick`, so a removable tag can be dismissed without triggering the tag body.
+
+<Aside type="caution">
+  There is no `showIcon` prop. A leading icon renders only when you pass a real
+  `icon` name (for example `icon="label"`); there is no default icon.
+</Aside>
+
+## Best practices
+
+**Do**
+
+- Keep `value` text short — a tag is for a single label, category, or key/value pair.
+- Use a split tag (`label` + `value`) when the tag represents a key and its value, such as `Env: Production`.
+- Pair `actionIcon="xmark"` with `onActionClick` when a tag represents a removable selection or filter.
+- Use `theme` to group or categorize, and rely on the text rather than color alone to convey meaning.
+
+**Don't**
+
+- Don't put an `icon` and a split `label` on the same tag expecting both on the right — in split mode the icon sits with the left (label) segment.
+- Don't lean on the tag as a primary interactive control; it's a label, not a button (see Accessibility).
+
+## Content
+
+{/* TODO: editorial — please review against product guidance. */}
+
+- Prefer concise, capitalized labels (e.g. "Production", "High priority").
+- For split tags, keep the `label` (key) short and predictable across tags.
+
+## Accessibility
+
+### Labeling
+
+- The `value` text carries the tag's meaning, so always provide clear text.
+- The `actionIcon` renders an icon-only button with no accessible name, so screen-reader users won't hear what removing it does. Don't rely on the reset action alone to convey critical intent.
+
+### Focus & states
+
+- The root is a plain `<div>`. Even with an `onClick`, it has no `role`, is not focusable, and has no keyboard handling — treat click support as a convenience, not a substitute for a real button.
+- The `actionIcon` button is a real, focusable button.
+- `disabled` dims the tag and disables the action button.
+
+### Known limitations
+
+- A clickable tag (`onClick`) is not keyboard-operable and exposes no role; use a Button for genuinely interactive controls.
+- The reset/action button lacks an `aria-label`.
+
+</TabItem>
+
+<TabItem label="Properties">
+
+{/* Visually hidden — anchors the section headings below in the TOC without showing a redundant title in the panel body (the tab already says "Properties"). Hidden via #page-level-tabs h2#properties in styles.css. */}
+
+## Properties
 
 <DocsPage.PropsTable
   props={[
     {
+      name: "value",
+      description:
+        "The main text content of the tag (the right segment in a split tag).",
+      required: true,
+      value: "string",
+    },
+    {
+      name: "label",
+      description:
+        "Key segment for a split tag. When both label and value are set, the tag renders as a two-part split tag.",
+      required: false,
+      value: "string",
+    },
+    {
       name: "variant",
       description: "Visual style of the tag.",
       required: false,
-      value: "'outline' | 'secondary'",
       defaultValue: "'outline'",
+      value: "'outline' | 'secondary'",
     },
     {
       name: "size",
       description: "Size of the tag.",
       required: false,
-      value: "'sm' | 'md'",
       defaultValue: "'md'",
+      value: "'sm' | 'md'",
     },
     {
       name: "theme",
       description: "Color theme of the tag.",
       required: false,
-      value: "'gray' | 'blue' | 'green' | 'red' | ...",
       defaultValue: "'gray'",
+      value:
+        "'gray' | 'blue' | 'brown' | 'cyan' | 'green' | 'forest-green' | 'indigo' | 'lime' | 'mint' | 'orange' | 'pink' | 'purple' | 'red' | 'violet' | 'yellow'",
     },
     {
       name: "rounded",
-      description: "Applies rounded corners to the tag.",
+      description: "Applies fully rounded corners to the tag.",
       required: false,
-      value: "boolean",
       defaultValue: "false",
+      value: "boolean",
     },
     {
       name: "icon",
-      description: "Specifies the name of the icon to display.",
+      description:
+        "Name of a leading icon to display before the text. No icon renders unless this is set.",
       required: false,
-      value: "string",
+      value: "IconName",
+    },
+    {
+      name: "iconProps",
+      description: "Additional props forwarded to the leading icon.",
+      required: false,
+      value: "Omit<IconPropsV2, 'name' | 'size' | 'fallback' | 'ref'>",
     },
     {
       name: "actionIcon",
-      description: "If true, displays a reset (close) icon.",
+      description:
+        "Name of a trailing icon rendered as an icon-only action button (e.g. 'xmark' for a removable tag).",
       required: false,
-      value: "IconV2Name",
-      defaultValue: "false",
+      value: "IconName",
     },
     {
       name: "onActionClick",
       description:
-        "Callback function triggered when the reset icon is clicked.",
+        "Called when the action button is clicked. Its event is isolated from the tag's own onClick.",
       required: false,
       value: "() => void",
     },
     {
-      name: "enableHover",
-      description: "If true, enables hover effects on the tag.",
+      name: "onClick",
+      description:
+        "Called when the tag body is clicked. Adds hover styling but does not make the tag keyboard-operable.",
       required: false,
-      value: "boolean",
-      defaultValue: "false",
+      value: "(event) => void",
     },
     {
-      name: "label",
-      description: "Optional key name for split tags.",
+      name: "enableHover",
+      description: "Enables hover styling without requiring an onClick.",
+      required: false,
+      defaultValue: "false",
+      value: "boolean",
+    },
+    {
+      name: "disabled",
+      description: "Dims the tag and disables the action button.",
+      required: false,
+      defaultValue: "false",
+      value: "boolean",
+    },
+    {
+      name: "labelClassName",
+      description: "Additional class names for the label (key) segment.",
       required: false,
       value: "string",
     },
     {
-      name: "value",
-      description: "The main text content of the tag.",
-      required: true,
+      name: "valueClassName",
+      description: "Additional class names for the value segment.",
+      required: false,
+      value: "string",
+    },
+    {
+      name: "className",
+      description: "Additional class names applied to the tag root.",
+      required: false,
       value: "string",
     },
   ]}
 />
+
+<Aside type="note">
+  `Tag` also accepts standard `<div>` attributes (spread onto the root), except
+  `role` and `tabIndex`.
+</Aside>
+
+</TabItem>
+
+</Tabs>
+
+</div>

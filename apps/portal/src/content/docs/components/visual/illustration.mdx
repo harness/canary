@@ -1,26 +1,31 @@
 ---
 title: Illustration
 description: Illustration component
-beta: true
 ---
 
 import { DocsPage } from "@/components/docs-page";
+import { Tabs, TabItem } from "@astrojs/starlight/components";
+import PageTabsToc from "@/components/page-tabs-toc.astro";
 import { Illustration, IllustrationsNameMap } from "@harnessio/ui/components";
 
+<PageTabsToc />
+
+<div id="page-level-tabs">
+
+<Tabs>
+
+<TabItem label="Overview">
+
 The `Illustration` component displays various illustrations and graphics used throughout the Harness UI. It has built-in support for theme-specific variants.
-
-## Usage
-
-```typescript jsx
-<Illustration name="no-data-folder" size={112} />
-```
 
 <DocsPage.ComponentExample
   client:only
   code={`<Illustration name="no-data-folder" size={112} />`}
 />
 
-## Sizing
+## Variations
+
+### Sizing
 
 The `Illustration` component can be sized using the `size` prop which sets both width and height (default is 112px).
 
@@ -35,7 +40,7 @@ The `Illustration` component can be sized using the `size` prop which sets both 
   `}
 />
 
-## Theme Support
+### Theme support
 
 Some illustrations have theme-specific variants. Use the `themeDependent` prop to enable theme-sensitive rendering.
 
@@ -46,16 +51,69 @@ Some illustrations have theme-specific variants. Use the `themeDependent` prop t
 
 Illustrations with specific light theme variants will use them automatically when the theme is set to light. For illustrations without a light variant, enabling `themeDependent` will apply an invert filter in light mode.
 
-## API Reference
+## Installation
 
 ```typescript jsx
-<Illustration
-  name="illustration-name"  // name of the illustration
-  size={112}               // [OPTIONAL] size in pixels for both width and height
-  themeDependent={false}   // [OPTIONAL] whether to use theme-specific variants
-  className="my-class"     // [OPTIONAL] custom class name
-/>
+<Illustration name="no-data-folder" size={112} />
 ```
+
+</TabItem>
+
+<TabItem label="Usage">
+
+## Anatomy
+
+`Illustration` renders a single SVG graphic selected by `name` from the illustration set, and adapts to the active theme.
+
+```tsx
+<Illustration name="no-data-folder" size={112} themeDependent />
+```
+
+- **Name lookup** — `name` selects the graphic from `IllustrationsNameMap`. If the name isn't found, the component warns in the console and renders nothing.
+- **Sizing** — `size` sets both width and height (default `112`). Pass `width` and/or `height` to override either dimension individually.
+- **Theme adaptation** — with `themeDependent`, the component reads the active theme. In light mode it renders the illustration's dedicated `-light` asset if one exists; if there's no light variant, it applies an `invert` CSS filter so the artwork stays legible.
+
+## Best practices
+
+{/* TODO: editorial — please review against product guidance. */}
+
+**Do**
+
+- Use `themeDependent` for illustrations that need to read correctly in both light and dark themes.
+- Size illustrations to their context — larger for full empty states, smaller when inline with content.
+- Pair the illustration with a heading and short description so the state is understandable without the artwork.
+
+**Don't**
+
+- Don't use an illustration as the only signal for an important state; back it with text.
+- Don't stretch an illustration by mismatching `width` and `height` unless the design calls for it.
+
+## Content
+
+{/* TODO: editorial — please review against product guidance. */}
+
+- Pick the illustration whose subject matches the situation (empty folder, no results, error) rather than a generic graphic.
+- Keep accompanying copy focused on what happened and what the user can do next.
+
+## Accessibility
+
+### Labeling
+
+- Illustrations are decorative and carry no accessible name. Convey the meaning of an empty or error state through an adjacent heading and description, not the artwork alone.
+
+### Known limitations
+
+- **No built-in text alternative.** The component doesn't emit an `alt`/`aria-label`; supply meaning through surrounding text.
+
+</TabItem>
+
+<TabItem label="Properties">
+
+{/* Visually hidden — anchors the section headings below in the TOC without showing a redundant title in the panel body (the tab already says "Properties"). Hidden via #page-level-tabs h2#properties in styles.css. */}
+
+## Properties
+
+### Illustration
 
 <DocsPage.PropsTable
   props={[
@@ -100,3 +158,9 @@ Illustrations with specific light theme variants will use them automatically whe
     },
   ]}
 />
+
+</TabItem>
+
+</Tabs>
+
+</div>

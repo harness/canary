@@ -1,0 +1,120 @@
+---
+title: Icon items
+description: Icon items in a DropdownMenu
+---
+
+import { DocsPage } from "@/components/docs-page";
+
+The `DropdownMenu` component supports icon items using the `DropdownMenu.IconItem` component. This allows you to create items with icons that can be used to represent actions or statuses.
+
+<DocsPage.ComponentExample
+  client:only
+  code={`<DropdownMenu.Root>
+    <DropdownMenu.Trigger aria-label="options menu" asChild>
+        <Button variant="ghost" iconOnly>
+            <IconV2 name="more-horizontal" />
+        </Button>
+    </DropdownMenu.Trigger>
+
+    <DropdownMenu.Content>
+        <DropdownMenu.IconItem icon="git-pull-request-closed" title="With icon" />
+        <DropdownMenu.IconItem icon="git-pull-request" title="With icon and description" description="Item description" />
+
+  </DropdownMenu.Content>
+</DropdownMenu.Root>`}
+/>
+
+## Properties
+
+### `IconItem`
+
+The `IconItem` component is a specialized item that displays an icon.
+
+```typescript jsx
+<DropdownMenu.IconItem
+  icon="git-pull-request-closed"          // icon name
+  title="Item title"        // title of the item
+  description="Description" // [OPTIONAL] description text
+  label="Label"             // [OPTIONAL] right-aligned label
+  shortcut="⌘K"             // [OPTIONAL] keyboard shortcut
+  checkmark                 // [OPTIONAL] show checkmark icon
+  className="my-class"      // [OPTIONAL] custom class
+  disabled                  // [OPTIONAL] disable the item
+  onSelect={onSelect}       // [OPTIONAL] event handler
+>
+  {/* Optional nested items for submenu */}
+</DropdownMenu.IconItem>
+```
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "icon",
+      description: "Name of the icon to display",
+      required: true,
+      value: "string",
+    },
+    {
+      name: "title",
+      description: "Title of the item",
+      required: true,
+      value: "ReactNode",
+    },
+    {
+      name: "description",
+      description: "Description text shown below the title",
+      required: false,
+      value: "string",
+    },
+    {
+      name: "label",
+      description: "Right-aligned label text",
+      required: false,
+      value: "string",
+    },
+    {
+      name: "shortcut",
+      description: "Keyboard shortcut text",
+      required: false,
+      value: "string",
+    },
+    {
+      name: "checkmark",
+      description: "Show checkmark icon on the right",
+      required: false,
+      value: "boolean",
+      defaultValue: "false",
+    },
+    {
+      name: "tag",
+      description: "Tag to show after the title (e.g. 'New', 'Beta')",
+      required: false,
+      value: "TagProps",
+    },
+    {
+      name: "className",
+      description: "Custom class name",
+      required: false,
+      value: "string",
+    },
+    {
+      name: "disabled",
+      description: "Disable the item",
+      required: false,
+      value: "boolean",
+      defaultValue: "false",
+    },
+    {
+      name: "onSelect",
+      description: "Event handler called when the item is selected",
+      required: false,
+      value: "(event: Event) => void",
+    },
+    {
+      name: "children",
+      description: "Nested items for creating a submenu",
+      required: false,
+      value: "ReactNode",
+    },
+  ]}
+/>

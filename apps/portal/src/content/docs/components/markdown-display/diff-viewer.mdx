@@ -1,12 +1,21 @@
 ---
 title: Diff Viewer
 description: A reusable component for displaying file diffs with syntax highlighting
-beta: true
 ---
 
-The `DiffViewer` component provides a powerful way to display file differences with syntax highlighting. It supports both Split (side-by-side) and Unified (inline) display modes, making it perfect for code review interfaces, version comparison tools, and change visualization.
-
 import { DocsPage } from "@/components/docs-page";
+import { Tabs, TabItem } from "@astrojs/starlight/components";
+import PageTabsToc from "@/components/page-tabs-toc.astro";
+
+<PageTabsToc />
+
+<div id="page-level-tabs">
+
+<Tabs>
+
+<TabItem label="Overview">
+
+The `DiffViewer` component provides a powerful way to display file differences with syntax highlighting. It supports both Split (side-by-side) and Unified (inline) display modes, making it perfect for code review interfaces, version comparison tools, and change visualization.
 
 <DocsPage.ComponentExample
   client:only
@@ -89,9 +98,11 @@ lang="yaml"
 `}
 />
 
-### Unified Mode
+## Variations
 
-Pass `diffViewMode={DiffModeEnum.Unified}` to render the diff inline instead of side-by-side.
+### Unified mode
+
+By default the diff renders in **Split mode** (old on the left, new on the right). Pass `diffViewMode={DiffModeEnum.Unified}` to render the diff inline, stacked in a single column — better for narrow layouts, side panels, and focused review of small changes.
 
 <DocsPage.ComponentExample
   client:only
@@ -108,7 +119,7 @@ Pass `diffViewMode={DiffModeEnum.Unified}` to render the diff inline instead of 
 `}
 />
 
-## Usage
+## Installation
 
 ```tsx
 import { DiffViewer } from "@harnessio/ui/components";
@@ -123,17 +134,70 @@ function MyComponent() {
 
 **Note:** The `DiffViewer` requires `ThemeProvider` from `@harnessio/ui/context` to be present in your component tree for theme detection to work properly.
 
-## Features
+</TabItem>
 
-- **Split & Unified Modes** - View diffs side-by-side or inline
-- **Syntax Highlighting** - Powered by Shiki with support for 200+ languages
-- **Theme Support** - Automatically adapts to light/dark theme via ThemeProvider context
-- **Real-time Theme Switching** - Updates instantly when theme changes without page refresh
-- **Line Numbers** - Clear line number indicators for both old and new code
-- **Change Indicators** - Visual markers for additions, deletions, and modifications
-- **Responsive** - Works seamlessly across different screen sizes
+<TabItem label="Usage">
 
-## Props
+## Anatomy
+
+`DiffViewer` is a single, self-contained component — you give it the two versions of a file and it renders the comparison. It's built on `@git-diff-view/react`, with syntax highlighting supplied by Shiki.
+
+```tsx
+<DiffViewer
+  oldCode={oldCode}
+  newCode={newCode}
+  lang="typescript"
+  diffViewMode={DiffModeEnum.Split}
+/>
+```
+
+- **Old / new code** — `oldCode` and `newCode` are the two strings being compared; the component computes the diff between them.
+- **Layout** — `diffViewMode` switches between `Split` (side-by-side, the default) and `Unified` (inline). Each line carries a line number for the old and new sides, and additions, deletions, and modifications are marked visually.
+- **Syntax highlighting** — `lang` sets the language grammar. Shiki supports 200+ languages (`typescript`, `tsx`, `javascript`, `jsx`, `python`, `go`, `java`, `yaml`, `json`, `bash`, `sql`, and many more); it defaults to `yaml`.
+- **Theme** — the component reads the current theme from `ThemeProvider` via `useTheme()` and renders light or dark highlighting to match, updating in real time when the theme changes. It must be rendered inside a `ThemeProvider`.
+
+## Best practices
+
+{/* TODO: editorial — please review against product guidance. */}
+
+**Do**
+
+- Set `lang` to match the file you're diffing so the syntax highlighting is accurate.
+- Give enough surrounding context in `oldCode` / `newCode` for a change to make sense on its own.
+- Reach for `Unified` mode in narrow containers (side panels, mobile) and keep `Split` for wide, detailed review.
+- Turn on `diffViewWrap` when lines are long and horizontal scrolling would hide changes.
+
+**Don't**
+
+- Don't drop a very large file into a single viewer — page or limit the visible range so review stays manageable.
+- Don't render `DiffViewer` outside a `ThemeProvider`; theme detection won't work.
+
+## Content
+
+{/* TODO: editorial — please review against product guidance. */}
+
+- Format both versions of the code before passing them in — the viewer shows exactly what it's given, so pre-existing formatting noise reads as changes.
+- Use `\n` for line breaks when building code strings inline.
+
+## Accessibility
+
+`DiffViewer` is a read-only, presentational view of a comparison. There are no interactive controls within it.
+
+### Labeling
+
+- Provide context around the viewer (a heading or caption naming the file or comparison), since the component itself doesn't announce what's being diffed.
+
+### Known limitations
+
+- **Changes are conveyed visually.** Additions, deletions, and modifications are shown through color and line markers; there's no textual, screen-reader-specific summary of what changed. Where the diff carries important meaning, pair it with a written summary of the change.
+
+</TabItem>
+
+<TabItem label="Properties">
+
+{/* Visually hidden — anchors the section headings below in the TOC without showing a redundant title in the panel body (the tab already says "Properties"). Hidden via #page-level-tabs h2#properties in styles.css. */}
+
+## Properties
 
 <DocsPage.PropsTable
   props={[
@@ -176,122 +240,8 @@ function MyComponent() {
   ]}
 />
 
-## Language Support
+</TabItem>
 
-The component supports syntax highlighting for **200+ programming languages** through the Shiki highlighter.
+</Tabs>
 
-### Popular Languages
-
-- **Web Development**: `typescript`, `tsx`, `javascript`, `jsx`, `html`, `css`, `scss`, `less`, `vue`, `vue-html`
-- **Backend**: `python`, `go`, `java`, `csharp`, `php`, `ruby`, `rust`, `kotlin`, `swift`
-- **Data & Config**: `yaml`, `json`, `xml`, `ini`, `properties`, `sql`, `graphql`
-- **Shell & Scripts**: `bash`, `shell`, `powershell`, `dockerfile`, `makefile`
-- **Documentation**: `markdown`, `asciidoc`, `latex`
-- **Systems**: `c`, `cpp`, `objectivec`, `rust`, `go`, `assembly`
-
-### Supported Languages
-
-The component supports all languages from the Shiki/Highlight.js library including:
-
-`arduino`, `bash`, `c`, `cpp`, `csharp`, `css`, `diff`, `go`, `graphql`, `ini`, `java`, `javascript`, `jsx`, `json`, `kotlin`, `less`, `lua`, `makefile`, `markdown`, `objectivec`, `perl`, `php`, `plaintext`, `python`, `r`, `ruby`, `rust`, `scss`, `shell`, `sql`, `swift`, `typescript`, `tsx`, `vbnet`, `wasm`, `xml`, `yaml`, `vue`, `vue-html`, `actionscript`, `ada`, `apache`, `applescript`, `armasm`, `awk`, `clojure`, `cmake`, `coffeescript`, `crystal`, `dart`, `delphi`, `django`, `dockerfile`, `elixir`, `elm`, `erlang`, `fortran`, `fsharp`, `gherkin`, `glsl`, `gradle`, `groovy`, `haml`, `handlebars`, `haskell`, `haxe`, `julia`, `latex`, `lisp`, `llvm`, `matlab`, `nginx`, `nim`, `nix`, `ocaml`, `perl`, `pgsql`, `prolog`, `protobuf`, `puppet`, `scala`, `scheme`, `smalltalk`, `stylus`, `tcl`, `terraform`, `twig`, `verilog`, `vhdl`, `vim`, and many more.
-
-**Total**: 200+ languages supported
-
-## Display Modes
-
-The DiffViewer supports two display modes via the `diffViewMode` prop. It defaults to **Split mode** when no mode is provided.
-
-### Split Mode (Side-by-Side)
-
-`diffViewMode={DiffModeEnum.Split}` (default)
-
-- Shows old code on the left, new code on the right
-- Ideal for detailed line-by-line comparisons
-- Best for desktop and larger screens
-- Clear visual separation of changes
-
-### Unified Mode (Inline)
-
-`diffViewMode={DiffModeEnum.Unified}`
-
-- Shows old and new code stacked inline in a single column
-- Ideal for narrow layouts or focused review of small changes
-- Easier to follow short, sequential edits
-- Works well in side panels and mobile viewports
-
-## Theme Integration
-
-The component automatically adapts to your application's theme using the `useTheme()` hook:
-
-### Automatic Theme Detection
-
-- The component reads the `isLightTheme` value from the `ThemeProvider` context
-- Theme changes are detected automatically and the diff view updates in real-time
-- No manual configuration needed - the theme synchronization happens automatically
-- Supports all theme modes from the design system (dark/light with various contrast levels)
-
-## Best Practices
-
-1. **Use Proper Language** - Always specify the correct `lang` prop for accurate syntax highlighting
-2. **Format Code** - Ensure code is properly formatted before passing to the component
-3. **Use `\n` for Line Breaks** - When defining code strings, use `\n` for newlines
-4. **Keep Code Readable** - For very large diffs, consider pagination or limiting the visible range
-5. **Provide Context** - Include enough surrounding code to make changes understandable
-
-## Examples
-
-### TypeScript Comparison
-
-```tsx
-<DiffViewer
-  oldCode={`interface User {
-  name: string;
-  age: number;
-}`}
-  newCode={`interface User {
-  name: string;
-  email: string;
-  age: number;
-  isActive: boolean;
-}`}
-  lang="typescript"
-/>
-```
-
-### JSON Configuration
-
-```tsx
-<DiffViewer
-  oldCode={`{
-  "version": "1.0.0",
-  "name": "my-app"
-}`}
-  newCode={`{
-  "version": "2.0.0",
-  "name": "my-app",
-  "description": "My awesome app"
-}`}
-  lang="json"
-/>
-```
-
-### Python Code
-
-```tsx
-<DiffViewer
-  oldCode={`def greet():
-    print("Hello")`}
-  newCode={`def greet(name="World"):
-    print(f"Hello, {name}!")`}
-  lang="python"
-/>
-```
-
-## Performance Considerations
-
-The component is optimized for performance:
-
-- **Async Loading** - Syntax highlighting is loaded asynchronously to avoid blocking
-- **Efficient Rendering** - Large diffs are rendered efficiently without performance degradation
-- **Optimized Theme Switching** - Theme changes don't trigger unnecessary re-renders
-- **Memoization** - Diff calculations are memoized to prevent redundant processing
+</div>

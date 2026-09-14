@@ -1,0 +1,37 @@
+---
+title: Submenus
+description: Creating nested submenus in a DropdownMenu
+---
+
+import { DocsPage } from "@/components/docs-page";
+
+The `DropdownMenu` component supports subitems using the `DropdownMenu.Item` component. This allows you to create items that can have their own nested items, effectively creating a submenu.
+
+<DocsPage.ComponentExample
+  client:only
+  code={`<DropdownMenu.Root>
+    <DropdownMenu.Trigger aria-label="options menu" asChild>
+        <Button variant="ghost" iconOnly>
+            <IconV2 name="more-horizontal" />
+        </Button>
+    </DropdownMenu.Trigger>
+
+    <DropdownMenu.Content>
+        <DropdownMenu.Item title="Item 1" />
+        <DropdownMenu.Item title="Item 2" />
+        <DropdownMenu.Item title="Item 3">
+            <DropdownMenu.Item title="Item 1" />
+            <DropdownMenu.Item title="Item 2" />
+            <DropdownMenu.Item title="Item 3">
+              <DropdownMenu.Item title="Item 1" />
+              <DropdownMenu.Item title="Item 2" />
+          </DropdownMenu.Item>
+        </DropdownMenu.Item>
+
+  </DropdownMenu.Content>
+</DropdownMenu.Root>`}
+/>
+
+## Properties
+
+Submenus are built with the `DropdownMenu.Item` component using nested `children`. See the `Item` API on the [Dropdown Menu](/components/overlays/dropdown-menu) page.

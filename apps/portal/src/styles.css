@@ -1,3 +1,29 @@
+/* ============================================================
+   Doc-site typography weight floor.
+   The DS optically remaps weights: "light" (slot 300) renders as 310
+   and "normal" (slot 400) as 360 — both below a true 400. Per the docs
+   request, every sub-400 weight is raised to 400 for the doc site only.
+   These override the DS weight tokens locally: this file is loaded only
+   by the portal, so @harnessio/ui and the shared tokens are untouched.
+   !important is required because @harnessio/ui/styles.css loads after
+   this file and would otherwise reset these vars.
+   ============================================================ */
+:root {
+  --cn-font-weight-default-normal-300: 400 !important; /* was 310 */
+  --cn-font-weight-default-normal-400: 400 !important; /* was 360 */
+  --cn-font-weight-mono-normal-300: 400 !important; /* was 300 */
+}
+
+/* Type specimens opt out of the weight floor above so the DS reference
+   demos render each variant's TRUE weight (310/360) and stay accurate
+   against their spec labels. Applied to the type-scale reference tables
+   and the Text variant specimen. */
+.ds-type-specimen {
+  --cn-font-weight-default-normal-300: 310 !important;
+  --cn-font-weight-default-normal-400: 360 !important;
+  --cn-font-weight-mono-normal-300: 300 !important;
+}
+
 body {
   @apply text-cn-1 text-cn-size-6 overscroll-none tracking-cn-normal font-body-normal !important;
   @apply !leading-7 !text-cn-size-6;
@@ -12,15 +38,19 @@ main {
 }
 
 .sl-container :is(h1):not(:where(.not-content *)) {
-  @apply text-cn-size-10 font-normal text-cn-1;
+  @apply text-cn-size-10 font-semibold text-cn-1;
 }
 
 .sl-container :is(h2):not(:where(.not-content *)) {
-  @apply text-cn-size-9 font-normal text-cn-1;
+  @apply text-cn-size-9 font-semibold text-cn-1;
 }
 
 .sl-container :is(h3):not(:where(.not-content *)) {
-  @apply text-cn-size-7 font-normal text-cn-1;
+  @apply text-cn-size-7 font-semibold text-cn-1;
+}
+
+.sl-container :is(h4):not(:where(.not-content *)) {
+  @apply font-semibold text-cn-1;
 }
 
 /* List styles for content */
@@ -199,18 +229,6 @@ code:not(.expressive-code code) {
     margin-inline: calc(-1 * var(--cn-layout-sm));
     padding-inline: var(--cn-layout-sm);
 
-    &::after {
-      content: "" !important;
-      display: block !important;
-      position: absolute !important;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      height: 1px;
-      background-color: var(--cn-border-3);
-      pointer-events: none;
-    }
-
     ul {
       @apply pl-0;
       display: flex;
@@ -254,9 +272,9 @@ code:not(.expressive-code code) {
         }
       }
 
-      /* Render IconV2 SVGs as sidebar icons via mask-image */
-      a[data-icon]::before,
-      a:not([data-icon])::before {
+      /* Render IconV2 SVGs as sidebar icons via mask-image.
+         Component (non-icon) links render as plain text — no bullet. */
+      a[data-icon]::before {
         content: "";
         display: inline-block;
         width: var(--cn-icon-size-sm);
@@ -423,27 +441,31 @@ code:not(.expressive-code code) {
     }
   }
 
-  details:last-child::after {
-    display: none;
-  }
-
   details details {
     @apply border-b-0 py-0;
     margin-inline: 0;
     padding-inline: 0;
 
-    &::after {
-      display: none;
-    }
-
+    /* Nested group label reads like a regular nav link, not a section header */
     summary {
       @apply py-cn-3xs;
+      gap: var(--cn-layout-xs);
 
       .group-label {
+        display: flex;
+        align-items: center;
+
         span {
-          @apply text-cn-size-5 font-medium text-cn-2;
+          @apply font-body-normal text-cn-2;
+          /* Match leaf link size — overrides the larger group-header size */
+          font-size: var(--cn-font-size-5) !important;
         }
       }
+    }
+
+    /* Indent the child pages so the nesting is visible under the label */
+    > ul li a {
+      padding-left: var(--cn-layout-xl);
     }
 
     &[open] > summary {
@@ -475,6 +497,31 @@ code:not(.expressive-code code) {
   }
 }
 
+/* Single-group sections (Components, Foundations, Data Viz) repeat their top-nav
+   tab name as the only sidebar group heading. Hide that redundant heading and
+   keep its items always visible, so the section can't be collapsed to nothing.
+   Items stay inside the group, so they keep their normal nested link/icon styles.
+   Scoped by `.category-sidebar--flat` (set in CategorySidebar.astro), so
+   multi-group sections and nested sub-groups (Button, Icon Button) are untouched. */
+.cn-portal-sidebar
+  .category-sidebar--flat
+  ul.top-level
+  > li
+  > details
+  > summary {
+  display: none;
+}
+.cn-portal-sidebar .category-sidebar--flat ul.top-level > li > details {
+  /* Restore the breathing room the hidden heading used to provide, so the first
+     item doesn't crowd the search box above it. */
+  @apply pt-cn-md pb-0;
+  margin-inline: 0;
+  padding-inline: 0;
+}
+.cn-portal-sidebar .category-sidebar--flat ul.top-level > li > details > ul {
+  display: flex !important;
+}
+
 /* ============================================================
    RIGHT SIDEBAR (Table of Contents)
    ============================================================ */
@@ -490,6 +537,20 @@ mobile-starlight-toc {
 
 ul.top-level summary svg {
   @apply font-normal text-cn-4 text-cn-size-5;
+}
+
+/* CONTENT COLUMN WIDTH — keep it consistent across pages.
+   DocTemplate nests flex items: [flex-1 justify-center wrapper] > [max-width:1200px
+   row] > [flex-1 content] + [200px TOC]. The wrapper is a flex-1 item with the
+   default min-width:auto, so its minimum size is its content's min-content width. A
+   page with a long, unwrapped code line (e.g. Button Group's Usage example) inflates
+   that min-content, letting the wrapper grow past its normal viewport share; the row
+   inside then expands to its 1200px cap, widening the flex-1 content column and
+   making that page wider than siblings whose code lines are short. Pinning
+   min-width:0 on the wrapper keeps it at its viewport share on every page, so the
+   content column is the same width regardless of code-line length. */
+div:has(> div[style*="1200px"] main[data-pagefind-body]) {
+  min-width: 0 !important;
 }
 
 .right-sidebar-panel {
@@ -510,7 +571,7 @@ ul.top-level summary svg {
 }
 
 .right-sidebar-panel li a {
-  @apply m-0 p-0 py-cn-3xs text-cn-4 text-cn-size-5 transition-colors duration-150 hover:text-cn-1;
+  @apply m-0 p-0 py-cn-3xs text-cn-4 text-cn-size-3 transition-colors duration-150 hover:text-cn-1;
 }
 
 .right-sidebar-panel li a[aria-current="true"] {
@@ -519,6 +580,98 @@ ul.top-level summary svg {
 
 .right-sidebar-panel li ul {
   @apply pl-cn-sm ml-cn-3xs border-l border-cn-3;
+}
+
+/* ============================================================
+   PAGE-LEVEL TABS — canary "overlined" variant
+   Restyles the Starlight <Tabs> that wrap a page body (#page-level-tabs)
+   to match the design-system Tabs `overlined` look: active tab reads as a
+   folder tab sitting on the container's bottom line. Uses the same cn-tabs-*
+   tokens as the real component so it tracks the theme.
+   ============================================================ */
+
+#page-level-tabs .tablist-wrapper ul[role="tablist"] {
+  border-bottom: var(--cn-tabs-container-border) solid var(--cn-border-3);
+  gap: 0;
+}
+
+#page-level-tabs .tablist-wrapper li.tab {
+  margin: 0;
+}
+
+#page-level-tabs .tablist-wrapper [role="tab"] {
+  min-height: var(--cn-tabs-item-overlined-min-height);
+  padding: var(--cn-tabs-item-overlined-py) var(--cn-tabs-item-overlined-px);
+  /* overlap the container's bottom border so the active tab merges with it */
+  margin-bottom: calc(-1 * var(--cn-tabs-container-border));
+  color: var(--cn-text-2);
+  text-decoration: none;
+  border: var(--cn-tabs-item-overlined-border) solid transparent;
+  border-radius: var(--cn-tabs-item-overlined-rt)
+    var(--cn-tabs-item-overlined-rt) var(--cn-tabs-item-overlined-rb)
+    var(--cn-tabs-item-overlined-rb);
+  font-weight: 400;
+  transition:
+    color 0.15s ease,
+    background-color 0.15s ease,
+    border-color 0.15s ease;
+}
+
+#page-level-tabs .tablist-wrapper [role="tab"]:hover {
+  color: var(--cn-text-1);
+}
+
+#page-level-tabs .tablist-wrapper [role="tab"][aria-selected="true"] {
+  border-color: var(--cn-border-3);
+  border-bottom-color: transparent;
+  background-color: var(--cn-bg-1);
+  color: var(--cn-text-brand);
+  font-weight: 500;
+}
+
+/* Visually-hidden panel heading — kept in the markup so the Properties
+   section H3s nest under it in the "On this page" TOC, but not shown in the
+   panel body (the "Properties" tab label already titles the section). */
+#page-level-tabs h2#properties {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* ============================================================
+   USAGE CODE BLOCK — fixed-height scroll
+   Caps the "Usage" snippet on every component page so long import/
+   example blocks don't dominate the page; the code scrolls within a
+   400px frame. Targets the code block immediately following the
+   "## Usage" heading (rendered as <h2 id="usage">), or the renamed
+   "## Installation" heading on pages that split usage into its own tab.
+   ============================================================ */
+.sl-markdown-content h2#usage + .expressive-code pre,
+.sl-markdown-content h2#installation + .expressive-code pre {
+  max-height: 400px;
+  overflow-y: auto;
+}
+
+/* ============================================================
+   ANATOMY CODE BLOCK — max-height scroll
+   Same treatment as the Usage block: caps the "Anatomy" snippet on
+   every component page at 400px so long composition trees don't
+   dominate the page; shorter blocks stay their natural height and
+   only taller ones scroll. Covers the two layouts used in the docs —
+   the code fence either directly follows the "## Anatomy" heading
+   (rendered as <h2 id="anatomy">) or follows a single description
+   paragraph.
+   ============================================================ */
+.sl-markdown-content h2#anatomy + .expressive-code pre,
+.sl-markdown-content h2#anatomy + p + .expressive-code pre {
+  max-height: 400px;
+  overflow-y: auto;
 }
 
 /* ============================================================
@@ -892,6 +1045,86 @@ button[aria-label="Search"] {
   min-width: 0;
 }
 
+/* Home hero (full-width landing) */
+.cn-home-hero {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: var(--cn-spacing-4);
+  padding: var(--cn-layout-2xl) 0 var(--cn-layout-xl);
+}
+
+.cn-home-hero-title {
+  font-size: var(--cn-font-size-11);
+  font-weight: 600;
+  line-height: 1.05;
+  letter-spacing: -0.03em;
+  color: var(--cn-text-1);
+  max-width: 20ch;
+  margin: 0;
+}
+
+.cn-home-hero-subtitle {
+  font-size: var(--cn-font-size-5);
+  line-height: 1.5;
+  color: var(--cn-text-2);
+  max-width: 68ch;
+  margin: 0;
+}
+
+.cn-home-hero-subtitle code {
+  font-size: 0.9em;
+  padding: 1px 5px;
+  border-radius: var(--cn-rounded-4);
+  background: var(--cn-bg-0);
+  border: 1px solid var(--cn-border-3);
+}
+
+.cn-home-cta-row {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--cn-spacing-3);
+  margin-top: var(--cn-spacing-3);
+}
+
+.cn-home-cta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.625rem 1.25rem;
+  border-radius: var(--cn-rounded-4);
+  font-size: var(--cn-font-size-3);
+  font-weight: 500;
+  line-height: 1.2;
+  text-decoration: none !important;
+  border: 1px solid transparent;
+  transition:
+    background 0.15s ease,
+    border-color 0.15s ease,
+    opacity 0.15s ease;
+}
+
+.cn-home-cta-primary {
+  background: var(--cn-text-1);
+  color: var(--cn-bg-0);
+}
+
+.cn-home-cta-primary:hover {
+  opacity: 0.85;
+}
+
+.cn-home-cta-secondary {
+  background: transparent;
+  color: var(--cn-text-1);
+  border-color: var(--cn-border-3);
+}
+
+.cn-home-cta-secondary:hover {
+  background: var(--cn-bg-0);
+}
+
 /* Feature Grid (Introduction hero) */
 .cn-feature-grid {
   display: grid;
@@ -991,6 +1224,32 @@ button[aria-label="Search"] {
   font-weight: 500;
   line-height: 1.3;
   color: var(--cn-text-1);
+}
+
+/* ============================================================
+   UUI-3226: force all page content text to text.1 (foreground-1).
+   Removes the secondary neutral grays from doc-site prose.
+   Intentionally skips: code snippets, tables/swatches (.not-content),
+   callouts (asides), and the right-hand TOC. Links keep their color.
+   `!important` is required to override Starlight's default prose colors.
+   ============================================================ */
+.sl-container
+  :is(p, li, span, strong, em, b, i, blockquote, dt, dd, figcaption, small):not(
+    :where(
+      .not-content,
+      .not-content *,
+      .expressive-code,
+      .expressive-code *,
+      pre,
+      pre *,
+      code,
+      .starlight-aside,
+      .starlight-aside *,
+      .right-sidebar-panel,
+      .right-sidebar-panel *
+    )
+  ) {
+  color: var(--cn-text-1) !important;
 }
 
 /* Growth box (CSS class prefix remains cn-growth-card) */

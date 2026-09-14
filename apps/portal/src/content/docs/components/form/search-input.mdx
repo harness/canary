@@ -4,8 +4,20 @@ description: SearchInput component
 ---
 
 import { DocsPage } from "@/components/docs-page";
+import { Tabs, TabItem } from "@astrojs/starlight/components";
+import PageTabsToc from "@/components/page-tabs-toc.astro";
 
-Below is an example of how to implement a search input that displays the current search value using React state. The SearchInput component includes a built-in 300ms debounce to prevent excessive callbacks when typing:
+<PageTabsToc />
+
+<div id="page-level-tabs">
+
+<Tabs>
+
+<TabItem label="Overview">
+
+`SearchInput` is a text input tuned for search: a leading search icon, a built-in 300ms debounce so callbacks don't fire on every keystroke, and optional match-navigation controls.
+
+The example below tracks the current value with React state.
 
 <DocsPage.ComponentExample client:only code={`() => {
   // Using useState hook to track search value
@@ -30,9 +42,11 @@ return (
 </div>
 ) }`} />
 
-## Search with Navigation
+## Variations
 
-Below is an example of how to implement a search input with navigation controls. The navigation buttons (previous, next, and clear) appear when you start typing.
+### With navigation
+
+Set `showPrevNextButtons` to add match-navigation controls. Previous, next, and clear buttons appear once there's text in the field.
 
 **Navigation:**
 
@@ -118,7 +132,7 @@ return (
 </div>
 ) }`} />
 
-## Usage
+## Installation
 
 ```typescript jsx
 import { SearchInput } from '@harnessio/ui/components'
@@ -133,149 +147,102 @@ return (
 )
 ```
 
-## API Reference
+</TabItem>
+
+<TabItem label="Usage">
+
+## Anatomy
+
+`SearchInput` is a single input with a leading search icon. It manages its own value internally — read changes through `onChange` (which receives the string value, debounced), and drive a controlled value with `searchValue`.
+
+```tsx
+<SearchInput
+  placeholder="Type to search..."
+  onChange={(value) => setQuery(value)}
+/>
+```
+
+- **Debounce** — `onChange` is debounced 300ms by default. Pass a number to change the delay, or `false` to fire on every keystroke.
+- **Navigation** — with `showPrevNextButtons`, previous / next / clear buttons appear when there's text. Wire `onNext` / `onPrev` (or a single `onEnter(text, reverse)`), and show progress with `counter`.
+- **Suffix** — use `suffix` for a trailing affordance, such as a keyboard-shortcut badge.
+
+## Best practices
+
+{/* TODO: editorial — please review against product guidance. */}
+
+**Do**
+
+- Keep the default debounce for live-filtering large lists or issuing network requests; only lower it when instant feedback matters.
+- Show a `counter` (e.g. `3/128`) whenever you enable navigation, so people know where they are in the results.
+- Provide an accessible name (see Accessibility) since the field has no visible label.
+
+**Don't**
+
+- Don't add navigation buttons for a simple filter that has no notion of "current match".
+- Don't debounce when the input drives purely local, cheap state where users expect instant response.
+
+## Content
+
+{/* TODO: editorial — please review against product guidance. */}
+
+- Use a placeholder that hints at the scope of the search ("Search pipelines…"), not just "Search".
+- Keep the `counter` compact — "current/total" (`3/128`).
+
+## Accessibility
+
+### Keyboard
+
+- **`Enter`** triggers `onEnter` moving forward (next match); **`Shift + Enter`** triggers it in reverse (previous match).
+- The optional previous / next / clear buttons are standard buttons, reachable and activatable from the keyboard.
+- **`⌘F` / `Ctrl+F` is not handled by the component.** The demo wires its own window listener; add one yourself if you want that shortcut.
+
+### Labeling
+
+- The field renders as a plain text input with no visible label and no built-in `aria-label`. Provide `aria-label` (or associate a label) so its purpose is announced.
+- The navigation buttons carry `aria-label`s ("Previous match", "Next match", "Clear search").
+
+</TabItem>
+
+<TabItem label="Properties">
+
+{/* Visually hidden — anchors the section headings below in the TOC without showing a redundant title in the panel body (the tab already says "Properties"). Hidden via #page-level-tabs h2#properties in styles.css. */}
+
+## Properties
 
 <DocsPage.PropsTable
   props={[
     {
-      name: "debounce",
-      description: "Debounce duration in milliseconds",
+      name: "onChange",
+      description: "Called with the new string value (debounced).",
       required: false,
-      defaultValue: 300,
+      value: "(value: string) => void",
+    },
+    {
+      name: "searchValue",
+      description:
+        "Controlled value. The component otherwise manages its own value.",
+      required: false,
+      value: "string",
+    },
+    {
+      name: "debounce",
+      description:
+        "Debounce duration in ms. true = 300ms; a number sets the delay; false disables debouncing.",
+      required: false,
+      defaultValue: "true",
       value: "number | boolean",
     },
     {
-      name: "wrapperClassName",
-      description: "Additional CSS classes for the wrapper element",
-      required: false,
-      defaultValue: "",
-      value: "string",
-    },
-    {
-      name: "label",
-      description: "Label text for the input field",
-      required: false,
-      defaultValue: "",
-      value: "string",
-    },
-    {
-      name: "caption",
-      description: "Helper text displayed below the input",
-      required: false,
-      defaultValue: "",
-      value: "string",
-    },
-    {
-      name: "error",
-      description: "Error message to display (will use danger theme and icon)",
-      required: false,
-      defaultValue: "",
-      value: "string",
-    },
-    {
-      name: "warning",
-      description: "Warning message to display (will use warning theme)",
-      required: false,
-      defaultValue: "",
-      value: "string",
-    },
-    {
-      name: "optional",
-      description: "Whether to display an 'optional' tag beside the label",
-      required: false,
-      defaultValue: "false",
-      value: "boolean",
-    },
-    {
-      name: "id",
-      description:
-        "Unique identifier for the input element (auto-generated if not provided)",
-      required: false,
-      defaultValue: "",
-      value: "string",
-    },
-    {
-      name: "disabled",
-      description: "Whether the input is disabled",
-      required: false,
-      defaultValue: "false",
-      value: "boolean",
-    },
-    {
-      name: "className",
-      description: "Additional CSS classes for the input element",
-      required: false,
-      defaultValue: "",
-      value: "string",
-    },
-    {
-      name: "inputContainerClassName",
-      description: "Additional CSS classes for the input container",
-      required: false,
-      defaultValue: "",
-      value: "string",
-    },
-    {
-      name: "theme",
-      description:
-        "Theme styling for the input and caption (automatically set to danger for errors, warning for warnings)",
-      required: false,
-      defaultValue: "'default'",
-      value: "'default' | 'success' | 'danger' | 'warning'",
-    },
-    {
-      name: "size",
-      description: "Size of the input field",
-      required: false,
-      defaultValue: "'md'",
-      value: "'md' | 'sm'",
-    },
-    {
-      name: "suffix",
-      description: "Content to display after the input field",
-      required: false,
-      defaultValue: "",
-      value: "ReactNode",
-    },
-    {
-      name: "value",
-      description: "Controlled value for the input",
-      required: false,
-      defaultValue: "",
-      value: "string",
-    },
-    {
-      name: "defaultValue",
-      description: "Default value for uncontrolled input",
-      required: false,
-      defaultValue: "",
-      value: "string",
-    },
-    {
-      name: "onChange",
-      description: "Callback when value changes",
-      required: false,
-      defaultValue: "",
-      value: " (value: string) => void",
-    },
-    {
       name: "placeholder",
-      description: "Placeholder text for the input field",
+      description: "Placeholder text for the input.",
       required: false,
-      defaultValue: "Search",
+      defaultValue: "'Search'",
       value: "string",
-    },
-    {
-      name: "readOnly",
-      description: "Whether the input is read-only",
-      required: false,
-      defaultValue: "false",
-      value: "boolean",
     },
     {
       name: "showPrevNextButtons",
       description:
-        "Whether to show navigation buttons (previous, next, clear) when search text is entered",
+        "Shows previous / next / clear buttons once search text is entered.",
       required: false,
       defaultValue: "false",
       value: "boolean",
@@ -283,41 +250,102 @@ return (
     {
       name: "counter",
       description:
-        "Text to display between the input and suffix (e.g., '1/10' for result count)",
+        "Text shown between the input and suffix (e.g. '1/10' for a result count).",
       required: false,
-      defaultValue: "",
       value: "string",
     },
     {
       name: "onEnter",
       description:
-        "Callback when Enter key is pressed. Receives the search text and a boolean indicating if Shift was held (for reverse navigation)",
+        "Called on Enter with the search text and whether Shift was held (reverse navigation).",
       required: false,
-      defaultValue: "",
       value: "(text: string, reverse?: boolean) => void",
     },
     {
       name: "onPrev",
       description:
-        "Callback when previous button is clicked. If not provided, falls back to onEnter with reverse=true",
+        "Called when the previous button is clicked. Falls back to onEnter with reverse=true.",
       required: false,
-      defaultValue: "",
       value: "(text: string) => void",
     },
     {
       name: "onNext",
       description:
-        "Callback when next button is clicked. If not provided, falls back to onEnter with reverse=false",
+        "Called when the next button is clicked. Falls back to onEnter with reverse=false.",
       required: false,
-      defaultValue: "",
       value: "(text: string) => void",
     },
     {
       name: "onKeyDown",
-      description: "Callback for keydown events on the input",
+      description: "Called for keydown events on the input.",
       required: false,
-      defaultValue: "",
       value: "(event: React.KeyboardEvent<HTMLInputElement>) => void",
+    },
+    {
+      name: "theme",
+      description: "Theme styling for the input.",
+      required: false,
+      defaultValue: "'default'",
+      value: "'default' | 'success' | 'danger' | 'warning'",
+    },
+    {
+      name: "size",
+      description: "Size of the input field.",
+      required: false,
+      defaultValue: "'md'",
+      value: "'md' | 'sm'",
+    },
+    {
+      name: "prefix",
+      description: "Content before the input. Defaults to the search icon.",
+      required: false,
+      value: "ReactNode",
+    },
+    {
+      name: "suffix",
+      description: "Content after the input (for example, a shortcut badge).",
+      required: false,
+      value: "ReactNode",
+    },
+    {
+      name: "disabled",
+      description: "Whether the input is disabled.",
+      required: false,
+      defaultValue: "false",
+      value: "boolean",
+    },
+    {
+      name: "readOnly",
+      description: "Whether the input is read-only.",
+      required: false,
+      defaultValue: "false",
+      value: "boolean",
+    },
+    {
+      name: "id",
+      description: "Id for the input element (auto-generated if not provided).",
+      required: false,
+      value: "string",
+    },
+    {
+      name: "className",
+      description: "Additional CSS classes for the input element.",
+      required: false,
+      value: "string",
+    },
+    {
+      name: "inputContainerClassName",
+      description: "Additional CSS classes for the input container.",
+      required: false,
+      value: "string",
     },
   ]}
 />
+
+The component forwards its `ref` to the underlying `<input>`, so you can call `ref.current?.focus()` (as the navigation example does).
+
+</TabItem>
+
+</Tabs>
+
+</div>

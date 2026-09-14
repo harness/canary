@@ -1,285 +1,84 @@
 ---
 title: Split Button
 description: Interactive split button with dropdown options
-beta: true
 ---
+
+import { DocsPage } from "@/components/docs-page";
+import { Tabs, TabItem } from "@astrojs/starlight/components";
+import PageTabsToc from "@/components/page-tabs-toc.astro";
+
+<PageTabsToc />
+
+<div id="page-level-tabs">
+
+<Tabs>
+
+<TabItem label="Overview">
 
 The `SplitButton` component provides a flexible UI element combining a button with a dropdown menu of options. It can be used in two different modes:
 
 - Regular dropdown menu (default behavior)
 - Radio button selection group (when `selectedValue` is provided)
 
-import { DocsPage } from "@/components/docs-page";
-import { Aside } from "@astrojs/starlight/components";
-
-<Aside>
-  The `SplitButton` component supports specific combinations of `variant` and `theme` props:
+The `SplitButton` component supports specific combinations of `variant` and `theme` props:
 
 - `variant="primary"` with `theme="default"`
-- `variant="outline"` with `theme="default" | "success" | "danger"`
-
-</Aside>
+- `variant="outline"` with `theme="default" | "success" | "danger" | "warning"`
 
 <DocsPage.ComponentExample
   client:only
-  code={`<div className="flex flex-col gap-cn-2xl">
-  {/* Variants and Themes */}
-  <div>
-    <Text variant="heading-subsection" as="h4" className="mb-cn-sm">Variants and Themes</Text>
-    
-    {/* Primary Variant */}
-    <div className="mb-cn-xl">
-      <Text variant="heading-small" as="h5" color="foreground-3" className="mb-cn-sm">Primary Variant</Text>
-      <div className="flex flex-wrap items-end gap-cn-md">
-        <SplitButton
-          id="primary-default"
-          variant="primary"
-          theme="default"
-          handleButtonClick={() => {}}
-          options={[
-            { value: 'option1', label: 'Option 1', description: 'Description for option 1' },
-            { value: 'option2', label: 'Option 2', description: 'Description for option 2' },
-          ]}
-          handleOptionChange={() => {}}
-        >
-          Primary + Default
-        </SplitButton>
-
-        <SplitButton
-          id="primary-success"
-          variant="primary"
-          theme="success"
-          handleButtonClick={() => {}}
-          options={[
-            { value: 'option1', label: 'Option 1', description: 'Description for option 1' },
-            { value: 'option2', label: 'Option 2', description: 'Description for option 2' },
-          ]}
-          handleOptionChange={() => {}}
-        >
-          Primary + Success
-        </SplitButton>
-
-        <SplitButton
-          id="primary-danger"
-          variant="primary"
-          theme="danger"
-          handleButtonClick={() => {}}
-          options={[
-            { value: 'option1', label: 'Option 1', description: 'Description for option 1' },
-            { value: 'option2', label: 'Option 2', description: 'Description for option 2' },
-          ]}
-          handleOptionChange={() => {}}
-        >
-          Primary + Danger
-        </SplitButton>
-      </div>
+  code={`<div className="space-y-cn-sm w-full">
+  <div className="flex items-start gap-cn-md border-b border-cn-borders-3 pb-cn-sm">
+    <span className="text-cn-size-2 text-cn-3 w-32 shrink-0 font-mono pt-cn-xs">primary</span>
+    <div className="flex flex-wrap gap-cn-sm items-center">
+      <SplitButton id="primary-default" variant="primary" theme="default" handleButtonClick={() => {}} options={[{ value: 'option1', label: 'Option 1', description: 'Description for option 1' }, { value: 'option2', label: 'Option 2', description: 'Description for option 2' }]} handleOptionChange={() => {}}>Default</SplitButton>
+      <SplitButton id="primary-success" variant="primary" theme="success" handleButtonClick={() => {}} options={[{ value: 'option1', label: 'Option 1', description: 'Description for option 1' }, { value: 'option2', label: 'Option 2', description: 'Description for option 2' }]} handleOptionChange={() => {}}>Success</SplitButton>
+      <SplitButton id="primary-danger" variant="primary" theme="danger" handleButtonClick={() => {}} options={[{ value: 'option1', label: 'Option 1', description: 'Description for option 1' }, { value: 'option2', label: 'Option 2', description: 'Description for option 2' }]} handleOptionChange={() => {}}>Danger</SplitButton>
+      <SplitButton id="primary-warning" variant="primary" theme="warning" handleButtonClick={() => {}} options={[{ value: 'option1', label: 'Option 1', description: 'Description for option 1' }, { value: 'option2', label: 'Option 2', description: 'Description for option 2' }]} handleOptionChange={() => {}}>Warning</SplitButton>
     </div>
-
-    {/* Secondary Variant */}
-    <div className="mb-cn-xl">
-      <Text variant="heading-small" as="h5" color="foreground-3" className="mb-cn-sm">Secondary Variant</Text>
-      <div className="flex flex-wrap items-end gap-cn-md">
-        <SplitButton
-          id="secondary-default"
-          variant="secondary"
-          theme="default"
-          handleButtonClick={() => {}}
-          options={[
-            { value: 'option1', label: 'Option 1', description: 'Description for option 1' },
-            { value: 'option2', label: 'Option 2', description: 'Description for option 2' },
-          ]}
-          handleOptionChange={() => {}}
-        >
-          Secondary + Default
-        </SplitButton>
-
-        <SplitButton
-          id="secondary-success"
-          variant="secondary"
-          theme="success"
-          handleButtonClick={() => {}}
-          options={[
-            { value: 'option1', label: 'Option 1', description: 'Description for option 1' },
-            { value: 'option2', label: 'Option 2', description: 'Description for option 2' },
-          ]}
-          handleOptionChange={() => {}}
-        >
-          Secondary + Success
-        </SplitButton>
-
-        <SplitButton
-          id="secondary-danger"
-          variant="secondary"
-          theme="danger"
-          handleButtonClick={() => {}}
-          options={[
-            { value: 'option1', label: 'Option 1', description: 'Description for option 1' },
-            { value: 'option2', label: 'Option 2', description: 'Description for option 2' },
-          ]}
-          handleOptionChange={() => {}}
-        >
-          Secondary + Danger
-        </SplitButton>
-      </div>
+  </div>
+  <div className="flex items-start gap-cn-md border-b border-cn-borders-3 pb-cn-sm">
+    <span className="text-cn-size-2 text-cn-3 w-32 shrink-0 font-mono pt-cn-xs">secondary</span>
+    <div className="flex flex-wrap gap-cn-sm items-center">
+      <SplitButton id="secondary-default" variant="secondary" theme="default" handleButtonClick={() => {}} options={[{ value: 'option1', label: 'Option 1', description: 'Description for option 1' }, { value: 'option2', label: 'Option 2', description: 'Description for option 2' }]} handleOptionChange={() => {}}>Default</SplitButton>
+      <SplitButton id="secondary-success" variant="secondary" theme="success" handleButtonClick={() => {}} options={[{ value: 'option1', label: 'Option 1', description: 'Description for option 1' }, { value: 'option2', label: 'Option 2', description: 'Description for option 2' }]} handleOptionChange={() => {}}>Success</SplitButton>
+      <SplitButton id="secondary-danger" variant="secondary" theme="danger" handleButtonClick={() => {}} options={[{ value: 'option1', label: 'Option 1', description: 'Description for option 1' }, { value: 'option2', label: 'Option 2', description: 'Description for option 2' }]} handleOptionChange={() => {}}>Danger</SplitButton>
+      <SplitButton id="secondary-warning" variant="secondary" theme="warning" handleButtonClick={() => {}} options={[{ value: 'option1', label: 'Option 1', description: 'Description for option 1' }, { value: 'option2', label: 'Option 2', description: 'Description for option 2' }]} handleOptionChange={() => {}}>Warning</SplitButton>
     </div>
-
-    {/* Outline Variant */}
-    <div className="mb-cn-xl">
-      <Text variant="heading-small" as="h5" color="foreground-3" className="mb-cn-sm">Outline Variant</Text>
-      <div className="flex flex-wrap items-end gap-cn-md">
-        <SplitButton
-          id="outline-default"
-          variant="outline"
-          theme="default"
-          handleButtonClick={() => {}}
-          options={[
-            { value: 'option1', label: 'Option 1', description: 'Description for option 1' },
-            { value: 'option2', label: 'Option 2', description: 'Description for option 2' },
-          ]}
-          handleOptionChange={() => {}}
-        >
-          Outline + Default
-        </SplitButton>
-
-        <SplitButton
-          id="outline-success"
-          variant="outline"
-          theme="success"
-          handleButtonClick={() => {}}
-          options={[
-            { value: 'option1', label: 'Option 1', description: 'Description for option 1' },
-            { value: 'option2', label: 'Option 2', description: 'Description for option 2' },
-          ]}
-          handleOptionChange={() => {}}
-        >
-          Outline + Success
-        </SplitButton>
-
-        <SplitButton
-          id="outline-danger"
-          variant="outline"
-          theme="danger"
-          handleButtonClick={() => {}}
-          options={[
-            { value: 'option1', label: 'Option 1', description: 'Description for option 1' },
-            { value: 'option2', label: 'Option 2', description: 'Description for option 2' },
-          ]}
-          handleOptionChange={() => {}}
-        >
-          Outline + Danger
-        </SplitButton>
-      </div>
+  </div>
+  <div className="flex items-start gap-cn-md border-b border-cn-borders-3 pb-cn-sm">
+    <span className="text-cn-size-2 text-cn-3 w-32 shrink-0 font-mono pt-cn-xs">outline</span>
+    <div className="flex flex-wrap gap-cn-sm items-center">
+      <SplitButton id="outline-default" variant="outline" theme="default" handleButtonClick={() => {}} options={[{ value: 'option1', label: 'Option 1', description: 'Description for option 1' }, { value: 'option2', label: 'Option 2', description: 'Description for option 2' }]} handleOptionChange={() => {}}>Default</SplitButton>
+      <SplitButton id="outline-success" variant="outline" theme="success" handleButtonClick={() => {}} options={[{ value: 'option1', label: 'Option 1', description: 'Description for option 1' }, { value: 'option2', label: 'Option 2', description: 'Description for option 2' }]} handleOptionChange={() => {}}>Success</SplitButton>
+      <SplitButton id="outline-danger" variant="outline" theme="danger" handleButtonClick={() => {}} options={[{ value: 'option1', label: 'Option 1', description: 'Description for option 1' }, { value: 'option2', label: 'Option 2', description: 'Description for option 2' }]} handleOptionChange={() => {}}>Danger</SplitButton>
+      <SplitButton id="outline-warning" variant="outline" theme="warning" handleButtonClick={() => {}} options={[{ value: 'option1', label: 'Option 1', description: 'Description for option 1' }, { value: 'option2', label: 'Option 2', description: 'Description for option 2' }]} handleOptionChange={() => {}}>Warning</SplitButton>
     </div>
-
   </div>
-
-{/* Radio Button Behavior */}
-
-<div>
-  <Text variant="heading-subsection" as="h4" className="mb-cn-sm">
-    Radio Button Selection
-  </Text>
-  <div className="flex flex-wrap items-end gap-cn-md">
-    <SplitButton
-      id="radio-button"
-      handleButtonClick={() => {}}
-      selectedValue="option1"
-      options={[
-        {
-          value: "option1",
-          label: "Option 1",
-          description: "Description for option 1",
-        },
-        {
-          value: "option2",
-          label: "Option 2",
-          description: "Description for option 2",
-        },
-      ]}
-      handleOptionChange={() => {}}
-    >
-      With Selected Value
-    </SplitButton>
+  <div className="flex items-start gap-cn-md border-b border-cn-borders-3 pb-cn-sm">
+    <span className="text-cn-size-2 text-cn-3 w-32 shrink-0 font-mono pt-cn-xs">radio</span>
+    <div className="flex flex-wrap gap-cn-sm items-center">
+      <SplitButton id="radio-button" handleButtonClick={() => {}} selectedValue="option1" options={[{ value: 'option1', label: 'Option 1', description: 'Description for option 1' }, { value: 'option2', label: 'Option 2', description: 'Description for option 2' }]} handleOptionChange={() => {}}>With Selected Value</SplitButton>
+    </div>
   </div>
-</div>
-
-{/* Loading State */}
-
-<div>
-  <Text variant="heading-subsection" as="h4" className="mb-cn-sm">
-    Loading State
-  </Text>
-  <div className="flex flex-wrap items-end gap-cn-md">
-    <SplitButton
-      id="loading-state"
-      handleButtonClick={() => {}}
-      loading={true}
-      options={[
-        {
-          value: "option1",
-          label: "Option 1",
-          description: "Description for option 1",
-        },
-        {
-          value: "option2",
-          label: "Option 2",
-          description: "Description for option 2",
-        },
-      ]}
-      handleOptionChange={() => {}}
-    >
-      Loading...
-    </SplitButton>
+  <div className="flex items-start gap-cn-md border-b border-cn-borders-3 pb-cn-sm">
+    <span className="text-cn-size-2 text-cn-3 w-32 shrink-0 font-mono pt-cn-xs">loading</span>
+    <div className="flex flex-wrap gap-cn-sm items-center">
+      <SplitButton id="loading-state" handleButtonClick={() => {}} loading={true} options={[{ value: 'option1', label: 'Option 1', description: 'Description for option 1' }, { value: 'option2', label: 'Option 2', description: 'Description for option 2' }]} handleOptionChange={() => {}}>Loading...</SplitButton>
+    </div>
   </div>
-</div>
-
-{/* Disabled States */}
-
-  <div>
-    <Text variant="heading-subsection" as="h4" className="mb-cn-sm">Disabled State</Text>
-    <div className="flex flex-wrap items-end gap-cn-md">
-      <SplitButton
-        id="disabled-state"
-        handleButtonClick={() => {}}
-        disabled
-        options={[
-          { value: 'option1', label: 'Option 1', description: 'Description for option 1' },
-          { value: 'option2', label: 'Option 2', description: 'Description for option 2' },
-        ]}
-        handleOptionChange={() => {}}
-      >
-        Disabled
-      </SplitButton>
-      <SplitButton
-        id="disabled-state"
-        handleButtonClick={() => {}}
-        disableButton
-        options={[
-          { value: 'option1', label: 'Option 1', description: 'Description for option 1' },
-          { value: 'option2', label: 'Option 2', description: 'Description for option 2' },
-        ]}
-        handleOptionChange={() => {}}
-      >
-        Disabled (Button)
-      </SplitButton>
-      <SplitButton
-        id="disabled-state"
-        handleButtonClick={() => {}}
-        disableDropdown
-        options={[
-          { value: 'option1', label: 'Option 1', description: 'Description for option 1' },
-          { value: 'option2', label: 'Option 2', description: 'Description for option 2' },
-        ]}
-        handleOptionChange={() => {}}
-      >
-        Disabled (Dropdown)
-      </SplitButton>
+  <div className="flex items-start gap-cn-md">
+    <span className="text-cn-size-2 text-cn-3 w-32 shrink-0 font-mono pt-cn-xs">disabled</span>
+    <div className="flex flex-wrap gap-cn-sm items-center">
+      <SplitButton id="disabled-all" handleButtonClick={() => {}} disabled options={[{ value: 'option1', label: 'Option 1', description: 'Description for option 1' }, { value: 'option2', label: 'Option 2', description: 'Description for option 2' }]} handleOptionChange={() => {}}>Disabled</SplitButton>
+      <SplitButton id="disabled-button" handleButtonClick={() => {}} disableButton options={[{ value: 'option1', label: 'Option 1', description: 'Description for option 1' }, { value: 'option2', label: 'Option 2', description: 'Description for option 2' }]} handleOptionChange={() => {}}>Disabled (Button)</SplitButton>
+      <SplitButton id="disabled-dropdown" handleButtonClick={() => {}} disableDropdown options={[{ value: 'option1', label: 'Option 1', description: 'Description for option 1' }, { value: 'option2', label: 'Option 2', description: 'Description for option 2' }]} handleOptionChange={() => {}}>Disabled (Dropdown)</SplitButton>
     </div>
   </div>
 </div>`}
 />
 
-## Usage
+## Installation
 
 ```typescript jsx
 import { SplitButton } from '@harnessio/ui/components'
@@ -331,7 +130,75 @@ return (
 )
 ```
 
-## API Reference
+</TabItem>
+
+<TabItem label="Usage">
+
+## Anatomy
+
+A split button pairs one main action with a menu of related choices. It is composed of:
+
+- **Action button** — a native `<button>` on the left showing the label and firing `handleButtonClick`. It carries the primary action and takes the `variant` / `theme` styling.
+- **Dropdown trigger** — the attached button on the right (a chevron, `nav-arrow-down`). It opens the menu and shares the action button's styling so the two read as one control.
+- **Menu** — the list revealed on open, built from `options`. Each option has a `label` and an optional `description`.
+- **Loading spinner** _(optional)_ — replaces the action button's content while `loading` is set.
+
+Passing `selectedValue` switches the menu from a list of one-off actions to a **radio group**, where opening the menu shows the current selection and picking an option changes it.
+
+## Best practices
+
+**Do**
+
+- Use a split button when there is one clear default action plus a few closely-related variations of it — for example "Save" with "Save and close" or "Save as draft".
+- Put the most common action on the main button so most people never need to open the menu.
+- Use the radio mode (`selectedValue`) when the options are modes of the same action and you want to show which is currently chosen.
+- Keep the option list short and the labels parallel, so the menu stays quick to scan.
+
+**Don't**
+
+- Don't fill the menu with actions unrelated to the main button; if the items aren't variations of the primary action, use a [Button Group](/components/actions/button-group/) or a standalone menu instead.
+- Don't hide the action people reach for most inside the menu — that defeats the point of the attached main button.
+- Don't reach for unsupported `variant` / `theme` pairs; stick to `primary + default` or `outline + (default | success | danger | warning)`.
+
+## Content
+
+- Use sentence case for the button label and every option — capitalize only the first word, along with any proper nouns or product names.
+- Keep the main button label to the specific action ("Deploy", "Merge") rather than a generic "Actions".
+- Start option labels with a verb and keep them parallel; use the optional `description` for the extra detail instead of a long label.
+
+## Accessibility
+
+The split button is two focusable controls — the action button and the dropdown trigger — joined visually. The menu is a [Dropdown Menu](/components/data-display/dropdown-menu/), so it inherits Radix's menu accessibility.
+
+### Keyboard
+
+- The **action button** is a native `<button>`: an individual tab stop, activated with **Enter** and **Space**.
+- The **dropdown trigger** is the next tab stop. Open the menu with **Enter**, **Space**, or **Arrow Down**; move through options with the **arrow keys**; select with **Enter**; and close with **Esc**, which returns focus to the trigger.
+- In radio mode (`selectedValue`), the menu is a radio group — arrow keys move between and select options.
+
+### Labeling
+
+- The action button is named by its text (`children`).
+- Each option is named by its `label`; the optional `description` is read as supporting text.
+- The dropdown trigger exposes its expanded/collapsed state through the Radix menu trigger (`aria-haspopup` / `aria-expanded`).
+
+### Focus & states
+
+- Both the action button and the dropdown trigger show the standard keyboard focus ring (`:focus-visible`) via the `--cn-focus` token.
+- `disabled` disables both halves; `disableButton` and `disableDropdown` disable just one, and the disabled half is correctly removed from the tab order.
+
+### Known limitations
+
+- **The dropdown trigger has no accessible name.** It renders only the chevron icon with no `aria-label` or tooltip, so assistive tech announces it as an unnamed button (only its "has popup" state comes through). There is currently no prop to label it — a consumer can't fix this without patching the component.
+- **Loading isn't announced.** While `loading` is set, the change isn't surfaced to screen readers (no `aria-busy` / live region), so non-visual users don't hear that the action is in progress — same limitation as the base [Button](/components/actions/button/).
+
+</TabItem>
+
+<TabItem label="Properties">
+
+{/* Visually hidden — anchors the section headings below in the TOC without showing a redundant title in the panel body (the tab already says "Properties"). Hidden via #page-level-tabs h2#properties in styles.css. */}
+
+## Properties
 
 <DocsPage.PropsTable
   props={[
@@ -397,7 +264,7 @@ return (
     {
       name: "variant",
       description:
-        "Visual style of the button. Allowed combinations: primary+default, or outline+(default|success|danger).",
+        "Visual style of the button. Allowed combinations: primary+default, or outline+(default|success|danger|warning).",
       required: false,
       value: "'primary' | 'outline' | 'secondary'",
       defaultValue: "'primary'",
@@ -405,9 +272,9 @@ return (
     {
       name: "theme",
       description:
-        "Color theme of the button. Allowed combinations: primary+default, or outline+(default|success|danger).",
+        "Color theme of the button. Allowed combinations: primary+default, or outline+(default|success|danger|warning).",
       required: false,
-      value: "'default' | 'success' | 'danger'",
+      value: "'default' | 'success' | 'danger' | 'warning'",
       defaultValue: "'default'",
     },
     {
@@ -436,3 +303,9 @@ return (
     },
   ]}
 />
+
+</TabItem>
+
+</Tabs>
+
+</div>

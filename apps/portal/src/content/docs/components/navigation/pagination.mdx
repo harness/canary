@@ -1,21 +1,26 @@
 ---
 title: Pagination
 description: Pagination component
-beta: true
 ---
 
-The `Pagination` component allows navigation through pages of content. It supports displaying a range of page numbers, as well as "Previous" and "Next" buttons.
-
-There are two types of pagination:
-
-- Determinate
-- Indeterminate
-
-The `totalItems` and `pageSize` props are used to determine the total number of items and the number of items per page in the pagination. If `totalItems` and `pageSize` are provided, the component will display the page numbers along with the navigation buttons. If `totalItems` and `pageSize` are not provided, the component will only display the "Next" and "Previous" buttons.
-
 import { DocsPage } from "@/components/docs-page";
+import { Tabs, TabItem } from "@astrojs/starlight/components";
+import PageTabsToc from "@/components/page-tabs-toc.astro";
 
-### Determinate Pagination (Button)
+<PageTabsToc />
+
+<div id="page-level-tabs">
+
+<Tabs>
+
+<TabItem label="Overview">
+
+The `Pagination` component allows navigation through pages of content, with "Previous" and "Next" buttons and — in determinate mode — a page-size selector.
+
+There are two modes:
+
+- **Determinate** — pass `totalItems` and `pageSize` so the component knows how many pages exist.
+- **Indeterminate** — pass `indeterminate` with `hasNext` / `hasPrevious` when the total isn't known ahead of time; only the Next / Previous controls render.
 
 <DocsPage.ComponentExample
   client:only
@@ -35,7 +40,9 @@ import { DocsPage } from "@/components/docs-page";
 
 }`} />
 
-### Determinate Pagination with Links
+## Variations
+
+### Determinate pagination with links
 
 <DocsPage.ComponentExample
   client:only
@@ -59,7 +66,7 @@ import { DocsPage } from "@/components/docs-page";
 
 }`} />
 
-### Determinate Pagination with Page size select
+### Determinate pagination with page size select
 
 <DocsPage.ComponentExample
   client:only
@@ -81,7 +88,9 @@ import { DocsPage } from "@/components/docs-page";
 
 }`} />
 
-### Determinate Pagination with custom page size values. Default value [10, 25, 50].
+### Determinate pagination with custom page size values
+
+The default page-size options are `[10, 25, 50]`.
 
 <DocsPage.ComponentExample
   client:only
@@ -105,7 +114,7 @@ import { DocsPage } from "@/components/docs-page";
 
 }`} />
 
-### Indeterminate Pagination with Links
+### Indeterminate pagination with links
 
 <DocsPage.ComponentExample
   client:only
@@ -135,7 +144,7 @@ import { DocsPage } from "@/components/docs-page";
 
 }`} />
 
-### Indeterminate Pagination with Callbacks
+### Indeterminate pagination with callbacks
 
 <DocsPage.ComponentExample
   client:only
@@ -165,7 +174,7 @@ import { DocsPage } from "@/components/docs-page";
 
 }`} />
 
-### Indeterminate Pagination with Callbacks and Page select
+### Indeterminate pagination with callbacks and page select
 
 <DocsPage.ComponentExample
   client:only
@@ -199,9 +208,9 @@ import { DocsPage } from "@/components/docs-page";
 
 }`} />
 
-## Usage
+## Installation
 
-### Determinate Pagination
+### Determinate pagination
 
 ```typescript jsx
 import { Pagination } from '@harnessio/ui/components'
@@ -220,7 +229,7 @@ return (
 )
 ```
 
-### Indeterminate Pagination
+### Indeterminate pagination
 
 ```typescript jsx
 import { Pagination } from '@harnessio/ui/components'
@@ -247,125 +256,186 @@ return (
 )
 ```
 
+</TabItem>
+
+<TabItem label="Usage">
+
+## Anatomy
+
+`Pagination` renders a Previous control, a Next control, and — in determinate mode when `onPageSizeChange` is supplied — an "items per page" select.
+
+- **Mode** — pass `totalItems` + `pageSize` for determinate paging, or `indeterminate` with `hasNext` / `hasPrevious` when the total is unknown.
+- **Navigation** — for each direction choose _either_ a callback (`goToPage`, or `onPrevious` / `onNext`) _or_ a link getter (`getPageLink`, or `getPrevPageLink` / `getNextPageLink`). The two styles are mutually exclusive; callbacks render `<button>`s, link getters render anchors styled as buttons.
+- **Page size** — providing `onPageSizeChange` shows the select; `pageSizeOptions` customizes its choices (default `[10, 25, 50]`).
+
+```tsx
+<Pagination
+  totalItems={100}
+  pageSize={pageSize}
+  currentPage={currentPage}
+  goToPage={setCurrentPage}
+  onPageSizeChange={setPageSize}
+/>
+```
+
+## Best practices
+
+{/* TODO: editorial — please review against product guidance. */}
+
+**Do**
+
+- Use determinate pagination whenever you know the total count — it lets people see how far they can go and pick a page size.
+- Use indeterminate pagination for cursor-based or streaming data where the total isn't available.
+- Keep `pageSizeOptions` short and sensible for the data density of the view.
+
+**Don't**
+
+- Don't mix a callback and a link getter for the same direction — pick one navigation style.
+- Don't use pagination for very small lists that fit on a single page; hide it when there's only one page of results.
+
+## Accessibility
+
+### Keyboard
+
+- The Previous / Next controls are standard buttons or links, so they're reachable and activatable with the keyboard in the usual way.
+
+### Labeling
+
+- The Previous and Next controls carry translated `aria-label`s ("Go to previous page" / "Go to next page") so their purpose is announced even though they're icon-only.
+
+### Known limitations
+
+- **No landmark or page-number list in the shipping component.** `Pagination` renders the Previous / Next controls (and optional page-size select) but does not wrap them in a `<nav>` and does not render a numbered page list — so there is no `aria-current` page indicator. If you need a labelled pagination landmark, provide it in the surrounding markup.
+
+</TabItem>
+
+<TabItem label="Properties">
+
+{/* Visually hidden — anchors the section headings below in the TOC without showing a redundant title in the panel body (the tab already says "Properties"). Hidden via #page-level-tabs h2#properties in styles.css. */}
+
+## Properties
+
+### Base props
+
+Common to both modes.
+
 <DocsPage.PropsTable
   props={[
-    // Base props (common to both modes)
-    {
-      name: "t",
-      description: "Translation function",
-      required: true,
-      value: "TFunction",
-    },
     {
       name: "className",
       description: "Custom class name",
       required: false,
       value: "string",
     },
-    // Determinate pagination mode props
-    {
-      name: "indeterminate",
-      description: "Whether to use indeterminate pagination mode",
-      required: false,
-      value: "boolean",
-      defaultValue: "false",
-    },
-    {
-      name: "totalItems",
-      description: "Total number of items (used with determinate pagination)",
-      required: false,
-      value: "number",
-    },
-    {
-      name: "pageSize",
-      description:
-        "Number of items per page (used with determinate pagination)",
-      required: false,
-      value: "number",
-    },
-    {
-      name: "pageSizeOptions",
-      description: "Options for items per page select",
-      defaultValue: "[10, 25, 50]",
-      required: false,
-      value: "number[]",
-    },
     {
       name: "onPageSizeChange",
       description:
-        "Function to set the number of items per page (used with determinate pagination)",
+        "Sets the number of items per page. Providing it renders the page-size select.",
       required: false,
       value: "(size: number) => void",
     },
     {
-      name: "currentPage",
-      description: "Current page number",
+      name: "pageSizeOptions",
+      description: "Options for the items-per-page select.",
+      defaultValue: "[10, 25, 50]",
       required: false,
+      value: "number[]",
+    },
+  ]}
+/>
+
+### Determinate mode
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "totalItems",
+      description: "Total number of items.",
+      required: true,
       value: "number",
     },
     {
-      name: "showPageNumbers",
-      description: "Show page numbers instead of only prev/next buttons",
-      required: false,
-      value: "boolean",
-      defaultValue: "false",
+      name: "pageSize",
+      description: "Number of items per page.",
+      required: true,
+      value: "number",
+    },
+    {
+      name: "currentPage",
+      description: "Current page number.",
+      required: true,
+      value: "number",
     },
     {
       name: "goToPage",
       description:
-        "Function to handle page change (used with determinate pagination)",
+        "Callback to change page (button navigation). Use this or getPageLink, not both.",
       required: false,
       value: "(page: number) => void",
     },
     {
       name: "getPageLink",
       description:
-        "Function to generate page links (used with determinate pagination)",
+        "Generates a page link (anchor navigation). Use this or goToPage, not both.",
       required: false,
       value: "(page: number) => string",
     },
-    // Indeterminate pagination mode props
+  ]}
+/>
+
+### Indeterminate mode
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "indeterminate",
+      description: "Selects indeterminate mode.",
+      required: true,
+      value: "true",
+    },
     {
       name: "hasPrevious",
-      description:
-        "Whether previous page is available (used with indeterminate pagination)",
+      description: "Whether a previous page is available.",
       required: false,
       value: "boolean",
     },
     {
       name: "hasNext",
-      description:
-        "Whether next page is available (used with indeterminate pagination)",
+      description: "Whether a next page is available.",
       required: false,
       value: "boolean",
     },
     {
       name: "onPrevious",
       description:
-        "Function to handle previous page click (used with indeterminate pagination)",
+        "Callback for the previous control. Use the callback pair or the link pair, not both.",
       required: false,
       value: "() => void",
     },
     {
       name: "onNext",
       description:
-        "Function to handle next page click (used with indeterminate pagination)",
+        "Callback for the next control. Use the callback pair or the link pair, not both.",
       required: false,
       value: "() => void",
     },
     {
       name: "getPrevPageLink",
-      description:
-        "Function to generate previous page link (used with indeterminate pagination)",
+      description: "Generates the previous-page link (anchor navigation).",
       required: false,
       value: "() => string",
     },
     {
       name: "getNextPageLink",
-      description:
-        "Function to generate next page link (used with indeterminate pagination)",
+      description: "Generates the next-page link (anchor navigation).",
       required: false,
       value: "() => string",
     },
   ]}
 />
+
+</TabItem>
+
+</Tabs>
+
+</div>

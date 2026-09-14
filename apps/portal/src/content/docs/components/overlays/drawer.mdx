@@ -1,14 +1,25 @@
 ---
 title: Drawer
 description: Drawer component with stacking
-beta: true
 ---
+
+import { DocsPage } from "@/components/docs-page";
+import { Tabs, TabItem } from "@astrojs/starlight/components";
+import PageTabsToc from "@/components/page-tabs-toc.astro";
+
+<PageTabsToc />
+
+<div id="page-level-tabs">
+
+<Tabs>
+
+<TabItem label="Overview">
 
 The `Drawer` component provides a way to display content in a panel that slides in from the edge of the screen. Supports multiple configuration options, including direction (left, right, top, bottom), size constraints, and nested drawers for building complex, multi-level interfaces.
 
 It is composed of several subcomponents such as `Drawer.Root`, `Drawer.Trigger`, `Drawer.Content`, `Drawer.Header`, `Drawer.HeaderV2`, `Drawer.Tagline`, `Drawer.Title`, `Drawer.Description`, `Drawer.Body`, `Drawer.Footer`, `Drawer.DualPane`, `Drawer.Rail`, `Drawer.Steps`, `Drawer.Step`, `Drawer.SubStep`, `Drawer.DualPaneMain` and `Drawer.Close` to offer a structured and customizable interface.
 
-import { DocsPage } from "@/components/docs-page";
+The [HeaderV2](/components/overlays/drawer/header-v2/) and [Dual Pane](/components/overlays/drawer/dual-pane/) layouts each have their own page.
 
 <DocsPage.ComponentExample
   client:only
@@ -756,8 +767,6 @@ return (
 
 ### Basic
 
-### Basic
-
 <DocsPage.ComponentExample
   client:only
   code={`
@@ -911,80 +920,6 @@ When `isLoading` is true, actions are hidden and the children (metadata) slot re
     </Drawer.Root>
 
 `}
-/>
-
-### `HeaderV2`
-
-<DocsPage.PropsTable
-  props={[
-    {
-      name: "title",
-      description: "The drawer title displayed as heading text.",
-      required: true,
-      value: "string",
-    },
-    {
-      name: "description",
-      description: "Optional description displayed below the title.",
-      required: false,
-      value: "string",
-      defaultValue: "undefined",
-    },
-    {
-      name: "icon",
-      description:
-        "Icon name (string) or logo object ({ logo: LogoV2NamesType }).",
-      required: false,
-      value: "IconV2NamesType | { logo: LogoV2NamesType }",
-      defaultValue: "undefined",
-    },
-    {
-      name: "actions",
-      description:
-        "ReactNode rendered to the right of the title row. Hidden when isLoading is true.",
-      required: false,
-      value: "ReactNode",
-      defaultValue: "undefined",
-    },
-    {
-      name: "tabs",
-      description:
-        "Array of tab items rendered as an underlined tab strip at the bottom of the header.",
-      required: false,
-      value: "HeaderV2TabItem[]",
-      defaultValue: "undefined",
-    },
-    {
-      name: "hideClose",
-      description: "When true, the close button is not rendered.",
-      required: false,
-      value: "boolean",
-      defaultValue: "false",
-    },
-    {
-      name: "isLoading",
-      description:
-        "When true, hides actions and renders a skeleton in place of children.",
-      required: false,
-      value: "boolean",
-      defaultValue: "false",
-    },
-    {
-      name: "children",
-      description:
-        "Metadata slot rendered between description and tabs. Shows skeleton when isLoading.",
-      required: false,
-      value: "ReactNode",
-      defaultValue: "undefined",
-    },
-    {
-      name: "className",
-      description: "Class to apply to the header wrapper.",
-      required: false,
-      value: "string",
-      defaultValue: "undefined",
-    },
-  ]}
 />
 
 ## Dual pane drawer
@@ -1566,6 +1501,88 @@ You can override the right pane's floor by setting `--cn-drawer-dual-pane-main-m
 }`}
 />
 
+</TabItem>
+
+<TabItem label="Properties">
+
+{/* Visually hidden — anchors the section headings below in the TOC without showing a redundant title in the panel body (the tab already says "Properties"). Hidden via #page-level-tabs h2#properties in styles.css. */}
+
+## Properties
+
+### `HeaderV2`
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "title",
+      description: "The drawer title displayed as heading text.",
+      required: true,
+      value: "string",
+    },
+    {
+      name: "description",
+      description: "Optional description displayed below the title.",
+      required: false,
+      value: "string",
+      defaultValue: "undefined",
+    },
+    {
+      name: "icon",
+      description:
+        "Icon name (string) or logo object ({ logo: LogoV2NamesType }).",
+      required: false,
+      value: "IconV2NamesType | { logo: LogoV2NamesType }",
+      defaultValue: "undefined",
+    },
+    {
+      name: "actions",
+      description:
+        "ReactNode rendered to the right of the title row. Hidden when isLoading is true.",
+      required: false,
+      value: "ReactNode",
+      defaultValue: "undefined",
+    },
+    {
+      name: "tabs",
+      description:
+        "Array of tab items rendered as an underlined tab strip at the bottom of the header.",
+      required: false,
+      value: "HeaderV2TabItem[]",
+      defaultValue: "undefined",
+    },
+    {
+      name: "hideClose",
+      description: "When true, the close button is not rendered.",
+      required: false,
+      value: "boolean",
+      defaultValue: "false",
+    },
+    {
+      name: "isLoading",
+      description:
+        "When true, hides actions and renders a skeleton in place of children.",
+      required: false,
+      value: "boolean",
+      defaultValue: "false",
+    },
+    {
+      name: "children",
+      description:
+        "Metadata slot rendered between description and tabs. Shows skeleton when isLoading.",
+      required: false,
+      value: "ReactNode",
+      defaultValue: "undefined",
+    },
+    {
+      name: "className",
+      description: "Class to apply to the header wrapper.",
+      required: false,
+      value: "string",
+      defaultValue: "undefined",
+    },
+  ]}
+/>
+
 ### `DualPane`
 
 Dual-pane row layout wrapper.
@@ -1751,8 +1768,6 @@ Right-hand column for the active step header, body, and footer.
     },
   ]}
 />
-
-## API Reference
 
 ### `Root`
 
@@ -2041,3 +2056,9 @@ A scrollable wrapper for all content that doesn’t belong to the [`Drawer.Heade
 ### `Footer`
 
 An optional footer wrapper.
+
+</TabItem>
+
+</Tabs>
+
+</div>

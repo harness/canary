@@ -1,12 +1,22 @@
 ---
 title: Text Input
-description: TextInput component
+description: Single-line text field with label, caption, affixes, and validation states
 ---
 
-The `TextInput` component is used to handle user input, providing options for styling via themes and sizes.
-Also offers options for adding icons, captions, custom content, and error text for the field.
-
 import { DocsPage } from "@/components/docs-page";
+import { Tabs, TabItem } from "@astrojs/starlight/components";
+import { Aside } from "@astrojs/starlight/components";
+import PageTabsToc from "@/components/page-tabs-toc.astro";
+
+<PageTabsToc />
+
+<div id="page-level-tabs">
+
+<Tabs>
+
+<TabItem label="Overview">
+
+The `TextInput` component handles single-line user input, with options for a label, caption, prefix/suffix affixes, validation states, and an info tooltip.
 
 <DocsPage.ComponentExample
   client:only
@@ -17,25 +27,9 @@ import { DocsPage } from "@/components/docs-page";
 `}
 />
 
-## Usage
+## Variations
 
-```typescript jsx
-import { TextInput } from '@harnessio/ui/components'
-
-//...
-
-return (
-    <TextInput
-    label="Success Input"
-    id="someinput"
-    value="input with value"
-    placeholder="Enter the value"
-    theme="success"
-  />
-)
-```
-
-## Disable
+### Disabled
 
 <DocsPage.ComponentExample
   client:only
@@ -45,7 +39,7 @@ return (
   </Layout.Vertical>`}
 />
 
-## Read only
+### Read only
 
 <DocsPage.ComponentExample
   client:only
@@ -55,23 +49,23 @@ return (
   </Layout.Vertical>`}
 />
 
-## Optional
+### Optional
+
+By default a labelled input shows a required `*` marker. Pass `optional` to remove it and mark the field as optional.
 
 <DocsPage.ComponentExample
   client:only
   code={`
   <Layout.Vertical gap="xl" className="min-w-[400px]">
-    <TextInput label="Text input label" placeholder="Enter the value" value="Value" optional />
+    <TextInput label="Text input label" placeholder="Enter the value" defaultValue="Value" optional />
   </Layout.Vertical>`}
 />
 
-## Theme
+### Theme
 
-The `TextInput` component accepts a `theme` prop, which defines the visual state of the input: either `success`, `warning`, or `danger`.
+The `TextInput` component accepts a `theme` prop, which defines the visual state of the input: `success`, `warning`, or `danger`.
 
-When an error occurs, set `theme="danger"` and pass the error message to the `error` prop.
-
-For warnings, set `theme="warning"` and provide the warning message via the `warning` prop.
+When an error occurs, pass the message to the `error` prop — this automatically applies the `danger` theme. For warnings, pass the `warning` prop, which applies the `warning` theme.
 
 <DocsPage.ComponentExample
   client:only
@@ -99,7 +93,9 @@ For warnings, set `theme="warning"` and provide the warning message via the `war
   </Layout.Vertical>`}
 />
 
-## Size
+### Size
+
+The `TextInput` component accepts a `size` prop, which defines the overall size of the input field. Available options are `md` (medium, default) and `sm` (small).
 
 <DocsPage.ComponentExample
   client:only
@@ -117,26 +113,7 @@ For warnings, set `theme="warning"` and provide the warning message via the `war
   </Layout.Vertical>`}
 />
 
-The `TextInput` component accepts a `size` prop, which defines the overall size of the input field.
-Available options are `md` (medium) and `sm` (small)
-
-<DocsPage.ComponentExample
-  client:only
-  code={`
-  <Layout.Vertical gap="xl" className="min-w-[400px]">
-    <TextInput
-      label="Medium Input"
-      placeholder="Enter the value"
-    />
-    <TextInput
-      size="sm"
-      label="Small Input"
-      placeholder="Enter the value"
-    />
-  </Layout.Vertical>`}
-/>
-
-## Prefix & suffix
+### Prefix & suffix
 
 The `TextInput` component supports `prefix` and `suffix` props, which allow adding content before or after the input field.
 
@@ -158,9 +135,9 @@ The `TextInput` component supports `prefix` and `suffix` props, which allow addi
 `}
 />
 
-## With Tooltip
+### With tooltip
 
-`tooltipContent` is used to display the content of the tooltip. `tooltipProps` is used to pass additional props to the tooltip.
+`tooltipContent` sets the content of the label's info tooltip. `tooltipProps` passes additional props to the tooltip.
 
 <DocsPage.ComponentExample
   client:only
@@ -178,10 +155,9 @@ The `TextInput` component supports `prefix` and `suffix` props, which allow addi
 `}
 />
 
-## Orientation
+### Orientation
 
-The `TextInput` component accepts an optional `orientation` prop, which defines the layout direction of the input and its label.
-Available options are `horizontal` and `vertical` (default).
+The `TextInput` component accepts an optional `orientation` prop, which defines the layout direction of the input and its label. Available options are `horizontal` and `vertical` (default).
 
 <DocsPage.ComponentExample
   client:only
@@ -203,103 +179,121 @@ Available options are `horizontal` and `vertical` (default).
   </Layout.Vertical>`}
 />
 
-## API Reference
+## Installation
 
-```typescript
-interface IconWithTooltipProps extends Omit<TooltipProps, "children"> {
-  className?: string;
-  /**
-   * If disabled, the tooltip will not be shown
-   */
-  disabled?: boolean;
-  iconProps?: IconPropsV2;
-}
+```tsx
+import { TextInput } from "@harnessio/ui/components";
+
+<TextInput
+  label="Success Input"
+  id="someinput"
+  value="input with value"
+  placeholder="Enter the value"
+  theme="success"
+/>;
 ```
+
+</TabItem>
+
+<TabItem label="Usage">
+
+## Anatomy
+
+`TextInput` composes a label, the input field, and a caption inside a control group.
+
+- The `label` renders above (or beside, when `orientation="horizontal"`) the input. By default it shows a required `*` marker; `optional` removes it. `tooltipContent` adds an info icon with a tooltip next to the label, and `labelSuffix` adds a custom element on the right of the label.
+- The input accepts optional `prefix` and `suffix` content rendered inline before and after the text.
+- Below the input, a caption area shows the `error` message (in the `danger` theme), then the `warning` message (in the `warning` theme), otherwise the plain `caption`.
+- Every input gets an `id`; if you don't provide one it's generated automatically and used to associate the label.
+
+<Aside type="note">
+  `error` and `warning` drive the theme automatically: `error` forces the
+  `danger` theme and `warning` forces the `warning` theme, overriding any
+  `theme` you pass.
+</Aside>
+
+## Best practices
+
+**Do**
+
+- Always provide a `label` (or an `aria-label`) so the field's purpose is clear.
+- Use `error` for validation messages — it both shows the message and switches the field to the `danger` theme, so you don't need to set `theme` yourself.
+- Use `caption` for persistent helper text and reserve `error`/`warning` for state-driven messages.
+- Add `optional` to fields that aren't required so the required `*` marker reflects reality.
+
+**Don't**
+
+- Don't use `TextInput` for numeric or search entry — the `type` prop excludes `'number'` and `'search'` (among others); use the dedicated components instead.
+- Don't set `theme="danger"` on its own to signal an error without an `error` message; pair them so users see what's wrong.
+
+## Content
+
+{/* TODO: editorial — please review against product guidance. */}
+
+- Keep labels short and noun-based; put format hints in the `caption`.
+- Write `error` messages as a clear, actionable statement of what to fix.
+
+## Accessibility
+
+### Labeling
+
+- The `label` is associated with the input through a shared `id` (auto-generated when omitted), so clicking the label focuses the field.
+- When there's no visible label, provide an `aria-label`.
+- `tooltipContent` surfaces supplementary help through an info button beside the label.
+
+### Focus & states
+
+- `disabled` removes the field from the tab order; `readOnly` keeps it focusable but non-editable.
+- `error` applies the `danger` theme and renders the message beneath the field so the validation state is both visible and adjacent to the input.
+
+</TabItem>
+
+<TabItem label="Properties">
+
+{/* Visually hidden — anchors the section headings below in the TOC without showing a redundant title in the panel body (the tab already says "Properties"). Hidden via #page-level-tabs h2#properties in styles.css. */}
+
+## Properties
 
 <DocsPage.PropsTable
   props={[
     {
-      name: "type",
-      description: "HTML input type, excludes 'number' and 'search'.",
-      required: false,
-      defaultValue: "text",
-      value: "string",
-    },
-    {
-      name: "wrapperClassName",
-      description: "Additional CSS classes for the wrapper element.",
-      required: false,
-      defaultValue: "",
-      value: "string",
-    },
-    {
       name: "label",
       description: "Label text for the input field.",
       required: false,
-      defaultValue: "",
       value: "string",
     },
     {
       name: "caption",
       description: "Helper text displayed below the input.",
       required: false,
-      defaultValue: "",
       value: "string",
     },
     {
       name: "error",
-      description: "Error message to display (will use danger theme and icon).",
+      description:
+        "Error message to display below the input. Automatically applies the danger theme.",
       required: false,
-      defaultValue: "",
       value: "string",
     },
     {
       name: "warning",
-      description: "Warning message to display (will use warning theme).",
+      description:
+        "Warning message to display below the input. Automatically applies the warning theme.",
       required: false,
-      defaultValue: "",
       value: "string",
     },
     {
       name: "optional",
-      description: "Whether to display an 'optional' tag beside the label.",
-      required: false,
-      defaultValue: "false",
-      value: "boolean",
-    },
-    {
-      name: "id",
       description:
-        "Unique identifier for the input element (auto-generated if not provided).",
-      required: false,
-      defaultValue: "",
-      value: "string",
-    },
-    {
-      name: "disabled",
-      description: "Whether the input is disabled.",
+        "When true, marks the field as optional by removing the required * marker from the label.",
       required: false,
       defaultValue: "false",
       value: "boolean",
-    },
-    {
-      name: "className",
-      description: "Additional CSS classes for the input element.",
-      required: false,
-      defaultValue: "",
-      value: "string",
-    },
-    {
-      name: "inputContainerClassName",
-      description: "Additional CSS classes for the input container.",
-      required: false,
-      defaultValue: "",
-      value: "string",
     },
     {
       name: "theme",
       description:
-        "Theme styling for the input and caption (automatically set to danger for errors, warning for warnings).",
+        "Visual state of the input. Automatically overridden to danger when error is set, or warning when warning is set.",
       required: false,
       defaultValue: "'default'",
       value: "'default' | 'success' | 'danger' | 'warning'",
@@ -312,45 +306,54 @@ interface IconWithTooltipProps extends Omit<TooltipProps, "children"> {
       value: "'md' | 'sm'",
     },
     {
+      name: "orientation",
+      description: "Layout direction of the input and its label.",
+      required: false,
+      defaultValue: "'vertical'",
+      value: "'vertical' | 'horizontal'",
+    },
+    {
+      name: "type",
+      description:
+        "HTML input type. Excludes 'number', 'search', 'hidden', 'radio', 'checkbox', and 'button'.",
+      required: false,
+      defaultValue: "'text'",
+      value: "string",
+    },
+    {
       name: "prefix",
       description: "Content to display before the input field.",
       required: false,
-      defaultValue: "",
       value: "ReactNode",
     },
     {
       name: "suffix",
       description: "Content to display after the input field.",
       required: false,
-      defaultValue: "",
       value: "ReactNode",
     },
     {
       name: "value",
       description: "Controlled value for the input.",
       required: false,
-      defaultValue: "",
       value: "string",
     },
     {
       name: "defaultValue",
-      description: "Default value for uncontrolled input.",
+      description: "Default value for an uncontrolled input.",
       required: false,
-      defaultValue: "",
       value: "string",
     },
     {
       name: "onChange",
-      description: "Callback when value changes.",
+      description: "Callback when the value changes.",
       required: false,
-      defaultValue: "",
       value: "React.ChangeEventHandler<HTMLInputElement>",
     },
     {
       name: "placeholder",
       description: "Placeholder text for the input field.",
       required: false,
-      defaultValue: "",
       value: "string",
     },
     {
@@ -361,6 +364,20 @@ interface IconWithTooltipProps extends Omit<TooltipProps, "children"> {
       value: "boolean",
     },
     {
+      name: "disabled",
+      description: "Whether the input is disabled.",
+      required: false,
+      defaultValue: "false",
+      value: "boolean",
+    },
+    {
+      name: "id",
+      description:
+        "Identifier for the input, used to associate the label. Auto-generated when omitted.",
+      required: false,
+      value: "string",
+    },
+    {
       name: "tooltipContent",
       description: "Content to display in the label tooltip.",
       required: false,
@@ -368,23 +385,52 @@ interface IconWithTooltipProps extends Omit<TooltipProps, "children"> {
     },
     {
       name: "tooltipProps",
-      description: "Additional props for configuring the tooltip.",
+      description: "Additional props for configuring the label tooltip.",
       required: false,
       value: "IconWithTooltipProps",
     },
     {
       name: "labelSuffix",
       description:
-        "Customized with a suffix element that appears on the right side of the label.",
+        "A suffix element that appears on the right side of the label.",
       required: false,
       value: "ReactNode",
     },
     {
-      name: "orientation",
-      description: "Defines the layout direction of the input and its label.",
+      name: "className",
+      description: "Additional CSS classes for the input element.",
       required: false,
-      defaultValue: "'vertical'",
-      value: "'vertical' | 'horizontal'",
+      value: "string",
+    },
+    {
+      name: "inputContainerClassName",
+      description: "Additional CSS classes for the input container.",
+      required: false,
+      value: "string",
+    },
+    {
+      name: "wrapperClassName",
+      description: "Additional CSS classes for the wrapper element.",
+      required: false,
+      value: "string",
     },
   ]}
 />
+
+<Aside type="note">
+  `TextInput` also accepts standard `<input>` attributes (such as `name`,
+  `required`, `maxLength`, `onFocus`, `onBlur`), which are forwarded to the
+  underlying input, and forwards its `ref` to that input.
+</Aside>
+
+<Aside type="tip">
+  `IconWithTooltipProps` extends the Tooltip props (minus `children`) with
+  `className`, `disabled` (when true, the tooltip is not shown), and
+  `iconProps`.
+</Aside>
+
+</TabItem>
+
+</Tabs>
+
+</div>

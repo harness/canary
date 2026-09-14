@@ -1,0 +1,62 @@
+---
+title: Slot
+description: Custom content slot in a DropdownMenu
+---
+
+import { DocsPage } from "@/components/docs-page";
+
+The `DropdownMenu.Slot` component provides a simple wrapper for custom content within the dropdown menu. This is useful for adding custom components or layouts that don't fit the standard item patterns.
+
+<DocsPage.ComponentExample
+  client:only
+  code={`<DropdownMenu.Root>
+    <DropdownMenu.Trigger aria-label="options menu" asChild>
+      <Button variant="ghost" iconOnly>
+        <IconV2 name="more-horizontal" />
+      </Button>
+    </DropdownMenu.Trigger>
+    <DropdownMenu.Content>
+      <DropdownMenu.Item title="Standard Item" />
+      <DropdownMenu.Separator />
+      <DropdownMenu.Slot className="p-cn-xs">
+          <div className="flex items-center gap-cn-xs">
+              <IconV2 name="star" />
+              <Text>Custom content in slot</Text>
+          </div>
+      </DropdownMenu.Slot>
+      <DropdownMenu.Separator />
+      <DropdownMenu.Item title="Another Item" />
+    </DropdownMenu.Content>
+  </DropdownMenu.Root>`}
+/>
+
+## Properties
+
+### `Slot`
+
+The `Slot` component provides a flexible container for custom content within the dropdown menu.
+
+```typescript jsx
+<DropdownMenu.Slot
+  className="my-class" // [OPTIONAL] custom class
+>
+  {/* Custom content */}
+</DropdownMenu.Slot>
+```
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "className",
+      description: "Custom class name",
+      required: false,
+      value: "string",
+    },
+    {
+      name: "children",
+      description: "Custom content to display",
+      required: false,
+      value: "ReactNode",
+    },
+  ]}
+/>

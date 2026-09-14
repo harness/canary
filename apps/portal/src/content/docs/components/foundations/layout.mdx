@@ -1,20 +1,27 @@
 ---
 title: Layout
 description: Flexible layout components using Tailwind CSS
-beta: true
 ---
 
 import { DocsPage } from "@/components/docs-page";
+import { Tabs, TabItem } from "@astrojs/starlight/components";
+import PageTabsToc from "@/components/page-tabs-toc.astro";
 
-## Overview
+<PageTabsToc />
 
-The Layout component provides a set of flexible layout primitives for building consistent UI layouts. It includes Grid, Flex, Horizontal, and Vertical components with a clean, type-safe API.
+<div id="page-level-tabs">
 
-## Flex Component
+<Tabs>
+
+<TabItem label="Overview">
+
+The Layout component provides a set of flexible layout primitives for building consistent UI layouts. It includes `Flex`, `Grid`, `Horizontal`, and `Vertical` components with a clean, type-safe API.
+
+## Flex
 
 The Flex component is a versatile layout container that allows you to arrange items in a row or column with various alignment and spacing options.
 
-### Basic Flex (Row Direction)
+### Basic flex (row direction)
 
 <DocsPage.ComponentExample
   client:only
@@ -31,7 +38,7 @@ The Flex component is a versatile layout container that allows you to arrange it
 </Layout.Flex>`}
 />
 
-### Flex with Column Direction
+### Flex with column direction
 
 <DocsPage.ComponentExample
   client:only
@@ -48,7 +55,7 @@ The Flex component is a versatile layout container that allows you to arrange it
 </Layout.Flex>`}
 />
 
-### Flex with Alignment and Justification
+### Flex with alignment and justification
 
 <DocsPage.ComponentExample
   client:only
@@ -70,7 +77,7 @@ The Flex component is a versatile layout container that allows you to arrange it
 </Layout.Flex>`}
 />
 
-### Flex with Gap
+### Flex with gap
 
 <DocsPage.ComponentExample
   client:only
@@ -87,7 +94,7 @@ The Flex component is a versatile layout container that allows you to arrange it
 </Layout.Flex>`}
 />
 
-### Flex with Wrap
+### Flex with wrap
 
 <DocsPage.ComponentExample
   client:only
@@ -110,7 +117,7 @@ The Flex component is a versatile layout container that allows you to arrange it
 </Layout.Flex>`}
 />
 
-### Flex with Custom Element
+### Flex with custom element
 
 <DocsPage.ComponentExample
   client:only
@@ -119,11 +126,11 @@ The Flex component is a versatile layout container that allows you to arrange it
 </Layout.Flex>`}
 />
 
-## Grid Component
+## Grid
 
 The Grid component provides a powerful way to create grid layouts with precise control over columns, rows, and spacing.
 
-### Basic Grid with Equal Columns
+### Basic grid with equal columns
 
 <DocsPage.ComponentExample
   client:only
@@ -143,7 +150,7 @@ The Grid component provides a powerful way to create grid layouts with precise c
 </Layout.Grid>`}
 />
 
-### Grid with Different Column Sizes
+### Grid with different column sizes
 
 <DocsPage.ComponentExample
   client:only
@@ -160,7 +167,7 @@ The Grid component provides a powerful way to create grid layouts with precise c
 </Layout.Grid>`}
 />
 
-### Grid with Defined Rows
+### Grid with defined rows
 
 <DocsPage.ComponentExample
   client:only
@@ -185,7 +192,7 @@ The Grid component provides a powerful way to create grid layouts with precise c
 </Layout.Grid>`}
 />
 
-### Grid with Numeric Columns
+### Grid with numeric columns
 
 <DocsPage.ComponentExample
   client:only
@@ -215,7 +222,7 @@ The Grid component provides a powerful way to create grid layouts with precise c
 </Layout.Grid>`}
 />
 
-### Grid with Numeric Rows and Columns
+### Grid with numeric rows and columns
 
 <DocsPage.ComponentExample
   client:only
@@ -240,7 +247,7 @@ The Grid component provides a powerful way to create grid layouts with precise c
 </Layout.Grid>`}
 />
 
-### Grid with Alignment and Justification
+### Grid with alignment and justification
 
 <DocsPage.ComponentExample
   client:only
@@ -266,11 +273,11 @@ The Grid component provides a powerful way to create grid layouts with precise c
 </Layout.Grid>`}
 />
 
-## Horizontal Component
+## Horizontal
 
 The Horizontal component is a convenient wrapper around Flex that's pre-configured for row layouts with consistent spacing options.
 
-### Horizontal with Alignment
+### Horizontal with alignment
 
 <DocsPage.ComponentExample
   client:only
@@ -287,11 +294,11 @@ The Horizontal component is a convenient wrapper around Flex that's pre-configur
 </Layout.Horizontal>`}
 />
 
-## Vertical Component
+## Vertical
 
 The Vertical component is a convenient wrapper around Flex that's pre-configured for column layouts with consistent spacing options.
 
-### Vertical with Alignment
+### Vertical with alignment
 
 <DocsPage.ComponentExample
   client:only
@@ -308,7 +315,7 @@ The Vertical component is a convenient wrapper around Flex that's pre-configured
 </Layout.Vertical>`}
 />
 
-## Two-Column Layout
+## Two-column layout
 
 <DocsPage.ComponentExample
   client:only
@@ -327,3 +334,234 @@ The Vertical component is a convenient wrapper around Flex that's pre-configured
   </Card.Root>
 </Layout.Grid>`}
 />
+
+## Installation
+
+```typescript jsx
+import { Layout } from '@harnessio/ui/components'
+
+// ...
+
+return (
+  <Layout.Flex gap="md">
+    {/* children */}
+  </Layout.Flex>
+)
+```
+
+</TabItem>
+
+<TabItem label="Usage">
+
+## Anatomy
+
+`Layout` is a collection of four primitives — `Layout.Flex`, `Layout.Grid`, `Layout.Horizontal`, and `Layout.Vertical`. Each renders a `div` by default and takes spacing from the design-system scale.
+
+```tsx
+<Layout.Vertical gap="md">
+  <Layout.Horizontal justify="between" align="center">
+    {/* … */}
+  </Layout.Horizontal>
+</Layout.Vertical>
+```
+
+- **Flex** — a flexbox container. `direction` defaults to `row`; `align`, `justify`, and `wrap` are unset until you provide them. `grow` toggles `flex-grow`. Flex has **no default gap**.
+- **Grid** — a CSS-grid container. `columns` and `rows` accept either a track string (`"2fr 1fr"`, `"auto auto"`) applied verbatim, or a number, which expands to that many equal tracks (`repeat(n, …)`). `flow` maps to `grid-auto-flow`. Grid has no `direction`/`wrap`.
+- **Horizontal / Vertical** — thin wrappers around Flex that lock `direction` to `row` / `column` (it can't be overridden) and **default `gap` to `md`**. Everything else passes straight through to Flex.
+- **Spacing** — `gap`, `gapX`, and `gapY` take the token scale (`none`, `4xs` … `4xl`) and map to `gap-cn-*` utilities, so spacing stays consistent with the rest of the system.
+- **Polymorphism** — `as` renders a different element (e.g. `as="span"`) while keeping the same layout props.
+
+## Best practices
+
+{/* TODO: editorial — please review against product guidance. */}
+
+**Do**
+
+- Reach for `Horizontal`/`Vertical` for the common row/column cases — they read clearly and already default `gap` to `md`.
+- Use `Grid` when you need real two-dimensional control (aligned columns and rows); use `Flex` for one-dimensional flows.
+- Keep spacing on the token scale (`gap="md"`) instead of ad-hoc margins so rhythm stays consistent.
+
+**Don't**
+
+- Don't nest many `Flex` containers to fake a grid — use `Grid` with `columns`.
+- Don't reintroduce raw pixel gaps via `className` when a `gap` token exists.
+
+## Accessibility
+
+Layout primitives are structural containers — they render a plain element (`div` by default) and add no roles or semantics of their own.
+
+### Labeling
+
+- Because these are generic containers, give meaning through the elements you place inside them (headings, landmarks, lists) or by rendering a semantic element with `as` (e.g. `as="nav"`, `as="ul"`).
+
+### Known limitations
+
+- **No implicit semantics.** A `Layout.*` won't announce itself as a region or list; choose the right element via `as` when structure matters to assistive tech.
+
+</TabItem>
+
+<TabItem label="Properties">
+
+{/* Visually hidden — anchors the section headings below in the TOC without showing a redundant title in the panel body (the tab already says "Properties"). Hidden via #page-level-tabs h2#properties in styles.css. */}
+
+## Properties
+
+### Shared props
+
+Accepted by all four layout primitives.
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "gap",
+      description: "Space between children, from the spacing token scale.",
+      required: false,
+      value:
+        "'none' | '4xs' | '3xs' | '2xs' | 'xs' | 'sm' | 'md' | 'lg' | 'xl' | '2xl' | '3xl' | '4xl'",
+    },
+    {
+      name: "gapX",
+      description: "Horizontal (column) gap only.",
+      required: false,
+      value: "GapSize",
+    },
+    {
+      name: "gapY",
+      description: "Vertical (row) gap only.",
+      required: false,
+      value: "GapSize",
+    },
+    {
+      name: "as",
+      description: "Render a different element while keeping the layout props.",
+      required: false,
+      value: "ElementType",
+      defaultValue: "'div'",
+    },
+    {
+      name: "className",
+      description: "Additional CSS classes.",
+      required: false,
+      value: "string",
+    },
+  ]}
+/>
+
+### Flex
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "direction",
+      description: "Main-axis direction.",
+      required: false,
+      value: "'row' | 'column' | 'row-reverse' | 'column-reverse'",
+      defaultValue: "'row'",
+    },
+    {
+      name: "align",
+      description: "Cross-axis alignment (align-items).",
+      required: false,
+      value: "'start' | 'center' | 'end' | 'baseline' | 'stretch'",
+    },
+    {
+      name: "justify",
+      description: "Main-axis distribution (justify-content).",
+      required: false,
+      value: "'start' | 'center' | 'end' | 'between'",
+    },
+    {
+      name: "wrap",
+      description: "Whether and how items wrap.",
+      required: false,
+      value: "'nowrap' | 'wrap' | 'wrap-reverse'",
+    },
+    {
+      name: "grow",
+      description: "Toggles flex-grow on the container.",
+      required: false,
+      value: "boolean",
+    },
+  ]}
+/>
+
+### Grid
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "columns",
+      description:
+        "Column tracks. A string is used verbatim ('2fr 1fr'); a number expands to that many equal columns.",
+      required: false,
+      value: "string | number",
+    },
+    {
+      name: "rows",
+      description:
+        "Row tracks. A string is used verbatim ('auto auto'); a number expands to that many equal rows.",
+      required: false,
+      value: "string | number",
+    },
+    {
+      name: "flow",
+      description: "Maps to grid-auto-flow.",
+      required: false,
+      value: "'row' | 'column' | 'dense' | 'row dense' | 'column dense'",
+    },
+    {
+      name: "align",
+      description: "Cross-axis alignment (align-items).",
+      required: false,
+      value: "'start' | 'center' | 'end' | 'baseline' | 'stretch'",
+    },
+    {
+      name: "justify",
+      description: "Distribution (justify-content).",
+      required: false,
+      value: "'start' | 'center' | 'end' | 'between'",
+    },
+  ]}
+/>
+
+### Horizontal & Vertical
+
+Wrappers around `Flex`. `direction` is fixed (`row` for Horizontal, `column` for Vertical) and cannot be overridden; all other `Flex` props pass through.
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "gap",
+      description:
+        "Space between children. Defaults to 'md' (unlike Flex, which has no default).",
+      required: false,
+      value: "GapSize",
+      defaultValue: "'md'",
+    },
+    {
+      name: "align",
+      description: "Cross-axis alignment (align-items).",
+      required: false,
+      value: "'start' | 'center' | 'end' | 'baseline' | 'stretch'",
+    },
+    {
+      name: "justify",
+      description: "Main-axis distribution (justify-content).",
+      required: false,
+      value: "'start' | 'center' | 'end' | 'between'",
+    },
+    {
+      name: "...flexProps",
+      description:
+        "All remaining Flex props (wrap, grow, gapX, gapY, as, …) are forwarded.",
+      required: false,
+      value: "Omit<FlexProps, 'direction'>",
+    },
+  ]}
+/>
+
+</TabItem>
+
+</Tabs>
+
+</div>

@@ -1,13 +1,21 @@
 ---
 title: Table
 description: Table component
-beta: true
 ---
 
-The `Table` component provides a way to display tabular data with various sub-components for customization.
-
 import { DocsPage } from "@/components/docs-page";
-import { Aside } from "@astrojs/starlight/components";
+import { Tabs, TabItem } from "@astrojs/starlight/components";
+import PageTabsToc from "@/components/page-tabs-toc.astro";
+
+<PageTabsToc />
+
+<div id="page-level-tabs">
+
+<Tabs>
+
+<TabItem label="Overview">
+
+The `Table` component provides a way to display tabular data. It's a set of composable parts — `Table.Root`, `Table.Header`, `Table.Body`, `Table.Footer`, `Table.Row`, `Table.Head`, `Table.Cell`, and `Table.Caption` — that map onto the native HTML table elements, so you assemble exactly the structure you need. Use this when you lay out the rows and columns yourself; reach for [Data Table](/components/data-display/data-table/) when you want a data-driven table with built-in sorting, selection, and expansion.
 
 <DocsPage.ComponentExample
   client:only
@@ -116,6 +124,12 @@ import { Aside } from "@astrojs/starlight/components";
 `}
 />
 
+## Variations
+
+### Selection controls
+
+Place a [Checkbox](/components/form/checkbox/) or [Radio](/components/form/radio/) in the first cell to make rows selectable, and mark the chosen rows with `selected` so they pick up the selected styling.
+
 <DocsPage.ComponentExample
   client:only
   code={`
@@ -206,6 +220,10 @@ import { Aside } from "@astrojs/starlight/components";
 `}
 />
 
+### Row actions and pagination
+
+Pass `paginationProps` to `Table.Root` to render a pagination bar below the table, and put a [MoreActionsTooltip](/components/overlays/tooltip/) in a trailing cell for per-row actions.
+
 <DocsPage.ComponentExample
   client:only
   code={`
@@ -278,6 +296,10 @@ import { Aside } from "@astrojs/starlight/components";
 `}
 />
 
+### Linked cells and rows
+
+Give a `Table.Cell` a `to` to turn its content into a link, or give the whole `Table.Row` a `to` to make every cell navigate to the same place. Opt a cell out of a linked row with `disableLink`, and tune the link with `linkProps` (e.g. `variant`, `suffixIcon`).
+
 <DocsPage.ComponentExample
   client:only
   code={`
@@ -329,6 +351,8 @@ import { Aside } from "@astrojs/starlight/components";
 
 ### Transparent variant
 
+Set `variant="transparent"` to drop the outer border and header background — useful when embedding a table inside a card or another container.
+
 <DocsPage.ComponentExample
   client:only
   code={`
@@ -369,6 +393,8 @@ import { Aside } from "@astrojs/starlight/components";
 />
 
 ### Disabled rows
+
+Set `disabled` on a `Table.Row` to dim it, show a not-allowed cursor, and suppress its click handler.
 
 <DocsPage.ComponentExample
   client:only
@@ -415,7 +441,7 @@ import { Aside } from "@astrojs/starlight/components";
 `}
 />
 
-## Usage
+## Installation
 
 ```typescript jsx
 import { Table } from '@harnessio/ui/components'
@@ -444,9 +470,13 @@ return (
 )
 ```
 
+</TabItem>
+
+<TabItem label="Usage">
+
 ## Anatomy
 
-All parts of the `Table` component can be imported and composed as required.
+All parts of the `Table` are imported from the `Table` object and composed together. They map directly onto the native HTML table elements:
 
 ```typescript jsx
 <Table.Root>
@@ -469,27 +499,76 @@ All parts of the `Table` component can be imported and composed as required.
 </Table.Root>
 ```
 
-## API Reference
+- **Root** — renders the `<table>` inside a container and a scroll viewport that scrolls horizontally when the table overflows. Rows highlight on hover by default (turn that off with `disableHighlightOnHover`). Passing `paginationProps` renders a [Pagination](/components/navigation/pagination/) bar beneath the table.
+- **Header / Body / Footer** — render `<thead>`, `<tbody>`, and `<tfoot>`. Group your `Table.Row`s into these.
+- **Row** — a `<tr>`. Mark it `selected` for selected styling or `disabled` to dim and de-activate it. Give it a `to` / `linkProps` (or an `onClick`) to make the whole row navigate — each cell then renders the link, and only the first interactive cell stays in the tab order.
+- **Head** — a `<th>` header cell. It can show a `tooltipProps` tooltip (with a dashed underline) and a sort affordance via `sortable` / `sortDirection`. The first `Head` in a row automatically hides its leading divider.
+- **Cell** — a `<td>`. Give it a `to` / `linkProps` to render its content as a link, or an `onClick` to make it a button; `disableLink` opts a cell out when its row is linked.
+- **Caption** — a `<caption>` describing the table.
 
-<Aside>
-  All components extend their HTML equivalents, so all relevant HTML props also
-  apply.
-</Aside>
+## Best practices
 
-### `Root`
+{/* TODO: editorial — please review against product guidance. */}
 
-The root component for the table.
+**Do**
 
-```typescript jsx
-<Table.Root
-  size="normal"                     // [OPTIONAL] Size of the table
-  className="custom-class"             // [OPTIONAL] Custom class name
-  tableClassName="custom-table-class"  // [OPTIONAL] Custom table class name
-  disableHighlightOnHover={false}   // [OPTIONAL] Disable row highlighting on hover (enabled by default)
->
-  {/* Table content */}
-</Table.Root>
-```
+- Always give the table a header row of `Table.Head` cells so every column is labeled.
+- Pick a `size` that matches the density of the surrounding UI — `compact` for dense data views, `relaxed` when the table is the focus of the page.
+- Keep a column's content type consistent down the column (numbers with numbers, dates with dates) so rows stay scannable.
+- When a whole row navigates somewhere, use a linked `Table.Row` so the entire row is the target, and `disableLink` on any cell that holds its own control.
+
+**Don't**
+
+- Don't put unrelated interactive controls inside a linked row or cell — the link covers the cell and will swallow the click.
+- Don't rely on the `selected` styling alone to convey selection; pair it with a real [Checkbox](/components/form/checkbox/) or [Radio](/components/form/radio/) in the row.
+- Don't use a table for layout — use it only for genuinely tabular data.
+
+## Content
+
+{/* TODO: editorial — please review against product guidance. */}
+
+- Write header labels as short nouns in sentence case ("Display name", "Date added").
+- Keep cell content concise; move secondary detail into a tooltip or a dedicated column rather than crowding a cell.
+- Use a consistent, sortable-friendly format for dates and numbers across the column.
+
+## Accessibility
+
+`Table` renders semantic HTML table elements — `<table>`, `<thead>`, `<tbody>`, `<tfoot>`, `<tr>`, `<th>`, `<td>`, and `<caption>` — so assistive tech announces it as a table with rows and columns out of the box.
+
+### Keyboard
+
+- Static tables aren't interactive and don't take focus. When a cell or row is a link (via `to` / `linkProps`) or a button (via `onClick`), that control is keyboard-focusable and activates with **Enter** (and **Space** for buttons).
+- For a linked row, only the first interactive cell is placed in the tab order (`tabIndex=0`) while the rest are skipped (`tabIndex=-1`), so a row is a single tab stop rather than one per cell.
+
+### Labeling
+
+- Column headers render as `<th>` inside `<thead>`, and `Table.Caption` renders a real `<caption>` — use it to give the table a name.
+- Selection controls in a row carry their own accessible name: give each [Checkbox](/components/form/checkbox/) / [Radio](/components/form/radio/) a `label` or `aria-label` so it isn't announced bare.
+
+### Focus & states
+
+- Interactive cells and rows use the standard link/button focus ring. Selected rows are marked with a `data-checked` attribute and disabled rows with `data-disabled`; disabled rows drop to a not-allowed cursor and have their click handler suppressed.
+
+### Known limitations
+
+- **`selected` is presentational.** It only applies selected styling — it sets no `aria-selected`. The actual selected state must come from the Checkbox/Radio you place in the row.
+- **Header cells set no explicit `scope`.** `Table.Head` renders a plain `<th>`; for complex tables with row headers or spanning headers, add `scope` (or `id`/`headers`) yourself so the header-to-cell associations are unambiguous.
+- **Sort state is visual only.** `sortable` / `sortDirection` render a sort icon but set no `aria-sort` on the header, so the current sort isn't announced. Manage `aria-sort` yourself if the table is sortable.
+- **A disabled row isn't disabled to assistive tech.** `disabled` suppresses the row's own `onClick` and dims it, but doesn't set `aria-disabled` on any controls inside the row — disable those controls directly if needed.
+
+</TabItem>
+
+<TabItem label="Properties">
+
+{/* Visually hidden — anchors the section headings below in the TOC without showing a redundant title in the panel body (the tab already says "Properties"). Hidden via #page-level-tabs h2#properties in styles.css. */}
+
+## Properties
+
+All parts extend their HTML equivalents, so the relevant native props (e.g. `colSpan`, `width`, `aria-*`) apply in addition to those below.
+
+### Root
+
+The root component for the table. Renders the `<table>` inside a scroll container.
 
 <DocsPage.PropsTable
   props={[
@@ -530,25 +609,33 @@ The root component for the table.
     },
     {
       name: "paginationProps",
-      description: "Props for the pagination component",
+      description:
+        "Props for the pagination component rendered beneath the table",
       required: false,
       value: "PaginationProps",
       defaultValue: "undefined",
     },
+    {
+      name: "stickyHeader",
+      description:
+        "Opt in to a single scroll viewport so sticky-positioned cells (e.g. sticky headers) resolve against one deterministic scroll container.",
+      required: false,
+      value: "boolean",
+      defaultValue: "false",
+    },
+    {
+      name: "maxHeight",
+      description:
+        "Maximum height of the scroll viewport. Only applies when stickyHeader is enabled.",
+      required: false,
+      value: "CSSProperties['maxHeight']",
+    },
   ]}
 />
 
-### `Header`
+### Header
 
-The header section of the table.
-
-```typescript jsx
-<Table.Header
-  className="custom-class" // [OPTIONAL] Custom class name
->
-  {/* Header content */}
-</Table.Header>
-```
+The header section of the table (`<thead>`).
 
 <DocsPage.PropsTable
   props={[
@@ -561,17 +648,9 @@ The header section of the table.
   ]}
 />
 
-### `Body`
+### Body
 
-The body section of the table.
-
-```typescript jsx
-<Table.Body
-  className="custom-class" // [OPTIONAL] Custom class name
->
-  {/* Body content */}
-</Table.Body>
-```
+The body section of the table (`<tbody>`).
 
 <DocsPage.PropsTable
   props={[
@@ -584,17 +663,9 @@ The body section of the table.
   ]}
 />
 
-### `Footer`
+### Footer
 
-The footer section of the table.
-
-```typescript jsx
-<Table.Footer
-  className="custom-class" // [OPTIONAL] Custom class name
->
-  {/* Footer content */}
-</Table.Footer>
-```
+The footer section of the table (`<tfoot>`).
 
 <DocsPage.PropsTable
   props={[
@@ -607,18 +678,9 @@ The footer section of the table.
   ]}
 />
 
-### `Row`
+### Row
 
-```typescript jsx
-<Table.Row
-  className="custom-class" // [OPTIONAL] Custom class name
-  selected={true} // [OPTIONAL] Whether the row is checked/selected
-  disabled={false} // [OPTIONAL] Whether the row is disabled
-  onClick={(e) => console.log('Row clicked', e)} // [OPTIONAL] Click handler for the row
->
-  {/* Row content */}
-</Table.Row>
-```
+A row within the table (`<tr>`).
 
 <DocsPage.PropsTable
   props={[
@@ -630,7 +692,8 @@ The footer section of the table.
     },
     {
       name: "selected",
-      description: "Whether the row is checked/selected",
+      description:
+        "Whether the row is checked/selected. Applies selected styling only — see the accessibility notes.",
       required: false,
       value: "boolean",
     },
@@ -650,7 +713,7 @@ The footer section of the table.
     {
       name: "to",
       description:
-        "URL to navigate to when the row is clicked. Renders the each table cell with a Link component.",
+        "URL to navigate to when the row is clicked. Renders each table cell with a Link component.",
       required: false,
       value: "string",
     },
@@ -659,22 +722,14 @@ The footer section of the table.
       description:
         "Additional props to pass to the Link component. A Link will be rendered if either 'to' or 'linkProps' are provided.",
       required: false,
-      value: "LinkProps",
+      value: "Omit<LinkProps, 'to'>",
     },
   ]}
 />
 
-### `Head`
+### Head
 
-A header cell within the table.
-
-```typescript jsx
-<Table.Head
-  className="custom-class" // [OPTIONAL] Custom class name
->
-  {/* Header cell content */}
-</Table.Head>
-```
+A header cell within the table (`<th>`).
 
 <DocsPage.PropsTable
   props={[
@@ -685,36 +740,45 @@ A header cell within the table.
       value: "string",
     },
     {
+      name: "sortable",
+      description:
+        "Whether the column is sortable. Renders a sort affordance icon.",
+      required: false,
+      value: "boolean",
+    },
+    {
+      name: "sortDirection",
+      description: "Current sort direction. Controls which sort icon is shown.",
+      required: false,
+      value: "'asc' | 'desc' | false",
+    },
+    {
+      name: "tooltipProps",
+      description:
+        "Props for a tooltip on the header cell. When set, the label gets a dashed underline and shows the tooltip on hover.",
+      required: false,
+      value: "Omit<TooltipProps, 'children'>",
+    },
+    {
       name: "containerProps",
-      description: "Props to be applied to the container element",
+      description: "Props to be applied to the header cell's content container",
       required: false,
       value: "FlexProps",
     },
     {
       name: "hideDivider",
       description:
-        "Whether to hide the left divider in the header cell. The first header cell in a row will not have a divider by default.",
+        "Whether to hide the left divider in the header cell. The first header cell in a row hides its divider automatically.",
       required: false,
       value: "boolean",
-      defaultValue: "true",
+      defaultValue: "false",
     },
   ]}
 />
 
-### `Cell`
+### Cell
 
-A cell within the table.
-
-```typescript jsx
-<Table.Cell
-  className="custom-class" // [OPTIONAL] Custom class name
-  onClick={(e) => console.log('Cell clicked', e)} // [OPTIONAL] Click handler for the cell
-  to="/path/to/page" // [OPTIONAL] URL to navigate to when the cell is clicked
-  linkProps={{ prefixIcon: 'arrow-right', variant: 'secondary' }} // [OPTIONAL] Additional props for the Link component
->
-  {/* Cell content */}
-</Table.Cell>
-```
+A cell within the table (`<td>`).
 
 <DocsPage.PropsTable
   props={[
@@ -726,9 +790,10 @@ A cell within the table.
     },
     {
       name: "onClick",
-      description: "Click handler for the cell.",
+      description:
+        "Click handler for the cell. Renders the cell content inside a button when no link is set.",
       required: false,
-      value: "(event: React.MouseEvent<HTMLTableCellElement>) => void",
+      value: "() => void",
     },
     {
       name: "to",
@@ -742,22 +807,22 @@ A cell within the table.
       description:
         "Additional props to pass to the Link component. A Link will be rendered if either 'to' or 'linkProps' are provided.",
       required: false,
-      value: "LinkProps",
+      value: "Omit<LinkProps, 'to'>",
+    },
+    {
+      name: "disableLink",
+      description:
+        "Opt this cell out of link rendering when its row is linked (via the row's 'to'/'linkProps').",
+      required: false,
+      value: "boolean",
+      defaultValue: "false",
     },
   ]}
 />
 
-### `Caption`
+### Caption
 
-A caption for the table.
-
-```typescript jsx
-<Table.Caption
-  className="custom-class" // [OPTIONAL] Custom class name
->
-  {/* Caption content */}
-</Table.Caption>
-```
+A caption for the table (`<caption>`).
 
 <DocsPage.PropsTable
   props={[
@@ -769,3 +834,9 @@ A caption for the table.
     },
   ]}
 />
+
+</TabItem>
+
+</Tabs>
+
+</div>

@@ -1,13 +1,22 @@
 ---
 title: Time Ago Card
-description: A card component that displays a timestamp in a human-readable "time ago" format.
-beta: true
+description: Displays a timestamp in a human-readable "time ago" format with a full date on hover
 ---
 
-The `TimeAgoCard` component displays a timestamp in a human-readable format, such as "5 minutes ago". It also provides an option to view the full date and time when clicked.
-
 import { DocsPage } from "@/components/docs-page";
+import { Tabs, TabItem } from "@astrojs/starlight/components";
 import { Aside } from "@astrojs/starlight/components";
+import PageTabsToc from "@/components/page-tabs-toc.astro";
+
+<PageTabsToc />
+
+<div id="page-level-tabs">
+
+<Tabs>
+
+<TabItem label="Overview">
+
+The `TimeAgoCard` component displays a timestamp in a human-readable format, such as "5 min. ago". Hovering (or focusing) the value reveals a tooltip with the full date and time in both UTC and the local timezone.
 
 <DocsPage.ComponentExample
   client:only
@@ -16,27 +25,11 @@ import { Aside } from "@astrojs/starlight/components";
   </div>`}
 />
 
-## Usage
+## Variations
 
-```typescript jsx
-import { TimeAgoCard } from "@/components";
+### Timestamp variants
 
-//...
-
-return (
-  <TimeAgoCard timestamp={new Date().toISOString()} />
-);
-```
-
-<Aside type="caution" title="Invalid Date Handling">
-  If an invalid date is passed to the `timestamp` prop (e.g., an invalid date
-  string or `NaN`), the component will **not render anything**. A warning
-  message will be displayed in browser console instead. Ensure that the
-  timestamp value is a valid ISO 8601 date string, Unix timestamp number, or
-  `null`.
-</Aside>
-
-## Timestamp variants
+The `timestamp` prop accepts an ISO 8601 string, a Unix timestamp number, or `null`. When omitted, nothing is rendered.
 
 <DocsPage.ComponentExample
   client:only
@@ -53,7 +46,7 @@ return (
   </div>`}
 />
 
-## Time difference examples
+### Time difference examples
 
 The component displays relative time in a narrow format for all time ranges:
 
@@ -90,7 +83,7 @@ The component displays relative time in a narrow format for all time ranges:
   </div>`}
 />
 
-## Future timestamps
+### Future timestamps
 
 The component also handles future timestamps:
 
@@ -109,7 +102,7 @@ The component also handles future timestamps:
   </div>`}
 />
 
-## With prefix
+### With prefix
 
 <DocsPage.ComponentExample
   client:only
@@ -123,45 +116,132 @@ The component also handles future timestamps:
   </div>`}
 />
 
-## API Reference
+### Live updating
+
+Set `live` to have the relative time re-render every second so it stays current without a page refresh.
+
+<DocsPage.ComponentExample
+  client:only
+  code={`<div className="flex flex-col gap-cn-md">
+    <Text>
+      live: <TimeAgoCard live timestamp={new Date(Date.now() - 3 * 1000).toISOString()} />
+    </Text>
+  </div>`}
+/>
+
+## Installation
+
+```tsx
+import { TimeAgoCard } from "@harnessio/ui/components";
+
+<TimeAgoCard timestamp={new Date().toISOString()} />;
+```
+
+</TabItem>
+
+<TabItem label="Usage">
+
+## Anatomy
+
+`TimeAgoCard` renders a trigger showing the relative time, with a tooltip that reveals the full date.
+
+- The trigger is a `<button>` wrapping a `Text` rendered as a `<time>` element (with a `dateTime` attribute). It shows the relative time (prefixed with `prefix` when provided).
+- On hover or focus, a tooltip opens showing the full date and time in two rows — UTC and the local timezone — each with a `StatusBadge` label.
+- Relative time is formatted with the native `Intl.RelativeTimeFormat` in the `narrow` style, so output is abbreviated (e.g. "5 min. ago", "2 days ago", "in 1 yr.") and localized to the user's locale.
+
+<Aside type="caution" title="Invalid Date Handling">
+  If an invalid date is passed to the `timestamp` prop (e.g. an invalid date
+  string, `NaN`, or the Unix epoch `0`), the component renders nothing visible
+  and logs a warning to the browser console instead. Ensure the timestamp is a
+  valid ISO 8601 string, a Unix timestamp number, or `null`.
+</Aside>
+
+## Best practices
+
+{/* TODO: editorial — please review against product guidance. */}
+
+**Do**
+
+- Use `prefix` to give the timestamp context ("Updated", "Created") when the surrounding text doesn't already.
+- Use `live` for timestamps a user watches in real time (e.g. a recently-triggered run), and leave it off for static lists to avoid unnecessary re-renders.
+- Pass a valid ISO 8601 string or Unix timestamp so the value always renders.
+
+**Don't**
+
+- Don't rely on `TimeAgoCard` alone to convey a critical exact time — the precise value lives in the hover tooltip, which isn't visible at a glance.
+- Don't pass a `Date` object; the prop expects a string, number, or `null`.
+
+## Accessibility
+
+### Keyboard
+
+- The trigger is a real `<button>`, so it is focusable and the full-date tooltip opens on focus as well as hover.
+
+### Labeling & semantics
+
+- The relative time is rendered inside a `<time>` element with a `dateTime` attribute, giving assistive tech and machines a precise, parseable value behind the human-readable text.
+
+</TabItem>
+
+<TabItem label="Properties">
+
+{/* Visually hidden — anchors the section headings below in the TOC without showing a redundant title in the panel body (the tab already says "Properties"). Hidden via #page-level-tabs h2#properties in styles.css. */}
+
+## Properties
 
 <DocsPage.PropsTable
   props={[
     {
       name: "timestamp",
-      description: "The timestamp to display in the card.",
+      description:
+        "The timestamp to display. Invalid dates render nothing and log a console warning.",
       required: false,
-      value: "'string' | 'number' | 'null'",
+      value: "string | number | null",
     },
     {
       name: "prefix",
-      description: "Optional prefix text to display before the time ago text.",
+      description: "Optional text displayed before the time ago text.",
       required: false,
-      value: "'string'",
+      value: "string",
+    },
+    {
+      name: "live",
+      description:
+        "When true, re-renders every second so the relative time stays current.",
+      required: false,
+      defaultValue: "false",
+      value: "boolean",
     },
     {
       name: "textProps",
       description: "Props for the trigger text element.",
       required: false,
-      value: "'TextProps'",
+      value: "Omit<TextProps<'time' | 'span'>, 'ref'>",
     },
     {
       name: "tooltipProps",
       description: "Props for the tooltip element.",
       required: false,
-      value: "'TooltipProps'",
-    },
-    {
-      name: "triggerClassName",
-      description: "Class names for the trigger element.",
-      required: false,
-      value: "'string'",
+      value: "TooltipProps",
     },
     {
       name: "triggerProps",
-      description: "Props for the trigger button element.",
+      description:
+        "Props for the trigger button element. Use triggerClassName for classes.",
       required: false,
-      value: "'ButtonHTMLAttributes<HTMLButtonElement>'",
+      value: "Omit<ButtonHTMLAttributes<HTMLButtonElement>, 'className'>",
+    },
+    {
+      name: "triggerClassName",
+      description: "Class names for the trigger button element.",
+      required: false,
+      value: "string",
     },
   ]}
 />
+
+</TabItem>
+
+</Tabs>
+
+</div>

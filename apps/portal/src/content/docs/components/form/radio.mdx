@@ -3,11 +3,19 @@ title: Radio
 description: Radio button component documentation
 ---
 
-The `Radio.Item` component provides a customizable, accessible radio button input.
-It must always be used inside a `Radio.Root` to function correctly.
-The `Radio.Root` component provides the necessary context for managing grouped selections.
-
 import { DocsPage } from "@/components/docs-page";
+import { Tabs, TabItem } from "@astrojs/starlight/components";
+import PageTabsToc from "@/components/page-tabs-toc.astro";
+
+<PageTabsToc />
+
+<div id="page-level-tabs">
+
+<Tabs>
+
+<TabItem label="Overview">
+
+The `Radio` component lets people choose a single option from a set. It's a compound component: `Radio.Root` provides the group context and manages selection, and each `Radio.Item` is a selectable option. `Radio.Item` must always be used inside a `Radio.Root`.
 
 <DocsPage.ComponentExample
   client:only
@@ -32,29 +40,9 @@ import { DocsPage } from "@/components/docs-page";
 }`}
 />
 
-## Usage
+## Variations
 
-```typescript jsx
-import { Radio } from "@harnessio/ui/components";
-
-function Example() {
-  const [group1Value, setGroup1Value] = React.useState("option1");
-
-  return (
-    <Radio.Root
-        label="Label text"
-        caption="Caption text"
-        value={group1Value}
-        onValueChange={setGroup1Value}
-      >
-        <Radio.Item name="group1" value="option1" label="Option 1" caption="This is option 1" />
-        <Radio.Item name="group1" value="option2" label="Option 2" caption="This is option 2" />
-      </Radio.Root>
-  );
-}
-```
-
-## Optional
+### Optional
 
 The radio group can be marked as optional via the `optional` prop on `Radio.Root`.
 
@@ -91,7 +79,7 @@ If there's no label, the optional indicator will be shown next to each individua
 }`}
 />
 
-## Disabled
+### Disabled
 
 The radio group can be marked as disabled via the `disabled` prop on `Radio.Root`, which disables all radio items within the group.
 
@@ -128,7 +116,7 @@ Alternatively, the `disabled` prop can be passed to individual `Radio.Item` to d
 }`}
 />
 
-## Error state
+### Error state
 
 The radio group can be marked as error via the `error` prop on `Radio.Root`.
 
@@ -154,7 +142,7 @@ The radio group can be marked as error via the `error` prop on `Radio.Root`.
 }`}
 />
 
-## With Tooltip
+### With tooltip
 
 `tooltipContent` is used to display the content of the tooltip. `tooltipProps` is used to pass additional props to the tooltip.
 
@@ -183,7 +171,7 @@ The radio group can be marked as error via the `error` prop on `Radio.Root`.
 
 />
 
-## Orientation
+### Orientation
 
 The `Radio.Root` component accepts an optional `orientation` prop, which defines the layout direction of the radio and its group label.
 Available options are `horizontal` and `vertical` (default).
@@ -223,12 +211,92 @@ Available options are `horizontal` and `vertical` (default).
 }`}
 />
 
-## API Reference
+## Installation
 
-The `Radio.Item` component must always be used inside a `Radio.Root` to function correctly.
-The `Radio.Root` provides the necessary context for managing grouped selections.
+```typescript jsx
+import { Radio } from "@harnessio/ui/components";
 
-### `Root`
+function Example() {
+  const [group1Value, setGroup1Value] = React.useState("option1");
+
+  return (
+    <Radio.Root
+        label="Label text"
+        caption="Caption text"
+        value={group1Value}
+        onValueChange={setGroup1Value}
+      >
+        <Radio.Item value="option1" label="Option 1" caption="This is option 1" />
+        <Radio.Item value="option2" label="Option 2" caption="This is option 2" />
+      </Radio.Root>
+  );
+}
+```
+
+</TabItem>
+
+<TabItem label="Usage">
+
+## Anatomy
+
+`Radio` is a compound component built on Radix UI's radio group. Wrap the options in `Radio.Root` and render one `Radio.Item` per choice.
+
+```tsx
+<Radio.Root value={value} onValueChange={setValue} label="Label text">
+  <Radio.Item value="option1" label="Option 1" caption="This is option 1" />
+  <Radio.Item value="option2" label="Option 2" caption="This is option 2" />
+</Radio.Root>
+```
+
+- **`Radio.Root`** — the group container and context. Control the selection with `value` + `onValueChange` (or leave it uncontrolled with `defaultValue`). It also carries the group-level `label`, `caption`, `optional`, `error`, `disabled`, `orientation`, and tooltip.
+- **`Radio.Item`** — a single option. `value` is required; `label` and `caption` describe it. An item is disabled when its own `disabled` is set or the group is disabled.
+
+## Best practices
+
+{/* TODO: editorial — please review against product guidance. */}
+
+**Do**
+
+- Use radios when there are a few mutually exclusive options that are all worth showing at once; use a select when the list is long.
+- Give the group a `label`, and keep each item label short with an optional `caption` for detail.
+- Preselect a sensible default when one exists, so people aren't forced to make a choice they don't care about.
+
+**Don't**
+
+- Don't use a radio group for a single on/off choice — use a checkbox or switch.
+- Don't disable the whole group to communicate an error; use the `error` state and keep the options readable.
+
+## Content
+
+{/* TODO: editorial — please review against product guidance. */}
+
+- Write item labels as parallel, self-contained phrases ("Everyone", "Only me").
+- Use `caption` for the consequence or detail of an option, not to restate the label.
+
+## Accessibility
+
+### Keyboard
+
+- Built on Radix's radio group: `Tab` moves focus into the group, and the arrow keys move the selection between items. Only the selected item (or the first item, if none is selected) is in the tab order.
+
+### Labeling
+
+- Each item's `label` is wired to its input via `htmlFor` / `id`, so clicking the label selects the item. If you omit `label`, provide an accessible name yourself.
+- The group exposes `radiogroup` semantics and items expose `radio`, courtesy of Radix.
+
+### Focus & states
+
+- The `error` prop toggles the group's error styling; it does not, on its own, detect whether an item is selected. Drive it from your own validation.
+
+</TabItem>
+
+<TabItem label="Properties">
+
+{/* Visually hidden — anchors the section headings below in the TOC without showing a redundant title in the panel body (the tab already says "Properties"). Hidden via #page-level-tabs h2#properties in styles.css. */}
+
+## Properties
+
+The `tooltipProps` prop uses the `IconWithTooltipProps` shape:
 
 ```typescript
 interface IconWithTooltipProps extends Omit<TooltipProps, "children"> {
@@ -241,19 +309,33 @@ interface IconWithTooltipProps extends Omit<TooltipProps, "children"> {
 }
 ```
 
+### Radio.Root
+
 <DocsPage.PropsTable
   props={[
     {
-      name: "name",
-      description: "Name of the radio button group.",
+      name: "value",
+      description:
+        "The controlled value of the selected item. Use with onValueChange.",
       required: false,
       value: "string",
     },
     {
-      name: "value",
-      description:
-        "The controlled value of the radio item to check. Should be used in conjunction with onValueChange.",
-      required: true,
+      name: "onValueChange",
+      description: "Called with the new value when the selection changes.",
+      required: false,
+      value: "(value: string) => void",
+    },
+    {
+      name: "defaultValue",
+      description: "The value selected on mount (uncontrolled).",
+      required: false,
+      value: "string",
+    },
+    {
+      name: "name",
+      description: "Name of the radio button group.",
+      required: false,
       value: "string",
     },
     {
@@ -276,33 +358,27 @@ interface IconWithTooltipProps extends Omit<TooltipProps, "children"> {
       value: "boolean",
     },
     {
-      name: "className",
-      description: "Additional class names to apply to the radio group.",
-      required: false,
-      value: "string",
-    },
-    {
-      name: "wrapperClassName",
-      description:
-        "Additional class names to apply to the radio group wrapper.",
-      required: false,
-      value: "string",
-    },
-    {
       name: "error",
       description:
-        "Displays the error state of radio items only when no item is selected.",
+        "Applies the error styling to the group. You control when it's shown.",
       required: false,
-      defaultValue: "",
+      defaultValue: "false",
       value: "boolean",
     },
     {
       name: "optional",
       description:
-        "Determines whether to display an 'optional' tag next to the group label, or next to each radio item label if no group label is provided.",
+        "Displays an 'optional' tag next to the group label, or next to each item label if no group label is provided.",
       required: false,
       defaultValue: "false",
       value: "boolean",
+    },
+    {
+      name: "orientation",
+      description: "Layout direction of the radio items and the group label.",
+      required: false,
+      defaultValue: "'vertical'",
+      value: "'vertical' | 'horizontal'",
     },
     {
       name: "tooltipContent",
@@ -318,32 +394,30 @@ interface IconWithTooltipProps extends Omit<TooltipProps, "children"> {
     },
     {
       name: "labelSuffix",
-      description:
-        "Customized with a suffix element that appears on the right side of the label.",
+      description: "Element appended to the right side of the label.",
       required: false,
       value: "ReactNode",
     },
     {
-      name: "orientation",
-      description:
-        "Defines the layout direction of the radio items and its group label.",
+      name: "className",
+      description: "Additional class names to apply to the radio group.",
       required: false,
-      defaultValue: "'vertical'",
-      value: "'vertical' | 'horizontal'",
+      value: "string",
+    },
+    {
+      name: "wrapperClassName",
+      description:
+        "Additional class names to apply to the radio group wrapper.",
+      required: false,
+      value: "string",
     },
   ]}
 />
 
-### `Item`
+### Radio.Item
 
 <DocsPage.PropsTable
   props={[
-    {
-      name: "name",
-      description: "Name of the radio button group.",
-      required: false,
-      value: "string",
-    },
     {
       name: "value",
       description: "The value of the radio button.",
@@ -354,13 +428,13 @@ interface IconWithTooltipProps extends Omit<TooltipProps, "children"> {
       name: "label",
       description: "Label displayed next to the radio button.",
       required: false,
-      value: "string",
+      value: "string | ReactElement",
     },
     {
       name: "caption",
       description: "Caption displayed under the label.",
       required: false,
-      value: "string",
+      value: "string | ReactElement",
     },
     {
       name: "disabled",
@@ -369,10 +443,23 @@ interface IconWithTooltipProps extends Omit<TooltipProps, "children"> {
       value: "boolean",
     },
     {
+      name: "id",
+      description:
+        "Id for the input. Auto-generated and wired to the label when omitted.",
+      required: false,
+      value: "string",
+    },
+    {
       name: "className",
-      description: "Additional class names to apply to the radio button.",
+      description: "Additional class names to apply to the item wrapper.",
       required: false,
       value: "string",
     },
   ]}
 />
+
+</TabItem>
+
+</Tabs>
+
+</div>

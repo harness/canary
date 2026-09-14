@@ -1,15 +1,24 @@
 ---
 title: Tabs
-description: Tabs component
-beta: true
+description: Organize content into switchable panels, or drive route-based navigation
 ---
 
 import { DocsPage } from "@/components/docs-page";
+import { Tabs, TabItem } from "@astrojs/starlight/components";
 import { Aside } from "@astrojs/starlight/components";
+import PageTabsToc from "@/components/page-tabs-toc.astro";
 
-The `Tabs` component provides a way to organize content into multiple panels, with each panel being associated with a tab trigger. It supports both regular tabs and navigation tabs that integrate with your router.
+<PageTabsToc />
 
-It can be composed with several subcomponents such as `Tabs.Root`, `Tabs.NavRoot`, `Tabs.List`, `Tabs.Trigger`, and `Tabs.Content` to offer a structured and customizable interface.
+<div id="page-level-tabs">
+
+<Tabs>
+
+<TabItem label="Overview">
+
+The `Tabs` component organizes content into multiple panels, each associated with a tab trigger. It comes in two modes: regular tabs that show and hide panels, and navigation tabs (`Tabs.NavRoot`) that integrate with your router.
+
+It is composed from `Tabs.Root`, `Tabs.NavRoot`, `Tabs.List`, `Tabs.Trigger`, and `Tabs.Content`, so you assemble exactly the structure you need.
 
 <DocsPage.ComponentExample
   client:only
@@ -32,105 +41,71 @@ It can be composed with several subcomponents such as `Tabs.Root`, `Tabs.NavRoot
 </Tabs.Root>`}
 />
 
-## Usage
+## Variations
 
-```typescript jsx
-import { Tabs } from "@harnessio/ui/components";
+### Variants
 
-//...
-
-return (
-  <Tabs.Root defaultValue="general">
-    <Tabs.List>
-      <Tabs.Trigger value="general">General</Tabs.Trigger>
-      <Tabs.Trigger value="security">Security</Tabs.Trigger>
-      <Tabs.Trigger value="advanced">Advanced</Tabs.Trigger>
-    </Tabs.List>
-
-    <Tabs.Content value="general">
-      {/* General settings content */}
-    </Tabs.Content>
-    <Tabs.Content value="security">
-      {/* Security settings content */}
-    </Tabs.Content>
-    <Tabs.Content value="advanced">
-      {/* Advanced settings content */}
-    </Tabs.Content>
-  </Tabs.Root>
-)
-```
-
-## Anatomy
-
-All parts of the `Tabs` component can be imported and composed as required.
-
-```typescript jsx
-// Regular Tabs
-<Tabs.Root>
-  <Tabs.List>
-    <Tabs.Trigger />
-  </Tabs.List>
-  <Tabs.Content />
-</Tabs.Root>
-
-// Navigation Tabs
-<Tabs.NavRoot>
-  <Tabs.List>
-    <Tabs.Trigger />
-  </Tabs.List>
-</Tabs.NavRoot>
-```
-
-## Variants
-
-The `Tabs` component supports multiple visual variants that can be applied via the `variant` prop on `Tabs.List`.
+Apply a visual style with the `variant` prop on `Tabs.List`.
 
 <DocsPage.ComponentExample
   client:only
-  code={`<div className="grid gap-cn-sm">
-    {/* Underlined (default) */}
-    <Tabs.Root defaultValue="tab1">
+  code={`<div className="space-y-cn-sm w-full">
+  <div className="flex items-center gap-cn-md border-b border-cn-borders-3 pb-cn-sm">
+    <span className="text-cn-size-2 text-cn-3 w-40 shrink-0 font-mono">underlined</span>
+    <div className="flex-1 min-w-0">
+      <Tabs.Root defaultValue="tab1">
         <Tabs.List>
-            <Tabs.Trigger value="tab1">Underlined 1</Tabs.Trigger>
-            <Tabs.Trigger value="tab2">Underlined 2</Tabs.Trigger>
-            <Tabs.Trigger value="tab3">Underlined 3</Tabs.Trigger>
-            <Tabs.Trigger value="tab4" disabled>Underlined 3</Tabs.Trigger>
+          <Tabs.Trigger value="tab1">Underlined 1</Tabs.Trigger>
+          <Tabs.Trigger value="tab2">Underlined 2</Tabs.Trigger>
+          <Tabs.Trigger value="tab3">Underlined 3</Tabs.Trigger>
+          <Tabs.Trigger value="tab4" disabled>Underlined 4</Tabs.Trigger>
         </Tabs.List>
-    </Tabs.Root>
-    
-    {/* Overlined */}
-    <Tabs.Root defaultValue="tab1">
+      </Tabs.Root>
+    </div>
+  </div>
+  <div className="flex items-center gap-cn-md border-b border-cn-borders-3 pb-cn-sm">
+    <span className="text-cn-size-2 text-cn-3 w-40 shrink-0 font-mono">overlined</span>
+    <div className="flex-1 min-w-0">
+      <Tabs.Root defaultValue="tab1">
         <Tabs.List variant="overlined">
-            <Tabs.Trigger value="tab1">Overlined 1</Tabs.Trigger>
-            <Tabs.Trigger value="tab2">Overlined 2</Tabs.Trigger>
-            <Tabs.Trigger value="tab3">Overlined 3</Tabs.Trigger>
-            <Tabs.Trigger value="tab4" disabled>Overlined 3</Tabs.Trigger>
+          <Tabs.Trigger value="tab1">Overlined 1</Tabs.Trigger>
+          <Tabs.Trigger value="tab2">Overlined 2</Tabs.Trigger>
+          <Tabs.Trigger value="tab3">Overlined 3</Tabs.Trigger>
+          <Tabs.Trigger value="tab4" disabled>Overlined 4</Tabs.Trigger>
         </Tabs.List>
-    </Tabs.Root>
-    
-    {/* Ghost */}
-    <Tabs.Root defaultValue="tab1">
+      </Tabs.Root>
+    </div>
+  </div>
+  <div className="flex items-center gap-cn-md border-b border-cn-borders-3 pb-cn-sm">
+    <span className="text-cn-size-2 text-cn-3 w-40 shrink-0 font-mono">ghost</span>
+    <div className="flex-1 min-w-0">
+      <Tabs.Root defaultValue="tab1">
         <Tabs.List variant="ghost">
-            <Tabs.Trigger value="tab1">Ghost 1</Tabs.Trigger>
-            <Tabs.Trigger value="tab2">Ghost 2</Tabs.Trigger>
-            <Tabs.Trigger value="tab3">Ghost 3</Tabs.Trigger>
-            <Tabs.Trigger value="tab4" disabled>Ghost 3</Tabs.Trigger>
+          <Tabs.Trigger value="tab1">Ghost 1</Tabs.Trigger>
+          <Tabs.Trigger value="tab2">Ghost 2</Tabs.Trigger>
+          <Tabs.Trigger value="tab3">Ghost 3</Tabs.Trigger>
+          <Tabs.Trigger value="tab4" disabled>Ghost 4</Tabs.Trigger>
         </Tabs.List>
-    </Tabs.Root>
-    
-    {/* Outlined */}
-    <Tabs.Root defaultValue="tab1">
+      </Tabs.Root>
+    </div>
+  </div>
+  <div className="flex items-center gap-cn-md">
+    <span className="text-cn-size-2 text-cn-3 w-40 shrink-0 font-mono">outlined</span>
+    <div className="flex-1 min-w-0">
+      <Tabs.Root defaultValue="tab1">
         <Tabs.List variant="outlined">
-            <Tabs.Trigger value="tab1">Outlined 1</Tabs.Trigger>
-            <Tabs.Trigger value="tab2">Outlined 2</Tabs.Trigger>
-            <Tabs.Trigger value="tab3">Outlined 3</Tabs.Trigger>
-            <Tabs.Trigger value="tab4" disabled>Outlined 3</Tabs.Trigger>
+          <Tabs.Trigger value="tab1">Outlined 1</Tabs.Trigger>
+          <Tabs.Trigger value="tab2">Outlined 2</Tabs.Trigger>
+          <Tabs.Trigger value="tab3">Outlined 3</Tabs.Trigger>
+          <Tabs.Trigger value="tab4" disabled>Outlined 4</Tabs.Trigger>
         </Tabs.List>
-    </Tabs.Root>
+      </Tabs.Root>
+    </div>
+  </div>
 </div>`}
 />
 
-## With Icons
+### With icons
 
 Tab triggers can include icons to enhance visual recognition and improve user experience.
 
@@ -161,7 +136,7 @@ Tab triggers can include icons to enhance visual recognition and improve user ex
 </Tabs.Root>`}
 />
 
-## With Logos
+### With logos
 
 Tab triggers can display logos for brand-specific navigation or integration tabs.
 
@@ -192,7 +167,7 @@ Tab triggers can display logos for brand-specific navigation or integration tabs
 </Tabs.Root>`}
 />
 
-## With Counters
+### With counters
 
 Tab triggers can display counter badges to show quantities or notifications.
 
@@ -229,7 +204,7 @@ Tab triggers can display counter badges to show quantities or notifications.
 </Tabs.Root>`}
 />
 
-## Complex Children
+### Complex children
 
 When icons, logos, and counters aren't sufficient, you can use custom children for more complex tab triggers.
 
@@ -258,7 +233,7 @@ When icons, logos, and counters aren't sufficient, you can use custom children f
 </Tabs.Root>`}
 />
 
-## Navigation Tabs
+### Navigation tabs
 
 The `Tabs.NavRoot` variant integrates with your router to create navigation-based tabs that update based on the current route.
 
@@ -279,7 +254,7 @@ The `Tabs.NavRoot` variant integrates with your router to create navigation-base
 </Tabs.NavRoot>`}
 />
 
-## Controlled Tabs
+### Controlled tabs
 
 Both `Tabs.Root` and `Tabs.NavRoot` can be controlled by passing `value` and `onValueChange` props.
 
@@ -328,7 +303,7 @@ Both `Tabs.Root` and `Tabs.NavRoot` can be controlled by passing `value` and `on
 }`}
 />
 
-## Orientation
+### Orientation
 
 The `Tabs` component supports both horizontal (default) and vertical orientations via the `orientation` prop on `Tabs.Root`. This affects both the visual layout and keyboard navigation behavior.
 
@@ -388,7 +363,7 @@ The `Tabs` component supports both horizontal (default) and vertical orientation
   top/bottom fade indicators when content exceeds the container height.
 </Aside>
 
-## Scrollable Tabs
+### Scrollable tabs
 
 When you have many tabs that overflow the container, the component automatically enables horizontal scrolling with fade indicators on both ends. The active tab will automatically scroll into view on mount and when changed.
 
@@ -429,7 +404,7 @@ When you have many tabs that overflow the container, the component automatically
   overflow their container.
 </Aside>
 
-## Custom Active Class
+### Custom active class
 
 You can customize the active tab styling using the `activeClassName` prop on `Tabs.List`.
 
@@ -457,289 +432,299 @@ You can customize the active tab styling using the `activeClassName` prop on `Ta
 </Tabs.Root>`}
 />
 
-## API Reference
+## Installation
 
-### `Root`
+```tsx
+import { Tabs } from "@harnessio/ui/components";
 
-The `Root` component serves as the main container for regular tabs functionality. It manages the active tab state and provides context to child components.
+<Tabs.Root defaultValue="general">
+  <Tabs.List>
+    <Tabs.Trigger value="general">General</Tabs.Trigger>
+    <Tabs.Trigger value="security">Security</Tabs.Trigger>
+    <Tabs.Trigger value="advanced">Advanced</Tabs.Trigger>
+  </Tabs.List>
 
-```typescript jsx
-<Tabs.Root
-  value={activeTab}         // [OPTIONAL] controlled active tab value
-  onValueChange={onChange}  // [OPTIONAL] callback when active tab changes
-  defaultValue="tab1"       // [OPTIONAL] default active tab (uncontrolled)
-  orientation="horizontal"  // [OPTIONAL] tab orientation
->
-  {/* List and Content components */}
-</Tabs.Root>
+  <Tabs.Content value="general">{/* General settings */}</Tabs.Content>
+  <Tabs.Content value="security">{/* Security settings */}</Tabs.Content>
+  <Tabs.Content value="advanced">{/* Advanced settings */}</Tabs.Content>
+</Tabs.Root>;
 ```
+
+</TabItem>
+
+<TabItem label="Usage">
+
+## Anatomy
+
+All parts of the `Tabs` component can be imported and composed as required. Regular tabs pair a `List` of triggers with matching `Content` panels; navigation tabs use `NavRoot` and drive routing from each trigger, so panels are usually rendered by the router instead.
+
+```tsx
+// Regular tabs
+<Tabs.Root>
+  <Tabs.List>
+    <Tabs.Trigger />
+  </Tabs.List>
+  <Tabs.Content />
+</Tabs.Root>
+
+// Navigation tabs
+<Tabs.NavRoot>
+  <Tabs.List>
+    <Tabs.Trigger />
+  </Tabs.List>
+</Tabs.NavRoot>
+```
+
+- `Tabs.List` holds the triggers and carries the visual `variant`. It automatically enables overflow scrolling with fade indicators and scrolls the active tab into view.
+- `Tabs.Trigger` is a single tab. It inherits its variant from the `List`, and can show an `icon`, a `logo`, a `counter` badge, or fully custom `children`.
+- `Tabs.Content` is the panel shown for the active tab in regular tabs. In navigation tabs it renders as a plain container whose visibility you control through routing.
+
+## Best practices
+
+**Do**
+
+- Give every trigger a unique `value`, and provide either a `defaultValue` or a controlled `value` so a tab is selected on first render.
+- Use descriptive trigger text so the tabs are understandable on their own.
+- Reach for `Tabs.NavRoot` when tabs represent different routes in your application.
+- Let the component handle overflow — many tabs will scroll horizontally with fade indicators rather than wrapping.
+
+**Don't**
+
+- Don't put both an `icon` and a `logo` on the same trigger; they are mutually exclusive.
+- Don't set `variant` per trigger to differ within one list — apply it once on the `List` so the group stays consistent.
+
+## Accessibility
+
+### Keyboard
+
+- In regular tabs, arrow keys move between triggers with a roving tabindex: <kbd>←</kbd>/<kbd>→</kbd> for horizontal and <kbd>↑</kbd>/<kbd>↓</kbd> for vertical, with <kbd>Home</kbd>/<kbd>End</kbd> jumping to the first/last tab.
+- Disabled triggers are skipped during keyboard navigation.
+
+### Labeling
+
+- Regular tabs render `role="tablist"` with `role="tab"` triggers and a matching `tabpanel`, wired up by the underlying primitive.
+- Navigation tabs render the `List` as a `<nav>` element with each trigger as a link, so they're announced as navigation.
+- Use clear, human-readable trigger text; for icon- or logo-only triggers, make sure the trigger still has an accessible name.
+
+### Focus & states
+
+- The active content panel is given `tabIndex={-1}` so focus can move into it programmatically.
+- `disabled` triggers can't be focused or activated. In navigation mode a disabled trigger gets `aria-disabled` and its navigation is prevented.
+
+### Known limitations
+
+- `Tabs.NavRoot` is a context provider that only uses its `children` — `value`, `onValueChange`, `defaultValue`, `orientation`, and `className` passed to it are ignored. Drive the active tab from the current route through each `Trigger`.
+- For navigation tabs, `aria-current` on the active tab comes from the router's `NavLink`, so wire up your router (e.g. react-router) for it to appear.
+
+</TabItem>
+
+<TabItem label="Properties">
+
+{/* Visually hidden — anchors the section headings below in the TOC without showing a redundant title in the panel body (the tab already says "Properties"). Hidden via #page-level-tabs h2#properties in styles.css. */}
+
+## Properties
+
+### Root
+
+The main container for regular tabs. It manages the active tab state and provides context to child components.
 
 <DocsPage.PropsTable
   props={[
     {
       name: "defaultValue",
-      description: "The default active tab value (uncontrolled)",
+      description: "The default active tab value (uncontrolled).",
       required: false,
       value: "string",
     },
     {
       name: "value",
-      description: "The controlled value of the active tab",
+      description: "The controlled value of the active tab.",
       required: false,
       value: "string",
     },
     {
       name: "onValueChange",
-      description: "Event handler called when the active tab changes",
+      description: "Called when the active tab changes.",
       required: false,
       value: "(value: string) => void",
     },
     {
       name: "orientation",
-      description: "The orientation of the tabs. Affects both visual layout (horizontal row vs vertical column) and keyboard navigation (Left/Right for horizontal, Up/Down for vertical). Also impacts scrolling behavior and border placement for underlined/overlined variants.",
+      description:
+        "Orientation of the tabs. Affects visual layout (horizontal row vs vertical column), keyboard navigation (Left/Right vs Up/Down), scrolling, and border placement for underlined/overlined variants.",
       required: false,
-      value: "'horizontal' | 'vertical'",
       defaultValue: "'horizontal'",
+      value: "'horizontal' | 'vertical'",
     },
     {
-      name: "children",
-      description: "Tab List and Content components",
-      required: true,
-      value: "ReactNode",
-    },
-
-]}
-/>
-
-### `NavRoot`
-
-The `NavRoot` component serves as the main container for navigation-based tabs. It integrates with your router to update the active tab based on the current route.
-
-```typescript jsx
-<Tabs.NavRoot
-  value={activeRoute}       // [OPTIONAL] controlled active route
-  onValueChange={navigate}  // [OPTIONAL] callback when route changes
-  defaultValue="/home"      // [OPTIONAL] default route
->
-  {/* List and optional Content components */}
-</Tabs.NavRoot>
-```
-
-<DocsPage.PropsTable
-  props={[
-    {
-      name: "value",
-      description: "The controlled value of the active route",
-      required: false,
-      value: "string",
-    },
-    {
-      name: "onValueChange",
-      description: "Event handler called when the active route changes",
-      required: false,
-      value: "(value: string) => void",
-    },
-    {
-      name: "defaultValue",
-      description: "The default active route (uncontrolled)",
+      name: "className",
+      description: "Custom class name applied to the root.",
       required: false,
       value: "string",
     },
     {
       name: "children",
-      description: "Tab List and optional Content components",
+      description: "Tab List and Content components.",
       required: true,
       value: "ReactNode",
     },
   ]}
 />
 
-### `List`
+### NavRoot
 
-The `List` component is a container for tab triggers that handles layout and styling variants.
-
-<Aside title="Accessibility">
-  For regular tabs, the `List` component renders as a `TabsList` with proper
-  ARIA attributes. For navigation tabs, it renders as a `nav` element. Both
-  implementations ensure proper keyboard navigation and screen reader support.
-</Aside>
-
-```typescript jsx
-<Tabs.List
-  variant="underlined"      // [OPTIONAL] visual variant
-  className="my-class"      // [OPTIONAL] custom class
-  activeClassName="active"  // [OPTIONAL] class for active tab
->
-  {/* Trigger components */}
-</Tabs.List>
-```
+The container for navigation-based tabs. It provides routing context to its triggers; the active tab is derived from the current route rather than from local state.
 
 <DocsPage.PropsTable
   props={[
     {
-      name: "className",
-      description: "Custom class name",
-      required: false,
-      value: "string",
+      name: "children",
+      description: "Tab List (and optional Content) components.",
+      required: true,
+      value: "ReactNode",
     },
+  ]}
+/>
+
+<Aside type="note">
+  `NavRoot` accepts the same prop type as `Root`, but only `children` is used —
+  `value`, `onValueChange`, `defaultValue`, `orientation`, and `className` are
+  ignored. Active state comes from each `Trigger`'s route via your router's
+  `NavLink`.
+</Aside>
+
+### List
+
+A container for tab triggers that handles layout and the visual variant. In regular tabs it renders as a tablist; in navigation tabs it renders as a `<nav>`.
+
+<DocsPage.PropsTable
+  props={[
     {
       name: "variant",
-      description: "Visual style variant of the tabs",
+      description: "Visual style variant, applied to all triggers in the list.",
       required: false,
-      value: "'underlined' | 'overlined' | 'ghost' | 'outlined'",
       defaultValue: "'underlined'",
+      value: "'underlined' | 'overlined' | 'ghost' | 'outlined'",
     },
     {
       name: "activeClassName",
-      description: "Additional class name applied to the active tab trigger",
+      description: "Additional class name applied to the active tab trigger.",
+      required: false,
+      value: "string",
+    },
+    {
+      name: "className",
+      description: "Custom class name.",
       required: false,
       value: "string",
     },
     {
       name: "children",
-      description: "Tab Trigger components",
+      description: "Tab Trigger components.",
       required: true,
       value: "ReactNode",
     },
   ]}
 />
 
-### `Trigger`
+### Trigger
 
-The `Trigger` component represents an individual tab button or navigation link.
-
-```typescript jsx
-// Regular tab trigger
-<Tabs.Trigger
-  value="tab1"              // unique identifier for the tab
-  icon="dashboard"          // [OPTIONAL] icon name
-  logo="github"             // [OPTIONAL] logo name (mutually exclusive with icon)
-  counter={5}               // [OPTIONAL] counter badge value
-  variant="underlined"      // [OPTIONAL] override List variant
-  className="my-class"      // [OPTIONAL] custom class
-  disabled                  // [OPTIONAL] disable the trigger
->
-  {/* Optional custom children */}
-</Tabs.Trigger>
-
-// Navigation tab trigger
-<Tabs.Trigger
-  value="/path"             // route path
-  linkProps={{              // [OPTIONAL] additional link properties
-    target: "_blank",
-    replace: true
-  }}
->
-  Navigation Tab
-</Tabs.Trigger>
-```
+An individual tab button (regular tabs) or navigation link (nav tabs). It inherits its `variant` from the `List`.
 
 <DocsPage.PropsTable
   props={[
     {
-      name: "className",
-      description: "Custom class name",
-      required: false,
-      value: "string",
-    },
-    {
-      name: "variant",
-      description: "Override the variant from List",
-      required: false,
-      value: "'underlined' | 'overlined' | 'ghost' | 'outlined'",
-    },
-    {
       name: "value",
-      description: "Unique identifier for the tab (or route path for nav tabs)",
+      description:
+        "Unique identifier for the tab. In navigation tabs this is the route path.",
       required: true,
       value: "string",
     },
     {
       name: "icon",
-      description: "Name of the icon to display (mutually exclusive with logo)",
+      description: "Name of the icon to display. Mutually exclusive with logo.",
       required: false,
-      value: "string",
+      value: "IconName",
     },
     {
       name: "logo",
-      description: "Name of the logo to display (mutually exclusive with icon)",
+      description: "Name of the logo to display. Mutually exclusive with icon.",
       required: false,
-      value: "string",
+      value: "LogoName",
     },
     {
       name: "counter",
-      description: "Counter badge value to display",
+      description:
+        "Counter badge value. Only renders when it is an integer, so 0 shows but null and non-integers do not.",
       required: false,
       value: "number | null",
     },
-
     {
       name: "disabled",
-      description: "Disable the trigger",
+      description: "Disables the trigger.",
       required: false,
-      value: "boolean",
       defaultValue: "false",
+      value: "boolean",
     },
     {
       name: "linkProps",
-      description: "Additional props for navigation links (NavRoot only)",
+      description:
+        "Additional props forwarded to the navigation link. Navigation tabs only.",
       required: false,
       value: "Omit<NavLinkProps, 'to'>",
     },
     {
+      name: "exact",
+      description:
+        "Match the route exactly when deciding the active state. Navigation tabs only.",
+      required: false,
+      value: "boolean",
+    },
+    {
+      name: "className",
+      description: "Custom class name.",
+      required: false,
+      value: "string",
+    },
+    {
       name: "children",
       description:
-        "Custom content (used when icon/logo/counter are insufficient)",
+        "Custom content, used when icon/logo/counter are insufficient.",
       required: false,
       value: "ReactNode",
     },
-
-]}
+  ]}
 />
 
-### `Content`
+### Content
 
-The `Content` component represents the panel content associated with a tab.
-
-```typescript jsx
-<Tabs.Content
-  value="tab1"         // matches the Trigger value
-  className="my-class" // [OPTIONAL] custom class
->
-  {/* Panel content */}
-</Tabs.Content>
-```
+The panel content associated with a tab. In regular tabs the primitive mounts only the active panel (unless `forceMount` is set); in navigation tabs it renders as a plain container.
 
 <DocsPage.PropsTable
   props={[
     {
-      name: "className",
-      description: "Custom class name",
-      required: false,
-      value: "string",
-    },
-    {
       name: "value",
-      description: "The value that associates this content with its trigger",
+      description: "The value that associates this content with its trigger.",
       required: true,
       value: "string",
     },
     {
+      name: "className",
+      description: "Custom class name.",
+      required: false,
+      value: "string",
+    },
+    {
       name: "children",
-      description: "Content to display when this tab is active",
+      description: "Content to display when this tab is active.",
       required: true,
       value: "ReactNode",
     },
   ]}
 />
 
-## Best Practices
+</TabItem>
 
-1. **Unique Values**: Ensure each tab trigger has a unique `value` prop
-2. **Default Selection**: Always provide either a `defaultValue` or controlled `value` to ensure a tab is selected by default
-3. **Accessible Labels**: Use descriptive text for tab triggers to ensure good accessibility
-4. **Icon Usage**: Choose between `icon` or `logo` props - don't use both on the same trigger
-5. **Navigation Tabs**: Use `NavRoot` when tabs represent different routes in your application
-6. **Content Loading**: Consider lazy loading tab content for better performance with heavy content
-7. **Keyboard Navigation**: The component supports standard keyboard navigation (Arrow keys, Home, End)
-8. **Scrollable Tabs**: The component automatically handles overflow scenarios - tabs will scroll horizontally with fade indicators when there are too many to fit in the container
+</Tabs>
+
+</div>

@@ -1,12 +1,21 @@
 ---
 title: Scroll Area
 description: Scroll area component
-beta: true
 ---
 
-The `ScrollArea` component offers a flexible, customizable container with scrollbars for overflowing content. Use it to display content that exceeds the visible area, supporting both horizontal and vertical scrolling.
-
 import { DocsPage } from "@/components/docs-page";
+import { Tabs, TabItem } from "@astrojs/starlight/components";
+import PageTabsToc from "@/components/page-tabs-toc.astro";
+
+<PageTabsToc />
+
+<div id="page-level-tabs">
+
+<Tabs>
+
+<TabItem label="Overview">
+
+The `ScrollArea` component offers a flexible, customizable container with scrollbars for overflowing content. Use it to display content that exceeds the visible area, supporting both horizontal and vertical scrolling.
 
 <DocsPage.ComponentExample
   client:only
@@ -32,27 +41,11 @@ import { DocsPage } from "@/components/docs-page";
 </div>`}
 />
 
-## Usage
-
-```typescript jsx
-import { ScrollArea } from '@harnessio/ui/components';
-
-//...
-
-return (
-  <ScrollArea className="w-[300px] h-[200px] border">
-    <div className="p-cn-md space-y-cn-md w-[700px]">
-      <p>Content that exceeds the viewport height and width.</p>
-      <p>More content...</p>
-      <p>Even more content...</p>
-    </div>
-  </ScrollArea>
-);
-```
+## Variations
 
 ### Directions
 
-The `ScrollArea` component supports the `direction` prop to set the text direction. It accepts values like `ltr` (left-to-right) and `rtl` (right-to-left). The default value is `ltr`.
+The `ScrollArea` component supports the `direction` prop to set the text direction. It accepts `ltr` (left-to-right) and `rtl` (right-to-left).
 
 <DocsPage.ComponentExample
   client:only
@@ -87,7 +80,7 @@ The `ScrollArea` component supports the `direction` prop to set the text directi
 </div>`}
 />
 
-### Scroll Events
+### Scroll events
 
 The `ScrollArea` component provides several event handlers to respond to scroll actions:
 
@@ -96,10 +89,9 @@ The `ScrollArea` component provides several event handlers to respond to scroll 
 - `onScrollLeft`: Triggered when the scroll area is scrolled to the left.
 - `onScrollRight`: Triggered when the scroll area is scrolled to the right.
 
-It provides an `IntersectionObserverEntry` parameter that contains information about the scroll position and visibility of the target element.
+Each handler receives an `IntersectionObserverEntry` describing the position and visibility of the edge sentinel.
 
-`rootMargin` and `threshold` props can be used to customize the scroll event behavior.
-Use `rootMargin` to adjust the offset around the scroll area, and `threshold` to define how much of the target should be visible before triggering the scroll event.
+`rootMargin` and `threshold` customize when the events fire. Use `rootMargin` to adjust the offset around the scroll area, and `threshold` to define how much of the target should be visible before triggering the scroll event.
 
 <DocsPage.ComponentExample
   client:only
@@ -161,10 +153,78 @@ Use `rootMargin` to adjust the offset around the scroll area, and `threshold` to
 </div>`}
 />
 
-## API Reference
+## Installation
+
+```typescript jsx
+import { ScrollArea } from '@harnessio/ui/components';
+
+//...
+
+return (
+  <ScrollArea className="w-[300px] h-[200px] border">
+    <div className="p-cn-md space-y-cn-md w-[700px]">
+      <p>Content that exceeds the viewport height and width.</p>
+      <p>More content...</p>
+      <p>Even more content...</p>
+    </div>
+  </ScrollArea>
+);
+```
+
+</TabItem>
+
+<TabItem label="Usage">
+
+## Anatomy
+
+`ScrollArea` wraps your content in a scrolling viewport. Give the viewport a fixed size (via `className`) and let the inner content overflow — the component handles the scrollbars and, optionally, edge-detection callbacks.
+
+```tsx
+<ScrollArea className="w-[300px] h-[200px]">
+  {/* overflowing content */}
+</ScrollArea>
+```
+
+- The outer element is the scroll viewport; `className` styles it and `classNameContent` styles the inner content wrapper.
+- Edge callbacks (`onScrollTop` / `onScrollBottom` / `onScrollLeft` / `onScrollRight`) are backed by `IntersectionObserver` sentinels placed at each edge; a sentinel is only rendered when its callback is provided.
+- Pass `preserveScrollPosition` with a `storageKey` to persist and restore the vertical scroll position across mounts.
+
+## Best practices
+
+{/* TODO: editorial — please review against product guidance. */}
+
+**Do**
+
+- Constrain the viewport with an explicit width/height so there's something to scroll within.
+- Use the edge callbacks for infinite-scroll or "load more" behavior — `onScrollBottom` is the usual hook for fetching the next page.
+- Tune `rootMargin` / `threshold` when you want to fetch slightly before the user actually reaches the edge.
+
+**Don't**
+
+- Don't attach an edge callback you don't use — the sentinel and observer are only created for callbacks you pass.
+- Don't rely on it for the whole-page scroll; it's for bounded, overflowing regions.
+
+## Accessibility
+
+### Focus & states
+
+- `ScrollArea` renders plain scrollable containers (it isn't built on a Radix scroll primitive) and doesn't add ARIA roles. Native keyboard scrolling applies once the region is focused.
+
+### Known limitations
+
+- Because no `role` or label is applied, give the region an accessible name in surrounding markup if its purpose isn't clear from context, and make sure keyboard users can reach the scrollable content.
+
+</TabItem>
+
+<TabItem label="Properties">
+
+{/* Visually hidden — anchors the section headings below in the TOC without showing a redundant title in the panel body (the tab already says "Properties"). Hidden via #page-level-tabs h2#properties in styles.css. */}
+
+## Properties
+
+### ScrollArea
 
 <DocsPage.PropsTable
-  componentName="ScrollArea"
   props={[
     {
       name: "children",
@@ -175,15 +235,14 @@ Use `rootMargin` to adjust the offset around the scroll area, and `threshold` to
     {
       name: "direction",
       description:
-        "Sets the text direction for the scroll area. Defaults to 'ltr'.",
+        "Sets the text direction (dir) for the scroll area. Inherits (typically ltr) when unset.",
       required: false,
-      defaultValue: "'ltr'",
       value: "'ltr' | 'rtl'",
     },
     {
       name: "className",
       description:
-        "Additional class names to apply to the scroll area container.",
+        "Additional class names to apply to the scroll area viewport.",
       required: false,
       value: "string",
     },
@@ -197,35 +256,35 @@ Use `rootMargin` to adjust the offset around the scroll area, and `threshold` to
     {
       name: "onScrollTop",
       description:
-        "Callback function triggered when the scroll area is scrolled to the top.",
+        "Callback triggered when the scroll area is scrolled to the top.",
       required: false,
       value: "(entry: IntersectionObserverEntry) => void",
     },
     {
       name: "onScrollBottom",
       description:
-        "Callback function triggered when the scroll area is scrolled to the bottom.",
+        "Callback triggered when the scroll area is scrolled to the bottom.",
       required: false,
       value: "(entry: IntersectionObserverEntry) => void",
     },
     {
       name: "onScrollLeft",
       description:
-        "Callback function triggered when the scroll area is scrolled to the left.",
+        "Callback triggered when the scroll area is scrolled to the left.",
       required: false,
       value: "(entry: IntersectionObserverEntry) => void",
     },
     {
       name: "onScrollRight",
       description:
-        "Callback function triggered when the scroll area is scrolled to the right.",
+        "Callback triggered when the scroll area is scrolled to the right.",
       required: false,
       value: "(entry: IntersectionObserverEntry) => void",
     },
     {
       name: "rootMargin",
       description:
-        "Margin around the scroll area to trigger scroll events. Defaults to '0px'.",
+        "Margin around the scroll area used to trigger scroll events.",
       required: false,
       defaultValue: "'0px'",
       value:
@@ -234,11 +293,33 @@ Use `rootMargin` to adjust the offset around the scroll area, and `threshold` to
     {
       name: "threshold",
       description:
-        "Threshold for triggering scroll events. A value between 0 and 1, where 0 means the event is triggered immediately and 1 means it is triggered when the scroll area is fully scrolled.",
+        "How much of the edge sentinel must be visible before a scroll event fires (0–1).",
       required: false,
       defaultValue: "0.1",
       value: "number | number[]",
     },
+    {
+      name: "preserveScrollPosition",
+      description:
+        "Persists and restores the vertical scroll position (paired with storageKey).",
+      required: false,
+      defaultValue: "false",
+      value: "boolean",
+    },
+    {
+      name: "storageKey",
+      description:
+        "Key used to store the scroll position when preserveScrollPosition is on.",
+      required: false,
+      value: "string",
+    },
   ]}
 />
-```
+
+The `useScrollArea` hook is also exported for advanced cases where you need to drive the viewport programmatically.
+
+</TabItem>
+
+</Tabs>
+
+</div>

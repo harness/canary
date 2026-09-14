@@ -1,0 +1,68 @@
+---
+title: Grouped items
+description: Grouping DropdownMenu items with DropdownMenu.Group
+---
+
+import { DocsPage } from "@/components/docs-page";
+
+The `DropdownMenu` component supports grouping items together using the `DropdownMenu.Group` component. This allows you to create a structured menu with labeled sections.
+
+<DocsPage.ComponentExample
+  client:only
+  code={`<DropdownMenu.Root>
+    <DropdownMenu.Trigger aria-label="options menu" asChild>
+        <Button variant="ghost" iconOnly>
+            <IconV2 name="more-horizontal" />
+        </Button>
+    </DropdownMenu.Trigger>
+
+    <DropdownMenu.Content>
+        <DropdownMenu.Group label="Group label">
+            <DropdownMenu.Item title="Item 1" />
+            <DropdownMenu.Item title="Item 2" />
+            <DropdownMenu.Item title="Item 3" />
+            <DropdownMenu.Item title="Item 4" />
+            <DropdownMenu.Item title="Item 5" />
+        </DropdownMenu.Group>
+
+  </DropdownMenu.Content>
+</DropdownMenu.Root>`}
+/>
+
+## Properties
+
+### `Group`
+
+The Group component represents a labeled group of menu items.
+
+```typescript jsx
+<DropdownMenu.Group
+  label="Group label"  // [OPTIONAL] label for the group
+  className="my-class" // [OPTIONAL] custom class
+>
+  {/* Group items */}
+</DropdownMenu.Group>
+```
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "label",
+      description: "Label text for the group",
+      required: false,
+      value: "string",
+    },
+    {
+      name: "className",
+      description: "Custom class name",
+      required: false,
+      value: "string",
+    },
+    {
+      name: "children",
+      description: "Group items",
+      required: true,
+      value: "ReactNode",
+    },
+  ]}
+/>

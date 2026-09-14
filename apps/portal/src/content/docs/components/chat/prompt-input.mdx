@@ -1,12 +1,21 @@
 ---
 title: Prompt Input
 description: AI chat prompt input component for conversational interfaces
-beta: true
 ---
 
 import { DocsPage } from "@/components/docs-page";
+import { Tabs, TabItem } from "@astrojs/starlight/components";
+import PageTabsToc from "@/components/page-tabs-toc.astro";
 
-The `PromptInput` component is a compound component for AI chat interfaces. It includes a textarea with auto-resize, keyboard shortcuts, and optional toolbar for actions.
+<PageTabsToc />
+
+<div id="page-level-tabs">
+
+<Tabs>
+
+<TabItem label="Overview">
+
+The `PromptInput` component is a compound component for AI chat interfaces. It includes a textarea with auto-resize, keyboard shortcuts, and an optional toolbar for actions.
 
 <DocsPage.ComponentExample
   client:only
@@ -23,7 +32,11 @@ The `PromptInput` component is a compound component for AI chat interfaces. It i
 </div>`}
 />
 
-## With Toolbar and Button
+## Variations
+
+### With toolbar and button
+
+Put tool buttons inside `PromptInput.Tools`. Each `PromptInput.Button` is an icon-only toggle for a toolbar action (attach, mention, and so on).
 
 <DocsPage.ComponentExample
   client:only
@@ -41,7 +54,9 @@ The `PromptInput` component is a compound component for AI chat interfaces. It i
 </div>`}
 />
 
-## Streaming State
+### Streaming state
+
+Pass `status="streaming"` to `PromptInput.Submit` while a response is generating. The submit icon becomes a stop icon so the same control cancels the stream.
 
 <DocsPage.ComponentExample
   client:only
@@ -59,7 +74,7 @@ The `PromptInput` component is a compound component for AI chat interfaces. It i
 </div>`}
 />
 
-## Usage
+## Installation
 
 ```typescript jsx
 import { PromptInput } from '@harnessio/ui/components'
@@ -80,18 +95,247 @@ return (
 )
 ```
 
-## Component Structure
+</TabItem>
 
-- **PromptInput.Root** - Form wrapper with submit handling
-- **PromptInput.Textarea** - Auto-resizing textarea with keyboard shortcuts
-- **PromptInput.Toolbar** - Container for actions and submit button
-- **PromptInput.Tools** - Container for tool buttons
-- **PromptInput.Submit** - Submit button with streaming state support
-- **PromptInput.Button** - Icon-only `Toggle` for toolbar actions (attach, emoji, etc.)
+<TabItem label="Usage">
 
-## Keyboard Shortcuts
+## Anatomy
 
-| Key             | Action            |
-| --------------- | ----------------- |
-| `Enter`         | Submit the form   |
-| `Shift + Enter` | Insert a new line |
+`PromptInput` is a compound component. `PromptInput.Root` is a real `<form>`; the textarea and toolbar are composed inside it.
+
+```tsx
+<PromptInput.Root onSubmit={handleSubmit}>
+  <PromptInput.Textarea placeholder="What would you like to know?" />
+  <PromptInput.Toolbar>
+    <PromptInput.Tools>
+      <PromptInput.Button prefixIcon="plus" tooltipProps={{ title: "Add" }} />
+    </PromptInput.Tools>
+    <PromptInput.Submit />
+  </PromptInput.Toolbar>
+</PromptInput.Root>
+```
+
+- **`PromptInput.Root`** — the form wrapper. It renders a native `<form>` and forwards standard form attributes, including `onSubmit`. It holds no value state of its own.
+- **`PromptInput.Textarea`** — an auto-resizing textarea. It grows with its content, submits the form on `Enter`, and inserts a newline on `Shift + Enter`. Its field name is `message`.
+- **`PromptInput.Toolbar`** — a container that lays out the tools on the left and the submit button on the right.
+- **`PromptInput.Tools`** — a container for toolbar buttons.
+- **`PromptInput.Button`** — an icon-only toggle for a toolbar action.
+- **`PromptInput.Submit`** — the submit button. It shows a send icon by default and a stop icon while `status="streaming"`.
+- **`PromptInput.Tags`** — an optional row of removable tags (for example, attached context), rendered when you pass a non-empty `tags` array.
+
+## Best practices
+
+{/* TODO: editorial — please review against product guidance. */}
+
+**Do**
+
+- Keep the placeholder short and action-oriented ("Ask me anything…").
+- Switch `PromptInput.Submit` to `status="streaming"` while a response generates, so the control doubles as a stop button.
+- Group related toolbar actions inside `PromptInput.Tools`, and give each `PromptInput.Button` a tooltip so its icon reads clearly.
+
+**Don't**
+
+- Don't add a separate submit `<button>` — `PromptInput.Submit` already submits the form, and the textarea submits on `Enter`.
+- Don't rely on the toolbar for critical actions on very narrow layouts where the buttons may crowd the submit control.
+
+## Content
+
+{/* TODO: editorial — please review against product guidance. */}
+
+- The textarea placeholder should describe what the person can ask, not label the field ("Ask me anything…", not "Prompt").
+- Give each toolbar button a concise tooltip title that names the action ("Add", "Attach", "Mention").
+
+## Accessibility
+
+### Keyboard
+
+- **`Enter`** submits the form; **`Shift + Enter`** inserts a new line.
+- The toolbar buttons and submit control are standard buttons, reachable and activatable with the keyboard in the usual way.
+
+### Labeling
+
+- `PromptInput.Textarea` is not labeled on its own — the placeholder is not a substitute for an accessible name. Pass a `label` (or `aria-label`) so the field is announced.
+- `PromptInput.Submit` and `PromptInput.Button` are icon-only. Give the submit control an `aria-label` (for example, "Send" / "Stop"), and give each toolbar button a `tooltipProps.title` (which names the toggle).
+
+### Known limitations
+
+- The component does not set an accessible name on the textarea or the submit button for you. Provide those in the surrounding markup.
+
+</TabItem>
+
+<TabItem label="Properties">
+
+{/* Visually hidden — anchors the section headings below in the TOC without showing a redundant title in the panel body (the tab already says "Properties"). Hidden via #page-level-tabs h2#properties in styles.css. */}
+
+## Properties
+
+### PromptInput.Root
+
+Renders a `<form>` and accepts all standard form attributes (`onSubmit`, `className`, and so on).
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "onSubmit",
+      description:
+        "Native form submit handler. Fired on Enter or when the submit button is pressed.",
+      required: false,
+      value: "FormEventHandler<HTMLFormElement>",
+    },
+    {
+      name: "children",
+      description: "The textarea, toolbar, and any tags.",
+      required: false,
+      value: "ReactNode",
+    },
+    {
+      name: "className",
+      description: "Additional CSS classes for the form wrapper.",
+      required: false,
+      value: "string",
+    },
+  ]}
+/>
+
+### PromptInput.Textarea
+
+Accepts all `Textarea` props. `autoResize` is always on and the field `name` is `message`.
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "placeholder",
+      description: "Placeholder text.",
+      required: false,
+      defaultValue: "'What would you like to know?'",
+      value: "string",
+    },
+    {
+      name: "value",
+      description: "Controlled value of the textarea.",
+      required: false,
+      value: "string",
+    },
+    {
+      name: "onChange",
+      description: "Change handler; receives the native change event.",
+      required: false,
+      value: "ChangeEventHandler<HTMLTextAreaElement>",
+    },
+    {
+      name: "label",
+      description: "Accessible label for the field.",
+      required: false,
+      value: "string",
+    },
+    {
+      name: "disabled",
+      description: "Disables the textarea.",
+      required: false,
+      value: "boolean",
+    },
+  ]}
+/>
+
+### PromptInput.Submit
+
+Extends `Button` (rendered icon-only, `type="submit"`, size `xs`).
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "status",
+      description:
+        "When 'streaming', shows a stop icon instead of the send icon. Otherwise the send icon is shown.",
+      required: false,
+      value: "'streaming'",
+    },
+    {
+      name: "children",
+      description: "Overrides the default icon.",
+      required: false,
+      value: "ReactNode",
+    },
+    {
+      name: "disabled",
+      description: "Disables the submit button.",
+      required: false,
+      value: "boolean",
+    },
+  ]}
+/>
+
+### PromptInput.Button
+
+Extends `Toggle` (rendered icon-only, default `variant='outline'`, size `xs`).
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "prefixIcon",
+      description: "Icon shown in the button.",
+      required: true,
+      value: "IconV2 name",
+    },
+    {
+      name: "prefixIconProps",
+      description: "Props forwarded to the icon (for example, size).",
+      required: false,
+      value: "Partial<IconPropsV2>",
+    },
+    {
+      name: "tooltipProps",
+      description: "Tooltip configuration; use title to name the action.",
+      required: false,
+      value: "IconWithTooltipProps",
+    },
+    {
+      name: "selected",
+      description: "Controlled selected (pressed) state of the toggle.",
+      required: false,
+      value: "boolean",
+    },
+    {
+      name: "onChange",
+      description: "Called with the new selected state when toggled.",
+      required: false,
+      value: "(selected: boolean) => void",
+    },
+    {
+      name: "disabled",
+      description: "Disables the button.",
+      required: false,
+      value: "boolean",
+    },
+  ]}
+/>
+
+### PromptInput.Toolbar & PromptInput.Tools
+
+Both are layout containers and accept standard `<div>` attributes, including `className` and `children`.
+
+### PromptInput.Tags
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "tags",
+      description:
+        "Tags to display. Each tag is { id, displayName, icon? }. Renders nothing when empty.",
+      required: false,
+      value: "PromptInputTag[]",
+    },
+    {
+      name: "onRemove",
+      description: "Called with a tag id when its remove control is pressed.",
+      required: false,
+      value: "(id: string) => void",
+    },
+  ]}
+/>
+
+</TabItem>
+
+</Tabs>
+
+</div>

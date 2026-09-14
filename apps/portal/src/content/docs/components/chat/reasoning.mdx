@@ -1,16 +1,21 @@
 ---
 title: Reasoning
 description: Collapsible AI reasoning/thinking component for chat interfaces
-beta: true
 ---
 
 import { DocsPage } from "@/components/docs-page";
+import { Tabs, TabItem } from "@astrojs/starlight/components";
+import PageTabsToc from "@/components/page-tabs-toc.astro";
 
-The `Reasoning` component displays AI reasoning or thinking content in a collapsible format. It automatically tracks streaming duration and can auto-collapse when streaming completes.
+<PageTabsToc />
 
-## Usage
+<div id="page-level-tabs">
 
-The Reasoning component uses a compound pattern with `Reasoning.Root`, `Reasoning.Trigger`, and `Reasoning.Content` sub-components.
+<Tabs>
+
+<TabItem label="Overview">
+
+The `Reasoning` component displays AI reasoning or thinking content in a collapsible format. It automatically tracks streaming duration and can auto-collapse when streaming completes. It's a compound component with `Reasoning.Root`, `Reasoning.Trigger`, and `Reasoning.Content`.
 
 <DocsPage.ComponentExample
   client:only
@@ -27,7 +32,9 @@ The Reasoning component uses a compound pattern with `Reasoning.Root`, `Reasonin
 </Reasoning.Root>`}
 />
 
-## Streaming State
+## Variations
+
+### Streaming state
 
 When `isStreaming` is true, the trigger displays an animated shimmer effect. The component tracks the duration automatically.
 
@@ -41,7 +48,7 @@ When `isStreaming` is true, the trigger displays an animated shimmer effect. The
 </Reasoning.Root>`}
 />
 
-## With Duration
+### With duration
 
 After streaming completes, the component displays how long the thinking took.
 
@@ -60,7 +67,7 @@ After streaming completes, the component displays how long the thinking took.
 </Reasoning.Root>`}
 />
 
-## Custom Thinking Message
+### Custom thinking message
 
 Customize the thinking message using the `getThinkingMessage` prop on the trigger.
 
@@ -79,7 +86,7 @@ Customize the thinking message using the `getThinkingMessage` prop on the trigge
 </Reasoning.Root>`}
 />
 
-## Usage
+## Installation
 
 ```typescript jsx
 import { Reasoning } from '@harnessio/ui/components'
@@ -113,45 +120,164 @@ const [open, setOpen] = useState(false)
 </Reasoning.Root>
 ```
 
-## Component Structure
+</TabItem>
 
-- **Reasoning.Root** - Container that manages state and provides context
-- **Reasoning.Trigger** - Clickable header with icon, message, and chevron
-- **Reasoning.Content** - Collapsible content area with markdown support
+<TabItem label="Usage">
 
-## API Reference
+## Anatomy
+
+`Reasoning` is a compound component built on Radix UI's collapsible. `Reasoning.Root` manages the streaming and open state; the trigger shows the thinking header, and the content holds the reasoning body.
+
+```tsx
+<Reasoning.Root isStreaming={isStreaming}>
+  <Reasoning.Trigger />
+  <Reasoning.Content>{reasoningText}</Reasoning.Content>
+</Reasoning.Root>
+```
+
+- **`Reasoning.Root`** — the container that manages state and provides context. Set `isStreaming` while the model is thinking; the component tracks duration and can auto-collapse once it finishes. Open state is uncontrolled (`defaultOpen`, default `true`) or controlled (`open` + `onOpenChange`).
+- **`Reasoning.Trigger`** — the clickable header. By default it renders a chevron followed by a thinking message; while streaming, that message is a shimmer. Use `getThinkingMessage` to customize it, or pass `children` to replace it entirely.
+- **`Reasoning.Content`** — the collapsible body. It renders its children as-is inside a scrollable region and auto-scrolls to the bottom while streaming.
+
+## Best practices
+
+{/* TODO: editorial — please review against product guidance. */}
+
+**Do**
+
+- Keep `isStreaming` in sync with the model's state so duration tracking and auto-collapse work as intended.
+- Let the reasoning collapse after it completes — it's supporting detail, not the primary answer.
+- Use `getThinkingMessage` when you want a domain-specific label ("Reviewing your code…") instead of the generic "Thinking…".
+
+**Don't**
+
+- Don't put the final answer inside `Reasoning.Content`; reserve it for the intermediate thinking.
+- Don't rely on Markdown formatting in the content — it renders as plain content, not parsed Markdown.
+
+## Content
+
+{/* TODO: editorial — please review against product guidance. */}
+
+- `Reasoning.Content` renders whatever node you pass without Markdown parsing. If you need formatted output, render your own formatted nodes (for example, a Markdown viewer) inside it.
+- Keep the trigger message short and in the present or past tense that matches the state ("Thinking…" while streaming, "Thought for 5 seconds" after).
+
+## Accessibility
+
+### Keyboard
+
+- The trigger is a real `<button>` (via Radix collapsible): it's focusable and toggles the content with `Enter` / `Space`.
+
+### Labeling
+
+- Radix wires the trigger's `aria-expanded` and `aria-controls` to the content region, so the expanded/collapsed state is announced.
+
+### Behavior
+
+1. **Auto-duration tracking**: when `isStreaming` transitions from `true` to `false`, the component calculates and displays the elapsed time (unless you pass an explicit `duration`).
+2. **Auto-collapse**: the component collapses on each transition from streaming to complete, so a finished reasoning block folds itself away.
+3. **Shimmer animation**: the default trigger message shows a shimmer while streaming to indicate ongoing activity.
+
+</TabItem>
+
+<TabItem label="Properties">
+
+{/* Visually hidden — anchors the section headings below in the TOC without showing a redundant title in the panel body (the tab already says "Properties"). Hidden via #page-level-tabs h2#properties in styles.css. */}
+
+## Properties
 
 ### Reasoning.Root
 
-| Prop           | Type                      | Default | Description                                     |
-| -------------- | ------------------------- | ------- | ----------------------------------------------- |
-| `isStreaming`  | `boolean`                 | `false` | Whether content is currently streaming          |
-| `open`         | `boolean`                 | —       | Controlled open state                           |
-| `defaultOpen`  | `boolean`                 | `true`  | Initial open state (uncontrolled)               |
-| `onOpenChange` | `(open: boolean) => void` | —       | Callback when open state changes                |
-| `duration`     | `number`                  | —       | Override the auto-calculated duration (seconds) |
-| `className`    | `string`                  | —       | Additional CSS classes                          |
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "isStreaming",
+      description: "Whether content is currently streaming.",
+      required: false,
+      defaultValue: "false",
+      value: "boolean",
+    },
+    {
+      name: "open",
+      description: "Controlled open state.",
+      required: false,
+      value: "boolean",
+    },
+    {
+      name: "defaultOpen",
+      description: "Initial open state (uncontrolled).",
+      required: false,
+      defaultValue: "true",
+      value: "boolean",
+    },
+    {
+      name: "onOpenChange",
+      description: "Callback when the open state changes.",
+      required: false,
+      value: "(open: boolean) => void",
+    },
+    {
+      name: "duration",
+      description: "Override the auto-calculated duration (seconds).",
+      required: false,
+      value: "number",
+    },
+    {
+      name: "className",
+      description: "Additional CSS classes.",
+      required: false,
+      value: "string",
+    },
+  ]}
+/>
 
 ### Reasoning.Trigger
 
-| Prop                 | Type                                                     | Default                  | Description                       |
-| -------------------- | -------------------------------------------------------- | ------------------------ | --------------------------------- |
-| `getThinkingMessage` | `(isStreaming: boolean, duration?: number) => ReactNode` | Default message function | Custom function to render message |
-| `children`           | `ReactNode`                                              | —                        | Override entire trigger content   |
-| `className`          | `string`                                                 | —                        | Additional CSS classes            |
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "getThinkingMessage",
+      description: "Custom function to render the trigger message.",
+      required: false,
+      value: "(isStreaming: boolean, duration?: number) => ReactNode",
+    },
+    {
+      name: "children",
+      description: "Overrides the entire trigger content.",
+      required: false,
+      value: "ReactNode",
+    },
+    {
+      name: "className",
+      description: "Additional CSS classes.",
+      required: false,
+      value: "string",
+    },
+  ]}
+/>
 
 ### Reasoning.Content
 
-| Prop        | Type     | Default | Description                 |
-| ----------- | -------- | ------- | --------------------------- |
-| `children`  | `string` | —       | Markdown content to display |
-| `className` | `string` | —       | Additional CSS classes      |
-
-## Hooks
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "children",
+      description:
+        "The reasoning content. Rendered as-is (no Markdown parsing).",
+      required: true,
+      value: "ReactNode",
+    },
+    {
+      name: "className",
+      description: "Additional CSS classes.",
+      required: false,
+      value: "string",
+    },
+  ]}
+/>
 
 ### useReasoning
 
-Access the reasoning context from within child components.
+Access the reasoning context from within child components. Throws if used outside a `Reasoning.Root`.
 
 ```typescript jsx
 import { useReasoning } from '@harnessio/ui/components'
@@ -163,10 +289,10 @@ const CustomComponent = () => {
 }
 ```
 
-## Behavior
+Returns `{ isStreaming: boolean; isOpen: boolean; duration: number | undefined }`.
 
-1. **Auto-duration tracking**: When `isStreaming` transitions from `true` to `false`, the component automatically calculates and displays the elapsed time.
+</TabItem>
 
-2. **Auto-collapse**: After streaming has started, the component automatically collapses as soon as streaming completes (only once per session).
+</Tabs>
 
-3. **Shimmer animation**: The trigger displays an animated shimmer effect while streaming to indicate ongoing activity.
+</div>

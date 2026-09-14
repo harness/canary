@@ -1,13 +1,21 @@
 ---
 title: Data Table
 description: Data table component with sorting, selection, and expansion capabilities
-beta: true
 ---
 
-The `Data Table` component provides a powerful way to display and interact with tabular data, featuring row selection, expansion, sorting, and custom cell rendering. Built on TanStack Table, it offers a comprehensive solution for complex data display needs.
-
 import { DocsPage } from "@/components/docs-page";
-import { Aside } from "@astrojs/starlight/components";
+import { Tabs, TabItem } from "@astrojs/starlight/components";
+import PageTabsToc from "@/components/page-tabs-toc.astro";
+
+<PageTabsToc />
+
+<div id="page-level-tabs">
+
+<Tabs>
+
+<TabItem label="Overview">
+
+The `DataTable` component provides a data-driven way to display and interact with tabular data, featuring row selection, expansion, sorting, and custom cell rendering. Built on [TanStack Table](https://tanstack.com/table/latest), you describe your `columns` and hand it your `data` — it builds the underlying [Table](/components/data-display/table-v2/) for you. Reach for the composable [Table](/components/data-display/table-v2/) instead when you want to lay out rows and cells by hand.
 
 <DocsPage.ComponentExample
   client:only
@@ -89,7 +97,11 @@ return (
 />
 ) }`} />
 
-## Column Filter Demo
+## Variations
+
+### Column visibility
+
+Pair the `useColumnFilter` hook with `DataTable.ColumnFilter` to let people toggle which columns show. Columns must set `enableHiding: true` and a unique `id`; the hook persists the choice to `localStorage`.
 
 <DocsPage.ComponentExample
   client:only
@@ -201,108 +213,9 @@ onReset={resetColumns}
 )
 }`} />
 
-## Anatomy
+### Grouped headers
 
-```jsx
-// Detail-panel expansion
-<DataTable
-  columns={columns}
-  data={data}
-  size="normal"
-  getRowId={(row) => row.id}
-  enableRowSelection
-  enableExpanding
-  renderSubComponent={renderSubComponent}
-  currentSorting={sorting}
-  onSortingChange={setSorting}
-  pagination={paginationProps}
-/>
-
-// Tree/nested rows
-<DataTable
-  columns={columns}
-  data={data}
-  enableExpanding
-  getSubRows={(row) => row.children}
-  currentExpanded={expanded}
-  onExpandedChange={setExpanded}
-/>
-```
-
-## Usage
-
-```tsx
-import { DataTable } from "@harnessio/ui/components";
-import { useState } from "react";
-import type {
-  ColumnDef,
-  SortingState,
-  RowSelectionState,
-  ExpandedState,
-} from "@tanstack/react-table";
-
-// Define your data type
-type User = {
-  name: string;
-  email: string;
-  status: "active" | "inactive";
-};
-
-// Define your columns
-const columns: ColumnDef<User>[] = [
-  {
-    accessorKey: "name",
-    header: "Name",
-    enableSorting: true,
-  },
-  {
-    accessorKey: "email",
-    header: "Email",
-  },
-  {
-    accessorKey: "status",
-    header: "Status",
-  },
-];
-
-function MyTable() {
-  // State for sorting, selection, and expansion
-  const [sorting, setSorting] = useState<SortingState>([]);
-  const [rowSelection, setRowSelection] = useState<RowSelectionState>({});
-  const [expanded, setExpanded] = useState<ExpandedState>({});
-
-  // Your data
-  const data = [
-    { name: "John Doe", email: "john@example.com", status: "active" },
-    { name: "Jane Smith", email: "jane@example.com", status: "inactive" },
-  ];
-
-  return (
-    <DataTable
-      columns={columns}
-      data={data}
-      getRowId={(row) => row.email}
-      currentSorting={sorting}
-      onSortingChange={setSorting}
-      enableRowSelection
-      currentRowSelection={rowSelection}
-      onRowSelectionChange={setRowSelection}
-      enableExpanding
-      currentExpanded={expanded}
-      onExpandedChange={setExpanded}
-      renderSubComponent={({ row }) => (
-        <div className="p-cn-md">
-          <p>Additional details for {row.original.name}</p>
-        </div>
-      )}
-    />
-  );
-}
-```
-
-## Grouped headers
-
-DataTable supports multi-row column headers via TanStack Table's nested `columns` API. Use a parent column with a `columns` array for each group. Ungrouped top-level columns (and any injected `select` / `expander` columns) automatically span both header rows.
+Build multi-row column headers with TanStack Table's nested `columns` API — a parent column with a `columns` array becomes a header group. Give every parent and child an explicit `id`, set `enableSorting: false` on parent columns, and keep sorting state keyed by leaf column `id`s. Ungrouped top-level columns (and injected select/expander columns) span both header rows automatically.
 
 <DocsPage.ComponentExample
   client:only
@@ -368,324 +281,324 @@ return (
 />
 ) }`} />
 
-### Guidelines
+### Nested rows (tree mode)
 
-- Set an explicit `id` on every parent and child column when using `visibleColumns` or column filters.
-- Keep sorting state keyed by **leaf** column `id`s. Group parent headers are not interactive.
-- Set `enableSorting: false` on group parent columns.
-- Use custom `header` renderers on leaf columns for tooltips or info icons.
-- Optional `meta.headerClassName` and `meta.isGroupHeader` on `ColumnDef` customize header cell styling.
+Pass `getSubRows` to render child rows as indented rows sharing the same columns, instead of a full-width detail panel. Rows with children show an expand/collapse chevron; leaf rows don't. `renderSubComponent` is ignored when `getSubRows` is provided.
 
-### Row selection and expansion
+<DocsPage.ComponentExample
+  client:only
+  code={`() => {
+  const data = [
+    {
+      id: 'platform',
+      name: 'Platform',
+      type: 'project',
+      total: 38166,
+      children: [
+        {
+          id: 'api-call',
+          name: 'API Call',
+          type: 'API_CALL',
+          total: 20663,
+          children: [
+            { id: 'api-internal', name: 'Internal APIs', type: 'INTERNAL', total: 12400 },
+            { id: 'api-external', name: 'External APIs', type: 'EXTERNAL', total: 8263 }
+          ]
+        },
+        { id: 'webhook', name: 'Webhook Event', type: 'WEBHOOK_EVENT', total: 11481 },
+        { id: 'connector', name: 'Connector Test', type: 'CONNECTOR_TEST', total: 6021 }
+      ]
+    },
+    {
+      id: 'cd',
+      name: 'Continuous Delivery',
+      type: 'project',
+      total: 28980,
+      children: [
+        { id: 'cd-deploy', name: 'Deployments', type: 'DEPLOYMENT', total: 18200 },
+        { id: 'cd-rollback', name: 'Rollbacks', type: 'ROLLBACK', total: 10780 }
+      ]
+    },
+    { id: 'feature-flags', name: 'Feature Flags', type: 'project', total: 9450 }
+  ]
 
-When `enableRowSelection` or `enableExpanding` is enabled, the injected columns are prepended as ungrouped leaf columns and automatically span both header rows.
+const columns = [
+{
+accessorKey: 'name',
+header: 'Project',
+cell: (info) => (
 
-## Props
+<Text variant="body-normal" color={info.row.depth === 0 ? 'foreground-1' : 'foreground-3'}>
+{info.getValue()}
+</Text>
+)
+},
+{
+accessorKey: 'type',
+header: 'Type',
+cell: (info) => (
+<Text variant="caption-normal" color="foreground-3">{info.getValue()}</Text>
+)
+},
+{
+accessorKey: 'total',
+header: 'Year Total (HSU)',
+cell: (info) => (
+<Text variant="body-normal">{info.getValue().toLocaleString()}</Text>
+)
+}
+]
 
-<DocsPage.PropsTable
-  props={[
-    {
-      name: "data",
-      description: "Array of data items to display in the table",
-      required: true,
-      value: "TData[]",
-    },
-    {
-      name: "columns",
-      description:
-        "Column definitions following TanStack Table's ColumnDef format",
-      required: true,
-      value: "ColumnDef<TData, unknown>[]",
-    },
-    {
-      name: "size",
-      description: "Size variant of the table",
-      required: false,
-      value: "'normal' | 'relaxed' | 'compact'",
-      defaultValue: "'normal'",
-    },
-    {
-      name: "variant",
-      description:
-        "Visual variant of the table. Use 'transparent' to display table without borders and background color.",
-      required: false,
-      value: "'default' | 'transparent'",
-      defaultValue: "'default'",
-    },
-    {
-      name: "getRowId",
-      description: "Function to get a unique ID for each row",
-      required: false,
-      value: "(row: TData) => string",
-    },
-    {
-      name: "paginationProps",
-      description: "Pagination configuration",
-      required: false,
-      value: "PaginationProps",
-    },
-    {
-      name: "getRowClassName",
-      description: "Function to apply custom class names to rows",
-      required: false,
-      value: "(row: Row<TData>) => string | undefined",
-    },
-    {
-      name: "onRowClick",
-      description: "Callback function when a row is clicked",
-      required: false,
-      value: "(data: TData, index: number) => void",
-    },
-    {
-      name: "getRowLink",
-      description:
-        "Function to generate a navigation link for a row. When provided, the row renders as a link navigating to the returned URL. Disabled rows (via getIsRowDisabled) will not render as links.",
-      required: false,
-      value: "(data: TData, index: number) => string",
-    },
-    {
-      name: "disableHighlightOnHover",
-      description: "Disable row highlighting on hover",
-      required: false,
-      value: "boolean",
-    },
-    {
-      name: "className",
-      description: "Custom class name for the table container",
-      required: false,
-      value: "string",
-    },
-    {
-      name: "currentSorting",
-      description: "Current sorting state",
-      required: false,
-      value: "SortingState",
-    },
-    {
-      name: "onSortingChange",
-      description: "Callback for when sorting changes",
-      required: false,
-      value: "OnChangeFn<SortingState>",
-    },
-    {
-      name: "enableRowSelection",
-      description: "Enable row selection functionality",
-      required: false,
-      value: "boolean",
-    },
-    {
-      name: "currentRowSelection",
-      description: "Current row selection state",
-      required: false,
-      value: "RowSelectionState",
-    },
-    {
-      name: "onRowSelectionChange",
-      description: "Callback for when row selection changes",
-      required: false,
-      value: "OnChangeFn<RowSelectionState>",
-    },
-    {
-      name: "enableExpanding",
-      description: "Enable row expansion functionality",
-      required: false,
-      value: "boolean",
-    },
-    {
-      name: "getRowCanExpand",
-      description: "Function to determine if a row can be expanded",
-      required: false,
-      value: "(row: Row<TData>) => boolean",
-    },
-    {
-      name: "getRowCanSelect",
-      description: "Function to determine if a row can be selected",
-      required: false,
-      value: "(row: Row<TData>) => boolean",
-    },
-    {
-      name: "getIsRowDisabled",
-      description:
-        "Function to determine if a row is disabled. Disabled rows have reduced opacity, show a not-allowed cursor, and cannot be clicked, selected, or expanded.",
-      required: false,
-      value: "(row: Row<TData>) => boolean",
-    },
-    {
-      name: "currentExpanded",
-      description: "Current expanded rows state",
-      required: false,
-      value: "ExpandedState",
-    },
-    {
-      name: "onExpandedChange",
-      description: "Callback for when expanded state changes",
-      required: false,
-      value: "OnChangeFn<ExpandedState>",
-    },
-    {
-      name: "renderSubComponent",
-      description:
-        "Render function for expanded row content (detail-panel mode). Ignored when getSubRows is provided.",
-      required: false,
-      value: "(props: { row: Row<TData> }) => React.ReactNode",
-    },
-    {
-      name: "getSubRows",
-      description:
-        "Extract child rows from a data item to enable tree/nested row mode. When provided, expanded rows render their children as indented table rows sharing the same column structure.",
-      required: false,
-      value: "(originalRow: TData, index: number) => TData[] | undefined",
-    },
-    {
-      name: "enableColumnResizing",
-      description: "Enable column resizing functionality",
-      required: false,
-      value: "boolean",
-    },
-    {
-      name: "visibleColumns",
-      description:
-        "Array of column IDs to control which columns are visible. Columns must have 'enableHiding: true' to be controlled by this prop.",
-      required: false,
-      value: "string[]",
-    },
-    {
-      name: "columnPinning",
-      description:
-        "Column pinning state to pin columns to the left or right side of the table. Pinned columns remain visible during horizontal scrolling.",
-      required: false,
-      value: "ColumnPinningState ({ left?: string[], right?: string[] })",
-    },
-    {
-      name: "stickyHeader",
-      description:
-        "Opt-in sticky headers. Renders the table inside a single scroll viewport so header cells stick to the top while the body scrolls. Offsets support up to two stacked header rows (grouped headers).",
-      required: false,
-      value: "boolean",
-    },
-    {
-      name: "maxHeight",
-      description:
-        "Maximum height of the table's scroll viewport. Only applies when stickyHeader is enabled.",
-      required: false,
-      value: "CSSProperties['maxHeight']",
-    },
-    {
-      name: "rowPinning",
-      description:
-        "Opt-in row pinning state. Bottom-pinned rows render in a tfoot whose cells stick to the bottom of the scroll viewport (stickyHeader is required for sticking). Pin rows by appending them to data and listing their getRowId ids in rowPinning.bottom.",
-      required: false,
-      value: "RowPinningState ({ top?: string[], bottom?: string[] })",
-    },
-    {
-      name: "onRowPinningChange",
-      description: "Callback for when row pinning changes",
-      required: false,
-      value: "OnChangeFn<RowPinningState>",
-    },
-    {
-      name: "enableRowPinning",
-      description: "Whether rows can be pinned. See TanStack enableRowPinning.",
-      required: false,
-      value: "boolean | ((row: Row<TData>) => boolean)",
-    },
-  ]}
+const [expanded, setExpanded] = React.useState({ platform: true, 'api-call': true })
+
+return (
+
+<DataTable
+  columns={columns}
+  data={data}
+  getRowId={(row) => row.id}
+  size="compact"
+  enableExpanding
+  getSubRows={(row) => row.children}
+  currentExpanded={expanded}
+  onExpandedChange={setExpanded}
 />
+) }`} />
 
-## DataTable.ColumnFilter Component
+### Row links
 
-The `DataTable.ColumnFilter` is a sub-component that provides a dropdown menu for toggling column visibility.
+Return a URL from `getRowLink` to make rows navigable — rows then render as links. Rows disabled via `getIsRowDisabled` are excluded from link rendering. `getRowLink` and `onRowClick` can coexist; the link takes precedence for navigation.
 
-### Props
+<DocsPage.ComponentExample
+  client:only
+  code={`() => {
+  const users = [
+    { id: 1, name: 'John Doe', email: 'john@example.com', status: 'active' },
+    { id: 2, name: 'Jane Smith', email: 'jane@example.com', status: 'active' },
+    { id: 3, name: 'Bob Johnson', email: 'bob@example.com', status: 'inactive' }
+  ]
 
-<DocsPage.PropsTable
-  props={[
-    {
-      name: "columns",
-      description: "Array of column options with label and value pairs",
-      required: true,
-      value: "CheckboxOptions[]",
-    },
-    {
-      name: "visibleColumns",
-      description: "Array of currently visible column IDs",
-      required: true,
-      value: "string[]",
-    },
-    {
-      name: "onCheckedChange",
-      description: "Callback when a column's visibility is toggled",
-      required: true,
-      value: "(columnName: string, checked: boolean) => void",
-    },
-    {
-      name: "onReset",
-      description:
-        "Optional callback to reset columns to default. When provided, shows a Reset button in the dropdown footer",
-      required: false,
-      value: "() => void",
-    },
-  ]}
+const columns = [
+{
+accessorKey: 'name',
+header: 'Name'
+},
+{
+accessorKey: 'email',
+header: 'Email'
+},
+{
+accessorKey: 'status',
+header: 'Status',
+cell: (info) => (
+
+<StatusBadge
+  theme={info.getValue() === "active" ? "success" : "default"}
+  size="sm"
+>
+  {info.getValue()}
+</StatusBadge>
+) } ]
+
+return (
+
+<DataTable
+  columns={columns}
+  data={users}
+  getRowId={(row) => row.id.toString()}
+  size="compact"
+  getRowLink={(data) => \`/users/\${data.id}\`}
+  getIsRowDisabled={(row) => row.original.status === "inactive"}
 />
+) }`} />
 
-## useColumnFilter Hook
+### Active row styling
 
-The `useColumnFilter` hook manages column visibility state with automatic localStorage persistence.
+Use `getRowClassName` to conditionally apply classes to rows based on row data — useful for marking active or highlighted rows. The function receives a TanStack `Row`; read `row.original` and return a class string (e.g. `cn-table-row-active`) or `undefined`.
 
-### Parameters
+<DocsPage.ComponentExample
+  client:only
+  code={`() => {
+  const users = [
+    { id: 1, name: 'John Doe', email: 'john@example.com', status: 'active', isActive: true },
+    { id: 2, name: 'Jane Smith', email: 'jane@example.com', status: 'active', isActive: false },
+    { id: 3, name: 'Bob Johnson', email: 'bob@example.com', status: 'inactive', isActive: false },
+    { id: 4, name: 'Alice Williams', email: 'alice@example.com', status: 'active', isActive: true }
+  ]
 
-<DocsPage.PropsTable
-  props={[
-    {
-      name: "storageKey",
-      description: "Unique key for localStorage persistence",
-      required: true,
-      value: "string",
-    },
-    {
-      name: "columns",
-      description: "Available columns configuration",
-      required: true,
-      value: "CheckboxOptions[]",
-    },
-    {
-      name: "defaultVisibleColumns",
-      description:
-        "Default visible columns when no localStorage value exists. If not provided, all columns are visible by default",
-      required: false,
-      value: "string[]",
-    },
-  ]}
+const columns = [
+{
+accessorKey: 'name',
+header: 'Name'
+},
+{
+accessorKey: 'email',
+header: 'Email'
+},
+{
+accessorKey: 'status',
+header: 'Status',
+cell: (info) => (
+
+<StatusBadge
+  theme={info.getValue() === "active" ? "success" : undefined}
+  size="sm"
+  variant="secondary"
+>
+  {info.getValue()}
+</StatusBadge>
+) } ]
+
+return (
+
+<DataTable
+  columns={columns}
+  data={users}
+  getRowId={(row) => row.id.toString()}
+  getRowClassName={(row) => {
+    return row.original.isActive ? "cn-table-row-active" : undefined;
+  }}
+  size="compact"
 />
+) }`} />
 
-### Return Value
+### Disabled rows
 
-<DocsPage.PropsTable
-  props={[
-    {
-      name: "visibleColumns",
-      description: "Currently visible column identifiers",
-      required: false,
-      value: "string[]",
-    },
-    {
-      name: "toggleColumn",
-      description: "Function to toggle visibility of a specific column",
-      required: false,
-      value: "(columnName: string, checked: boolean) => void",
-    },
-    {
-      name: "resetColumns",
-      description: "Function to reset to default visible columns",
-      required: false,
-      value: "() => void",
-    },
-  ]}
+Return `true` from `getIsRowDisabled` to disable specific rows. Disabled rows have reduced opacity, show a not-allowed cursor, and cannot be clicked, selected, or expanded. The "Select all" checkbox skips them.
+
+<DocsPage.ComponentExample
+  client:only
+  code={`() => {
+  const users = [
+    { id: 1, name: 'John Doe', email: 'john@example.com', status: 'active' },
+    { id: 2, name: 'Jane Smith', email: 'jane@example.com', status: 'inactive' },
+    { id: 3, name: 'Bob Johnson', email: 'bob@example.com', status: 'active' },
+    { id: 4, name: 'Alice Williams', email: 'alice@example.com', status: 'inactive' }
+  ]
+
+const [expanded, setExpanded] = React.useState({})
+const [rowSelection, setRowSelection] = React.useState({})
+
+const columns = [
+{
+accessorKey: 'name',
+header: 'Name'
+},
+{
+accessorKey: 'email',
+header: 'Email'
+},
+{
+accessorKey: 'status',
+header: 'Status',
+cell: (info) => (
+
+<StatusBadge
+  theme={info.getValue() === "active" ? "success" : "default"}
+  size="sm"
+>
+  {info.getValue()}
+</StatusBadge>
+) } ]
+
+const renderSubComponent = ({ row }) => {
+const user = row.original
+return (
+
+<div>
+  <p>
+    Details for {user.name}: {user.email}
+  </p>
+</div>
+) }
+
+return (
+
+<DataTable
+  columns={columns}
+  data={users}
+  getRowId={(row) => row.id.toString()}
+  size="compact"
+  enableRowSelection
+  enableExpanding
+  renderSubComponent={renderSubComponent}
+  currentExpanded={expanded}
+  onExpandedChange={setExpanded}
+  currentRowSelection={rowSelection}
+  onRowSelectionChange={setRowSelection}
+  onRowClick={(data) => alert(data.name + " clicked")}
+  getIsRowDisabled={(row) => row.original.status === "inactive"}
 />
+) }`} />
 
-## Column Pinning
+### Transparent variant
 
-The `DataTable` component supports column pinning, allowing you to pin columns to the left or right side of the table. Pinned columns remain visible while scrolling horizontally through the table.
+Set `variant="transparent"` to remove the background and border styling — ideal for embedding a table in a card or inside an expandable row. All features keep working; pair with `size="compact"` for a condensed look.
+
+<DocsPage.ComponentExample
+  client:only
+  code={`() => {
+  const users = [
+    { name: 'John Doe', email: 'john@example.com', status: 'active', role: 'Admin' },
+    { name: 'Jane Smith', email: 'jane@example.com', status: 'active', role: 'Manager' },
+    { name: 'Bob Johnson', email: 'bob@example.com', status: 'inactive', role: 'Developer' },
+    { name: 'Alice Williams', email: 'alice@example.com', status: 'active', role: 'Designer' }
+  ]
+
+const columns = [
+{
+accessorKey: 'name',
+header: 'Name',
+enableSorting: true
+},
+{
+accessorKey: 'email',
+header: 'Email'
+},
+{
+accessorKey: 'role',
+header: 'Role'
+},
+{
+accessorKey: 'status',
+header: 'Status',
+cell: (info) => (
+
+<StatusBadge
+  theme={info.getValue() === "active" ? "success" : "default"}
+  size="sm"
+>
+  {info.getValue()}
+</StatusBadge>
+) } ]
+
+const [tableSorting, setTableSorting] = React.useState([])
+
+const sortedData = [...users].sort((a, b) => {
+if (tableSorting.length === 0) return 0
+const sort = tableSorting[0]
+const key = sort.id
+if (a[key] < b[key]) return sort.desc ? 1 : -1
+if (a[key] > b[key]) return sort.desc ? -1 : 1
+return 0
+})
+
+return (
+
+<DataTable
+  columns={columns}
+  data={sortedData}
+  getRowId={(row) => row.email}
+  size="compact"
+  variant="transparent"
+  currentSorting={tableSorting}
+  onSortingChange={setTableSorting}
+/>
+) }`} />
+
+### Column pinning
+
+Pass a `columnPinning` state (`{ left, right }`) to pin columns to either side so they stay visible during horizontal scrolling. Pinned columns get a subtle shadow. Set explicit column `size` values for the best control, and avoid pinning so many columns that the scrollable area shrinks too far.
 
 <DocsPage.ComponentExample
   client:only
@@ -842,72 +755,9 @@ Right
 )
 }`} />
 
-### Usage
+### Sticky headers
 
-To enable column pinning, pass a `columnPinning` prop to the `DataTable` component with the column IDs you want to pin:
-
-```tsx
-import { DataTable } from "@harnessio/ui/components";
-import { useState } from "react";
-import type { ColumnPinningState } from "@tanstack/react-table";
-
-function TableWithPinnedColumns() {
-  const [columnPinning, setColumnPinning] = useState<ColumnPinningState>({
-    left: ["name"], // Pin 'name' column to the left
-    right: ["status"], // Pin 'status' column to the right
-  });
-
-  const columns = [
-    {
-      id: "name",
-      accessorKey: "name",
-      header: "Name",
-      size: 150, // Optional: Set column width
-    },
-    {
-      id: "email",
-      accessorKey: "email",
-      header: "Email",
-      size: 200,
-    },
-    {
-      id: "status",
-      accessorKey: "status",
-      header: "Status",
-      size: 100,
-    },
-  ];
-
-  return (
-    <DataTable columns={columns} data={data} columnPinning={columnPinning} />
-  );
-}
-```
-
-### Key Features
-
-- **Left Pinning**: Pin columns to the left side of the table
-- **Right Pinning**: Pin columns to the right side of the table
-- **Visual Indicators**: Pinned columns have subtle shadows to indicate their pinned state
-- **Sticky Positioning**: Pinned columns remain visible during horizontal scrolling
-- **Multiple Columns**: Pin multiple columns to either side
-
-### Best Practices
-
-- Pin important identifier columns (like names or IDs) to the left
-- Pin action columns or status indicators to the right
-- Avoid pinning too many columns as it reduces the scrollable area
-- Set explicit column widths using the `size` property for better control
-
-<Aside type="tip">
-  **Performance Tip:** Column pinning works best with tables that have many
-  columns requiring horizontal scrolling. For tables with few columns, pinning
-  may not be necessary.
-</Aside>
-
-## Sticky Headers
-
-The `DataTable` supports opt-in sticky headers via the `stickyHeader` prop. When enabled, the table renders inside a single, well-defined scroll viewport (`maxHeight` controls its height), and the header cells stick to the top while the body scrolls — remaining fully opaque, including on sortable-header hover. Sticky headers compose with grouped (stacked) headers and with column pinning.
+Set `stickyHeader` (paired with `maxHeight`) to render the table in a single scroll viewport so header cells stick to the top while the body scrolls — staying fully opaque, even on sortable-header hover. Sticky offsets support up to two stacked header rows and compose with column pinning.
 
 <DocsPage.ComponentExample
   client:only
@@ -970,42 +820,9 @@ return (
 />
 ) }`} />
 
-### Usage
+### Row pinning
 
-```tsx
-import { DataTable } from "@harnessio/ui/components";
-
-function TableWithStickyHeader() {
-  return (
-    <DataTable
-      columns={columns}
-      data={data}
-      getRowId={(row) => row.id}
-      stickyHeader
-      maxHeight={320}
-    />
-  );
-}
-```
-
-### Key Features
-
-- **Opt-in**: with `stickyHeader` unset, the table renders exactly as before
-- **Opaque headers**: headers stay fully opaque while scrolling and on sortable-header hover — body rows never show through
-- **Grouped headers**: both stacked header rows stick; the second row offsets itself below the first (measured, with a no-JS CSS-variable fallback)
-- **Works with column pinning**: sticky header cells that are also column-pinned layer correctly above both
-
-### Guidelines
-
-- Pair `stickyHeader` with `maxHeight` so the table has a constrained scroll viewport.
-- Sticky offsets support up to two stacked header rows.
-- The scroll viewport is the table's own container — pagination stays visible below the scroll area.
-
-## Row Pinning
-
-The `DataTable` supports opt-in **bottom row pinning** via TanStack Table's `rowPinning` state — designed for grand-total rows that must stay visible at the bottom of the table. Pinned rows render in a `<tfoot>` whose cells stick to the bottom of the scroll viewport; pair with `stickyHeader` so the header and the total frame the scrolling body.
-
-To pin a total row, append it to `data` and list its `getRowId` id in `rowPinning.bottom`:
+Opt in to **bottom** row pinning via TanStack's `rowPinning` state — designed for a grand-total row that stays visible at the bottom. Append the total row to `data` and list its `getRowId` id in `rowPinning.bottom`; pair with `stickyHeader` so the header and total frame the scrolling body. Bottom pinning supports a single row — if multiple ids are listed, only the last one renders.
 
 <DocsPage.ComponentExample
   client:only
@@ -1052,795 +869,473 @@ return (
 />
 ) }`} />
 
-### Usage
+## Installation
 
 ```tsx
 import { DataTable } from "@harnessio/ui/components";
+import { useState } from "react";
+import type {
+  ColumnDef,
+  SortingState,
+  RowSelectionState,
+  ExpandedState,
+} from "@tanstack/react-table";
 
-function TableWithGrandTotal() {
-  const grandTotal = computeTotals(data); // your own totals row
+// Define your data type
+type User = {
+  name: string;
+  email: string;
+  status: "active" | "inactive";
+};
 
-  return (
-    <DataTable
-      columns={columns}
-      data={[...data, grandTotal]}
-      getRowId={(row) => row.id}
-      stickyHeader
-      maxHeight={340}
-      rowPinning={{ bottom: [grandTotal.id] }}
-    />
-  );
-}
-```
+// Define your columns
+const columns: ColumnDef<User>[] = [
+  {
+    accessorKey: "name",
+    header: "Name",
+    enableSorting: true,
+  },
+  {
+    accessorKey: "email",
+    header: "Email",
+  },
+  {
+    accessorKey: "status",
+    header: "Status",
+  },
+];
 
-### Styling ownership
+function MyTable() {
+  // State for sorting, selection, and expansion
+  const [sorting, setSorting] = useState<SortingState>([]);
+  const [rowSelection, setRowSelection] = useState<RowSelectionState>({});
+  const [expanded, setExpanded] = useState<ExpandedState>({});
 
-- **DataTable owns structure and position**: sticking, z-index layering, opaque backgrounds, the separator above the pinned band, and the spacer row for short tables. Pinned rows get a header-like band (`--cn-bg-2` + medium weight) by default.
-- **You own content and emphasis**: the totals row data itself, cell formatting, the "Grand total" label, and extra styling via `getRowClassName` or the guaranteed `cn-table-v2-row-pinned` class / `data-pinned="bottom"` attribute.
-
-### Behavior notes
-
-- **Single pinned row**: bottom pinning supports exactly one row. If multiple ids are listed in `rowPinning.bottom`, only the last (bottom-most) row renders in the footer — without accumulated offsets the rows would overlap at `bottom: 0`. Multi-row stacking is a possible follow-up.
-- **Short tables**: when the body is shorter than the viewport, whitespace opens between the last body row and the pinned row instead of the pinned row collapsing upward.
-- **Row + column pinning**: a pinned row crossing a pinned column renders a correct corner cell layered above both axes (e.g. a right-pinned `Total` column with a bottom-pinned grand total).
-- `keepPinnedRows` stays at TanStack's default (`true`), so a pinned row appears on **every page** — intended for totals, surprising for other rows.
-- If you use row selection, select-all counts a synthetic totals row unless you exclude it via `getRowCanSelect`.
-- `rowPinning.top` is accepted in state but not rendered — there is no top-pinned body row use case yet.
-
-## Transparent Variant
-
-The `DataTable` component supports a `transparent` variant that removes the background and border styling, making it ideal for embedding tables in cards or within expandable table row or other containers where you want a cleaner, more integrated look.
-
-<DocsPage.ComponentExample
-  client:only
-  code={`() => {
-  const users = [
-    { name: 'John Doe', email: 'john@example.com', status: 'active', role: 'Admin' },
-    { name: 'Jane Smith', email: 'jane@example.com', status: 'active', role: 'Manager' },
-    { name: 'Bob Johnson', email: 'bob@example.com', status: 'inactive', role: 'Developer' },
-    { name: 'Alice Williams', email: 'alice@example.com', status: 'active', role: 'Designer' }
-  ]
-
-const columns = [
-{
-accessorKey: 'name',
-header: 'Name',
-enableSorting: true
-},
-{
-accessorKey: 'email',
-header: 'Email'
-},
-{
-accessorKey: 'role',
-header: 'Role'
-},
-{
-accessorKey: 'status',
-header: 'Status',
-cell: (info) => (
-
-<StatusBadge
-  theme={info.getValue() === "active" ? "success" : "default"}
-  size="sm"
->
-  {info.getValue()}
-</StatusBadge>
-) } ]
-
-const [tableSorting, setTableSorting] = React.useState([])
-
-const sortedData = [...users].sort((a, b) => {
-if (tableSorting.length === 0) return 0
-const sort = tableSorting[0]
-const key = sort.id
-if (a[key] < b[key]) return sort.desc ? 1 : -1
-if (a[key] > b[key]) return sort.desc ? -1 : 1
-return 0
-})
-
-return (
-
-<DataTable
-  columns={columns}
-  data={sortedData}
-  getRowId={(row) => row.email}
-  size="compact"
-  variant="transparent"
-  currentSorting={tableSorting}
-  onSortingChange={setTableSorting}
-/>
-) }`} />
-
-### Usage
-
-```tsx
-import { DataTable, Card } from "@harnessio/ui/components";
-
-function TransparentTable() {
-  const columns = [
-    { accessorKey: "name", header: "Name" },
-    { accessorKey: "email", header: "Email" },
-  ];
-
+  // Your data
   const data = [
-    { name: "John Doe", email: "john@example.com" },
-    { name: "Jane Smith", email: "jane@example.com" },
-  ];
-
-  return (
-    <Card.Root>
-      <Card.Title>Users</Card.Title>
-      <Card.Content className="p-0">
-        <DataTable
-          columns={columns}
-          data={data}
-          variant="transparent"
-          size="compact"
-        />
-      </Card.Content>
-    </Card.Root>
-  );
-}
-```
-
-### Key Features
-
-- **No Background**: Removes the default table background for a cleaner look
-- **No Border**: Removes outer borders while maintaining internal structure
-- **Expandable Rows**: Perfect for embedding tables within expandable rows of another table.
-- **Maintains Functionality**: All features (sorting, selection, expansion) work normally
-
-### Best Practices
-
-- Use `transparent` variant when embedding tables in containers with their own backgrounds
-- Combine with `size="compact"` for a more condensed appearance in cards
-- Ideal for dashboard widgets and summary tables
-
-## Adding active className to table row
-
-The `getRowClassName` prop allows you to conditionally apply CSS classes to table rows based on row data. This is useful for highlighting specific rows, such as marking active items or selected states.
-
-<DocsPage.ComponentExample
-  client:only
-  code={`() => {
-  const users = [
-    { id: 1, name: 'John Doe', email: 'john@example.com', status: 'active', isActive: true },
-    { id: 2, name: 'Jane Smith', email: 'jane@example.com', status: 'active', isActive: false },
-    { id: 3, name: 'Bob Johnson', email: 'bob@example.com', status: 'inactive', isActive: false },
-    { id: 4, name: 'Alice Williams', email: 'alice@example.com', status: 'active', isActive: true }
-  ]
-
-const columns = [
-{
-accessorKey: 'name',
-header: 'Name'
-},
-{
-accessorKey: 'email',
-header: 'Email'
-},
-{
-accessorKey: 'status',
-header: 'Status',
-cell: (info) => (
-
-<StatusBadge
-  theme={info.getValue() === "active" ? "success" : undefined}
-  size="sm"
-  variant="secondary"
->
-  {info.getValue()}
-</StatusBadge>
-) } ]
-
-return (
-
-<DataTable
-  columns={columns}
-  data={users}
-  getRowId={(row) => row.id.toString()}
-  getRowClassName={(row) => {
-    return row.original.isActive ? "cn-table-row-active" : undefined;
-  }}
-  size="compact"
-/>
-) }`} />
-
-### Usage
-
-```tsx
-import { DataTable } from "@harnessio/ui/components";
-
-function TableWithActiveRows() {
-  const columns = [
-    { accessorKey: "name", header: "Name" },
-    { accessorKey: "email", header: "Email" },
-  ];
-
-  const data = [
-    { id: 1, name: "John Doe", email: "john@example.com", isActive: true },
-    { id: 2, name: "Jane Smith", email: "jane@example.com", isActive: false },
+    { name: "John Doe", email: "john@example.com", status: "active" },
+    { name: "Jane Smith", email: "jane@example.com", status: "inactive" },
   ];
 
   return (
     <DataTable
       columns={columns}
       data={data}
-      getRowId={(row) => row.id}
-      getRowClassName={(row) => {
-        return row.original.isActive ? "cn-table-row-active" : undefined;
-      }}
+      getRowId={(row) => row.email}
+      currentSorting={sorting}
+      onSortingChange={setSorting}
+      enableRowSelection
+      currentRowSelection={rowSelection}
+      onRowSelectionChange={setRowSelection}
+      enableExpanding
+      currentExpanded={expanded}
+      onExpandedChange={setExpanded}
+      renderSubComponent={({ row }) => (
+        <div className="p-cn-md">
+          <p>Additional details for {row.original.name}</p>
+        </div>
+      )}
     />
   );
 }
 ```
 
-### Key Points
+</TabItem>
 
-- The `getRowClassName` function receives a `Row<TData>` object from TanStack Table
-- Access row data via `row.original` to apply conditional logic
-- Return a string with class names or `undefined` for no custom styling
-- Use design system class names (e.g., `cn-table-row-active`) for consistent styling
+<TabItem label="Usage">
 
-## Disabled Rows
+## Anatomy
 
-The `getIsRowDisabled` prop allows you to disable specific rows based on row data. Disabled rows have reduced opacity, show a not-allowed cursor, and cannot be clicked, selected, or expanded.
-
-<DocsPage.ComponentExample
-  client:only
-  code={`() => {
-  const users = [
-    { id: 1, name: 'John Doe', email: 'john@example.com', status: 'active' },
-    { id: 2, name: 'Jane Smith', email: 'jane@example.com', status: 'inactive' },
-    { id: 3, name: 'Bob Johnson', email: 'bob@example.com', status: 'active' },
-    { id: 4, name: 'Alice Williams', email: 'alice@example.com', status: 'inactive' }
-  ]
-
-const [expanded, setExpanded] = React.useState({})
-const [rowSelection, setRowSelection] = React.useState({})
-
-const columns = [
-{
-accessorKey: 'name',
-header: 'Name'
-},
-{
-accessorKey: 'email',
-header: 'Email'
-},
-{
-accessorKey: 'status',
-header: 'Status',
-cell: (info) => (
-
-<StatusBadge
-  theme={info.getValue() === "active" ? "success" : "default"}
-  size="sm"
->
-  {info.getValue()}
-</StatusBadge>
-) } ]
-
-const renderSubComponent = ({ row }) => {
-const user = row.original
-return (
-
-<div>
-  <p>
-    Details for {user.name}: {user.email}
-  </p>
-</div>
-) }
-
-return (
-
-<DataTable
-  columns={columns}
-  data={users}
-  getRowId={(row) => row.id.toString()}
-  size="compact"
-  enableRowSelection
-  enableExpanding
-  renderSubComponent={renderSubComponent}
-  currentExpanded={expanded}
-  onExpandedChange={setExpanded}
-  currentRowSelection={rowSelection}
-  onRowSelectionChange={setRowSelection}
-  onRowClick={(data) => alert(data.name + " clicked")}
-  getIsRowDisabled={(row) => row.original.status === "inactive"}
-/>
-) }`} />
-
-### Usage
+`DataTable` is a single, data-driven component — you don't compose parts. You describe the shape of each column with a TanStack `ColumnDef` array and hand it your `data`; internally it renders the composable [Table](/components/data-display/table-v2/) (`Table.Root` / `Header` / `Body` / `Row` / `Head` / `Cell`, plus a `Footer` for pinned rows).
 
 ```tsx
-import { DataTable } from "@harnessio/ui/components";
-
-function TableWithDisabledRows() {
-  const columns = [
-    { accessorKey: "name", header: "Name" },
-    { accessorKey: "email", header: "Email" },
-  ];
-
-  const data = [
-    { id: 1, name: "John Doe", email: "john@example.com", status: "active" },
-    {
-      id: 2,
-      name: "Jane Smith",
-      email: "jane@example.com",
-      status: "inactive",
-    },
-  ];
-
-  return (
-    <DataTable
-      columns={columns}
-      data={data}
-      getRowId={(row) => row.id.toString()}
-      getIsRowDisabled={(row) => row.original.status === "inactive"}
-      onRowClick={(data) => console.log("Clicked:", data.name)}
-    />
-  );
-}
-```
-
-### Key Points
-
-- The `getIsRowDisabled` function receives a `Row<TData>` object from TanStack Table
-- Access row data via `row.original` to apply conditional logic
-- Disabled rows cannot be clicked, selected, or expanded
-- The "Select all" checkbox skips disabled rows
-- Disabled rows are visually distinguished with reduced opacity and a not-allowed cursor
-
-## Row Links
-
-The `getRowLink` prop allows you to make rows navigable by returning a URL string for each row. When provided, rows render as links. Rows disabled via `getIsRowDisabled` will not render as links.
-
-<DocsPage.ComponentExample
-  client:only
-  code={`() => {
-  const users = [
-    { id: 1, name: 'John Doe', email: 'john@example.com', status: 'active' },
-    { id: 2, name: 'Jane Smith', email: 'jane@example.com', status: 'active' },
-    { id: 3, name: 'Bob Johnson', email: 'bob@example.com', status: 'inactive' }
-  ]
-
-const columns = [
-{
-accessorKey: 'name',
-header: 'Name'
-},
-{
-accessorKey: 'email',
-header: 'Email'
-},
-{
-accessorKey: 'status',
-header: 'Status',
-cell: (info) => (
-
-<StatusBadge
-  theme={info.getValue() === "active" ? "success" : "default"}
-  size="sm"
->
-  {info.getValue()}
-</StatusBadge>
-) } ]
-
-return (
-
-<DataTable
-  columns={columns}
-  data={users}
-  getRowId={(row) => row.id.toString()}
-  size="compact"
-  getRowLink={(data) => \`/users/\${data.id}\`}
-  getIsRowDisabled={(row) => row.original.status === "inactive"}
-/>
-) }`} />
-
-### Usage
-
-```tsx
-import { DataTable } from "@harnessio/ui/components";
-
-function TableWithRowLinks() {
-  const columns = [
-    { accessorKey: "name", header: "Name" },
-    { accessorKey: "email", header: "Email" },
-  ];
-
-  const data = [
-    { id: 1, name: "John Doe", email: "john@example.com", status: "active" },
-    {
-      id: 2,
-      name: "Jane Smith",
-      email: "jane@example.com",
-      status: "inactive",
-    },
-  ];
-
-  return (
-    <DataTable
-      columns={columns}
-      data={data}
-      getRowId={(row) => row.id.toString()}
-      getRowLink={(data) => `/users/${data.id}`}
-      getIsRowDisabled={(row) => row.original.status === "inactive"}
-    />
-  );
-}
-```
-
-### Key Points
-
-- `getRowLink` receives the row's data and its index, and must return a string URL
-- Rows with a link render as navigable elements
-- Disabled rows (via `getIsRowDisabled`) are excluded from link rendering
-- `getRowLink` and `onRowClick` can coexist; the link takes precedence for navigation
-
-## Nested Rows (Tree Mode)
-
-The `DataTable` supports tree/nested row rendering via the `getSubRows` prop. When provided, child rows are rendered as indented rows sharing the same column structure, instead of a full-width detail panel. Rows with children show an expand/collapse chevron; leaf rows do not.
-
-<DocsPage.ComponentExample
-  client:only
-  code={`() => {
-  const data = [
-    {
-      id: 'platform',
-      name: 'Platform',
-      type: 'project',
-      total: 38166,
-      children: [
-        {
-          id: 'api-call',
-          name: 'API Call',
-          type: 'API_CALL',
-          total: 20663,
-          children: [
-            { id: 'api-internal', name: 'Internal APIs', type: 'INTERNAL', total: 12400 },
-            { id: 'api-external', name: 'External APIs', type: 'EXTERNAL', total: 8263 }
-          ]
-        },
-        { id: 'webhook', name: 'Webhook Event', type: 'WEBHOOK_EVENT', total: 11481 },
-        { id: 'connector', name: 'Connector Test', type: 'CONNECTOR_TEST', total: 6021 }
-      ]
-    },
-    {
-      id: 'cd',
-      name: 'Continuous Delivery',
-      type: 'project',
-      total: 28980,
-      children: [
-        { id: 'cd-deploy', name: 'Deployments', type: 'DEPLOYMENT', total: 18200 },
-        { id: 'cd-rollback', name: 'Rollbacks', type: 'ROLLBACK', total: 10780 }
-      ]
-    },
-    { id: 'feature-flags', name: 'Feature Flags', type: 'project', total: 9450 }
-  ]
-
-const columns = [
-{
-accessorKey: 'name',
-header: 'Project',
-cell: (info) => (
-
-<Text variant="body-normal" color={info.row.depth === 0 ? 'foreground-1' : 'foreground-3'}>
-{info.getValue()}
-</Text>
-)
-},
-{
-accessorKey: 'type',
-header: 'Type',
-cell: (info) => (
-<Text variant="caption-normal" color="foreground-3">{info.getValue()}</Text>
-)
-},
-{
-accessorKey: 'total',
-header: 'Year Total (HSU)',
-cell: (info) => (
-<Text variant="body-normal">{info.getValue().toLocaleString()}</Text>
-)
-}
-]
-
-const [expanded, setExpanded] = React.useState({ platform: true, 'api-call': true })
-
-return (
-
 <DataTable
   columns={columns}
   data={data}
   getRowId={(row) => row.id}
-  size="compact"
-  enableExpanding
-  getSubRows={(row) => row.children}
-  currentExpanded={expanded}
-  onExpandedChange={setExpanded}
-/>
-) }`} />
-
-### Usage
-
-```tsx
-import { DataTable } from "@harnessio/ui/components";
-import { useState } from "react";
-import type { ExpandedState } from "@tanstack/react-table";
-
-interface ProjectData {
-  id: string;
-  name: string;
-  type: string;
-  total: number;
-  children?: ProjectData[];
-}
-
-function NestedTable() {
-  const [expanded, setExpanded] = useState<ExpandedState>({});
-
-  const data: ProjectData[] = [
-    {
-      id: "platform",
-      name: "Platform",
-      type: "project",
-      total: 38166,
-      children: [
-        {
-          id: "api-call",
-          name: "API Call",
-          type: "API_CALL",
-          total: 20663,
-          children: [
-            {
-              id: "api-internal",
-              name: "Internal APIs",
-              type: "INTERNAL",
-              total: 12400,
-            },
-            {
-              id: "api-external",
-              name: "External APIs",
-              type: "EXTERNAL",
-              total: 8263,
-            },
-          ],
-        },
-        {
-          id: "webhook",
-          name: "Webhook Event",
-          type: "WEBHOOK_EVENT",
-          total: 11481,
-        },
-      ],
-    },
-    {
-      id: "feature-flags",
-      name: "Feature Flags",
-      type: "project",
-      total: 9450,
-    },
-  ];
-
-  const columns = [
-    { accessorKey: "name", header: "Project" },
-    { accessorKey: "type", header: "Type" },
-    { accessorKey: "total", header: "Year Total (HSU)" },
-  ];
-
-  return (
-    <DataTable
-      columns={columns}
-      data={data}
-      getRowId={(row) => row.id}
-      enableExpanding
-      getSubRows={(row) => row.children}
-      currentExpanded={expanded}
-      onExpandedChange={setExpanded}
-    />
-  );
-}
-```
-
-### Key Points
-
-- `getSubRows` tells the table how to extract child rows from each data item
-- Child rows share the same column definitions as parent rows
-- The expander column automatically indents based on nesting depth using the `md` spacing token
-- Leaf rows (no children) do not render an expand/collapse chevron
-- `renderSubComponent` is ignored when `getSubRows` is provided
-- Works with `currentExpanded` and `onExpandedChange` for controlled expansion state
-- Compatible with other features like sorting, row selection, and row links
-
-## Examples
-
-### Table with Custom Cell Rendering
-
-```tsx
-import { DataTable, StatusBadge } from "@harnessio/ui/components";
-
-const columns = [
-  {
-    accessorKey: "name",
-    header: "Name",
-  },
-  {
-    accessorKey: "status",
-    header: "Status",
-    cell: (info) => (
-      <StatusBadge
-        theme={info.getValue() === "active" ? "success" : "danger"}
-        size="sm"
-      >
-        {info.getValue()}
-      </StatusBadge>
-    ),
-  },
-];
-```
-
-### Table with Conditional Row Selection
-
-```tsx
-<DataTable
-  columns={columns}
-  data={data}
   enableRowSelection
-  getRowCanSelect={(row) => row.original.status === "active"}
-  currentRowSelection={rowSelection}
-  onRowSelectionChange={setRowSelection}
+  enableExpanding
+  currentSorting={sorting}
+  onSortingChange={setSorting}
 />
 ```
 
-### Table with Column Visibility Control
+- **Columns** — each `ColumnDef` provides a `header`, an `accessorKey` (or `accessorFn`), and an optional `cell` renderer for custom content. Nest a `columns` array on a parent column for grouped headers.
+- **Injected columns** — enabling features prepends columns for you: `enableRowSelection` adds a leading checkbox column (with a select-all checkbox in the header), and `enableExpanding` adds an expander chevron column (detail-panel mode) or an inline chevron on the first column (tree mode via `getSubRows`).
+- **Expansion** — `renderSubComponent` renders a full-width detail panel beneath an expanded row; `getSubRows` instead renders child rows as indented rows in the same columns. Providing `getSubRows` switches to tree mode and ignores `renderSubComponent`.
+- **Sorting** — sorting is **manual by default** (`manualSorting` defaults to `true`): clicking a sortable header calls `onSortingChange` with the new `SortingState`, and you sort `data` yourself (e.g. on the server). Set `manualSorting={false}` to let the table sort in place.
+- **Pagination** — pass `paginationProps` to render a [Pagination](/components/navigation/pagination/) bar beneath the table.
+- **Sticky / pinned** — `stickyHeader` + `maxHeight` render the table in a scroll viewport with sticky headers; `columnPinning` pins columns to the sides; `rowPinning.bottom` renders a single bottom-pinned row in a `<tfoot>`.
 
-The DataTable component provides a built-in column filter dropdown (`DataTable.ColumnFilter`) and a hook (`useColumnFilter`) for managing column visibility with localStorage persistence.
+## Best practices
 
-#### Using the Built-in Column Filter (Recommended)
+{/* TODO: editorial — please review against product guidance. */}
 
-```tsx
-import { DataTable } from "@harnessio/ui/components";
-import { useColumnFilter } from "@harnessio/ui/hooks";
-import type { CheckboxOptions } from "@harnessio/ui/components";
+**Do**
 
-// Define columns with enableHiding and unique IDs
-const columns = [
-  {
-    id: "name",
-    accessorKey: "name",
-    header: "Name",
-    enableHiding: true,
-  },
-  {
-    id: "email",
-    accessorKey: "email",
-    header: "Email",
-    enableHiding: true,
-  },
-  {
-    id: "status",
-    accessorKey: "status",
-    header: "Status",
-    enableHiding: true,
-  },
-  {
-    id: "createdAt",
-    accessorKey: "createdAt",
-    header: "Created At",
-    enableHiding: true,
-  },
-];
+- Provide a stable `getRowId` so selection, expansion, and pinning state track the right rows as data changes.
+- Give every column a unique `id` when you use `visibleColumns`, column filters, or grouped headers.
+- Keep custom `cell` renderers lightweight and consistent down a column so rows stay scannable.
+- Use `getIsRowDisabled` (rather than filtering data out) when a row should be visible but not actionable.
 
-// Define column options for the filter dropdown
-const COLUMN_OPTIONS: CheckboxOptions[] = [
-  { label: "Name", value: "name" },
-  { label: "Email", value: "email" },
-  { label: "Status", value: "status" },
-  { label: "Created At", value: "createdAt" },
-];
+**Don't**
 
-function TableWithColumnFilter() {
-  // Use the column filter hook with localStorage persistence
-  const { visibleColumns, toggleColumn, resetColumns } = useColumnFilter({
-    storageKey: "my-table-columns", // Unique key for localStorage
-    columns: COLUMN_OPTIONS,
-    defaultVisibleColumns: ["name", "email", "status"], // Default visible columns
-  });
+- Don't forget to actually sort `data` when using the default manual sorting — the table won't reorder rows for you unless you set `manualSorting={false}`.
+- Don't pin more columns than the layout can spare; leave enough scrollable width for the rest.
+- Don't rely on row color or a status theme alone to convey meaning — keep the value itself explicit in the cell.
 
-  const data = [
+## Content
+
+{/* TODO: editorial — please review against product guidance. */}
+
+- Write column headers as short nouns in sentence case ("Created at", "Year total").
+- Keep cell content concise; use a custom `cell` renderer for badges or formatting rather than cramming markup into the data.
+- Use a consistent format for dates and numbers within a column so sorting and scanning behave predictably.
+
+## Accessibility
+
+`DataTable` renders through the semantic [Table](/components/data-display/table-v2/) primitives, so it produces a real HTML `<table>` with `<thead>`, `<tbody>`, and (for pinned rows) `<tfoot>`.
+
+### Keyboard
+
+- The injected controls are keyboard-operable: the select-all and per-row checkboxes are focusable and toggle with **Space**, and the expander is a real [Button](/components/actions/button/) that activates with **Enter**/**Space**.
+- Row selection checkboxes stop click propagation, so toggling a checkbox doesn't also fire the row's `onRowClick`.
+
+### Labeling
+
+- The injected checkboxes carry built-in accessible names — "Select all rows" on the header checkbox and "Select row" on each row — and the expander button is labeled "Toggle Row Expanded".
+- Provide a meaningful `header` for every column so each column is announced.
+
+### Focus & states
+
+- Checkboxes and the expander use the standard focus ring. Disabled rows (`getIsRowDisabled`) drop to reduced opacity and a not-allowed cursor, and can't be clicked, selected, or expanded; the select-all checkbox skips them.
+
+### Known limitations
+
+- **Sort state isn't announced.** Sortable headers render a sort icon but set no `aria-sort`, so screen-reader users aren't told the current sort direction.
+- **Sorting is mouse-driven.** The sortable header is a clickable `<th>` with no keyboard affordance of its own, so the sort can't be toggled from the keyboard — provide an alternative control if keyboard sorting matters.
+- **Selected state is presentational.** Row selection styling comes from the [Table](/components/data-display/table-v2/) `selected` styling; the accessible selected state lives on the row's checkbox, not on the `<tr>` (no `aria-selected`).
+- **A pinned total row appears on every page.** `keepPinnedRows` stays at TanStack's default, so a bottom-pinned row shows on every page — intended for totals, surprising for other rows. If you use row selection, exclude a synthetic totals row via `getRowCanSelect`.
+
+</TabItem>
+
+<TabItem label="Properties">
+
+{/* Visually hidden — anchors the section headings below in the TOC without showing a redundant title in the panel body (the tab already says "Properties"). Hidden via #page-level-tabs h2#properties in styles.css. */}
+
+## Properties
+
+### DataTable
+
+<DocsPage.PropsTable
+  props={[
     {
-      name: "John Doe",
-      email: "john@example.com",
-      status: "active",
-      createdAt: "2024-01-15",
+      name: "data",
+      description: "Array of data items to display in the table",
+      required: true,
+      value: "TData[]",
     },
     {
-      name: "Jane Smith",
-      email: "jane@example.com",
-      status: "inactive",
-      createdAt: "2024-02-20",
+      name: "columns",
+      description:
+        "Column definitions following TanStack Table's ColumnDef format",
+      required: true,
+      value: "ColumnDef<TData, unknown>[]",
     },
-  ];
+    {
+      name: "size",
+      description: "Size variant of the table",
+      required: false,
+      value: "'normal' | 'relaxed' | 'compact'",
+      defaultValue: "'normal'",
+    },
+    {
+      name: "variant",
+      description:
+        "Visual variant of the table. Use 'transparent' to display table without borders and background color.",
+      required: false,
+      value: "'default' | 'transparent'",
+      defaultValue: "'default'",
+    },
+    {
+      name: "getRowId",
+      description: "Function to get a unique ID for each row",
+      required: false,
+      value: "(row: TData) => string",
+    },
+    {
+      name: "paginationProps",
+      description: "Pagination configuration",
+      required: false,
+      value: "PaginationProps",
+    },
+    {
+      name: "getRowClassName",
+      description: "Function to apply custom class names to rows",
+      required: false,
+      value: "(row: Row<TData>) => string | undefined",
+    },
+    {
+      name: "onRowClick",
+      description: "Callback function when a row is clicked",
+      required: false,
+      value: "(data: TData, index: number) => void",
+    },
+    {
+      name: "getRowLink",
+      description:
+        "Function to generate a navigation link for a row. When provided, the row renders as a link navigating to the returned URL. Disabled rows (via getIsRowDisabled) will not render as links.",
+      required: false,
+      value: "(data: TData, index: number) => string",
+    },
+    {
+      name: "disableHighlightOnHover",
+      description: "Disable row highlighting on hover",
+      required: false,
+      value: "boolean",
+    },
+    {
+      name: "className",
+      description: "Custom class name for the table container",
+      required: false,
+      value: "string",
+    },
+    {
+      name: "currentSorting",
+      description: "Current sorting state",
+      required: false,
+      value: "SortingState",
+    },
+    {
+      name: "onSortingChange",
+      description: "Callback for when sorting changes",
+      required: false,
+      value: "OnChangeFn<SortingState>",
+    },
+    {
+      name: "manualSorting",
+      description:
+        "When true (the default), you must sort the data yourself (e.g. server-side); the table only reports sorting changes. Set false to sort in place.",
+      required: false,
+      value: "boolean",
+      defaultValue: "true",
+    },
+    {
+      name: "enableRowSelection",
+      description: "Enable row selection functionality",
+      required: false,
+      value: "boolean",
+    },
+    {
+      name: "currentRowSelection",
+      description: "Current row selection state",
+      required: false,
+      value: "RowSelectionState",
+    },
+    {
+      name: "onRowSelectionChange",
+      description: "Callback for when row selection changes",
+      required: false,
+      value: "OnChangeFn<RowSelectionState>",
+    },
+    {
+      name: "enableExpanding",
+      description: "Enable row expansion functionality",
+      required: false,
+      value: "boolean",
+    },
+    {
+      name: "getRowCanExpand",
+      description: "Function to determine if a row can be expanded",
+      required: false,
+      value: "(row: Row<TData>) => boolean",
+    },
+    {
+      name: "getRowCanSelect",
+      description: "Function to determine if a row can be selected",
+      required: false,
+      value: "(row: Row<TData>) => boolean",
+    },
+    {
+      name: "getIsRowDisabled",
+      description:
+        "Function to determine if a row is disabled. Disabled rows have reduced opacity, show a not-allowed cursor, and cannot be clicked, selected, or expanded.",
+      required: false,
+      value: "(row: Row<TData>) => boolean",
+    },
+    {
+      name: "currentExpanded",
+      description: "Current expanded rows state",
+      required: false,
+      value: "ExpandedState",
+    },
+    {
+      name: "onExpandedChange",
+      description: "Callback for when expanded state changes",
+      required: false,
+      value: "OnChangeFn<ExpandedState>",
+    },
+    {
+      name: "renderSubComponent",
+      description:
+        "Render function for expanded row content (detail-panel mode). Ignored when getSubRows is provided.",
+      required: false,
+      value: "(props: { row: Row<TData> }) => React.ReactNode",
+    },
+    {
+      name: "getSubRows",
+      description:
+        "Extract child rows from a data item to enable tree/nested row mode. When provided, expanded rows render their children as indented table rows sharing the same column structure.",
+      required: false,
+      value: "(originalRow: TData, index: number) => TData[] | undefined",
+    },
+    {
+      name: "initiallyExpandAllRows",
+      description:
+        "When true, all rows are expanded initially. Overridden by currentExpanded when provided.",
+      required: false,
+      value: "boolean",
+      defaultValue: "false",
+    },
+    {
+      name: "visibleColumns",
+      description:
+        "Array of column IDs to control which columns are visible. Columns must have 'enableHiding: true' to be controlled by this prop.",
+      required: false,
+      value: "string[]",
+    },
+    {
+      name: "columnPinning",
+      description:
+        "Column pinning state to pin columns to the left or right side of the table. Pinned columns remain visible during horizontal scrolling.",
+      required: false,
+      value: "ColumnPinningState ({ left?: string[], right?: string[] })",
+    },
+    {
+      name: "stickyHeader",
+      description:
+        "Opt-in sticky headers. Renders the table inside a single scroll viewport so header cells stick to the top while the body scrolls. Offsets support up to two stacked header rows (grouped headers).",
+      required: false,
+      value: "boolean",
+    },
+    {
+      name: "maxHeight",
+      description:
+        "Maximum height of the table's scroll viewport. Only applies when stickyHeader is enabled.",
+      required: false,
+      value: "CSSProperties['maxHeight']",
+    },
+    {
+      name: "rowPinning",
+      description:
+        "Opt-in row pinning state. Bottom-pinned rows render in a tfoot whose cells stick to the bottom of the scroll viewport (stickyHeader is required for sticking). Pin rows by appending them to data and listing their getRowId ids in rowPinning.bottom.",
+      required: false,
+      value: "RowPinningState ({ top?: string[], bottom?: string[] })",
+    },
+    {
+      name: "onRowPinningChange",
+      description: "Callback for when row pinning changes",
+      required: false,
+      value: "OnChangeFn<RowPinningState>",
+    },
+    {
+      name: "enableRowPinning",
+      description: "Whether rows can be pinned. See TanStack enableRowPinning.",
+      required: false,
+      value: "boolean | ((row: Row<TData>) => boolean)",
+    },
+  ]}
+/>
 
-  return (
-    <>
-      {/* Column filter dropdown */}
-      <DataTable.ColumnFilter
-        columns={COLUMN_OPTIONS}
-        visibleColumns={visibleColumns}
-        onCheckedChange={toggleColumn}
-        onReset={resetColumns}
-      />
+### DataTable.ColumnFilter
 
-      {/* DataTable with visible columns */}
-      <DataTable
-        columns={columns}
-        data={data}
-        visibleColumns={visibleColumns}
-      />
-    </>
-  );
-}
-```
+A sub-component that provides a dropdown menu for toggling column visibility.
 
-#### Manual Column Visibility Control
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "columns",
+      description: "Array of column options with label and value pairs",
+      required: true,
+      value: "CheckboxOptions[]",
+    },
+    {
+      name: "visibleColumns",
+      description: "Array of currently visible column IDs",
+      required: true,
+      value: "string[]",
+    },
+    {
+      name: "onCheckedChange",
+      description: "Callback when a column's visibility is toggled",
+      required: true,
+      value: "(columnName: string, checked: boolean) => void",
+    },
+    {
+      name: "onReset",
+      description:
+        "Optional callback to reset columns to default. When provided, shows a Reset button in the dropdown footer",
+      required: false,
+      value: "() => void",
+    },
+  ]}
+/>
 
-You can also manually control column visibility without using the hook:
+### useColumnFilter parameters
 
-```tsx
-import { DataTable } from "@harnessio/ui/components";
-import { useState } from "react";
+The `useColumnFilter` hook manages column visibility state with automatic `localStorage` persistence.
 
-function TableWithManualColumnControl() {
-  const [visibleColumns, setVisibleColumns] = useState([
-    "name",
-    "email",
-    "status",
-  ]);
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "storageKey",
+      description: "Unique key for localStorage persistence",
+      required: true,
+      value: "string",
+    },
+    {
+      name: "columns",
+      description: "Available columns configuration",
+      required: true,
+      value: "CheckboxOptions[]",
+    },
+    {
+      name: "defaultVisibleColumns",
+      description:
+        "Default visible columns when no localStorage value exists. If not provided, all columns are visible by default",
+      required: false,
+      value: "string[]",
+    },
+  ]}
+/>
 
-  const handleColumnToggle = (columnId: string, checked: boolean) => {
-    if (checked) {
-      setVisibleColumns([...visibleColumns, columnId]);
-    } else {
-      setVisibleColumns(visibleColumns.filter((id) => id !== columnId));
-    }
-  };
+### useColumnFilter return value
 
-  const handleReset = () => {
-    setVisibleColumns(["name", "email", "status"]);
-  };
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "visibleColumns",
+      description: "Currently visible column identifiers",
+      required: false,
+      value: "string[]",
+    },
+    {
+      name: "toggleColumn",
+      description: "Function to toggle visibility of a specific column",
+      required: false,
+      value: "(columnName: string, checked: boolean) => void",
+    },
+    {
+      name: "resetColumns",
+      description: "Function to reset to default visible columns",
+      required: false,
+      value: "() => void",
+    },
+  ]}
+/>
 
-  return (
-    <>
-      <DataTable.ColumnFilter
-        columns={COLUMN_OPTIONS}
-        visibleColumns={visibleColumns}
-        onCheckedChange={handleColumnToggle}
-        onReset={handleReset}
-      />
+</TabItem>
 
-      <DataTable
-        columns={columns}
-        data={data}
-        visibleColumns={visibleColumns}
-      />
-    </>
-  );
-}
-```
+</Tabs>
 
-<Aside type="tip">
-  **Key Points:** - Each column must have a unique `id` that matches the values
-  in `COLUMN_OPTIONS` - Set `enableHiding: true` on columns you want to be
-  toggleable - The `useColumnFilter` hook automatically persists preferences to
-  localStorage - The `onReset` prop is optional and adds a "Reset" button to the
-  dropdown footer
-</Aside>
-
-<Aside type="note">
-  The `visibleColumns` prop accepts an array of column IDs. Only columns with
-  IDs present in this array will be displayed in the table.
-</Aside>
+</div>

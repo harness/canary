@@ -1,12 +1,22 @@
 ---
 title: ViewOnly
 description: ViewOnly component for displaying read-only label-value pairs
-beta: true
 ---
 
-The `ViewOnly` component displays data in a read-only format with label-value pairs. It supports single-column and responsive two-column layouts, loading states, and custom content.
-
 import { DocsPage } from "@/components/docs-page";
+import { Tabs, TabItem } from "@astrojs/starlight/components";
+import { Aside } from "@astrojs/starlight/components";
+import PageTabsToc from "@/components/page-tabs-toc.astro";
+
+<PageTabsToc />
+
+<div id="page-level-tabs">
+
+<Tabs>
+
+<TabItem label="Overview">
+
+The `ViewOnly` component displays data as read-only label-value pairs. It supports single-column and responsive two-column layouts, horizontal or vertical item layouts, loading states, and custom React content for any value.
 
 <DocsPage.ComponentExample
   client:only
@@ -21,27 +31,11 @@ import { DocsPage } from "@/components/docs-page";
   />`}
 />
 
-## Usage
+## Variations
 
-```typescript jsx
-import { ViewOnly } from '@harnessio/ui'
+### Single column layout
 
-// ...
-
-return (
-  <ViewOnly
-    title="Section Title"
-    data={[
-      { label: "Label 1", value: "Value 1" },
-      { label: "Label 2", value: "Value 2" }
-    ]}
-  />
-)
-```
-
-## Single Column Layout
-
-Force a single-column layout regardless of container width using the `layout` prop.
+Force a single-column layout regardless of container width with `layout="singleColumn"`.
 
 <DocsPage.ComponentExample
   client:only
@@ -56,9 +50,9 @@ Force a single-column layout regardless of container width using the `layout` pr
   />`}
 />
 
-## Two-Column Layout
+### Two-column layout
 
-By default, the component uses a responsive two-column layout when the container is wide enough (≥800px). Data is automatically split between columns.
+By default the component uses a responsive two-column layout when the container is wide enough (≥800px), automatically splitting the data between the two columns.
 
 <DocsPage.ComponentExample
   client:only
@@ -76,7 +70,7 @@ By default, the component uses a responsive two-column layout when the container
   />`}
 />
 
-## Loading State
+### Loading state
 
 Display skeleton placeholders while data is being fetched.
 
@@ -93,9 +87,9 @@ Display skeleton placeholders while data is being fetched.
   />`}
 />
 
-## Empty Values
+### Empty values
 
-When a value is empty or undefined, the component displays "empty" in a disabled style.
+When a value is empty, `null`, or `undefined`, the component displays "empty" in a disabled style.
 
 <DocsPage.ComponentExample
   client:only
@@ -109,7 +103,7 @@ When a value is empty or undefined, the component displays "empty" in a disabled
   />`}
 />
 
-## Custom Value Content
+### Custom value content
 
 Values can be any React node, allowing for custom formatting and components.
 
@@ -125,9 +119,9 @@ Values can be any React node, allowing for custom formatting and components.
   />`}
 />
 
-## ViewOnlyItem
+### Using ViewOnlyItem directly
 
-You can also use the `ViewOnlyItem` component directly for more control.
+Use the `ViewOnlyItem` component directly for more control over layout.
 
 <DocsPage.ComponentExample
   client:only
@@ -138,93 +132,157 @@ You can also use the `ViewOnlyItem` component directly for more control.
   </Layout.Vertical>`}
 />
 
-## API Reference
+## Installation
 
-### `ViewOnly`
+```tsx
+import { ViewOnly } from "@harnessio/ui/components";
 
-The main component for displaying read-only data.
-
-```typescript jsx
 <ViewOnly
-  title="Section Title"          // [OPTIONAL] Title displayed above the data
-  data={[...]}                   // [REQUIRED] Array of label-value pairs or ReactNodes
-  layout="columns"               // [OPTIONAL] Layout mode
-  isLoading={false}              // [OPTIONAL] Show loading skeletons
-  className="custom-class"       // [OPTIONAL] Custom class name
-/>
+  title="Section Title"
+  data={[
+    { label: "Label 1", value: "Value 1" },
+    { label: "Label 2", value: "Value 2" },
+  ]}
+/>;
 ```
+
+</TabItem>
+
+<TabItem label="Usage">
+
+## Anatomy
+
+`ViewOnly` renders an optional title above a description list of label-value pairs.
+
+- The title renders as a heading; each entry is a `ViewOnlyItem` showing a `label` and its `value`.
+- `layout` controls the column mode: `columns` (default) switches to two columns once the container measures ≥800px wide, splitting the data between them; `singleColumn` always stacks in one column.
+- `itemLayout` controls each pair's own orientation: `horizontal` (default) places the label and value side by side; `vertical` stacks the label above the value.
+- Pass `forceColumns` to render two columns without measuring the container.
+- Each `value` accepts any React node, so you can drop in badges, links, or formatted text.
+
+<Aside type="note">
+  A falsy `value` renders the placeholder text "empty" in a disabled style. This
+  is a plain falsy check, so `0` and `false` also render as "empty" — wrap those
+  in a string (or a custom node) if you need them shown literally.
+</Aside>
+
+## Best practices
+
+{/* TODO: editorial — please review against product guidance. */}
+
+**Do**
+
+- Use `ViewOnly` for read-only summaries — profile details, run metadata, settings review — where fields don't need editing.
+- Keep `label` text short and consistent so the columns align cleanly.
+- Reach for `layout="singleColumn"` in narrow containers (side panels, drawers) where two columns would cramp the values.
+
+**Don't**
+
+- Don't use `ViewOnly` for editable data — it renders values as static text, not form fields.
+- Don't rely on `0` or `false` displaying literally; a falsy value shows "empty".
+
+## Accessibility
+
+### Labeling & semantics
+
+- In the default `horizontal` item layout, the component renders a description list: the container is a `<dl>`, each label a `<dt>`, and each value a `<dd>`, so assistive tech reads each value as the definition of its label.
+- Long string values are truncated with a native `title` tooltip exposing the full text. Custom React-node values are not truncated or titled.
+- The `vertical` item layout renders labels and values as plain text rather than `<dt>`/`<dd>`; prefer the default `horizontal` layout when description-list semantics matter.
+
+</TabItem>
+
+<TabItem label="Properties">
+
+{/* Visually hidden — anchors the section headings below in the TOC without showing a redundant title in the panel body (the tab already says "Properties"). Hidden via #page-level-tabs h2#properties in styles.css. */}
+
+## Properties
+
+### ViewOnly
 
 <DocsPage.PropsTable
   props={[
     {
-      name: "title",
-      description: "Title displayed above the data section",
-      required: false,
-      value: "string",
-    },
-    {
       name: "data",
       description:
-        "Array of data items to display. Each item can be an object with label and value properties, or a ReactNode for custom content.",
+        "Array of items to display. Each item is an object with label and value properties, or a ReactNode for custom content.",
       required: true,
       value: "ViewOnlyItemData[]",
     },
     {
+      name: "title",
+      description: "Title displayed above the data section.",
+      required: false,
+      value: "string",
+    },
+    {
       name: "layout",
       description:
-        "Layout mode. 'columns' enables responsive two-column layout when container is wide enough. 'singleColumn' forces single-column layout.",
+        "Column mode. 'columns' enables a responsive two-column layout when the container is ≥800px wide; 'singleColumn' always uses one column.",
       required: false,
       value: "'singleColumn' | 'columns'",
       defaultValue: "'columns'",
     },
     {
+      name: "itemLayout",
+      description:
+        "Orientation of each label-value pair. 'horizontal' places them side by side; 'vertical' stacks the label above the value.",
+      required: false,
+      value: "'horizontal' | 'vertical'",
+      defaultValue: "'horizontal'",
+    },
+    {
+      name: "forceColumns",
+      description:
+        "When true, renders two columns without measuring the container width.",
+      required: false,
+      value: "boolean",
+      defaultValue: "false",
+    },
+    {
       name: "isLoading",
       description:
-        "When true, displays skeleton placeholders instead of actual values",
+        "When true, displays skeleton placeholders instead of the values.",
       required: false,
       value: "boolean",
       defaultValue: "false",
     },
     {
       name: "className",
-      description: "Custom class name for the root element",
+      description: "Custom class name for the root element.",
       required: false,
       value: "string",
     },
   ]}
 />
 
-### `ViewOnlyItem`
-
-Individual item component for displaying a single label-value pair.
-
-```typescript jsx
-<ViewOnlyItem
-  label="Field Label"            // [REQUIRED] Label text
-  value="Field Value"            // [REQUIRED] Value to display
-  isLoading={false}              // [OPTIONAL] Show loading skeleton
-/>
-```
+### ViewOnlyItem
 
 <DocsPage.PropsTable
   props={[
     {
       name: "label",
-      description: "The label text displayed on the left",
+      description: "The label text.",
       required: true,
       value: "string",
     },
     {
       name: "value",
       description:
-        "The value to display. Can be a string or any ReactNode. Empty values display 'empty' text.",
+        "The value to display. Any ReactNode. A falsy value renders 'empty'.",
       required: true,
       value: "ReactNode",
     },
     {
+      name: "itemLayout",
+      description: "Orientation of the label and value.",
+      required: false,
+      value: "'horizontal' | 'vertical'",
+      defaultValue: "'horizontal'",
+    },
+    {
       name: "isLoading",
       description:
-        "When true, displays skeleton placeholders for both label and value",
+        "When true, displays skeleton placeholders for both the label and value.",
       required: false,
       value: "boolean",
       defaultValue: "false",
@@ -232,10 +290,16 @@ Individual item component for displaying a single label-value pair.
   ]}
 />
 
-### `ViewOnlyItemData`
+### ViewOnlyItemData
 
-Type definition for data items.
+Type definition for each entry in `data`.
 
 ```typescript
 type ViewOnlyItemData = { label: string; value: ReactNode } | ReactNode;
 ```
+
+</TabItem>
+
+</Tabs>
+
+</div>

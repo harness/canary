@@ -1,0 +1,15 @@
+---
+import TopNav from "./TopNav.astro";
+---
+
+<div class="flex flex-col min-h-screen bg-cn-1">
+  <!-- Top navigation -->
+  <TopNav />
+
+  <!-- Full-width landing content (no docs sidebar / TOC) -->
+  <div class="flex-1 flex justify-center" style="padding-top: 20px;">
+    <div class="w-full" style="max-width: 1100px; padding: 0 40px 80px;">
+      <slot />
+    </div>
+  </div>
+</div>

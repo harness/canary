@@ -1,0 +1,230 @@
+---
+title: No Data
+description: Empty-state block with illustration, title, description, and actions
+---
+
+import { DocsPage } from "@/components/docs-page";
+import { Tabs, TabItem } from "@astrojs/starlight/components";
+import PageTabsToc from "@/components/page-tabs-toc.astro";
+
+<PageTabsToc />
+
+<div id="page-level-tabs">
+
+<Tabs>
+
+<TabItem label="Overview">
+
+The `NoData` component renders a centered empty state used across the application when a list, table, or view has no content (or after an error). It pairs an illustration with a title, one or more description lines, and optional primary / secondary / split-button actions.
+
+<DocsPage.ComponentExample
+  client:only
+  code={`
+    <NoData
+      withBorder
+      imageName="no-data-cog"
+      title="No pipelines yet"
+      description={[
+        'Create your first pipeline to get started.',
+        'Pipelines automate your build, test, and deploy steps.'
+      ]}
+      primaryButton={{ label: 'Create pipeline', icon: 'plus' }}
+      secondaryButton={{ label: 'Learn more', variant: 'outline' }}
+    />
+`}
+/>
+
+## Variations
+
+### Without actions
+
+A minimal empty state — just an illustration, title, and description.
+
+<DocsPage.ComponentExample
+  client:only
+  code={`
+    <NoData
+      withBorder
+      imageName="no-search-magnifying-glass"
+      title="No results found"
+      description={['Try adjusting your search or filters.']}
+    />
+`}
+/>
+
+## Installation
+
+```tsx
+import { NoData } from "@harnessio/ui/components";
+
+<NoData
+  imageName="no-data-cog"
+  title="No pipelines yet"
+  description={["Create your first pipeline to get started."]}
+  primaryButton={{
+    label: "Create pipeline",
+    icon: "plus",
+    to: "/pipelines/new",
+  }}
+  secondaryButton={{ label: "Learn more", variant: "outline" }}
+/>;
+```
+
+</TabItem>
+
+<TabItem label="Usage">
+
+## Anatomy
+
+`NoData` is a single, configuration-driven component — you describe the empty state with props rather than composing child parts.
+
+```tsx
+<NoData
+  imageName="no-data-cog"
+  title="No pipelines yet"
+  description={["Create your first pipeline to get started."]}
+  primaryButton={{ label: "Create pipeline", icon: "plus" }}
+/>
+```
+
+- **Illustration** — rendered only when `imageName` is set, above the title, at `imageSize` pixels (default `112`).
+- **Title** — a single centered line of emphasized text.
+- **Description** — one line per entry in the `description` array, each rendered as its own centered line of supporting text.
+- **Actions row** — rendered when any of `primaryButton`, `secondaryButton`, `splitButton`, or `children` is provided. They appear in that fixed order: primary, then secondary, then split button, then any custom `children`. The actions are not mutually exclusive — any combination renders together.
+- **`withBorder`** — wraps the whole block in a bordered, rounded container; when false (the default) the empty state is borderless.
+
+The `primaryButton` extends `Button` props, so it accepts `variant` and other button options. The `secondaryButton` is always rendered as an `outline` button regardless of any `variant` passed. Passing `to` on either turns it into a router link; `isDialogTrigger` wraps it as a dialog trigger.
+
+## Best practices
+
+{/* TODO: editorial — please review against product guidance. */}
+
+**Do**
+
+- Match the illustration to the situation — use a "no data" illustration for genuinely empty views and a "no results" illustration after a search or filter returns nothing.
+- Give people a way forward: a primary action to create the missing thing, or a secondary action to learn more or clear filters.
+- Keep the title short and the description to one or two lines.
+
+**Don't**
+
+- Don't use `NoData` for loading states — use a skeleton or spinner while data is in flight, and only show the empty state once you know there's nothing to display.
+- Don't stack more than a primary and a secondary action; if you need a menu of choices, use the split button.
+
+## Content
+
+{/* TODO: editorial — please review against product guidance. */}
+
+- Write the title as a plain statement of what's missing ("No pipelines yet"), not an error ("Failed to load").
+- Use the description to say what to do next, not to repeat the title.
+- Each string in `description` is its own line — split sentences deliberately rather than relying on wrapping.
+
+## Accessibility
+
+### Labeling
+
+- The `title` is rendered as styled text, **not** a semantic heading. If the empty state needs to participate in the page's heading outline, provide a heading in the surrounding layout.
+- The illustration is decorative and is not given descriptive alt text — make sure the title and description carry the full meaning on their own.
+
+### Focus & states
+
+- `NoData` itself is non-interactive; focus and keyboard behavior come entirely from the action buttons (or custom `children`) you pass in, which are standard `Button`s.
+
+### Known limitations
+
+- **Split-button option handling is constrained.** The `splitButton` renders a `SplitButton`, but its `handleOptionChange` callback is only forwarded for a specific internal option value — prefer the primary/secondary actions for general use, and verify split-button behavior in context.
+
+</TabItem>
+
+<TabItem label="Properties">
+
+{/* Visually hidden — anchors the section headings below in the TOC without showing a redundant title in the panel body (the tab already says "Properties"). Hidden via #page-level-tabs h2#properties in styles.css. */}
+
+## Properties
+
+### NoData
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "title",
+      description:
+        "Empty-state heading text (rendered as styled text, not a semantic heading).",
+      required: true,
+      value: "string",
+    },
+    {
+      name: "description",
+      description:
+        "One or more lines of supporting text, each rendered on its own line.",
+      required: true,
+      value: "string[]",
+    },
+    {
+      name: "imageName",
+      description:
+        "Illustration to display above the title (e.g. no-data-cog, no-search-magnifying-glass). Omit for a text-only empty state.",
+      required: false,
+      value: "IllustrationsNameType",
+    },
+    {
+      name: "imageSize",
+      description: "Illustration size in pixels.",
+      required: false,
+      defaultValue: "112",
+      value: "number",
+    },
+    {
+      name: "primaryButton",
+      description:
+        "Primary action. Extends Button props and adds label, icon, to (router link), and isDialogTrigger.",
+      required: false,
+      value: "ButtonProps & { label; icon?; to?; isDialogTrigger? }",
+    },
+    {
+      name: "secondaryButton",
+      description:
+        "Secondary action, same shape as primaryButton. Always rendered as an outline button.",
+      required: false,
+      value: "ButtonProps & { label; icon?; to?; isDialogTrigger? }",
+    },
+    {
+      name: "splitButton",
+      description:
+        "Renders a SplitButton action with dropdown options instead of, or alongside, a plain primary button.",
+      required: false,
+      value: "{ label; icon?; options; handleOptionChange; handleButtonClick }",
+    },
+    {
+      name: "withBorder",
+      description: "Wraps the empty state in a bordered, rounded container.",
+      required: false,
+      defaultValue: "false",
+      value: "boolean",
+    },
+    {
+      name: "children",
+      description:
+        "Custom action content rendered in the actions row, after the buttons.",
+      required: false,
+      value: "ReactNode",
+    },
+    {
+      name: "className",
+      description: "Additional CSS classes for the outer container.",
+      required: false,
+      value: "string",
+    },
+    {
+      name: "textWrapperClassName",
+      description: "Additional CSS classes for the title/description wrapper.",
+      required: false,
+      value: "string",
+    },
+  ]}
+/>
+
+</TabItem>
+
+</Tabs>
+
+</div>

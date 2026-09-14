@@ -1,0 +1,153 @@
+---
+title: Indicator items
+description: Indicator items in a DropdownMenu
+---
+
+import { DocsPage } from "@/components/docs-page";
+
+The `DropdownMenu` component supports indicator items using the `DropdownMenu.IndicatorItem` component. This allows you to create items with indicators that can be used to make color pickers or other visual indicators.
+
+<DocsPage.ComponentExample
+  client:only
+  code={`<DropdownMenu.Root>
+    <DropdownMenu.Trigger aria-label="options menu" asChild>
+        <Button variant="ghost" iconOnly>
+            <IconV2 name="more-horizontal" />
+        </Button>
+    </DropdownMenu.Trigger>
+
+    <DropdownMenu.Content >
+        <DropdownMenu.IndicatorItem color="gray" title="Gray" />
+        <DropdownMenu.IndicatorItem color="green" title="Green" />
+        <DropdownMenu.IndicatorItem color="red" title="Red" />
+        <DropdownMenu.IndicatorItem color="blue" title="Blue" />
+        <DropdownMenu.IndicatorItem color="purple" title="Purple" />
+        <DropdownMenu.IndicatorItem color="brown" title="Brown" />
+        <DropdownMenu.IndicatorItem color="cyan" title="Cyan" />
+        <DropdownMenu.IndicatorItem color="indigo" title="Indigo" />
+        <DropdownMenu.IndicatorItem color="lime" title="Lime" />
+        <DropdownMenu.IndicatorItem color="mint" title="Mint" />
+        <DropdownMenu.IndicatorItem color="orange" title="Orange" />
+        <DropdownMenu.IndicatorItem color="pink" title="Pink" />
+        <DropdownMenu.IndicatorItem color="violet" title="Violet" />
+        <DropdownMenu.IndicatorItem color="gray" title="Gray pulse" pulse />
+        <DropdownMenu.IndicatorItem color="green" title="Green pulse" pulse />
+        <DropdownMenu.IndicatorItem color="red" title="Red pulse" pulse />
+        <DropdownMenu.IndicatorItem color="blue" title="Blue pulse" pulse />
+        <DropdownMenu.IndicatorItem color="purple" title="Purple pulse" pulse />
+        <DropdownMenu.IndicatorItem color="brown" title="Brown pulse" pulse />
+        <DropdownMenu.IndicatorItem color="cyan" title="Cyan pulse" pulse />
+        <DropdownMenu.IndicatorItem color="indigo" title="Indigo pulse" pulse />
+        <DropdownMenu.IndicatorItem color="lime" title="Lime pulse" pulse />
+        <DropdownMenu.IndicatorItem color="mint" title="Mint pulse" pulse />
+        <DropdownMenu.IndicatorItem color="orange" title="Orange pulse" pulse />
+        <DropdownMenu.IndicatorItem color="pink" title="Pink pulse" pulse />
+        <DropdownMenu.IndicatorItem color="violet" title="Violet pulse" pulse />
+
+  </DropdownMenu.Content>
+</DropdownMenu.Root>`}
+/>
+
+## Properties
+
+### `IndicatorItem`
+
+The `IndicatorItem` component is a specialized item that displays a color indicator.
+
+```typescript jsx
+<DropdownMenu.IndicatorItem
+  color="green"             // indicator color
+  title="Item title"        // title of the item
+  pulse                     // [OPTIONAL] animate the indicator
+  description="Description" // [OPTIONAL] description text
+  label="Label"             // [OPTIONAL] right-aligned label
+  shortcut="⌘K"             // [OPTIONAL] keyboard shortcut
+  checkmark                 // [OPTIONAL] show checkmark icon
+  className="my-class"      // [OPTIONAL] custom class
+  disabled                  // [OPTIONAL] disable the item
+  onSelect={onSelect}       // [OPTIONAL] event handler
+>
+  {/* Optional nested items for submenu */}
+</DropdownMenu.IndicatorItem>
+```
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "color",
+      description: "Color of the indicator",
+      required: true,
+      value:
+        "'gray' | 'green' | 'red' | 'yellow' | 'blue' | 'purple' | 'brown' | 'cyan' | 'indigo' | 'lime' | 'mint' | 'orange' | 'pink' | 'violet'",
+    },
+    {
+      name: "pulse",
+      description: "Whether to animate the indicator with a pulse effect",
+      required: false,
+      value: "boolean",
+      defaultValue: "false",
+    },
+    {
+      name: "title",
+      description: "Title of the item",
+      required: true,
+      value: "ReactNode",
+    },
+    {
+      name: "description",
+      description: "Description text shown below the title",
+      required: false,
+      value: "string",
+    },
+    {
+      name: "label",
+      description: "Right-aligned label text",
+      required: false,
+      value: "string",
+    },
+    {
+      name: "shortcut",
+      description: "Keyboard shortcut text",
+      required: false,
+      value: "string",
+    },
+    {
+      name: "checkmark",
+      description: "Show checkmark icon on the right",
+      required: false,
+      value: "boolean",
+      defaultValue: "false",
+    },
+    {
+      name: "tag",
+      description: "Tag to show after the title (e.g. 'New', 'Beta')",
+      required: false,
+      value: "TagProps",
+    },
+    {
+      name: "className",
+      description: "Custom class name",
+      required: false,
+      value: "string",
+    },
+    {
+      name: "disabled",
+      description: "Disable the item",
+      required: false,
+      value: "boolean",
+      defaultValue: "false",
+    },
+    {
+      name: "onSelect",
+      description: "Event handler called when the item is selected",
+      required: false,
+      value: "(event: Event) => void",
+    },
+    {
+      name: "children",
+      description: "Nested items for creating a submenu",
+      required: false,
+      value: "ReactNode",
+    },
+  ]}
+/>

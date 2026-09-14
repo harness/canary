@@ -4,9 +4,18 @@ description: Select component for choosing a single option from a list
 ---
 
 import { DocsPage } from "@/components/docs-page";
-import { Aside } from "@astrojs/starlight/components";
+import { Tabs, TabItem } from "@astrojs/starlight/components";
+import PageTabsToc from "@/components/page-tabs-toc.astro";
 
-The `Select` component provides a dropdown interface for selecting a single value from a list of options. It supports both controlled and uncontrolled modes, clearable selections, async loading states, search functionality, and integrates seamlessly with form validation.
+<PageTabsToc />
+
+<div id="page-level-tabs">
+
+<Tabs>
+
+<TabItem label="Overview">
+
+The `Select` component provides a dropdown for choosing a single value from a list of options. It supports both controlled and uncontrolled modes, clearable selections, async loading, search filtering, grouped options, and the usual form-field affordances (label, caption, error/warning).
 
 <DocsPage.ComponentExample
   client:only
@@ -30,28 +39,9 @@ The `Select` component provides a dropdown interface for selecting a single valu
 }`}
 />
 
-## Usage
+## Variations
 
-```typescript jsx
-import { Select } from "@harnessio/ui/components";
-
-//...
-
-return (
-  <Select
-    options={[
-      { label: "One", value: "one" },
-      { label: "Two", value: "two" },
-      { label: "Three", value: "three" },
-      { label: "Four", value: "four", disabled: true },
-    ]}
-    defaultValue="three"
-    onChange={(value) => console.log(value)}
-  />
-)
-```
-
-## Clearable Selection
+### Clearable selection
 
 Set `clearable` to show a clear button when a value is selected. Clearing the field resets the value to `undefined`, calls `onChange(undefined)`, and invokes `onClear` when provided.
 
@@ -80,7 +70,7 @@ Set `clearable` to show a clear button when a value is selected. Clearing the fi
 }`}
 />
 
-## Suffix Example
+### Suffix
 
 The `Select` component can be customized with a suffix element that appears on the right side of the input.
 
@@ -116,7 +106,7 @@ The `Select` component can be customized with a suffix element that appears on t
 }`}
 />
 
-## Form Integration
+### Form integration
 
 The `Select` component integrates seamlessly with form elements like labels, captions, and validation messages.
 
@@ -176,7 +166,7 @@ The `Select` component integrates seamlessly with form elements like labels, cap
 }`}
 />
 
-## Search Functionality
+### Search
 
 Enable client-side search filtering to help users find options quickly in large or structured lists.
 
@@ -282,7 +272,7 @@ Enable client-side search filtering to help users find options quickly in large 
 }`}
 />
 
-## Async Loading
+### Async loading
 
 Options can be loaded asynchronously by passing a function that returns a Promise.
 
@@ -332,7 +322,7 @@ Options can be loaded asynchronously by passing a function that returns a Promis
 }`}
 />
 
-## Disabled States
+### Disabled states
 
 Both the entire select and individual options can be disabled.
 
@@ -373,7 +363,7 @@ Both the entire select and individual options can be disabled.
 }`}
 />
 
-## On Open Callback
+### Open callback
 
 The `onOpen` callback is triggered when the dropdown menu opens. This is useful for lazy loading data, logging analytics, or triggering side effects when users interact with the select.
 
@@ -413,7 +403,7 @@ The `onOpen` callback is triggered when the dropdown menu opens. This is useful 
 }`}
 />
 
-## Loading States
+### Loading states
 
 The Select component provides clear loading indicators for different scenarios.
 
@@ -446,7 +436,7 @@ The Select component provides clear loading indicators for different scenarios.
 }`}
 />
 
-## Complex Option Labels
+### Complex option labels
 
 Options can have ReactNode labels for rich content display.
 
@@ -499,7 +489,7 @@ Options can have ReactNode labels for rich content display.
 }`}
 />
 
-## Custom Option Renderer
+### Custom option renderer
 
 Customize how individual options are rendered using the `optionRenderer` prop. This allows advanced layouts or UI elements for each option.
 
@@ -547,7 +537,7 @@ Customize how individual options are rendered using the `optionRenderer` prop. T
 }`}
 />
 
-## Grouped Options and Separators
+### Grouped options and separators
 
 <DocsPage.ComponentExample
   client:only
@@ -585,7 +575,7 @@ Customize how individual options are rendered using the `optionRenderer` prop. T
 }`}
 />
 
-## Header and Footer
+### Header and footer
 
 <DocsPage.ComponentExample
   client:only
@@ -631,9 +621,9 @@ Customize how individual options are rendered using the `optionRenderer` prop. T
 }`}
 />
 
-## Sizes
+### Sizes
 
-The `Select` component supports two sizes: `default` and `sm`. The default size is suitable for most use cases, while the `sm` size is useful for compact layouts.
+The `Select` component supports two sizes: `md` (default) and `sm`. The default size is suitable for most use cases, while the `sm` size is useful for compact layouts.
 
 <DocsPage.ComponentExample
   client:only
@@ -679,7 +669,7 @@ The `Select` component supports two sizes: `default` and `sm`. The default size 
 }`}
 />
 
-## With Tooltip
+### With tooltip
 
 `tooltipContent` is used to display the content of the tooltip. `tooltipProps` is used to pass additional props to the tooltip.
 
@@ -710,7 +700,7 @@ The `Select` component supports two sizes: `default` and `sm`. The default size 
 }`}
 />
 
-## Orientation
+### Orientation
 
 The `Select` component accepts an optional `orientation` prop, which defines the layout direction of the input and its label.
 Available options are `horizontal` and `vertical` (default).
@@ -751,55 +741,115 @@ Available options are `horizontal` and `vertical` (default).
             caption="Caption text"
             orientation="horizontal"
           />
-      </div>
+      </Layout.Vertical>
     );
 
 }`}
 />
 
-## API Reference
-
-### `Select`
-
-The `Select` component is the main component for creating dropdown selections.
+## Installation
 
 ```typescript jsx
-<Select
-  options={options}         // Array of options or async function
-  value={value}             // [OPTIONAL] controlled value
-  defaultValue              // [OPTIONAL] default value for uncontrolled mode
-  onChange={onChange}       // [OPTIONAL] change handler
-  clearable                 // [OPTIONAL] show clear button when selected
-  onClear={onClear}         // [OPTIONAL] callback when selection is cleared
-  onOpen={onOpen}           // [OPTIONAL] callback when dropdown opens
-  disabled                  // [OPTIONAL] disable the select
-  onScrollEnd={onScroll}    // [OPTIONAL] infinite scroll callback
-  placeholder="Select..."   // [OPTIONAL] placeholder text
-  isLoading                 // [OPTIONAL] loading state
-  allowSearch               // [OPTIONAL] enable search
-  onSearch={customSearch}   // [OPTIONAL] custom search function
-  optionRenderer={renderer} // [OPTIONAL] custom option renderer
+import { Select } from "@harnessio/ui/components";
 
-  // Form integration props
-  id="my-select"            // [OPTIONAL] HTML id
-  label="Label"             // [OPTIONAL] form label
-  error="Error message"     // [OPTIONAL] error message
-  warning="Warning"         // [OPTIONAL] warning message
-  caption="Help text"       // [OPTIONAL] caption text
-  optional                  // [OPTIONAL] mark as optional
-  theme="default"           // [OPTIONAL] theme variant
-  className="custom-class"  // [OPTIONAL] custom className
+//...
+
+return (
+  <Select
+    options={[
+      { label: "One", value: "one" },
+      { label: "Two", value: "two" },
+      { label: "Three", value: "three" },
+      { label: "Four", value: "four", disabled: true },
+    ]}
+    defaultValue="three"
+    onChange={(value) => console.log(value)}
+  />
+)
+```
+
+</TabItem>
+
+<TabItem label="Usage">
+
+## Anatomy
+
+`Select` is a single component driven by the `options` prop — a flat list, grouped lists, or an async function that resolves options. Control the selection with `value` + `onChange`, or leave it uncontrolled with `defaultValue`.
+
+```tsx
+<Select
+  options={[
+    { label: "One", value: "one" },
+    { label: "Two", value: "two" },
+  ]}
+  value={value}
+  onChange={setValue}
+  placeholder="Select an option"
 />
 ```
+
+- **Options** can be flat (`{ label, value, disabled? }`), grouped (`{ label, options: [...] }`), or a separator (the string `'-'`). Pass a function returning a `Promise` for async loading; the component shows a spinner while it resolves.
+- **Search** — set `allowSearch` to show a search box in the dropdown; the default filter matches the option label. `onSearch` is a notification callback fired with the (debounced) query — it doesn't replace the built-in filtering.
+- **Form field** — `label`, `caption`, `error`, and `warning` render the surrounding form chrome; a hidden input carries the `name`/`value` for native form submission.
+- **Dropdown content** — customize with `header`, `footer`, `optionRenderer`, and `contentWidth`; `onScrollEnd` fires near the bottom for infinite scroll and `onOpen` fires when the menu opens.
+
+It's built on the `DropdownMenu` primitive rather than a native `<select>`, so the trigger opens a menu of items rather than a native option list.
+
+## Best practices
+
+{/* TODO: editorial — please review against product guidance. */}
+
+**Do**
+
+- Use `Select` for choosing one value from a moderate-to-long list; for a few always-visible options, prefer `Radio`.
+- Turn on `allowSearch` once the list gets long enough that scanning is slow.
+- Set a `placeholder` that names what's being chosen ("Select a branch"), and preselect a sensible `defaultValue` when one exists.
+
+**Don't**
+
+- Don't use `error`/`warning` decoratively — they force the danger/warning theme and read as validation feedback.
+- Don't nest deep group hierarchies; grouping is a single level of labelled sections with optional separators.
+
+## Content
+
+{/* TODO: editorial — please review against product guidance. */}
+
+- Write option labels as short, parallel phrases; reserve rich `ReactNode` labels for cases that genuinely need an icon or secondary text.
+- Keep group labels ("Fruits", "Vegetables") as plain category names.
+
+## Accessibility
+
+### Keyboard
+
+- The trigger is a button that opens a menu (via the `DropdownMenu` primitive): arrow keys move between items, `Enter` selects, and `Escape` closes. When `allowSearch` is on, typing in the search box narrows the list and the arrow keys still move the highlight through the filtered items.
+
+### Labeling
+
+- Provide a `label` (or associate your own) so the trigger has an accessible name; the label is wired to the control via `htmlFor` / `id`, and an `id` is generated when you don't pass one.
+- The selected option is indicated with a checkmark in the menu.
+
+### Focus & states
+
+- Because it's built on a menu primitive rather than a native `listbox`/`combobox`, it uses menu semantics rather than the native selected-option model. `error` and `warning` drive the visual theme; wire them from your own validation.
+
+</TabItem>
+
+<TabItem label="Properties">
+
+{/* Visually hidden — anchors the section headings below in the TOC without showing a redundant title in the panel body (the tab already says "Properties"). Hidden via #page-level-tabs h2#properties in styles.css. */}
+
+## Properties
+
+### Select
 
 <DocsPage.PropsTable
   props={[
     {
       name: "options",
       description:
-        "Flat or grouped array of selectable items, including optional separators. Can be async.",
+        "Flat or grouped array of selectable items, including optional separators. Can be an async function returning a Promise.",
       required: true,
-      value: "SelectOption<T>[] | () => Promise<SelectOption<T>[]>",
+      value: "SelectOption<T>[] | (() => Promise<SelectOption<T>[]>)",
     },
     {
       name: "value",
@@ -839,94 +889,77 @@ The `Select` component is the main component for creating dropdown selections.
       description:
         "Callback fired when the dropdown opens. Useful for lazy loading data or tracking user interactions.",
       required: false,
-      value: "() => void",
-    },
-    {
-      name: "tooltipContent",
-      description: "Content to display in the label tooltip.",
-      required: false,
-      value: "Exclude<ReactNode, boolean | null | undefined>",
-    },
-    {
-      name: "tooltipProps",
-      description: "Additional props for configuring the tooltip.",
-      required: false,
-      value: "IconWithTooltipProps",
-    },
-    {
-      name: "onSelectedChange",
-      description:
-        "Callback fired when the selected option changes (useful for controlled components).",
-      required: false,
-      value: "(event: ChangeEvent<HTMLInputElement>) => void",
-    },
-    {
-      name: "disabled",
-      description: "Disable the entire select.",
-      required: false,
-      value: "boolean",
-      defaultValue: "false",
+      value: "() => void | Promise<void>",
     },
     {
       name: "onScrollEnd",
       description:
-        "Callback fired when user scrolls near the bottom of options list.",
+        "Callback fired when the user scrolls near the bottom of the options list.",
       required: false,
       value: "() => void",
-    },
-    {
-      name: "size",
-      description: "Size of the select input.",
-      required: false,
-      value: "'sm' | 'md'",
-      defaultValue: "'md'",
-    },
-    {
-      name: "placeholder",
-      description: "Placeholder text when no option is selected.",
-      required: false,
-      value: "string",
-      defaultValue: "'Select an option'",
     },
     {
       name: "isLoading",
       description: "Show loading indicator.",
       required: false,
-      value: "boolean",
       defaultValue: "false",
+      value: "boolean",
     },
     {
-      name: "id",
-      description: "HTML id attribute for the select trigger.",
+      name: "allowSearch",
+      description:
+        "Enable the in-dropdown search box and client-side filtering.",
       required: false,
-      value: "string",
-      defaultValue: "Auto-generated",
+      defaultValue: "false",
+      value: "boolean",
     },
     {
-      name: "name",
-      description: "HTML name attribute for form submission.",
+      name: "onSearch",
+      description:
+        "Notification callback fired with the (debounced) query. It does not replace the built-in label filtering.",
+      required: false,
+      value: "(query: string) => void",
+    },
+    {
+      name: "searchValue",
+      description: "Seeds the initial search input value.",
       required: false,
       value: "string",
+    },
+    {
+      name: "optionRenderer",
+      description:
+        "Custom renderer for each value option. Must return a DropdownMenu item element (Item, AvatarItem, IconItem, LogoItem, or IndicatorItem).",
+      required: false,
+      value: "(option: ValueOption<T>) => SelectItemType",
+    },
+    {
+      name: "size",
+      description: "Size of the select trigger.",
+      required: false,
+      defaultValue: "'md'",
+      value: "'md' | 'sm'",
+    },
+    {
+      name: "placeholder",
+      description: "Placeholder text when no option is selected.",
+      required: false,
+      defaultValue: "'Select an option'",
+      value: "string",
+    },
+    {
+      name: "theme",
+      description:
+        "Visual theme. Note: passing error forces 'danger' and warning forces 'warning', regardless of this value.",
+      required: false,
+      defaultValue: "'default'",
+      value: "'default' | 'danger' | 'warning'",
     },
     {
       name: "label",
       description: "Label text displayed above the select.",
       required: false,
       value: "string",
-    },
-    {
-      name: "suffix",
-      description:
-        "Custom element to display on the right side of the select input.",
-      required: false,
-      value: "ReactNode",
-    },
-    {
-      name: "theme",
-      description: "Visual theme variant.",
-      required: false,
-      value: "'default' | 'danger' | 'warning'",
-      defaultValue: "'default'",
     },
     {
       name: "caption",
@@ -936,49 +969,59 @@ The `Select` component is the main component for creating dropdown selections.
     },
     {
       name: "error",
-      description: "Error message (sets theme to 'danger').",
+      description: "Error message (also sets the theme to 'danger').",
       required: false,
       value: "string",
     },
     {
       name: "warning",
-      description: "Warning message (sets theme to 'warning').",
+      description: "Warning message (also sets the theme to 'warning').",
       required: false,
       value: "string",
     },
     {
       name: "optional",
-      description: "Shows '(optional)' next to the label.",
+      description: "Shows an 'optional' indicator next to the label.",
       required: false,
       value: "boolean",
-      defaultValue: "false",
     },
     {
-      name: "allowSearch",
-      description: "Enable client-side search filtering.",
+      name: "orientation",
+      description: "Layout direction of the select and its label.",
       required: false,
-      value: "boolean",
-      defaultValue: "false",
+      defaultValue: "'vertical'",
+      value: "'vertical' | 'horizontal'",
     },
     {
-      name: "onSearch",
-      description: "Custom search filter function.",
+      name: "tooltipContent",
+      description: "Content to display in the label tooltip.",
       required: false,
-      value: "(query: string) => SelectOption<T>[]",
-      defaultValue: "Filters by label containing query",
+      value: "Exclude<ReactNode, boolean | null | undefined>",
     },
     {
-      name: "searchValue",
-      description: "Controlled search input value.",
+      name: "tooltipProps",
+      description: "Additional props for configuring the label tooltip.",
       required: false,
-      value: "string",
+      value: "IconWithTooltipProps",
     },
     {
-      name: "optionRenderer",
+      name: "labelSuffix",
+      description: "Element appended to the right side of the label.",
+      required: false,
+      value: "ReactNode",
+    },
+    {
+      name: "prefix",
+      description: "Custom element rendered before the select value.",
+      required: false,
+      value: "ReactNode",
+    },
+    {
+      name: "suffix",
       description:
-        "Function to render custom SelectItemType for each value option.",
+        "Custom element rendered on the right side of the select trigger.",
       required: false,
-      value: "(option: ValueOption<T>) => SelectItemType",
+      value: "ReactNode",
     },
     {
       name: "header",
@@ -995,14 +1038,32 @@ The `Select` component is the main component for creating dropdown selections.
     {
       name: "contentWidth",
       description:
-        "Width of the dropdown content. Can be 'triggerWidth' or 'auto'. If 'auto', it will take the full width of the parent container.",
+        "Width of the dropdown content. 'triggerWidth' matches the trigger; 'auto' sizes to content.",
       required: false,
-      value: "'triggerWidth' | 'auto'",
       defaultValue: "'auto'",
+      value: "'auto' | 'triggerWidth'",
     },
     {
-      name: "rootClassName",
-      description: "Custom class name for the root container.",
+      name: "disabled",
+      description: "Disable the entire select.",
+      required: false,
+      value: "boolean",
+    },
+    {
+      name: "id",
+      description: "HTML id for the trigger (auto-generated when omitted).",
+      required: false,
+      value: "string",
+    },
+    {
+      name: "name",
+      description: "HTML name attribute for form submission.",
+      required: false,
+      value: "string",
+    },
+    {
+      name: "wrapperClassName",
+      description: "Custom class name for the outer wrapper.",
       required: false,
       value: "string",
     },
@@ -1014,25 +1075,16 @@ The `Select` component is the main component for creating dropdown selections.
     },
     {
       name: "contentClassName",
-      description:
-        "Custom class name for the dropdown content container. This can be used to apply custom styles to the dropdown content, such as setting a custom maximum width.",
+      description: "Custom class name for the dropdown content container.",
       required: false,
       value: "string",
-      defaultValue: "''",
-    },
-    {
-      name: "orientation",
-      description: "Defines the layout direction of the select and its label.",
-      required: false,
-      defaultValue: "'vertical'",
-      value: "'vertical' | 'horizontal'",
     },
   ]}
 />
 
-### `SelectOption`
+### SelectOption
 
-The `SelectOption` interface defines the shape of each option in the select dropdown.
+Each option is a value option, a group of value options, or a separator (`'-'`).
 
 ```typescript
 type SelectOption<T = string> =
@@ -1065,7 +1117,7 @@ type SelectOption<T = string> =
     },
     {
       name: "value",
-      description: "Value that will be passed to onChange when selected.",
+      description: "Value passed to onChange when the option is selected.",
       required: true,
       value: "T",
     },
@@ -1073,35 +1125,14 @@ type SelectOption<T = string> =
       name: "disabled",
       description: "Disable this specific option.",
       required: false,
-      value: "boolean",
       defaultValue: "false",
+      value: "boolean",
     },
   ]}
 />
 
-<Aside title="Note">
-  Only unique props are documented here. Common input props like `label`,
-  `placeholder`, `caption`, `error` etc. follow the same patterns as other form
-  components.
-</Aside>
+</TabItem>
 
-## Behavior
+</Tabs>
 
-- When `options` is a promise-returning function, the component shows a loading spinner while fetching
-- The dropdown shows a loading spinner at the bottom when `isLoading` is true and there are existing options (for infinite scroll)
-- Search input appears at the top of the dropdown when `allowSearch` is true
-- The default search implementation filters options by checking if the label contains the query (case-insensitive)
-- Search query is cleared when the dropdown closes or an option is selected
-- When `clearable` is true, selected values can be reset to `undefined`
-- Form validation states (`error`, `warning`) automatically set the appropriate theme
-- The component supports generic types for option values, not limited to strings
-- If optionRenderer is provided, it overrides the default option rendering logic. This can be used to inject custom components such as avatars, icons, or descriptions for each option.
-
-## Accessibility
-
-- The Select component uses semantic HTML with proper ARIA attributes
-- Keyboard navigation is fully supported (Arrow keys, Enter, Escape)
-- Screen readers announce the selected value and available options
-- The trigger button is properly labeled when used with the `label` prop
-- Focus management follows WCAG guidelines
-- Search input receives focus automatically when the dropdown opens with search enabled
+</div>

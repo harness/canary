@@ -255,7 +255,24 @@ export const DateRangePickerContent = ({
       : selectedForValue(draft, weekStartsOn)
     : undefined
   const fixedComplete = mode !== 'fixed' || Boolean(fixedSelection?.from && fixedSelection.to)
-  const draftValid = hasDraftValue && fixedComplete
+  // A complete draft can still fail to resolve (e.g. a fixed range whose end time is
+  // earlier than its start time on the same day). Guard here so Apply can't commit a
+  // range that would later crash resolveDateRange/formatDateRangeLabel downstream.
+  const draftResolves = useMemo(() => {
+    if (!hasDraftValue || !fixedComplete) return false
+    try {
+      resolveDateRange(draft, { weekStartsOn })
+      return true
+    } catch {
+      return false
+    }
+  }, [draft, fixedComplete, hasDraftValue, weekStartsOn])
+  const draftValid = hasDraftValue && fixedComplete && draftResolves
+  // The trash button empties the draft so the user can commit "no range" for an already
+  // applied value. Apply must stay enabled for that intentional clear even though the
+  // (empty) draft itself is not "valid".
+  const canClearApplied = !hasDraftValue && Boolean(normalizedValue)
+  const canApply = draftValid || canClearApplied
 
   const resetDraft = () => {
     const applied = normalizeDateRangeValue(value, safeDefaultTimeZone)
@@ -485,6 +502,10 @@ export const DateRangePickerContent = ({
   }
 
   const apply = () => {
+    if (canClearApplied) {
+      onApply(undefined)
+      return
+    }
     if (!draftValid) return
     onApply(draft)
   }
@@ -877,7 +898,7 @@ export const DateRangePickerContent = ({
           <Button size="sm" variant="outline" onClick={cancel}>
             Cancel
           </Button>
-          <Button size="sm" disabled={!draftValid} onClick={apply}>
+          <Button size="sm" disabled={!canApply} onClick={apply}>
             Apply
           </Button>
         </ButtonLayout>
@@ -924,8 +945,18 @@ export const DateRangePicker = ({
       ? 'Custom'
       : placeholder
   const label = `${rangeLabel} · ${zoneBadge}`
+  // formatDateRangeLabel resolves the range and throws for values that can't (e.g. a fixed
+  // range whose end time is earlier than its start). The editor's Apply gate now prevents
+  // that from happening via this component, but `value` can also be supplied directly by
+  // the consumer, so fall back to the compact label instead of crashing the trigger.
   const fullLabel = normalizedValue
-    ? formatDateRangeLabel(normalizedValue, { includeResolvedRange: true, includeTimeZone: true, weekStartsOn })
+    ? (() => {
+        try {
+          return formatDateRangeLabel(normalizedValue, { includeResolvedRange: true, includeTimeZone: true, weekStartsOn })
+        } catch {
+          return label
+        }
+      })()
     : label
   const useQuickPresetBar = showQuickPresetBar && !trigger && !renderTrigger
 

@@ -1,5 +1,6 @@
 import { addDays, format, isValid, parse } from 'date-fns'
 
+import { resolveDateRange } from './resolve-date-range'
 import { utcToCivilDate } from './timezone-utils'
 import {
   CalendarPeriod,
@@ -248,7 +249,17 @@ export const parseDateRangeQuery = (input: string, options: ParseDateRangeQueryO
   if (calendar) return { kind: 'calendar', ...calendar, timeZone }
 
   const absolute = parseAbsolute(query, timeZone, now)
-  if (absolute) return absolute
+  if (absolute) {
+    // parseAbsolute happily builds a reversed or empty interval (e.g. "since <future date>"
+    // yields from > to). Validate it resolves before handing it back so callers get a
+    // friendly parser error instead of an unresolvable range crashing further down the tree.
+    try {
+      resolveDateRange(absolute)
+    } catch {
+      throw new Error("That range doesn't resolve to a valid interval — check the start and end dates.")
+    }
+    return absolute
+  }
 
   const relative = parseRelative(query, timeZone)
   if (relative) return relative

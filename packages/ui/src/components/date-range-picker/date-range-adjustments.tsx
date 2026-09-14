@@ -4,6 +4,7 @@ import { Button } from '../button'
 import { Checkbox } from '../checkbox'
 import { Select } from '../form-primitives/select'
 import { IconV2 } from '../icon-v2'
+import { Layout } from '../layout'
 import { Popover } from '../popover'
 import { Text } from '../text'
 import { ToggleGroup } from '../toggle-group'
@@ -113,7 +114,7 @@ export const DateRangeAdjustments = ({
   }
 
   return (
-    <div className={cn('flex min-w-0 items-center gap-cn-xs', className)}>
+    <Layout.Horizontal align="center" gap="xs" className={cn('min-w-0', className)}>
       {enableExclusions && (
         <Popover.Root>
           <Popover.Trigger asChild>
@@ -232,7 +233,7 @@ export const DateRangeAdjustments = ({
           </Popover.Content>
         </Popover.Root>
       )}
-    </div>
+    </Layout.Horizontal>
   )
 }
 

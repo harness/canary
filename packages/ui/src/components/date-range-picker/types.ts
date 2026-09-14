@@ -192,7 +192,8 @@ export interface DateRangePickerProps {
 
 export interface DateRangePickerContentProps {
   value?: DateRangeInput
-  onApply: (value: DateRangeValue) => void
+  /** Called with the applied value, or `undefined` when the user clears the range and applies. */
+  onApply: (value?: DateRangeValue) => void
   onCancel: () => void
   presets?: DateRangePreset[]
   allowFuture?: boolean

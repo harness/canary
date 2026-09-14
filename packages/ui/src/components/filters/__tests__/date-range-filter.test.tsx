@@ -73,8 +73,11 @@ describe('date range filter integration', () => {
     await userEvent.click(screen.getByRole('button', { name: 'Clear range' }))
 
     expect(onChange).not.toHaveBeenCalled()
-    expect(screen.getByRole('button', { name: 'Apply' })).toBeDisabled()
     expect(document.querySelectorAll('[aria-selected="true"]')).toHaveLength(0)
+
+    // Apply stays enabled so clearing an already-applied filter can actually be committed.
+    await userEvent.click(screen.getByRole('button', { name: 'Apply' }))
+    expect(onChange).toHaveBeenCalledWith(undefined)
   })
 
   it('adapts legacy presets to absolute semantic presets and preserves semantic presets', () => {

@@ -124,9 +124,32 @@ describe('DateRangePicker', () => {
     await userEvent.click(screen.getByRole('button', { name: 'Clear range' }))
 
     expect(onChange).not.toHaveBeenCalled()
-    expect(screen.getByRole('button', { name: 'Apply' })).toBeDisabled()
     expect(screen.getByRole('menuitem', { name: 'Presets', current: 'page' })).toBeInTheDocument()
     expect(document.querySelectorAll('[aria-selected="true"]')).toHaveLength(0)
+  })
+
+  test('clearing an applied range and clicking Apply commits the cleared (undefined) value', async () => {
+    const onChange = vi.fn()
+    render(<DateRangePicker value={rollingValue} onChange={onChange} />)
+
+    await openPicker()
+    await userEvent.click(screen.getByRole('button', { name: 'Clear range' }))
+    // Apply stays enabled so an intentional clear of an already-applied range can be committed.
+    expect(screen.getByRole('button', { name: 'Apply' })).toBeEnabled()
+
+    await userEvent.click(screen.getByRole('button', { name: 'Apply' }))
+    expect(onChange).toHaveBeenCalledWith(undefined)
+  })
+
+  test('Apply stays disabled when clearing a draft that was never applied', async () => {
+    const onChange = vi.fn()
+    render(<DateRangePicker onChange={onChange} />)
+
+    await openPicker()
+    await userEvent.click(screen.getByRole('menuitem', { name: 'Fixed' }))
+    await userEvent.click(screen.getByRole('button', { name: 'Clear range' }))
+
+    expect(screen.getByRole('button', { name: 'Apply' })).toBeDisabled()
   })
 
   test('keeps the timezone and always-visible full-day time fields when cleared', async () => {
@@ -232,6 +255,30 @@ describe('DateRangePicker', () => {
         from: expect.objectContaining({ time: '07:15' })
       })
     )
+  })
+
+  test('disables Apply for a same-day fixed range whose end time is before its start time', async () => {
+    const onChange = vi.fn()
+    // No applied value: opening Fixed defaults to a blank same-day draft (today – today),
+    // which is what makes this scenario reachable.
+    render(<DateRangePicker onChange={onChange} />)
+
+    await openPicker()
+    await userEvent.click(screen.getByRole('menuitem', { name: 'Fixed' }))
+
+    const startTime = screen.getByLabelText('Start time')
+    await userEvent.clear(startTime)
+    await userEvent.type(startTime, '10:00 am{enter}')
+
+    const endTime = screen.getByLabelText('End time')
+    await userEvent.clear(endTime)
+    await userEvent.type(endTime, '9:00 am{enter}')
+
+    // A single day with Start 10:00 and End 09:00 never resolves to a positive interval;
+    // Apply must stay disabled rather than committing a range that crashes the trigger label.
+    expect(screen.getByRole('button', { name: 'Apply' })).toBeDisabled()
+    await userEvent.click(screen.getByRole('button', { name: 'Apply' }))
+    expect(onChange).not.toHaveBeenCalled()
   })
 
   test('commits custom adjustments with Apply and keeps them mutually exclusive', async () => {

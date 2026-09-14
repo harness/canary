@@ -17,7 +17,8 @@ interface DateRangeFieldProps {
   filter: FilterFieldConfig<DateRangeInput>
   presets?: DateRangeFilterPreset[]
   showCustomRange?: boolean
-  onUpdateFilter: (filterValue: SemanticDateRangeValue) => void
+  /** `filterValue` is `undefined` when the user clears the range in the editor and applies. */
+  onUpdateFilter: (filterValue?: SemanticDateRangeValue) => void
   onCancel: () => void
   calendarProps?: DateRangeCalendarProps | DateRangePickerCalendarProps
   calendarClassNames?: ClassNames

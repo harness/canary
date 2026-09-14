@@ -90,4 +90,11 @@ describe('parseDateRangeQuery', () => {
   it('returns a useful error for unsupported input', () => {
     expect(() => parseDateRangeQuery('whenever traffic was highest', options)).toThrow(/rolling range.*period.*dates/i)
   })
+
+  it.each([
+    'Aug 15 to Aug 1',
+    'since 2026-09-01' // "since" pins `to` to today (Aug 25), so a future start reverses the range.
+  ])('rejects an absolute range that does not resolve to a positive interval: %s', query => {
+    expect(() => parseDateRangeQuery(query, options)).toThrow(/doesn't resolve to a valid interval/i)
+  })
 })

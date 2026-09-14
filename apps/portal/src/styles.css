@@ -1058,10 +1058,10 @@ button[aria-label="Search"] {
 .cn-home-hero-title {
   font-size: var(--cn-font-size-11);
   font-weight: 600;
-  line-height: 0.95;
+  line-height: 1.05;
   letter-spacing: -0.03em;
   color: var(--cn-text-1);
-  max-width: 20ch;
+  max-width: none;
   margin: 0;
 }
 

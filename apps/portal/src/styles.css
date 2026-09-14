@@ -1198,6 +1198,39 @@ button[aria-label="Search"] {
   color: var(--cn-text-2);
 }
 
+/* Principles Grid (3 columns × 2 rows of cards) */
+.cn-principles-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--cn-spacing-4);
+  margin-bottom: var(--cn-layout-md);
+}
+
+.cn-principle-card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--cn-spacing-2);
+  padding: var(--cn-layout-md);
+  border: 1px solid var(--cn-border-2);
+  border-radius: var(--cn-rounded-6);
+  background: var(--cn-bg-2);
+}
+
+.cn-principle-title {
+  margin: 0;
+  font-size: var(--cn-font-size-5);
+  font-weight: 550;
+  color: var(--cn-text-1);
+  line-height: 1.3;
+}
+
+.cn-principle-body {
+  margin: 0;
+  font-size: var(--cn-font-size-3);
+  color: var(--cn-text-2);
+  line-height: 1.5;
+}
+
 /* Component Grid */
 .cn-component-grid-category-title {
   font-size: var(--cn-font-size-5);

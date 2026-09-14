@@ -1048,6 +1048,10 @@ button[aria-label="Search"] {
 /* Home dot-grid background */
 .cn-home-bg {
   position: relative;
+  /* Own stacking context so the dots pseudo-element (z-index: -1) sits behind
+     the content but above the base background — without disturbing the sticky
+     TopNav's own z-index. */
+  isolation: isolate;
   /* Gray.50 base with a Blue.25 wash fading up from the bottom of the viewport */
   background-color: lch(97% 0 272);
   background-image: linear-gradient(to top, lch(98% 3 240) 0%, transparent 100%);
@@ -1062,18 +1066,13 @@ button[aria-label="Search"] {
   content: "";
   position: absolute;
   inset: 0;
-  z-index: 0;
+  z-index: -1;
   pointer-events: none;
   background-color: var(--cn-border-2);
   -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16'%3E%3Crect width='2' height='2' fill='%23000'/%3E%3C/svg%3E");
   mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16'%3E%3Crect width='2' height='2' fill='%23000'/%3E%3C/svg%3E");
   -webkit-mask-size: 16px 16px;
   mask-size: 16px 16px;
-}
-
-.cn-home-bg > * {
-  position: relative;
-  z-index: 1;
 }
 
 /* Home hero (full-width landing) */

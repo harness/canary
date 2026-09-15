@@ -99,11 +99,6 @@ export default defineConfig({
               attrs: { "data-icon": "text-size" },
             },
             {
-              slug: "foundations/writing",
-              label: "Writing Guidelines",
-              attrs: { "data-icon": "edit-pencil" },
-            },
-            {
               slug: "foundations/spacings",
               label: "Spacings",
               attrs: { "data-icon": "arrow-long-right" },

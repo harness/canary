@@ -404,6 +404,35 @@ describe('DateRangePicker', () => {
     expect(tomorrowButton).not.toBeDisabled()
   })
 
+  test('clamps a typed future end date to today when allowFuture is false', async () => {
+    const onChange = vi.fn()
+    const yesterday = addDays(new Date(), -1)
+    render(
+      <DateRangePicker
+        value={{ kind: 'absolute', timeZone: 'UTC', from: { date: toCivilDate(yesterday) }, to: { date: toCivilDate(yesterday) } }}
+        onChange={onChange}
+        allowFuture={false}
+      />
+    )
+
+    await openPicker()
+    await userEvent.click(screen.getByRole('menuitem', { name: 'Fixed' }))
+
+    const endDate = screen.getByLabelText('End date')
+    const future = format(addDays(new Date(), 5), 'MMM d, yyyy')
+    await userEvent.clear(endDate)
+    await userEvent.type(endDate, `${future}{enter}`)
+
+    // The calendar disables future days via getDisabledMatchers; typing must be clamped
+    // to today too, or a typed date could bypass the same allowFuture constraint.
+    expect(endDate).toHaveValue(format(new Date(), 'MMM d, yyyy'))
+
+    await userEvent.click(screen.getByRole('button', { name: 'Apply' }))
+    expect(onChange).toHaveBeenCalledWith(
+      expect.objectContaining({ kind: 'absolute', to: expect.objectContaining({ date: toCivilDate(new Date()) }) })
+    )
+  })
+
   test('only shows optional search and rolling adjustments when enabled', async () => {
     const { rerender } = render(<DateRangePicker value={rollingValue} onChange={vi.fn()} />)
     await openPicker()

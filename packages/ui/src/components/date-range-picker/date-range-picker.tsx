@@ -360,8 +360,14 @@ export const DateRangePickerContent = ({
     if (selection?.from) setMonth(selection.from)
   }
 
-  const updateEndpointDate = (endpoint: 'from' | 'to', date: CivilDate) => {
+  const updateEndpointDate = (endpoint: 'from' | 'to', typed: CivilDate) => {
     if (draft.kind !== 'absolute') return
+
+    // The calendar disables future days via getDisabledMatchers when allowFuture is false,
+    // but the text field parses any valid date. Clamp here too so a typed date can't bypass
+    // the same constraint the calendar enforces.
+    const today = localToCivilDate(new Date())
+    const date = !allowFuture && typed > today ? today : typed
 
     const next: AbsoluteDateRangeValue = { ...draft, [endpoint]: { ...draft[endpoint], date } }
     // Typing past the opposite endpoint collapses the range onto the edited day.

@@ -1,0 +1,12 @@
+{
+  "codeConnect": {
+    "include": [
+      "packages/ui/src/components/**/*.figma.{ts,tsx}",
+      "packages/pipeline-graph/src/components/**/*.figma.{ts,tsx}"
+    ],
+    "paths": {
+      "@harnessio/ui/components": "packages/ui/src/components",
+      "@harnessio/pipeline-graph": "packages/pipeline-graph/src/components"
+    }
+  }
+}

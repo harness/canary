@@ -1,25 +1,14 @@
 import { ReactNode } from 'react'
 
-import {
-  Button,
-  FilterField,
-  FilterOptionConfig,
-  IconV2,
-  renderFilterSelectAddIconLabel,
-  SearchableDropdown,
-  type FiltersFieldProps
-} from '@harnessio/ui/components'
+import { Button, FilterField, FilterOptionConfig, IconV2, type FiltersFieldProps } from '@harnessio/ui/components'
 import { useTranslation } from '@harnessio/ui/context'
 import { cn } from '@harnessio/ui/utils'
 
 interface FiltersBarProps<T, V = T[keyof T], CustomValue = Record<string, unknown>> {
   openedFilter: string | undefined
-  setOpenedFilter: (filter: keyof T) => void
   filterOptions: FilterOptionConfig<Extract<keyof T, string>, CustomValue>[]
   selectedFiltersCnt: number
-  isAddFilterSearchable?: boolean
-  addFilterInputPlaceholder?: string
-  /** Hides the "Add filter" dropdown and the "Reset" control. */
+  /** Hides the "Reset" control. */
   hideAddFilter?: boolean
   renderSelectedFilters: (
     filterFieldRenderer: (
@@ -45,11 +34,8 @@ const ListControlBar = <T extends Record<string, any>, CustomValue = Record<stri
   openedFilter,
   sortSelectionsCnt,
   renderSelectedSort,
-  setOpenedFilter,
   renderSelectedFilters,
   renderFilterOptions,
-  isAddFilterSearchable,
-  addFilterInputPlaceholder,
   hideAddFilter
 }: FiltersBarProps<T, V, CustomValue>) => {
   const { t } = useTranslation()
@@ -63,28 +49,11 @@ const ListControlBar = <T extends Record<string, any>, CustomValue = Record<stri
     />
   )
 
-  const filterOptionsRenderer = ({
-    addFilter,
-    resetFilters,
-    availableFilters
-  }: FilterOptionsRendererProps<Extract<keyof T, string>>) => {
+  const filterOptionsRenderer = ({ resetFilters }: FilterOptionsRendererProps<Extract<keyof T, string>>) => {
     const showFilterResetButton = filterOptions.some(filterOption => !filterOption.isDefaultValue)
 
     return (
       <>
-        <SearchableDropdown
-          options={filterOptions.filter(option => availableFilters.includes(option.value))}
-          dropdownAlign="start"
-          onChange={(option: { value: any }) => {
-            addFilter(option.value)
-            setOpenedFilter(option.value)
-          }}
-          onReset={() => resetFilters()}
-          isSearchable={isAddFilterSearchable}
-          inputPlaceholder={addFilterInputPlaceholder ?? t('component:filter.inputPlaceholder', 'Filter by...')}
-          buttonLabel={t('component:filter.buttonLabel', 'Reset filters')}
-          displayLabel={renderFilterSelectAddIconLabel({ displayLabel: t('component:filter.defaultLabel', 'Filter') })}
-        />
         {showFilterResetButton && (
           <Button variant="transparent" onClick={() => resetFilters()} className="hover:text-cn-danger">
             <IconV2 name="xmark" />

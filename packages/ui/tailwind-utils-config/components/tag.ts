@@ -36,7 +36,7 @@ function createTagVariantStyles(variant: 'outline' | 'secondary'): CSSRuleObject
     const theme = themeColorMapper[_theme as 'green' | 'red' | 'yellow'] ?? _theme
     const isOutline = variant === 'outline'
     const style: CSSRuleObject = {
-      color: `var(--cn-set-${theme}-${isOutline ? 'outline-text' : 'secondary-text'})`,
+      color: `var(--cn-set-${theme}-secondary-text)`,
       backgroundColor: `var(--cn-set-${theme}-${isOutline ? 'outline-bg' : 'secondary-bg'})`,
       borderColor: `var(--cn-set-${theme}-${isOutline ? 'outline-border' : 'secondary-bg'})`,
 
@@ -60,7 +60,7 @@ function createTagVariantStyles(variant: 'outline' | 'secondary'): CSSRuleObject
 
       // ICON STYLES
       '.cn-tag-icon': {
-        color: `var(--cn-set-${theme}-${isOutline ? 'outline-text' : 'secondary-text'}) !important`
+        color: `var(--cn-set-${theme}-secondary-text) !important`
       }
     }
 
@@ -78,9 +78,9 @@ export default {
     gap: 'var(--cn-tag-gap)',
     borderWidth: `var(--cn-tag-border)`,
     borderRadius: `var(--cn-tag-radius-default)`,
-    maxWidth: `var(--cn-tag-max-width)`,
+    maxWidth: `min(var(--cn-tag-max-width), 100%)`,
     height: `var(--cn-tag-size-md)`,
-    '@apply w-fit items-center transition-colors select-none font-body-single-line-normal': '',
+    '@apply w-fit min-w-0 items-center transition-colors select-none font-body-single-line-normal': '',
 
     ':where(.cn-tag-action-icon-button)': {
       marginRight: 'calc(-1 * var(--cn-tag-px))',
@@ -132,7 +132,12 @@ export default {
     },
 
     '.cn-tag-text': {
-      '@apply truncate leading-normal align-middle inline-block': ''
+      '@apply truncate leading-cn-16 align-middle inline-block': ''
     }
+  },
+
+  '.cn-tag-split': {
+    maxWidth: `min(var(--cn-tag-split-max-width), 100%)`,
+    '@apply min-w-0': ''
   }
 }

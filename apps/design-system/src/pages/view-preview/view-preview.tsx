@@ -9,6 +9,8 @@ import { RepoSettingsViewWrapper } from '@/pages/view-preview/repo-settings-view
 import { SideNavWrapper } from '@/pages/view-preview/side-nav-wrapper'
 import DataTableDemo from '@subjects/views/data-table-demo'
 import DataTableGroupedHeadersDemo from '@subjects/views/data-table-grouped-headers-demo'
+import DataTablePinnedRowsDemo from '@subjects/views/data-table-pinned-rows-demo'
+import DataTableStickyHeaderDemo from '@subjects/views/data-table-sticky-header-demo'
 import DateRangePickerDemo from '@subjects/views/date-range-picker-demo'
 import DraggableCardsDemo from '@subjects/views/draggable-cards-demo'
 import ExecutionListWrapper from '@subjects/views/execution-list/execution-list'
@@ -545,6 +547,14 @@ export const viewPreviews: Record<string, ViewPreviewGroup> = {
       'data-table-grouped-headers-demo': {
         label: 'Data Table Grouped Headers',
         element: <DataTableGroupedHeadersDemo />
+      },
+      'data-table-sticky-header-demo': {
+        label: 'Data Table Sticky Header',
+        element: <DataTableStickyHeaderDemo />
+      },
+      'data-table-pinned-rows-demo': {
+        label: 'Data Table Pinned Rows',
+        element: <DataTablePinnedRowsDemo />
       }
     }
   },

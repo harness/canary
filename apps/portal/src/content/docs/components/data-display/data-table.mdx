@@ -556,6 +556,39 @@ When `enableRowSelection` or `enableExpanding` is enabled, the injected columns 
       required: false,
       value: "ColumnPinningState ({ left?: string[], right?: string[] })",
     },
+    {
+      name: "stickyHeader",
+      description:
+        "Opt-in sticky headers. Renders the table inside a single scroll viewport so header cells stick to the top while the body scrolls. Offsets support up to two stacked header rows (grouped headers).",
+      required: false,
+      value: "boolean",
+    },
+    {
+      name: "maxHeight",
+      description:
+        "Maximum height of the table's scroll viewport. Only applies when stickyHeader is enabled.",
+      required: false,
+      value: "CSSProperties['maxHeight']",
+    },
+    {
+      name: "rowPinning",
+      description:
+        "Opt-in row pinning state. Bottom-pinned rows render in a tfoot whose cells stick to the bottom of the scroll viewport (stickyHeader is required for sticking). Pin rows by appending them to data and listing their getRowId ids in rowPinning.bottom.",
+      required: false,
+      value: "RowPinningState ({ top?: string[], bottom?: string[] })",
+    },
+    {
+      name: "onRowPinningChange",
+      description: "Callback for when row pinning changes",
+      required: false,
+      value: "OnChangeFn<RowPinningState>",
+    },
+    {
+      name: "enableRowPinning",
+      description: "Whether rows can be pinned. See TanStack enableRowPinning.",
+      required: false,
+      value: "boolean | ((row: Row<TData>) => boolean)",
+    },
   ]}
 />
 
@@ -871,6 +904,188 @@ function TableWithPinnedColumns() {
   columns requiring horizontal scrolling. For tables with few columns, pinning
   may not be necessary.
 </Aside>
+
+## Sticky Headers
+
+The `DataTable` supports opt-in sticky headers via the `stickyHeader` prop. When enabled, the table renders inside a single, well-defined scroll viewport (`maxHeight` controls its height), and the header cells stick to the top while the body scrolls — remaining fully opaque, including on sortable-header hover. Sticky headers compose with grouped (stacked) headers and with column pinning.
+
+<DocsPage.ComponentExample
+  client:only
+  code={`() => {
+  const people = Array.from({ length: 30 }, (_, i) => ({
+    id: i + 1,
+    name: \`Person \${i + 1}\`,
+    age: 24 + ((i * 7) % 30),
+    visits: 10 + ((i * 37) % 190),
+    status: ['active', 'inactive', 'pending'][i % 3],
+    profileProgress: 5 + ((i * 13) % 95)
+  }))
+
+const columns = [
+{ id: 'name', accessorKey: 'name', header: 'Name', enableSorting: true },
+{
+id: 'info',
+header: 'Info',
+enableSorting: false,
+columns: [
+{ id: 'age', accessorKey: 'age', header: 'Age', enableSorting: true },
+{ id: 'visits', accessorKey: 'visits', header: 'Visits', enableSorting: true },
+{
+id: 'status',
+accessorKey: 'status',
+header: 'Status',
+enableSorting: true,
+cell: (info) => {
+const value = String(info.getValue())
+const theme = value === 'active' ? 'success' : value === 'inactive' ? 'danger' : 'warning'
+return (
+
+<StatusBadge variant="secondary" theme={theme} size="sm">
+  {value}
+</StatusBadge>
+) } }, { id: 'profileProgress', accessorKey: 'profileProgress', header: 'Profile Progress',
+enableSorting: true } ] } ]
+
+const [tableSorting, setTableSorting] = React.useState([])
+
+const sortedData = [...people].sort((a, b) => {
+if (tableSorting.length === 0) return 0
+const sort = tableSorting[0]
+const key = sort.id
+if (a[key] < b[key]) return sort.desc ? 1 : -1
+if (a[key] > b[key]) return sort.desc ? -1 : 1
+return 0
+})
+
+return (
+
+<DataTable
+  columns={columns}
+  data={sortedData}
+  getRowId={(row) => String(row.id)}
+  stickyHeader
+  maxHeight={320}
+  currentSorting={tableSorting}
+  onSortingChange={setTableSorting}
+/>
+) }`} />
+
+### Usage
+
+```tsx
+import { DataTable } from "@harnessio/ui/components";
+
+function TableWithStickyHeader() {
+  return (
+    <DataTable
+      columns={columns}
+      data={data}
+      getRowId={(row) => row.id}
+      stickyHeader
+      maxHeight={320}
+    />
+  );
+}
+```
+
+### Key Features
+
+- **Opt-in**: with `stickyHeader` unset, the table renders exactly as before
+- **Opaque headers**: headers stay fully opaque while scrolling and on sortable-header hover — body rows never show through
+- **Grouped headers**: both stacked header rows stick; the second row offsets itself below the first (measured, with a no-JS CSS-variable fallback)
+- **Works with column pinning**: sticky header cells that are also column-pinned layer correctly above both
+
+### Guidelines
+
+- Pair `stickyHeader` with `maxHeight` so the table has a constrained scroll viewport.
+- Sticky offsets support up to two stacked header rows.
+- The scroll viewport is the table's own container — pagination stays visible below the scroll area.
+
+## Row Pinning
+
+The `DataTable` supports opt-in **bottom row pinning** via TanStack Table's `rowPinning` state — designed for grand-total rows that must stay visible at the bottom of the table. Pinned rows render in a `<tfoot>` whose cells stick to the bottom of the scroll viewport; pair with `stickyHeader` so the header and the total frame the scrolling body.
+
+To pin a total row, append it to `data` and list its `getRowId` id in `rowPinning.bottom`:
+
+<DocsPage.ComponentExample
+  client:only
+  code={`() => {
+  const sales = Array.from({ length: 18 }, (_, i) => {
+    const q1 = 120 + ((i * 41) % 380)
+    const q2 = 150 + ((i * 53) % 320)
+    return {
+      id: \`sale-\${i + 1}\`,
+      product: \`Product \${i + 1}\`,
+      q1,
+      q2,
+      total: q1 + q2
+    }
+  })
+
+const grandTotal = {
+id: 'grand-total',
+product: 'Grand total',
+q1: sales.reduce((acc, row) => acc + row.q1, 0),
+q2: sales.reduce((acc, row) => acc + row.q2, 0),
+total: sales.reduce((acc, row) => acc + row.total, 0)
+}
+
+const columns = [
+{ id: 'product', accessorKey: 'product', header: 'Product' },
+{ id: 'q1', accessorKey: 'q1', header: 'Q1' },
+{ id: 'q2', accessorKey: 'q2', header: 'Q2' },
+{ id: 'total', accessorKey: 'total', header: 'Total' }
+]
+
+return (
+
+<DataTable
+  columns={columns}
+  data={[...sales, grandTotal]}
+  getRowId={(row) => row.id}
+  stickyHeader
+  maxHeight={340}
+  rowPinning={{ bottom: ["grand-total"] }}
+  getRowClassName={(row) =>
+    row.original.id === "grand-total" ? "[&>td]:font-medium" : undefined
+  }
+/>
+) }`} />
+
+### Usage
+
+```tsx
+import { DataTable } from "@harnessio/ui/components";
+
+function TableWithGrandTotal() {
+  const grandTotal = computeTotals(data); // your own totals row
+
+  return (
+    <DataTable
+      columns={columns}
+      data={[...data, grandTotal]}
+      getRowId={(row) => row.id}
+      stickyHeader
+      maxHeight={340}
+      rowPinning={{ bottom: [grandTotal.id] }}
+    />
+  );
+}
+```
+
+### Styling ownership
+
+- **DataTable owns structure and position**: sticking, z-index layering, opaque backgrounds, the separator above the pinned band, and the spacer row for short tables. Pinned rows get a header-like band (`--cn-bg-2` + medium weight) by default.
+- **You own content and emphasis**: the totals row data itself, cell formatting, the "Grand total" label, and extra styling via `getRowClassName` or the guaranteed `cn-table-v2-row-pinned` class / `data-pinned="bottom"` attribute.
+
+### Behavior notes
+
+- **Single pinned row**: bottom pinning supports exactly one row. If multiple ids are listed in `rowPinning.bottom`, only the last (bottom-most) row renders in the footer — without accumulated offsets the rows would overlap at `bottom: 0`. Multi-row stacking is a possible follow-up.
+- **Short tables**: when the body is shorter than the viewport, whitespace opens between the last body row and the pinned row instead of the pinned row collapsing upward.
+- **Row + column pinning**: a pinned row crossing a pinned column renders a correct corner cell layered above both axes (e.g. a right-pinned `Total` column with a bottom-pinned grand total).
+- `keepPinnedRows` stays at TanStack's default (`true`), so a pinned row appears on **every page** — intended for totals, surprising for other rows.
+- If you use row selection, select-all counts a synthetic totals row unless you exclude it via `getRowCanSelect`.
+- `rowPinning.top` is accepted in state but not rendered — there is no top-pinned body row use case yet.
 
 ## Transparent Variant
 

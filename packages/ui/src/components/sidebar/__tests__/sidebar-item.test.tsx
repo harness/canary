@@ -283,6 +283,20 @@ describe('SidebarItem', () => {
       expect(preventDefault).toHaveBeenCalled()
       expect(actionClick).toHaveBeenCalled()
     })
+
+    test('does not render action buttons when collapsed', () => {
+      sidebarContext.state = 'collapsed'
+      renderComponent({
+        actionButtons: [
+          {
+            iconName: 'pin',
+            onClick: vi.fn()
+          }
+        ]
+      })
+
+      expect(screen.queryByTestId('layout-horizontal')).toBeNull()
+    })
   })
 
   describe('Dropdowns & Action Menu', () => {
@@ -335,25 +349,43 @@ describe('SidebarItem', () => {
       })
 
       expect(mockFilter).toHaveBeenCalled()
-      const grids = screen.getAllByTestId('layout-grid')
-      const submenuGrid = grids[grids.length - 1]
-      expect(submenuGrid).toHaveAttribute('data-state', 'open')
+      expect(screen.getByRole('group')).toHaveAttribute('data-state', 'open')
+      expect(screen.getByText('Child')).toBeInTheDocument()
 
       sidebarContext.state = 'collapsed'
       rerender(<SidebarItem {...({ ...baseProps, defaultSubmenuOpen: true, children: submenuChild } as any)} />)
 
-      const updatedGrids = screen.getAllByTestId('layout-grid')
-      const updatedSubmenu = updatedGrids[updatedGrids.length - 1]
-      expect(updatedSubmenu).toHaveAttribute('data-state', 'closed')
+      expect(screen.getByRole('group', { hidden: true })).toHaveAttribute('data-state', 'closed')
+      expect(screen.getByText('Child')).toBeInTheDocument()
+    })
+
+    test('keeps submenu items mounted when closed', () => {
+      renderComponent({ children: submenuChild, defaultSubmenuOpen: false })
+      expect(screen.getByRole('group', { hidden: true })).toHaveAttribute('data-state', 'closed')
+      expect(screen.getByRole('group', { hidden: true })).toHaveAttribute('aria-hidden', 'true')
+      expect(screen.getByText('Child')).toBeInTheDocument()
     })
 
     test('toggles submenu state on button click', async () => {
       renderComponent({ children: submenuChild, defaultSubmenuOpen: false })
       const menuItemButton = screen.getByRole('menuitem')
       await userEvent.click(menuItemButton)
-      const grids = screen.getAllByTestId('layout-grid')
-      const submenuGrid = grids[grids.length - 1]
-      expect(submenuGrid).toHaveAttribute('data-state', 'open')
+      expect(screen.getByRole('group')).toHaveAttribute('data-state', 'open')
+    })
+
+    test('expands sidebar and opens submenu when clicked while collapsed', async () => {
+      sidebarContext.state = 'collapsed'
+      const { rerender } = renderComponent({ children: submenuChild, defaultSubmenuOpen: false })
+
+      await userEvent.click(screen.getByRole('menuitem'))
+
+      expect(sidebarContext.setOpen).toHaveBeenCalledWith(true)
+
+      // Simulate sidebar finishing expand (setOpen from context is mocked)
+      sidebarContext.state = 'expanded'
+      rerender(<SidebarItem {...({ ...baseProps, children: submenuChild, defaultSubmenuOpen: false } as any)} />)
+
+      expect(screen.getByRole('group')).toHaveAttribute('data-state', 'open')
     })
 
     test('marks parent active when collapsed and a sub-item has active', () => {

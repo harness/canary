@@ -22,6 +22,12 @@ const DimmedShadow3Style = {
     '0 4px 6px -1px lch(from var(--cn-shadow-color-3) l c h / 0.05), 0 2px 8px -2px lch(from var(--cn-shadow-color-3) l c h / 0.05)'
 }
 
+/** Cap for tags so the status badge can reserve space and truncate. */
+const StudioCardTagMaxWidth = 'var(--cn-size-28)'
+
+/** Gap between status badge and tag. */
+const StudioCardStatusTagGap = 'var(--cn-layout-2xs)'
+
 export default {
   '.cn-studio-card': {
     // Step cards (base, no group/stage). Three-way radius split — see overrides below.
@@ -66,27 +72,31 @@ export default {
     // Selected state with theme-based borders
     '&[data-selected="true"]': {
       '&[data-theme="default"]': {
-        border: '1px solid var(--cn-border-brand)',
-        boxShadow: '0 0 0 3px color-mix(in srgb, var(--cn-border-brand) 20%, transparent)'
+        border: '1px solid var(--cn-border-brand) !important',
+        boxShadow: '0 0 0 3px color-mix(in srgb, var(--cn-border-brand) 20%, transparent) !important'
       },
       '&[data-theme="success"]': {
-        border: '1px solid var(--cn-border-success)',
-        boxShadow: '0 0 0 3px color-mix(in srgb, var(--cn-border-success) 20%, transparent)'
+        border: '1px solid var(--cn-border-success) !important',
+        boxShadow: '0 0 0 3px color-mix(in srgb, var(--cn-border-success) 20%, transparent) !important'
       },
       '&[data-theme="warning"]:not(:has(> [data-status="executing"]))': {
-        border: '1px solid var(--cn-border-warning)',
-        boxShadow: '0 0 0 3px color-mix(in srgb, var(--cn-border-warning) 20%, transparent)'
+        border: '1px solid var(--cn-border-warning) !important',
+        boxShadow: '0 0 0 3px color-mix(in srgb, var(--cn-border-warning) 20%, transparent) !important'
       },
       '&[data-theme="danger"]': {
-        border: '1px solid var(--cn-border-danger)',
-        boxShadow: '0 0 0 3px color-mix(in srgb, var(--cn-border-danger) 20%, transparent)'
+        border: '1px solid var(--cn-border-danger) !important',
+        boxShadow: '0 0 0 3px color-mix(in srgb, var(--cn-border-danger) 20%, transparent) !important'
       }
     },
 
     '&:has(.cn-studio-card-group:hover)': {
       backgroundColor: 'lch(from var(--cn-bg-3) l c h / 0.45) !important',
-      borderColor: 'lch(from var(--cn-border-2) l c h / 0.65) !important',
       ...DimmedShadow3Style,
+
+      // Selected cards keep their theme border — dimming it would hide the selection.
+      '&:not([data-selected="true"])': {
+        borderColor: 'lch(from var(--cn-border-2) l c h / 0.65) !important'
+      },
 
       '>': {
         ...StudioCardHelperItemsHoveredStyles
@@ -190,7 +200,7 @@ export default {
 
     '> :not(&-title)': {
       '@apply shrink-0': ''
-    },
+    }
   },
 
   // Compact header padding for xs cards
@@ -205,13 +215,13 @@ export default {
       '@apply absolute inset-y-0 right-0 w-8': '',
       content: '""',
       zIndex: '1',
-      background: `linear-gradient(to right, color-mix(in lch, var(--cn-comp-pipeline-card-footer-bg) 0%, transparent), var(--cn-comp-pipeline-card-footer-bg))`
+      background: `linear-gradient(to right, color-mix(in lch, var(--cn-comp-pipeline-card-bg) 0%, transparent), var(--cn-comp-pipeline-card-bg))`
     },
     '&::after': {
       '@apply absolute  absolute inset-x-0 bottom-0 h-8': '',
       content: '""',
       zIndex: '2',
-      background: `linear-gradient(to bottom, color-mix(in lch, var(--cn-comp-pipeline-card-footer-bg) 0%, transparent), var(--cn-comp-pipeline-card-footer-bg))`
+      background: `linear-gradient(to bottom, color-mix(in lch, var(--cn-comp-pipeline-card-bg) 0%, transparent), var(--cn-comp-pipeline-card-bg))`
     },
 
     // Allow pre tags to wrap and prevent width expansion
@@ -241,7 +251,7 @@ export default {
       '& .cn-studio-card:not(:hover)': {
         backgroundColor: 'lch(from var(--cn-bg-3) l c h / 0.45) !important',
 
-        '&:not(:has(> [data-status="executing"]))': {
+        '&:not(:has(> [data-status="executing"])):not([data-selected="true"])': {
           borderColor: 'lch(from var(--cn-border-2) l c h / 0.65) !important'
         },
         ...DimmedShadow3Style,
@@ -257,7 +267,7 @@ export default {
       '& .cn-studio-card-group:hover .cn-studio-card': {
         opacity: '1 !important',
 
-        '&:not(:has(> [data-status="executing"]))': {
+        '&:not(:has(> [data-status="executing"])):not([data-selected="true"])': {
           borderColor: 'var(--cn-border-2) !important'
           // borderColor: 'lch(from var(--cn-border-2) l c h / 0.65) !important',
         },
@@ -278,7 +288,8 @@ export default {
   // Tag Component
   '.cn-studio-card-tag': {
     '@apply flex gap-cn-3xs p-cn-2xs border rounded-t-cn-4 top-[-28px] right-0 absolute select-none': '',
-    color: 'var(--cn-set-purple-outline-text)',
+    maxWidth: StudioCardTagMaxWidth,
+    color: 'var(--cn-set-purple-secondary-text)',
     'background-color': 'var(--cn-set-purple-outline-bg)',
     'border-color': 'var(--cn-set-purple-outline-border)',
 
@@ -305,14 +316,21 @@ export default {
   // Status Component
   '.cn-studio-card-status': {
     position: 'absolute',
-    top: '-28px'
+    top: '-28px',
+    maxWidth: '100%',
+    // Override `.cn-badge` min-width: fit-content so max-width can take effect.
+    minWidth: '0',
+
+    '.cn-studio-card:has(> .cn-studio-card-tag) > &': {
+      maxWidth: `calc(100% - ${StudioCardTagMaxWidth} - ${StudioCardStatusTagGap})`
+    }
   },
 
   // Footer Component
   '.cn-studio-card-footer': {
     minHeight: 'var(--cn-size-29)',
     borderTop: '1px solid var(--cn-comp-pipeline-card-border)',
-    backgroundColor: 'var(--cn-comp-pipeline-card-footer-bg)',
+    backgroundColor: 'var(--cn-comp-pipeline-card-bg)',
     '@apply flex flex-col px-cn-md py-cn-md font-caption-normal': '',
 
     // Default: line-clamp-4 for regular cards
@@ -333,7 +351,7 @@ export default {
       minHeight: 'var(--cn-size-16)',
       '@apply px-cn-xs py-cn-xs': '',
       '& span': {
-        '@apply line-clamp-2': ''
+        '@apply line-clamp-3': ''
       }
     },
 
@@ -357,12 +375,13 @@ export default {
   },
 
   // Stage header and footer (all sizes): exclude from intrinsic card width; fill width set by steps
-  '.cn-studio-card-group.cn-studio-card-stage > .cn-studio-card-header, .cn-studio-card-group.cn-studio-card-stage > .cn-studio-card-footer': {
-    width: '0',
-    minWidth: '100%',
-    maxWidth: '100%',
-    overflow: 'hidden'
-  },
+  '.cn-studio-card-group.cn-studio-card-stage > .cn-studio-card-header, .cn-studio-card-group.cn-studio-card-stage > .cn-studio-card-footer':
+    {
+      width: '0',
+      minWidth: '100%',
+      maxWidth: '100%',
+      overflow: 'hidden'
+    },
 
   '.cn-studio-card-expand-button-main': {
     zIndex: '2',
@@ -383,18 +402,20 @@ export default {
   },
 
   '.cn-studio-card-expand-button-top': {
-    '@apply flex items-center gap-cn-2xs p-cn-xs pl-cn-md flex-1 text-cn-1': ''
+    '@apply flex items-center gap-cn-2xs p-cn-xs pl-cn-md flex-1 min-w-0 overflow-hidden text-cn-1': ''
   },
 
   '.cn-studio-card-expand-button-bottom': {
     '@apply flex items-center justify-end gap-cn-2xs py-cn-xs px-cn-md flex-1 border-t border-cn-2': '',
-    backgroundColor: 'var(--cn-comp-pipeline-card-footer-bg)'
+    backgroundColor: 'var(--cn-comp-pipeline-card-bg)'
   },
 
   // Expand Button Component
   '.cn-studio-card-expand-button': {
     position: 'relative',
     width: '226px',
+    maxWidth: '100%',
+    minWidth: '0',
     height: 'var(--cn-size-22)',
     transition: 'transform 0.1s linear',
 
@@ -465,6 +486,8 @@ export default {
     // Minimal variant
     '&[data-variant="minimal"]': {
       width: 'auto',
+      maxWidth: '100%',
+      minWidth: '0',
       height: 'auto',
 
       '.cn-studio-card-expand-button-top': {

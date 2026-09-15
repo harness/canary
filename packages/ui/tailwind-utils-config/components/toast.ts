@@ -1,7 +1,8 @@
 export default {
   '.cn-toast-wrapper': {
     right: 'var(--cn-toast-offset-right)',
-    bottom: 'var(--cn-toast-offset-bottom)'
+    bottom: 'var(--cn-toast-offset-bottom)',
+    pointerEvents: 'auto'
   },
 
   '.cn-toast': {
@@ -37,6 +38,22 @@ export default {
 
     '.cn-toast-description': {
       '@apply text-cn-2': ''
+    },
+
+    '&.cn-toast-severity-critical': {
+      borderLeftColor: 'var(--cn-border-danger)'
+    },
+
+    '&.cn-toast-severity-high': {
+      borderLeftColor: 'var(--cn-border-warning)'
+    },
+
+    '&.cn-toast-severity-medium': {
+      borderLeftColor: 'var(--cn-border-success)'
+    },
+
+    '&.cn-toast-severity-low': {
+      borderLeftColor: 'var(--cn-border-brand)'
     },
 
     '&.cn-toast-danger': {
@@ -86,6 +103,10 @@ export default {
         transform: 'rotate(180deg)',
         transition: 'transform 0.2s ease-out'
       }
+    },
+
+    '.cn-toast-bottom-actions': {
+      '@apply w-full': ''
     }
   }
 }

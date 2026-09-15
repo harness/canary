@@ -114,7 +114,7 @@ const Progress = forwardRef<HTMLProgressElement, ProgressProps>(
     },
     ref
   ) => {
-    const percentageValue = Math.min(Math.max(0, value), 1) * 100 || 0
+    const percentageValue = Math.round(Math.min(Math.max(0, value), 1) * 100 * 100) / 100 || 0
 
     const id = useMemo(() => defaultId || `progress-${generateAlphaNumericHash(10)}`, [defaultId])
 

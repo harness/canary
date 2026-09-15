@@ -198,7 +198,7 @@ const ListField = ({
       </Text>
     )}
     {description && (
-      <Text as="div" className="select-none" truncate={!disableTruncate}>
+      <Text as="div" truncate={!disableTruncate}>
         {description}
       </Text>
     )}

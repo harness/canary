@@ -234,6 +234,123 @@ describe('CardSelect', () => {
         expect(option2).toHaveAttribute('aria-checked', 'true')
         expect(option1).toHaveAttribute('aria-checked', 'false')
       })
+
+      test('should keep the selected item checked on re-click by default', async () => {
+        const onValueChange = vi.fn()
+        renderComponent(
+          <CardSelect.Root type="single" onValueChange={onValueChange}>
+            <CardSelect.Item value="option1">Option 1</CardSelect.Item>
+            <CardSelect.Item value="option2">Option 2</CardSelect.Item>
+          </CardSelect.Root>
+        )
+
+        const option1 = screen.getByRole('radio', { name: /option 1/i })
+        await userEvent.click(option1)
+        expect(option1).toHaveAttribute('aria-checked', 'true')
+        expect(onValueChange).toHaveBeenCalledWith('option1')
+
+        onValueChange.mockClear()
+        await userEvent.click(option1)
+
+        expect(option1).toHaveAttribute('aria-checked', 'true')
+        expect(onValueChange).not.toHaveBeenCalled()
+      })
+
+      test('should deselect the selected item on Enter when deselectable', async () => {
+        const onValueChange = vi.fn()
+        renderComponent(
+          <CardSelect.Root type="single" deselectable onValueChange={onValueChange}>
+            <CardSelect.Item value="option1">Option 1</CardSelect.Item>
+            <CardSelect.Item value="option2">Option 2</CardSelect.Item>
+          </CardSelect.Root>
+        )
+
+        const option1 = screen.getByRole('radio', { name: /option 1/i })
+        await userEvent.click(option1)
+        onValueChange.mockClear()
+        option1.focus()
+        await userEvent.keyboard('{Enter}')
+
+        expect(option1).toHaveAttribute('aria-checked', 'false')
+        expect(onValueChange).toHaveBeenCalledWith(null)
+      })
+
+      test('should deselect the selected item on re-click when deselectable', async () => {
+        const onValueChange = vi.fn()
+        renderComponent(
+          <CardSelect.Root type="single" deselectable onValueChange={onValueChange}>
+            <CardSelect.Item value="option1">Option 1</CardSelect.Item>
+            <CardSelect.Item value="option2">Option 2</CardSelect.Item>
+          </CardSelect.Root>
+        )
+
+        const option1 = screen.getByRole('radio', { name: /option 1/i })
+        await userEvent.click(option1)
+        expect(option1).toHaveAttribute('aria-checked', 'true')
+        expect(onValueChange).toHaveBeenCalledWith('option1')
+
+        onValueChange.mockClear()
+        await userEvent.click(option1)
+
+        expect(option1).toHaveAttribute('aria-checked', 'false')
+        expect(onValueChange).toHaveBeenCalledTimes(1)
+        expect(onValueChange).toHaveBeenCalledWith(null)
+      })
+
+      test('should call onValueChange(null) on re-click in controlled deselectable mode without changing visual state', async () => {
+        const onValueChange = vi.fn()
+        renderComponent(
+          <CardSelect.Root type="single" deselectable value="option1" onValueChange={onValueChange}>
+            <CardSelect.Item value="option1">Option 1</CardSelect.Item>
+            <CardSelect.Item value="option2">Option 2</CardSelect.Item>
+          </CardSelect.Root>
+        )
+
+        const option1 = screen.getByRole('radio', { name: /option 1/i })
+        expect(option1).toHaveAttribute('aria-checked', 'true')
+
+        await userEvent.click(option1)
+
+        expect(onValueChange).toHaveBeenCalledTimes(1)
+        expect(onValueChange).toHaveBeenCalledWith(null)
+        expect(option1).toHaveAttribute('aria-checked', 'true')
+      })
+
+      test('should treat controlled value={null} as empty with no item checked', () => {
+        renderComponent(
+          <CardSelect.Root type="single" value={null} defaultValue="option1">
+            <CardSelect.Item value="option1">Option 1</CardSelect.Item>
+            <CardSelect.Item value="option2">Option 2</CardSelect.Item>
+          </CardSelect.Root>
+        )
+
+        const option1 = screen.getByRole('radio', { name: /option 1/i })
+        const option2 = screen.getByRole('radio', { name: /option 2/i })
+        expect(option1).toHaveAttribute('aria-checked', 'false')
+        expect(option2).toHaveAttribute('aria-checked', 'false')
+      })
+
+      test('should uncheck the previously selected item when rerendered with value={null}', () => {
+        const { rerender } = renderComponent(
+          <CardSelect.Root type="single" value="option1">
+            <CardSelect.Item value="option1">Option 1</CardSelect.Item>
+            <CardSelect.Item value="option2">Option 2</CardSelect.Item>
+          </CardSelect.Root>
+        )
+
+        const option1 = screen.getByRole('radio', { name: /option 1/i })
+        expect(option1).toHaveAttribute('aria-checked', 'true')
+
+        rerender(
+          <CardSelect.Root type="single" value={null}>
+            <CardSelect.Item value="option1">Option 1</CardSelect.Item>
+            <CardSelect.Item value="option2">Option 2</CardSelect.Item>
+          </CardSelect.Root>
+        )
+
+        expect(screen.getByRole('radio', { name: /option 1/i })).toHaveAttribute('aria-checked', 'false')
+        expect(screen.getByRole('radio', { name: /option 2/i })).toHaveAttribute('aria-checked', 'false')
+      })
     })
 
     describe('Multiple Selection', () => {
@@ -655,6 +772,141 @@ describe('CardSelect', () => {
 
         const option = screen.getByRole('radio', { name: /option 1/i })
         expect(option).toHaveAttribute('aria-disabled', 'true')
+      })
+    })
+
+    describe('Coming Soon State', () => {
+      test('should force disabled when comingSoon is true, even without disabled prop', () => {
+        renderComponent(
+          <CardSelect.Root type="single">
+            <CardSelect.Item value="option1" comingSoon>
+              Option 1
+            </CardSelect.Item>
+          </CardSelect.Root>
+        )
+
+        const option = screen.getByRole('radio', { name: /option 1/i })
+        expect(option).toHaveAttribute('aria-disabled', 'true')
+        expect(option).toHaveAttribute('data-disabled', '')
+      })
+
+      test('should not respond to clicks when comingSoon', async () => {
+        const onValueChange = vi.fn()
+        renderComponent(
+          <CardSelect.Root type="single" onValueChange={onValueChange}>
+            <CardSelect.Item value="option1" comingSoon>
+              Option 1
+            </CardSelect.Item>
+          </CardSelect.Root>
+        )
+
+        const option = screen.getByRole('radio', { name: /option 1/i })
+        await userEvent.click(option)
+
+        expect(option).toHaveAttribute('aria-checked', 'false')
+        expect(onValueChange).not.toHaveBeenCalled()
+      })
+
+      test('should set data-coming-soon attribute when comingSoon is true', () => {
+        renderComponent(
+          <CardSelect.Root type="single">
+            <CardSelect.Item value="option1" comingSoon>
+              Option 1
+            </CardSelect.Item>
+          </CardSelect.Root>
+        )
+
+        const option = screen.getByRole('radio', { name: /option 1/i })
+        expect(option).toHaveAttribute('data-coming-soon', '')
+      })
+
+      test('should not set data-coming-soon attribute by default', () => {
+        renderComponent(
+          <CardSelect.Root type="single">
+            <CardSelect.Item value="option1">Option 1</CardSelect.Item>
+          </CardSelect.Root>
+        )
+
+        const option = screen.getByRole('radio', { name: /option 1/i })
+        expect(option).not.toHaveAttribute('data-coming-soon')
+      })
+
+      test('should render a "Coming Soon" badge when comingSoon is true', () => {
+        renderComponent(
+          <CardSelect.Root type="single">
+            <CardSelect.Item value="option1" comingSoon>
+              Option 1
+            </CardSelect.Item>
+          </CardSelect.Root>
+        )
+
+        expect(screen.getByText('Coming Soon')).toBeInTheDocument()
+      })
+
+      test('should not render a "Coming Soon" badge by default', () => {
+        renderComponent(
+          <CardSelect.Root type="single">
+            <CardSelect.Item value="option1">Option 1</CardSelect.Item>
+          </CardSelect.Root>
+        )
+
+        expect(screen.queryByText('Coming Soon')).not.toBeInTheDocument()
+      })
+
+      test('should render the badge with cn-badge-info theme class', () => {
+        const { container } = renderComponent(
+          <CardSelect.Root type="single">
+            <CardSelect.Item value="option1" comingSoon>
+              Option 1
+            </CardSelect.Item>
+          </CardSelect.Root>
+        )
+
+        const badge = container.querySelector('.cn-badge-info')
+        expect(badge).toBeInTheDocument()
+      })
+    })
+
+    describe('Glow State', () => {
+      test('should set data-glow attribute when glow is true and item is checked', async () => {
+        renderComponent(
+          <CardSelect.Root type="single">
+            <CardSelect.Item value="option1" glow>
+              Option 1
+            </CardSelect.Item>
+          </CardSelect.Root>
+        )
+
+        const option = screen.getByRole('radio', { name: /option 1/i })
+        await userEvent.click(option)
+
+        expect(option).toHaveAttribute('data-glow', '')
+      })
+
+      test('should not set data-glow attribute when glow is true but item is not checked', () => {
+        renderComponent(
+          <CardSelect.Root type="single">
+            <CardSelect.Item value="option1" glow>
+              Option 1
+            </CardSelect.Item>
+          </CardSelect.Root>
+        )
+
+        const option = screen.getByRole('radio', { name: /option 1/i })
+        expect(option).not.toHaveAttribute('data-glow')
+      })
+
+      test('should not set data-glow attribute when glow is false, even if checked', async () => {
+        renderComponent(
+          <CardSelect.Root type="single">
+            <CardSelect.Item value="option1">Option 1</CardSelect.Item>
+          </CardSelect.Root>
+        )
+
+        const option = screen.getByRole('radio', { name: /option 1/i })
+        await userEvent.click(option)
+
+        expect(option).not.toHaveAttribute('data-glow')
       })
     })
 

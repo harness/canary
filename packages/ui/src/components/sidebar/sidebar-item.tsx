@@ -1,4 +1,14 @@
-import { ComponentPropsWithoutRef, forwardRef, ReactNode, Ref, useCallback, useEffect, useMemo, useState } from 'react'
+import {
+  ComponentPropsWithoutRef,
+  forwardRef,
+  ReactNode,
+  Ref,
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState
+} from 'react'
 
 import {
   Avatar,
@@ -204,7 +214,9 @@ const SidebarItemTrigger = forwardRef<HTMLButtonElement | HTMLAnchorElement, Sid
     const withDescription = !!description
     const withActionMenu = state === 'expanded' && !!actionMenuItems && actionMenuItems.length > 0
     const withDropdownMenu = !!dropdownMenuContent
-    const withActionButtons = !!actionButtons
+    // Pin/action buttons must not render while collapsed — they overlay the icon grid area
+    // (see collapsedSidebarStyles) and would intercept clicks meant to navigate or expand.
+    const withActionButtons = state === 'expanded' && !!actionButtons && actionButtons.length > 0
     const withRightElement = withActionMenu || withDropdownMenu || !!badge || withSubmenu || withRightIndicator
     const withDragHandle = !!draggable
 
@@ -251,7 +263,7 @@ const SidebarItemTrigger = forwardRef<HTMLButtonElement | HTMLAnchorElement, Sid
           })}
         </Layout.Horizontal>
       )
-    }, [actionButtons])
+    }, [actionButtons, withActionButtons])
 
     const renderContent = () => (
       <Layout.Grid
@@ -291,7 +303,7 @@ const SidebarItemTrigger = forwardRef<HTMLButtonElement | HTMLAnchorElement, Sid
         </Text>
         {withDescription && (
           <Text
-            variant="caption-single-line-light"
+            variant="caption-single-line-normal"
             color="foreground-3"
             className="cn-sidebar-item-content-description"
             truncate
@@ -330,8 +342,12 @@ const SidebarItemTrigger = forwardRef<HTMLButtonElement | HTMLAnchorElement, Sid
         )}
         {withSubmenu && (
           <IconV2
-            name={submenuOpen ? 'nav-arrow-down' : 'nav-arrow-right'}
+            name="nav-arrow-right"
             className="cn-sidebar-item-content-right-element"
+            style={{
+              transform: submenuOpen ? 'rotate(90deg)' : 'rotate(0deg)',
+              transition: 'transform 0.2s ease-out'
+            }}
             size="2xs"
           />
         )}
@@ -484,7 +500,7 @@ SidebarItemTrigger.displayName = 'SidebarItemTrigger'
 
 export const SidebarItem = forwardRef<HTMLButtonElement | HTMLAnchorElement, SidebarItemProps>(
   ({ subMenuOpen, defaultSubmenuOpen, onSubmenuChange, ...props }, ref) => {
-    const { state } = useSidebar()
+    const { state, setOpen: setSidebarOpen } = useSidebar()
 
     const collapsedSubmenuActive = state === 'collapsed' && !!props.children && hasActiveSubmenuChild(props.children)
 
@@ -508,12 +524,30 @@ export const SidebarItem = forwardRef<HTMLButtonElement | HTMLAnchorElement, Sid
       [isControlled, onSubmenuChange]
     )
 
-    const toggleSubmenu = useCallback(() => setOpen(!effectiveOpen), [setOpen, effectiveOpen])
+    // When clicked while collapsed, expand first; open submenu after sidebar state flips to expanded.
+    const pendingSubmenuOpenRef = useRef(false)
 
-    // Close automatically if sidebar collapses
+    const toggleSubmenu = useCallback(() => {
+      if (state === 'collapsed') {
+        pendingSubmenuOpenRef.current = true
+        setSidebarOpen(true)
+        return
+      }
+      setOpen(!effectiveOpen)
+    }, [state, setSidebarOpen, setOpen, effectiveOpen])
+
+    // Close automatically if sidebar collapses; apply pending open after expand.
     useEffect(() => {
-      if (state === 'collapsed' && effectiveOpen) {
-        setOpen(false)
+      if (state === 'collapsed') {
+        if (effectiveOpen) {
+          setOpen(false)
+        }
+        return
+      }
+
+      if (pendingSubmenuOpenRef.current) {
+        pendingSubmenuOpenRef.current = false
+        setOpen(true)
       }
     }, [state, effectiveOpen, setOpen])
 
@@ -538,25 +572,39 @@ export const SidebarItem = forwardRef<HTMLButtonElement | HTMLAnchorElement, Sid
     const withSubmenu = !!itemProps.children
 
     if (withSubmenu) {
-      const filteredChildren = effectiveOpen
-        ? filterChildrenByDisplayNames(itemProps.children, [SUBMENU_ITEM_DISPLAY_NAME])
-        : []
-      const rowsCount = filteredChildren.length + 1
+      const filteredChildren = filterChildrenByDisplayNames(itemProps.children, [SUBMENU_ITEM_DISPLAY_NAME])
 
       return (
         <div className="contents">
           <WrappedItemTrigger />
-          <Layout.Grid
+          <div
             className="cn-sidebar-submenu-group"
             role="group"
-            columns="1fr"
             data-state={effectiveOpen ? 'open' : 'closed'}
+            aria-hidden={!effectiveOpen}
             style={{
-              ...(effectiveOpen ? { maxHeight: `${rowsCount * 40}px` } : { maxHeight: '0px', padding: 0 })
+              gridTemplateRows: effectiveOpen ? '1fr' : '0fr',
+              visibility: effectiveOpen ? 'visible' : 'hidden',
+              // Keep links visible while collapsing, then hide once fully closed.
+              transition: effectiveOpen
+                ? 'grid-template-rows 0.2s ease-out, visibility 0s'
+                : 'grid-template-rows 0.2s ease-out, visibility 0s linear 0.2s'
             }}
           >
-            {filteredChildren}
-          </Layout.Grid>
+            <div style={{ overflow: 'hidden', minHeight: 0 }}>
+              <Layout.Grid
+                columns="1fr"
+                style={{
+                  paddingLeft: 'var(--cn-layout-xl)',
+                  paddingTop: 'var(--cn-sidebar-group-py)',
+                  paddingBottom: 'var(--cn-sidebar-group-py)',
+                  gap: 'var(--cn-spacing-2)'
+                }}
+              >
+                {filteredChildren}
+              </Layout.Grid>
+            </div>
+          </div>
         </div>
       )
     }

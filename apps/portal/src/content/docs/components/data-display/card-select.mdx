@@ -270,6 +270,44 @@ Cards can be disabled either individually or as a group:
   </div>`}
 />
 
+### Coming Soon
+
+Cards can be marked as not-yet-available. `comingSoon` forces the item disabled and shows a badge:
+
+<DocsPage.ComponentExample
+  client:only
+  code={`<div className="flex flex-col space-y-cn-xs">
+    <CardSelect.Root type="single" defaultValue="kubernetes">
+      <CardSelect.Item value="kubernetes" logo="kubernetes">
+        <CardSelect.Title>Kubernetes</CardSelect.Title>
+        <CardSelect.Description>Real, available now</CardSelect.Description>
+      </CardSelect.Item>
+      <CardSelect.Item value="ecs" comingSoon>
+        <CardSelect.Title>Amazon ECS</CardSelect.Title>
+        <CardSelect.Description>Not built yet</CardSelect.Description>
+      </CardSelect.Item>
+    </CardSelect.Root>
+  </div>`}
+/>
+
+### Glow
+
+Selected cards can show an accent glow ring in addition to the standard checked border:
+
+<DocsPage.ComponentExample
+  client:only
+  code={`<div className="flex flex-col space-y-cn-xs">
+    <CardSelect.Root type="single" defaultValue="option-1">
+      <CardSelect.Item value="option-1" glow>
+        <CardSelect.Title>Glowing When Selected</CardSelect.Title>
+      </CardSelect.Item>
+      <CardSelect.Item value="option-2">
+        <CardSelect.Title>Standard Selection</CardSelect.Title>
+      </CardSelect.Item>
+    </CardSelect.Root>
+  </div>`}
+/>
+
 ## API Reference
 
 ### Root
@@ -395,6 +433,22 @@ Represents an individual selectable card option.
     {
       name: "disabled",
       description: "When true, prevents this item from being selected.",
+      required: false,
+      value: "boolean",
+      defaultValue: "false",
+    },
+    {
+      name: "glow",
+      description:
+        "When true and the item is checked, renders an accent glow ring around the card.",
+      required: false,
+      value: "boolean",
+      defaultValue: "false",
+    },
+    {
+      name: "comingSoon",
+      description:
+        "When true, forces the item disabled and renders a 'Coming Soon' badge. Overrides disabled.",
       required: false,
       value: "boolean",
       defaultValue: "false",

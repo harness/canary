@@ -1,3 +1,5 @@
+import { useState } from 'react'
+
 import { render, RenderResult, screen, waitFor } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { vi } from 'vitest'
@@ -45,7 +47,7 @@ describe('MultiSelect', () => {
     test('should apply disabled state', () => {
       renderComponent({ disabled: true })
 
-      const input = document.querySelector('input[type="text"]') as HTMLInputElement
+      const input = screen.getByPlaceholderText('Select items') as HTMLInputElement
       expect(input).toBeDisabled()
     })
   })
@@ -304,6 +306,147 @@ describe('MultiSelect', () => {
 
       expect(input).toHaveValue('  spaced  ')
     })
+
+    test('should create key-value options in the default creation mode', async () => {
+      const handleChange = vi.fn()
+      render(<MultiSelect onChange={handleChange} placeholder="Add tags" />)
+
+      const input = screen.getByPlaceholderText('Add tags')
+      await userEvent.click(input)
+      await userEvent.type(input, 'env:prod')
+      await userEvent.keyboard('{Enter}')
+
+      await waitFor(() => {
+        expect(handleChange).toHaveBeenCalledWith([{ key: 'env', value: 'prod', id: 'env:prod' }])
+      })
+    })
+
+    test('should replace existing key-value options by key in the default creation mode', async () => {
+      const existingTag = { key: 'env', value: 'dev', id: 'env:dev' }
+      const handleChange = vi.fn()
+      render(<MultiSelect onChange={handleChange} value={[existingTag]} placeholder="Add tags" />)
+
+      const input = screen.getByRole('combobox')
+      await userEvent.click(input)
+      await userEvent.type(input, 'env:prod')
+      await userEvent.keyboard('{Enter}')
+
+      await waitFor(() => {
+        expect(handleChange).toHaveBeenCalledWith([{ key: 'env', value: 'prod', id: 'env:prod' }])
+      })
+    })
+
+    test('should not create options when creation is disallowed', async () => {
+      const handleChange = vi.fn()
+      render(<MultiSelect onChange={handleChange} disallowCreation placeholder="Add tags" />)
+
+      const input = screen.getByPlaceholderText('Add tags')
+      await userEvent.click(input)
+      await userEvent.type(input, 'newtag')
+      await userEvent.keyboard('{Enter}')
+
+      expect(handleChange).not.toHaveBeenCalled()
+    })
+
+    test('should create values when search query is externally controlled', async () => {
+      const handleChange = vi.fn()
+      const SearchControlledMultiSelect = () => {
+        const [searchQuery, setSearchQuery] = useState('')
+
+        return (
+          <MultiSelect
+            onChange={handleChange}
+            searchQuery={searchQuery}
+            setSearchQuery={setSearchQuery}
+            placeholder="Add tags"
+          />
+        )
+      }
+
+      render(<SearchControlledMultiSelect />)
+
+      const input = screen.getByPlaceholderText('Add tags')
+      await userEvent.click(input)
+      await userEvent.type(input, 'newtag')
+      await userEvent.keyboard('{Enter}')
+
+      await waitFor(() => {
+        expect(handleChange).toHaveBeenCalledWith([{ key: 'newtag', id: 'newtag' }])
+      })
+    })
+
+    test('should create literal values for URLs when creationValueMode is literal', async () => {
+      const handleChange = vi.fn()
+      render(
+        <MultiSelect onChange={handleChange} creationValueMode="literal" placeholder="Enter URL and press Enter" />
+      )
+
+      const input = screen.getByPlaceholderText('Enter URL and press Enter')
+      await userEvent.click(input)
+      await userEvent.type(input, 'https://test.com')
+      await userEvent.keyboard('{Enter}')
+
+      await waitFor(() => {
+        expect(handleChange).toHaveBeenCalledWith([{ key: 'https://test.com', id: 'https://test.com' }])
+      })
+    })
+
+    test('should create multiple literal values from comma-separated input', async () => {
+      const handleChange = vi.fn()
+      render(<MultiSelect onChange={handleChange} creationValueMode="literal" placeholder="Enter URLs" />)
+
+      const input = screen.getByPlaceholderText('Enter URLs')
+      await userEvent.click(input)
+      await userEvent.type(input, 'https://a.com, https://b.com')
+      await userEvent.keyboard('{Enter}')
+
+      await waitFor(() => {
+        expect(handleChange).toHaveBeenCalledWith([
+          { key: 'https://a.com', id: 'https://a.com' },
+          { key: 'https://b.com', id: 'https://b.com' }
+        ])
+      })
+    })
+
+    test('should call onChange when adding a tag in uncontrolled mode', async () => {
+      const handleChange = vi.fn()
+      render(<MultiSelect onChange={handleChange} placeholder="Add tags" />)
+
+      const input = screen.getByPlaceholderText('Add tags')
+      await userEvent.click(input)
+      await userEvent.type(input, 'newtag')
+      await userEvent.keyboard('{Enter}')
+
+      await waitFor(() => {
+        expect(handleChange).toHaveBeenCalledWith([{ key: 'newtag', id: 'newtag' }])
+      })
+    })
+
+    test('should not duplicate a literal tag when the same value is entered twice', async () => {
+      const existingTag = { key: 'https://test.com', id: 'https://test.com' }
+      const handleChange = vi.fn()
+      render(
+        <MultiSelect
+          onChange={handleChange}
+          creationValueMode="literal"
+          value={[existingTag]}
+          placeholder="Enter URL"
+        />
+      )
+
+      // Placeholder is hidden when tags are selected; query by combobox role instead
+      const input = screen.getByRole('combobox')
+      await userEvent.click(input)
+      await userEvent.type(input, 'https://test.com')
+      await userEvent.keyboard('{Enter}')
+
+      await waitFor(() => {
+        expect(handleChange).toHaveBeenCalled()
+        const result = handleChange.mock.calls[0][0] as (typeof existingTag)[]
+        expect(result).toHaveLength(1)
+        expect(result[0]).toEqual(existingTag)
+      })
+    })
   })
 
   describe('States & Themes', () => {
@@ -373,6 +516,21 @@ describe('MultiSelect', () => {
 
       await waitFor(() => {
         expect(screen.getByText('Press Enter to create')).toBeInTheDocument()
+      })
+    })
+
+    test('should show custom creationLabel when provided', async () => {
+      renderComponent({
+        options: [],
+        disallowCreation: false,
+        creationLabel: 'Press Enter to filter'
+      })
+
+      const input = screen.getByPlaceholderText('Select items')
+      await userEvent.click(input)
+
+      await waitFor(() => {
+        expect(screen.getByText('Press Enter to filter')).toBeInTheDocument()
       })
     })
   })
@@ -475,6 +633,30 @@ describe('MultiSelect', () => {
       expect(screen.getByText('option3')).toBeInTheDocument()
       const icon = document.querySelector('.cn-icon')
       expect(icon).toBeInTheDocument()
+    })
+
+    test('should render custom label in dropdown but keep key on selected tag', async () => {
+      const optionWithLabel = {
+        id: 'custom',
+        key: 'alice',
+        label: <span data-testid="custom-dropdown-label">Alice (admin)</span>
+      }
+      renderComponent({ options: [optionWithLabel] })
+
+      const input = screen.getByPlaceholderText('Select items')
+      await userEvent.click(input)
+
+      await waitFor(() => {
+        expect(screen.getByTestId('custom-dropdown-label')).toBeInTheDocument()
+      })
+      expect(screen.queryByText('alice')).not.toBeInTheDocument()
+
+      await userEvent.click(screen.getByTestId('custom-dropdown-label'))
+
+      await waitFor(() => {
+        expect(screen.getByText('alice')).toBeInTheDocument()
+        expect(screen.queryByTestId('custom-dropdown-label')).not.toBeInTheDocument()
+      })
     })
 
     test('should handle disabled options', async () => {
@@ -628,7 +810,7 @@ describe('MultiSelect', () => {
 
       rerender(<MultiSelect options={mockOptions} placeholder="Select" disabled={true} />)
 
-      input = document.querySelector('input[type="text"]') as HTMLInputElement
+      input = screen.getByPlaceholderText('Select') as HTMLInputElement
       expect(input).toBeDisabled()
     })
   })

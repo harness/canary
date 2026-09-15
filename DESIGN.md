@@ -566,7 +566,9 @@ Source: `packages/core-design-system/design-tokens/core/typography.json`.
 
 **Borders.** 1px is the workhorse. 1.5px and 2px exist for emphasis (active form fields, error states). Heavier borders are non-idiomatic.
 
-**Viewport.** Canonical desktop is 1440px; the supported range is 1080–1919px. Source: `packages/core-design-system/design-tokens/breakpoint/desktop.json`.
+**Viewport.** Canonical desktop is 1440px; the supported range is 1080–1920px, with an additional 1280px breakpoint (`--cn-breakpoint-viewport-xl`). Source: `packages/core-design-system/design-tokens/breakpoint/desktop.json`.
+
+**Page width.** Standard content pages can opt into a centered 1280px maximum width with `Page.Root maxWidth="page"`. Full-bleed pages such as graphs, editors, and dense tables retain the default `maxWidth="full"`. The constrained width resolves through `--cn-page-container-max-width`; it is independent of the similarly sized viewport breakpoint.
 
 Source: `packages/core-design-system/design-tokens/core/dimensions.json`.
 

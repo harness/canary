@@ -528,7 +528,7 @@ describe('Problems', () => {
       expect(root).toHaveClass('min-h-12')
       expect(root).toHaveClass('overflow-scroll')
       expect(root).toHaveClass('text-[13px]')
-      expect(root).toHaveClass('leading-[15px]')
+      expect(root).toHaveClass('leading-cn-16')
     })
 
     test('should render root container with problems', () => {

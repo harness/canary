@@ -50,6 +50,7 @@ export const ForkTag: React.FC<ForkTagProps> = ({
     <Link
       noHoverUnderline
       external
+      className="min-w-0 max-w-[var(--cn-tag-max-width)]"
       href={toUpstreamRepo(repoPath, `files/${branchName}`)}
       onClick={e => e.stopPropagation()}
     >
@@ -89,7 +90,11 @@ const BranchTag: React.FC<BranchTagProps> = ({
   }
 
   return (
-    <Link noHoverUnderline to={`${spaceId ? `/${spaceId}` : ''}/repos/${repoId}/files/${branchName}`}>
+    <Link
+      noHoverUnderline
+      className="min-w-0 max-w-[var(--cn-tag-max-width)]"
+      to={`${spaceId ? `/${spaceId}` : ''}/repos/${repoId}/files/${branchName}`}
+    >
       <TagComponent
         variant={variant}
         theme={theme}

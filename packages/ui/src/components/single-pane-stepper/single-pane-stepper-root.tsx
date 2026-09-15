@@ -4,6 +4,7 @@ import { cn } from '@utils/cn'
 
 import { AlertDialog } from '../alert-dialog'
 import { FlowEngineProvider, useEngineContext } from '../flow-stepper/engine'
+import { resolveShowRootHeader } from '../flow-stepper/resolve-show-root-header'
 import { IconV2 } from '../icon-v2'
 import { Layout } from '../layout'
 import { Text } from '../text'
@@ -13,12 +14,6 @@ import { SinglePaneStepperRootProps } from './single-pane-stepper-types'
 const DEFAULT_REACTIVATION_PROMPT = {
   title: 'Go back?',
   description: 'Going back to this step will discard your progress on subsequent steps. Are you sure?'
-}
-
-function resolveShowRootHeader(showRootHeader?: boolean, hideHeader?: boolean): boolean {
-  if (showRootHeader !== undefined) return showRootHeader
-  if (hideHeader !== undefined) return !hideHeader
-  return true
 }
 
 function SinglePaneStepperContent({
@@ -34,8 +29,12 @@ function SinglePaneStepperContent({
   hideHeader,
   reactivationPrompt,
   className,
-  style
-}: Omit<SinglePaneStepperRootProps, 'flow' | 'onComplete'>) {
+  style,
+  showStepBadge,
+  hideUpcomingGroups,
+  hidePredictedSteps,
+  disableCompletedFade
+}: Omit<SinglePaneStepperRootProps, 'flow' | 'onComplete' | 'onReactivate' | 'children' | 'initialEngineState'>) {
   const { drawerState, closeDrawer, pendingReactivation, confirmReactivation, cancelReactivation } = useEngineContext()
 
   const prompt = reactivationPrompt || DEFAULT_REACTIVATION_PROMPT
@@ -73,6 +72,10 @@ function SinglePaneStepperContent({
           showStepperHeader={showStepperHeader}
           contentTitle={contentTitle}
           contentSubtitle={contentSubtitle}
+          showStepBadge={showStepBadge}
+          hideUpcomingGroups={hideUpcomingGroups}
+          hidePredictedSteps={hidePredictedSteps}
+          disableCompletedFade={disableCompletedFade}
         />
       </Layout.Vertical>
 
@@ -87,16 +90,33 @@ function SinglePaneStepperContent({
         onCancel={cancelReactivation}
         theme="warning"
       >
-        <AlertDialog.Content title={prompt.title}>{prompt.description}</AlertDialog.Content>
+        <AlertDialog.Content title={prompt.title}>
+          <p className="cn-stepper-go-back-body">{prompt.description}</p>
+        </AlertDialog.Content>
       </AlertDialog.Root>
     </>
   )
 }
 
-export function SinglePaneStepperRoot({ flow, onComplete, disableAutoScroll, ...props }: SinglePaneStepperRootProps) {
+export function SinglePaneStepperRoot({
+  flow,
+  onComplete,
+  onReactivate,
+  disableAutoScroll,
+  initialEngineState,
+  children,
+  ...props
+}: SinglePaneStepperRootProps) {
   return (
-    <FlowEngineProvider flow={flow} onComplete={onComplete} disableAutoScroll={disableAutoScroll}>
+    <FlowEngineProvider
+      flow={flow}
+      onComplete={onComplete}
+      onReactivate={onReactivate}
+      disableAutoScroll={disableAutoScroll}
+      initialEngineState={initialEngineState}
+    >
       <SinglePaneStepperContent {...props} />
+      {children}
     </FlowEngineProvider>
   )
 }

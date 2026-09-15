@@ -123,11 +123,6 @@ const FilterGroupInner = <
     }
   })
 
-  // Create a wrapper function that matches the expected type
-  const handleSetOpenedFilter = (filter: keyof T) => {
-    setOpenedFilter(filter as V)
-  }
-
   const onSortValueChange = (sort: SortValue[]) => {
     setSortSelectionsCnt(sort.length)
     multiSortConfig?.onSortChange?.(sort)
@@ -177,7 +172,7 @@ const FilterGroupInner = <
                 {props.quickFiltersSlot}
                 {filterOptions.length > 0 && !hideAddFilter && (
                   <FilterHandler.Dropdown>
-                    {(addFilter, availableFilters, resetFilters) => {
+                    {(addFilter, availableFilters) => {
                       return (
                         <SearchableDropdown<FilterOptionConfig<V, CustomValue>>
                           options={filterOptions.filter(option => availableFilters.includes(option.value))}
@@ -185,12 +180,10 @@ const FilterGroupInner = <
                             addFilter(option.value)
                             setOpenedFilter(option.value)
                           }}
-                          onReset={() => resetFilters()}
                           isSearchable={isAddFilterSearchable}
                           inputPlaceholder={
                             addFilterInputPlaceholder ?? t('component:filter.inputPlaceholder', 'Filter by...')
                           }
-                          buttonLabel={t('component:filter.buttonLabel', 'Reset filters')}
                           displayLabel={renderFilterSelectLabel({
                             selectedFilters: filterOptions.length - availableFilters.length,
                             displayLabel: t('component:filter.defaultLabel', 'Add filter')
@@ -224,8 +217,6 @@ const FilterGroupInner = <
           </ListActions.Root>
           <>
             <ListControlBar<T, CustomValue, T[keyof T]>
-              isAddFilterSearchable={isAddFilterSearchable}
-              addFilterInputPlaceholder={addFilterInputPlaceholder}
               hideAddFilter={hideAddFilter}
               renderSelectedFilters={filterFieldRenderer => (
                 <FilterHandler.Content className={'gap-x-cn-md flex items-center'}>
@@ -267,7 +258,6 @@ const FilterGroupInner = <
               sortSelectionsCnt={sortSelectionsCnt}
               renderSelectedSort={() => <Sort.MultiSort />}
               openedFilter={openedFilter}
-              setOpenedFilter={handleSetOpenedFilter}
               filterOptions={filterOptions}
               selectedFiltersCnt={selectedFiltersCnt}
             />

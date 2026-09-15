@@ -1,5 +1,6 @@
 import accordionStyles from './accordion'
 import alertStyles from './alert'
+import alertItemStyles from './alert-item'
 import avatarStyles from './avatar'
 import badgeStyles from './badge'
 import breadcrumbStyles from './breadcrumb'
@@ -62,6 +63,7 @@ import yamlOutputStyles from './yaml-output'
 
 export const ComponentStyles = [
   accordionStyles,
+  alertItemStyles,
   alertStyles,
   badgeStyles,
   buttonStyles,

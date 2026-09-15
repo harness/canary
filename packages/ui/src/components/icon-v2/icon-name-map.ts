@@ -195,6 +195,7 @@ import Drag from './icons/drag.svg'
 import Earth from './icons/earth.svg'
 import EditPencil from './icons/edit-pencil.svg'
 import Edit from './icons/edit.svg'
+import Emoji from './icons/emoji.svg'
 import EmptyCircle from './icons/empty-circle.svg'
 import EmptyPage from './icons/empty-page.svg'
 import EnergyUsageWindow from './icons/energy-usage-window.svg'
@@ -727,6 +728,7 @@ export const IconNameMapV2 = {
   earth: Earth,
   'edit-pencil': EditPencil,
   edit: Edit,
+  emoji: Emoji,
   'empty-circle': EmptyCircle,
   'empty-page': EmptyPage,
   'energy-usage-window': EnergyUsageWindow,

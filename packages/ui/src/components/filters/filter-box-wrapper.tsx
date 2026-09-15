@@ -8,6 +8,8 @@ import { Layout } from '@components/layout'
 import { Text } from '@components/text'
 import { cn } from '@utils/cn'
 
+export type FilterFieldTriggerVariant = 'secondary' | 'outline'
+
 interface FiltersProps {
   handleRemoveFilter: () => void
   defaultOpen: boolean
@@ -18,6 +20,11 @@ interface FiltersProps {
   valueLabel?: ReactNode
   tooltipContent?: ReactNode
   contentClassName?: string
+  /**
+   * Trigger button look. Defaults to `secondary` so existing filter groups stay unchanged.
+   * Use `outline` for standalone filters that should match other outline filter controls.
+   */
+  variant?: FilterFieldTriggerVariant
   children?: ReactNode
 }
 
@@ -31,7 +38,8 @@ const FilterBoxWrapper = ({
   valueLabel,
   tooltipContent,
   onOpenChange,
-  contentClassName
+  contentClassName,
+  variant = 'secondary'
 }: FiltersProps) => {
   const { t } = useTranslation()
 
@@ -54,7 +62,7 @@ const FilterBoxWrapper = ({
     >
       <DropdownMenu.Trigger asChild>
         <Button
-          variant="secondary"
+          variant={variant}
           tooltipProps={
             tooltipContent
               ? {

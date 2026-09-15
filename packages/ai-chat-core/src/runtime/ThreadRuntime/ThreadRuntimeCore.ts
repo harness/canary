@@ -11,6 +11,12 @@ export interface ThreadRuntimeCoreConfig {
   initialMessages?: Message[]
   onMessagesChange?: (messages: Message[]) => void
   capabilityExecutionManager?: CapabilityExecutionManager
+  /**
+   * When true (default), sending a new message marks still-open elicitation
+   * cards superseded in the live UI so they stop spinning. Resume is invalidated
+   * by ml-infra on the plain-text turn. Exposed as a gate for rollout.
+   */
+  supersedeOpenElicitationsOnSend?: boolean
 }
 
 export class ThreadRuntimeCore extends BaseSubscribable {
@@ -70,6 +76,10 @@ export class ThreadRuntimeCore extends BaseSubscribable {
 
   public get pendingCapability(): { capabilityId: string; capabilityName: string } | null {
     return this._pendingCapability
+  }
+
+  public get supersedeOpenElicitationsOnSend(): boolean {
+    return this.config.supersedeOpenElicitationsOnSend !== false
   }
 
   public get conversationId(): string | undefined {

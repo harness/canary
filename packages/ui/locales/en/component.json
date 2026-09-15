@@ -87,6 +87,9 @@
     "external-tickets": "External Tickets",
     "administration": "Administration"
   },
+  "cardSelect": {
+    "comingSoon": "Coming Soon"
+  },
   "dialog": {
     "noDescription": "No description available"
   },
@@ -146,6 +149,7 @@
   },
   "select": {
     "placeholder": "Select an option",
+    "clearSelection": "Clear selection",
     "noResults": "No results found",
     "noOptions": "No options available"
   },

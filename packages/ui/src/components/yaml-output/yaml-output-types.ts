@@ -17,4 +17,6 @@ export interface YamlOutputProps {
    * (e.g. a single-purpose read-only panel) can pass false to omit it entirely.
    */
   showModeToggle?: boolean
+  /** Hides the editor's line-number gutter. Defaults to false. */
+  hideLineNumbers?: boolean
 }

@@ -49,6 +49,8 @@ export interface MultiSelectOption {
   id: string | number
   key: string
   value?: string
+  /** Custom dropdown content. Selected tags still use `key`. */
+  label?: ReactNode
   icon?: IconV2NamesType
   title?: string
   disable?: boolean
@@ -70,6 +72,32 @@ export interface MultiSelectOption {
   onReset?: () => void
 }
 
+export type MultiSelectCreationValueMode = 'keyValue' | 'literal'
+
+function parseCreatedOptions(value: string, mode: MultiSelectCreationValueMode): MultiSelectOption[] {
+  if (mode === 'literal') {
+    return value
+      .split(',')
+      .map(part => part.trim())
+      .filter(Boolean)
+      .map(part => ({ key: part, id: part }))
+  }
+  const { data, metadata } = csvToObject(value)
+  return Object.entries(data).map(([key, val]) => ({
+    key,
+    value: metadata[key] ? val : undefined,
+    id: metadata[key] ? `${key}:${val}` : key
+  }))
+}
+
+function findExistingCreatedOptionIndex(
+  options: MultiSelectOption[],
+  newOption: MultiSelectOption,
+  mode: MultiSelectCreationValueMode
+): number {
+  return options.findIndex(option => (mode === 'literal' ? option.id === newOption.id : option.key === newOption.key))
+}
+
 export interface MultiSelectProps extends CommonInputsProp {
   value?: MultiSelectOption[]
   defaultValue?: MultiSelectOption[]
@@ -81,6 +109,13 @@ export interface MultiSelectProps extends CommonInputsProp {
   disabled?: boolean
   className?: string
   disallowCreation?: boolean
+  /**
+   * Controls how typed input becomes tags on Enter. Comma-separated values are supported.
+   * - `keyValue` — splits on `:` (e.g. `env:prod`, `app:web`)
+   * - `literal` — no split on `:` (e.g. `https://example.com`, `image:latest`, `host:8080`)
+   */
+  creationValueMode?: MultiSelectCreationValueMode
+  creationLabel?: string
   isLoading?: boolean
   theme?: VariantProps<typeof multiSelectVariants>['theme']
   /** Props of `Command` */
@@ -110,6 +145,8 @@ export const MultiSelect = forwardRef<MultiSelectRef, MultiSelectProps>(
       disabled,
       className,
       disallowCreation = false,
+      creationValueMode = 'keyValue',
+      creationLabel = 'Press Enter to create',
       isLoading = false,
       commandProps,
       inputProps,
@@ -196,22 +233,14 @@ export const MultiSelect = forwardRef<MultiSelectRef, MultiSelectProps>(
               handleUnselect(getSelectedOptions().at(-1)!)
             }
           }
-          if (e.key === 'Enter' && input.value && !disallowCreation) {
-            const inputValue = input.value.trim()
-            // Handle comma-separated input or single option
-            const { data: csvData, metadata: csvMetadata } = csvToObject(inputValue)
-            const updatedOptions = getSelectedOptions()
+          const currentTypedValue = input.value.trim()
+          if (e.key === 'Enter' && currentTypedValue && !disallowCreation) {
+            const updatedOptions = [...getSelectedOptions()]
 
-            // Process each key-value pair from the CSV object
-            for (const [key, value] of Object.entries(csvData)) {
-              const wasKeyValuePair = csvMetadata[key] // Use metadata from csvToObject
-              const newOption = {
-                key,
-                value: wasKeyValuePair ? value : undefined, // Set value only for genuine key:value pairs
-                id: wasKeyValuePair ? `${key}:${value}` : key
-              }
+            const newOptions = parseCreatedOptions(currentTypedValue, creationValueMode)
 
-              const existingIndex = updatedOptions.findIndex(option => option.key === newOption.key)
+            for (const newOption of newOptions) {
+              const existingIndex = findExistingCreatedOptionIndex(updatedOptions, newOption, creationValueMode)
 
               if (existingIndex !== -1) {
                 // Replace existing option
@@ -223,9 +252,8 @@ export const MultiSelect = forwardRef<MultiSelectRef, MultiSelectProps>(
             }
 
             // Update state and clear input
-            if (isControlled) {
-              onChange?.(updatedOptions)
-            } else {
+            onChange?.(updatedOptions)
+            if (!isControlled) {
               setSelected(updatedOptions)
             }
             setInputValue('')
@@ -237,7 +265,7 @@ export const MultiSelect = forwardRef<MultiSelectRef, MultiSelectProps>(
           }
         }
       },
-      [disallowCreation, getSelectedOptions, handleUnselect, availableOptions, isControlled, setSearchQuery, onChange]
+      [creationValueMode, disallowCreation, getSelectedOptions, handleUnselect, isControlled, setSearchQuery, onChange]
     )
 
     useEffect(() => {
@@ -372,7 +400,7 @@ export const MultiSelect = forwardRef<MultiSelectRef, MultiSelectProps>(
                       setOpen(true)
                       inputProps?.onFocus?.(event)
                     }}
-                    placeholder={disabled || getSelectedOptions().length > 0 ? '' : placeholder}
+                    placeholder={getSelectedOptions().length > 0 ? '' : placeholder}
                     className={cn('cn-multi-select-input', inputProps?.className)}
                     asChild
                   >
@@ -403,7 +431,7 @@ export const MultiSelect = forwardRef<MultiSelectRef, MultiSelectProps>(
                         </Command.Item>
                       ) : (
                         <Command.Item value="-" disabled>
-                          Press Enter to create
+                          {creationLabel}
                         </Command.Item>
                       )
                     ) : (
@@ -418,17 +446,15 @@ export const MultiSelect = forwardRef<MultiSelectRef, MultiSelectProps>(
                               setInputValue('')
                               setSearchQuery?.('')
                               const newSelectedValues = [...getSelectedOptions(), option]
-                              if (isControlled) {
-                                onChange?.(newSelectedValues)
-                              } else {
-                                onChange?.(newSelectedValues)
+                              onChange?.(newSelectedValues)
+                              if (!isControlled) {
                                 setSelected(newSelectedValues)
                               }
                             }}
                           >
                             <Layout.Flex align="center" gap="xs">
                               {option.icon && <IconV2 name={option.icon} />}
-                              {option.key}
+                              {option.label ?? option.key}
                             </Layout.Flex>
                           </Command.Item>
                         ))}

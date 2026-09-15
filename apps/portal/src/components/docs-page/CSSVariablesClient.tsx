@@ -216,7 +216,11 @@ export const CSSVariablesClient = ({
                 <Text variant="heading-subsection" as="h3">
                   {subcategory}
                 </Text>
-                <Text variant="body-single-line-light" color="foreground-3">
+                <Text
+                  variant="body-normal"
+                  color="foreground-3"
+                  className="leading-none"
+                >
                   {vars.length}
                 </Text>
               </div>
@@ -246,10 +250,7 @@ export const CSSVariablesClient = ({
                               />
                             )}
                             {v.description ? (
-                              <Tooltip
-                                content={v.description.split("\n")[0]}
-                                theme="themed"
-                              >
+                              <Tooltip content={v.description.split("\n")[0]}>
                                 <span
                                   className="cursor-help"
                                   style={{
@@ -259,8 +260,8 @@ export const CSSVariablesClient = ({
                                   }}
                                 >
                                   <Text
-                                    variant="body-single-line-code"
-                                    className="!border-0 !p-0"
+                                    variant="body-code"
+                                    className="!border-0 !p-0 leading-none"
                                   >
                                     {v.name}
                                   </Text>
@@ -268,8 +269,8 @@ export const CSSVariablesClient = ({
                               </Tooltip>
                             ) : (
                               <Text
-                                variant="body-single-line-code"
-                                className="!border-0 !p-0"
+                                variant="body-code"
+                                className="!border-0 !p-0 leading-none"
                               >
                                 {v.name}
                               </Text>
@@ -282,8 +283,8 @@ export const CSSVariablesClient = ({
                               {v.twClasses.map((cls) => (
                                 <Text
                                   key={cls}
-                                  variant="body-single-line-code"
-                                  className="!border-0 !p-0"
+                                  variant="body-code"
+                                  className="!border-0 !p-0 leading-none"
                                 >
                                   {cls}
                                 </Text>
@@ -291,8 +292,8 @@ export const CSSVariablesClient = ({
                             </div>
                           ) : (
                             <Text
-                              variant="body-single-line-code"
-                              className="!border-0 !p-0"
+                              variant="body-code"
+                              className="!border-0 !p-0 leading-none"
                               color="foreground-3"
                             >
                               —
@@ -301,8 +302,8 @@ export const CSSVariablesClient = ({
                         </Table.Cell>
                         <Table.Cell>
                           <Text
-                            variant="body-single-line-code"
-                            className="!border-0 !p-0"
+                            variant="body-code"
+                            className="!border-0 !p-0 leading-none"
                           >
                             {live ? (
                               <LiveValue varName={v.name} fallback={v.value} />

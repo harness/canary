@@ -20,6 +20,7 @@ export interface ActionData {
   isDanger?: boolean
   disabled?: boolean
   tooltip?: Pick<TooltipProps, 'title' | 'content'>
+  testId?: string
 }
 
 export interface MoreActionsTooltipProps {
@@ -33,6 +34,10 @@ export interface MoreActionsTooltipProps {
   buttonVariant?: ButtonVariants
   buttonSize?: ButtonSizes
   disabled?: boolean
+  /** Accessible name and tooltip for the trigger button. Defaults to "Show more actions". */
+  label?: string
+  /** Called when the menu opens or closes. Useful for deferred work like RBAC checks (UUI-2039). */
+  onOpenChange?: (open: boolean) => void
 }
 
 /**
@@ -49,7 +54,9 @@ export const MoreActionsTooltip = forwardRef<HTMLButtonElement, MoreActionsToolt
       className,
       buttonVariant = 'ghost',
       buttonSize = 'md',
-      disabled = false
+      disabled = false,
+      label = 'Show more actions',
+      onOpenChange
     },
     ref
   ) => {
@@ -57,12 +64,17 @@ export const MoreActionsTooltip = forwardRef<HTMLButtonElement, MoreActionsToolt
     const [suppressTooltip, setSuppressTooltip] = useState(false)
     const timeoutRef = useRef<ReturnType<typeof setTimeout>>()
 
-    const handleDropdownOpenChange = useCallback((open: boolean) => {
-      if (open) return
-      clearTimeout(timeoutRef.current)
-      setSuppressTooltip(true)
-      timeoutRef.current = setTimeout(() => setSuppressTooltip(false), TOOLTIP_SUPPRESS_AFTER_CLOSE_MS)
-    }, [])
+    const handleDropdownOpenChange = useCallback(
+      (open: boolean) => {
+        onOpenChange?.(open)
+
+        if (open) return
+        clearTimeout(timeoutRef.current)
+        setSuppressTooltip(true)
+        timeoutRef.current = setTimeout(() => setSuppressTooltip(false), TOOLTIP_SUPPRESS_AFTER_CLOSE_MS)
+      },
+      [onOpenChange]
+    )
 
     useEffect(() => () => clearTimeout(timeoutRef.current), [])
 
@@ -73,13 +85,13 @@ export const MoreActionsTooltip = forwardRef<HTMLButtonElement, MoreActionsToolt
         <DropdownMenu.Trigger ref={ref} disabled={disabled} asChild>
           <Button
             theme={theme}
-            className="text-cn-gray-outline"
+            className="text-cn-gray-secondary"
             variant={buttonVariant}
             iconOnly
             size={buttonSize}
-            aria-label="Show more actions"
+            aria-label={label}
             tooltipProps={{
-              content: 'Show more actions',
+              content: label,
               open: suppressTooltip ? false : undefined
             }}
           >
@@ -112,6 +124,7 @@ export const MoreActionsTooltip = forwardRef<HTMLButtonElement, MoreActionsToolt
                       </Text>
                     }
                     disabled={action.disabled}
+                    data-testid={action.testId}
                   />
                 ) : (
                   <DropdownMenu.Item
@@ -121,6 +134,7 @@ export const MoreActionsTooltip = forwardRef<HTMLButtonElement, MoreActionsToolt
                       </Text>
                     }
                     disabled={action.disabled}
+                    data-testid={action.testId}
                   />
                 )}
               </Link>
@@ -139,6 +153,7 @@ export const MoreActionsTooltip = forwardRef<HTMLButtonElement, MoreActionsToolt
                   action?.onClick?.()
                 }}
                 disabled={action.disabled}
+                data-testid={action.testId}
               />
             ) : (
               <DropdownMenu.Item
@@ -153,6 +168,7 @@ export const MoreActionsTooltip = forwardRef<HTMLButtonElement, MoreActionsToolt
                   action?.onClick?.()
                 }}
                 disabled={action.disabled}
+                data-testid={action.testId}
               />
             )
 

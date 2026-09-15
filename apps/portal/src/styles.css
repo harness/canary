@@ -1,5 +1,5 @@
 body {
-  @apply text-cn-2 text-cn-size-6 overscroll-none tracking-cn-normal font-body-normal !important;
+  @apply text-cn-1 text-cn-size-6 overscroll-none tracking-cn-normal font-body-normal !important;
   @apply !leading-7 !text-cn-size-6;
 }
 
@@ -57,7 +57,7 @@ code:not(.expressive-code code) {
 
 /* Table text — match cn-table-v2 component */
 .cn-table-v2-head {
-  font-size: var(--cn-font-size-4, 0.8125rem) !important;
+  font-size: var(--cn-font-size-3, 0.75rem) !important;
   line-height: var(--cn-line-height-4, 1.125rem) !important;
   font-weight: 360 !important;
 }
@@ -68,7 +68,7 @@ code:not(.expressive-code code) {
 }
 
 .cn-table-v2-cell code {
-  font-size: var(--cn-font-size-4) !important;
+  font-size: var(--cn-font-size-3) !important;
 }
 
 .shade-preview {
@@ -695,7 +695,7 @@ button[aria-label="Search"] {
 
 .pagination-links a > span > .link-title {
   display: block !important;
-  font-size: var(--cn-font-size-4) !important;
+  font-size: var(--cn-font-size-3) !important;
   font-weight: 500 !important;
   color: var(--cn-text-1) !important;
   line-height: 1.3 !important;
@@ -775,20 +775,20 @@ button[aria-label="Search"] {
 }
 
 .starlight-aside--note .starlight-aside__title {
-  color: var(--cn-set-indigo-outline-text);
+  color: var(--cn-set-indigo-secondary-text);
 }
 
 .starlight-aside--note .starlight-aside__icon {
-  color: var(--cn-set-indigo-outline-text);
+  color: var(--cn-set-indigo-secondary-text);
 }
 
 .starlight-aside--note .starlight-aside__content p {
-  color: var(--cn-set-indigo-outline-text);
+  color: var(--cn-set-indigo-secondary-text);
 }
 
 .sl-markdown-content .starlight-aside--note :not(pre) > code {
   background-color: var(--cn-set-indigo-outline-bg) !important;
-  color: var(--cn-set-indigo-outline-text) !important;
+  color: var(--cn-set-indigo-secondary-text) !important;
   border: 1px solid var(--cn-set-indigo-outline-border) !important;
   padding: 2px 6px !important;
   margin-inline: var(--cn-layout-4xs) !important;
@@ -805,20 +805,20 @@ button[aria-label="Search"] {
 }
 
 .starlight-aside--tip .starlight-aside__title {
-  color: var(--cn-set-success-outline-text);
+  color: var(--cn-set-success-secondary-text);
 }
 
 .starlight-aside--tip .starlight-aside__icon {
-  color: var(--cn-set-success-outline-text);
+  color: var(--cn-set-success-secondary-text);
 }
 
 .starlight-aside--tip .starlight-aside__content p {
-  color: var(--cn-set-success-outline-text);
+  color: var(--cn-set-success-secondary-text);
 }
 
 .sl-markdown-content .starlight-aside--tip :not(pre) > code {
   background-color: var(--cn-set-success-outline-bg) !important;
-  color: var(--cn-set-success-outline-text) !important;
+  color: var(--cn-set-success-secondary-text) !important;
   border: 1px solid var(--cn-set-success-outline-border) !important;
   padding: 2px 6px !important;
   margin-inline: var(--cn-layout-4xs) !important;
@@ -835,20 +835,20 @@ button[aria-label="Search"] {
 }
 
 .starlight-aside--caution .starlight-aside__title {
-  color: var(--cn-set-warning-outline-text);
+  color: var(--cn-set-warning-secondary-text);
 }
 
 .starlight-aside--caution .starlight-aside__icon {
-  color: var(--cn-set-warning-outline-text);
+  color: var(--cn-set-warning-secondary-text);
 }
 
 .starlight-aside--caution .starlight-aside__content p {
-  color: var(--cn-set-warning-outline-text);
+  color: var(--cn-set-warning-secondary-text);
 }
 
 .sl-markdown-content .starlight-aside--caution :not(pre) > code {
   background-color: var(--cn-set-warning-outline-bg) !important;
-  color: var(--cn-set-warning-outline-text) !important;
+  color: var(--cn-set-warning-secondary-text) !important;
   border: 1px solid var(--cn-set-warning-outline-border) !important;
   padding: 2px 6px !important;
   margin-inline: var(--cn-layout-4xs) !important;
@@ -865,20 +865,20 @@ button[aria-label="Search"] {
 }
 
 .starlight-aside--danger .starlight-aside__title {
-  color: var(--cn-set-danger-outline-text);
+  color: var(--cn-set-danger-secondary-text);
 }
 
 .starlight-aside--danger .starlight-aside__icon {
-  color: var(--cn-set-danger-outline-text);
+  color: var(--cn-set-danger-secondary-text);
 }
 
 .starlight-aside--danger .starlight-aside__content p {
-  color: var(--cn-set-danger-outline-text);
+  color: var(--cn-set-danger-secondary-text);
 }
 
 .sl-markdown-content .starlight-aside--danger :not(pre) > code {
   background-color: var(--cn-set-danger-outline-bg) !important;
-  color: var(--cn-set-danger-outline-text) !important;
+  color: var(--cn-set-danger-secondary-text) !important;
   border: 1px solid var(--cn-set-danger-outline-border) !important;
   padding: 2px 6px !important;
   margin-inline: var(--cn-layout-4xs) !important;
@@ -991,4 +991,61 @@ button[aria-label="Search"] {
   font-weight: 500;
   line-height: 1.3;
   color: var(--cn-text-1);
+}
+
+/* Growth box (CSS class prefix remains cn-growth-card) */
+.cn-growth-card {
+  width: 100%;
+}
+
+/* Docs live preview: constrain the demo to the intended sidebar width */
+.cn-growth-card-demo {
+  width: 220px;
+}
+
+.cn-growth-card-actions {
+  margin-top: var(--cn-spacing-3);
+}
+
+.cn-growth-card .cn-card-content {
+  @apply !text-cn-size-3 leading-snug tracking-cn-tight;
+}
+
+/*
+ * Primary CTA — Figma linear border: border/brand @ 16% → set/purple/primary @ 87%, 90deg.
+ * Same layered-bg technique as Button variant="ai", but only these two design-system stops.
+ * !important beats .cn-button-secondary border-color so the transparent ring (and gradient) wins.
+ * Fill matches card surface; gradient paints only the transparent border ring.
+ */
+.cn-button.cn-growth-card-cta {
+  color: var(--cn-set-ai-outline-text) !important;
+  background-color: transparent !important;
+  background-image:
+    linear-gradient(var(--cn-bg-1), var(--cn-bg-1)),
+    linear-gradient(
+      90deg,
+      var(--cn-border-brand) 16%,
+      var(--cn-set-purple-primary-bg) 87%
+    ) !important;
+  background-origin: border-box !important;
+  background-clip: padding-box, border-box !important;
+  background-size:
+    100% 100%,
+    100% 100% !important;
+  border: var(--cn-btn-border) solid transparent !important;
+  box-shadow: none !important;
+}
+
+.cn-button.cn-growth-card-cta:hover:not(:disabled, .cn-button-disabled),
+.cn-button.cn-growth-card-cta:active:not(:disabled, .cn-button-disabled) {
+  background-color: transparent !important;
+  background-image:
+    linear-gradient(var(--cn-bg-2), var(--cn-bg-2)),
+    linear-gradient(
+      90deg,
+      var(--cn-border-brand) 16%,
+      var(--cn-set-purple-primary-bg) 87%
+    ) !important;
+  border-color: transparent !important;
+  box-shadow: none !important;
 }

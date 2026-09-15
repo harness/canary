@@ -121,6 +121,9 @@ const DropdownMenuContent = forwardRef<ElementRef<typeof DropdownMenuPrimitive.C
       propOnKeyDownCapture?.(e)
       if (e.defaultPrevented || e.isDefaultPrevented?.()) return
 
+      // Capture-phase stopPropagation would also block the input's own Enter handlers (e.g. MultiSelect).
+      if (isTargetInput && e.key === 'Enter') return
+
       if ((isTargetInput && e.key !== 'ArrowDown' && e.key !== 'ArrowUp') || e.key === 'Tab') {
         e.stopPropagation()
         return

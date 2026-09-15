@@ -1,4 +1,4 @@
-import { ComponentProps, ElementType, forwardRef, ReactElement, Ref, useCallback, useState } from 'react'
+import { ComponentProps, ElementType, forwardRef, ReactElement, Ref, useEffect, useRef, useState } from 'react'
 
 import { useMergeRefs, wrapConditionalObjectElement } from '@/utils'
 import { Slot } from '@radix-ui/react-slot'
@@ -40,23 +40,20 @@ type TextElement =
 export const typographyVariantConfig = {
   'heading-hero': 'font-heading-hero',
   'heading-section': 'font-heading-section',
+  'heading-default': 'font-heading-default',
   'heading-subsection': 'font-heading-subsection',
   'heading-base': 'font-heading-base',
   'heading-small': 'font-heading-small',
   'body-normal': 'font-body-normal',
   'body-single-line-normal': 'font-body-single-line-normal',
-  'body-single-line-light': 'font-body-single-line-light',
   'body-strong': 'font-body-strong',
   'body-single-line-strong': 'font-body-single-line-strong',
   'body-code': 'font-body-code',
-  'body-single-line-code': 'font-body-single-line-code',
   'caption-normal': 'font-caption-normal',
   'caption-light': 'font-caption-light',
   'caption-strong': 'font-caption-strong',
   'caption-code': 'font-caption-code',
-  'caption-single-line-code': 'font-caption-single-line-code',
-  'caption-single-line-normal': 'font-caption-single-line-normal',
-  'caption-single-line-light': 'font-caption-single-line-light'
+  'caption-single-line-normal': 'font-caption-single-line-normal'
 }
 
 export const textVariants = cva('', {
@@ -114,23 +111,20 @@ const textVariantToElement: Record<
 > = {
   'heading-hero': { element: 'p', color: 'foreground-1' },
   'heading-section': { element: 'p', color: 'foreground-1' },
+  'heading-default': { element: 'p', color: 'foreground-1' },
   'heading-subsection': { element: 'p', color: 'foreground-1' },
   'heading-base': { element: 'p', color: 'foreground-1' },
   'heading-small': { element: 'p', color: 'foreground-1' },
   'body-normal': { element: 'p', color: 'foreground-2' },
-  'body-single-line-light': { element: 'p', color: 'foreground-2' },
   'body-single-line-normal': { element: 'p', color: 'foreground-2' },
   'body-strong': { element: 'p', color: 'foreground-2' },
   'body-single-line-strong': { element: 'p', color: 'foreground-2' },
   'body-code': { element: 'pre', color: 'foreground-2' },
-  'body-single-line-code': { element: 'pre', color: 'foreground-2' },
   'caption-code': { element: 'span', color: 'foreground-2' },
-  'caption-single-line-code': { element: 'span', color: 'foreground-2' },
   'caption-normal': { element: 'span', color: 'foreground-2' },
   'caption-light': { element: 'span', color: 'foreground-2' },
   'caption-strong': { element: 'span', color: 'foreground-2' },
-  'caption-single-line-normal': { element: 'span', color: 'foreground-2' },
-  'caption-single-line-light': { element: 'span', color: 'foreground-2' }
+  'caption-single-line-normal': { element: 'span', color: 'foreground-2' }
 }
 
 const getTextNode = ({ as, variant = 'body-normal', asChild }: Pick<TextProps, 'as' | 'asChild' | 'variant'>) => {
@@ -182,21 +176,27 @@ const TextWithRef = forwardRef<HTMLElement, TextProps>(
     ref
   ) => {
     const [titleText, setTitleText] = useState('')
+    const elementRef = useRef<HTMLElement | null>(null)
 
     const Comp = getTextNode({ as, variant, asChild })
     const isHeading = !as && !!variant?.startsWith('heading')
-    const color = _color ?? textVariantToElement[variant ?? 'body-normal'].color
 
-    const getTitleFromRef = useCallback(
-      (element: HTMLElement | null) => {
-        if (element && (truncate || lineClamp)) {
-          setTitleText(element.innerText || '')
-        }
-      },
-      [truncate, lineClamp]
-    )
+    /**
+     * To prevent breaking Text component when a wrong variant is passed.
+     *
+     * Some variants are removed and those changes might not get updated in all places.
+     * In that case, we fallback to the default variant.
+     */
+    const fallback = textVariantToElement[variant ?? 'body-normal'] ?? textVariantToElement['body-normal']
+    const color = _color ?? fallback.color
 
-    const compRef = useMergeRefs<HTMLElement>([getTitleFromRef, ref])
+    useEffect(() => {
+      if (elementRef.current && (truncate || lineClamp)) {
+        setTitleText(elementRef.current.innerText || '')
+      }
+    }, [children, truncate, lineClamp])
+
+    const compRef = useMergeRefs<HTMLElement>([elementRef, ref])
 
     const isTruncated = lineClamp ? false : truncate
 

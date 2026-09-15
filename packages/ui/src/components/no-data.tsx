@@ -82,7 +82,7 @@ export const NoData: FC<NoDataProps> = ({
         className
       )}
     >
-      {!!imageName && <Illustration name={imageName} size={imageSize} themeDependent />}
+      {!!imageName && <Illustration name={imageName} size={imageSize} />}
 
       <Layout.Vertical gap="xl" align="center" justify="center">
         <Layout.Vertical gap="xs" align="center" justify="center" className={textWrapperClassName}>

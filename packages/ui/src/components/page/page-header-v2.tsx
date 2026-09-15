@@ -5,7 +5,7 @@ import { IconV2, type IconV2NamesType } from '../icon-v2'
 import { Layout } from '../layout'
 import { Tabs } from '../tabs'
 import { Text } from '../text'
-import { usePageScrollable } from './page'
+import { usePageMaxWidth, usePageScrollable } from './page'
 
 export interface HeaderV2TabItem {
   label: string
@@ -27,6 +27,8 @@ export interface PageHeaderV2Props {
   tabs?: HeaderV2TabItem[]
   /** `ghost` renders tabs inline in the title row; `underlined` (default) renders below. */
   tabsVariant?: HeaderV2TabsVariant
+  /** Optional className passed to the `Tabs.List` element. */
+  tabsClassName?: string
   contentTabs?: boolean
   children?: ReactNode
   className?: string
@@ -83,12 +85,13 @@ const TitleSection: FC<TitleSectionProps> = ({ title, iconName, description, act
   )
 }
 
-const NavTabsSection: FC<{ items: HeaderV2TabItem[]; variant?: HeaderV2TabsVariant }> = ({
+const NavTabsSection: FC<{ items: HeaderV2TabItem[]; variant?: HeaderV2TabsVariant; className?: string }> = ({
   items,
-  variant = 'underlined'
+  variant = 'underlined',
+  className
 }) => (
   <Tabs.NavRoot>
-    <Tabs.List variant={variant}>
+    <Tabs.List variant={variant} className={className}>
       {items.map(tab => (
         <Tabs.Trigger
           key={tab.value}
@@ -123,11 +126,13 @@ export const HeaderV2: FC<PageHeaderV2Props> = ({
   breadcrumbs,
   tabs,
   tabsVariant = 'underlined',
+  tabsClassName,
   contentTabs,
   children,
   className
 }) => {
   const scrollable = usePageScrollable()
+  const maxWidth = usePageMaxWidth()
   const hasTabs = tabs && tabs.length > 0
   const showInlineTabs = hasTabs && tabsVariant === 'ghost' && !contentTabs
   const showSeparateTabs = hasTabs && !showInlineTabs
@@ -140,6 +145,7 @@ export const HeaderV2: FC<PageHeaderV2Props> = ({
         // In scrollable mode, Page.Root uses `display: contents` on the wrapper,
         // so this header must own its own padding and sticky positioning.
         scrollable && 'sticky top-0 z-10 bg-cn-1 cn-page-content cn-page-content-pt',
+        scrollable && maxWidth === 'page' && 'max-w-cn-page mx-auto',
         className
       )}
     >
@@ -153,7 +159,7 @@ export const HeaderV2: FC<PageHeaderV2Props> = ({
       />
       {children}
       {showSeparateTabs && contentTabs && <ContentTabsSection items={tabs} />}
-      {showSeparateTabs && !contentTabs && <NavTabsSection items={tabs} />}
+      {showSeparateTabs && !contentTabs && <NavTabsSection items={tabs} className={tabsClassName} />}
     </Layout.Vertical>
   )
 }

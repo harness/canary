@@ -24,7 +24,6 @@ const fontSizeMap = {
   'cn-size-1': 'var(--cn-font-size-1)',
   'cn-size-2': 'var(--cn-font-size-2)',
   'cn-size-3': 'var(--cn-font-size-3)',
-  'cn-size-4': 'var(--cn-font-size-4)',
   'cn-size-5': 'var(--cn-font-size-5)',
   'cn-size-6': 'var(--cn-font-size-6)',
   'cn-size-7': 'var(--cn-font-size-7)',
@@ -33,10 +32,7 @@ const fontSizeMap = {
   'cn-size-10': 'var(--cn-font-size-10)',
   'cn-size-11': 'var(--cn-font-size-11)',
   'cn-size-12': 'var(--cn-font-size-12)',
-  'cn-size-13': 'var(--cn-font-size-13)',
-  'cn-size-14': 'var(--cn-font-size-14)',
-  'cn-size-15': 'var(--cn-font-size-15)',
-  'cn-size-16': 'var(--cn-font-size-16)'
+  'cn-size-15': 'var(--cn-font-size-15)'
 }
 const tailwindDesignSystem: TailwindConfig = {
   darkMode: ['class'],
@@ -86,7 +82,7 @@ const tailwindDesignSystem: TailwindConfig = {
        * Example:
        * ✅ .text-cn-success-primary + .bg-cn-success-primary
        * ✅ .text-cn-success-secondary + .bg-cn-success-secondary
-       * ✅ .text-cn-success-outline + .bg-cn-success-outline + .border-cn-success-outline
+       * ✅ .text-cn-success-secondary + .bg-cn-success-outline + .border-cn-success-outline (outline surface uses secondary text)
        *
        * ❌ .text-cn-success-primary + .bg-cn-success-secondary
        * ❌ .text-cn-success-primary + .bg-cn-success-outline
@@ -221,7 +217,7 @@ const tailwindDesignSystem: TailwindConfig = {
        * Example:
        * ✅ .text-cn-success-primary + .bg-cn-success-primary
        * ✅ .text-cn-success-secondary + .bg-cn-success-secondary
-       * ✅ .text-cn-success-outline + .bg-cn-success-outline + .border-cn-success-outline
+       * ✅ .text-cn-success-secondary + .bg-cn-success-outline + .border-cn-success-outline (outline surface uses secondary text)
        *
        * ❌ .text-cn-success-primary + .bg-cn-success-secondary
        * ❌ .text-cn-success-primary + .bg-cn-success-outline
@@ -229,75 +225,61 @@ const tailwindDesignSystem: TailwindConfig = {
       'cn-success': {
         DEFAULT: 'var(--cn-text-success)',
         primary: 'var(--cn-set-success-primary-text)',
-        secondary: 'var(--cn-set-success-secondary-text)',
-        outline: 'var(--cn-set-success-outline-text)'
+        secondary: 'var(--cn-set-success-secondary-text)'
       },
       'cn-gray': {
         primary: 'var(--cn-set-gray-primary-text)',
-        secondary: 'var(--cn-set-gray-secondary-text)',
-        outline: 'var(--cn-set-gray-outline-text)'
+        secondary: 'var(--cn-set-gray-secondary-text)'
       },
       'cn-danger': {
         DEFAULT: 'var(--cn-text-danger)',
         primary: 'var(--cn-set-danger-primary-text)',
-        secondary: 'var(--cn-set-danger-secondary-text)',
-        outline: 'var(--cn-set-danger-outline-text)'
+        secondary: 'var(--cn-set-danger-secondary-text)'
       },
       'cn-warning': {
         DEFAULT: 'var(--cn-text-warning)',
         primary: 'var(--cn-set-warning-primary-text)',
-        secondary: 'var(--cn-set-warning-secondary-text)',
-        outline: 'var(--cn-set-warning-outline-text)'
+        secondary: 'var(--cn-set-warning-secondary-text)'
       },
       'cn-blue': {
         primary: 'var(--cn-set-blue-primary-text)',
-        secondary: 'var(--cn-set-blue-secondary-text)',
-        outline: 'var(--cn-set-blue-outline-text)'
+        secondary: 'var(--cn-set-blue-secondary-text)'
       },
       'cn-purple': {
         primary: 'var(--cn-set-purple-primary-text)',
-        secondary: 'var(--cn-set-purple-secondary-text)',
-        outline: 'var(--cn-set-purple-outline-text)'
+        secondary: 'var(--cn-set-purple-secondary-text)'
       },
       'cn-brown': {
         primary: 'var(--cn-set-brown-primary-text)',
-        secondary: 'var(--cn-set-brown-secondary-text)',
-        outline: 'var(--cn-set-brown-outline-text)'
+        secondary: 'var(--cn-set-brown-secondary-text)'
       },
       'cn-cyan': {
         primary: 'var(--cn-set-cyan-primary-text)',
-        secondary: 'var(--cn-set-cyan-secondary-text)',
-        outline: 'var(--cn-set-cyan-outline-text)'
+        secondary: 'var(--cn-set-cyan-secondary-text)'
       },
       'cn-indigo': {
         primary: 'var(--cn-set-indigo-primary-text)',
-        secondary: 'var(--cn-set-indigo-secondary-text)',
-        outline: 'var(--cn-set-indigo-outline-text)'
+        secondary: 'var(--cn-set-indigo-secondary-text)'
       },
       'cn-mint': {
         primary: 'var(--cn-set-mint-primary-text)',
-        secondary: 'var(--cn-set-mint-secondary-text)',
-        outline: 'var(--cn-set-mint-outline-text)'
+        secondary: 'var(--cn-set-mint-secondary-text)'
       },
       'cn-orange': {
         primary: 'var(--cn-set-orange-primary-text)',
-        secondary: 'var(--cn-set-orange-secondary-text)',
-        outline: 'var(--cn-set-orange-outline-text)'
+        secondary: 'var(--cn-set-orange-secondary-text)'
       },
       'cn-pink': {
         primary: 'var(--cn-set-pink-primary-text)',
-        secondary: 'var(--cn-set-pink-secondary-text)',
-        outline: 'var(--cn-set-pink-outline-text)'
+        secondary: 'var(--cn-set-pink-secondary-text)'
       },
       'cn-violet': {
         primary: 'var(--cn-set-violet-primary-text)',
-        secondary: 'var(--cn-set-violet-secondary-text)',
-        outline: 'var(--cn-set-violet-outline-text)'
+        secondary: 'var(--cn-set-violet-secondary-text)'
       },
       'cn-forest': {
         primary: 'var(--cn-set-forest-green-primary-text)',
-        secondary: 'var(--cn-set-forest-green-secondary-text)',
-        outline: 'var(--cn-set-forest-green-outline-text)'
+        secondary: 'var(--cn-set-forest-green-secondary-text)'
       },
       transparent: 'transparent',
       inherit: 'inherit',
@@ -322,9 +304,9 @@ const tailwindDesignSystem: TailwindConfig = {
        * These colors should be used along with their text and bg outline pairs
        *
        * Example:
-       * ✅ .text-cn-success-outline + .bg-cn-success-outline + .border-cn-success-outline
+       * ✅ .text-cn-success-secondary + .bg-cn-success-outline + .border-cn-success-outline (outline surface uses secondary text)
        *
-       * ❌ .text-cn-success-outline + .bg-cn-success-outline + .border-cn-danger-outline
+       * ❌ .text-cn-success-secondary + .bg-cn-success-outline + .border-cn-danger-outline
        */
       'cn-success': {
         DEFAULT: 'var(--cn-border-success)',
@@ -449,12 +431,9 @@ const tailwindDesignSystem: TailwindConfig = {
     },
 
     letterSpacing: {
-      'cn-tighter': 'var(--cn-tracking-tighter)',
       'cn-tight': 'var(--cn-tracking-tight)',
       'cn-normal': 'var(--cn-tracking-normal)',
-      'cn-wide': 'var(--cn-tracking-wide)',
-      'cn-wider': 'var(--cn-tracking-wider)',
-      'cn-widest': 'var(--cn-tracking-widest)'
+      'cn-wide': 'var(--cn-tracking-wide)'
     },
     extend: {
       backgroundImage: {
@@ -468,6 +447,19 @@ const tailwindDesignSystem: TailwindConfig = {
       },
       opacity: {
         'cn-disabled': 'var(--cn-disabled-opacity)'
+      },
+      // Token-backed line-height ramp (4px grid) → `leading-cn-8` … `leading-cn-40`.
+      // Additive under `extend`, so stock `leading-*` stay available during the remap.
+      lineHeight: {
+        'cn-8': 'var(--cn-line-height-8)',
+        'cn-12': 'var(--cn-line-height-12)',
+        'cn-16': 'var(--cn-line-height-16)',
+        'cn-20': 'var(--cn-line-height-20)',
+        'cn-24': 'var(--cn-line-height-24)',
+        'cn-28': 'var(--cn-line-height-28)',
+        'cn-32': 'var(--cn-line-height-32)',
+        'cn-36': 'var(--cn-line-height-36)',
+        'cn-40': 'var(--cn-line-height-40)'
       },
       // Spreading props to keep the default tailwind values
       // @TODO Need to clean out width and height tokens coming via spacing
@@ -490,7 +482,8 @@ const tailwindDesignSystem: TailwindConfig = {
       },
       maxWidth: {
         ...defaultTheme.spacing,
-        ...sizeTokensMap
+        ...sizeTokensMap,
+        'cn-page': 'var(--cn-page-container-max-width)'
       },
       width: {
         ...defaultTheme.spacing,
@@ -648,6 +641,14 @@ const tailwindDesignSystem: TailwindConfig = {
     'prose-img',
     'prose-code',
     ...Object.keys(fontSizeMap).map(key => `!text-${key}`),
+
+    // Neutral background tokens, !important variants — safelist patterns don't emit the
+    // !important modifier, so downstream consumers (no Tailwind of their own) can only get
+    // these if we force-generate them here. Lets consumers beat rules like .cn-sidebar-wrapper.
+    '!bg-cn-0',
+    '!bg-cn-1',
+    '!bg-cn-2',
+    '!bg-cn-3',
 
     /** New design system Variants  */
     { pattern: /-cn-/ },

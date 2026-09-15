@@ -43,7 +43,7 @@
       },
       "full-width": {
         "$type": "sizing",
-        "$value": "{size.64}"
+        "$value": "{size.60}"
       },
       "min-width": {
         "$type": "sizing",

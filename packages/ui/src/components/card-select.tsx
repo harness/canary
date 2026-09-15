@@ -1,10 +1,12 @@
 import { createContext, forwardRef, HTMLAttributes, ReactNode, useContext, useState } from 'react'
 
+import { useTranslation } from '@/context'
 import { cn } from '@utils/cn'
 import { cva, type VariantProps } from 'class-variance-authority'
 
 import { IconV2, IconV2NamesType } from './icon-v2'
 import { LogoV2, LogoV2NamesType } from './logo-v2'
+import { StatusBadge } from './status-badge/status-badge'
 
 type CardSelectType = 'single' | 'multiple'
 
@@ -16,6 +18,12 @@ type CardSelectRootProps<T> = {
   defaultValue?: T extends 'single' ? unknown : unknown[]
   onValueChange?: T extends 'single' ? (val: unknown) => void : (val: unknown[]) => void
   disabled?: boolean
+  /**
+   * Single-select only. When true, re-clicking the selected item clears it (`onValueChange(null)`).
+   * Off by default so `type="single"` stays radio-sticky for existing consumers. No-op for
+   * `type="multiple"`, which already toggles.
+   */
+  deselectable?: boolean
   rows?: number
   cols?: number
   children: ReactNode
@@ -26,6 +34,10 @@ interface CardSelectItemProps extends HTMLAttributes<HTMLInputElement> {
   icon?: IconV2NamesType
   logo?: LogoV2NamesType
   disabled?: boolean
+  /** Renders a selected-state glow ring in addition to the standard checked border. */
+  glow?: boolean
+  /** Forces disabled + renders a "Coming Soon" badge (see status-badge.tsx theme="info"). Overrides `disabled`. */
+  comingSoon?: boolean
   children: ReactNode
 }
 
@@ -34,6 +46,7 @@ interface CardSelectContext {
   name: string
   currentValue: unknown | unknown[]
   disabled: boolean
+  deselectable: boolean
   onValueChange: (value: unknown) => void
 }
 
@@ -81,6 +94,7 @@ function CardSelectRoot<T extends CardSelectType>({
   defaultValue,
   onValueChange,
   disabled = false,
+  deselectable = false,
   children,
   rows,
   cols
@@ -89,8 +103,10 @@ function CardSelectRoot<T extends CardSelectType>({
     defaultValue ?? (type === 'multiple' ? [] : undefined)
   )
 
-  const currentValue = value ?? internalValue
+  // `value !== undefined` (not `value ??`) so a parent can pass `null` as controlled empty
+  // and actually clear a stale check. `null ?? internalValue` would fall through.
   const isControlled = value !== undefined
+  const currentValue = isControlled ? value : internalValue
 
   const handleValueChange = (itemValue: unknown) => {
     if (disabled) return
@@ -102,7 +118,9 @@ function CardSelectRoot<T extends CardSelectType>({
             ? currentValue.filter(v => v !== itemValue)
             : [...currentValue, itemValue]
           : [itemValue]
-        : itemValue
+        : deselectable && isChecked(itemValue, currentValue)
+          ? null
+          : itemValue
 
     if (!isControlled) {
       setInternalValue(newValue)
@@ -117,6 +135,7 @@ function CardSelectRoot<T extends CardSelectType>({
         name,
         currentValue,
         disabled,
+        deselectable,
         onValueChange: handleValueChange
       }}
     >
@@ -137,9 +156,23 @@ function CardSelectRoot<T extends CardSelectType>({
 }
 
 const CardSelectItem = forwardRef<HTMLLabelElement, CardSelectItemProps>(
-  ({ className, value, icon, logo, disabled: itemDisabled = false, children, ...props }, ref) => {
-    const { type, name, currentValue, disabled: groupDisabled, onValueChange } = useCardSelect()
-    const isDisabled = itemDisabled || groupDisabled
+  (
+    {
+      className,
+      value,
+      icon,
+      logo,
+      disabled: itemDisabled = false,
+      glow = false,
+      comingSoon = false,
+      children,
+      ...props
+    },
+    ref
+  ) => {
+    const { type, name, currentValue, disabled: groupDisabled, deselectable, onValueChange } = useCardSelect()
+    const { t } = useTranslation()
+    const isDisabled = itemDisabled || groupDisabled || comingSoon
     const checked = isChecked(value, currentValue)
 
     return (
@@ -154,6 +187,8 @@ const CardSelectItem = forwardRef<HTMLLabelElement, CardSelectItemProps>(
         )}
         data-state={checked ? 'checked' : undefined}
         data-disabled={isDisabled ? '' : undefined}
+        data-coming-soon={comingSoon ? '' : undefined}
+        data-glow={glow && checked ? '' : undefined}
         aria-checked={checked}
         aria-disabled={isDisabled}
         tabIndex={isDisabled ? -1 : 0}
@@ -166,6 +201,16 @@ const CardSelectItem = forwardRef<HTMLLabelElement, CardSelectItemProps>(
             }
           }
         }}
+        onClick={e => {
+          // Native <input type="radio"> onChange does not fire on the already-checked input,
+          // so re-click would be a no-op without this. Opt-in via deselectable so default
+          // single-select stays radio-sticky. Only intercept the selected item — first-select
+          // still goes through onChange, avoiding a double fire.
+          if (deselectable && type === 'single' && checked && !isDisabled) {
+            e.preventDefault()
+            onValueChange(value)
+          }
+        }}
       >
         <div className="cn-card-select-content">
           <div className="cn-card-select-content-left">
@@ -173,7 +218,12 @@ const CardSelectItem = forwardRef<HTMLLabelElement, CardSelectItemProps>(
             {logo && !icon && <LogoV2 size="md" name={logo} className="cn-card-select-logo" />}
             <div className="cn-card-select-content-container">{children}</div>
           </div>
-          {checked && <IconV2 size="md" name="check" className="cn-card-select-check" />}
+          {comingSoon && (
+            <StatusBadge variant="secondary" theme="info" size="sm" className="cn-card-select-coming-soon-badge">
+              {t('component:cardSelect.comingSoon', 'Coming Soon')}
+            </StatusBadge>
+          )}
+          {checked && !comingSoon && <IconV2 size="md" name="check" className="cn-card-select-check" />}
         </div>
         <input
           type={type === 'multiple' ? 'checkbox' : 'radio'}

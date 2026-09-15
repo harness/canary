@@ -67,26 +67,50 @@ export default {
     cursor: 'pointer',
     padding: '0',
     flexShrink: '0',
-    opacity: '0',
-    transition: 'opacity 150ms ease',
+    // v5 `.pq-card__pencil` is always on for done/skipped. Card mute (0.6) still fades it.
+    color: 'var(--cn-text-3)',
+    opacity: '1',
+    transition: 'background-color 120ms ease, color 120ms ease',
+    position: 'relative',
+    zIndex: '2',
 
     '&:hover': {
-      background: 'var(--cn-bg-3)'
+      color: 'var(--cn-text-1)',
+      backgroundColor: 'var(--cn-state-hover)'
+    },
+
+    '&:focus-visible': {
+      color: 'var(--cn-text-1)',
+      outline: 'var(--cn-focus)',
+      outlineOffset: 'var(--cn-outline-offset-tight)'
     }
   },
 
-  '.cn-flow-stepper-card:hover .cn-flow-stepper-card-edit': {
-    opacity: '1'
+  '.cn-flow-stepper-card-go-back-hit': {
+    position: 'absolute',
+    inset: '0',
+    zIndex: '1',
+    border: 'none',
+    background: 'transparent',
+    cursor: 'pointer',
+    padding: '0'
   },
 
   '.cn-flow-stepper-card-content': {
     marginTop: 'var(--cn-spacing-6)',
     paddingLeft: 'calc(var(--cn-size-4) + var(--cn-spacing-3))',
+    minWidth: '0',
 
     '&[inert]': {
       opacity: '0.6',
       cursor: 'default'
     }
+  },
+
+  // Completed items already fade to 0.6 (see stepper.ts). inert is also 0.6, so without this
+  // reset the body is 0.6×0.6. Hover-restore on the item would still leave the body darker.
+  '.cn-stepper-step-item:has(.cn-stepper-step-completed) .cn-flow-stepper-card-content[inert]': {
+    opacity: '1'
   },
 
   '.cn-flow-stepper-card-description': {

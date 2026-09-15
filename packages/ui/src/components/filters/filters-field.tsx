@@ -5,7 +5,7 @@ import { Label } from '@components/form-primitives'
 import { MultiSelectOption } from '@components/multi-select'
 import { cn } from '@utils/cn'
 
-import FilterBoxWrapper from './filter-box-wrapper'
+import FilterBoxWrapper, { type FilterFieldTriggerVariant } from './filter-box-wrapper'
 import Calendar from './filters-bar/actions/variants/calendar-field'
 import { MultiSelectFilter } from './filters-bar/actions/variants/checkbox'
 import Combobox, { ComboBoxOptions } from './filters-bar/actions/variants/combo-box'
@@ -35,6 +35,11 @@ export interface FiltersFieldProps<
   onOpenChange?: (open: boolean) => void
   onChange: (selectedValues: V) => void
   value?: V
+  /**
+   * Trigger button look. Defaults to `secondary`.
+   * Pass `outline` for standalone filters (no filter group).
+   */
+  variant?: FilterFieldTriggerVariant
 }
 
 interface FilterFieldProps<T extends string, V extends FilterValueTypes, CustomValue = Record<string, unknown>> {
@@ -164,7 +169,8 @@ const FiltersField = <T extends string, V extends FilterValueTypes, CustomValue 
   dropdownContentClassName,
   onOpenChange,
   onChange,
-  value
+  value,
+  variant
 }: FiltersFieldProps<T, V, CustomValue>) => {
   const activeFilterOption = {
     type: filterOption.value,
@@ -201,6 +207,7 @@ const FiltersField = <T extends string, V extends FilterValueTypes, CustomValue 
       contentClassName={cn(
         filterOption.type === FilterFieldTypes.Calendar ? 'w-[250px]' : '',
         filterOption.type === FilterFieldTypes.DateRange ? 'w-auto min-w-[400px] max-w-none' : '',
+        filterOption.type === FilterFieldTypes.MultiTag ? 'cn-dropdown-menu-overflow-visible' : '',
         dropdownContentClassName
       )}
       handleRemoveFilter={() => removeFilter()}
@@ -211,6 +218,7 @@ const FiltersField = <T extends string, V extends FilterValueTypes, CustomValue 
       filterLabel={filterOption.label}
       valueLabel={valueLabel}
       tooltipContent={tooltipContent}
+      variant={variant}
     >
       <FilterFieldInternal<T, V, CustomValue>
         filter={activeFilterOption}

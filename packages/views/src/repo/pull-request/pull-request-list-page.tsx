@@ -562,7 +562,6 @@ const PullRequestListPage: FC<PullRequestPageProps> = ({
                 </PRListFilterHandler.Dropdown>
               )}
               openedFilter={openedFilter}
-              setOpenedFilter={setOpenedFilter}
               selectedFiltersCnt={selectedFiltersCnt}
               filterOptions={PR_FILTER_OPTIONS}
             />

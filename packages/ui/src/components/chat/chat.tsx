@@ -57,7 +57,7 @@ const Message: FC<MessageProps> = ({ self, avatar, actions, children }) => {
         })}
       >
         <div
-          className={cn('text-cn-size-2 text-cn-1 leading-relaxed', {
+          className={cn('text-cn-size-2 text-cn-1 leading-cn-20', {
             'px-cn-sm py-cn-xs bg-cn-gray-secondary rounded-[8px_8px_2px_8px]': self
           })}
         >
@@ -73,7 +73,7 @@ const CodeBlock: FC<PropsWithChildren<{ className?: string }>> = ({ children, cl
   return (
     <code
       className={cn(
-        'inline-block rounded-[3px] border border-cn-2 bg-cn-gray-secondary px-cn-2xs text-cn-size-2 leading-[18px]',
+        'inline-block rounded-[3px] border border-cn-2 bg-cn-gray-secondary px-cn-2xs text-cn-size-2 leading-cn-20',
         className
       )}
     >

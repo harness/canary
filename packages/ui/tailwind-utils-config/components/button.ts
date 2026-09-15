@@ -3,7 +3,7 @@ import { CSSRuleObject } from 'tailwindcss/types/config'
 /** Variants */
 const variants = ['primary', 'secondary', 'outline', 'ghost'] as const
 
-const themes = ['success', 'danger', 'default'] as const
+const themes = ['success', 'danger', 'warning', 'default'] as const
 
 const sizes = ['3xs', '2xs', 'xs', 'sm', 'md'] as const
 
@@ -14,6 +14,7 @@ const BUTTON_TRANSITION_EASING = 'ease-in-out'
 const themeStyleMapper: Record<(typeof themes)[number], string> = {
   success: 'success',
   danger: 'danger',
+  warning: 'warning',
   default: 'gray'
 }
 
@@ -33,7 +34,7 @@ function createButtonVariantStyles() {
        * Hover and active states are added for ghost variant based on outline variant.
        */
       if (variant === 'ghost') {
-        style[`color`] = `var(--cn-set-${themeStyle}-outline-text)`
+        style[`color`] = `var(--cn-set-${themeStyle}-secondary-text)`
 
         // For default theme, use state tokens; for other themes use outline tokens
         const hoverBg = theme === 'default' ? 'var(--cn-state-hover)' : `var(--cn-set-${themeStyle}-outline-bg-hover)`
@@ -51,9 +52,18 @@ function createButtonVariantStyles() {
       } else {
         const themeStyleForVariant = variant === 'primary' && theme === 'default' ? 'brand' : themeStyle
 
+        /**
+         * The outline variant has no dedicated text token — it shares the secondary
+         * text color (same as the ghost variant above).
+         */
+        const textToken =
+          variant === 'outline'
+            ? `--cn-set-${themeStyleForVariant}-secondary-text`
+            : `--cn-set-${themeStyleForVariant}-${variant}-text`
+
         // Default styles
         style[`backgroundColor`] = `var(--cn-set-${themeStyleForVariant}-${variant}-bg)`
-        style[`color`] = `var(--cn-set-${themeStyleForVariant}-${variant}-text) !important`
+        style[`color`] = `var(${textToken}) !important`
         style[`borderColor`] =
           `var(--cn-set-${themeStyleForVariant}-${variant}-border, var(--cn-set-${themeStyleForVariant}-${variant}-bg))`
 
@@ -85,7 +95,7 @@ function createButtonVariantStyles() {
              * Some variants don't have separator
              * Hence adding border color for separator
              *  */
-            backgroundColor: `var(--cn-set-${themeStyleForVariant}-${variant}-text)`,
+            backgroundColor: `var(${textToken})`,
             opacity: 'var(--cn-opacity-20)'
           }
         }

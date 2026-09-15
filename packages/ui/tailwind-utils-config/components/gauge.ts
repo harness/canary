@@ -6,6 +6,9 @@ const statusIndicatorColors = {
 } as const
 
 const gaugeSizes = {
+  '3xs': {
+    width: 'var(--cn-size-8, 32px)'
+  },
   '2xs': {
     width: 'var(--cn-size-12, 48px)'
   },
@@ -58,6 +61,7 @@ export default {
     flexDirection: 'column',
     alignItems: 'center',
     gap: 'var(--cn-spacing-2xs)',
+    flexShrink: '0',
 
     '&-label': {
       userSelect: 'none'
@@ -70,10 +74,6 @@ export default {
       gap: 'var(--cn-spacing-2xs)'
     },
 
-    '&-helper': {
-      userSelect: 'none'
-    },
-
     '&-descriptor': {
       userSelect: 'none'
     },
@@ -81,7 +81,9 @@ export default {
     '&-ring': {
       position: 'relative',
       display: 'grid',
-      placeItems: 'center'
+      placeItems: 'center',
+      width: gaugeSizes.md.width,
+      height: gaugeSizes.md.width
     },
 
     '&-svg': {

@@ -1,10 +1,10 @@
-import { forwardRef, HTMLAttributes, useMemo } from 'react'
+import { forwardRef, HTMLAttributes, ReactNode } from 'react'
 
 import { cn } from '@utils/cn'
-import { clamp, generateAlphaNumericHash } from '@utils/utils'
+import { clamp } from '@utils/utils'
 import { cva, type VariantProps } from 'class-variance-authority'
 
-import { Text } from './text'
+import { Text, type TextProps } from './text'
 
 export type GaugeValueFormat = 'percent' | 'fraction' | 'score'
 export type GaugeStatusLevel = 'poor' | 'fair' | 'good' | 'none'
@@ -21,7 +21,7 @@ export interface GaugeStatusLabelMap {
   good: string
 }
 
-export type GaugeSize = '2xs' | 'xs' | 'sm' | 'md' | 'lg'
+export type GaugeSize = '3xs' | '2xs' | 'xs' | 'sm' | 'md' | 'lg'
 
 export interface GaugeProps extends Omit<HTMLAttributes<HTMLDivElement>, 'children'> {
   value: number
@@ -35,7 +35,11 @@ export interface GaugeProps extends Omit<HTMLAttributes<HTMLDivElement>, 'childr
   status?: GaugeStatus
   thresholds?: GaugeThresholds
   statusLabelMap?: GaugeStatusLabelMap
-  helperText?: string
+  /**
+   * Content below the gauge ring. Pass any ReactNode (text, popover trigger, etc.).
+   * Falls back to the derived status label when omitted. Pass `null` to hide.
+   */
+  description?: ReactNode
 }
 
 const DEFAULT_MAX = 100
@@ -45,6 +49,7 @@ const DEFAULT_STATUS_LABELS: GaugeStatusLabelMap = { poor: 'Poor', fair: 'Fair',
 const gaugeVariants = cva('cn-gauge', {
   variants: {
     size: {
+      '3xs': 'cn-gauge-size-3xs',
       '2xs': 'cn-gauge-size-2xs',
       xs: 'cn-gauge-size-xs',
       sm: 'cn-gauge-size-sm',
@@ -117,25 +122,57 @@ export function getGaugeDescriptor(
   return statusLabelMap[statusLevel]
 }
 
+function getDescriptorStatusColor(statusLevel: GaugeStatusLevel): NonNullable<TextProps['color']> {
+  switch (statusLevel) {
+    case 'poor':
+      return 'danger'
+    case 'fair':
+      return 'warning'
+    case 'good':
+      return 'success'
+    case 'none':
+      return 'brand'
+  }
+}
+
+function renderDescription(
+  description: ReactNode | undefined,
+  statusLevel: GaugeStatusLevel,
+  statusLabelMap: GaugeStatusLabelMap
+): ReactNode {
+  if (description === null) return null
+
+  const content = description !== undefined ? description : getGaugeDescriptor(statusLevel, statusLabelMap)
+
+  if (content == null || content === false) return null
+
+  if (typeof content === 'string' || typeof content === 'number') {
+    return (
+      <Text
+        className="cn-gauge-descriptor"
+        variant="caption-normal"
+        color={getDescriptorStatusColor(statusLevel)}
+        align="center"
+      >
+        {content}
+      </Text>
+    )
+  }
+
+  return content
+}
+
 interface GaugeRingProps {
   readonly fraction: number
-  readonly sizeClass: GaugeVariantProps['size']
   readonly statusLevel: GaugeStatusLevel
 }
 
 const GAUGE_VIEWBOX_SIZE = 100
+/** Stroke width in viewBox units; scales with CSS size automatically. */
+const GAUGE_TRACK_WIDTH = 14
 
-const GAUGE_TRACK_WIDTH: Record<NonNullable<GaugeSize>, number> = {
-  '2xs': 4,
-  xs: 4,
-  sm: 5,
-  md: 6,
-  lg: 8
-}
-
-function GaugeRing({ fraction, sizeClass, statusLevel }: GaugeRingProps) {
-  const strokeWidth = GAUGE_TRACK_WIDTH[sizeClass ?? 'md']
-  const radius = (GAUGE_VIEWBOX_SIZE - strokeWidth) / 2
+function GaugeRing({ fraction, statusLevel }: GaugeRingProps) {
+  const radius = (GAUGE_VIEWBOX_SIZE - GAUGE_TRACK_WIDTH) / 2
   const circumference = 2 * Math.PI * radius
   const dashOffset = circumference * (1 - fraction)
 
@@ -147,7 +184,7 @@ function GaugeRing({ fraction, sizeClass, statusLevel }: GaugeRingProps) {
         cy={GAUGE_VIEWBOX_SIZE / 2}
         r={radius}
         fill="none"
-        strokeWidth={strokeWidth}
+        strokeWidth={GAUGE_TRACK_WIDTH}
       />
       <circle
         className={cn('cn-gauge-indicator', `cn-gauge-indicator-${statusLevel}`)}
@@ -155,7 +192,7 @@ function GaugeRing({ fraction, sizeClass, statusLevel }: GaugeRingProps) {
         cy={GAUGE_VIEWBOX_SIZE / 2}
         r={radius}
         fill="none"
-        strokeWidth={strokeWidth}
+        strokeWidth={GAUGE_TRACK_WIDTH}
         strokeDasharray={circumference}
         strokeDashoffset={dashOffset}
         transform={`rotate(-90 ${GAUGE_VIEWBOX_SIZE / 2} ${GAUGE_VIEWBOX_SIZE / 2})`}
@@ -178,33 +215,23 @@ const Gauge = forwardRef<HTMLDivElement, GaugeProps>(
       status = 'auto',
       thresholds = DEFAULT_THRESHOLDS,
       statusLabelMap = DEFAULT_STATUS_LABELS,
-      helperText,
       className,
+      description,
       'aria-label': ariaLabel,
-      'aria-describedby': ariaDescribedBy,
       ...divProps
     },
     ref
   ) => {
-    const helperId = useMemo(() => `gauge-helper-${generateAlphaNumericHash(8)}`, [])
-
     const safeMax = Number.isFinite(max) && max >= 0 ? max : DEFAULT_MAX
     const clampedValue = clampValue(value, safeMax)
     const fraction = safeMax === 0 ? 0 : clampedValue / safeMax
     const percent = fraction * 100
     const statusLevel = deriveGaugeStatusLevel(percent, status, thresholds)
-    const descriptor = getGaugeDescriptor(statusLevel, statusLabelMap)
     const formattedValue = formatGaugeValue(clampedValue, safeMax, valueFormat, precision)
 
     const resolvedSize: GaugeVariantProps['size'] = size ?? 'md'
     const showGaugeLabel = showLabel && Boolean(label)
-
-    const describedBy = useMemo(() => {
-      const ids: string[] = []
-      if (helperText) ids.push(helperId)
-      if (ariaDescribedBy) ids.push(ariaDescribedBy)
-      return ids.length > 0 ? ids.join(' ') : undefined
-    }, [ariaDescribedBy, helperId, helperText])
+    const descriptionContent = renderDescription(description, statusLevel, statusLabelMap)
 
     let valueVariant: 'heading-section' | 'heading-base' | 'heading-subsection' = 'heading-subsection'
     if (resolvedSize === 'lg') {
@@ -222,7 +249,6 @@ const Gauge = forwardRef<HTMLDivElement, GaugeProps>(
         aria-valuemin={0}
         aria-valuemax={safeMax}
         aria-label={ariaLabel ?? label}
-        aria-describedby={describedBy}
         className={cn(
           gaugeVariants({
             size: resolvedSize,
@@ -239,25 +265,15 @@ const Gauge = forwardRef<HTMLDivElement, GaugeProps>(
 
         <div className="cn-gauge-body">
           <div className="cn-gauge-ring">
-            <GaugeRing fraction={fraction} sizeClass={resolvedSize} statusLevel={statusLevel} />
+            <GaugeRing fraction={fraction} statusLevel={statusLevel} />
             {showValue && (
               <Text className="cn-gauge-value" variant={valueVariant} color="foreground-2" align="center">
                 {formattedValue}
               </Text>
             )}
           </div>
-          {descriptor && (
-            <Text className="cn-gauge-descriptor" variant="caption-normal" color="foreground-3" align="center">
-              {descriptor}
-            </Text>
-          )}
+          {descriptionContent}
         </div>
-
-        {helperText && (
-          <Text id={helperId} className="cn-gauge-helper" variant="caption-normal" color="foreground-3">
-            {helperText}
-          </Text>
-        )}
       </div>
     )
   }

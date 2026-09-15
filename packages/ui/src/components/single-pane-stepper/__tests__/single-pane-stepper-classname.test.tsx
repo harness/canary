@@ -23,9 +23,9 @@ function EmptyCard() {
 }
 
 const flow: FlowConfig = {
-  steps: { s1: { title: 'Step 1' } },
-  subSteps: { a: { step: 's1', title: 'A', component: EmptyCard } },
-  initialSubStep: 'a'
+  stepGroups: { s1: { title: 'Step 1' } },
+  steps: { a: { step: 's1', title: 'A', component: EmptyCard } },
+  initialStep: 'a'
 }
 
 describe('SinglePaneStepper.Root className', () => {

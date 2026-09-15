@@ -86,7 +86,10 @@ export default {
       },
       '&-child': {
         '&::before': {
-          content: '"\u200B"' // Zero-width space to ensure the element has a width
+          // Zero-width space to give the inline-block a line box. Written as a CSS escape
+          // (not the literal character) so the generated stylesheet stays ASCII-only and
+          // cannot render as mojibake when the CSS is decoded as anything but UTF-8.
+          content: '"\\200B"'
         },
 
         display: 'inline-block',

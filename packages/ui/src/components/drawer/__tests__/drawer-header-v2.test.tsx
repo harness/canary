@@ -93,6 +93,38 @@ describe('DrawerHeaderV2', () => {
     expect(screen.getByText('main branch')).toBeInTheDocument()
   })
 
+  test('renders tagline above the title when provided', () => {
+    const { container } = render(<HeaderV2 title="Build #142" tagline="Pipelines / main" />)
+    expect(screen.getByText('Pipelines / main')).toBeInTheDocument()
+    expect(container.querySelector('.cn-drawer-tagline')).toBeInTheDocument()
+  })
+
+  test('clamps the description via the header-v2 description class', () => {
+    const { container } = render(<HeaderV2 title="Build #142" description="a very long description" />)
+    expect(container.querySelector('.cn-drawer-header-v2-description')).toBeInTheDocument()
+  })
+
+  test('Drawer.Header renders the structured layout when a title prop is passed', () => {
+    const { container } = render(
+      <Drawer.Header title="Build #142" tagline="Pipelines / main" description="main branch" />
+    )
+    expect(screen.getByText('Build #142')).toBeInTheDocument()
+    expect(screen.getByText('main branch')).toBeInTheDocument()
+    expect(container.querySelector('.cn-drawer-header-v2')).toBeInTheDocument()
+  })
+
+  test('Drawer.Header still renders the legacy composition layout with children', () => {
+    const { container } = render(
+      <Drawer.Header>
+        <Drawer.Title>Legacy Title</Drawer.Title>
+      </Drawer.Header>
+    )
+    expect(screen.getByText('Legacy Title')).toBeInTheDocument()
+    // legacy wrapper class, not the structured one
+    expect(container.querySelector('.cn-drawer-header')).toBeInTheDocument()
+    expect(container.querySelector('.cn-drawer-header-v2')).not.toBeInTheDocument()
+  })
+
   test('renders icon when provided', () => {
     const { container } = render(<HeaderV2 title="Build" icon="pipeline" />)
     expect(container.querySelector('.cn-drawer-header-v2-icon')).toBeInTheDocument()

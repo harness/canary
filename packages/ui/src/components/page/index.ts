@@ -6,5 +6,5 @@ export const Page = {
   HeaderV2
 }
 
-export type { PageHeaderProps, PageHeaderBackProps, PageHeaderButtonProps } from './page'
+export type { PageHeaderProps, PageHeaderBackProps, PageHeaderButtonProps, PageMaxWidth } from './page'
 export type { PageHeaderV2Props, HeaderV2TabItem } from './page-header-v2'

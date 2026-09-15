@@ -1,15 +1,9 @@
-import { type ComponentType, type ReactNode } from 'react'
-
-import {
-  type DrawerComponentProps,
-  type FlowConfig,
-  type ReactivationPrompt
-} from '../flow-stepper/engine/engine-types'
-
 export type {
+  StepGroupConfig,
   StepConfig,
-  SubStepConfig,
   FlowConfig,
+  GroupedFlowConfig,
+  FlatFlowConfig,
   CardStatus,
   CardEntry,
   DrawerResult,
@@ -18,23 +12,7 @@ export type {
   ReactivationPrompt
 } from '../flow-stepper/engine/engine-types'
 
-export interface DualPaneStepperRootProps {
-  flow: FlowConfig
-  icon?: ReactNode
-  title?: string
-  stepperTitle?: string
-  contentTitle?: string
-  contentSubtitle?: string
-  drawers?: Record<string, ComponentType<DrawerComponentProps>>
-  onComplete?: (state: Record<string, unknown>) => void
-  onClose?: () => void
-  leftPane?: ReactNode
-  reactivationPrompt?: ReactivationPrompt
-  // Disable auto-scrolling the right pane to the active card (on mount and on transitions). Use for
-  // completed/review flows where the card stack should render from the top and stay put.
-  disableAutoScroll?: boolean
-  panelSizes?: { default?: number; min?: number; max?: number }
-}
+export type { DualPaneStepperRootProps } from '../flow-stepper/stepper-root-props'
 
 // CardAction props come from the shared FlowStepperCardAction (single source of truth).
 export type { FlowStepperCardActionProps as CardActionProps } from '../flow-stepper/flow-stepper-card-action'

@@ -21,7 +21,6 @@ vi.mock('@components/text', () => ({
     'caption-normal': 'caption-normal',
     'caption-light': 'caption-light',
     'caption-single-line-normal': 'caption-single-line-normal',
-    'caption-single-line-light': 'caption-single-line-light',
     'heading-base': 'heading-base'
   }
 }))
@@ -236,7 +235,6 @@ describe('SkeletonTypography', () => {
       'caption-normal',
       'caption-light',
       'caption-single-line-normal',
-      'caption-single-line-light',
       'heading-base'
     ]
 

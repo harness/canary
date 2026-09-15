@@ -1,6 +1,6 @@
 import React, { cloneElement, createRef, forwardRef } from 'react'
 
-import { render, screen } from '@testing-library/react'
+import { fireEvent, render, screen } from '@testing-library/react'
 import { beforeEach, describe, expect, test, vi } from 'vitest'
 
 import { MoreActionsTooltip } from '../more-actions-tooltip'
@@ -44,7 +44,13 @@ vi.mock('@components/button', () => {
 })
 
 vi.mock('@components/dropdown-menu', () => {
-  const Root = ({ children }: any) => <div data-testid="dropdown-root">{children}</div>
+  const Root = ({ children, onOpenChange }: any) => (
+    <div data-testid="dropdown-root">
+      <button data-testid="simulate-open" type="button" onClick={() => onOpenChange?.(true)} />
+      <button data-testid="simulate-close" type="button" onClick={() => onOpenChange?.(false)} />
+      {children}
+    </div>
+  )
 
   const Trigger = forwardRef<any, any>(({ children, disabled }, ref) => {
     const child = cloneElement(children, { ref, disabled })
@@ -291,5 +297,43 @@ describe('MoreActionsTooltip', () => {
 
     const button = screen.getByRole('button', { name: 'Show more actions' })
     expect(button).toBeDisabled()
+  })
+
+  test('applies custom label to trigger aria-label and tooltip', () => {
+    renderComponent({ label: 'Dashboard actions' })
+
+    expect(screen.getByRole('button', { name: 'Dashboard actions' })).toBeInTheDocument()
+    expect(buttonMockCalls[0].props.tooltipProps).toMatchObject({ content: 'Dashboard actions' })
+  })
+
+  test('forwards testId to action items', () => {
+    render(
+      <MoreActionsTooltip
+        actions={[
+          { title: 'Plain', onClick: vi.fn(), testId: 'action-plain' },
+          { title: 'Icon', iconName: 'star', onClick: vi.fn(), testId: 'action-icon' },
+          { title: 'Link', to: '/link', testId: 'action-link' },
+          { title: 'Link Icon', to: '/link-icon', iconName: 'edit-pencil', testId: 'action-link-icon' }
+        ]}
+      />
+    )
+
+    expect(dropdownItemCalls[0]).toMatchObject({ 'data-testid': 'action-plain' })
+    expect(dropdownIconItemCalls[0]).toMatchObject({ 'data-testid': 'action-icon' })
+    expect(dropdownItemCalls[1]).toMatchObject({ 'data-testid': 'action-link' })
+    expect(dropdownIconItemCalls[1]).toMatchObject({ 'data-testid': 'action-link-icon' })
+  })
+
+  test('notifies onOpenChange when the menu opens and closes', () => {
+    const onOpenChange = vi.fn()
+    renderComponent({ onOpenChange })
+
+    expect(onOpenChange).not.toHaveBeenCalled()
+
+    fireEvent.click(screen.getByTestId('simulate-open'))
+    expect(onOpenChange).toHaveBeenCalledWith(true)
+
+    fireEvent.click(screen.getByTestId('simulate-close'))
+    expect(onOpenChange).toHaveBeenCalledWith(false)
   })
 })

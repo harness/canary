@@ -220,18 +220,19 @@ function ExpandButton({
           {variant === 'default' && (icon ?? <IconV2 name="harness-plugins" size="lg" />)}
           <Text
             color="inherit"
-            variant={variant === 'minimal' ? 'caption-single-line-code' : 'body-strong'}
-            className="truncate"
+            variant={variant === 'minimal' ? 'caption-code' : 'body-strong'}
+            className="min-w-0 flex-1"
+            truncate
           >
             {label}
           </Text>
-          {variant === 'minimal' && <IconV2 name="expand" size="xs" />}
+          {variant === 'minimal' && <IconV2 name="expand" size="xs" className="shrink-0" />}
         </div>
 
         {/* Count + expand icon */}
         {variant === 'default' && (
           <div className="cn-studio-card-expand-button-bottom">
-            <Text color="foreground-1" variant="body-single-line-code">
+            <Text color="foreground-1" variant="body-code" className="leading-none">
               +{stepCount} more
             </Text>
             <IconV2
@@ -272,7 +273,7 @@ function Tag({ tagText, icon }: PropsWithChildren<{ tagText: string; icon?: Icon
   return (
     <div className="cn-studio-card-tag">
       {icon && <IconV2 name={icon} size="xs" />}
-      <Text title={tagText} color="inherit" variant="caption-single-line-normal">
+      <Text title={tagText} color="inherit" variant="caption-single-line-normal" truncate>
         {truncatedText}
       </Text>
     </div>
@@ -335,7 +336,7 @@ function StudioCardButton({
       type="button"
       className={cn('cn-studio-card-button', 'bg-cn-3 shadow-cn-none self-start', className)}
     >
-      <Text color="foreground-1" variant="body-single-line-code">
+      <Text color="foreground-1" variant="body-code" className="leading-none">
         {children}
       </Text>
       {icon && <IconV2 className="text-cn-2" name={icon} size="sm" />}

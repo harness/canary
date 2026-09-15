@@ -143,9 +143,12 @@ To show a simple toast, use the `toast` function.
 
 ### Info toast
 
+Info toast supports optional `secondaryAction`, `ctaPosition` (`"top"` | `"bottom"`), and `severity` (`"Critical"` | `"High"` | `"Medium"` | `"Low"`). These options are info-only. Omitting them preserves the default info toast layout and styling.
+
 <DocsPage.ComponentExample
   client:only
   code={`
+  <div className="flex flex-col items-start min-w-[600px] gap-cn-2xl">
     <Button
       onClick={() =>
         toast.info({
@@ -153,12 +156,131 @@ To show a simple toast, use the `toast` function.
           description: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Magni magnam quibusdam fugit saepe voluptates aperiam perspiciatis ipsam! Ad cupiditate, tempora aspernatur a, veritatis, rem maxime est aliquam natus iure vero.",
           options: {
             duration: 5000,
+            ctaPosition: 'bottom',
+            action: {
+              label: 'View details',
+              onClick: () => {
+                console.log('View details')
+              }
+            },
+            secondaryAction: {
+              label: 'Ignore',
+              onClick: () => {
+                console.log('Ignore')
+              }
+            }
           }
         })
       }
     >
       Show info toast
-    </Button>`}
+    </Button>
+
+    <h4>Info toasts with severity</h4>
+    <div className="flex gap-cn-sm">
+      <Button onClick={() =>
+            toast.info({
+              title: 'Toast title',
+              description: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Magni magnam quibusdam fugit saepe voluptates aperiam perspiciatis ipsam! Ad cupiditate, tempora aspernatur a, veritatis, rem maxime est aliquam natus iure vero.",
+              options: {
+                duration: 5000,
+                severity: 'Critical',
+                ctaPosition: 'bottom',
+                action: {
+                  label: 'View details',
+                  onClick: () => {
+                    console.log('View details')
+                  }
+                },
+                secondaryAction: {
+                  label: 'Ignore',
+                  onClick: () => {
+                    console.log('Ignore')
+                  }
+                }
+              }
+            })
+          }>
+        Critical
+      </Button>
+      <Button onClick={() =>
+            toast.info({
+              title: 'Toast title',
+              description: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Magni magnam quibusdam fugit saepe voluptates aperiam perspiciatis ipsam! Ad cupiditate, tempora aspernatur a, veritatis, rem maxime est aliquam natus iure vero.",
+              options: {
+                duration: 5000,
+                severity: 'High',
+                ctaPosition: 'bottom',
+                action: {
+                  label: 'View details',
+                  onClick: () => {
+                    console.log('View details')
+                  }
+                },
+                secondaryAction: {
+                  label: 'Ignore',
+                  onClick: () => {
+                    console.log('Ignore')
+                  }
+                }
+              }
+            })
+          }>
+        High
+      </Button>
+      <Button onClick={() =>
+            toast.info({
+              title: 'Toast title',
+              description: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Magni magnam quibusdam fugit saepe voluptates aperiam perspiciatis ipsam! Ad cupiditate, tempora aspernatur a, veritatis, rem maxime est aliquam natus iure vero.",
+              options: {
+                duration: 5000,
+                severity: 'Medium',
+                ctaPosition: 'bottom',
+                action: {
+                  label: 'View details',
+                  onClick: () => {
+                    console.log('View details')
+                  }
+                },
+                secondaryAction: {
+                  label: 'Ignore',
+                  onClick: () => {
+                    console.log('Ignore')
+                  }
+                }
+              }
+            })
+          }>
+        Medium
+      </Button>
+      <Button onClick={() =>
+            toast.info({
+              title: 'Toast title',
+              description: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Magni magnam quibusdam fugit saepe voluptates aperiam perspiciatis ipsam! Ad cupiditate, tempora aspernatur a, veritatis, rem maxime est aliquam natus iure vero.",
+              options: {
+                duration: 5000,
+                severity: 'Low',
+                ctaPosition: 'bottom',
+                action: {
+                  label: 'View details',
+                  onClick: () => {
+                    console.log('View details')
+                  }
+                },
+                secondaryAction: {
+                  label: 'Ignore',
+                  onClick: () => {
+                    console.log('Ignore')
+                  }
+                }
+              }
+            })
+          }>
+        Low
+      </Button>
+
+  </div>
+    </div>`}
 />
 
 ### Loading toast
@@ -252,9 +374,10 @@ Toast params are the parameters that are passed to the toast function.
     },
     {
       name: "options",
-      description: "Options object for the toast",
+      description:
+        "Options object for the toast. Info toast uses InfoToastOptions.",
       required: false,
-      value: "ToastOptions",
+      value: "ToastOptions | InfoToastOptions",
     },
     {
       name: "description",
@@ -310,6 +433,26 @@ Toast options are the configuration object that are passed to the toast paramete
       description: "Whether the toast can be dismissed by the user",
       required: false,
       value: "boolean",
+    },
+    {
+      name: "secondaryAction",
+      description: "Info toast only. Optional second action button.",
+      required: false,
+      value: "Action",
+    },
+    {
+      name: "ctaPosition",
+      description:
+        'Info toast only. CTA placement: "top" (default) or "bottom".',
+      required: false,
+      value: '"top" | "bottom"',
+    },
+    {
+      name: "severity",
+      description:
+        'Info toast only. Border severity: "Critical", "High", "Medium", or "Low".',
+      required: false,
+      value: '"Critical" | "High" | "Medium" | "Low"',
     },
   ]}
 />

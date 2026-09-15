@@ -2,10 +2,46 @@ import { CSSProperties } from 'react'
 
 import { Column } from '@tanstack/react-table'
 
-export const getCommonPinningStyles = <T>(column: Column<T>): CSSProperties => {
+/**
+ * Vertical stickiness of a cell, on the same `position: sticky` mechanism as
+ * column pinning, applied to the block axis.
+ */
+export interface StickyCellVertical {
+  edge: 'top' | 'bottom'
+  offset: number | string
+}
+
+export interface GetStickyCellStylesOptions<T> {
+  column: Column<T>
+  /**
+   * When provided, the cell sticks to the given block-axis edge.
+   * Used for sticky header cells (top) and bottom-pinned rows (bottom).
+   */
+  vertical?: StickyCellVertical
+}
+
+/**
+ * Z-index layering is a rule, not a lookup table:
+ *   zIndex = verticalLayer + horizontalLayer
+ *   vertical   — normal cell: 0, pinned row: 2, header cell: 4
+ *   horizontal — unpinned column: 0, pinned column: 1
+ * Invariants: the header always paints above body cells, a pinned row always
+ * paints above normal body cells, and a pinned column always paints above its
+ * unpinned neighbours within the same band. The corner cell (pinned row +
+ * pinned column) lands on layer 3 without special-casing.
+ */
+const PINNED_ROW_VERTICAL_LAYER = 2
+const HEADER_VERTICAL_LAYER = 4
+
+const toCssOffset = (offset: number | string): string => (typeof offset === 'number' ? `${offset}px` : offset)
+
+export const getStickyCellStyles = <T>({ column, vertical }: GetStickyCellStylesOptions<T>): CSSProperties => {
   const isPinned = column.getIsPinned()
   const isLastLeftPinnedColumn = isPinned === 'left' && column?.getIsLastColumn?.('left')
   const isFirstRightPinnedColumn = isPinned === 'right' && column?.getIsFirstColumn?.('right')
+
+  const horizontalLayer = isPinned ? 1 : 0
+  const verticalLayer = vertical?.edge === 'top' ? HEADER_VERTICAL_LAYER : vertical ? PINNED_ROW_VERTICAL_LAYER : 0
 
   return {
     boxShadow: isLastLeftPinnedColumn
@@ -15,7 +51,15 @@ export const getCommonPinningStyles = <T>(column: Column<T>): CSSProperties => {
         : undefined,
     left: isPinned === 'left' ? `${column.getStart('left')}px` : undefined,
     right: isPinned === 'right' ? `${column.getAfter('right')}px` : undefined,
-    position: isPinned ? 'sticky' : 'relative',
-    zIndex: isPinned ? 1 : 0
+    top: vertical?.edge === 'top' ? toCssOffset(vertical.offset) : undefined,
+    bottom: vertical?.edge === 'bottom' ? toCssOffset(vertical.offset) : undefined,
+    position: isPinned || vertical ? 'sticky' : 'relative',
+    zIndex: verticalLayer + horizontalLayer
   }
 }
+
+/**
+ * @deprecated Use {@link getStickyCellStyles} with `{ column }` instead.
+ * Kept as a re-export so existing callers behave identically.
+ */
+export const getCommonPinningStyles = <T>(column: Column<T>): CSSProperties => getStickyCellStyles({ column })

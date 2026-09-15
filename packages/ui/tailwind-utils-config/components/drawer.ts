@@ -470,6 +470,10 @@ export default {
         '@apply shrink-0': ''
       },
 
+      '&-description': {
+        '@apply line-clamp-2': ''
+      },
+
       '&-metadata': {
         paddingTop: 'var(--cn-spacing-1)'
       },

@@ -8,6 +8,10 @@ export const typography = {
       font: 'var(--cn-heading-section)',
       letterSpacing: 'var(--cn-tracking-tight)'
     },
+    '&-heading-default': {
+      font: 'var(--cn-heading-default)',
+      letterSpacing: 'var(--cn-tracking-tight)'
+    },
     '&-heading-subsection': {
       font: 'var(--cn-heading-subsection)',
       letterSpacing: 'var(--cn-tracking-tight)'
@@ -36,10 +40,6 @@ export const typography = {
       font: 'var(--cn-body-code)',
       letterSpacing: 'var(--cn-tracking-tight)'
     },
-    '&-body-single-line-code': {
-      font: 'var(--cn-body-single-line-code)',
-      letterSpacing: 'var(--cn-tracking-tight)'
-    },
     '&-caption-normal': {
       font: 'var(--cn-caption-normal)',
       letterSpacing: 'var(--cn-tracking-normal)'
@@ -56,10 +56,6 @@ export const typography = {
       font: 'var(--cn-caption-code)',
       letterSpacing: 'var(--cn-tracking-normal)'
     },
-    '&-caption-single-line-code': {
-      font: 'var(--cn-caption-single-line-code)',
-      letterSpacing: 'var(--cn-tracking-normal)'
-    },
     '&-link-default': {
       font: 'var(--cn-comp-link-default)'
     },
@@ -74,20 +70,8 @@ export const typography = {
       font: 'var(--cn-body-single-line-normal)',
       letterSpacing: 'var(--cn-tracking-tight)'
     },
-    '&-body-single-line-light': {
-      font: 'var(--cn-body-single-line-light)',
-      letterSpacing: 'var(--cn-tracking-tight)'
-    },
     '&-caption-single-line-normal': {
       font: 'var(--cn-caption-single-line-normal)',
-      letterSpacing: 'var(--cn-tracking-normal)'
-    },
-    '&-caption-single-line-strong': {
-      font: 'var(--cn-caption-single-line-strong)',
-      letterSpacing: 'var(--cn-tracking-normal)'
-    },
-    '&-caption-single-line-light': {
-      font: 'var(--cn-caption-single-line-light)',
       letterSpacing: 'var(--cn-tracking-normal)'
     },
     '&-dialog-title': {
@@ -95,7 +79,7 @@ export const typography = {
     },
     '&-micro-normal': {
       font: 'var(--cn-micro-normal)',
-      letterSpacing: 'var(--cn-tracking-wider)'
+      letterSpacing: 'var(--cn-tracking-wide)'
     }
   }
 }

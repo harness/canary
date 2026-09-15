@@ -62,6 +62,15 @@ export default {
       '--cn-dropdown-item-py': 'var(--cn-spacing-1)'
     },
 
+    // Allow absolute children (e.g. MultiSelect creation hint) to paint outside the menu.
+    '&.cn-dropdown-menu-overflow-visible': {
+      overflow: 'visible',
+
+      '.cn-dropdown-menu-content, .cn-dropdown-menu-container': {
+        overflow: 'visible'
+      }
+    },
+
     '&-container': {
       padding: 'var(--cn-dropdown-container)',
       minWidth: '0',
@@ -105,8 +114,9 @@ export default {
       '&:not(:where([aria-disabled=true]))': {
         '&:where([data-highlighted]), &:where([data-state="open"])': {
           backgroundColor: 'var(--cn-state-hover)',
-          outline: 'none',
-          cursor: 'default'
+          outline: 'var(--cn-focus)',
+          cursor: 'default',
+          '@apply outline-offset-cn-tight': ''
         }
       },
 

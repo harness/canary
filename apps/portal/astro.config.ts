@@ -144,6 +144,7 @@ export default defineConfig({
           label: "Components",
           items: [
             "components/data-display/accordion",
+            "components/data-display/alert-item",
             "components/feedback/alert",
             "components/overlays/alert-dialog",
             "components/visual/avatar",
@@ -235,6 +236,10 @@ export default defineConfig({
                 tabindex: -1,
                 onclick: "event.preventDefault(); return false;",
               },
+            },
+            {
+              slug: "growth-patterns/growth-box",
+              label: "Growth Box [WIP]",
             },
           ],
         },

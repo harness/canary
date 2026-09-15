@@ -46,6 +46,12 @@ export interface PipelineInput {
   enum?: any[]
 
   /**
+   * Allowed defines a list of accepted input values for Harness pipeline inputs.
+   * This is an alias for enum.
+   */
+  allowed?: PipelineInput['enum']
+
+  /**
    * Pattern defines a regular expression input constraint.
    */
   pattern?: string

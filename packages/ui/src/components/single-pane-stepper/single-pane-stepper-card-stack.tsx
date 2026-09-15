@@ -1,52 +1,61 @@
-import { useCallback, useEffect, useMemo, useRef } from 'react'
+import { useCallback, useEffect, useRef } from 'react'
 
-import { CardContextProvider, deriveStepperModel, useEngineContext } from '../flow-stepper/engine'
+import { CardContextProvider, useEngineContext } from '../flow-stepper/engine'
+import { FlowStepperRestartButton } from '../flow-stepper/flow-stepper-card'
+import { FlowStepperRail } from '../flow-stepper/flow-stepper-rail'
+import { useFlowStepperRailModel } from '../flow-stepper/use-flow-stepper-rail-model'
 import { Layout } from '../layout'
-import { Stepper } from '../stepper'
-import { Text } from '../text'
 
 interface SinglePaneStepperCardStackProps {
   stepperTitle?: string
   showStepperHeader?: boolean
   contentTitle?: string
   contentSubtitle?: string
+  /** When true, renders a "Step {n}/{total}" pill badge next to each step's title. Default false —
+   * purely opt-in, no rendering change for existing consumers that don't pass it. */
+  showStepBadge?: boolean
+  hideUpcomingGroups?: boolean
+  hidePredictedSteps?: boolean
+  disableCompletedFade?: boolean
 }
 
 export function SinglePaneStepperCardStack({
   stepperTitle,
   showStepperHeader,
   contentTitle,
-  contentSubtitle
+  contentSubtitle,
+  showStepBadge,
+  hideUpcomingGroups,
+  hidePredictedSteps,
+  disableCompletedFade
 }: SinglePaneStepperCardStackProps) {
-  const { flow, cardHistory, activeSubStepId, predictedPath, registerScrollToCard, scrollToCard, disableAutoScroll } =
-    useEngineContext()
+  const { flow, cardHistory, activeStepId, predictedPath, registerScrollToCard, disableAutoScroll } = useEngineContext()
+  const { totalOverride, stepNumberOverrides, stepNumberOverridesComplete, handleStepperClick } =
+    useFlowStepperRailModel({ rewindCompletedClicks: true })
   const containerRef = useRef<HTMLDivElement>(null)
-  const activeRef = useRef(activeSubStepId)
-  activeRef.current = activeSubStepId
+  const activeRef = useRef(activeStepId)
+  activeRef.current = activeStepId
 
   const scrollToCardLocal = useCallback(
-    (subStepId: string) => {
+    (stepId: string) => {
       // Consumers can disable all programmatic scroll (completed/review flows) — the timeline then
-      // renders from the top and stays put; only the user scrolls.
+      // renders from the top and stays put; only user scrolls.
       if (disableAutoScroll) return
       const container = containerRef.current
       if (!container) return
-      const cardEl = container.querySelector(`[data-card-id="${subStepId}"]`) as HTMLElement | null
+      const cardEl = container.querySelector(`[data-card-id="${stepId}"]`) as HTMLElement | null
       if (!cardEl) return
-
       const containerRect = container.getBoundingClientRect()
       const cardRect = cardEl.getBoundingClientRect()
-      const offsetTop = cardRect.top - containerRect.top + container.scrollTop
-      const targetScroll = offsetTop
-
-      // JSDOM doesn't implement scrollTo; fall back to direct scrollTop for test environments
-      if (typeof container.scrollTo === 'function') {
-        container.scrollTo({ top: Math.max(0, targetScroll), behavior: 'smooth' })
+      const offset = cardRect.top - containerRect.top + container.scrollTop
+      // scrollTo is unavailable in JSDOM — guard so tests don't throw.
+      if (container.scrollTo) {
+        container.scrollTo({ top: Math.max(0, offset - 16), behavior: 'smooth' })
       } else {
-        container.scrollTop = Math.max(0, targetScroll)
+        container.scrollTop = Math.max(0, offset - 16)
       }
     },
-    [containerRef, disableAutoScroll]
+    [disableAutoScroll]
   )
 
   useEffect(() => {
@@ -60,95 +69,49 @@ export function SinglePaneStepperCardStack({
     }
   }, [scrollToCardLocal])
 
-  const derivedSteps = useMemo(
-    () => deriveStepperModel(flow, cardHistory, predictedPath, activeSubStepId),
-    [flow, cardHistory, predictedPath, activeSubStepId]
-  )
-
-  // Progressive disclosure: only render steps that have been reached (active, completed, or error).
-  const visibleSteps = useMemo(() => derivedSteps.filter(step => step.state !== 'upcoming'), [derivedSteps])
-
-  // Build map of subStepId -> card status from cardHistory for status prop
-  const cardStatusMap = new Map(cardHistory.map(e => [e.subStepId, e.status]))
-
-  const handleStepperClick = (value: string) => {
-    const historyEntry = cardHistory.find(e => e.subStepId === value)
-    if (historyEntry) {
-      scrollToCard(historyEntry.subStepId)
-      return
-    }
-    const firstInStep = cardHistory.find(e => flow.subSteps[e.subStepId]?.step === value)
-    if (firstInStep) {
-      scrollToCard(firstInStep.subStepId)
-    }
-  }
-
   return (
     <div ref={containerRef} className="cn-single-pane-stepper-card-stack">
       <div className="cn-single-pane-stepper-card-stack-inner">
         {(contentTitle || contentSubtitle) && (
-          <Layout.Vertical gap="2xs" className="cn-single-pane-stepper-content-header">
-            {contentTitle && (
-              <Text as="h2" variant="heading-subsection" color="foreground-1" className="!m-0">
-                {contentTitle}
-              </Text>
-            )}
-            {contentSubtitle && (
-              <Text as="p" variant="body-normal" color="foreground-1" className="!m-0">
-                {contentSubtitle}
-              </Text>
-            )}
+          <Layout.Vertical className="cn-single-pane-stepper-content-header">
+            {/* Native heading/p — Text's font-* utilities would force !important on the CSS. */}
+            {contentTitle && <h2 className="cn-single-pane-stepper-content-title">{contentTitle}</h2>}
+            {contentSubtitle && <p className="cn-single-pane-stepper-content-subtitle">{contentSubtitle}</p>}
           </Layout.Vertical>
         )}
 
-        <Stepper.Root
-          value={activeSubStepId}
+        <FlowStepperRail
+          flow={flow}
+          cardHistory={cardHistory}
+          activeStepId={activeStepId}
+          predictedPath={predictedPath}
+          value={activeStepId}
           onValueChange={handleStepperClick}
-          title={showStepperHeader ? stepperTitle : undefined}
-          collapsibleSubSteps
-        >
-          {visibleSteps.map(derivedStep => {
-            const activeStepId = flow.subSteps[activeSubStepId]?.step
-            const isActiveStep = activeStepId === derivedStep.stepId
-            const showSubSteps = derivedStep.visited.length > 0 || isActiveStep
+          stepperTitle={stepperTitle}
+          showStepperHeader={showStepperHeader}
+          showStepBadge={showStepBadge}
+          totalOverride={totalOverride}
+          stepNumberOverrides={stepNumberOverrides}
+          stepNumberOverridesComplete={stepNumberOverridesComplete}
+          collapsibleNestedSteps
+          hideUpcomingGroups={hideUpcomingGroups}
+          hidePredictedSteps={hidePredictedSteps}
+          disableCompletedFade={disableCompletedFade}
+          renderStepHeaderActions={(stepId, status) => <FlowStepperRestartButton stepId={stepId} status={status} />}
+          renderStepContent={(stepId, status) => {
+            const CardComponent = flow.steps[stepId]?.component
+            if (!CardComponent) return null
+            const mountGeneration = cardHistory.find(e => e.stepId === stepId)?.mountGeneration ?? 0
 
             return (
-              <Stepper.Step
-                key={derivedStep.stepId}
-                value={derivedStep.stepId}
-                title={derivedStep.title}
-                description={derivedStep.description}
-                state={derivedStep.state}
-                hasSubSteps={false}
-              >
-                {showSubSteps &&
-                  !derivedStep.isTerminalStep &&
-                  derivedStep.visited.map(v => {
-                    const CardComponent = flow.subSteps[v.subStepId]?.component
-                    const cardStatus = cardStatusMap.get(v.subStepId)
-                    if (!CardComponent || !cardStatus) return null
-
-                    return (
-                      <Stepper.SubStep
-                        key={v.subStepId}
-                        value={v.subStepId}
-                        title={flow.subSteps[v.subStepId]?.title}
-                        description={flow.subSteps[v.subStepId]?.description}
-                        state={v.state}
-                        visualCompleted={flow.subSteps[v.subStepId]?.visualCompleted}
-                      >
-                        <div data-card-id={v.subStepId}>
-                          <CardContextProvider subStepId={v.subStepId} status={cardStatus} contentOnly>
-                            <CardComponent />
-                          </CardContextProvider>
-                        </div>
-                      </Stepper.SubStep>
-                    )
-                  })}
-              </Stepper.Step>
+              <div key={`${stepId}-${mountGeneration}`} data-card-id={stepId}>
+                <CardContextProvider stepId={stepId} status={status} contentOnly>
+                  <CardComponent />
+                </CardContextProvider>
+              </div>
             )
-          })}
-        </Stepper.Root>
+          }}
+        />
       </div>
     </div>
   )

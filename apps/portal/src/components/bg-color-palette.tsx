@@ -24,7 +24,7 @@ const ColorSwatch: React.FC<ColorSwatchProps> = ({
     <Text
       variant="caption-normal"
       color="inherit"
-      className="text-cn-size-4 font-mono"
+      className="text-cn-size-3 font-mono"
     >
       {label}
     </Text>
@@ -142,7 +142,9 @@ const SemanticColors: React.FC = () => {
     <Layout.Grid className="mt-cn-md" gap="sm">
       {colors.map((item) => {
         const getBGClassName = (variant: string, withBorder?: boolean) => {
-          return `bg-cn-${item.color}-${variant} text-cn-${item.color}-${variant} ${withBorder ? `border border-cn-${item.color}-outline` : ""}`;
+          // Outline surfaces use the secondary text color (no dedicated outline text color).
+          const textVariant = variant === "outline" ? "secondary" : variant;
+          return `bg-cn-${item.color}-${variant} text-cn-${item.color}-${textVariant} ${withBorder ? `border border-cn-${item.color}-outline` : ""}`;
         };
         return (
           <Layout.Grid
@@ -163,7 +165,7 @@ const SemanticColors: React.FC = () => {
               <Text
                 variant="caption-normal"
                 color="inherit"
-                className="text-cn-size-4 font-mono"
+                className="text-cn-size-3 font-mono"
               >
                 Primary
               </Text>
@@ -180,7 +182,7 @@ const SemanticColors: React.FC = () => {
               <Text
                 variant="caption-normal"
                 color="inherit"
-                className="text-cn-size-4 font-mono"
+                className="text-cn-size-3 font-mono"
               >
                 Secondary
               </Text>
@@ -197,7 +199,7 @@ const SemanticColors: React.FC = () => {
               <Text
                 variant="caption-normal"
                 color="inherit"
-                className="text-cn-size-4 font-mono"
+                className="text-cn-size-3 font-mono"
               >
                 Outline
               </Text>

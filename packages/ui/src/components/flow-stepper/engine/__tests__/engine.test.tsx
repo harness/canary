@@ -1,10 +1,17 @@
 import React, { useEffect } from 'react'
 
-import { render, screen, waitFor } from '@testing-library/react'
+import { render, screen, waitFor, within } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { describe, expect, test, vi } from 'vitest'
 
-import { CardContextProvider, FlowEngineProvider, useEngineContext, useFlowCard, type FlowConfig } from '../index'
+import {
+  CardContextProvider,
+  FlowEngineProvider,
+  useEngineContext,
+  useFlowCard,
+  type FlowConfig,
+  type InitialEngineState
+} from '../index'
 
 // Mocks
 vi.mock('@components/icon-v2', () => ({
@@ -35,11 +42,15 @@ function CardStack() {
   return (
     <div data-testid="card-stack">
       {cardHistory.map(entry => {
-        const CardComponent = flow.subSteps[entry.subStepId]?.component
+        const CardComponent = flow.steps[entry.stepId]?.component
         if (!CardComponent) return null
         return (
-          <CardContextProvider key={entry.subStepId} subStepId={entry.subStepId} status={entry.status}>
-            <div data-testid={`card-${entry.subStepId}`} data-status={entry.status}>
+          <CardContextProvider
+            key={`${entry.stepId}-${entry.mountGeneration ?? 0}`}
+            stepId={entry.stepId}
+            status={entry.status}
+          >
+            <div data-testid={`card-${entry.stepId}`} data-status={entry.status}>
               <CardComponent />
             </div>
           </CardContextProvider>
@@ -144,6 +155,44 @@ function ErrorRecoveryCard() {
   )
 }
 
+// Restore test cards: report their own card status so a restored snapshot's per-entry status
+// can be asserted without colliding testids when two of these render side by side.
+function RestoreErrorCard() {
+  const { status } = useFlowCard()
+  return <span data-testid="restore-status">{status}</span>
+}
+
+// Engine-level probe that can target ANY stepId (not just the card it's mounted on) — used to
+// exercise complete()/error() against a restored, non-active step (e.g. a restored 'completed' or
+// 'error' entry that is not the current activeStepId).
+function EngineStepProbe({ stepId }: { stepId: string }) {
+  const { complete, error } = useEngineContext()
+  return (
+    <div>
+      <button data-testid={`probe-complete-${stepId}`} onClick={() => complete(stepId, { probed: true })}>
+        probe-complete-{stepId}
+      </button>
+      <button data-testid={`probe-error-${stepId}`} onClick={() => error(stepId)}>
+        probe-error-{stepId}
+      </button>
+    </div>
+  )
+}
+
+// Probe from the task brief: exercises complete() on the current activeStepId and surfaces
+// engine-level state for assertions.
+function CompleteProbe() {
+  const { complete, activeStepId, cardHistory, state } = useEngineContext()
+  return (
+    <div>
+      <span data-testid="active">{activeStepId}</span>
+      <span data-testid="history-len">{cardHistory.length}</span>
+      <span data-testid="state-answer">{String(state.answer ?? '')}</span>
+      <button onClick={() => complete(activeStepId, { probed: true })}>probe-complete</button>
+    </div>
+  )
+}
+
 // Drawer test cards
 function DrawerCardA() {
   const { openDrawer } = useFlowCard()
@@ -186,8 +235,8 @@ function DrawerComponent() {
   )
 }
 
-// Card that completes to a substep id that does not exist in the flow config — exercises the
-// unknown-nextSubStepId guard.
+// Card that completes to a step id that does not exist in the flow config — exercises the
+// unknown-nextStepId guard.
 function BadRouteCard() {
   const { complete } = useFlowCard()
   return (
@@ -229,6 +278,39 @@ function ReactivateCardC() {
   )
 }
 
+function RemountCardA() {
+  const { complete } = useFlowCard()
+  return (
+    <div>
+      <h3>Remount Card A</h3>
+      <button onClick={() => complete({ step1: 'done' }, 'remount-b')}>Next</button>
+    </div>
+  )
+}
+
+function RemountCardB() {
+  const { complete } = useFlowCard()
+  const [count, setCount] = React.useState(0)
+  return (
+    <div>
+      <h3>Remount Card B</h3>
+      <span data-testid="remount-counter">{count}</span>
+      <button onClick={() => setCount(c => c + 1)}>Increment</button>
+      <button onClick={() => complete({ step2: 'done' }, 'remount-c')}>Next</button>
+    </div>
+  )
+}
+
+function RemountCardC() {
+  const { requestReactivation } = useEngineContext()
+  return (
+    <div>
+      <h3>Remount Card C</h3>
+      <button onClick={() => requestReactivation('remount-b')}>Edit Previous</button>
+    </div>
+  )
+}
+
 function ReactivationDialog() {
   const { pendingReactivation, confirmReactivation, cancelReactivation } = useEngineContext()
   if (!pendingReactivation) return null
@@ -243,95 +325,113 @@ function ReactivationDialog() {
 
 // Test flow configs
 const testFlow: FlowConfig = {
-  steps: {
+  stepGroups: {
     'step-1': { title: 'First Step', description: 'Do first thing' },
     'step-2': { title: 'Second Step', description: 'Do second thing' },
     'step-3': { title: 'Third Step', description: 'Do third thing' }
   },
-  subSteps: {
+  steps: {
     'card-a': { step: 'step-1', title: 'Card A', description: 'First card', component: TestCardA, next: 'card-b' },
     'card-b': { step: 'step-2', title: 'Card B', description: 'Second card', component: TestCardB, next: 'card-c' },
     'card-c': { step: 'step-3', title: 'Card C', description: 'Third card', component: TestCardC }
   },
-  initialSubStep: 'card-a'
+  initialStep: 'card-a'
 }
 
 const terminalFlow: FlowConfig = {
-  steps: {
+  stepGroups: {
     'step-1': { title: 'First Step' },
     'step-2': { title: 'Second Step' }
   },
-  subSteps: {
+  steps: {
     'terminal-a': { step: 'step-1', title: 'Terminal A', component: TerminalCardA, next: 'terminal-b' },
     'terminal-b': { step: 'step-2', title: 'Terminal B', component: TerminalCardB, terminal: true }
   },
-  initialSubStep: 'terminal-a'
+  initialStep: 'terminal-a'
 }
 
 const skipFlow: FlowConfig = {
-  steps: {
+  stepGroups: {
     'step-1': { title: 'First Step' },
     'step-2': { title: 'Second Step' }
   },
-  subSteps: {
+  steps: {
     'skip-a': { step: 'step-1', title: 'Skip A', component: SkipCardA, next: 'skip-b' },
     'skip-b': { step: 'step-2', title: 'Skip B', component: SkipCardB }
   },
-  initialSubStep: 'skip-a'
+  initialStep: 'skip-a'
 }
 
 const errorFlow: FlowConfig = {
-  steps: {
+  stepGroups: {
     'step-1': { title: 'First Step' }
   },
-  subSteps: {
+  steps: {
     'error-a': { step: 'step-1', title: 'Error A', component: ErrorCardA }
   },
-  initialSubStep: 'error-a'
+  initialStep: 'error-a'
 }
 
 const errorRecoveryFlow: FlowConfig = {
-  steps: {
+  stepGroups: {
     'step-1': { title: 'First Step' }
   },
-  subSteps: {
-    'error-recovery': { step: 'step-1', title: 'Error Recovery', component: ErrorRecoveryCard }
+  steps: {
+    'error-recovery': { step: 'step-1', title: 'Error Recovery', component: ErrorRecoveryCard },
+    // Extra steps used only by initialEngineState restore tests (terminalRef rebuild around
+    // 'error' entries). Not part of the 'error-recovery' initialStep path above.
+    'error-a': { step: 'step-1', title: 'Error A', component: RestoreErrorCard, next: 'error-b' },
+    'error-b': { step: 'step-1', title: 'Error B', component: RestoreErrorCard }
   },
-  initialSubStep: 'error-recovery'
+  initialStep: 'error-recovery'
 }
 
 const drawerFlow: FlowConfig = {
-  steps: {
+  stepGroups: {
     'step-1': { title: 'First Step' }
   },
-  subSteps: {
+  steps: {
     'drawer-a': { step: 'step-1', title: 'Drawer A', component: DrawerCardA }
   },
-  initialSubStep: 'drawer-a'
+  initialStep: 'drawer-a'
 }
 
 const badRouteFlow: FlowConfig = {
-  steps: {
+  stepGroups: {
     'step-1': { title: 'First Step' }
   },
-  subSteps: {
+  steps: {
     'bad-route': { step: 'step-1', title: 'Bad Route', component: BadRouteCard }
   },
-  initialSubStep: 'bad-route'
+  initialStep: 'bad-route'
 }
 
 const reactivateFlow: FlowConfig = {
-  steps: {
+  stepGroups: {
     'step-1': { title: 'First Step' },
     'step-2': { title: 'Second Step' },
     'step-3': { title: 'Third Step' }
   },
-  subSteps: {
+  steps: {
     'reactivate-a': { step: 'step-1', title: 'Reactivate A', component: ReactivateCardA, next: 'reactivate-b' },
     'reactivate-b': { step: 'step-2', title: 'Reactivate B', component: ReactivateCardB, next: 'reactivate-c' },
     'reactivate-c': { step: 'step-3', title: 'Reactivate C', component: ReactivateCardC }
   },
-  initialSubStep: 'reactivate-a'
+  initialStep: 'reactivate-a'
+}
+
+const remountFlow: FlowConfig = {
+  stepGroups: {
+    'step-1': { title: 'First Step' },
+    'step-2': { title: 'Second Step' },
+    'step-3': { title: 'Third Step' }
+  },
+  steps: {
+    'remount-a': { step: 'step-1', title: 'Remount A', component: RemountCardA, next: 'remount-b' },
+    'remount-b': { step: 'step-2', title: 'Remount B', component: RemountCardB, next: 'remount-c' },
+    'remount-c': { step: 'step-3', title: 'Remount C', component: RemountCardC }
+  },
+  initialStep: 'remount-a'
 }
 
 describe('Flow Engine', () => {
@@ -411,8 +511,8 @@ describe('Flow Engine', () => {
     })
   })
 
-  describe('Terminal Substeps', () => {
-    test('terminal substep enters as active (not auto-completed)', async () => {
+  describe('Terminal Steps', () => {
+    test('terminal step enters as active (not auto-completed)', async () => {
       render(
         <FlowEngineProvider flow={terminalFlow}>
           <TestHarness>
@@ -426,7 +526,7 @@ describe('Flow Engine', () => {
       })
     })
 
-    test('terminal substep calls onComplete on user action', async () => {
+    test('terminal step calls onComplete on user action', async () => {
       const onComplete = vi.fn()
       render(
         <FlowEngineProvider flow={terminalFlow} onComplete={onComplete}>
@@ -505,7 +605,7 @@ describe('Flow Engine', () => {
       })
     })
 
-    test('error-and-continue: errored substep stays red in history while the flow advances', async () => {
+    test('error-and-continue: errored step stays red in history while the flow advances', async () => {
       function ErrorContinueHarness() {
         const { error } = useEngineContext()
         useEffect(() => {
@@ -600,7 +700,7 @@ describe('Flow Engine', () => {
   })
 
   describe('Invalid transitions', () => {
-    test('complete() to an unknown substep is ignored and logs an error (no phantom card)', async () => {
+    test('complete() to an unknown step is ignored and logs an error (no phantom card)', async () => {
       const consoleError = vi.spyOn(console, 'error').mockImplementation(() => {})
       render(
         <FlowEngineProvider flow={badRouteFlow}>
@@ -619,7 +719,7 @@ describe('Flow Engine', () => {
       })
       // No card was pushed for the unknown target — the stack still holds only the origin card.
       // (The origin card carries a data-status; the card-stack container does not, so filtering by
-      // it counts only real substep cards, excluding the wrapping container.)
+      // it counts only real step cards, excluding the wrapping container.)
       expect(screen.queryByTestId('card-does-not-exist')).not.toBeInTheDocument()
       const renderedCards = screen.getAllByTestId(/^card-/).filter(el => el.hasAttribute('data-status'))
       expect(renderedCards).toHaveLength(1)
@@ -753,6 +853,306 @@ describe('Flow Engine', () => {
         expect(screen.queryByTestId('reactivation-dialog')).not.toBeInTheDocument()
         expect(screen.getByText('Reactivate Card C')).toBeInTheDocument()
       })
+    })
+
+    test('remounts the reactivated card so local state resets', async () => {
+      render(
+        <FlowEngineProvider flow={remountFlow}>
+          <TestHarness>
+            <CardStack />
+            <ReactivationDialog />
+          </TestHarness>
+        </FlowEngineProvider>
+      )
+
+      await userEvent.click(screen.getAllByText('Next')[0])
+      await waitFor(() => {
+        expect(screen.getByText('Remount Card B')).toBeInTheDocument()
+      })
+
+      expect(screen.getByTestId('remount-counter')).toHaveTextContent('0')
+      await userEvent.click(screen.getByText('Increment'))
+      expect(screen.getByTestId('remount-counter')).toHaveTextContent('1')
+
+      const cardB = screen.getByTestId('card-remount-b')
+      const nextButton = cardB.querySelector('button:last-of-type')
+      expect(nextButton).toBeTruthy()
+      await userEvent.click(nextButton as HTMLElement)
+
+      await waitFor(() => {
+        expect(screen.getByText('Remount Card C')).toBeInTheDocument()
+      })
+
+      await userEvent.click(screen.getByText('Edit Previous'))
+      await waitFor(() => {
+        expect(screen.getByTestId('reactivation-dialog')).toBeInTheDocument()
+      })
+      await userEvent.click(screen.getByText('Confirm'))
+
+      await waitFor(() => {
+        expect(screen.getByTestId('card-remount-b')).toHaveAttribute('data-status', 'active')
+        expect(screen.queryByTestId('card-remount-c')).not.toBeInTheDocument()
+      })
+
+      expect(screen.getByTestId('remount-counter')).toHaveTextContent('0')
+    })
+
+    test('calls onReactivate with the restarted step id after confirm', async () => {
+      const onReactivate = vi.fn()
+      render(
+        <FlowEngineProvider flow={reactivateFlow} onReactivate={onReactivate}>
+          <TestHarness>
+            <CardStack />
+            <ReactivationDialog />
+          </TestHarness>
+        </FlowEngineProvider>
+      )
+
+      await userEvent.click(screen.getAllByText('Next')[0])
+      await waitFor(() => {
+        expect(screen.getByText('Reactivate Card B')).toBeInTheDocument()
+      })
+      const cardB = screen.getByTestId('card-reactivate-b')
+      const nextButton = cardB.querySelector('button')
+      expect(nextButton).toBeTruthy()
+      await userEvent.click(nextButton as HTMLElement)
+      await waitFor(() => {
+        expect(screen.getByText('Reactivate Card C')).toBeInTheDocument()
+      })
+
+      await userEvent.click(screen.getByText('Edit Previous'))
+      await waitFor(() => {
+        expect(screen.getByTestId('reactivation-dialog')).toBeInTheDocument()
+      })
+      await userEvent.click(screen.getByText('Confirm'))
+
+      await waitFor(() => {
+        expect(onReactivate).toHaveBeenCalledTimes(1)
+        expect(onReactivate).toHaveBeenCalledWith('reactivate-b')
+      })
+    })
+
+    test('does not call onReactivate when reactivation is cancelled', async () => {
+      const onReactivate = vi.fn()
+      render(
+        <FlowEngineProvider flow={reactivateFlow} onReactivate={onReactivate}>
+          <TestHarness>
+            <CardStack />
+            <ReactivationDialog />
+          </TestHarness>
+        </FlowEngineProvider>
+      )
+
+      await userEvent.click(screen.getAllByText('Next')[0])
+      await waitFor(() => {
+        expect(screen.getByText('Reactivate Card B')).toBeInTheDocument()
+      })
+      const cardB = screen.getByTestId('card-reactivate-b')
+      const nextButton = cardB.querySelector('button')
+      expect(nextButton).toBeTruthy()
+      await userEvent.click(nextButton as HTMLElement)
+      await waitFor(() => {
+        expect(screen.getByText('Reactivate Card C')).toBeInTheDocument()
+      })
+
+      await userEvent.click(screen.getByText('Edit Previous'))
+      await waitFor(() => {
+        expect(screen.getByTestId('reactivation-dialog')).toBeInTheDocument()
+      })
+      await userEvent.click(screen.getByText('Cancel'))
+
+      expect(onReactivate).not.toHaveBeenCalled()
+    })
+  })
+
+  describe('initialEngineState', () => {
+    test('present snapshot seeds cardHistory and state; active is the restored active step', () => {
+      const initialEngineState: InitialEngineState = {
+        state: { answer: 'yes' },
+        cardHistory: [
+          { stepId: 'card-a', status: 'completed', stateSnapshot: {} },
+          { stepId: 'card-b', status: 'active', stateSnapshot: {} }
+        ]
+      }
+
+      render(
+        <FlowEngineProvider flow={testFlow} initialEngineState={initialEngineState}>
+          <TestHarness>
+            <CardStack />
+            <CompleteProbe />
+          </TestHarness>
+        </FlowEngineProvider>
+      )
+
+      expect(screen.getByTestId('active')).toHaveTextContent('card-b')
+      expect(screen.getByTestId('history-len')).toHaveTextContent('2')
+      expect(screen.getByTestId('state-answer')).toHaveTextContent('yes')
+      expect(screen.getByTestId('card-card-a')).toHaveAttribute('data-status', 'completed')
+      expect(screen.getByTestId('card-card-b')).toHaveAttribute('data-status', 'active')
+    })
+
+    test('restored completed step: re-completing it does not push a duplicate completed entry', async () => {
+      const initialEngineState: InitialEngineState = {
+        state: { answer: 'yes' },
+        cardHistory: [
+          { stepId: 'card-a', status: 'completed', stateSnapshot: {} },
+          { stepId: 'card-b', status: 'active', stateSnapshot: {} }
+        ]
+      }
+
+      render(
+        <FlowEngineProvider flow={testFlow} initialEngineState={initialEngineState}>
+          <TestHarness>
+            <CardStack />
+            <CompleteProbe />
+            <EngineStepProbe stepId="card-a" />
+          </TestHarness>
+        </FlowEngineProvider>
+      )
+
+      expect(screen.getByTestId('history-len')).toHaveTextContent('2')
+
+      await userEvent.click(screen.getByTestId('probe-complete-card-a'))
+
+      // No duplicate 'card-b' pushed, card-a stays completed, and its state patch was NOT merged
+      // in (terminalRef guarded re-entry before setState ran).
+      await waitFor(() => {
+        expect(screen.getByTestId('history-len')).toHaveTextContent('2')
+        expect(screen.getByTestId('card-card-a')).toHaveAttribute('data-status', 'completed')
+        expect(screen.getByTestId('card-card-b')).toHaveAttribute('data-status', 'active')
+        expect(screen.getByTestId('state-answer')).toHaveTextContent('yes')
+      })
+    })
+
+    test("history [{error-a: 'error'}, {error-b: 'active'}]: complete('error-a') is a no-op (error not last is terminal)", async () => {
+      const initialEngineState: InitialEngineState = {
+        state: {},
+        cardHistory: [
+          { stepId: 'error-a', status: 'error', stateSnapshot: {} },
+          { stepId: 'error-b', status: 'active', stateSnapshot: {} }
+        ]
+      }
+
+      render(
+        <FlowEngineProvider flow={errorRecoveryFlow} initialEngineState={initialEngineState}>
+          <TestHarness>
+            <CardStack />
+            <CompleteProbe />
+            <EngineStepProbe stepId="error-a" />
+          </TestHarness>
+        </FlowEngineProvider>
+      )
+
+      expect(screen.getByTestId('history-len')).toHaveTextContent('2')
+      expect(within(screen.getByTestId('card-error-a')).getByTestId('restore-status')).toHaveTextContent('error')
+
+      await userEvent.click(screen.getByTestId('probe-complete-error-a'))
+
+      // Swallowed: still 2 entries, error-a still 'error'.
+      await waitFor(() => {
+        expect(screen.getByTestId('history-len')).toHaveTextContent('2')
+        expect(within(screen.getByTestId('card-error-a')).getByTestId('restore-status')).toHaveTextContent('error')
+      })
+    })
+
+    test("history [{error-a: 'error'}] (last entry): complete('error-a') is NOT swallowed by terminalRef (retry works)", async () => {
+      const initialEngineState: InitialEngineState = {
+        state: {},
+        cardHistory: [{ stepId: 'error-a', status: 'error', stateSnapshot: {} }]
+      }
+
+      render(
+        <FlowEngineProvider flow={errorRecoveryFlow} initialEngineState={initialEngineState}>
+          <TestHarness>
+            <CardStack />
+            <CompleteProbe />
+            <EngineStepProbe stepId="error-a" />
+          </TestHarness>
+        </FlowEngineProvider>
+      )
+
+      expect(screen.getByTestId('history-len')).toHaveTextContent('1')
+      expect(within(screen.getByTestId('card-error-a')).getByTestId('restore-status')).toHaveTextContent('error')
+
+      await userEvent.click(screen.getByTestId('probe-complete-error-a'))
+
+      // Not swallowed: transitions to 'completed' and advances to 'error-b'.
+      await waitFor(() => {
+        expect(within(screen.getByTestId('card-error-a')).getByTestId('restore-status')).toHaveTextContent('completed')
+        expect(screen.getByTestId('history-len')).toHaveTextContent('2')
+      })
+    })
+
+    test('empty cardHistory is treated as omitted: seeds initialStep active with empty state', () => {
+      const initialEngineState: InitialEngineState = {
+        state: { foo: 'bar' },
+        cardHistory: []
+      }
+
+      render(
+        <FlowEngineProvider flow={testFlow} initialEngineState={initialEngineState}>
+          <TestHarness>
+            <CardStack />
+            <CompleteProbe />
+          </TestHarness>
+        </FlowEngineProvider>
+      )
+
+      expect(screen.getByTestId('active')).toHaveTextContent('card-a')
+      expect(screen.getByTestId('history-len')).toHaveTextContent('1')
+      expect(screen.getByTestId('state-answer')).toHaveTextContent('')
+    })
+
+    test('unknown stepId in cardHistory is treated as omitted: seeds initialStep active', () => {
+      const initialEngineState: InitialEngineState = {
+        state: { foo: 'bar' },
+        cardHistory: [{ stepId: 'not-a-real-step', status: 'active', stateSnapshot: {} }]
+      }
+
+      render(
+        <FlowEngineProvider flow={testFlow} initialEngineState={initialEngineState}>
+          <TestHarness>
+            <CardStack />
+            <CompleteProbe />
+          </TestHarness>
+        </FlowEngineProvider>
+      )
+
+      expect(screen.getByTestId('active')).toHaveTextContent('card-a')
+      expect(screen.getByTestId('history-len')).toHaveTextContent('1')
+      expect(screen.getByTestId('state-answer')).toHaveTextContent('')
+    })
+
+    test('drawerState and pendingReactivation stay null after hydrate', () => {
+      function DrawerAndReactivationProbe() {
+        const { drawerState, pendingReactivation } = useEngineContext()
+        return (
+          <div>
+            <span data-testid="drawer-state">{drawerState === null ? 'null' : 'non-null'}</span>
+            <span data-testid="pending-reactivation">{pendingReactivation === null ? 'null' : 'non-null'}</span>
+          </div>
+        )
+      }
+
+      const initialEngineState: InitialEngineState = {
+        state: { answer: 'yes' },
+        cardHistory: [
+          { stepId: 'card-a', status: 'completed', stateSnapshot: {} },
+          { stepId: 'card-b', status: 'active', stateSnapshot: {} }
+        ]
+      }
+
+      render(
+        <FlowEngineProvider flow={testFlow} initialEngineState={initialEngineState}>
+          <TestHarness>
+            <CardStack />
+            <DrawerAndReactivationProbe />
+          </TestHarness>
+        </FlowEngineProvider>
+      )
+
+      expect(screen.getByTestId('drawer-state')).toHaveTextContent('null')
+      expect(screen.getByTestId('pending-reactivation')).toHaveTextContent('null')
     })
   })
 })

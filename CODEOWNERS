@@ -21,3 +21,5 @@
 /packages/unified-pipeline/* srdjan.arsic@harness.io
 /packages/yaml-editor/* srdjan.arsic@harness.io
 /packages/core-design-system/* pranesh.g@harness.io katie.grantier@harness.io
+/packages/ai-chat-core/* avinash.m@harness.io
+/packages/filters/* avinash.m@harness.io harish.viswanathan@harness.io

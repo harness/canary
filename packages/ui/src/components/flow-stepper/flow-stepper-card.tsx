@@ -30,15 +30,62 @@ function BlockedMessage({ message }: { message: string }) {
 const INTERACTIVE_STATES: Set<CardStatus> = new Set(['active', 'error'])
 const TERMINAL_STATES: Set<CardStatus> = new Set(['completed', 'skipped'])
 
-export function FlowStepperCard({ title, description, blockedMessage, children, className }: FlowStepperCardProps) {
-  const { requestReactivation, cardHistory } = useEngineContext()
-  const { subStepId, status, contentOnly } = useCardStatus()
-
+function shouldShowRestart(status: CardStatus, cardHistory: { stepId: string; status: CardStatus }[], stepId: string) {
   const isTerminal = TERMINAL_STATES.has(status)
-  const isLastCard = cardHistory[cardHistory.length - 1]?.subStepId === subStepId
+  const isLastCard = cardHistory[cardHistory.length - 1]?.stepId === stepId
   const isFlowComplete = !cardHistory.some(e => INTERACTIVE_STATES.has(e.status))
   const isFinished = isTerminal && isLastCard && isFlowComplete
-  const showRestart = isTerminal && !isFinished
+  return isTerminal && !isFinished
+}
+
+function GoBackHit({ stepId }: { stepId: string }) {
+  const { requestReactivation } = useEngineContext()
+
+  return (
+    <button
+      type="button"
+      className="cn-flow-stepper-card-go-back-hit"
+      aria-label="Go back to this step"
+      onClick={event => {
+        event.stopPropagation()
+        requestReactivation(stepId)
+      }}
+    />
+  )
+}
+
+/** Edit control for a terminal (not finished) step. Single-pane slots this into the step header
+ *  beside the collapse caret so card content keeps full width. DualPane still renders it in the
+ *  card title row. Always visible on completed/skipped, matching v5 `.pq-card__pencil`. */
+export function FlowStepperRestartButton({ stepId, status }: { stepId: string; status: CardStatus }) {
+  const { requestReactivation, cardHistory } = useEngineContext()
+
+  if (!shouldShowRestart(status, cardHistory, stepId)) return null
+
+  return (
+    <button
+      type="button"
+      className="cn-flow-stepper-card-edit"
+      onClick={event => {
+        event.stopPropagation()
+        requestReactivation(stepId)
+      }}
+      aria-label="Go back to this step"
+    >
+      <IconV2 name="edit-pencil" size="sm" />
+    </button>
+  )
+}
+
+export function FlowStepperCard({ title, description, blockedMessage, children, className }: FlowStepperCardProps) {
+  const { cardHistory } = useEngineContext()
+  const { stepId, status, contentOnly } = useCardStatus()
+
+  const isTerminal = TERMINAL_STATES.has(status)
+  const isLastCard = cardHistory[cardHistory.length - 1]?.stepId === stepId
+  const isFlowComplete = !cardHistory.some(e => INTERACTIVE_STATES.has(e.status))
+  const isFinished = isTerminal && isLastCard && isFlowComplete
+  const showGoBackHit = isTerminal && !isFinished
 
   const cardClassName = cn(
     'cn-flow-stepper-card',
@@ -46,29 +93,18 @@ export function FlowStepperCard({ title, description, blockedMessage, children, 
       'cn-flow-stepper-card-active': status === 'active',
       'cn-flow-stepper-card-finished': isFinished,
       'cn-flow-stepper-card-completed': isTerminal && !isFinished,
-      'cn-flow-stepper-card-error': status === 'error',
-      'cn-flow-stepper-card-content-only': contentOnly
+      'cn-flow-stepper-card-error': status === 'error'
     },
     className
   )
 
   const contentInertProps = isTerminal && !isFinished ? ({ inert: '' } as React.HTMLAttributes<HTMLDivElement>) : {}
 
-  const restartButton = showRestart ? (
-    <button
-      type="button"
-      className="cn-flow-stepper-card-edit"
-      onClick={() => requestReactivation(subStepId)}
-      aria-label="Redo this step"
-    >
-      <IconV2 name="restart" size="sm" className="text-cn-2" />
-    </button>
-  ) : null
-
   if (contentOnly) {
     return (
+      // Single-pane: Restart lives in the Stepper.Step header (left of the collapse caret), not
+      // beside this body. Tiles keep the full content width whether Restart is showing or not.
       <div className={cardClassName}>
-        {restartButton}
         {/* inert disables all interaction (click, focus, a11y) in terminal-state cards.
            The finished card (last card in a completed flow) stays interactive for final actions.
            Cast needed because React 18 types don't include inert yet. */}
@@ -83,6 +119,7 @@ export function FlowStepperCard({ title, description, blockedMessage, children, 
           {blockedMessage && <BlockedMessage message={blockedMessage} />}
           {children}
         </div>
+        {showGoBackHit && <GoBackHit stepId={stepId} />}
       </div>
     )
   }
@@ -106,7 +143,7 @@ export function FlowStepperCard({ title, description, blockedMessage, children, 
             {title}
           </Text>
         </div>
-        {restartButton}
+        <FlowStepperRestartButton stepId={stepId} status={status} />
       </div>
       {description && (
         <div className="cn-flow-stepper-card-description">
@@ -119,6 +156,7 @@ export function FlowStepperCard({ title, description, blockedMessage, children, 
         {blockedMessage && <BlockedMessage message={blockedMessage} />}
         {children}
       </div>
+      {showGoBackHit && <GoBackHit stepId={stepId} />}
     </div>
   )
 }

@@ -22,11 +22,11 @@ export interface StyledMultiTypeSelectProps extends MultiTypeSelectProps {
 const getButtonIcon = (inputValueType: InputValueType) => {
   switch (inputValueType) {
     case 'fixed':
-      return <IconV2 name="code-brackets" size="xs" className="text-cn-blue-outline" />
+      return <IconV2 name="code-brackets" size="xs" className="text-cn-blue-secondary" />
     case 'runtime':
-      return <IconV2 name="code" size="xs" className="text-cn-purple-outline" />
+      return <IconV2 name="code" size="xs" className="text-cn-purple-secondary" />
     case 'expression':
-      return <IconV2 name="variables" size="xs" className="text-cn-orange-outline" />
+      return <IconV2 name="variables" size="xs" className="text-cn-orange-secondary" />
   }
 }
 
@@ -62,19 +62,19 @@ function MultiTypeSelectBase(props: StyledMultiTypeSelectProps): React.JSX.Eleme
     {
       value: 'fixed',
       icon: 'code-brackets',
-      iconClassName: 'text-cn-blue-outline',
+      iconClassName: 'text-cn-blue-secondary',
       title: 'Fixed'
     },
     {
       value: 'runtime',
       icon: 'code',
-      iconClassName: 'text-cn-purple-outline',
+      iconClassName: 'text-cn-purple-secondary',
       title: 'Runtime'
     },
     {
       value: 'expression',
       icon: 'variables',
-      iconClassName: 'text-cn-orange-outline',
+      iconClassName: 'text-cn-orange-secondary',
       title: 'Expression'
     }
   ]

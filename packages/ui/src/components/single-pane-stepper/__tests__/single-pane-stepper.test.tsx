@@ -4,7 +4,10 @@ import { render, screen, waitFor } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { describe, expect, test, vi } from 'vitest'
 
-import { CardContextProvider, FlowEngineProvider } from '../../flow-stepper/engine'
+import flowStepperCardStyles from '../../../../tailwind-utils-config/components/flow-stepper-card'
+import singlePaneStepperStyles from '../../../../tailwind-utils-config/components/single-pane-stepper'
+import stepperStyles from '../../../../tailwind-utils-config/components/stepper'
+import { CardContextProvider, FlowEngineProvider, useEngineContext } from '../../flow-stepper/engine'
 import { FlowStepperCard } from '../../flow-stepper/flow-stepper-card'
 import { SinglePaneStepper, useFlowCard } from '../index'
 import type { FlowConfig } from '../single-pane-stepper-types'
@@ -82,6 +85,11 @@ function TestCardTerminal() {
   )
 }
 
+function EngineChildProbe() {
+  const { activeStepId } = useEngineContext()
+  return <span data-testid="bridge-child">{activeStepId}</span>
+}
+
 function TestCardBlocked() {
   return (
     <SinglePaneStepper.Card title="Card Blocked" blockedMessage="Select an option to continue">
@@ -91,59 +99,68 @@ function TestCardBlocked() {
 }
 
 const testFlow: FlowConfig = {
-  steps: {
+  stepGroups: {
     'step-1': { title: 'First Step', description: 'Do first thing' },
     'step-2': { title: 'Second Step', description: 'Do second thing' },
     'step-3': { title: 'Third Step', description: 'Do third thing' }
   },
-  subSteps: {
+  steps: {
     'card-a': { step: 'step-1', title: 'Card A', description: 'First card', component: TestCardA, next: 'card-b' },
     'card-b': { step: 'step-2', title: 'Card B', description: 'Second card', component: TestCardB, next: 'card-c' },
     'card-c': { step: 'step-3', title: 'Card C', description: 'Third card', component: TestCardC }
   },
-  initialSubStep: 'card-a'
+  initialStep: 'card-a'
+}
+
+const flatTestFlow: FlowConfig = {
+  steps: {
+    'card-a': { title: 'Card A', description: 'First card', component: TestCardA, next: 'card-b' },
+    'card-b': { title: 'Card B', description: 'Second card', component: TestCardB, next: 'card-c' },
+    'card-c': { title: 'Card C', description: 'Third card', component: TestCardC }
+  },
+  initialStep: 'card-a'
 }
 
 const testFlowWithSkip: FlowConfig = {
-  steps: {
+  stepGroups: {
     'step-1': { title: 'First Step' },
     'step-2': { title: 'Second Step' }
   },
-  subSteps: {
+  steps: {
     'card-skip': { step: 'step-1', title: 'Card Skip', component: TestCardSkip, next: 'card-b' },
     'card-b': { step: 'step-2', title: 'Card B', component: TestCardB }
   },
-  initialSubStep: 'card-skip'
+  initialStep: 'card-skip'
 }
 
 const testFlowWithError: FlowConfig = {
-  steps: {
+  stepGroups: {
     'step-1': { title: 'First Step' }
   },
-  subSteps: {
+  steps: {
     'card-error': { step: 'step-1', title: 'Card Error', component: TestCardError }
   },
-  initialSubStep: 'card-error'
+  initialStep: 'card-error'
 }
 
 const testFlowTerminal: FlowConfig = {
-  steps: {
+  stepGroups: {
     'step-1': { title: 'Terminal Step' }
   },
-  subSteps: {
+  steps: {
     'card-terminal': { step: 'step-1', title: 'Card Terminal', component: TestCardTerminal, terminal: true }
   },
-  initialSubStep: 'card-terminal'
+  initialStep: 'card-terminal'
 }
 
 const testFlowBlocked: FlowConfig = {
-  steps: {
+  stepGroups: {
     'step-1': { title: 'First Step' }
   },
-  subSteps: {
+  steps: {
     'card-blocked': { step: 'step-1', title: 'Card Blocked', component: TestCardBlocked }
   },
-  initialSubStep: 'card-blocked'
+  initialStep: 'card-blocked'
 }
 
 describe('SinglePaneStepper', () => {
@@ -164,6 +181,16 @@ describe('SinglePaneStepper', () => {
       const closeButton = screen.getByRole('button', { name: 'Close' })
       await userEvent.click(closeButton)
       expect(onClose).toHaveBeenCalledTimes(1)
+    })
+
+    test('omitting disableCompletedFade does not add the opt-out class', () => {
+      const { container } = render(<SinglePaneStepper.Root flow={testFlow} />)
+      expect(container.querySelector('nav.cn-stepper')).not.toHaveClass('cn-stepper-disable-completed-fade')
+    })
+
+    test('disableCompletedFade adds the opt-out class on the inner stepper', () => {
+      const { container } = render(<SinglePaneStepper.Root flow={testFlow} disableCompletedFade />)
+      expect(container.querySelector('nav.cn-stepper')).toHaveClass('cn-stepper-disable-completed-fade')
     })
 
     test('showRootHeader=false hides header even when title provided', () => {
@@ -207,6 +234,60 @@ describe('SinglePaneStepper', () => {
       expect(screen.getByText('Connect your code')).toBeInTheDocument()
     })
 
+    test('card stack inner has no DualPane-style scroll spacers', () => {
+      // DualPane uses 8cqh / 36vh spacers to keep the active card in focus.
+      // SinglePane is a timeline: contentTitle and steps should start at the
+      // top of the pane and end after the last step, with no empty bands.
+      const inner = singlePaneStepperStyles['.cn-single-pane-stepper-card-stack-inner']
+      expect(Object.hasOwn(inner, '&::before')).toBe(false)
+      expect(Object.hasOwn(inner, '&::after')).toBe(false)
+    })
+
+    test('card stack inner uses v5 stack padding', () => {
+      // UUI-3566 — 40px sides (`--cn-spacing-10`). Vertical 16px (`--cn-spacing-4`) lines up
+      // with YAML chrome top.
+      const inner = singlePaneStepperStyles['.cn-single-pane-stepper-card-stack-inner']
+      expect(inner.padding).toBe('var(--cn-spacing-4) var(--cn-spacing-10) var(--cn-spacing-4)')
+    })
+
+    test('pane surface, title/intro type, and intro-to-first-card gap match v5', () => {
+      expect(singlePaneStepperStyles['.cn-single-pane-stepper-root'].background).toBe('var(--cn-bg-2)')
+
+      const header = singlePaneStepperStyles['.cn-single-pane-stepper-content-header']
+      expect(header.gap).toBe('var(--cn-spacing-3)')
+      expect(header.marginBottom).toBe('var(--cn-spacing-2)')
+
+      const title = singlePaneStepperStyles['.cn-single-pane-stepper-content-title']
+      expect(title.fontSize).toBe('var(--cn-font-size-6)')
+      expect(title.fontWeight).toBe('var(--cn-font-weight-default-normal-600)')
+      expect(title.lineHeight).toBe('var(--cn-line-height-6-normal)')
+      expect(title.color).toBe('var(--cn-text-1)')
+
+      const subtitle = singlePaneStepperStyles['.cn-single-pane-stepper-content-subtitle']
+      expect(subtitle.color).toBe('var(--cn-text-2)')
+      expect(subtitle.lineHeight).toBe('var(--cn-line-height-6-tight)')
+    })
+
+    test('completed item mute does not double-fade inert card body', () => {
+      const reset =
+        flowStepperCardStyles[
+          '.cn-stepper-step-item:has(.cn-stepper-step-completed) .cn-flow-stepper-card-content[inert]'
+        ]
+      expect(reset.opacity).toBe('1')
+    })
+
+    test('completed-step pencil is always visible, not hover-only', () => {
+      // v5 `.pq-card__pencil` is `display: inline-flex` on done/skipped at rest.
+      // Card mute (0.6) still applies. Hover-only opacity hid the affordance.
+      const edit = flowStepperCardStyles['.cn-flow-stepper-card-edit']
+      expect(edit.opacity).toBe('1')
+      expect('.cn-flow-stepper-card:hover .cn-flow-stepper-card-edit' in flowStepperCardStyles).toBe(false)
+      expect(
+        '.cn-stepper-step-item:hover .cn-flow-stepper-card-edit, .cn-stepper-nested-step-item:hover .cn-flow-stepper-card-edit' in
+          flowStepperCardStyles
+      ).toBe(false)
+    })
+
     test('does not render stepper header when stepperTitle provided without showStepperHeader', () => {
       const { container } = render(<SinglePaneStepper.Root flow={testFlow} stepperTitle="Setup Steps" />)
       expect(container.querySelector('.cn-stepper-header')).not.toBeInTheDocument()
@@ -225,14 +306,17 @@ describe('SinglePaneStepper', () => {
       expect(container.querySelector('.cn-stepper-header')).not.toBeInTheDocument()
     })
 
-    test('renders stepper with visited steps only; future steps appear when active', () => {
-      render(<SinglePaneStepper.Root flow={testFlow} />)
-      // Only the active step is rendered initially
+    test('renders full step-group skeleton up front; unreached groups show as upcoming placeholders', () => {
+      const { container } = render(<SinglePaneStepper.Root flow={testFlow} />)
+      // All three step groups render immediately, not just the active one.
       expect(screen.getByText('First Step')).toBeInTheDocument()
-      expect(screen.queryByText('Second Step')).not.toBeInTheDocument()
-      expect(screen.queryByText('Third Step')).not.toBeInTheDocument()
-      // Initial card content is visible
+      expect(screen.getByText('Second Step')).toBeInTheDocument()
+      expect(screen.getByText('Third Step')).toBeInTheDocument()
+      // Initial card content is visible.
       expect(screen.getAllByText('Card A').length).toBeGreaterThanOrEqual(1)
+      // The unreached groups render as upcoming (no visited/active card content inside them yet).
+      const upcomingGroups = container.querySelectorAll('.cn-stepper-step-upcoming')
+      expect(upcomingGroups.length).toBeGreaterThanOrEqual(2)
     })
   })
 
@@ -287,33 +371,33 @@ describe('SinglePaneStepper', () => {
       render(<SinglePaneStepper.Root flow={testFlowWithError} />)
       await userEvent.click(screen.getByText('Error'))
       await waitFor(() => {
-        // Error icon appears on the substep indicator (card header is hidden in single-pane)
+        // Error icon appears on the step indicator (card header is hidden in single-pane)
         const icons = screen.getAllByTestId('icon-xmark')
         expect(icons.length).toBeGreaterThanOrEqual(1)
       })
     })
   })
 
-  describe('Terminal Substeps', () => {
-    test('terminal substep auto-completes without firing onComplete until explicit re-entry', async () => {
+  describe('Terminal Steps', () => {
+    test('terminal step auto-completes without firing onComplete until explicit re-entry', async () => {
       const onComplete = vi.fn()
       render(<SinglePaneStepper.Root flow={testFlowTerminal} onComplete={onComplete} />)
       await userEvent.click(screen.getByText('Complete Terminal'))
       // Terminal completes but onComplete should not be called yet
       await waitFor(() => {
-        // Completed icon appears on the substep indicator (card header is hidden in single-pane)
+        // Completed icon appears on the step indicator (card header is hidden in single-pane)
         const icons = screen.getAllByTestId('icon-check')
         expect(icons.length).toBeGreaterThanOrEqual(1)
       })
       expect(onComplete).not.toHaveBeenCalled()
     })
 
-    test('visualCompleted terminal substep renders parent step as completed (green), not active', async () => {
+    test('visualCompleted terminal step renders parent step group as completed (green), not active', async () => {
       const visualCompletedFlow: FlowConfig = {
-        steps: { 'step-1': { title: 'First' }, 'step-2': { title: 'Second' } },
-        subSteps: {
+        stepGroups: { 'step-1': { title: 'First' }, 'step-2': { title: 'Second' } },
+        steps: {
           // TestCardA/TestCardB hard-code their transition targets ('card-b'/'card-c') rather
-          // than reading `next` from the flow config, so the substep ids here must match those
+          // than reading `next` from the flow config, so the step ids here must match those
           // literals to match this file's existing fixture convention.
           'card-a': { step: 'step-1', title: 'A', component: TestCardA, next: 'card-b' },
           'card-b': {
@@ -324,12 +408,12 @@ describe('SinglePaneStepper', () => {
             visualCompleted: true
           }
         },
-        initialSubStep: 'card-a'
+        initialStep: 'card-a'
       }
       render(<SinglePaneStepper.Root flow={visualCompletedFlow} />)
       await userEvent.click(screen.getByText('Next'))
       await waitFor(() => {
-        // The parent step (step-2) must show the plain completed connector class, NOT the
+        // The parent step group (step-2) must show the plain completed connector class, NOT the
         // partial active-trunk class — proving stepper-step.tsx took the ordinary completed
         // path with zero code changes there, driven entirely by derive-stepper-model.ts.
         const connectors = document.querySelectorAll('.cn-stepper-connector')
@@ -341,24 +425,24 @@ describe('SinglePaneStepper', () => {
   })
 
   describe('Stepper Integration', () => {
-    test('substeps and cards accumulate as user progresses', async () => {
+    test('steps and cards accumulate as user progresses', async () => {
       render(<SinglePaneStepper.Root flow={testFlow} />)
-      // Only the first step is rendered initially
+      // All step groups render immediately (unreached ones as upcoming placeholders).
       expect(screen.getByText('First Step')).toBeInTheDocument()
-      expect(screen.queryByText('Second Step')).not.toBeInTheDocument()
-      expect(screen.queryByText('Third Step')).not.toBeInTheDocument()
+      expect(screen.getByText('Second Step')).toBeInTheDocument()
+      expect(screen.getByText('Third Step')).toBeInTheDocument()
 
-      // Initially only first substep card is visible
+      // Initially only first step's card is visible
       expect(screen.getAllByText('Card A').length).toBeGreaterThanOrEqual(1)
 
-      // After navigating, second step/substep/card appears
+      // After navigating, second step group/step/card appears
       await userEvent.click(screen.getByText('Next'))
       await waitFor(() => {
         expect(screen.getByText('Second Step')).toBeInTheDocument()
         expect(screen.getAllByText('Card B').length).toBeGreaterThanOrEqual(1)
       })
 
-      // After navigating again, third step/substep/card appears
+      // After navigating again, third step group/step/card appears
       await userEvent.click(screen.getByText('Finish'))
       await waitFor(() => {
         expect(screen.getByText('Third Step')).toBeInTheDocument()
@@ -366,7 +450,7 @@ describe('SinglePaneStepper', () => {
       })
     })
 
-    test('completed steps remain visible after progressing', async () => {
+    test('completed step groups remain visible after progressing', async () => {
       render(<SinglePaneStepper.Root flow={testFlow} />)
       await userEvent.click(screen.getByText('Next'))
       await waitFor(() => {
@@ -382,7 +466,7 @@ describe('SinglePaneStepper', () => {
       })
     })
 
-    test('card content renders inside substep panel', async () => {
+    test('card content renders inside nested step panel', async () => {
       render(<SinglePaneStepper.Root flow={testFlow} />)
       // Card content should be present and the Next button should be clickable
       const nextButton = screen.getByText('Next')
@@ -403,11 +487,11 @@ describe('SinglePaneStepper', () => {
       }
 
       const waitingFlow: FlowConfig = {
-        steps: { 'step-1': { title: 'First Step' } },
-        subSteps: {
+        stepGroups: { 'step-1': { title: 'First Step' } },
+        steps: {
           'card-wait': { step: 'step-1', title: 'Waiting', component: TestCardWaiting }
         },
-        initialSubStep: 'card-wait'
+        initialStep: 'card-wait'
       }
 
       const { container } = render(<SinglePaneStepper.Root flow={waitingFlow} />)
@@ -416,9 +500,9 @@ describe('SinglePaneStepper', () => {
         expect(screen.getByText('Working...')).toBeInTheDocument()
       })
 
-      expect(container.querySelector('.cn-stepper-substep-placeholder')).not.toBeInTheDocument()
+      expect(container.querySelector('.cn-stepper-nested-step-placeholder')).not.toBeInTheDocument()
       expect(container.querySelector('[data-testid="icon-more-horizontal"]')).not.toBeInTheDocument()
-      expect(container.querySelector('.cn-stepper-collapsible-substeps')).toBeInTheDocument()
+      expect(container.querySelector('.cn-stepper-collapsible-nested-steps')).toBeInTheDocument()
 
       const activeStepItem = container.querySelector('.cn-stepper-step-active')?.closest('.cn-stepper-step-item')
       const connector = activeStepItem?.querySelector('.cn-stepper-connector')
@@ -426,24 +510,120 @@ describe('SinglePaneStepper', () => {
       expect(connector).toHaveClass('cn-stepper-connector-active-partial')
     })
 
-    test('completed substeps default collapsed and toggle via chevron', async () => {
+    test('renders predicted upcoming steps within the active step group, matching dual-pane behavior', async () => {
+      function TestCardChained() {
+        const { complete } = useFlowCard()
+        return (
+          <SinglePaneStepper.Card title="Chained">
+            <button onClick={() => complete({}, 'card-next')}>Go</button>
+          </SinglePaneStepper.Card>
+        )
+      }
+
+      const chainedFlow: FlowConfig = {
+        stepGroups: { 'step-1': { title: 'Group' } },
+        steps: {
+          'card-chained': { step: 'step-1', title: 'Chained', component: TestCardChained, next: 'card-next' },
+          'card-next': { step: 'step-1', title: 'Next Card', component: TestCardB }
+        },
+        initialStep: 'card-chained'
+      }
+
+      const { container } = render(<SinglePaneStepper.Root flow={chainedFlow} />)
+
+      const upcomingSteps = container.querySelectorAll('.cn-stepper-nested-step-upcoming')
+      expect(upcomingSteps.length).toBeGreaterThanOrEqual(1)
+      expect(screen.getByText('Next Card')).toBeInTheDocument()
+    })
+
+    test('hideUpcomingGroups omits groups whose derived state is upcoming', () => {
+      render(<SinglePaneStepper.Root flow={testFlow} hideUpcomingGroups />)
+
+      expect(screen.getByText('First Step')).toBeInTheDocument()
+      expect(screen.queryByText('Second Step')).not.toBeInTheDocument()
+      expect(screen.queryByText('Third Step')).not.toBeInTheDocument()
+    })
+
+    test('hidePredictedSteps omits predicted nested placeholders in grouped mode', () => {
+      function TestCardChained() {
+        const { complete } = useFlowCard()
+        return (
+          <SinglePaneStepper.Card title="Chained">
+            <button onClick={() => complete({}, 'card-next')}>Go</button>
+          </SinglePaneStepper.Card>
+        )
+      }
+
+      const chainedFlow: FlowConfig = {
+        stepGroups: { 'step-1': { title: 'Group' } },
+        steps: {
+          'card-chained': { step: 'step-1', title: 'Chained', component: TestCardChained, next: 'card-next' },
+          'card-next': { step: 'step-1', title: 'Next Card', component: TestCardB }
+        },
+        initialStep: 'card-chained'
+      }
+
+      const { container } = render(<SinglePaneStepper.Root flow={chainedFlow} hidePredictedSteps />)
+
+      expect(container.querySelectorAll('.cn-stepper-nested-step-upcoming').length).toBe(0)
+      expect(screen.queryByText('Next Card')).not.toBeInTheDocument()
+      expect(screen.getByText('Chained')).toBeInTheDocument()
+    })
+
+    test('hidePredictedSteps does not invent an indeterminate placeholder', () => {
+      function TestCardChained() {
+        const { complete } = useFlowCard()
+        return (
+          <SinglePaneStepper.Card title="Chained">
+            <button onClick={() => complete({}, 'card-next')}>Go</button>
+          </SinglePaneStepper.Card>
+        )
+      }
+
+      const chainedFlow: FlowConfig = {
+        stepGroups: { 'step-1': { title: 'Group' } },
+        steps: {
+          'card-chained': { step: 'step-1', title: 'Chained', component: TestCardChained, next: 'card-next' },
+          'card-next': { step: 'step-1', title: 'Next Card', component: TestCardB }
+        },
+        initialStep: 'card-chained'
+      }
+
+      const { container } = render(<SinglePaneStepper.Root flow={chainedFlow} hidePredictedSteps />)
+
+      expect(container.querySelector('.cn-stepper-nested-step-placeholder')).not.toBeInTheDocument()
+      expect(container.querySelector('[data-testid="icon-more-horizontal"]')).not.toBeInTheDocument()
+    })
+
+    test('hidePredictedSteps does not change the showStepBadge total', () => {
+      const { container } = render(
+        <SinglePaneStepper.Root flow={testFlow} hideUpcomingGroups hidePredictedSteps showStepBadge />
+      )
+
+      const badge = container.querySelector('.cn-stepper-step-badge')
+      expect(badge).toHaveTextContent('Step 1/3')
+    })
+
+    test('completed nested steps default collapsed and toggle via chevron', async () => {
       const { container } = render(<SinglePaneStepper.Root flow={testFlow} />)
       await userEvent.click(screen.getByText('Next'))
       await waitFor(() => {
         expect(screen.getByText('Answer: yes')).toBeInTheDocument()
       })
 
-      const collapseTriggers = container.querySelectorAll('.cn-stepper-substep-collapse-trigger')
+      const collapseTriggers = container.querySelectorAll('.cn-stepper-nested-step-collapse-trigger')
       expect(collapseTriggers.length).toBeGreaterThanOrEqual(1)
 
-      const completedItem = container.querySelector('.cn-stepper-substep-completed.cn-stepper-substep-item-collapsible')
+      const completedItem = container.querySelector(
+        '.cn-stepper-nested-step-completed.cn-stepper-nested-step-item-collapsible'
+      )
       expect(completedItem).toBeTruthy()
 
-      const panel = completedItem?.querySelector('.cn-stepper-substep-panel-collapsible')
+      const panel = completedItem?.querySelector('.cn-stepper-nested-step-panel-collapsible')
       expect(panel).toHaveAttribute('data-state', 'closed')
 
       const completedCollapse = completedItem?.querySelector(
-        '.cn-stepper-substep-collapse-trigger'
+        '.cn-stepper-nested-step-collapse-trigger'
       ) as HTMLButtonElement
       await userEvent.click(completedCollapse)
 
@@ -458,26 +638,56 @@ describe('SinglePaneStepper', () => {
       })
     })
 
-    test('clicking substep title expands collapsed panel', async () => {
+    test('clicking nested step title on a completed step opens go-back confirm and does not expand', async () => {
       const { container } = render(<SinglePaneStepper.Root flow={testFlow} />)
       await userEvent.click(screen.getByText('Next'))
       await waitFor(() => {
         expect(screen.getByText('Answer: yes')).toBeInTheDocument()
       })
 
-      const completedItem = container.querySelector('.cn-stepper-substep-completed.cn-stepper-substep-item-collapsible')
-      const panel = completedItem?.querySelector('.cn-stepper-substep-panel-collapsible')
+      const completedItem = container.querySelector(
+        '.cn-stepper-nested-step-completed.cn-stepper-nested-step-item-collapsible'
+      )
+      const panel = completedItem?.querySelector('.cn-stepper-nested-step-panel-collapsible')
       expect(panel).toHaveAttribute('data-state', 'closed')
 
-      const completedTitle = completedItem?.querySelector('.cn-stepper-substep') as HTMLButtonElement
+      const completedTitle = completedItem?.querySelector('.cn-stepper-nested-step') as HTMLButtonElement
       await userEvent.click(completedTitle)
 
       await waitFor(() => {
-        expect(panel).toHaveAttribute('data-state', 'open')
+        expect(screen.getByText('Go back?')).toBeInTheDocument()
+      })
+      expect(panel).toHaveAttribute('data-state', 'closed')
+      const goBackCopy = screen.getByText(/Going back to this step will discard/)
+      expect(goBackCopy).toHaveClass('cn-stepper-go-back-body')
+      expect(stepperStyles['.cn-stepper-go-back-body'].color).toBe('var(--cn-text-2)')
+    })
+
+    test('clicking completed card body opens go-back confirm', async () => {
+      const { container } = render(<SinglePaneStepper.Root flow={testFlow} />)
+      await userEvent.click(screen.getByText('Next'))
+      await waitFor(() => {
+        expect(screen.getByText('Answer: yes')).toBeInTheDocument()
+      })
+
+      const completedItem = container.querySelector(
+        '.cn-stepper-nested-step-completed.cn-stepper-nested-step-item-collapsible'
+      )
+      const collapseTrigger = completedItem?.querySelector(
+        '.cn-stepper-nested-step-collapse-trigger'
+      ) as HTMLButtonElement
+      await userEvent.click(collapseTrigger)
+
+      const goBackHit = completedItem?.querySelector('.cn-flow-stepper-card-go-back-hit') as HTMLButtonElement
+      expect(goBackHit).toBeTruthy()
+      await userEvent.click(goBackHit)
+
+      await waitFor(() => {
+        expect(screen.getByText('Go back?')).toBeInTheDocument()
       })
     })
 
-    test('collapsed substeps keep card children mounted (streamed content survives expand)', async () => {
+    test('collapsed nested steps keep card children mounted (streamed content survives expand)', async () => {
       function TestCardLogs() {
         const { status, complete } = useFlowCard()
         const [logs, setLogs] = React.useState<string[]>([])
@@ -496,12 +706,12 @@ describe('SinglePaneStepper', () => {
       }
 
       const logFlow: FlowConfig = {
-        steps: { 'step-1': { title: 'Step' } },
-        subSteps: {
+        stepGroups: { 'step-1': { title: 'Step' } },
+        steps: {
           'card-logs': { step: 'step-1', title: 'Card Logs', component: TestCardLogs, next: 'card-b' },
           'card-b': { step: 'step-1', title: 'Card B', component: TestCardB }
         },
-        initialSubStep: 'card-logs'
+        initialStep: 'card-logs'
       }
 
       const { container } = render(<SinglePaneStepper.Root flow={logFlow} />)
@@ -510,11 +720,15 @@ describe('SinglePaneStepper', () => {
         expect(screen.getByTestId('log-output')).toHaveTextContent('persisted log line')
       })
 
-      const completedItem = container.querySelector('.cn-stepper-substep-completed.cn-stepper-substep-item-collapsible')
-      const panel = completedItem?.querySelector('.cn-stepper-substep-panel-collapsible')
+      const completedItem = container.querySelector(
+        '.cn-stepper-nested-step-completed.cn-stepper-nested-step-item-collapsible'
+      )
+      const panel = completedItem?.querySelector('.cn-stepper-nested-step-panel-collapsible')
       expect(panel).toHaveAttribute('data-state', 'closed')
 
-      const collapseTrigger = completedItem?.querySelector('.cn-stepper-substep-collapse-trigger') as HTMLButtonElement
+      const collapseTrigger = completedItem?.querySelector(
+        '.cn-stepper-nested-step-collapse-trigger'
+      ) as HTMLButtonElement
       await userEvent.click(collapseTrigger)
 
       await waitFor(() => {
@@ -530,19 +744,28 @@ describe('SinglePaneStepper', () => {
         expect(screen.getByText('Answer: yes')).toBeInTheDocument()
       })
 
-      const completedItem = container.querySelector('.cn-stepper-substep-completed.cn-stepper-substep-item-collapsible')
-      const panel = completedItem?.querySelector('.cn-stepper-substep-panel-collapsible')
+      const completedItem = container.querySelector(
+        '.cn-stepper-nested-step-completed.cn-stepper-nested-step-item-collapsible'
+      )
+      const panel = completedItem?.querySelector('.cn-stepper-nested-step-panel-collapsible')
       expect(panel).toHaveAttribute('data-state', 'closed')
 
-      const collapseTrigger = completedItem?.querySelector('.cn-stepper-substep-collapse-trigger') as HTMLButtonElement
+      const collapseTrigger = completedItem?.querySelector(
+        '.cn-stepper-nested-step-collapse-trigger'
+      ) as HTMLButtonElement
       await userEvent.click(collapseTrigger)
 
       await waitFor(() => {
         expect(panel).toHaveAttribute('data-state', 'open')
       })
 
-      const restartButton = screen.getByRole('button', { name: 'Redo this step' })
+      const header = completedItem?.querySelector('.cn-stepper-nested-step-header')
+      const headerActions = header?.querySelector('.cn-stepper-header-actions')
+      const restartButton = headerActions?.querySelector('.cn-flow-stepper-card-edit') as HTMLButtonElement
+      expect(restartButton).toHaveAccessibleName('Go back to this step')
       expect(restartButton.closest('[inert]')).toBeNull()
+      expect(headerActions?.nextElementSibling).toBe(collapseTrigger)
+      expect(completedItem?.querySelector('.cn-flow-stepper-card-content')).not.toContainElement(restartButton)
 
       await userEvent.click(restartButton)
 
@@ -551,7 +774,7 @@ describe('SinglePaneStepper', () => {
       })
     })
 
-    test('async streamed logs survive completion and substep collapse', async () => {
+    test('async streamed logs survive completion and nested step collapse', async () => {
       const STREAMED_LINE = '✓ endpoint reachable'
 
       function TestCardStreamingLogs() {
@@ -599,12 +822,12 @@ describe('SinglePaneStepper', () => {
       }
 
       const streamFlow: FlowConfig = {
-        steps: { 'step-1': { title: 'Step' } },
-        subSteps: {
+        stepGroups: { 'step-1': { title: 'Step' } },
+        steps: {
           'card-stream': { step: 'step-1', title: 'Card Stream', component: TestCardStreamingLogs, next: 'card-b' },
           'card-b': { step: 'step-1', title: 'Card B', component: TestCardB }
         },
-        initialSubStep: 'card-stream'
+        initialStep: 'card-stream'
       }
 
       const { container } = render(<SinglePaneStepper.Root flow={streamFlow} />)
@@ -614,11 +837,15 @@ describe('SinglePaneStepper', () => {
         expect(screen.getByTestId('log-cursor')).toHaveTextContent('hidden')
       })
 
-      const completedItem = container.querySelector('.cn-stepper-substep-completed.cn-stepper-substep-item-collapsible')
-      const panel = completedItem?.querySelector('.cn-stepper-substep-panel-collapsible')
+      const completedItem = container.querySelector(
+        '.cn-stepper-nested-step-completed.cn-stepper-nested-step-item-collapsible'
+      )
+      const panel = completedItem?.querySelector('.cn-stepper-nested-step-panel-collapsible')
       expect(panel).toHaveAttribute('data-state', 'closed')
 
-      const collapseTrigger = completedItem?.querySelector('.cn-stepper-substep-collapse-trigger') as HTMLButtonElement
+      const collapseTrigger = completedItem?.querySelector(
+        '.cn-stepper-nested-step-collapse-trigger'
+      ) as HTMLButtonElement
       await userEvent.click(collapseTrigger)
 
       await waitFor(() => {
@@ -626,6 +853,502 @@ describe('SinglePaneStepper', () => {
         expect(screen.getByTestId('log-output')).toHaveTextContent(STREAMED_LINE)
         expect(screen.getByTestId('log-cursor')).toHaveTextContent('hidden')
       })
+    })
+  })
+
+  describe('Flat Mode', () => {
+    test('renders steps as top-level Stepper.Step items when stepGroups is absent, not nested inside a StepGroup', async () => {
+      const { container } = render(<SinglePaneStepper.Root flow={flatTestFlow} />)
+
+      // No StepGroup wrapper: steps must NOT have the nested branch-connector class.
+      expect(container.querySelector('.cn-stepper-nested-step-item')).not.toBeInTheDocument()
+
+      // Each visited step instead renders with the top-level (straight-connector) class, the same
+      // one a StepGroup itself uses on its own <li> — proving the step is registered directly
+      // into ctx.orderedSteps via TopLevelStep, with no ParentStepProvider involved.
+      expect(container.querySelectorAll('.cn-stepper-step-item').length).toBeGreaterThanOrEqual(1)
+      expect(screen.getAllByText('Card A').length).toBeGreaterThanOrEqual(1)
+
+      await userEvent.click(screen.getByText('Next'))
+      await waitFor(() => {
+        expect(screen.getAllByText('Card B').length).toBeGreaterThanOrEqual(1)
+
+        // Still top-level, still no nested-step-item.
+        expect(container.querySelector('.cn-stepper-nested-step-item')).not.toBeInTheDocument()
+        expect(container.querySelectorAll('.cn-stepper-step-item').length).toBe(3)
+      })
+    })
+
+    test('hidePredictedSteps omits upcoming entries from the flat timeline', async () => {
+      const { container } = render(<SinglePaneStepper.Root flow={flatTestFlow} hidePredictedSteps />)
+
+      await userEvent.click(screen.getByText('Next'))
+      await waitFor(() => {
+        expect(screen.getAllByText('Card B').length).toBeGreaterThanOrEqual(1)
+      })
+
+      expect(container.querySelectorAll('.cn-stepper-step-item').length).toBe(2)
+      expect(screen.queryByText('Card C')).not.toBeInTheDocument()
+    })
+
+    test('hideUpcomingGroups is a no-op on flat flows', async () => {
+      const { container } = render(<SinglePaneStepper.Root flow={flatTestFlow} hideUpcomingGroups />)
+
+      await userEvent.click(screen.getByText('Next'))
+      await waitFor(() => {
+        expect(screen.getAllByText('Card B').length).toBeGreaterThanOrEqual(1)
+        expect(container.querySelectorAll('.cn-stepper-step-item').length).toBe(3)
+      })
+    })
+
+    test('showStepBadge renders the "Step n/total" badge on the flat top-level step', () => {
+      const { container } = render(<SinglePaneStepper.Root flow={flatTestFlow} showStepBadge />)
+
+      const badge = container.querySelector('.cn-stepper-step-badge')
+      expect(badge).toBeInTheDocument()
+      // flatTestFlow has 3 total steps; totalStepsOverride reports the flow's real count, not just
+      // the 1 step mounted so far under progressive disclosure.
+      expect(badge).toHaveTextContent('Step 1/3')
+    })
+
+    test('grouped mode (stepGroups present) keeps steps nested inside StepGroup', () => {
+      const { container } = render(<SinglePaneStepper.Root flow={testFlow} />)
+
+      expect(container.querySelector('.cn-stepper-nested-step-item')).toBeInTheDocument()
+    })
+  })
+
+  describe('Step Badge Totals (Branching Flows)', () => {
+    // Mirrors a real branching flow (e.g. the portal demo's mutually-exclusive auth-provider
+    // steps): 'github-auth', 'gitlab-auth', and 'bitbucket-auth' all share the SAME step group
+    // ('auth') and all converge on the shared 'connect-repo' step, but a run only ever walks ONE of
+    // them. flow.steps has 5 entries total, but the actual path for this run ('start' ->
+    // 'github-auth' -> 'connect-repo') is only 3 steps — the two unchosen sibling auth steps must
+    // NOT inflate the badge's denominator.
+    const branchingStepsFlow: FlowConfig = {
+      steps: {
+        start: { title: 'Start', component: () => null, next: 'github-auth' },
+        'github-auth': { title: 'GitHub', component: () => null, next: 'connect-repo' },
+        'gitlab-auth': { title: 'GitLab', component: () => null, next: 'connect-repo' },
+        'bitbucket-auth': { title: 'Bitbucket', component: () => null, next: 'connect-repo' },
+        // Flagged terminal: this flow's genuine, designed end — required for reachedKnownEnd to
+        // correctly report true once the walk reaches it (a step with no `next` that isn't flagged
+        // terminal is ambiguous — its real continuation may be decided dynamically at runtime).
+        'connect-repo': { title: 'Connect', component: () => null, terminal: true }
+      },
+      initialStep: 'start'
+    }
+
+    test("flat mode: badge total counts only the active path's steps, not every mutually-exclusive sibling step", () => {
+      const { container } = render(<SinglePaneStepper.Root flow={branchingStepsFlow} showStepBadge />)
+
+      const badge = container.querySelector('.cn-stepper-step-badge')
+      expect(badge).toBeInTheDocument()
+      // Correct total: 'start' (visited) + 'github-auth' + 'connect-repo' (predicted along the
+      // active branch) = 3. The old, buggy Object.keys(flow.steps).length would report 5 (it also
+      // counts the never-visited 'gitlab-auth'/'bitbucket-auth' siblings), which could never reach
+      // n/n for this run.
+      expect(badge).toHaveTextContent('Step 1/3')
+    })
+
+    // Mirrors a flow where entire step GROUPS (not just steps within one group) are mutually
+    // exclusive — e.g. two different infra-setup routes, each with its own dedicated step group,
+    // where a run only ever walks one of the routes' groups.
+    const branchingGroupsFlow: FlowConfig = {
+      stepGroups: {
+        start: { title: 'Start' },
+        'provider-a': { title: 'Provider A' },
+        'provider-b': { title: 'Provider B' },
+        connect: { title: 'Connect' },
+        done: { title: 'Done' }
+      },
+      steps: {
+        start: { step: 'start', title: 'Start', component: () => null, next: 'a-step' },
+        'a-step': { step: 'provider-a', title: 'A Step', component: () => null, next: 'connect-repo' },
+        'b-step': { step: 'provider-b', title: 'B Step', component: () => null, next: 'connect-repo' },
+        'connect-repo': { step: 'connect', title: 'Connect', component: () => null, next: 'finish' },
+        // Flagged terminal: this flow's genuine, designed end — required for reachedKnownEnd to
+        // correctly report true once the walk reaches it (a step with no `next` that isn't flagged
+        // terminal is ambiguous — its real continuation may be decided dynamically at runtime).
+        finish: { step: 'done', title: 'Finish', component: () => null, terminal: true }
+      },
+      initialStep: 'start'
+    }
+
+    test("non-flat mode: badge total counts only the active path's step GROUPS, not every mutually-exclusive sibling group", () => {
+      const { container } = render(<SinglePaneStepper.Root flow={branchingGroupsFlow} showStepBadge />)
+
+      const badge = container.querySelector('.cn-stepper-step-badge')
+      expect(badge).toBeInTheDocument()
+      // Correct total: 'start' (visited) + 'provider-a', 'connect', 'done' (predicted groups along
+      // the active branch) = 4 distinct groups. The old, buggy
+      // Object.keys(flow.stepGroups ?? {}).length would report 5 (it also counts 'provider-b', the
+      // unchosen sibling group never reached on this run).
+      expect(badge).toHaveTextContent('Step 1/4')
+    })
+
+    test("non-flat mode: each group's own badge numerator reflects its path-order position, and off-path sibling groups render no badge at all", () => {
+      const { container } = render(<SinglePaneStepper.Root flow={branchingGroupsFlow} showStepBadge />)
+
+      // DOM render order (Object.entries(flow.stepGroups), see deriveStepperModel) is: start,
+      // provider-a, provider-b, connect, done. 'provider-b' is never on this run's path, so it gets
+      // NO badge at all (a badge for a path this run never walks would be misleading — it could
+      // duplicate or exceed an on-path group's number). The remaining 4 badges reflect PATH-order
+      // position: start=1, provider-a=2, connect=3, done=4 — not their raw rendering index (which
+      // would give connect=4, done=5, the original pre-fix bug).
+      const badges = container.querySelectorAll('.cn-stepper-step-badge')
+      expect(badges).toHaveLength(4)
+      expect(badges[0]).toHaveTextContent('Step 1/4') // start
+      expect(badges[1]).toHaveTextContent('Step 2/4') // provider-a
+      expect(badges[2]).toHaveTextContent('Step 3/4') // connect
+      expect(badges[3]).toHaveTextContent('Step 4/4') // done
+
+      // 'provider-b' itself renders (Task 6 always renders every group), just with no badge.
+      expect(screen.getByText('Provider B')).toBeInTheDocument()
+
+      // The off-path row's indicator circle and accessible name must ALSO not claim a step
+      // number that could collide with or exceed an on-path group's real number — round 2 only
+      // fixed the badge pill; this locks in that the circle number and aria-label got the same
+      // treatment.
+      const providerBRow = screen.getByText('Provider B').closest('.cn-stepper-step')
+      expect(providerBRow).not.toBeNull()
+      expect(providerBRow?.querySelector('.cn-stepper-indicator-number')).not.toBeInTheDocument()
+      expect(providerBRow).toHaveAttribute('aria-label', 'Provider B')
+    })
+
+    // Mirrors a flow where the ACTIVE step has no static `next` — its real destination is decided
+    // dynamically at runtime (e.g. a choice made on the step's own card), exactly how platformUI's
+    // CDv2 deployment-pipeline-v2 flow behaves. `dynamicNext: true` is the explicit opt-in for this
+    // (round 6) — without it, a step with no `next` that also isn't `terminal` is now treated as a
+    // genuine, designed end (see single-pane-stepper-card-stack.tsx's pathWalkComplete), not an
+    // unresolved one. With it set, deriveFullPredictedPath still can't walk past 'step-one' the same
+    // way it always has, but the caller now KNOWS that's because the continuation is dynamic, not
+    // because the flow author forgot `terminal`. StepGroups structurally beyond the active one are
+    // absent from stepNumberOverrides for that reason — nothing to do with being an off-path sibling
+    // — just because the walk hasn't reached them yet. This is the real-world case round 4 fixes:
+    // those groups must still show their real sequential number, not the off-path placeholder.
+    const dynamicNextFlow: FlowConfig = {
+      stepGroups: {
+        'group-one': { title: 'Group One' },
+        'group-two': { title: 'Group Two' },
+        'group-three': { title: 'Group Three' }
+      },
+      steps: {
+        'step-one': { step: 'group-one', title: 'Step One', component: () => null, dynamicNext: true },
+        'step-two': { step: 'group-two', title: 'Step Two', component: () => null, next: 'step-three' },
+        'step-three': { step: 'group-three', title: 'Step Three', component: () => null }
+      },
+      initialStep: 'step-one'
+    }
+
+    test('non-flat mode: groups beyond an unresolved dynamic-next step keep their real number, not the off-path placeholder', () => {
+      render(<SinglePaneStepper.Root flow={dynamicNextFlow} showStepBadge />)
+
+      // 'step-one' (the active step) has no static `next`, so reachedKnownEnd is false and the
+      // predicted-path walk never runs past it — stepNumberOverrides only contains 'group-one'.
+      // 'group-two' and 'group-three' are absent from the map for reasons that have nothing to do
+      // with being off-path siblings (this flow has none), so they must still render a real,
+      // sequential circle-number badge — not the empty-circle "no identity" placeholder a
+      // genuinely off-path group gets.
+      const groupOneRow = screen.getByText('Group One').closest('.cn-stepper-step')
+      const groupTwoRow = screen.getByText('Group Two').closest('.cn-stepper-step')
+      const groupThreeRow = screen.getByText('Group Three').closest('.cn-stepper-step')
+
+      expect(groupOneRow?.querySelector('.cn-stepper-indicator-number')).toHaveTextContent('1')
+      expect(groupTwoRow?.querySelector('.cn-stepper-indicator-number')).toHaveTextContent('2')
+      expect(groupThreeRow?.querySelector('.cn-stepper-indicator-number')).toHaveTextContent('3')
+
+      expect(groupOneRow?.querySelector('.cn-stepper-step-badge')).toHaveTextContent('Step 1/3')
+      expect(groupTwoRow?.querySelector('.cn-stepper-step-badge')).toHaveTextContent('Step 2/3')
+      expect(groupThreeRow?.querySelector('.cn-stepper-step-badge')).toHaveTextContent('Step 3/3')
+
+      expect(groupOneRow).toHaveAttribute('aria-label', 'Step 1 of 3: Group One')
+    })
+
+    // Same root cause as dynamicNextFlow above, but the unresolved dynamic-next step is ONE HOP
+    // DOWNSTREAM of the active step instead of being the active step itself. 'step-one' (active)
+    // DOES have a static `next` ('step-two'), so a predicate that only checks the active step's own
+    // `next` (the pre-fix bug) would wrongly conclude reachedKnownEnd: true — even though the walk
+    // actually stops at 'step-two' (no static `next`, not terminal) and never confirms 'group-three'
+    // is really on the path. reachedKnownEnd must reflect where the WHOLE walk stopped, not just
+    // whether the active step's own first hop was static, so 'group-three' must keep its real
+    // number here exactly like 'group-two'/'group-three' do in dynamicNextFlow above. `dynamicNext:
+    // true` on 'step-two' (round 6) is what marks that stopping point as genuinely unresolved rather
+    // than a designed end — see single-pane-stepper-card-stack.tsx's pathWalkComplete.
+    const downstreamDynamicNextFlow: FlowConfig = {
+      stepGroups: {
+        'group-one': { title: 'Group One' },
+        'group-two': { title: 'Group Two' },
+        'group-three': { title: 'Group Three' }
+      },
+      steps: {
+        'step-one': { step: 'group-one', title: 'Step One', component: () => null, next: 'step-two' },
+        'step-two': { step: 'group-two', title: 'Step Two', component: () => null, dynamicNext: true },
+        'step-three': { step: 'group-three', title: 'Step Three', component: () => null }
+      },
+      initialStep: 'step-one'
+    }
+
+    test('non-flat mode: a downstream (not active) unresolved dynamic-next step also keeps later groups’ real numbers', () => {
+      render(<SinglePaneStepper.Root flow={downstreamDynamicNextFlow} showStepBadge />)
+
+      // 'step-one' (active) has a static next into 'step-two', which itself has no static next —
+      // the walk advances one hop then stops there. stepNumberOverrides only contains
+      // 'group-one'/'group-two'; 'group-three' is absent for the same "not yet known" reason as
+      // dynamicNextFlow's groups, not because it's a genuinely off-path sibling (this flow has
+      // none), so it must still render its real, sequential circle-number badge.
+      const groupOneRow = screen.getByText('Group One').closest('.cn-stepper-step')
+      const groupTwoRow = screen.getByText('Group Two').closest('.cn-stepper-step')
+      const groupThreeRow = screen.getByText('Group Three').closest('.cn-stepper-step')
+
+      expect(groupOneRow?.querySelector('.cn-stepper-indicator-number')).toHaveTextContent('1')
+      expect(groupTwoRow?.querySelector('.cn-stepper-indicator-number')).toHaveTextContent('2')
+      expect(groupThreeRow?.querySelector('.cn-stepper-indicator-number')).toHaveTextContent('3')
+
+      expect(groupOneRow?.querySelector('.cn-stepper-step-badge')).toHaveTextContent('Step 1/3')
+      expect(groupTwoRow?.querySelector('.cn-stepper-step-badge')).toHaveTextContent('Step 2/3')
+      expect(groupThreeRow?.querySelector('.cn-stepper-step-badge')).toHaveTextContent('Step 3/3')
+
+      expect(groupThreeRow).toHaveAttribute('aria-label', 'Step 3 of 3: Group Three')
+    })
+
+    test('linear flow (no branching): total unchanged in either grouped or flat mode', () => {
+      // flatTestFlow and testFlow are the same 3-card linear shape, one flat one grouped. Asserting
+      // both proves no regression on the common (non-branching) case in either render mode.
+      const { container: flatContainer } = render(<SinglePaneStepper.Root flow={flatTestFlow} showStepBadge />)
+      expect(flatContainer.querySelector('.cn-stepper-step-badge')).toHaveTextContent('Step 1/3')
+
+      const { container: groupedContainer } = render(<SinglePaneStepper.Root flow={testFlow} showStepBadge />)
+      expect(groupedContainer.querySelector('.cn-stepper-step-badge')).toHaveTextContent('Step 1/3')
+    })
+
+    // Mirrors the real portal-demo bug: a step like 'choose-provider' or 'choose-infra' declares NO
+    // static `next` at all because its card picks the next step dynamically at runtime via
+    // complete(statePatch, nextStepId) — hence `dynamicNext: true` (round 6's explicit opt-in;
+    // without it, this would now read as a genuine designed end and tighten instead of falling
+    // back — see single-pane-stepper-card-stack.tsx's pathWalkComplete). Before the original fix,
+    // fullPredictedPath was `[]` for such a step, so the badge collapsed to "Step 1/1" even though
+    // more steps (landing-a/landing-b's step group) genuinely follow. The fix must fall back to the
+    // flow-wide count instead of collapsing.
+    const dynamicChoiceFlow: FlowConfig = {
+      stepGroups: { choice: { title: 'Choice' }, next: { title: 'Next' } },
+      steps: {
+        pick: { step: 'choice', title: 'Pick', component: () => null, dynamicNext: true }, // no static next — dynamic
+        'landing-a': { step: 'next', title: 'Landing A', component: () => null },
+        'landing-b': { step: 'next', title: 'Landing B', component: () => null }
+      },
+      initialStep: 'pick'
+    }
+
+    const dynamicChoiceFlatFlow: FlowConfig = {
+      steps: {
+        pick: { title: 'Pick', component: () => null, dynamicNext: true }, // no static next — dynamic
+        'landing-a': { title: 'Landing A', component: () => null },
+        'landing-b': { title: 'Landing B', component: () => null }
+      },
+      initialStep: 'pick'
+    }
+
+    test('flat mode: badge total falls back to the full flow.steps count (not collapsed to 1) when the active step has no static next', () => {
+      const { container } = render(<SinglePaneStepper.Root flow={dynamicChoiceFlatFlow} showStepBadge />)
+
+      const badge = container.querySelector('.cn-stepper-step-badge')
+      expect(badge).toBeInTheDocument()
+      // Object.keys(dynamicChoiceFlatFlow.steps).length === 3 ('pick', 'landing-a', 'landing-b'). The
+      // pre-fix behavior would show "Step 1/1" (cardHistory.length + empty fullPredictedPath).
+      expect(badge).toHaveTextContent('Step 1/3')
+    })
+
+    test('non-flat mode: badge total falls back to the full flow.stepGroups count (not collapsed to 1) when the active step has no static next', () => {
+      const { container } = render(<SinglePaneStepper.Root flow={dynamicChoiceFlow} showStepBadge />)
+
+      const badge = container.querySelector('.cn-stepper-step-badge')
+      expect(badge).toBeInTheDocument()
+      // Object.keys(dynamicChoiceFlow.stepGroups).length === 2 ('choice', 'next').
+      expect(badge).toHaveTextContent('Step 1/2')
+    })
+
+    // Round 6 regression: branchingStepsFlow above but WITHOUT `terminal: true` on the end step —
+    // a flow author simply forgot the flag (or never needed it before `dynamicNext` existed).
+    // `pathWalkComplete` must still treat this as a genuine, designed end (the stopping step isn't
+    // flagged `dynamicNext` either), so the total must stay tight at the real path length — NOT
+    // inflate to Object.keys(flow.steps).length like the pre-round-6 bug did.
+    const branchingStepsFlowNoTerminal: FlowConfig = {
+      steps: {
+        start: { title: 'Start', component: () => null, next: 'github-auth' },
+        'github-auth': { title: 'GitHub', component: () => null, next: 'connect-repo' },
+        'gitlab-auth': { title: 'GitLab', component: () => null, next: 'connect-repo' },
+        'bitbucket-auth': { title: 'Bitbucket', component: () => null, next: 'connect-repo' },
+        'connect-repo': { title: 'Connect', component: () => null } // no terminal, no dynamicNext
+      },
+      initialStep: 'start'
+    }
+
+    test('flat mode: an unflagged (no terminal) dead end still counts as a genuine end, not an inflated fallback', () => {
+      const { container } = render(<SinglePaneStepper.Root flow={branchingStepsFlowNoTerminal} showStepBadge />)
+
+      const badge = container.querySelector('.cn-stepper-step-badge')
+      expect(badge).toBeInTheDocument()
+      // Same real path length as branchingStepsFlow (3) — omitting `terminal` must not resurrect
+      // the "Step 1/5" inflation bug now that `dynamicNext` (not "terminal is missing") is the
+      // signal for genuine ambiguity.
+      expect(badge).toHaveTextContent('Step 1/3')
+    })
+
+    // Round 6 regression: branchingGroupsFlow above but WITHOUT `terminal: true` on 'finish'. Same
+    // reasoning as branchingStepsFlowNoTerminal — 'provider-b' must stay hidden (a confirmed
+    // off-path sibling, exactly like the terminal:true case) and the total must stay at 4, not
+    // inflate to 5 or produce a numerator collision.
+    const branchingGroupsFlowNoTerminal: FlowConfig = {
+      stepGroups: {
+        start: { title: 'Start' },
+        'provider-a': { title: 'Provider A' },
+        'provider-b': { title: 'Provider B' },
+        connect: { title: 'Connect' },
+        done: { title: 'Done' }
+      },
+      steps: {
+        start: { step: 'start', title: 'Start', component: () => null, next: 'a-step' },
+        'a-step': { step: 'provider-a', title: 'A Step', component: () => null, next: 'connect-repo' },
+        'b-step': { step: 'provider-b', title: 'B Step', component: () => null, next: 'connect-repo' },
+        'connect-repo': { step: 'connect', title: 'Connect', component: () => null, next: 'finish' },
+        finish: { step: 'done', title: 'Finish', component: () => null } // no terminal, no dynamicNext
+      },
+      initialStep: 'start'
+    }
+
+    test('non-flat mode: an unflagged (no terminal) dead end resolves the map completely — off-path sibling stays hidden, no collision, no inflation', () => {
+      const { container } = render(<SinglePaneStepper.Root flow={branchingGroupsFlowNoTerminal} showStepBadge />)
+
+      const badges = container.querySelectorAll('.cn-stepper-step-badge')
+      expect(badges).toHaveLength(4)
+      expect(badges[0]).toHaveTextContent('Step 1/4') // start
+      expect(badges[1]).toHaveTextContent('Step 2/4') // provider-a
+      expect(badges[2]).toHaveTextContent('Step 3/4') // connect
+      expect(badges[3]).toHaveTextContent('Step 4/4') // done
+
+      // 'provider-b' still renders as a row, just with no badge/number — identical to the
+      // terminal:true case, proving omitting `terminal` doesn't resurrect the off-path collision.
+      const providerBRow = screen.getByText('Provider B').closest('.cn-stepper-step')
+      expect(providerBRow?.querySelector('.cn-stepper-step-badge')).not.toBeInTheDocument()
+      expect(providerBRow?.querySelector('.cn-stepper-indicator-number')).not.toBeInTheDocument()
+    })
+
+    // Defense-in-depth for the round-6 numerator fix in flow-stepper-rail.tsx (the "global max"
+    // fallback), isolated from the dynamicNext/pathWalkComplete fix above. Here the walk genuinely
+    // STAYS unresolved (the active step is flagged `dynamicNext`, same as dynamicNextFlow), AND a
+    // genuinely off-path sibling group ('group-off-path') renders BETWEEN a group with a real
+    // override (group-one=1) and a later group that also lacks one (group-two, group-three).
+    // stepNumberOverrides only contains group-one(1) and group-two(2) (from the one static hop
+    // 'step-one' -> 'step-two' before the walk stops at 'step-two', which is flagged dynamicNext).
+    // The OLD raw-stepIndex+1 fallback would give 'group-off-path' (rendered at index 1) the number
+    // 2 — colliding with 'group-two's REAL override, also 2. The fix must give it a number strictly
+    // above the highest real override instead.
+    const dynamicWithOffPathSiblingFlow: FlowConfig = {
+      stepGroups: {
+        'group-one': { title: 'Group One' },
+        'group-off-path': { title: 'Off Path' },
+        'group-two': { title: 'Group Two' },
+        'group-three': { title: 'Group Three' }
+      },
+      steps: {
+        'step-one': { step: 'group-one', title: 'Step One', component: () => null, next: 'step-two' },
+        'step-off-path': { step: 'group-off-path', title: 'Off Path Step', component: () => null },
+        'step-two': { step: 'group-two', title: 'Step Two', component: () => null, dynamicNext: true },
+        'step-three': { step: 'group-three', title: 'Step Three', component: () => null }
+      },
+      initialStep: 'step-one'
+    }
+
+    test('non-flat mode: a genuinely off-path sibling rendered between resolved and still-unresolved groups gets a collision-free fallback number', () => {
+      render(<SinglePaneStepper.Root flow={dynamicWithOffPathSiblingFlow} showStepBadge />)
+
+      // Real overrides: group-one=1 (cardHistory), group-two=2 (fullPredictedPath's one hop). Both
+      // 'group-off-path' and 'group-three' are absent from the map (the walk stopped at 'step-two',
+      // flagged dynamicNext, so the map stays incomplete) and must get SYNTHESIZED numbers strictly
+      // above the highest real override (2) — group-off-path=3, group-three=4 — never colliding
+      // with group-two's real 2, and never repeating 1-4.
+      const groupOneRow = screen.getByText('Group One').closest('.cn-stepper-step')
+      const offPathRow = screen.getByText('Off Path').closest('.cn-stepper-step')
+      const groupTwoRow = screen.getByText('Group Two').closest('.cn-stepper-step')
+      const groupThreeRow = screen.getByText('Group Three').closest('.cn-stepper-step')
+
+      expect(groupOneRow?.querySelector('.cn-stepper-step-badge')).toHaveTextContent('Step 1/4')
+      expect(offPathRow?.querySelector('.cn-stepper-step-badge')).toHaveTextContent('Step 3/4')
+      expect(groupTwoRow?.querySelector('.cn-stepper-step-badge')).toHaveTextContent('Step 2/4')
+      expect(groupThreeRow?.querySelector('.cn-stepper-step-badge')).toHaveTextContent('Step 4/4')
+
+      // All four numerators must be distinct — the collision this test guards against.
+      const numerators = [groupOneRow, offPathRow, groupTwoRow, groupThreeRow].map(
+        row => row?.querySelector('.cn-stepper-step-badge')?.textContent
+      )
+      expect(new Set(numerators).size).toBe(4)
+    })
+
+    // Round 6 follow-up regression: a step can carry BOTH a static `next` (so the walk doesn't stop
+    // there) AND `dynamicNext: true`. The old `pathWalkComplete` check only looked at the
+    // STOPPED-AT step's own `dynamicNext` flag — here that's 'step-two', a dead end (no `next`, not
+    // `terminal`) that lacks the flag — and silently walked straight past 'step-one's flag via its
+    // static `next`, as if 'step-one's continuation were fully known. The fix must check
+    // `dynamicNext` along the WHOLE walked-plus-predicted path (`[activeStepId, ...fullPredictedPath]`),
+    // not just the final stopped-at step, so 'step-one's flag isn't silently ignored.
+    const dynamicNextEarlierInPathFlow: FlowConfig = {
+      steps: {
+        'step-one': { title: 'Step One', component: () => null, next: 'step-two', dynamicNext: true },
+        'step-two': { title: 'Step Two', component: () => null }, // dead end: no next, not terminal
+        'step-three': { title: 'Step Three', component: () => null } // never reached on this run's path
+      },
+      initialStep: 'step-one'
+    }
+
+    test('flat mode: a static-next step earlier in the path that is ALSO flagged dynamicNext still forces the flow-wide fallback, not the tight walked total', () => {
+      const { container } = render(<SinglePaneStepper.Root flow={dynamicNextEarlierInPathFlow} showStepBadge />)
+
+      const badge = container.querySelector('.cn-stepper-step-badge')
+      expect(badge).toBeInTheDocument()
+      // Walked total: cardHistory (0, nothing completed yet) + fullPredictedPath (['step-two'], the
+      // one static hop off 'step-one') = 1. The pre-fix code would report "Step 1/1" here — it only
+      // checks 'step-two' (the stopped-at step, which has no dynamicNext), silently ignoring
+      // 'step-one's flag because the walk continued past it via a static `next`. The fix must fall
+      // back to Object.keys(flow.steps).length = 3 instead, proving the flag is honored wherever it
+      // appears on the path, not only at the final stop.
+      expect(badge).toHaveTextContent('Step 1/3')
+    })
+  })
+
+  describe('Root children', () => {
+    test('Root children render inside FlowEngineProvider after visual content', () => {
+      render(
+        <SinglePaneStepper.Root flow={testFlow}>
+          <EngineChildProbe />
+        </SinglePaneStepper.Root>
+      )
+      expect(screen.getByTestId('bridge-child')).toHaveTextContent('card-a')
+    })
+
+    test('Root children are not forwarded onto Content DOM', () => {
+      const { container } = render(
+        <SinglePaneStepper.Root flow={testFlow}>
+          <EngineChildProbe />
+        </SinglePaneStepper.Root>
+      )
+      expect(container.querySelectorAll('[data-testid="bridge-child"]')).toHaveLength(1)
+    })
+
+    test('Root forwards initialEngineState into the engine', () => {
+      render(
+        <SinglePaneStepper.Root
+          flow={testFlow}
+          initialEngineState={{
+            state: { answer: 'restored' },
+            cardHistory: [
+              { stepId: 'card-a', status: 'completed', stateSnapshot: { answer: 'restored' } },
+              { stepId: 'card-b', status: 'active', stateSnapshot: {} }
+            ]
+          }}
+        />
+      )
+      expect(screen.getByText('Card B')).toBeInTheDocument()
     })
   })
 
@@ -641,7 +1364,7 @@ describe('SinglePaneStepper', () => {
     test('renders blocked message in standard card mode (non-contentOnly)', () => {
       render(
         <FlowEngineProvider flow={testFlowBlocked}>
-          <CardContextProvider subStepId="card-blocked" status="active">
+          <CardContextProvider stepId="card-blocked" status="active">
             <FlowStepperCard title="Card Blocked" blockedMessage="Select an option to continue">
               <button>Continue</button>
             </FlowStepperCard>

@@ -62,12 +62,16 @@ function getTwClasses(n: string): string[] {
   if (n === "--cn-state-selected") return ["bg-cn-selected"];
 
   // set tokens: --cn-set-{color}-{variant}-{prop}[-suffix]
+  // primary/secondary carry text; outline carries a border but has no dedicated
+  // text token (it shares the secondary text color).
   if (
     (m = n.match(
-      /^--cn-set-(.+?)-(primary|secondary|outline)-(bg|text|border)(-hover|-selected)?$/,
+      /^--cn-set-(.+?)-(?:(primary|secondary)-(bg|text)|(outline)-(bg|border))(-hover|-selected)?$/,
     ))
   ) {
-    const [, raw, variant, prop, suffix] = m;
+    const [, raw, psVariant, psProp, olVariant, olProp, suffix] = m;
+    const variant = psVariant || olVariant;
+    const prop = psProp || olProp;
     const c = SET_COLOR_MAP[raw] || raw;
     const pfx = prop === "bg" ? "bg" : prop === "text" ? "text" : "border";
     return [`${pfx}-cn-${c}-${variant}${suffix || ""}`];

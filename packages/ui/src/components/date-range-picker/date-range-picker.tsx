@@ -958,7 +958,11 @@ export const DateRangePicker = ({
   const fullLabel = normalizedValue
     ? (() => {
         try {
-          return formatDateRangeLabel(normalizedValue, { includeResolvedRange: true, includeTimeZone: true, weekStartsOn })
+          return formatDateRangeLabel(normalizedValue, {
+            includeResolvedRange: true,
+            includeTimeZone: true,
+            weekStartsOn
+          })
         } catch {
           return label
         }

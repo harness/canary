@@ -409,7 +409,12 @@ describe('DateRangePicker', () => {
     const yesterday = addDays(new Date(), -1)
     render(
       <DateRangePicker
-        value={{ kind: 'absolute', timeZone: 'UTC', from: { date: toCivilDate(yesterday) }, to: { date: toCivilDate(yesterday) } }}
+        value={{
+          kind: 'absolute',
+          timeZone: 'UTC',
+          from: { date: toCivilDate(yesterday) },
+          to: { date: toCivilDate(yesterday) }
+        }}
         onChange={onChange}
         allowFuture={false}
       />

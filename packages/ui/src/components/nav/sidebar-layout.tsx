@@ -21,7 +21,7 @@ export const SidebarLayout = ({
 
         <Sidebar.Inset className="bg-cn-1 grid grid-cols-[auto_1fr] border border-l-0 rounded-t-cn-3 cn-content-full-height mr-cn-2xs">
           <div className="overflow-y-auto overflow-x-hidden">{chat}</div>
-          <div className="overflow-y-auto overflow-x-hidden">{mainContent}</div>
+          <div className="overflow-y-auto overflow-x-auto">{mainContent}</div>
         </Sidebar.Inset>
       </Layout.Grid>
     </Layout.Flex>

@@ -475,6 +475,29 @@ return await response.json();
 </Card.Root>`}
 />
 
+## Muted
+
+Apply muted text color to markdown content using the `muted` prop. This is useful when the viewer appears in a secondary or subdued context, such as a sidebar or metadata panel.
+
+<DocsPage.ComponentExample
+  client:only
+  code={`<Layout.Flex>
+<MarkdownViewer
+    withBorder
+    source={\`## Default
+This markdown uses the **default** text color.
+Emphasis and other styling remain fully visible.\`}
+/>
+<MarkdownViewer
+    muted
+    withBorder
+    source={\`## Muted
+This markdown uses the **muted** text color.
+Emphasis and other styling remain fully visible.\`}
+/>
+</Layout.Flex>`}
+/>
+
 ## API Reference
 
 <DocsPage.PropsTable
@@ -570,6 +593,14 @@ return await response.json();
         "Custom footer content for suggestion blocks (e.g., action buttons)",
       required: false,
       value: "ReactNode",
+    },
+    {
+      name: "muted",
+      description:
+        "Apply muted text color (text-cn-3) to all markdown content. Use when the viewer appears in a secondary or subdued context.",
+      required: false,
+      defaultValue: "false",
+      value: "boolean",
     },
   ]}
 />

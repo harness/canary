@@ -341,7 +341,7 @@ This image URL will be transformed by the imageUrlTransform function.\`}
 imageUrlTransform={(src) => {
 // Transform relative paths to absolute URLs
 if (!src.startsWith('http')) {
-return \`https://via.placeholder.com/400x200?text=\${encodeURIComponent(src)}\`;
+return \`https://placehold.co/400x200?text=\${encodeURIComponent(src)}\`;
 }
 return src;
 }}

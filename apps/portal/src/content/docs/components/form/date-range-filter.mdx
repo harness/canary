@@ -82,7 +82,7 @@ The controlled value is the same semantic union used by the standalone picker:
 - `calendar` stores a named period such as `last_week` or `next_month`.
 - `absolute` stores fixed civil dates and optional times.
 
-UTC is the default. The selected IANA timezone persists on every semantic value so reloading a URL or saved filter preserves local calendar boundaries. `resolveDateRange` converts the value to inclusive `from` and exclusive `to` UTC instants (`[from, to)`) when the product constructs its query.
+The browser's own timezone is the default (falling back to UTC only if it can't be detected); set `defaultTimeZone` in `filterFieldConfig` to pin a fixed zone instead. The selected IANA timezone persists on every semantic value so reloading a URL or saved filter preserves local calendar boundaries. `resolveDateRange` converts the value to inclusive `from` and exclusive `to` UTC instants (`[from, to)`) when the product constructs its query.
 
 ## Configure picker capabilities
 
@@ -176,7 +176,7 @@ Use these properties inside `filterOption.filterFieldConfig`.
       name: "defaultTimeZone",
       description: "Fallback IANA timezone when a value is absent or invalid.",
       required: false,
-      defaultValue: '"UTC"',
+      defaultValue: 'Browser timezone (falls back to "UTC")',
       value: "string",
     },
     {

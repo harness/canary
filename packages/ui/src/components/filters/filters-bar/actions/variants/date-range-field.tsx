@@ -2,6 +2,7 @@ import type { ClassNames } from 'react-day-picker'
 
 import {
   DateRangePickerContent,
+  getBrowserTimeZone,
   normalizeDateRangeValue,
   type DateRangeInput,
   type DateRangePickerCalendarProps,
@@ -68,7 +69,9 @@ const DateRangeField = ({
   enableExclusions,
   onInterpretQuery,
   weekStartsOn,
-  defaultTimeZone = 'UTC'
+  // Defaults to the browser's own zone rather than UTC; consumers can still pin an
+  // explicit defaultTimeZone via filterFieldConfig when they need a fixed zone.
+  defaultTimeZone = getBrowserTimeZone()
 }: DateRangeFieldProps) => (
   <DateRangePickerContent
     value={filter.value}

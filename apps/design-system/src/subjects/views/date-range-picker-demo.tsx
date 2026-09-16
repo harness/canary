@@ -29,7 +29,7 @@ const DateRangePickerDemo = () => {
 
   return (
     <Layout.Flex direction="column" gapY="xl" className="mx-auto max-w-[1120px] p-cn-xl">
-      <div className="flex items-start justify-between gap-cn-lg">
+      <Layout.Horizontal align="start" justify="between" gap="lg">
         <Layout.Flex direction="column" gapY="xs">
           <Text variant="heading-section">Service health overview</Text>
           <Text variant="body-normal" color="foreground-3">
@@ -39,15 +39,11 @@ const DateRangePickerDemo = () => {
         <Text variant="caption-normal" color="foreground-3">
           Updated just now
         </Text>
-      </div>
+      </Layout.Horizontal>
 
       <section className="border-cn-2 rounded-cn-4 border bg-cn-1">
         <div className="border-cn-2 flex items-center justify-start gap-cn-md border-b p-cn-md">
-          <DateRangePicker
-            value={value}
-            onChange={setValue}
-            onInterpretQuery={interpretQuery(timeZone)}
-          />
+          <DateRangePicker value={value} onChange={setValue} onInterpretQuery={interpretQuery(timeZone)} />
         </div>
 
         <div className="grid grid-cols-3 gap-cn-md p-cn-lg">

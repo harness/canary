@@ -10,6 +10,7 @@ import { DropdownMenu } from '../dropdown-menu'
 import { Select } from '../form-primitives/select'
 import { IconV2 } from '../icon-v2'
 import { SearchInput } from '../inputs'
+import { Layout } from '../layout'
 import { Popover } from '../popover'
 import { Separator } from '../separator'
 import { Sidebar } from '../sidebar'
@@ -30,6 +31,7 @@ import { getDefaultDateRangeQuickPresets } from './presets'
 import { resolveDateRange } from './resolve-date-range'
 import {
   formatTimeZoneOffset,
+  getBrowserTimeZone,
   getPreferredTimeZones,
   getSupportedTimeZones,
   normalizeTimeZone,
@@ -193,7 +195,9 @@ export const DateRangePickerContent = ({
   enableExclusions = false,
   showAdjustmentControls = true,
   quickPresets: configuredQuickPresets,
-  defaultTimeZone = DEFAULT_TIME_ZONE,
+  // The browser's own zone is the friendliest starting point for a fresh picker;
+  // UTC remains the ultimate fallback inside normalizeTimeZone if detection fails.
+  defaultTimeZone = getBrowserTimeZone(),
   weekStartsOn,
   onInterpretQuery,
   calendarProps,
@@ -526,7 +530,7 @@ export const DateRangePickerContent = ({
   const presetActions = visibleQuickPresets.length > 0 && (
     // Match the ToggleGroup's own internal item gap (cn-3xs) so the space between
     // Today/Yesterday and the space before the Last/duration group reads as one rhythm.
-    <div className="flex flex-wrap items-center gap-cn-3xs">
+    <Layout.Horizontal wrap="wrap" align="center" gap="3xs">
       {regularQuickPresets.length > 0 && (
         <ToggleGroup.Root
           type="single"
@@ -547,7 +551,11 @@ export const DateRangePickerContent = ({
       {directionalQuickPresets.length > 0 && (
         // h-8 matches the sm Button's own height (var(--cn-btn-size-sm)) so this pill's
         // own border doesn't add extra height on top of the buttons it wraps.
-        <div className="border-cn-2 flex h-8 min-w-0 items-center overflow-hidden rounded-cn-3 border border-solid">
+        <Layout.Horizontal
+          align="center"
+          gap="none"
+          className="border-cn-2 h-8 min-w-0 overflow-hidden rounded-cn-3 border border-solid"
+        >
           <DropdownMenu.Root>
             <DropdownMenu.Trigger asChild>
               <Button
@@ -577,10 +585,11 @@ export const DateRangePickerContent = ({
             </DropdownMenu.Content>
           </DropdownMenu.Root>
           <Separator orientation="vertical" className="h-5" />
-          <div
+          <Layout.Horizontal
             role="radiogroup"
             aria-label={`${presetDirection === 'past' ? 'Last' : 'Next'} duration presets`}
-            className="flex items-center"
+            align="center"
+            gap="none"
           >
             {directionalQuickPresets.map((preset, index) => {
               const isSelected = preset.id === selectedQuickPresetId
@@ -608,10 +617,10 @@ export const DateRangePickerContent = ({
                 </Fragment>
               )
             })}
-          </div>
-        </div>
+          </Layout.Horizontal>
+        </Layout.Horizontal>
       )}
-    </div>
+    </Layout.Horizontal>
   )
 
   return (
@@ -659,7 +668,7 @@ export const DateRangePickerContent = ({
         </div>
       )}
 
-      <div className="flex min-h-[400px]">
+      <Layout.Horizontal gap="none" className="min-h-[400px]">
         <aside className="border-cn-2 w-52 shrink-0 border-y-0 border-l-0 border-r border-solid bg-cn-1 p-cn-sm">
           <Sidebar.Provider defaultOpen className="h-auto min-h-0 w-full bg-transparent [--cn-sidebar-min-height:auto]">
             <nav aria-label="Custom date range options" className="w-full">
@@ -679,8 +688,11 @@ export const DateRangePickerContent = ({
         </aside>
 
         <div className="min-w-0 flex-1">
-          <div
-            className={cn('flex items-start justify-between gap-cn-md p-cn-md', {
+          <Layout.Horizontal
+            align="start"
+            justify="between"
+            gap="md"
+            className={cn('p-cn-md', {
               // Other sections reserve a consistent 88px so switching sections in the sidebar
               // doesn't jump the calendar up/down. Fixed skips that: its row now sizes to its
               // own content, so the p-cn-md padding above the fields, below them (before the
@@ -698,7 +710,7 @@ export const DateRangePickerContent = ({
                       <Text variant="caption-strong" color="foreground-3" className="block">
                         Saved presets
                       </Text>
-                      <div className="flex flex-wrap gap-cn-xs">
+                      <Layout.Horizontal wrap="wrap" gap="xs">
                         {customPresets.map(preset => (
                           <Button
                             key={preset.id}
@@ -718,7 +730,7 @@ export const DateRangePickerContent = ({
                             {preset.label}
                           </Button>
                         ))}
-                      </div>
+                      </Layout.Horizontal>
                     </div>
                   )}
                 </div>
@@ -729,7 +741,7 @@ export const DateRangePickerContent = ({
                 // month, End from the right month," which isn't true—either endpoint can
                 // land in either visible month. The border above the calendar does the
                 // job of separating this row instead.
-                <div className="grid grid-cols-2 items-end gap-cn-sm">
+                <Layout.Grid columns={2} align="end" gap="sm">
                   <div className="min-w-0">
                     <DateTimeEndpointField
                       label="Start"
@@ -748,17 +760,19 @@ export const DateRangePickerContent = ({
                       onTimeChange={time => setDraft({ ...draft, to: { ...draft.to, time } })}
                     />
                   </div>
-                </div>
+                </Layout.Grid>
               )}
 
               {section === 'last' && draft.kind === 'relative' && (
-                <div className="flex items-end gap-cn-xs">
+                <Layout.Horizontal align="end" gap="xs">
                   {/* Joined segmented control (shared border, no gap between options) instead of
                       the spaced ToggleGroup, so Last/Next reads as one either/or control. */}
-                  <div
+                  <Layout.Horizontal
                     role="radiogroup"
                     aria-label="Rolling direction"
-                    className="border-cn-2 flex h-8 items-center overflow-hidden rounded-cn-3 border border-solid"
+                    align="center"
+                    gap="none"
+                    className="border-cn-2 h-8 overflow-hidden rounded-cn-3 border border-solid"
                   >
                     <Button
                       size="sm"
@@ -781,7 +795,7 @@ export const DateRangePickerContent = ({
                     >
                       Next
                     </Button>
-                  </div>
+                  </Layout.Horizontal>
                   <PositiveAmountInput
                     aria-label="Rolling amount"
                     value={draft.amount}
@@ -795,11 +809,11 @@ export const DateRangePickerContent = ({
                     size="sm"
                     wrapperClassName="w-32"
                   />
-                </div>
+                </Layout.Horizontal>
               )}
 
               {(section === 'period-to-date' || section === 'previous-period') && draft.kind === 'calendar' && (
-                <div className="flex items-end gap-cn-sm">
+                <Layout.Horizontal align="end" gap="sm">
                   <Select
                     label={section === 'period-to-date' ? 'Period to date' : 'Previous period'}
                     aria-label="Calendar period"
@@ -812,7 +826,7 @@ export const DateRangePickerContent = ({
                   <Text variant="caption-normal" color="foreground-3" className="mb-cn-xs">
                     {formatResolvedDateRange(draft, { includeTimeZone: false, weekStartsOn })}
                   </Text>
-                </div>
+                </Layout.Horizontal>
               )}
             </div>
 
@@ -831,7 +845,7 @@ export const DateRangePickerContent = ({
                   className="shrink-0"
                 />
               )}
-          </div>
+          </Layout.Horizontal>
 
           {section === 'fixed' && (
             // Only Fixed pairs a Start/End row with the calendar right below it, so only
@@ -843,11 +857,11 @@ export const DateRangePickerContent = ({
             </div>
           )}
 
-          <div
-            className={cn(
-              'flex min-h-[320px] items-start justify-center px-cn-md pb-cn-lg',
-              section === 'fixed' ? 'pt-cn-md' : 'pt-cn-sm'
-            )}
+          <Layout.Horizontal
+            align="start"
+            justify="center"
+            gap="none"
+            className={cn('min-h-[320px] px-cn-md pb-cn-lg', section === 'fixed' ? 'pt-cn-md' : 'pt-cn-sm')}
           >
             <Calendar
               {...calendarProps}
@@ -872,12 +886,18 @@ export const DateRangePickerContent = ({
               }}
               aria-label="Date range calendar"
             />
-          </div>
+          </Layout.Horizontal>
         </div>
-      </div>
+      </Layout.Horizontal>
 
-      <div className="border-cn-2 flex min-h-16 flex-wrap items-center justify-between gap-cn-sm border-x-0 border-b-0 border-t border-solid px-cn-md py-cn-sm">
-        <div className="flex min-w-0 flex-wrap items-center gap-cn-md">
+      <Layout.Horizontal
+        wrap="wrap"
+        align="center"
+        justify="between"
+        gap="sm"
+        className="border-cn-2 min-h-16 border-x-0 border-b-0 border-t border-solid px-cn-md py-cn-sm"
+      >
+        <Layout.Horizontal wrap="wrap" align="center" gap="md" className="min-w-0">
           <Select
             aria-label="Time zone"
             options={timeZoneOptions}
@@ -889,7 +909,7 @@ export const DateRangePickerContent = ({
             contentClassName="max-w-none w-[340px]"
             triggerClassName="w-80"
           />
-        </div>
+        </Layout.Horizontal>
         <ButtonLayout horizontalAlign="end" className="ml-auto">
           <Button
             iconOnly
@@ -908,7 +928,7 @@ export const DateRangePickerContent = ({
             Apply
           </Button>
         </ButtonLayout>
-      </div>
+      </Layout.Horizontal>
     </div>
   )
 }
@@ -926,7 +946,8 @@ export const DateRangePicker = ({
   disabled,
   className,
   popoverClassName,
-  defaultTimeZone = DEFAULT_TIME_ZONE,
+  // Same rationale as DateRangePickerContent: default to the browser's zone, not UTC.
+  defaultTimeZone = getBrowserTimeZone(),
   weekStartsOn,
   enableOffset = false,
   enableExclusions = false,

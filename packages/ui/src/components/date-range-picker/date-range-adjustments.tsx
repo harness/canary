@@ -134,7 +134,12 @@ export const DateRangeAdjustments = ({
             </Button>
           </Popover.Trigger>
           <Popover.Content custom hideArrow align="end" sideOffset={8} className="w-[328px] p-0">
-            <div className="border-cn-2 flex items-center justify-between gap-cn-sm border-x-0 border-t-0 border-b border-solid px-cn-md py-cn-sm">
+            <Layout.Horizontal
+              align="center"
+              justify="between"
+              gap="sm"
+              className="border-cn-2 border-x-0 border-t-0 border-b border-solid px-cn-md py-cn-sm"
+            >
               <Text variant="body-strong">Exclude from range</Text>
               <Button
                 size="sm"
@@ -145,7 +150,7 @@ export const DateRangeAdjustments = ({
               >
                 Clear
               </Button>
-            </div>
+            </Layout.Horizontal>
             <div className="space-y-cn-md p-cn-md">
               <Checkbox
                 label="Incomplete current interval"
@@ -198,7 +203,12 @@ export const DateRangeAdjustments = ({
             </Button>
           </Popover.Trigger>
           <Popover.Content custom hideArrow align="end" sideOffset={8} className="w-[328px] p-0">
-            <div className="border-cn-2 flex items-center justify-between gap-cn-sm border-x-0 border-t-0 border-b border-solid px-cn-md py-cn-sm">
+            <Layout.Horizontal
+              align="center"
+              justify="between"
+              gap="sm"
+              className="border-cn-2 border-x-0 border-t-0 border-b border-solid px-cn-md py-cn-sm"
+            >
               <Text variant="body-strong">Shift range back by</Text>
               <Button
                 size="sm"
@@ -209,9 +219,9 @@ export const DateRangeAdjustments = ({
               >
                 Clear
               </Button>
-            </div>
+            </Layout.Horizontal>
             <div className="space-y-cn-xs p-cn-md">
-              <div className="flex items-end gap-cn-xs">
+              <Layout.Horizontal align="end" gap="xs">
                 <PositiveAmountInput
                   aria-label="Offset amount"
                   value={offset?.amount ?? 1}
@@ -225,7 +235,7 @@ export const DateRangeAdjustments = ({
                   size="sm"
                   wrapperClassName="flex-1"
                 />
-              </div>
+              </Layout.Horizontal>
               <Text variant="caption-normal" color="foreground-3" as="span" className="block">
                 An offset replaces any exclusions on this range.
               </Text>

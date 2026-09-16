@@ -98,7 +98,7 @@ type DateRangeValue =
 - **Calendar** values retain a named period and resolve its boundaries in the selected timezone. For `this_*`, `extent: "full"` includes the complete period while `"to_now"` stops at the current instant.
 - **Absolute** values store civil dates and optional wall-clock times. They remain fixed instead of moving with `now`.
 
-UTC is the default timezone. Set `defaultTimeZone` to another valid IANA identifier when no value exists. Once selected, the IANA timezone is stored on the value, so URL and saved-filter round trips do not shift calendar days or daylight-saving boundaries.
+The browser's own timezone is the default when no value exists and `defaultTimeZone` is not set, falling back to UTC only if the runtime can't detect a usable zone. Set `defaultTimeZone` to another valid IANA identifier to pin a fixed zone instead. Once selected, the IANA timezone is stored on the value, so URL and saved-filter round trips do not shift calendar days or daylight-saving boundaries.
 
 ## Resolve values at query time
 
@@ -260,7 +260,7 @@ Use `trigger` for a static custom trigger or `renderTrigger` when the trigger ne
       description:
         "Fallback IANA timezone used when the value is absent or invalid.",
       required: false,
-      defaultValue: '"UTC"',
+      defaultValue: 'Browser timezone (falls back to "UTC")',
       value: "string",
     },
     {

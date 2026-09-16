@@ -1,6 +1,13 @@
 import type { ReactElement } from 'react'
 import type { ClassNames, DayPickerRangeProps } from 'react-day-picker'
 
+/**
+ * The last-resort time zone used internally when a value is missing or an IANA zone
+ * can't be validated (see `normalizeTimeZone`). Fresh pickers do NOT default to this:
+ * `DateRangePicker`, `DateRangePickerContent`, and the filters-bar `DateRangeField`
+ * default their `defaultTimeZone` prop to the browser's own zone via
+ * `getBrowserTimeZone()`, and only fall through to UTC if that detection itself fails.
+ */
 export const DEFAULT_TIME_ZONE = 'UTC'
 export const DATE_RANGE_CODEC_VERSION = 1 as const
 
@@ -176,7 +183,7 @@ export interface DateRangePickerProps {
   enableTimeSelection?: boolean
   enableOffset?: boolean
   enableExclusions?: boolean
-  /** Time zone used when value is absent or does not specify a valid zone. */
+  /** Time zone used when value is absent or does not specify a valid zone. Defaults to the browser's own zone. */
   defaultTimeZone?: TimeZoneId
   weekStartsOn?: Weekday
   onInterpretQuery?: InterpretDateRangeQuery
@@ -205,6 +212,7 @@ export interface DateRangePickerContentProps {
   showAdjustmentControls?: boolean
   /** Compact presets shown below the optional search bar. */
   quickPresets?: DateRangeQuickPreset[]
+  /** Time zone used when value is absent or does not specify a valid zone. Defaults to the browser's own zone. */
   defaultTimeZone?: TimeZoneId
   weekStartsOn?: Weekday
   onInterpretQuery?: InterpretDateRangeQuery

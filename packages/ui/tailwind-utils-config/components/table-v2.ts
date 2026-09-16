@@ -22,6 +22,29 @@ export default {
       }
     },
 
+    '&-overlay-host': {
+      position: 'relative',
+      display: 'grid',
+      width: 'max-content',
+      minWidth: '100%',
+      isolation: 'isolate',
+
+      '& > .cn-table-v2-element': {
+        gridArea: '1 / 1'
+      }
+    },
+
+    '&-column-resize-indicator': {
+      gridArea: '1 / 1',
+      justifySelf: 'start',
+      alignSelf: 'start',
+      zIndex: '20',
+      width: '2px',
+      height: 'var(--cn-table-header-min)',
+      pointerEvents: 'none',
+      backgroundColor: 'var(--cn-border-brand)'
+    },
+
     // Variants
     '&:where(.cn-table-v2-normal)': {
       '@apply caption-bottom': '',
@@ -189,6 +212,63 @@ export default {
       top: '0',
       left: 'calc(-1 * var(--cn-table-header-px))',
       height: '100%'
+    },
+
+    '&-head-resizable': {
+      position: 'relative',
+
+      // The next header cell paints over this cell's right edge (same inline
+      // z-index, later in DOM). Lift this cell while the handle is used so the
+      // brand resize line stays visible — including in a single header row.
+      '&:hover, &:has([data-resizing=true])': {
+        overflow: 'visible',
+        zIndex: '8 !important'
+      }
+    },
+
+    '&-column-resizer': {
+      position: 'absolute',
+      top: '0',
+      right: '0',
+      zIndex: '2',
+      width: '8px',
+      height: '100%',
+      margin: '0',
+      padding: '0',
+      border: '0',
+      appearance: 'none',
+      background: 'transparent',
+      cursor: 'col-resize',
+      userSelect: 'none',
+      touchAction: 'none',
+      outline: 'none',
+
+      '&::after': {
+        content: '""',
+        position: 'absolute',
+        top: '0',
+        right: '0',
+        width: '1px',
+        height: '100%',
+        backgroundColor: 'transparent'
+      },
+
+      '&:hover::after': {
+        backgroundColor: 'var(--cn-border-3)',
+        width: '2px'
+      },
+
+      '&:focus-visible::after': {
+        backgroundColor: 'var(--cn-border-brand)',
+        width: '2px'
+      },
+
+      // The table-level overlay is the only drag indicator. Suppress this
+      // in-cell line while dragging so auto-layout tables do not show both.
+      '&:where([data-resizing=true])::after': {
+        backgroundColor: 'transparent',
+        width: '1px'
+      }
     },
 
     // Data cell

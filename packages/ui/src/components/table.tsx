@@ -65,6 +65,12 @@ export interface TableRootV2Props extends HTMLAttributes<HTMLTableElement>, Vari
    * Ref forwarded to the scroll viewport element. Only applies in sticky mode.
    */
   viewportRef?: Ref<HTMLDivElement>
+  /**
+   * Optional overlay rendered as a sibling of `<table>` inside the scroll
+   * viewport. Used by DataTable for a column-resize indicator that is not
+   * clipped by header cells.
+   */
+  overlay?: ReactNode
 }
 
 const TableRoot = forwardRef<HTMLTableElement, TableRootV2Props>(
@@ -79,6 +85,8 @@ const TableRoot = forwardRef<HTMLTableElement, TableRootV2Props>(
       stickyHeader = false,
       maxHeight,
       viewportRef,
+      overlay,
+      style,
       ...props
     },
     ref
@@ -97,7 +105,22 @@ const TableRoot = forwardRef<HTMLTableElement, TableRootV2Props>(
         style={{ maxHeight: stickyHeader ? maxHeight : undefined }}
         ref={stickyHeader ? viewportRef : undefined}
       >
-        <table ref={ref} className={cn('cn-table-v2-element', tableClassName)} {...props} />
+        {overlay !== undefined ? (
+          <div
+            className="cn-table-v2-overlay-host"
+            style={{ display: 'grid', width: 'max-content', minWidth: '100%', ...style }}
+          >
+            <table
+              ref={ref}
+              className={cn('cn-table-v2-element', tableClassName)}
+              style={{ gridArea: '1 / 1', ...style }}
+              {...props}
+            />
+            {overlay}
+          </div>
+        ) : (
+          <table ref={ref} className={cn('cn-table-v2-element', tableClassName)} style={style} {...props} />
+        )}
       </div>
       {paginationProps && (
         <Pagination
@@ -210,6 +233,12 @@ export interface TableHeadProps extends ThHTMLAttributes<HTMLTableCellElement> {
   containerProps?: FlexProps
   hideDivider?: boolean
   contentClassName?: string
+  /**
+   * Optional chrome rendered as a direct child of the `<th>`, outside the
+   * label/sort layout. Used by DataTable for column resize handles so they
+   * can be positioned against the cell boundary.
+   */
+  resizeHandle?: ReactNode
 }
 
 const TableHead = forwardRef<HTMLTableCellElement, TableHeadProps>(
@@ -223,6 +252,7 @@ const TableHead = forwardRef<HTMLTableCellElement, TableHeadProps>(
       hideDivider = false,
       containerProps,
       contentClassName,
+      resizeHandle,
       ...props
     },
     ref
@@ -265,13 +295,15 @@ const TableHead = forwardRef<HTMLTableCellElement, TableHeadProps>(
         className={cn(
           'cn-table-v2-head',
           {
-            'cn-table-v2-head-sortable': sortable
+            'cn-table-v2-head-sortable': sortable,
+            'cn-table-v2-head-resizable': !!resizeHandle
           },
           className
         )}
         {...props}
       >
         {contentElement}
+        {resizeHandle}
       </th>
     )
   }

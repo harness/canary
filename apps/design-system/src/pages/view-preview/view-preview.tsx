@@ -7,6 +7,7 @@ import { Navigate, Route, Routes } from 'react-router-dom'
 import { ProfileSettingsViewWrapper } from '@/pages/view-preview/profile-settings-view-wrapper.tsx'
 import { RepoSettingsViewWrapper } from '@/pages/view-preview/repo-settings-view-wrapper'
 import { SideNavWrapper } from '@/pages/view-preview/side-nav-wrapper'
+import DataTableColumnResizingDemo from '@subjects/views/data-table-column-resizing-demo'
 import DataTableDemo from '@subjects/views/data-table-demo'
 import DataTableGroupedHeadersDemo from '@subjects/views/data-table-grouped-headers-demo'
 import DataTablePinnedRowsDemo from '@subjects/views/data-table-pinned-rows-demo'
@@ -546,6 +547,10 @@ export const viewPreviews: Record<string, ViewPreviewGroup> = {
       'data-table-grouped-headers-demo': {
         label: 'Data Table Grouped Headers',
         element: <DataTableGroupedHeadersDemo />
+      },
+      'data-table-column-resizing-demo': {
+        label: 'Data Table Column Resizing',
+        element: <DataTableColumnResizingDemo />
       },
       'data-table-sticky-header-demo': {
         label: 'Data Table Sticky Header',

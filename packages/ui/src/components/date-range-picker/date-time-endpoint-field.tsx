@@ -159,7 +159,10 @@ export const DateTimeEndpointField = ({
     <div
       className={cn(
         'flex h-8 items-center rounded-cn-3 border border-solid bg-cn-2',
-        invalid || timeInvalid ? 'border-cn-danger' : 'border-transparent focus-within:border-cn-1',
+        // `border-cn-2` at rest so this reads as an input like the other Fixed/Rolling controls
+        // (e.g. the Last/Next segmented control) instead of looking borderless; `border-cn-1` on
+        // focus matches the stronger outline other inputs use when active.
+        invalid || timeInvalid ? 'border-cn-danger' : 'border-cn-2 focus-within:border-cn-1',
         className
       )}
     >

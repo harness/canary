@@ -6,17 +6,9 @@ import {
   FilterFieldTypes,
   formatDateRangeLabel,
   Layout,
-  parseDateRangeQuery,
   Text,
   type SemanticDateRangeValue
 } from '@harnessio/ui/components'
-
-const interpretQuery =
-  (timeZone: string) =>
-  async (query: string): Promise<SemanticDateRangeValue> => {
-    await Promise.resolve()
-    return parseDateRangeQuery(query, { timeZone })
-  }
 
 const DateRangePickerDemo = () => {
   const [value, setValue] = useState<SemanticDateRangeValue | undefined>()
@@ -25,7 +17,6 @@ const DateRangePickerDemo = () => {
     period: 'next_month',
     timeZone: 'America/New_York'
   })
-  const timeZone = value?.timeZone ?? 'UTC'
 
   return (
     <Layout.Flex direction="column" gapY="xl" className="mx-auto max-w-[1120px] p-cn-xl">
@@ -43,7 +34,7 @@ const DateRangePickerDemo = () => {
 
       <section className="border-cn-2 rounded-cn-4 border bg-cn-1">
         <div className="border-cn-2 flex items-center justify-start gap-cn-md border-b p-cn-md">
-          <DateRangePicker value={value} onChange={setValue} onInterpretQuery={interpretQuery(timeZone)} />
+          <DateRangePicker value={value} onChange={setValue} />
         </div>
 
         <div className="grid grid-cols-3 gap-cn-md p-cn-lg">

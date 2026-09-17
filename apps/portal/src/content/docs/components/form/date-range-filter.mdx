@@ -101,27 +101,6 @@ const filterFieldConfig = {
 - Offset and exclusion controls are hidden unless `enableOffset` or `enableExclusions` is set. They appear only in Rolling and commit with the range through the same Apply action. Their semantic adjustment is mutually exclusive, and offsets additionally require a past/Last direction.
 - After a complete fixed range, the next date click resets the range and starts a new selection.
 
-## Queries
-
-`onInterpretQuery` is an optional asynchronous extension point owned by the consuming product. The component provides loading and error UI but does not choose an AI/query service.
-
-```typescript jsx
-const filterFieldConfig = {
-  onInterpretQuery: async (query) => {
-    if (query.trim().toLowerCase() === "next month") {
-      return {
-        kind: "calendar",
-        period: "next_month",
-        timeZone: "UTC",
-      };
-    }
-    throw new Error("Unsupported date-range query");
-  },
-};
-```
-
-Omit the callback to hide the search field.
-
 ## URL and saved-filter persistence
 
 Assign `dateRangeValueParser` to the filter option's `parser`. Its versioned format round-trips semantic kind, timezone, absolute dates and times, and relative adjustments. The parser throws for invalid persisted input; use `parseDateRangeValue` directly when a non-throwing `undefined` result is preferable.
@@ -200,12 +179,6 @@ Use these properties inside `filterOption.filterFieldConfig`.
       required: false,
       defaultValue: "false",
       value: "boolean",
-    },
-    {
-      name: "onInterpretQuery",
-      description: "Consumer-owned asynchronous date-range query interpreter.",
-      required: false,
-      value: "(query: string) => Promise<DateRangeValue>",
     },
     {
       name: "calendarProps / calendarClassNames",

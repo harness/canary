@@ -18,27 +18,6 @@ import { DocsPage } from "@/components/docs-page";
       unit: 'day',
       timeZone: 'UTC',
     });
-    const interpretQuery = async (query) => {
-      const normalized = query.trim().toLowerCase();
-      if (normalized === 'last 14 days') {
-        return {
-          kind: 'relative',
-          direction: 'past',
-          amount: 14,
-          unit: 'day',
-          timeZone: value.timeZone,
-        };
-      }
-      if (normalized === 'next month') {
-        return {
-          kind: 'calendar',
-          period: 'next_month',
-          timeZone: value.timeZone,
-        };
-      }
-      throw new Error('Try "last 14 days" or "next month".');
-    };
-
     return (
       <Layout.Flex direction="column" gapY="sm">
         <DateRangePicker
@@ -46,7 +25,6 @@ import { DocsPage } from "@/components/docs-page";
           onChange={setValue}
           enableOffset
           enableExclusions
-          onInterpretQuery={interpretQuery}
         />
       </Layout.Flex>
     );
@@ -134,18 +112,15 @@ For display, `formatDateRangeLabel` renders the semantic name (`Last 7 days`, op
 - Those controls render only at the top right of **Rolling** and update its draft, so the range and adjustment commit together with one **Apply** action.
 - The semantic `adjustment` union prevents an offset and exclusions from being active simultaneously. Offsets apply only to past rolling ranges. Exclusions can omit an incomplete interval and selected weekdays without changing the resolver's outer bounds.
 
-## Consumer-owned query action
+## Parsing freeform queries
 
-Supplying `onInterpretQuery` adds the natural-language query UI. Consumers can call the exported
-`parseDateRangeQuery(query, { timeZone })` for deterministic support across rolling ranges, named periods,
-fixed dates and times, offsets, and exclusions. Products that need unrestricted language understanding can
-replace it with an AI-backed interpreter returning a `Promise<DateRangeValue>`. Rejected promises are rendered as picker errors.
+`DateRangePicker` doesn't render its own query input, but the exported `parseDateRangeQuery(query, { timeZone })`
+utility gives deterministic support across rolling ranges, named periods, fixed dates and times, offsets, and
+exclusions—wire it up to your own search/input UI and call `onChange` with the result.
 
 Examples understood by `parseDateRangeQuery` include `last 20 days and exclude 2 days`,
 `last 8 weeks excluding weekends`, `month to date`, `Aug 1 to Aug 15`, and
 `from Aug 1 at 9am to Aug 15 at 5:30pm`.
-
-Omit the callback to omit the search field.
 
 ## URL and saved-filter persistence
 
@@ -283,12 +258,6 @@ Use `trigger` for a static custom trigger or `renderTrigger` when the trigger ne
       required: false,
       defaultValue: "false",
       value: "boolean",
-    },
-    {
-      name: "onInterpretQuery",
-      description: "Consumer-owned asynchronous natural-language interpreter.",
-      required: false,
-      value: "(query: string) => Promise<DateRangeValue>",
     },
     {
       name: "weekStartsOn",

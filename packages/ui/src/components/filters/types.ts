@@ -7,7 +7,6 @@ import { MultiSelectOption, MultiSelectProps } from '@components/multi-select'
 import type {
   DateRangeInput,
   DateRangePickerCalendarProps,
-  InterpretDateRangeQuery,
   DateRangePreset as SemanticDateRangePreset,
   DateRangeValue as SemanticDateRangeValue,
   TimeZoneId,
@@ -147,7 +146,6 @@ interface DateRangeFilterOptionConfig<T extends string = string> extends FilterO
     enableTimeSelection?: boolean
     enableOffset?: boolean
     enableExclusions?: boolean
-    onInterpretQuery?: InterpretDateRangeQuery
     weekStartsOn?: Weekday
     defaultTimeZone?: TimeZoneId
   }

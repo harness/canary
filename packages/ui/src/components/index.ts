@@ -163,8 +163,7 @@ export {
   type ParseDateRangeQueryOptions,
   type DateTimeEndpointFieldProps,
   type DateRangeAdjustmentsProps,
-  type DateRangeQuickPreset,
-  type InterpretDateRangeQuery
+  type DateRangeQuickPreset
 } from './date-range-picker'
 export * from './file-upload'
 export * from './input-caption'

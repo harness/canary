@@ -235,8 +235,8 @@ const parseRelative = (query: string, timeZone: TimeZoneId): DateRangeValue | un
 
 /**
  * Deterministic natural-language parser for every semantic range supported by
- * DateRangePicker. Products can replace it with an AI-backed interpreter via
- * onInterpretQuery when they need unrestricted language understanding.
+ * DateRangePicker. Standalone utility—wire it up to your own input/search UI
+ * when you need to accept freeform date range queries.
  */
 export const parseDateRangeQuery = (input: string, options: ParseDateRangeQueryOptions = {}): DateRangeValue => {
   const query = clean(input)

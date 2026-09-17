@@ -10,17 +10,7 @@ import {
   useState
 } from 'react'
 
-import {
-  Button,
-  IconV2,
-  IconV2NamesType,
-  Layout,
-  ScrollArea,
-  Separator,
-  Sheet,
-  Text,
-  useScrollArea
-} from '@/components'
+import { Button, IconV2, IconV2NamesType, Layout, ScrollArea, Separator, Text, useScrollArea } from '@/components'
 import { useTranslation } from '@/context'
 import { cn } from '@utils/cn'
 
@@ -29,31 +19,10 @@ import { useSidebar } from './sidebar-context'
 
 export const SidebarRoot = forwardRef<HTMLDivElement, ComponentProps<'div'> & { side?: 'left' | 'right' }>(
   ({ side = 'left', className, children, ...props }, ref) => {
-    const { isMobile, state, openMobile, setOpenMobile } = useSidebar()
-
-    if (isMobile) {
-      return (
-        <Sheet.Root open={openMobile} onOpenChange={setOpenMobile} {...props}>
-          <Sheet.Content
-            data-mobile="true"
-            className="cn-sidebar !pointer-events-auto"
-            side={side}
-            hideCloseButton
-            modal={false}
-          >
-            {children}
-          </Sheet.Content>
-        </Sheet.Root>
-      )
-    }
+    const { state } = useSidebar()
 
     return (
-      <div
-        ref={ref}
-        className={cn('group peer cn-sidebar-root-responsive min-w-11')}
-        data-state={state}
-        data-side={side}
-      >
+      <div ref={ref} className={cn('group peer cn-sidebar-root min-w-11')} data-state={state} data-side={side}>
         <div className={cn('cn-sidebar cn-sidebar-desktop', className)} data-state={state} {...props}>
           {children}
         </div>
@@ -133,7 +102,11 @@ export const SidebarRail = forwardRef<
       onMouseLeave={() => setHovered(false)}
       {...props}
     >
-      <div className={cn('absolute top-[calc(50%-var(--cn-header-height))] right-0', { 'translate-x-1/2': hovered })}>
+      <div
+        className={cn('absolute top-[calc(50%-var(--cn-header-height))] right-0', {
+          'translate-x-1/2': hovered
+        })}
+      >
         {hovered ? (
           <IconV2 name={open ? 'nav-arrow-left' : 'nav-arrow-right'} size="lg" />
         ) : (

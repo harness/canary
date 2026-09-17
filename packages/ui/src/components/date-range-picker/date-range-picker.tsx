@@ -9,7 +9,6 @@ import { Calendar } from '../calendar'
 import { DropdownMenu } from '../dropdown-menu'
 import { Select } from '../form-primitives/select'
 import { IconV2 } from '../icon-v2'
-import { SearchInput } from '../inputs'
 import { Layout } from '../layout'
 import { Popover } from '../popover'
 import { Separator } from '../separator'
@@ -199,7 +198,6 @@ export const DateRangePickerContent = ({
   // UTC remains the ultimate fallback inside normalizeTimeZone if detection fails.
   defaultTimeZone = getBrowserTimeZone(),
   weekStartsOn,
-  onInterpretQuery,
   calendarProps,
   calendarClassNames,
   showFixedRange = true,
@@ -227,9 +225,6 @@ export const DateRangePickerContent = ({
     normalizedValue ? selectedForValue(initial, weekStartsOn) : undefined
   )
   const [month, setMonth] = useState<Date>(() => selectedForValue(initial, weekStartsOn)?.from ?? new Date())
-  const [query, setQuery] = useState('')
-  const [queryLoading, setQueryLoading] = useState(false)
-  const [queryError, setQueryError] = useState('')
   const [presetDirection, setPresetDirection] = useState<DateRangeDirection>(
     initial.kind === 'relative' ? initial.direction : 'past'
   )
@@ -288,8 +283,6 @@ export const DateRangePickerContent = ({
     setSection(applied ? sectionForValue(next, quickPresets) : 'presets')
     setFixedSelection(selection)
     setMonth(selection?.from ?? new Date())
-    setQuery('')
-    setQueryError('')
     if (next.kind === 'relative') setPresetDirection(next.direction)
   }
 
@@ -302,8 +295,6 @@ export const DateRangePickerContent = ({
     setSection('presets')
     setFixedSelection(undefined)
     setMonth(new Date())
-    setQuery('')
-    setQueryError('')
   }
 
   useEffect(() => {
@@ -431,28 +422,6 @@ export const DateRangePickerContent = ({
     const zone = normalizeTimeZone(nextTimeZone)
     setDraft({ ...draft, timeZone: zone } as DateRangeValue)
     setHasDraftValue(true)
-  }
-
-  const interpretQuery = async () => {
-    const trimmed = query.trim()
-    if (!trimmed || !onInterpretQuery) return
-    setQueryLoading(true)
-    setQueryError('')
-    try {
-      const interpreted = normalizeDateRangeValue(await onInterpretQuery(trimmed), timeZone)
-      if (!interpreted) throw new Error('The query did not return a valid date range')
-      setDraft(interpreted)
-      setHasDraftValue(true)
-      setMode(modeForValue(interpreted))
-      setSection(sectionForValue(interpreted, quickPresets))
-      const selection = selectedForValue(interpreted, weekStartsOn)
-      setFixedSelection(selection)
-      if (selection?.from) setMonth(selection.from)
-    } catch (error) {
-      setQueryError(error instanceof Error ? error.message : 'Unable to interpret date range')
-    } finally {
-      setQueryLoading(false)
-    }
   }
 
   const visibleQuickPresets = quickPresets.filter(
@@ -625,49 +594,6 @@ export const DateRangePickerContent = ({
 
   return (
     <div className={cn('w-[720px] max-w-[calc(100vw-2rem)] overflow-hidden rounded-cn-4 bg-cn-1', className)}>
-      {onInterpretQuery && (
-        <div className="border-cn-2 border-x-0 border-t-0 border-b border-solid p-cn-sm">
-          <SearchInput
-            size="md"
-            debounce={false}
-            aria-label="Describe a date range"
-            placeholder='Describe a date and time range, e.g. "last 7 days"'
-            searchValue={query}
-            onChange={nextQuery => {
-              setQuery(nextQuery)
-              if (queryError) setQueryError('')
-            }}
-            onEnter={() => void interpretQuery()}
-            theme={queryError ? 'danger' : 'default'}
-            className="text-cn-size-5"
-            inputContainerClassName="h-10 w-full"
-            prefix={
-              <span className="grid h-full w-10 shrink-0 place-items-center">
-                <IconV2 name="sparks" size="md" className="text-cn-brand-primary" />
-              </span>
-            }
-            suffix={
-              <Button
-                size="sm"
-                variant="ghost"
-                iconOnly
-                loading={queryLoading}
-                disabled={!query.trim()}
-                onClick={interpretQuery}
-                aria-label="Interpret date range"
-              >
-                <IconV2 name="arrow-right" size="sm" />
-              </Button>
-            }
-          />
-          {queryError && (
-            <Text variant="caption-normal" color="danger" className="mt-cn-2xs block px-cn-xs" role="alert">
-              {queryError}
-            </Text>
-          )}
-        </div>
-      )}
-
       <Layout.Horizontal gap="none" className="min-h-[400px]">
         <aside className="border-cn-2 w-52 shrink-0 border-y-0 border-l-0 border-r border-solid bg-cn-1 p-cn-sm">
           <Sidebar.Provider defaultOpen className="h-auto min-h-0 w-full bg-transparent [--cn-sidebar-min-height:auto]">
@@ -764,15 +690,20 @@ export const DateRangePickerContent = ({
               )}
 
               {section === 'last' && draft.kind === 'relative' && (
-                <Layout.Horizontal align="end" gap="xs">
+                // `wrap="wrap"` so this reflows onto a second line instead of the flex row
+                // shrinking the joined Last/Next control below its content width—that control's
+                // own `overflow-hidden` (needed for the shared border) would silently clip its
+                // label text (e.g. "Next" rendering as "Nex") rather than visibly wrapping.
+                <Layout.Horizontal align="end" gap="xs" wrap="wrap">
                   {/* Joined segmented control (shared border, no gap between options) instead of
-                      the spaced ToggleGroup, so Last/Next reads as one either/or control. */}
+                      the spaced ToggleGroup, so Last/Next reads as one either/or control.
+                      `shrink-0` keeps it from ever being squeezed below its label width. */}
                   <Layout.Horizontal
                     role="radiogroup"
                     aria-label="Rolling direction"
                     align="center"
                     gap="none"
-                    className="border-cn-2 h-8 overflow-hidden rounded-cn-3 border border-solid"
+                    className="border-cn-2 h-8 shrink-0 overflow-hidden rounded-cn-3 border border-solid"
                   >
                     <Button
                       size="sm"

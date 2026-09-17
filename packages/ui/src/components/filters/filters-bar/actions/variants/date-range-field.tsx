@@ -6,7 +6,6 @@ import {
   normalizeDateRangeValue,
   type DateRangeInput,
   type DateRangePickerCalendarProps,
-  type InterpretDateRangeQuery,
   type DateRangePreset as SemanticDateRangePreset,
   type DateRangeValue as SemanticDateRangeValue,
   type TimeZoneId,
@@ -27,7 +26,6 @@ interface DateRangeFieldProps {
   enableTimeSelection?: boolean
   enableOffset?: boolean
   enableExclusions?: boolean
-  onInterpretQuery?: InterpretDateRangeQuery
   weekStartsOn?: Weekday
   defaultTimeZone?: TimeZoneId
 }
@@ -67,7 +65,6 @@ const DateRangeField = ({
   enableTimeSelection,
   enableOffset,
   enableExclusions,
-  onInterpretQuery,
   weekStartsOn,
   // Defaults to the browser's own zone rather than UTC; consumers can still pin an
   // explicit defaultTimeZone via filterFieldConfig when they need a fixed zone.
@@ -85,7 +82,6 @@ const DateRangeField = ({
     enableTimeSelection={enableTimeSelection}
     enableOffset={enableOffset}
     enableExclusions={enableExclusions}
-    onInterpretQuery={onInterpretQuery}
     weekStartsOn={weekStartsOn}
     defaultTimeZone={defaultTimeZone}
   />

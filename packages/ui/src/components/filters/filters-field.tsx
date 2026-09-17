@@ -210,6 +210,15 @@ const FiltersField = <T extends string, V extends FilterValueTypes, CustomValue 
         filterOption.type === FilterFieldTypes.MultiTag ? 'cn-dropdown-menu-overflow-visible' : '',
         dropdownContentClassName
       )}
+      scrollAreaClassName={
+        // The date range picker's sidebar + calendar + footer can exceed the default
+        // ~360px dropdown cap (e.g. the Presets tab's two-month calendar), which clipped
+        // the timezone/Cancel/Apply footer and forced an extra internal scroll that also
+        // scrolled the section sidebar out of view. Let it grow with the viewport instead.
+        filterOption.type === FilterFieldTypes.DateRange
+          ? 'max-h-[min(560px,calc(var(--radix-dropdown-menu-content-available-height)_-_8px))]'
+          : undefined
+      }
       handleRemoveFilter={() => removeFilter()}
       isOpen={isOpen}
       setIsOpen={setIsOpen}

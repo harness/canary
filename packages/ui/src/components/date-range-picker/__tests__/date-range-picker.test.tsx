@@ -438,28 +438,18 @@ describe('DateRangePicker', () => {
     )
   })
 
-  test('only shows optional search and rolling adjustments when enabled', async () => {
+  test('only shows rolling adjustments when enabled', async () => {
     const { rerender } = render(<DateRangePicker value={rollingValue} onChange={vi.fn()} />)
     await openPicker()
 
-    expect(screen.queryByPlaceholderText(/Describe a date and time range/)).not.toBeInTheDocument()
     expect(screen.queryByRole('button', { name: /Offset/ })).not.toBeInTheDocument()
     expect(screen.queryByRole('button', { name: /Exclude/ })).not.toBeInTheDocument()
 
     await userEvent.click(screen.getByRole('button', { name: 'Cancel' }))
-    rerender(
-      <DateRangePicker
-        value={rollingValue}
-        onChange={vi.fn()}
-        onInterpretQuery={async () => rollingValue}
-        enableOffset
-        enableExclusions
-      />
-    )
+    rerender(<DateRangePicker value={rollingValue} onChange={vi.fn()} enableOffset enableExclusions />)
     await openPicker()
     await userEvent.click(screen.getByRole('menuitem', { name: 'Rolling' }))
 
-    expect(screen.getByPlaceholderText(/Describe a date and time range/)).toBeInTheDocument()
     expect(screen.getByRole('button', { name: /Offset/ })).toBeInTheDocument()
     expect(screen.getByRole('button', { name: /Exclude/ })).toBeInTheDocument()
   })

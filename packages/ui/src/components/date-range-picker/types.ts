@@ -162,8 +162,6 @@ export interface DateRangePickerTriggerContext {
   value?: DateRangeValue
 }
 
-export type InterpretDateRangeQuery = (query: string) => Promise<DateRangeValue>
-
 export type DateRangePickerCalendarProps = Omit<
   DayPickerRangeProps,
   'classNames' | 'mode' | 'numberOfMonths' | 'onDayClick' | 'onSelect' | 'selected'
@@ -186,7 +184,6 @@ export interface DateRangePickerProps {
   /** Time zone used when value is absent or does not specify a valid zone. Defaults to the browser's own zone. */
   defaultTimeZone?: TimeZoneId
   weekStartsOn?: Weekday
-  onInterpretQuery?: InterpretDateRangeQuery
   calendarProps?: DateRangePickerCalendarProps
   calendarClassNames?: ClassNames
   trigger?: ReactElement
@@ -210,12 +207,11 @@ export interface DateRangePickerContentProps {
   enableExclusions?: boolean
   /** Set false to hide offset and exclusion controls from this editor. */
   showAdjustmentControls?: boolean
-  /** Compact presets shown below the optional search bar. */
+  /** Compact presets shown below the sidebar. */
   quickPresets?: DateRangeQuickPreset[]
   /** Time zone used when value is absent or does not specify a valid zone. Defaults to the browser's own zone. */
   defaultTimeZone?: TimeZoneId
   weekStartsOn?: Weekday
-  onInterpretQuery?: InterpretDateRangeQuery
   calendarProps?: DateRangePickerCalendarProps
   calendarClassNames?: ClassNames
   /** @deprecated Prefer leaving fixed ranges enabled for consistent picker behavior. */

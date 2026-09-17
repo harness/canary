@@ -92,6 +92,16 @@ describe('HeaderV2', () => {
     expect(screen.getByText('Tab 2')).toBeInTheDocument()
   })
 
+  test('renders tab badge when provided', () => {
+    render(
+      <HeaderV2
+        title="Test Page"
+        tabs={[{ label: 'Tab 1', value: 'tab1', badge: { variant: 'primary', theme: 'info', content: 'New' } }]}
+      />
+    )
+    expect(screen.getByText('New')).toBeInTheDocument()
+  })
+
   test('does not render tabs when not provided', () => {
     render(<HeaderV2 title="Test Page" />)
     expect(screen.queryByRole('tablist')).not.toBeInTheDocument()

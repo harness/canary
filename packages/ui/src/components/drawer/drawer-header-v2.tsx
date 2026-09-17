@@ -30,7 +30,14 @@ const TabsSection: FC<{ items: HeaderV2TabItem[] }> = ({ items }) => {
   return (
     <Tabs.List variant="underlined">
       {items.map(tab => (
-        <Tabs.Trigger key={tab.value} value={tab.value} icon={tab.icon} counter={tab.counter} disabled={tab.disabled}>
+        <Tabs.Trigger
+          key={tab.value}
+          value={tab.value}
+          icon={tab.icon}
+          counter={tab.counter}
+          badge={tab.badge}
+          disabled={tab.disabled}
+        >
           {tab.label}
         </Tabs.Trigger>
       ))}

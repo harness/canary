@@ -850,13 +850,13 @@ Wrap the drawer content in a `Tabs.Root` to enable tab switching. `Drawer.Header
 
         <Drawer.Content size="md">
           <Tabs.Root value={tab} onValueChange={setTab}>
-            <Drawer.Header
+            <Drawer.HeaderV2
               title="Build #1234"
               tagline="Pipelines / main"
               description="Triggered by push to main"
               icon="pipeline"
               tabs={[
-                { label: 'Overview', value: 'overview' },
+                { label: 'Overview', value: 'overview', badge: { variant: 'primary', theme: 'info', content: 'New' } },
                 { label: 'Logs', value: 'logs' },
                 { label: 'Artifacts', value: 'artifacts', counter: 3 },
                 { label: 'Tests', value: 'tests', disabled: true },
@@ -949,7 +949,7 @@ When `isLoading` is true, actions are hidden and the children (metadata) slot re
     {
       name: "tabs",
       description:
-        "Array of tab items rendered as an underlined tab strip at the bottom of the header.",
+        "Array of tab items rendered as an underlined tab strip at the bottom of the header. See HeaderV2TabItem below.",
       required: false,
       value: "HeaderV2TabItem[]",
       defaultValue: "undefined",
@@ -983,6 +983,64 @@ When `isLoading` is true, actions are hidden and the children (metadata) slot re
       required: false,
       value: "string",
       defaultValue: "undefined",
+    },
+  ]}
+/>
+
+### `HeaderV2TabItem`
+
+Each entry in the `tabs` array accepts the following fields.
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "label",
+      description: "Tab label text.",
+      required: true,
+      value: "string",
+    },
+    {
+      name: "value",
+      description: "Unique identifier for the tab.",
+      required: true,
+      value: "string",
+    },
+    {
+      name: "icon",
+      description: "Name of the icon to display before the label.",
+      required: false,
+      value: "IconV2NamesType",
+      defaultValue: "undefined",
+    },
+    {
+      name: "counter",
+      description: "Counter badge value to display after the label.",
+      required: false,
+      value: "number",
+      defaultValue: "undefined",
+    },
+    {
+      name: "badge",
+      description:
+        "Optional status badge rendered after the label. Pass a string for a simple badge, or StatusBadge props (`variant`, `theme`, `content`, etc.).",
+      required: false,
+      value: "string | TabBadgeProps",
+      defaultValue: "undefined",
+    },
+    {
+      name: "disabled",
+      description: "Disables the tab.",
+      required: false,
+      value: "boolean",
+      defaultValue: "false",
+    },
+    {
+      name: "exact",
+      description:
+        "When true, matches the route exactly. Only applies to navigation tabs.",
+      required: false,
+      value: "boolean",
+      defaultValue: "false",
     },
   ]}
 />

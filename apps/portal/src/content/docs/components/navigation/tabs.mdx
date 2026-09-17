@@ -615,6 +615,7 @@ The `Trigger` component represents an individual tab button or navigation link.
   icon="dashboard"          // [OPTIONAL] icon name
   logo="github"             // [OPTIONAL] logo name (mutually exclusive with icon)
   counter={5}               // [OPTIONAL] counter badge value
+  badge="New"               // [OPTIONAL] status badge (string or StatusBadge props)
   variant="underlined"      // [OPTIONAL] override List variant
   className="my-class"      // [OPTIONAL] custom class
   disabled                  // [OPTIONAL] disable the trigger
@@ -671,6 +672,13 @@ The `Trigger` component represents an individual tab button or navigation link.
       description: "Counter badge value to display",
       required: false,
       value: "number | null",
+    },
+    {
+      name: "badge",
+      description:
+        "Status badge rendered after the label. Pass a string for a simple badge, or StatusBadge props (variant, theme, content, etc.)",
+      required: false,
+      value: "string | TabBadgeProps",
     },
 
     {

@@ -178,6 +178,18 @@ describe('DrawerHeaderV2', () => {
     expect(screen.getByRole('tab', { name: 'Inputs' })).toBeInTheDocument()
   })
 
+  test('renders tab badge when provided', () => {
+    render(
+      <Tabs.Root defaultValue="logs">
+        <HeaderV2
+          title="Build"
+          tabs={[{ label: 'Logs', value: 'logs', badge: { variant: 'primary', theme: 'info', content: 'New' } }]}
+        />
+      </Tabs.Root>
+    )
+    expect(screen.getByText('New')).toBeInTheDocument()
+  })
+
   test('does not render tabs when omitted', () => {
     render(<HeaderV2 title="Build" />)
     expect(screen.queryByRole('tablist')).not.toBeInTheDocument()

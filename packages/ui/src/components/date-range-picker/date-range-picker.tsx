@@ -614,20 +614,15 @@ export const DateRangePickerContent = ({
         </aside>
 
         <div className="min-w-0 flex-1">
-          <Layout.Horizontal
-            align="start"
-            justify="between"
-            gap="md"
-            className={cn('p-cn-md', {
-              // Other sections reserve a consistent 88px so switching sections in the sidebar
-              // doesn't jump the calendar up/down. Fixed skips that: its row now sizes to its
-              // own content, so the p-cn-md padding above the fields, below them (before the
-              // separator), and below the separator (calendar's pt-cn-md) all match—an even
-              // rhythm instead of a forced 88px box pushing the fields down.
-              'min-h-[88px]': section !== 'fixed'
-            })}
-          >
-            <div className="min-w-0 flex-1">
+          <Layout.Horizontal align="start" justify="between" gap="md" className="p-cn-md min-h-[88px]">
+            {/* min-h-[88px] applies to every section (including Fixed) so switching sections in
+                the sidebar never jumps the calendar up/down. Fixed's own content (the Start/End
+                row) is much shorter than 88px, so it bottom-anchors itself below (self-stretch +
+                justify-end) instead of sizing this box to fit—that keeps the gap between the
+                fields and the separator equal to the gap between the separator and the calendar
+                (both driven by the same p-cn-md/pt-cn-md tokens) rather than relying on a tight
+                fit that changes this row's height per section. */}
+            <div className={cn('min-w-0 flex-1', section === 'fixed' && 'flex flex-col justify-end self-stretch')}>
               {section === 'presets' && (
                 <div className="space-y-cn-md">
                   {presetActions}
@@ -781,8 +776,9 @@ export const DateRangePickerContent = ({
           {section === 'fixed' && (
             // Only Fixed pairs a Start/End row with the calendar right below it, so only
             // Fixed needs the separator that keeps the two from reading as one control.
-            // Equal padding above (header's p-cn-md) and below (pt-cn-md on the calendar
-            // row) keeps the line centered in the gap instead of hugging the calendar.
+            // The fields bottom-anchor within the header row (see above), so the gap above
+            // this line (header's p-cn-md) matches the gap below it (calendar's pt-cn-md),
+            // keeping the line centered between the two regardless of the header row's height.
             <div className="px-cn-md">
               <Separator />
             </div>

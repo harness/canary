@@ -845,7 +845,7 @@ export const DateRangePickerContent = ({
           {/* Labeled "Clear" instead of a trash icon: the panel header already has a trash
               icon button for deleting the whole filter, so a second trash icon here would
               read as ambiguous/contradictory. */}
-          <Button size="sm" variant="secondary" onClick={clearRange}>
+          <Button size="sm" variant="ghost" onClick={clearRange}>
             Clear
           </Button>
           <Button size="sm" variant="outline" onClick={cancel}>

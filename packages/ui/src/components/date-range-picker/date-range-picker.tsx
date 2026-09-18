@@ -842,15 +842,11 @@ export const DateRangePickerContent = ({
           />
         </Layout.Horizontal>
         <ButtonLayout horizontalAlign="end" className="ml-auto">
-          <Button
-            iconOnly
-            size="sm"
-            variant="transparent"
-            aria-label="Clear range"
-            tooltipProps={{ content: 'Clear range' }}
-            onClick={clearRange}
-          >
-            <IconV2 name="trash" size="sm" />
+          {/* Labeled "Clear" instead of a trash icon: the panel header already has a trash
+              icon button for deleting the whole filter, so a second trash icon here would
+              read as ambiguous/contradictory. */}
+          <Button size="sm" variant="secondary" onClick={clearRange}>
+            Clear
           </Button>
           <Button size="sm" variant="outline" onClick={cancel}>
             Cancel

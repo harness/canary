@@ -121,7 +121,7 @@ describe('DateRangePicker', () => {
     render(<DateRangePicker value={rollingValue} onChange={onChange} />)
 
     await openPicker()
-    await userEvent.click(screen.getByRole('button', { name: 'Clear range' }))
+    await userEvent.click(screen.getByRole('button', { name: 'Clear' }))
 
     expect(onChange).not.toHaveBeenCalled()
     expect(screen.getByRole('menuitem', { name: 'Presets', current: 'page' })).toBeInTheDocument()
@@ -133,7 +133,7 @@ describe('DateRangePicker', () => {
     render(<DateRangePicker value={rollingValue} onChange={onChange} />)
 
     await openPicker()
-    await userEvent.click(screen.getByRole('button', { name: 'Clear range' }))
+    await userEvent.click(screen.getByRole('button', { name: 'Clear' }))
     // Apply stays enabled so an intentional clear of an already-applied range can be committed.
     expect(screen.getByRole('button', { name: 'Apply' })).toBeEnabled()
 
@@ -147,7 +147,7 @@ describe('DateRangePicker', () => {
 
     await openPicker()
     await userEvent.click(screen.getByRole('menuitem', { name: 'Fixed' }))
-    await userEvent.click(screen.getByRole('button', { name: 'Clear range' }))
+    await userEvent.click(screen.getByRole('button', { name: 'Clear' }))
 
     expect(screen.getByRole('button', { name: 'Apply' })).toBeDisabled()
   })
@@ -162,7 +162,7 @@ describe('DateRangePicker', () => {
     expect(screen.getByLabelText('Start time')).toHaveValue('12:00 AM')
     expect(screen.getByLabelText('End time')).toHaveValue('11:59 PM')
 
-    await userEvent.click(screen.getByRole('button', { name: 'Clear range' }))
+    await userEvent.click(screen.getByRole('button', { name: 'Clear' }))
 
     expect(onChange).not.toHaveBeenCalled()
     expect(screen.queryByRole('button', { name: 'UTC' })).not.toBeInTheDocument()

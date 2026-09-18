@@ -617,12 +617,12 @@ export const DateRangePickerContent = ({
           <Layout.Horizontal align="start" justify="between" gap="md" className="p-cn-md min-h-[88px]">
             {/* min-h-[88px] applies to every section (including Fixed) so switching sections in
                 the sidebar never jumps the calendar up/down. Fixed's own content (the Start/End
-                row) is much shorter than 88px, so it bottom-anchors itself below (self-stretch +
-                justify-end) instead of sizing this box to fit—that keeps the gap between the
-                fields and the separator equal to the gap between the separator and the calendar
-                (both driven by the same p-cn-md/pt-cn-md tokens) rather than relying on a tight
-                fit that changes this row's height per section. */}
-            <div className={cn('min-w-0 flex-1', section === 'fixed' && 'flex flex-col justify-end self-stretch')}>
+                row) is much shorter than 88px, so it centers its own leftover slack via
+                mt-cn-sm/mb-cn-sm on the fields grid below instead of sizing this box to fit—that
+                keeps the gap above the fields, the gap below them (before the separator), and
+                the gap below the separator (calendar's matching top padding) all equal, rather
+                than a tight fit that changes this row's height per section. */}
+            <div className="min-w-0 flex-1">
               {section === 'presets' && (
                 <div className="space-y-cn-md">
                   {presetActions}
@@ -662,7 +662,7 @@ export const DateRangePickerContent = ({
                 // month, End from the right month," which isn't true—either endpoint can
                 // land in either visible month. The border above the calendar does the
                 // job of separating this row instead.
-                <Layout.Grid columns={2} align="end" gap="sm">
+                <Layout.Grid columns={2} align="end" gap="sm" className="mt-cn-sm mb-cn-sm">
                   <div className="min-w-0">
                     <DateTimeEndpointField
                       label="Start"
@@ -776,9 +776,9 @@ export const DateRangePickerContent = ({
           {section === 'fixed' && (
             // Only Fixed pairs a Start/End row with the calendar right below it, so only
             // Fixed needs the separator that keeps the two from reading as one control.
-            // The fields bottom-anchor within the header row (see above), so the gap above
-            // this line (header's p-cn-md) matches the gap below it (calendar's pt-cn-md),
-            // keeping the line centered between the two regardless of the header row's height.
+            // The fields' mb-cn-sm plus the header's own p-cn-md give a 28px gap above this
+            // line; the calendar row's matching pt-[28px] below gives the same gap on the
+            // other side, keeping the line centered between the two.
             <div className="px-cn-md">
               <Separator />
             </div>
@@ -788,7 +788,7 @@ export const DateRangePickerContent = ({
             align="start"
             justify="center"
             gap="none"
-            className={cn('min-h-[320px] px-cn-md pb-cn-lg', section === 'fixed' ? 'pt-cn-md' : 'pt-cn-sm')}
+            className={cn('min-h-[320px] px-cn-md pb-cn-lg', section === 'fixed' ? 'pt-[28px]' : 'pt-cn-sm')}
           >
             <Calendar
               {...calendarProps}

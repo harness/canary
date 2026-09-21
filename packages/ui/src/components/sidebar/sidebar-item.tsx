@@ -575,7 +575,7 @@ export const SidebarItem = forwardRef<HTMLButtonElement | HTMLAnchorElement, Sid
       const filteredChildren = filterChildrenByDisplayNames(itemProps.children, [SUBMENU_ITEM_DISPLAY_NAME])
 
       return (
-        <div className="contents">
+        <div className="cn-sidebar-item-submenu-wrapper">
           <WrappedItemTrigger />
           <div
             className="cn-sidebar-submenu-group"

@@ -70,7 +70,7 @@ describe('date range filter integration', () => {
       </TooltipProvider>
     )
 
-    await userEvent.click(screen.getByRole('button', { name: 'Clear range' }))
+    await userEvent.click(screen.getByRole('button', { name: 'Clear' }))
 
     expect(onChange).not.toHaveBeenCalled()
     expect(document.querySelectorAll('[aria-selected="true"]')).toHaveLength(0)

@@ -85,7 +85,7 @@ export default defineConfig({
           items: [
             {
               slug: "changelog",
-              label: "Overview",
+              label: "Change log",
               attrs: { "data-icon": "clipboard-check" },
             },
           ],

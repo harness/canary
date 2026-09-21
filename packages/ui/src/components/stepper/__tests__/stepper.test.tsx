@@ -32,12 +32,14 @@ function BasicStepper({
   value = 'step1',
   onValueChange = vi.fn(),
   completed = false,
+  disableCompletedFade = false,
   showConnectors = false,
   title
 }: {
   value?: string
   onValueChange?: (v: string) => void
   completed?: boolean
+  disableCompletedFade?: boolean
   showConnectors?: boolean
   title?: React.ReactNode
 }) {
@@ -46,6 +48,7 @@ function BasicStepper({
       value={value}
       onValueChange={onValueChange}
       completed={completed}
+      disableCompletedFade={disableCompletedFade}
       showConnectors={showConnectors}
       title={title}
     >
@@ -1205,6 +1208,54 @@ describe('Stepper', () => {
         </Stepper.Root>
       )
       expect(container.querySelector('[data-tooltip-content]')).not.toBeInTheDocument()
+    })
+  })
+
+  describe('UUI-3585 default chrome', () => {
+    test('head pad, connector inset, open-step panel, active badge, and completed mute are defaults', () => {
+      const step = stepperStyles['.cn-stepper-step']
+      expect(step.paddingBlock).toBe('var(--cn-spacing-3)')
+      expect(step.paddingInline).toBe('0')
+
+      const connector = stepperStyles['.cn-stepper-connector']
+      expect(connector.top).toBe('calc(var(--cn-spacing-3) + var(--cn-size-5) + var(--cn-spacing-half))')
+      expect(connector.bottom).toBe('calc(var(--cn-spacing-half) - var(--cn-spacing-3))')
+
+      const lastChild = stepperStyles['.cn-stepper-step-item']['&:last-child'] as {
+        '& .cn-stepper-connector': { bottom: string }
+      }
+      expect(lastChild['& .cn-stepper-connector'].bottom).toBe('var(--cn-spacing-half)')
+
+      expect(stepperStyles['.cn-stepper-step-panel'].marginTop).toBe('0')
+
+      const activeBadge = stepperStyles['.cn-stepper-step-active .cn-stepper-step-badge']
+      expect(activeBadge.borderColor).toBe('var(--cn-set-blue-outline-border)')
+      expect(activeBadge.background).toBe('var(--cn-set-blue-outline-bg)')
+      expect(activeBadge.color).toBe('var(--cn-set-blue-outline-text)')
+
+      const completedItem = stepperStyles[
+        '.cn-stepper:not(.cn-stepper-disable-completed-fade) .cn-stepper-step-item'
+      ] as {
+        '&:has(.cn-stepper-step-completed)': { opacity: string; '&:hover': { opacity: string } }
+      }
+      expect(completedItem['&:has(.cn-stepper-step-completed)'].opacity).toBe('0.6')
+      expect(completedItem['&:has(.cn-stepper-step-completed)']['&:hover'].opacity).toBe('1')
+    })
+  })
+
+  describe('UUI-3726 disableCompletedFade', () => {
+    test('omitting the prop does not add the opt-out class', () => {
+      const { container } = render(<BasicStepper value="step2" />)
+      expect(container.querySelector('nav.cn-stepper')).not.toHaveClass('cn-stepper-disable-completed-fade')
+    })
+
+    test('true adds the opt-out class on root', () => {
+      const { container } = render(<BasicStepper value="step2" disableCompletedFade />)
+      expect(container.querySelector('nav.cn-stepper')).toHaveClass('cn-stepper-disable-completed-fade')
+    })
+
+    test('completed mute does not apply on the ungated step item', () => {
+      expect('&:has(.cn-stepper-step-completed)' in stepperStyles['.cn-stepper-step-item']).toBe(false)
     })
   })
 })

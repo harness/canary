@@ -149,6 +149,7 @@
   },
   "select": {
     "placeholder": "Select an option",
+    "clearSelection": "Clear selection",
     "noResults": "No results found",
     "noOptions": "No options available"
   },

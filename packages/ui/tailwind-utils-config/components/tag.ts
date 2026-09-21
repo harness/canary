@@ -132,7 +132,7 @@ export default {
     },
 
     '.cn-tag-text': {
-      '@apply truncate leading-normal align-middle inline-block': ''
+      '@apply truncate leading-cn-16 align-middle inline-block': ''
     }
   },
 

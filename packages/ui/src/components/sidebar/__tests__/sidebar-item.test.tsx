@@ -349,25 +349,28 @@ describe('SidebarItem', () => {
       })
 
       expect(mockFilter).toHaveBeenCalled()
-      const grids = screen.getAllByTestId('layout-grid')
-      const submenuGrid = grids[grids.length - 1]
-      expect(submenuGrid).toHaveAttribute('data-state', 'open')
+      expect(screen.getByRole('group')).toHaveAttribute('data-state', 'open')
+      expect(screen.getByText('Child')).toBeInTheDocument()
 
       sidebarContext.state = 'collapsed'
       rerender(<SidebarItem {...({ ...baseProps, defaultSubmenuOpen: true, children: submenuChild } as any)} />)
 
-      const updatedGrids = screen.getAllByTestId('layout-grid')
-      const updatedSubmenu = updatedGrids[updatedGrids.length - 1]
-      expect(updatedSubmenu).toHaveAttribute('data-state', 'closed')
+      expect(screen.getByRole('group', { hidden: true })).toHaveAttribute('data-state', 'closed')
+      expect(screen.getByText('Child')).toBeInTheDocument()
+    })
+
+    test('keeps submenu items mounted when closed', () => {
+      renderComponent({ children: submenuChild, defaultSubmenuOpen: false })
+      expect(screen.getByRole('group', { hidden: true })).toHaveAttribute('data-state', 'closed')
+      expect(screen.getByRole('group', { hidden: true })).toHaveAttribute('aria-hidden', 'true')
+      expect(screen.getByText('Child')).toBeInTheDocument()
     })
 
     test('toggles submenu state on button click', async () => {
       renderComponent({ children: submenuChild, defaultSubmenuOpen: false })
       const menuItemButton = screen.getByRole('menuitem')
       await userEvent.click(menuItemButton)
-      const grids = screen.getAllByTestId('layout-grid')
-      const submenuGrid = grids[grids.length - 1]
-      expect(submenuGrid).toHaveAttribute('data-state', 'open')
+      expect(screen.getByRole('group')).toHaveAttribute('data-state', 'open')
     })
 
     test('expands sidebar and opens submenu when clicked while collapsed', async () => {
@@ -382,9 +385,7 @@ describe('SidebarItem', () => {
       sidebarContext.state = 'expanded'
       rerender(<SidebarItem {...({ ...baseProps, children: submenuChild, defaultSubmenuOpen: false } as any)} />)
 
-      const grids = screen.getAllByTestId('layout-grid')
-      const submenuGrid = grids[grids.length - 1]
-      expect(submenuGrid).toHaveAttribute('data-state', 'open')
+      expect(screen.getByRole('group')).toHaveAttribute('data-state', 'open')
     })
 
     test('marks parent active when collapsed and a sub-item has active', () => {

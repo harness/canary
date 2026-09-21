@@ -53,6 +53,8 @@ export interface FlowStepperRailProps {
    * `deriveFlatStepperModel` in flat mode. Visual only — engine derivation, routing, badge totals,
    * and the indeterminate placeholder still follow the engine. Default false. */
   hidePredictedSteps?: boolean
+  /** Forwarded to `Stepper.Root`. Omit or false keeps the default 0.6 completed-step mute. */
+  disableCompletedFade?: boolean
 }
 
 export function FlowStepperRail({
@@ -72,7 +74,8 @@ export function FlowStepperRail({
   renderStepContent,
   renderStepHeaderActions,
   hideUpcomingGroups,
-  hidePredictedSteps
+  hidePredictedSteps,
+  disableCompletedFade
 }: FlowStepperRailProps) {
   const cardStatusMap = new Map(cardHistory.map(e => [e.stepId, e.status]))
   const title = showStepperHeader ? stepperTitle : undefined
@@ -87,6 +90,7 @@ export function FlowStepperRail({
         onValueChange={onValueChange}
         title={title}
         collapsibleNestedSteps={collapsibleNestedSteps}
+        disableCompletedFade={disableCompletedFade}
       >
         {stepsToRender.map(step => {
           const status = cardStatusMap.get(step.stepId)
@@ -144,6 +148,7 @@ export function FlowStepperRail({
       onValueChange={onValueChange}
       title={title}
       collapsibleNestedSteps={collapsibleNestedSteps}
+      disableCompletedFade={disableCompletedFade}
     >
       {groupsToRender.map(derivedStep => {
         const activeStepGroupId = flow.steps[activeStepId]?.step

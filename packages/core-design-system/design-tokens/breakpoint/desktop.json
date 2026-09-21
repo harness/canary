@@ -8,12 +8,21 @@
       "$type": "number",
       "$value": "1080"
     },
+    "viewportXl": {
+      "$type": "number",
+      "$value": "1280"
+    },
     "viewportMax": {
       "$type": "number",
-      "$value": "1919"
+      "$value": "1920"
     }
   },
   "page-container": {
+    "max-width": {
+      "$type": "sizing",
+      "$value": "1280",
+      "$description": "Maximum content width for constrained pages."
+    },
     "spacing-px": {
       "$type": "number",
       "$value": "{spacing.4}",
@@ -49,6 +58,17 @@
         "textCase": "{textCase.none}"
       },
       "$description": "Primary organizational heading that creates clear content boundaries. Establishes consistent rhythm through proper spacing relationships with surrounding elements. Maintains sufficient contrast with body text while creating a harmonious scale progression.\n\nCommon uses: Main topic dividers in articles, Dashboard section headers, Product category headers, Page-level navigation anchors, Form section dividers."
+    },
+    "default": {
+      "$type": "typography",
+      "$value": {
+        "fontFamily": "{fontFamily.default}",
+        "fontWeight": "{fontWeight.default.normal.600}",
+        "fontSize": "{fontSize.8}",
+        "lineHeight": "{lineHeight.28}",
+        "letterSpacing": "{tracking.tight}"
+      },
+      "$description": "General-purpose heading and the default choice for most content headings. Provides clear hierarchy without the visual weight of larger section headings, striking a balance suited to the majority of interface contexts.\n\nCommon uses: Panel and card titles, Form and settings section headers, Dashboard widget titles, Detail-page headings, Dialog and drawer content headings."
     },
     "subsection": {
       "$type": "typography",
@@ -227,7 +247,7 @@
         "$value": {
           "fontFamily": "{fontFamily.default}",
           "fontWeight": "{fontWeight.default.normal.600}",
-          "fontSize": "{fontSize.4}",
+          "fontSize": "{fontSize.3}",
           "lineHeight": "{lineHeight.20}",
           "letterSpacing": "{tracking.normal}",
           "textDecoration": "{textDecoration.none}"
@@ -257,7 +277,7 @@
             "fontWeight": "{fontWeight.default.normal.600}",
             "fontSize": "{fontSize.10}",
             "lineHeight": "{lineHeight.40}",
-            "letterSpacing": "{tracking.tighter}"
+            "letterSpacing": "{tracking.tight}"
           },
           "$description": "Primary document heading that establishes the main topic with prominent visual weight and size. Creates the top level in document hierarchy.\n\nCommon uses: Document titles, Main article headings, Tutorial titles, Report titles."
         },
@@ -268,7 +288,7 @@
             "fontWeight": "{fontWeight.default.normal.600}",
             "fontSize": "{fontSize.9}",
             "lineHeight": "{lineHeight.36}",
-            "letterSpacing": "{tracking.tighter}"
+            "letterSpacing": "{tracking.tight}"
           },
           "$description": "Secondary heading for major content divisions. Creates clear breaks between primary sections while maintaining hierarchical relationship with H1.\n\nCommon uses: Chapter divisions, Major content sections, Topic groups, Process divisions."
         },
@@ -443,7 +463,7 @@
         "fontWeight": "{fontWeight.default.normal.600}",
         "fontSize": "0.6875rem",
         "lineHeight": "{lineHeight.16}",
-        "letterSpacing": "{tracking.wider}"
+        "letterSpacing": "{tracking.wide}"
       },
       "$description": "The smallest service text (labels, signatures, technical information)"
     }

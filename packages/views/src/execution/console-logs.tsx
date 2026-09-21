@@ -84,7 +84,7 @@ const ConsoleLogs: FC<ConsoleLogsProps> = ({ logs, query }) => {
         return (
           <div
             key={index}
-            className={cn('text-cn-size-2 flex w-full items-center pl-cn-lg  font-body-code leading-normal', {
+            className={cn('text-cn-size-2 flex w-full items-center pl-cn-lg  font-body-code leading-cn-16', {
               'bg-logs-background-6': type === LivelogLineType.WARNING,
               'bg-logs-background-7': type === LivelogLineType.ERROR,
               'pt-cn-2xs': index !== 0

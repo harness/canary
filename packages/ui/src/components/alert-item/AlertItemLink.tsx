@@ -18,7 +18,6 @@ export const AlertItemLink = forwardRef<HTMLAnchorElement, AlertItemLinkProps>(
       <Link
         ref={ref}
         variant="default"
-        suffixIcon
         className={cn('z-10', className)}
         {...(external === true
           ? ({ ...linkProps, external: true, target: '_blank', rel: 'noopener noreferrer' } as Extract<

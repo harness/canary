@@ -252,7 +252,8 @@ function NestedStep({
 
   const handleClick = () => {
     ctx.selectNestedStep(value)
-    if (isCollapsible) {
+    const isTerminal = derivedState === 'completed' || derivedState === 'skipped'
+    if (isCollapsible && !isTerminal) {
       setExpanded(true)
     }
   }

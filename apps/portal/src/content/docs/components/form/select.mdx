@@ -6,7 +6,7 @@ description: Select component for choosing a single option from a list
 import { DocsPage } from "@/components/docs-page";
 import { Aside } from "@astrojs/starlight/components";
 
-The `Select` component provides a dropdown interface for selecting a single value from a list of options. It supports both controlled and uncontrolled modes, async loading states, search functionality, and integrates seamlessly with form validation.
+The `Select` component provides a dropdown interface for selecting a single value from a list of options. It supports both controlled and uncontrolled modes, clearable selections, async loading states, search functionality, and integrates seamlessly with form validation.
 
 <DocsPage.ComponentExample
   client:only
@@ -50,6 +50,35 @@ return (
   />
 )
 ```
+
+## Clearable Selection
+
+Set `clearable` to show a clear button when a value is selected. Clearing the field resets the value to `undefined`, calls `onChange(undefined)`, and invokes `onClear` when provided.
+
+<DocsPage.ComponentExample
+  client:only
+  code={`() => {
+    const [value, setValue] = React.useState('banana');
+
+    return (
+      <Select
+        label="Clearable fruit selector"
+        options={[
+          { label: 'Apple', value: 'apple' },
+          { label: 'Banana', value: 'banana' },
+          { label: 'Orange', value: 'orange' },
+          { label: 'Strawberry', value: 'strawberry' },
+        ]}
+        value={value}
+        onChange={setValue}
+        onClear={() => console.log('Selection cleared')}
+        clearable
+        placeholder="Select a fruit"
+      />
+    );
+
+}`}
+/>
 
 ## Suffix Example
 
@@ -740,6 +769,8 @@ The `Select` component is the main component for creating dropdown selections.
   value={value}             // [OPTIONAL] controlled value
   defaultValue              // [OPTIONAL] default value for uncontrolled mode
   onChange={onChange}       // [OPTIONAL] change handler
+  clearable                 // [OPTIONAL] show clear button when selected
+  onClear={onClear}         // [OPTIONAL] callback when selection is cleared
   onOpen={onOpen}           // [OPTIONAL] callback when dropdown opens
   disabled                  // [OPTIONAL] disable the select
   onScrollEnd={onScroll}    // [OPTIONAL] infinite scroll callback
@@ -784,9 +815,24 @@ The `Select` component is the main component for creating dropdown selections.
     },
     {
       name: "onChange",
-      description: "Callback fired when selection changes.",
+      description:
+        "Callback fired when selection changes. Receives undefined when a clearable selection is cleared.",
       required: false,
-      value: "(value: T) => void",
+      value: "(value: T | undefined) => void",
+    },
+    {
+      name: "clearable",
+      description:
+        "Shows a clear button when a value is selected, allowing the selection to be reset.",
+      required: false,
+      value: "boolean",
+      defaultValue: "false",
+    },
+    {
+      name: "onClear",
+      description: "Callback fired when the selected value is cleared.",
+      required: false,
+      value: "() => void",
     },
     {
       name: "onOpen",
@@ -1046,6 +1092,7 @@ type SelectOption<T = string> =
 - Search input appears at the top of the dropdown when `allowSearch` is true
 - The default search implementation filters options by checking if the label contains the query (case-insensitive)
 - Search query is cleared when the dropdown closes or an option is selected
+- When `clearable` is true, selected values can be reset to `undefined`
 - Form validation states (`error`, `warning`) automatically set the appropriate theme
 - The component supports generic types for option values, not limited to strings
 - If optionRenderer is provided, it overrides the default option rendering logic. This can be used to inject custom components such as avatars, icons, or descriptions for each option.

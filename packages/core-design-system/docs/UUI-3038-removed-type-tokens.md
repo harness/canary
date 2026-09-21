@@ -47,7 +47,7 @@ _Kept: 15 (96px). 11/12 still in use → deferred to UUI-2492._
 | ----------------- | ----- | --------------- |
 | `tracking.widest` | 0.1em | "All caps text" |
 
-_Kept: `tracking.tighter` / `tracking.wider` still in use → deferred to UUI-2492._
+_Kept: `tracking.tighter` / `tracking.wider` were still in use → since consolidated in Phase 2 (`tighter`→`tight`, `wider`→`wide`)._
 
 ## textCase (`core/typography.json`)
 

@@ -14,6 +14,7 @@ import {
 } from 'react'
 
 import {
+  Button,
   CommonInputsProp,
   ControlGroup,
   DropdownMenu,
@@ -62,6 +63,10 @@ interface GroupOption<T = string> {
 
 type SelectOption<T = string> = ValueOption<T> | GroupOption<T> | SeparatorOption
 
+type SelectChangeHandler<T> = {
+  bivarianceHack(value: T): void
+}['bivarianceHack']
+
 type SelectItemType =
   | ReactElement<typeof DropdownMenu.Item>
   | ReactElement<typeof DropdownMenu.AvatarItem>
@@ -75,7 +80,8 @@ interface SelectProps<T = string>
   options: SelectOption<T>[] | (() => Promise<SelectOption<T>[]>)
   value?: T
   defaultValue?: T
-  onChange?: (value: T) => void
+  onChange?: SelectChangeHandler<T>
+  onClear?: () => void
   onOpen?: () => void | Promise<void>
   onScrollEnd?: () => void
   isLoading?: boolean
@@ -92,6 +98,7 @@ interface SelectProps<T = string>
   prefix?: ReactNode
   suffix?: ReactNode
   triggerClassName?: string
+  clearable?: boolean
 }
 
 // Helper function to check option types
@@ -146,12 +153,13 @@ function PrefixSuffix({ comp, className }: { comp?: React.ReactNode; className?:
   ) : null
 }
 
-function SelectInner<T = string>(
-  {
+function SelectInner<T = string>(props: SelectProps<T>, ref: ForwardedRef<HTMLButtonElement>) {
+  const {
     options: optionsProp,
     value,
     defaultValue,
     onChange,
+    onClear,
     onOpen,
     disabled,
     onScrollEnd,
@@ -175,16 +183,15 @@ function SelectInner<T = string>(
     prefix,
     suffix,
     triggerClassName,
+    clearable = false,
     wrapperClassName,
     size,
     orientation,
     tooltipContent,
     tooltipProps,
     labelSuffix,
-    ...props
-  }: SelectProps<T>,
-  ref: ForwardedRef<HTMLButtonElement>
-) {
+    ...commonProps
+  } = props
   const [isOpen, setIsOpen] = useState(false)
   const [internalValue, setInternalValue] = useState<T | undefined>(defaultValue)
   const [debouncedSearchQuery, setDebouncedSearchQuery] = useState('')
@@ -197,12 +204,12 @@ function SelectInner<T = string>(
 
   const isHorizontal = orientation === 'horizontal'
 
-  const isControlled = value !== undefined
+  const isControlled = Object.prototype.hasOwnProperty.call(props, 'value')
   const selectedValue = isControlled ? value : internalValue
 
   const placeholder = _placeholder || t('component:select.placeholder', 'Select an option')
 
-  const theme = error ? 'danger' : warning ? 'warning' : props.theme
+  const theme = error ? 'danger' : warning ? 'warning' : commonProps.theme
 
   const id = useMemo(() => defaultId || `select-${generateAlphaNumericHash(10)}`, [defaultId])
 
@@ -280,6 +287,7 @@ function SelectInner<T = string>(
   const showSpinner = [isLoadingOptions, isLoading].some(Boolean)
 
   const hiddenInputRef = useRef<HTMLInputElement>(null)
+  const skipHiddenInputOnChangeRef = useRef(false)
 
   const { searchInputRef, handleSearchKeyDown, getItemProps } = useSearchableDropdownKeyboardNavigation({
     itemsLength: allValueOptions?.length ?? 0
@@ -292,10 +300,11 @@ function SelectInner<T = string>(
       }
       onChange?.(optionValue)
 
-      if (onChange && hiddenInputRef.current) {
+      if (hiddenInputRef.current) {
         hiddenInputRef.current.value = String(optionValue)
-        const event = new Event('change', { bubbles: true })
-        hiddenInputRef.current.dispatchEvent(event)
+        skipHiddenInputOnChangeRef.current = true
+        hiddenInputRef.current.dispatchEvent(new Event('change', { bubbles: true }))
+        skipHiddenInputOnChangeRef.current = false
       }
 
       setIsOpen(false)
@@ -303,6 +312,28 @@ function SelectInner<T = string>(
     },
     [isControlled, onChange]
   )
+
+  const handleClear = useCallback(() => {
+    if (!isControlled) {
+      setInternalValue(undefined)
+    }
+
+    if (onChange) {
+      ;(onChange as (value: T | undefined) => void)(undefined)
+    }
+
+    onClear?.()
+
+    if (hiddenInputRef.current) {
+      hiddenInputRef.current.value = ''
+      skipHiddenInputOnChangeRef.current = true
+      hiddenInputRef.current.dispatchEvent(new Event('change', { bubbles: true }))
+      skipHiddenInputOnChangeRef.current = false
+    }
+
+    setIsOpen(false)
+    setSearchQuery('')
+  }, [isControlled, onChange, onClear])
 
   // Render options recursively
   const renderOptions = (options: SelectOption<T>[], level = 0, resetFlatIndex = true) => {
@@ -412,8 +443,11 @@ function SelectInner<T = string>(
           type="hidden"
           className="sr-only"
           name={name}
-          value={String(selectedValue || '')}
-          onChange={e => onChange?.(e.target.value as T)}
+          value={selectedValue == null ? '' : String(selectedValue)}
+          onChange={e => {
+            if (skipHiddenInputOnChangeRef.current) return
+            onChange?.(e.target.value as T)
+          }}
         />
 
         <DropdownMenu.Root
@@ -439,7 +473,38 @@ function SelectInner<T = string>(
               <Text color={disabled ? 'disabled' : selectedOption ? 'foreground-1' : 'foreground-2'} truncate as="div">
                 {selectedOption ? selectedOption.label : placeholder}
               </Text>
-              <IconV2 name="nav-arrow-down" size="xs" className="cn-select-indicator-icon" />
+              {clearable && selectedOption && !disabled ? (
+                <Button
+                  asChild
+                  className="cn-button-icon-only"
+                  size="xs"
+                  variant="ghost"
+                  rounded
+                  aria-label={t('component:select.clearSelection', 'Clear selection')}
+                  onPointerDown={e => {
+                    e.preventDefault()
+                    e.stopPropagation()
+                  }}
+                  onClick={e => {
+                    e.preventDefault()
+                    e.stopPropagation()
+                    handleClear()
+                  }}
+                  onKeyDown={e => {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                      e.preventDefault()
+                      e.stopPropagation()
+                      handleClear()
+                    }
+                  }}
+                >
+                  <span role="button" tabIndex={0}>
+                    <IconV2 name="xmark" size="xs" />
+                  </span>
+                </Button>
+              ) : (
+                <IconV2 name="nav-arrow-down" size="xs" className="cn-select-indicator-icon" />
+              )}
             </div>
             <PrefixSuffix comp={suffix} className="cn-select-suffix" />
           </DropdownMenu.Trigger>

@@ -51,6 +51,7 @@ const Header: FC<PageHeaderProps> = ({
   headerActions
 }) => {
   const scrollable = usePageScrollable()
+  const maxWidth = usePageMaxWidth()
   const titleElement =
     typeof title === 'string' ? (
       <Text as="h1" variant="heading-section" truncate>
@@ -69,7 +70,8 @@ const Header: FC<PageHeaderProps> = ({
         // In scrollable mode, Page.Root uses `display: contents` on the wrapper,
         // so this header must own its own padding and sticky positioning.
         scrollable &&
-          'sticky top-0 z-10 bg-cn-1 pt-[var(--cn-page-container-spacing-py)] px-[var(--cn-page-container-spacing-px)]'
+          'sticky top-0 z-10 bg-cn-1 pt-[var(--cn-page-container-spacing-py)] px-[var(--cn-page-container-spacing-px)]',
+        scrollable && maxWidth === 'page' && 'max-w-cn-page mx-auto'
       )}
     >
       {(!!backLink || !!headerActions) && (
@@ -116,8 +118,12 @@ const Header: FC<PageHeaderProps> = ({
 Header.displayName = 'PageHeader'
 
 const PageScrollableContext = createContext(false)
+const PageMaxWidthContext = createContext<PageMaxWidth>('full')
 
 export const usePageScrollable = () => useContext(PageScrollableContext)
+export const usePageMaxWidth = () => useContext(PageMaxWidthContext)
+
+export type PageMaxWidth = 'full' | 'page'
 
 /**
  * When `scrollable` is true, Page.Root enables full-page scroll with a sticky header:
@@ -134,29 +140,45 @@ export const usePageScrollable = () => useContext(PageScrollableContext)
 const Root = ({
   children,
   scrollable,
+  maxWidth = 'full',
   mainClassName,
   contentClassName
 }: {
   children: ReactNode
   scrollable?: boolean
+  maxWidth?: PageMaxWidth
   mainClassName?: string
   contentClassName?: string
 }) => {
+  const isConstrained = maxWidth === 'page'
+
   return (
     <PageScrollableContext.Provider value={!!scrollable}>
-      <SandboxLayout.Main className={cn('min-h-0', scrollable && 'overflow-auto', mainClassName)}>
-        {/* `contents` removes this element's box so children participate directly in Main's flex layout.
-            `!p-0` overrides the padding from cn-sandbox-layout-content (applied via tailwind plugin). */}
-        <SandboxLayout.Content className={cn('min-h-0', { 'contents !p-0': scrollable }, contentClassName)}>
-          {children}
-        </SandboxLayout.Content>
-      </SandboxLayout.Main>
+      <PageMaxWidthContext.Provider value={maxWidth}>
+        <SandboxLayout.Main className={cn('min-h-0', scrollable && 'overflow-auto', mainClassName)}>
+          {/* `contents` removes this element's box so children participate directly in Main's flex layout.
+              `!p-0` overrides the padding from cn-sandbox-layout-content (applied via tailwind plugin). */}
+          <SandboxLayout.Content
+            className={cn(
+              'min-h-0',
+              {
+                'contents !p-0': scrollable,
+                'max-w-cn-page mx-auto': isConstrained && !scrollable
+              },
+              contentClassName
+            )}
+          >
+            {children}
+          </SandboxLayout.Content>
+        </SandboxLayout.Main>
+      </PageMaxWidthContext.Provider>
     </PageScrollableContext.Provider>
   )
 }
 
 const Content = ({ children, className }: { children: ReactNode; className?: string }) => {
   const scrollable = usePageScrollable()
+  const maxWidth = usePageMaxWidth()
   // Canvas/fill views pass flex-1 to stretch into available space — they manage
   // their own internal scroll and don't need page-level vertical padding or bottom spacer.
   const isFilledContent = className?.includes('flex-1')
@@ -167,6 +189,7 @@ const Content = ({ children, className }: { children: ReactNode; className?: str
         !scrollable && 'flex-1',
         scrollable && 'cn-page-content',
         scrollable && !isFilledContent && 'cn-page-content-pt',
+        scrollable && maxWidth === 'page' && 'max-w-cn-page mx-auto w-full',
         className
       )}
     >

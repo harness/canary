@@ -38,6 +38,7 @@ import Chainguard from './logos/chainguard.svg'
 import ChatGpt from './logos/chat-gpt.svg'
 import Checkmarx from './logos/checkmarx.svg'
 import Checkov from './logos/checkov.svg'
+import CircleCi from './logos/circle-ci.svg'
 import Claude from './logos/claude.svg'
 import Codecov from './logos/codecov.svg'
 import Composer from './logos/composer.svg'
@@ -78,6 +79,7 @@ import Github from './logos/github.svg'
 import Gitlab from './logos/gitlab.svg'
 import Gitleaks from './logos/gitleaks.svg'
 import Go from './logos/go.svg'
+import Gocd from './logos/gocd.svg'
 import Google from './logos/google.svg'
 import Grafana from './logos/grafana.svg'
 import Group from './logos/group.svg'
@@ -134,6 +136,8 @@ import Queue from './logos/queue.svg'
 import Qwiet from './logos/qwiet.svg'
 import Rancher from './logos/rancher.svg'
 import Redhat from './logos/redhat.svg'
+import RegistryGeneric from './logos/registry-generic.svg'
+import RegistryRaw from './logos/registry-raw.svg'
 import Ruby from './logos/ruby.svg'
 import RunTest from './logos/run-test.svg'
 import Run from './logos/run.svg'
@@ -160,10 +164,12 @@ import Sysdig from './logos/sysdig.svg'
 import Tanzu from './logos/tanzu.svg'
 import TasVars from './logos/tas-vars.svg'
 import Tas from './logos/tas.svg'
+import Teamcity from './logos/teamcity.svg'
 import Tenable from './logos/tenable.svg'
 import Terraform from './logos/terraform.svg'
 import Terragrunt from './logos/terragrunt.svg'
 import Traceable from './logos/traceable.svg'
+import TravisCi from './logos/travis-ci.svg'
 import Veracode from './logos/veracode.svg'
 import VueJs from './logos/vue-js.svg'
 import Windows from './logos/windows.svg'
@@ -209,6 +215,7 @@ export const LogoNameMapV2 = {
   'chat-gpt': ChatGpt,
   checkmarx: Checkmarx,
   checkov: Checkov,
+  'circle-ci': CircleCi,
   claude: Claude,
   codecov: Codecov,
   composer: Composer,
@@ -249,6 +256,7 @@ export const LogoNameMapV2 = {
   gitlab: Gitlab,
   gitleaks: Gitleaks,
   go: Go,
+  gocd: Gocd,
   google: Google,
   grafana: Grafana,
   group: Group,
@@ -305,6 +313,8 @@ export const LogoNameMapV2 = {
   qwiet: Qwiet,
   rancher: Rancher,
   redhat: Redhat,
+  'registry-generic': RegistryGeneric,
+  'registry-raw': RegistryRaw,
   ruby: Ruby,
   'run-test': RunTest,
   run: Run,
@@ -331,10 +341,12 @@ export const LogoNameMapV2 = {
   tanzu: Tanzu,
   'tas-vars': TasVars,
   tas: Tas,
+  teamcity: Teamcity,
   tenable: Tenable,
   terraform: Terraform,
   terragrunt: Terragrunt,
   traceable: Traceable,
+  'travis-ci': TravisCi,
   veracode: Veracode,
   'vue-js': VueJs,
   windows: Windows,

@@ -23,31 +23,31 @@ const PipelineStatus = ({
     <div className="flex justify-between gap-[44px]">
       {commit && (
         <div className="gap-cn-2xs flex flex-col">
-          <span className="text-cn-2 leading-tight">Commit</span>
+          <span className="text-cn-2 leading-cn-16">Commit</span>
           <span className="text-cn-1">{commit}</span>
         </div>
       )}
       {branch && (
         <div className="gap-cn-2xs flex flex-col">
-          <span className="text-cn-2 leading-tight">Branch</span>
+          <span className="text-cn-2 leading-cn-16">Branch</span>
           <span className="text-cn-1">{branch}</span>
         </div>
       )}
       <div className="gap-cn-2xs flex flex-col">
-        <span className="text-cn-2 leading-tight">Status</span>
+        <span className="text-cn-2 leading-cn-16">Status</span>
         <ExecutionStatus.Badge status={status} minimal />
       </div>
       <div className="gap-cn-2xs flex flex-col">
-        <span className="text-cn-2 leading-tight">Build time</span>
+        <span className="text-cn-2 leading-cn-16">Build time</span>
         <span className="text-cn-1">{buildTime}</span>
       </div>
       <div className="gap-cn-2xs flex flex-col">
-        <span className="text-cn-2 leading-tight">Created</span>
+        <span className="text-cn-2 leading-cn-16">Created</span>
         <span className="text-cn-1">{createdTime}</span>
       </div>
       {delegateType && (
         <div className="gap-cn-2xs flex flex-col">
-          <span className="text-cn-2 leading-tight">Delegate type</span>
+          <span className="text-cn-2 leading-cn-16">Delegate type</span>
           <span className="text-cn-1">{delegateType}</span>
         </div>
       )}

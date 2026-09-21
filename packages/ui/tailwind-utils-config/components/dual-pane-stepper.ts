@@ -60,7 +60,28 @@ export default {
 
   '.cn-dual-pane-stepper-content-header': {
     padding: 'var(--cn-spacing-6) var(--cn-spacing-6) 0',
-    flexShrink: '0'
+    flexShrink: '0',
+    gap: 'var(--cn-spacing-3)'
+  },
+
+  // Same v5 setup-head type as SinglePane. These classes own type — do not wrap
+  // the nodes in Text (its font-* / text-cn-* utilities would force !important).
+  // `--cn-line-height-20` / `-24` are not emitted. Title: `--cn-line-height-6-normal`
+  // (24px). Intro: `--cn-line-height-6-tight` (20px).
+  '.cn-dual-pane-stepper-content-title': {
+    margin: '0',
+    fontSize: 'var(--cn-font-size-6)',
+    fontWeight: 'var(--cn-font-weight-default-normal-600)',
+    lineHeight: 'var(--cn-line-height-6-normal)',
+    letterSpacing: 'var(--cn-tracking-tight)',
+    color: 'var(--cn-text-1)'
+  },
+
+  '.cn-dual-pane-stepper-content-subtitle': {
+    margin: '0',
+    fontSize: 'var(--cn-font-size-4)',
+    lineHeight: 'var(--cn-line-height-6-tight)',
+    color: 'var(--cn-text-2)'
   },
 
   '.cn-dual-pane-stepper-card-stack': {

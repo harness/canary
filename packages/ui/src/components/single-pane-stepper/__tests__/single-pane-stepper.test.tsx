@@ -4,7 +4,9 @@ import { render, screen, waitFor } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { describe, expect, test, vi } from 'vitest'
 
+import flowStepperCardStyles from '../../../../tailwind-utils-config/components/flow-stepper-card'
 import singlePaneStepperStyles from '../../../../tailwind-utils-config/components/single-pane-stepper'
+import stepperStyles from '../../../../tailwind-utils-config/components/stepper'
 import { CardContextProvider, FlowEngineProvider, useEngineContext } from '../../flow-stepper/engine'
 import { FlowStepperCard } from '../../flow-stepper/flow-stepper-card'
 import { SinglePaneStepper, useFlowCard } from '../index'
@@ -181,6 +183,16 @@ describe('SinglePaneStepper', () => {
       expect(onClose).toHaveBeenCalledTimes(1)
     })
 
+    test('omitting disableCompletedFade does not add the opt-out class', () => {
+      const { container } = render(<SinglePaneStepper.Root flow={testFlow} />)
+      expect(container.querySelector('nav.cn-stepper')).not.toHaveClass('cn-stepper-disable-completed-fade')
+    })
+
+    test('disableCompletedFade adds the opt-out class on the inner stepper', () => {
+      const { container } = render(<SinglePaneStepper.Root flow={testFlow} disableCompletedFade />)
+      expect(container.querySelector('nav.cn-stepper')).toHaveClass('cn-stepper-disable-completed-fade')
+    })
+
     test('showRootHeader=false hides header even when title provided', () => {
       render(<SinglePaneStepper.Root flow={testFlow} title="Test Flow" showRootHeader={false} />)
       expect(screen.queryByText('Test Flow')).not.toBeInTheDocument()
@@ -231,11 +243,49 @@ describe('SinglePaneStepper', () => {
       expect(Object.hasOwn(inner, '&::after')).toBe(false)
     })
 
-    test('card stack inner matches YAML header vertical padding and keeps side padding', () => {
-      // YAML header uses --cn-spacing-3 (12px) top/bottom. Uniform --cn-spacing-6
-      // (24px) sat the contentTitle a step below the YAML pane title.
+    test('card stack inner uses v5 stack padding', () => {
+      // UUI-3566 — 40px sides (`--cn-spacing-10`). Vertical 16px (`--cn-spacing-4`) lines up
+      // with YAML chrome top.
       const inner = singlePaneStepperStyles['.cn-single-pane-stepper-card-stack-inner']
-      expect(inner.padding).toBe('var(--cn-spacing-3) var(--cn-spacing-6)')
+      expect(inner.padding).toBe('var(--cn-spacing-4) var(--cn-spacing-10) var(--cn-spacing-4)')
+    })
+
+    test('pane surface, title/intro type, and intro-to-first-card gap match v5', () => {
+      expect(singlePaneStepperStyles['.cn-single-pane-stepper-root'].background).toBe('var(--cn-bg-2)')
+
+      const header = singlePaneStepperStyles['.cn-single-pane-stepper-content-header']
+      expect(header.gap).toBe('var(--cn-spacing-3)')
+      expect(header.marginBottom).toBe('var(--cn-spacing-2)')
+
+      const title = singlePaneStepperStyles['.cn-single-pane-stepper-content-title']
+      expect(title.fontSize).toBe('var(--cn-font-size-6)')
+      expect(title.fontWeight).toBe('var(--cn-font-weight-default-normal-600)')
+      expect(title.lineHeight).toBe('var(--cn-line-height-6-normal)')
+      expect(title.color).toBe('var(--cn-text-1)')
+
+      const subtitle = singlePaneStepperStyles['.cn-single-pane-stepper-content-subtitle']
+      expect(subtitle.color).toBe('var(--cn-text-2)')
+      expect(subtitle.lineHeight).toBe('var(--cn-line-height-6-tight)')
+    })
+
+    test('completed item mute does not double-fade inert card body', () => {
+      const reset =
+        flowStepperCardStyles[
+          '.cn-stepper-step-item:has(.cn-stepper-step-completed) .cn-flow-stepper-card-content[inert]'
+        ]
+      expect(reset.opacity).toBe('1')
+    })
+
+    test('completed-step pencil is always visible, not hover-only', () => {
+      // v5 `.pq-card__pencil` is `display: inline-flex` on done/skipped at rest.
+      // Card mute (0.6) still applies. Hover-only opacity hid the affordance.
+      const edit = flowStepperCardStyles['.cn-flow-stepper-card-edit']
+      expect(edit.opacity).toBe('1')
+      expect('.cn-flow-stepper-card:hover .cn-flow-stepper-card-edit' in flowStepperCardStyles).toBe(false)
+      expect(
+        '.cn-stepper-step-item:hover .cn-flow-stepper-card-edit, .cn-stepper-nested-step-item:hover .cn-flow-stepper-card-edit' in
+          flowStepperCardStyles
+      ).toBe(false)
     })
 
     test('does not render stepper header when stepperTitle provided without showStepperHeader', () => {
@@ -588,7 +638,7 @@ describe('SinglePaneStepper', () => {
       })
     })
 
-    test('clicking nested step title expands collapsed panel', async () => {
+    test('clicking nested step title on a completed step opens go-back confirm and does not expand', async () => {
       const { container } = render(<SinglePaneStepper.Root flow={testFlow} />)
       await userEvent.click(screen.getByText('Next'))
       await waitFor(() => {
@@ -605,7 +655,35 @@ describe('SinglePaneStepper', () => {
       await userEvent.click(completedTitle)
 
       await waitFor(() => {
-        expect(panel).toHaveAttribute('data-state', 'open')
+        expect(screen.getByText('Go back?')).toBeInTheDocument()
+      })
+      expect(panel).toHaveAttribute('data-state', 'closed')
+      const goBackCopy = screen.getByText(/Going back to this step will discard/)
+      expect(goBackCopy).toHaveClass('cn-stepper-go-back-body')
+      expect(stepperStyles['.cn-stepper-go-back-body'].color).toBe('var(--cn-text-2)')
+    })
+
+    test('clicking completed card body opens go-back confirm', async () => {
+      const { container } = render(<SinglePaneStepper.Root flow={testFlow} />)
+      await userEvent.click(screen.getByText('Next'))
+      await waitFor(() => {
+        expect(screen.getByText('Answer: yes')).toBeInTheDocument()
+      })
+
+      const completedItem = container.querySelector(
+        '.cn-stepper-nested-step-completed.cn-stepper-nested-step-item-collapsible'
+      )
+      const collapseTrigger = completedItem?.querySelector(
+        '.cn-stepper-nested-step-collapse-trigger'
+      ) as HTMLButtonElement
+      await userEvent.click(collapseTrigger)
+
+      const goBackHit = completedItem?.querySelector('.cn-flow-stepper-card-go-back-hit') as HTMLButtonElement
+      expect(goBackHit).toBeTruthy()
+      await userEvent.click(goBackHit)
+
+      await waitFor(() => {
+        expect(screen.getByText('Go back?')).toBeInTheDocument()
       })
     })
 
@@ -681,12 +759,11 @@ describe('SinglePaneStepper', () => {
         expect(panel).toHaveAttribute('data-state', 'open')
       })
 
-      const restartButton = screen.getByRole('button', { name: 'Redo this step' })
-      expect(restartButton.closest('[inert]')).toBeNull()
-
       const header = completedItem?.querySelector('.cn-stepper-nested-step-header')
       const headerActions = header?.querySelector('.cn-stepper-header-actions')
-      expect(headerActions).toContainElement(restartButton)
+      const restartButton = headerActions?.querySelector('.cn-flow-stepper-card-edit') as HTMLButtonElement
+      expect(restartButton).toHaveAccessibleName('Go back to this step')
+      expect(restartButton.closest('[inert]')).toBeNull()
       expect(headerActions?.nextElementSibling).toBe(collapseTrigger)
       expect(completedItem?.querySelector('.cn-flow-stepper-card-content')).not.toContainElement(restartButton)
 

@@ -50,6 +50,11 @@ export interface SharedFlowStepperRootProps {
    *  timeline. Visual only — engine derivation, routing, badge totals, and the indeterminate
    *  placeholder still follow the engine. Default false. */
   hidePredictedSteps?: boolean
+  /**
+   * When true, completed steps stay at full opacity with no hover/focus restore.
+   * Omit or false keeps the default 0.6 mute. Forwarded to `Stepper.Root`. UUI-3726.
+   */
+  disableCompletedFade?: boolean
   className?: string
   style?: CSSProperties
   /** Rendered after the visual content, inside `FlowEngineProvider` — for context-only consumers

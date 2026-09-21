@@ -26,7 +26,6 @@ interface NavLinkStorageInterface {
 }
 
 export const AppShell: FC = () => {
-  const { isMobile } = useSidebar()
   const routes = useRoutes()
   const { spaceId } = useParams<PathParams>()
   const spaceURL = useGetSpaceURLParam() ?? ''
@@ -73,7 +72,7 @@ export const AppShell: FC = () => {
   return (
     <>
       <AppSideBar>
-        <Breadcrumbs breadcrumbs={breadcrumbs} isMobile={isMobile} withMobileSidebarToggle />
+        <Breadcrumbs breadcrumbs={breadcrumbs} withMobileSidebarToggle />
         <MainContentLayout useSidebar={useSidebar} withBreadcrumbs={breadcrumbs.length > 0}>
           <Outlet />
         </MainContentLayout>

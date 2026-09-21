@@ -618,4 +618,54 @@ describe('Zod Validation System', () => {
       expect(invalidResult.success).toBe(false)
     })
   })
+
+  describe('Object container inputs with runtime/expression values', () => {
+    // An object/group input (nested `inputs`) that the UI can switch to a runtime
+    // input string (e.g. `<+input>`). Before the fix this produced a hard
+    // "Expected object, received string" error because the object schema had no
+    // string-union fallback and globalValidation never ran on the container node.
+    const objectContainerFormDefinition: IFormDefinition = {
+      inputs: [
+        {
+          inputType: 'object',
+          path: 'ref',
+          label: 'Ref',
+          inputs: [
+            { inputType: 'text', path: 'ref.type', label: 'Type', required: true },
+            { inputType: 'text', path: 'ref.name', label: 'Name' }
+          ]
+        }
+      ]
+    }
+
+    const nonFixedGlobalValidation: IGetValidationSchemaOptions = {
+      validationConfig: {
+        globalValidation: (value: unknown) =>
+          typeof value === 'string' && /^<\+.*>$/.test(value) ? { continue: false } : { continue: true }
+      }
+    }
+
+    it('accepts a runtime-input string at an object-container path', async () => {
+      const values = { ref: '<+input>' }
+      const schema = getValidationSchema(objectContainerFormDefinition, values, nonFixedGlobalValidation)
+      const result = await schema.safeParseAsync(values)
+      expect(result.success).toBe(true)
+    })
+
+    it('still validates the nested object shape when a real object is provided', async () => {
+      const schema = getValidationSchema(
+        objectContainerFormDefinition,
+        { ref: { type: 'branch', name: 'main' } },
+        nonFixedGlobalValidation
+      )
+      expect((await schema.safeParseAsync({ ref: { type: 'branch', name: 'main' } })).success).toBe(true)
+      // ref.type is required, so an object missing it must fail.
+      expect((await schema.safeParseAsync({ ref: { name: 'main' } })).success).toBe(false)
+    })
+
+    it('treats an undefined object container as valid (optional)', async () => {
+      const schema = getValidationSchema(objectContainerFormDefinition, {}, nonFixedGlobalValidation)
+      expect((await schema.safeParseAsync({})).success).toBe(true)
+    })
+  })
 })

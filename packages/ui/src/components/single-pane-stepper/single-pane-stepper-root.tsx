@@ -32,7 +32,8 @@ function SinglePaneStepperContent({
   style,
   showStepBadge,
   hideUpcomingGroups,
-  hidePredictedSteps
+  hidePredictedSteps,
+  disableCompletedFade
 }: Omit<SinglePaneStepperRootProps, 'flow' | 'onComplete' | 'onReactivate' | 'children' | 'initialEngineState'>) {
   const { drawerState, closeDrawer, pendingReactivation, confirmReactivation, cancelReactivation } = useEngineContext()
 
@@ -74,6 +75,7 @@ function SinglePaneStepperContent({
           showStepBadge={showStepBadge}
           hideUpcomingGroups={hideUpcomingGroups}
           hidePredictedSteps={hidePredictedSteps}
+          disableCompletedFade={disableCompletedFade}
         />
       </Layout.Vertical>
 
@@ -88,7 +90,9 @@ function SinglePaneStepperContent({
         onCancel={cancelReactivation}
         theme="warning"
       >
-        <AlertDialog.Content title={prompt.title}>{prompt.description}</AlertDialog.Content>
+        <AlertDialog.Content title={prompt.title}>
+          <p className="cn-stepper-go-back-body">{prompt.description}</p>
+        </AlertDialog.Content>
       </AlertDialog.Root>
     </>
   )

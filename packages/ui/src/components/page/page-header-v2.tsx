@@ -3,15 +3,16 @@ import { type FC, type ReactNode } from 'react'
 import { cn } from '../../utils/cn'
 import { IconV2, type IconV2NamesType } from '../icon-v2'
 import { Layout } from '../layout'
-import { Tabs } from '../tabs'
+import { Tabs, type TabBadgeProps } from '../tabs'
 import { Text } from '../text'
-import { usePageScrollable } from './page'
+import { usePageMaxWidth, usePageScrollable } from './page'
 
 export interface HeaderV2TabItem {
   label: string
   value: string
   icon?: IconV2NamesType
   counter?: number
+  badge?: string | TabBadgeProps
   disabled?: boolean
   exact?: boolean
 }
@@ -98,6 +99,7 @@ const NavTabsSection: FC<{ items: HeaderV2TabItem[]; variant?: HeaderV2TabsVaria
           value={tab.value}
           icon={tab.icon}
           counter={tab.counter}
+          badge={tab.badge}
           disabled={tab.disabled}
           exact={tab.exact}
         >
@@ -111,7 +113,14 @@ const NavTabsSection: FC<{ items: HeaderV2TabItem[]; variant?: HeaderV2TabsVaria
 const ContentTabsSection: FC<{ items: HeaderV2TabItem[] }> = ({ items }) => (
   <Tabs.List variant="underlined">
     {items.map(tab => (
-      <Tabs.Trigger key={tab.value} value={tab.value} icon={tab.icon} counter={tab.counter} disabled={tab.disabled}>
+      <Tabs.Trigger
+        key={tab.value}
+        value={tab.value}
+        icon={tab.icon}
+        counter={tab.counter}
+        badge={tab.badge}
+        disabled={tab.disabled}
+      >
         {tab.label}
       </Tabs.Trigger>
     ))}
@@ -132,6 +141,7 @@ export const HeaderV2: FC<PageHeaderV2Props> = ({
   className
 }) => {
   const scrollable = usePageScrollable()
+  const maxWidth = usePageMaxWidth()
   const hasTabs = tabs && tabs.length > 0
   const showInlineTabs = hasTabs && tabsVariant === 'ghost' && !contentTabs
   const showSeparateTabs = hasTabs && !showInlineTabs
@@ -144,6 +154,7 @@ export const HeaderV2: FC<PageHeaderV2Props> = ({
         // In scrollable mode, Page.Root uses `display: contents` on the wrapper,
         // so this header must own its own padding and sticky positioning.
         scrollable && 'sticky top-0 z-10 bg-cn-1 cn-page-content cn-page-content-pt',
+        scrollable && maxWidth === 'page' && 'max-w-cn-page mx-auto',
         className
       )}
     >

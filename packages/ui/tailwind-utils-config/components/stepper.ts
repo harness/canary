@@ -84,13 +84,35 @@ export default {
       },
 
       '& .cn-stepper-connector': {
-        bottom: 'var(--cn-spacing-4-half)'
+        // Last item has no next ring. Default bottom is negative (extends into the next head
+        // pad). Pin a 2px inset so the trunk stops just under this ring (UUI-3574).
+        bottom: 'var(--cn-spacing-half)'
       },
 
       // Stop the trunk where the elbow's rounded corner begins (radius above the branch arm)
       // so the vertical line doesn't poke past the bend on the last step.
       '&:has(.cn-stepper-nested-step-placeholder) .cn-stepper-connector': {
         bottom: 'calc(var(--cn-size-8) + var(--cn-rounded-5))'
+      }
+    }
+  },
+
+  // UUI-3585 — v5 `.pq-card[data-state="done"]` is opacity ~0.58 on the whole card. Canary used
+  // to dim only `[inert]` card body. Opacity on `.cn-stepper-step-content` is a no-op because
+  // that box is `display: contents`. Fade the item (rail head + body). No 0.58 token; 0.6
+  // matches the inert opacity. Hover / completed-head focus-visible restore the way v5 does.
+  // UUI-3726 — `disableCompletedFade` on Root adds `.cn-stepper-disable-completed-fade` so
+  // completed-flow consumers can skip this mute (full opacity, no hover flash).
+  '.cn-stepper:not(.cn-stepper-disable-completed-fade) .cn-stepper-step-item': {
+    '&:has(.cn-stepper-step-completed)': {
+      opacity: '0.6',
+
+      '&:hover': {
+        opacity: '1'
+      },
+
+      '&:has(.cn-stepper-step-completed:focus-visible)': {
+        opacity: '1'
       }
     }
   },
@@ -104,7 +126,11 @@ export default {
     width: '100%',
     border: 'none',
     background: 'none',
-    padding: '0',
+    // UUI-3574 — v5 `.pq-card__head` pad is 16px; signed-off closest token is 12px. Horizontal
+    // stays 0 so the indicator column does not shift. This drops the circle, so the connector
+    // `top` below must move by the same amount or the trunk paints through the number.
+    paddingBlock: 'var(--cn-spacing-3)',
+    paddingInline: '0',
     cursor: 'pointer',
     textAlign: 'left',
 
@@ -214,16 +240,17 @@ export default {
     minWidth: '0'
   },
 
-  // Step badge — opt-in "Step n/m" pill shown next to the step title (StepperStep `showStepBadge`).
-  // Values match the CDv2 prototype (pq-step-badge): neutral surface-2 background, subtle border,
-  // muted text — a de-emphasized progress indicator, not a status/theme tag.
+  // Step badge — opt-in "Step n/m" chip next to the step title (StepperStep `showStepBadge`).
+  // Prototype `.pq-step-badge` is radius 4px (`--cn-rounded-2`), not a pill. `--cn-tag-radius-default`
+  // is `--cn-rounded-3` (6px) and `--cn-rounded-full` is 9999px. Do not use Tag: Tag-sm restyles
+  // type and height (UUI-3585).
   '.cn-stepper-step-badge': {
     display: 'inline-flex',
     alignItems: 'center',
     flexShrink: '0',
     // Vertical padding matches --cn-spacing-half (2px) exactly.
     padding: 'var(--cn-spacing-half) var(--cn-spacing-2)',
-    borderRadius: 'var(--cn-rounded-full)',
+    borderRadius: 'var(--cn-rounded-2)',
     border: 'var(--cn-spacing-px) solid var(--cn-border-2)',
     background: 'var(--cn-bg-2)',
     color: 'var(--cn-text-3)',
@@ -235,11 +262,13 @@ export default {
     lineHeight: '1.35'
   },
 
-  // Active row's badge gets a brand-tinted recolor to match the prototype's active-state badge (base/default case above already matches the prototype's neutral state)
+  // Active row's badge matches v5 `--pq-step-accent` / fill / border (`--cn-set-blue-outline-*`).
+  // Do not use `--cn-border-brand` / `--cn-set-brand-outline-*` — those read as a pill tint, not
+  // the prototype's blue outline chip (UUI-3585).
   '.cn-stepper-step-active .cn-stepper-step-badge': {
-    borderColor: 'var(--cn-border-brand)',
-    background: 'var(--cn-set-brand-outline-bg)',
-    color: 'var(--cn-text-brand)'
+    borderColor: 'var(--cn-set-blue-outline-border)',
+    background: 'var(--cn-set-blue-outline-bg)',
+    color: 'var(--cn-set-blue-outline-text)'
   },
 
   // Step Panel — container for arbitrary content rendered below a top-level Step (no StepGroup
@@ -248,7 +277,8 @@ export default {
   // column (--cn-size-5) plus its gap (--cn-spacing-4) so panel content lines up under the title text.
   '.cn-stepper-step-panel': {
     marginLeft: 'calc(var(--cn-size-5) + var(--cn-spacing-4))',
-    marginTop: 'var(--cn-spacing-2)',
+    // UUI-3575 — v5 head-to-body gap is the head padding-block. Extra panel margin doubles it.
+    marginTop: '0',
     minWidth: '0'
   },
 
@@ -313,8 +343,10 @@ export default {
   '.cn-stepper-connector': {
     position: 'absolute',
     left: 'calc((var(--cn-size-5) - var(--cn-spacing-px)) / 2)',
-    top: 'var(--cn-size-5)',
-    bottom: '0',
+    // v5 connector is `margin: 2px 0`. Offset by the 12px head pad plus that 2px inset so the
+    // trunk misses the number and still meets the next ring (UUI-3574).
+    top: 'calc(var(--cn-spacing-3) + var(--cn-size-5) + var(--cn-spacing-half))',
+    bottom: 'calc(var(--cn-spacing-half) - var(--cn-spacing-3))',
     width: 'var(--cn-spacing-px)',
     borderRadius: 'var(--cn-rounded-1)',
     // The vertical trunk must sit ABOVE the nested-step branch elbows. The branch wires live in the
@@ -656,6 +688,11 @@ export default {
     marginLeft: 'var(--cn-spacing-4)'
   },
 
+  '.cn-stepper-nested-step-item:has(.cn-stepper-nested-step-completed):hover .cn-stepper-nested-step-title, .cn-stepper-nested-step-item:has(.cn-stepper-nested-step-skipped):hover .cn-stepper-nested-step-title':
+    {
+      fontWeight: 'var(--cn-font-weight-default-normal-700)'
+    },
+
   '.cn-stepper-nested-step-description': {
     gridColumn: '3',
     marginTop: 'var(--cn-spacing-half)',
@@ -824,6 +861,15 @@ export default {
     width: '40%',
     height: 'var(--cn-size-3)',
     borderRadius: 'var(--cn-rounded-2)'
+  },
+
+  // AlertDialog body is primary (`--cn-text-1`). Subdued copy is `--cn-text-2` + `font-body-normal`.
+  // Prototype go-back is custom CSS (20px icon, 10px gap, body indented under the title). That is
+  // not AlertDialog. Do not recreate that chrome here.
+  '.cn-stepper-go-back-body': {
+    margin: '0',
+    color: 'var(--cn-text-2)',
+    '@apply font-body-normal': ''
   },
 
   /* Reduced Motion */

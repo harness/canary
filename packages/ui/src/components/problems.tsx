@@ -32,7 +32,7 @@ export interface ProblemsProps<T = unknown> {
 const ProblemsComponent = {
   Root: function Root({ children }: { children: React.ReactNode }) {
     // TODO: needs design review
-    return <div className="min-h-12 overflow-scroll text-[13px] leading-[15px]">{children}</div>
+    return <div className="min-h-12 overflow-scroll text-[13px] leading-cn-16">{children}</div>
   },
 
   Row: function Root({ onClick, children }: { onClick?: () => void; children: React.ReactNode }) {

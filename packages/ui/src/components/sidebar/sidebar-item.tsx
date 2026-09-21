@@ -342,8 +342,12 @@ const SidebarItemTrigger = forwardRef<HTMLButtonElement | HTMLAnchorElement, Sid
         )}
         {withSubmenu && (
           <IconV2
-            name={submenuOpen ? 'nav-arrow-down' : 'nav-arrow-right'}
+            name="nav-arrow-right"
             className="cn-sidebar-item-content-right-element"
+            style={{
+              transform: submenuOpen ? 'rotate(90deg)' : 'rotate(0deg)',
+              transition: 'transform 0.2s ease-out'
+            }}
             size="2xs"
           />
         )}
@@ -568,25 +572,39 @@ export const SidebarItem = forwardRef<HTMLButtonElement | HTMLAnchorElement, Sid
     const withSubmenu = !!itemProps.children
 
     if (withSubmenu) {
-      const filteredChildren = effectiveOpen
-        ? filterChildrenByDisplayNames(itemProps.children, [SUBMENU_ITEM_DISPLAY_NAME])
-        : []
-      const rowsCount = filteredChildren.length + 1
+      const filteredChildren = filterChildrenByDisplayNames(itemProps.children, [SUBMENU_ITEM_DISPLAY_NAME])
 
       return (
         <div className="contents">
           <WrappedItemTrigger />
-          <Layout.Grid
+          <div
             className="cn-sidebar-submenu-group"
             role="group"
-            columns="1fr"
             data-state={effectiveOpen ? 'open' : 'closed'}
+            aria-hidden={!effectiveOpen}
             style={{
-              ...(effectiveOpen ? { maxHeight: `${rowsCount * 40}px` } : { maxHeight: '0px', padding: 0 })
+              gridTemplateRows: effectiveOpen ? '1fr' : '0fr',
+              visibility: effectiveOpen ? 'visible' : 'hidden',
+              // Keep links visible while collapsing, then hide once fully closed.
+              transition: effectiveOpen
+                ? 'grid-template-rows 0.2s ease-out, visibility 0s'
+                : 'grid-template-rows 0.2s ease-out, visibility 0s linear 0.2s'
             }}
           >
-            {filteredChildren}
-          </Layout.Grid>
+            <div style={{ overflow: 'hidden', minHeight: 0 }}>
+              <Layout.Grid
+                columns="1fr"
+                style={{
+                  paddingLeft: 'var(--cn-layout-xl)',
+                  paddingTop: 'var(--cn-sidebar-group-py)',
+                  paddingBottom: 'var(--cn-sidebar-group-py)',
+                  gap: 'var(--cn-spacing-2)'
+                }}
+              >
+                {filteredChildren}
+              </Layout.Grid>
+            </div>
+          </div>
         </div>
       )
     }

@@ -43,81 +43,75 @@ const isComponents = active?.id === "components";
   )
 }
 
-{
-  isComponents && (
-    <script is:inline>
-      (() => {
-        const init = () => {
-        const input = document.querySelector(".cn-component-search input");
-        const sidebar = document.querySelector(".cn-sidebar-scroll-inner");
-        if (!input || !sidebar) return;
+<script is:inline>
+  // Guards on the presence of the search box, so this safely no-ops on pages
+  // outside the Components section where the input is not rendered.
+  (() => {
+    const init = () => {
+      const input = document.querySelector(".cn-component-search input");
+      const sidebar = document.querySelector(".cn-sidebar-scroll-inner");
+      if (!input || !sidebar) return;
 
-        const topList = sidebar.querySelector(
-          "ul.top-level > li > details > ul",
-        );
-        if (!topList) return;
+      const topList = sidebar.querySelector("ul.top-level > li > details > ul");
+      if (!topList) return;
 
-        const items = Array.from(topList.children);
-        // Remember each group's initial open state so we can restore it when
-        // the query is cleared, instead of leaving every group expanded.
-        const groups = items
-          .map((li) => li.querySelector(":scope > details"))
-          .filter(Boolean);
-        const originalOpen = new Map(
-          groups.map((d) => [d, d.hasAttribute("open")]),
-        );
+      const items = Array.from(topList.children);
+      // Remember each group's initial open state so we can restore it when
+      // the query is cleared, instead of leaving every group expanded.
+      const groups = items
+        .map((li) => li.querySelector(":scope > details"))
+        .filter(Boolean);
+      const originalOpen = new Map(
+        groups.map((d) => [d, d.hasAttribute("open")]),
+      );
 
-        const matches = (el, term) =>
-          (el.textContent || "").trim().toLowerCase().includes(term);
+      const matches = (el, term) =>
+        (el.textContent || "").trim().toLowerCase().includes(term);
 
-        const filter = (raw) => {
-          const term = raw.trim().toLowerCase();
+      const filter = (raw) => {
+        const term = raw.trim().toLowerCase();
 
-          items.forEach((li) => {
-            const group = li.querySelector(":scope > details");
+        items.forEach((li) => {
+          const group = li.querySelector(":scope > details");
 
-            if (group) {
-              const summary = group.querySelector(":scope > summary");
-              const subItems = Array.from(
-                group.querySelectorAll(":scope > ul > li"),
-              );
-              const labelMatch = term !== "" && summary && matches(summary, term);
+          if (group) {
+            const summary = group.querySelector(":scope > summary");
+            const subItems = Array.from(
+              group.querySelectorAll(":scope > ul > li"),
+            );
+            const labelMatch = term !== "" && summary && matches(summary, term);
 
-              let groupHasMatch = false;
-              subItems.forEach((subLi) => {
-                const link = subLi.querySelector("a");
-                const show =
-                  term === "" ||
-                  labelMatch ||
-                  (link && matches(link, term));
-                subLi.classList.toggle("hidden", !show);
-                if (show) groupHasMatch = true;
-              });
+            let groupHasMatch = false;
+            subItems.forEach((subLi) => {
+              const link = subLi.querySelector("a");
+              const show =
+                term === "" || labelMatch || (link && matches(link, term));
+              subLi.classList.toggle("hidden", !show);
+              if (show) groupHasMatch = true;
+            });
 
-              li.classList.toggle("hidden", term !== "" && !groupHasMatch);
+            li.classList.toggle("hidden", term !== "" && !groupHasMatch);
 
-              if (term === "") {
-                group.toggleAttribute("open", originalOpen.get(group));
-              } else if (groupHasMatch) {
-                group.setAttribute("open", "");
-              }
-            } else {
-              const link = li.querySelector(":scope > a");
-              const show = term === "" || (link && matches(link, term));
-              li.classList.toggle("hidden", !show);
+            if (term === "") {
+              group.toggleAttribute("open", originalOpen.get(group));
+            } else if (groupHasMatch) {
+              group.setAttribute("open", "");
             }
-          });
-        };
+          } else {
+            const link = li.querySelector(":scope > a");
+            const show = term === "" || (link && matches(link, term));
+            li.classList.toggle("hidden", !show);
+          }
+        });
+      };
 
-        input.addEventListener("input", () => filter(input.value));
-        };
+      input.addEventListener("input", () => filter(input.value));
+    };
 
-        if (document.readyState === "loading") {
-          document.addEventListener("DOMContentLoaded", init);
-        } else {
-          init();
-        }
-      })();
-    </script>
-  )
-}
+    if (document.readyState === "loading") {
+      document.addEventListener("DOMContentLoaded", init);
+    } else {
+      init();
+    }
+  })();
+</script>

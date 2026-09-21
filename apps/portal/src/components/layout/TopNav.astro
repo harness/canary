@@ -15,7 +15,10 @@ const active = getActiveCategory(Astro.url.pathname);
     <SidebarLogo />
   </div>
 
-  <nav class="cn-topnav-tabs cn-tabs-list cn-tabs-list-ghost ml-auto" aria-label="Primary">
+  <nav
+    class="cn-topnav-tabs cn-tabs-list cn-tabs-list-ghost ml-auto"
+    aria-label="Primary"
+  >
     {
       NAV_CATEGORIES.map((category) => (
         <a

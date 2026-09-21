@@ -1107,7 +1107,11 @@ button[aria-label="Search"] {
   isolation: isolate;
   /* Gray.50 base with a Blue.25 wash fading up from the bottom of the viewport */
   background-color: lch(97% 0 272);
-  background-image: linear-gradient(to top, lch(98% 3 240) 0%, transparent 100%);
+  background-image: linear-gradient(
+    to top,
+    lch(98% 3 240) 0%,
+    transparent 100%
+  );
   background-attachment: fixed;
   background-repeat: no-repeat;
   background-size: 100% 100vh;

@@ -626,6 +626,72 @@ describe('Tabs', () => {
       })
     })
 
+    describe('Badge', () => {
+      test('should render string badge', () => {
+        render(
+          <TestWrapper>
+            <Tabs.Root>
+              <Tabs.List>
+                <Tabs.Trigger value="tab1" badge="New">
+                  Tab 1
+                </Tabs.Trigger>
+              </Tabs.List>
+            </Tabs.Root>
+          </TestWrapper>
+        )
+
+        expect(screen.getByText('New')).toBeInTheDocument()
+      })
+
+      test('should render badge from StatusBadge props with a default variant', () => {
+        render(
+          <TestWrapper>
+            <Tabs.Root>
+              <Tabs.List>
+                <Tabs.Trigger value="tab1" badge={{ theme: 'info', content: 'New' }}>
+                  Tab 1
+                </Tabs.Trigger>
+              </Tabs.List>
+            </Tabs.Root>
+          </TestWrapper>
+        )
+
+        const badge = screen.getByText('New')
+        expect(badge.closest('.cn-badge-info')).toBeInTheDocument()
+        expect(badge.closest('.cn-badge-sm')).toBeInTheDocument()
+      })
+
+      test('should render badge after counter', () => {
+        render(
+          <TestWrapper>
+            <Tabs.Root>
+              <Tabs.List>
+                <Tabs.Trigger value="tab1" counter={3} badge="New">
+                  Tab 1
+                </Tabs.Trigger>
+              </Tabs.List>
+            </Tabs.Root>
+          </TestWrapper>
+        )
+
+        expect(screen.getByRole('tab').textContent).toBe('Tab 13New')
+      })
+
+      test('should not render badge when undefined', () => {
+        render(
+          <TestWrapper>
+            <Tabs.Root>
+              <Tabs.List>
+                <Tabs.Trigger value="tab1">Tab 1</Tabs.Trigger>
+              </Tabs.List>
+            </Tabs.Root>
+          </TestWrapper>
+        )
+
+        expect(screen.getByRole('tab').textContent).toBe('Tab 1')
+      })
+    })
+
     describe('Active State', () => {
       test('should apply active class to selected tab', () => {
         render(

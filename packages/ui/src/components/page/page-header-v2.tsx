@@ -3,7 +3,7 @@ import { type FC, type ReactNode } from 'react'
 import { cn } from '../../utils/cn'
 import { IconV2, type IconV2NamesType } from '../icon-v2'
 import { Layout } from '../layout'
-import { Tabs } from '../tabs'
+import { Tabs, type TabBadgeProps } from '../tabs'
 import { Text } from '../text'
 import { usePageMaxWidth, usePageScrollable } from './page'
 
@@ -12,6 +12,7 @@ export interface HeaderV2TabItem {
   value: string
   icon?: IconV2NamesType
   counter?: number
+  badge?: string | TabBadgeProps
   disabled?: boolean
   exact?: boolean
 }
@@ -98,6 +99,7 @@ const NavTabsSection: FC<{ items: HeaderV2TabItem[]; variant?: HeaderV2TabsVaria
           value={tab.value}
           icon={tab.icon}
           counter={tab.counter}
+          badge={tab.badge}
           disabled={tab.disabled}
           exact={tab.exact}
         >
@@ -111,7 +113,14 @@ const NavTabsSection: FC<{ items: HeaderV2TabItem[]; variant?: HeaderV2TabsVaria
 const ContentTabsSection: FC<{ items: HeaderV2TabItem[] }> = ({ items }) => (
   <Tabs.List variant="underlined">
     {items.map(tab => (
-      <Tabs.Trigger key={tab.value} value={tab.value} icon={tab.icon} counter={tab.counter} disabled={tab.disabled}>
+      <Tabs.Trigger
+        key={tab.value}
+        value={tab.value}
+        icon={tab.icon}
+        counter={tab.counter}
+        badge={tab.badge}
+        disabled={tab.disabled}
+      >
         {tab.label}
       </Tabs.Trigger>
     ))}

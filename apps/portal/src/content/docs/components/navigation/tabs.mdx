@@ -660,6 +660,13 @@ An individual tab button (regular tabs) or navigation link (nav tabs). It inheri
       value: "number | null",
     },
     {
+      name: "badge",
+      description:
+        "Status badge rendered after the label. Pass a string for a simple badge, or StatusBadge props (variant, theme, content, etc.)",
+      required: false,
+      value: "string | TabBadgeProps",
+    },
+    {
       name: "disabled",
       description: "Disables the trigger.",
       required: false,

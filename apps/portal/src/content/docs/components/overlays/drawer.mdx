@@ -1583,6 +1583,64 @@ You can override the right pane's floor by setting `--cn-drawer-dual-pane-main-m
   ]}
 />
 
+### `HeaderV2TabItem`
+
+Each entry in the `tabs` array accepts the following fields.
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "label",
+      description: "Tab label text.",
+      required: true,
+      value: "string",
+    },
+    {
+      name: "value",
+      description: "Unique identifier for the tab.",
+      required: true,
+      value: "string",
+    },
+    {
+      name: "icon",
+      description: "Name of the icon to display before the label.",
+      required: false,
+      value: "IconV2NamesType",
+      defaultValue: "undefined",
+    },
+    {
+      name: "counter",
+      description: "Counter badge value to display after the label.",
+      required: false,
+      value: "number",
+      defaultValue: "undefined",
+    },
+    {
+      name: "badge",
+      description:
+        "Optional status badge rendered after the label. Pass a string for a simple badge, or StatusBadge props (`variant`, `theme`, `content`, etc.).",
+      required: false,
+      value: "string | TabBadgeProps",
+      defaultValue: "undefined",
+    },
+    {
+      name: "disabled",
+      description: "Disables the tab.",
+      required: false,
+      value: "boolean",
+      defaultValue: "false",
+    },
+    {
+      name: "exact",
+      description:
+        "When true, matches the route exactly. Only applies to navigation tabs.",
+      required: false,
+      value: "boolean",
+      defaultValue: "false",
+    },
+  ]}
+/>
+
 ### `DualPane`
 
 Dual-pane row layout wrapper.

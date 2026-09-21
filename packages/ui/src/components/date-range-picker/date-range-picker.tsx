@@ -614,8 +614,8 @@ export const DateRangePickerContent = ({
         </aside>
 
         <div className="min-w-0 flex-1">
-          <Layout.Horizontal align="start" justify="between" gap="md" className="p-cn-md min-h-[88px]">
-            {/* min-h-[88px] applies to every section so switching sections in the sidebar never
+          <Layout.Horizontal align="start" justify="between" gap="md" className="p-cn-md min-h-[72px]">
+            {/* min-h-[72px] applies to every section so switching sections in the sidebar never
                 jumps the calendar up/down, and every section now shares the same divider and
                 calendar-row padding below (see the separator block further down), so the whole
                 picker stays in the same visual rhythm regardless of which tab is active. Fixed's

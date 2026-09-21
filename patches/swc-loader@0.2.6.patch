@@ -1,0 +1,14 @@
+diff --git a/package.json b/package.json
+index 7bbe5f0cecb9432e30c8ec57528dc2d9ca33b33e..6927c8ac44511714724cae7e03678501fb534059 100644
+--- a/package.json
++++ b/package.json
+@@ -12,8 +12,7 @@
+     "webpack": "^5.69.1"
+   },
+   "peerDependencies": {
+-    "@swc/core": "^1.2.147",
+-    "webpack": ">=2"
++    "@swc/core": "^1.2.147"
+   },
+   "dependencies": {
+     "@swc/counter": "^0.1.3"

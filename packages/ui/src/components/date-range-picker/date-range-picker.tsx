@@ -615,14 +615,15 @@ export const DateRangePickerContent = ({
 
         <div className="min-w-0 flex-1">
           <Layout.Horizontal align="start" justify="between" gap="md" className="p-cn-md min-h-[88px]">
-            {/* min-h-[88px] applies to every section (including Fixed) so switching sections in
-                the sidebar never jumps the calendar up/down. Fixed's own content (the Start/End
-                row) is much shorter than 88px, so it bottom-anchors itself below (self-stretch +
-                justify-end) instead of sizing this box to fit—that keeps the gap between the
-                fields and the separator equal to the gap between the separator and the calendar
-                (both driven by the same p-cn-md/pt-cn-md tokens) rather than relying on a tight
-                fit that changes this row's height per section. */}
-            <div className={cn('min-w-0 flex-1', section === 'fixed' && 'flex flex-col justify-end self-stretch')}>
+            {/* min-h-[88px] applies to every section so switching sections in the sidebar never
+                jumps the calendar up/down, and every section now shares the same divider and
+                calendar-row padding below (see the separator block further down), so the whole
+                picker stays in the same visual rhythm regardless of which tab is active. Fixed's
+                own content (the Start/End row) is much shorter than 88px, so it splits its own
+                leftover slack evenly via mt-cn-sm/mb-cn-sm on the fields grid instead of sizing
+                to fit or anchoring to one edge—keeping the gap above the fields and the gap
+                below them (before the divider) equal. */}
+            <div className="min-w-0 flex-1">
               {section === 'presets' && (
                 <div className="space-y-cn-md">
                   {presetActions}
@@ -662,7 +663,7 @@ export const DateRangePickerContent = ({
                 // month, End from the right month," which isn't true—either endpoint can
                 // land in either visible month. The border above the calendar does the
                 // job of separating this row instead.
-                <Layout.Grid columns={2} align="end" gap="sm">
+                <Layout.Grid columns={2} align="end" gap="sm" className="mt-cn-sm mb-cn-sm">
                   <div className="min-w-0">
                     <DateTimeEndpointField
                       label="Start"
@@ -741,7 +742,6 @@ export const DateRangePickerContent = ({
               {(section === 'period-to-date' || section === 'previous-period') && draft.kind === 'calendar' && (
                 <Layout.Horizontal align="end" gap="sm">
                   <Select
-                    label={section === 'period-to-date' ? 'Period to date' : 'Previous period'}
                     aria-label="Calendar period"
                     options={section === 'period-to-date' ? PERIOD_TO_DATE_OPTIONS : PREVIOUS_PERIOD_OPTIONS}
                     value={draft.period}
@@ -773,22 +773,17 @@ export const DateRangePickerContent = ({
               )}
           </Layout.Horizontal>
 
-          {section === 'fixed' && (
-            // Only Fixed pairs a Start/End row with the calendar right below it, so only
-            // Fixed needs the separator that keeps the two from reading as one control.
-            // The fields bottom-anchor within the header row (see above), so the gap above
-            // this line (header's p-cn-md) matches the gap below it (calendar's pt-cn-md),
-            // keeping the line centered between the two regardless of the header row's height.
-            <div className="px-cn-md">
-              <Separator />
-            </div>
-          )}
+          {/* Every section shows this divider between its own controls and the calendar below, so
+              the picker reads the same way no matter which tab is active. */}
+          <div className="px-cn-md">
+            <Separator />
+          </div>
 
           <Layout.Horizontal
             align="start"
             justify="center"
             gap="none"
-            className={cn('min-h-[320px] px-cn-md pb-cn-lg', section === 'fixed' ? 'pt-cn-md' : 'pt-cn-sm')}
+            className="min-h-[320px] px-cn-md pb-cn-lg pt-cn-md"
           >
             <Calendar
               {...calendarProps}

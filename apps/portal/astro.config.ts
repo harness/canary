@@ -53,6 +53,11 @@ export default defineConfig({
           collapsed: false,
           items: [
             {
+              slug: "design-system/principles",
+              label: "Principles",
+              attrs: { "data-icon": "light-bulb-on" },
+            },
+            {
               slug: "design-system/architecture-overview",
               label: "Architecture Overview",
               attrs: { "data-icon": "delegates" },

@@ -20,7 +20,7 @@ export const NAV_CATEGORIES: NavCategory[] = [
   {
     id: "docs",
     label: "Docs",
-    href: "/design-system/architecture-overview",
+    href: "/design-system/principles",
     segments: ["getting-started", "design-system", "changelog"],
     groups: ["Getting Started", "Change Log"],
   },

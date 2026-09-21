@@ -187,26 +187,27 @@ code:not(.expressive-code code) {
   @apply text-cn-2 !important;
 }
 
-/* Sidebar search button */
-.cn-sidebar-search {
+/* Global search button (top nav) */
+.cn-topnav-search {
   flex-shrink: 0;
+  width: 240px;
 }
 
-.cn-sidebar-search button[data-open-modal] {
+.cn-topnav-search button[data-open-modal] {
   width: 100% !important;
   justify-content: flex-start !important;
   border-radius: var(--cn-rounded-5) !important;
   border: var(--cn-border-width-1) solid var(--cn-border-3) !important;
   padding: var(--cn-spacing-1-half) var(--cn-spacing-2) var(--cn-spacing-1-half)
     var(--cn-layout-sm) !important;
-  min-height: var(--cn-size-9) !important;
+  min-height: var(--cn-size-8) !important;
   max-width: 100% !important;
   background-color: var(--cn-bg-2) !important;
   box-shadow: none !important;
   @apply text-cn-3 text-cn-size-5 transition-all duration-150;
 }
 
-.cn-sidebar-search button[data-open-modal]:hover {
+.cn-topnav-search button[data-open-modal]:hover {
   background-color: var(--cn-bg-3) !important;
   border-color: var(--cn-border-3) !important;
   box-shadow: none !important;
@@ -695,7 +696,7 @@ button[aria-label="Search"] {
 }
 
 /* Shortcut badge (⌘K) — wrapper kbd */
-.cn-sidebar-search kbd {
+.cn-topnav-search kbd {
   background-color: var(--cn-set-gray-secondary-bg) !important;
   color: var(--cn-set-gray-secondary-text) !important;
   font-size: 11px !important;
@@ -708,8 +709,8 @@ button[aria-label="Search"] {
 }
 
 /* Inner kbds — reset to plain inline text */
-.cn-sidebar-search kbd kbd,
-.cn-sidebar-search kbd kbd.astro-3gqstntz {
+.cn-topnav-search kbd kbd,
+.cn-topnav-search kbd kbd.astro-3gqstntz {
   border: none !important;
   background: transparent !important;
   padding: 0 !important;

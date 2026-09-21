@@ -1,5 +1,4 @@
 ---
-import Search from "@astrojs/starlight/components/Search.astro";
 import CategorySidebar from "./CategorySidebar.astro";
 import TopNav from "./TopNav.astro";
 ---
@@ -13,11 +12,6 @@ import TopNav from "./TopNav.astro";
     <nav
       class="cn-portal-sidebar flex flex-col w-[248px] shrink-0 sticky top-14 h-[calc(100vh-3.5rem)] border-r border-cn-3"
     >
-      <!-- Search -->
-      <div class="cn-sidebar-search flex-shrink-0 px-cn-sm pt-cn-md pb-cn-sm">
-        <Search />
-      </div>
-
       <!-- Scrollable nav -->
       <div class="cn-sidebar-scroll flex-1 min-h-0 overflow-hidden">
         <div

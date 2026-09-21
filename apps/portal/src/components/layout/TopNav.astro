@@ -1,4 +1,5 @@
 ---
+import Search from "@astrojs/starlight/components/Search.astro";
 import SocialIcons from "@astrojs/starlight/components/SocialIcons.astro";
 import SidebarLogo from "./SidebarLogo.astro";
 import ThemeSelect from "./ThemeSelect.astro";
@@ -32,6 +33,11 @@ const active = getActiveCategory(Astro.url.pathname);
       ))
     }
   </nav>
+
+  <!-- Global search — sits to the right of the Data Viz tab -->
+  <div class="cn-topnav-search flex-shrink-0">
+    <Search />
+  </div>
 
   <div class="cn-topnav-actions flex items-center gap-cn-sm">
     <SocialIcons />

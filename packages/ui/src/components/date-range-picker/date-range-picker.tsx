@@ -663,7 +663,7 @@ export const DateRangePickerContent = ({
                 // month, End from the right month," which isn't true—either endpoint can
                 // land in either visible month. The border above the calendar does the
                 // job of separating this row instead.
-                <Layout.Grid columns={2} align="end" gap="sm" className="mt-cn-sm mb-cn-sm">
+                <Layout.Grid columns={2} align="end" gap="sm">
                   <div className="min-w-0">
                     <DateTimeEndpointField
                       label="Start"

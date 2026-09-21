@@ -214,6 +214,50 @@ code:not(.expressive-code code) {
   @apply text-cn-2;
 }
 
+/* Component-scoped sidebar search (Components section only) */
+.cn-component-search-field {
+  display: flex;
+  align-items: center;
+  gap: var(--cn-spacing-1-half);
+  width: 100%;
+  min-height: var(--cn-size-9);
+  padding: 0 var(--cn-spacing-2);
+  border-radius: var(--cn-rounded-5);
+  border: var(--cn-border-width-1) solid var(--cn-border-3);
+  background-color: var(--cn-bg-2);
+  transition: all 150ms;
+}
+
+.cn-component-search-field:focus-within {
+  border-color: var(--cn-border-2);
+}
+
+.cn-component-search-icon {
+  flex-shrink: 0;
+  width: 16px;
+  height: 16px;
+  color: var(--cn-text-3);
+}
+
+.cn-component-search input {
+  width: 100%;
+  border: 0;
+  background: transparent;
+  outline: none;
+  color: var(--cn-text-1);
+  @apply text-cn-size-5;
+}
+
+.cn-component-search input::placeholder {
+  color: var(--cn-text-3);
+}
+
+/* Hide the native search clear control for a consistent look */
+.cn-component-search input::-webkit-search-cancel-button {
+  -webkit-appearance: none;
+  appearance: none;
+}
+
 .cn-portal-sidebar {
   background-color: var(--cn-bg-1);
 

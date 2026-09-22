@@ -378,6 +378,7 @@ import PrComment from './icons/pr-comment.svg'
 import Presentation from './icons/presentation.svg'
 import Prohibition from './icons/prohibition.svg'
 import Project from './icons/project.svg'
+import PromptRepository from './icons/prompt-repository.svg'
 import QuestionMark from './icons/question-mark.svg'
 import Quote from './icons/quote.svg'
 import RedoAction from './icons/redo-action.svg'
@@ -911,6 +912,7 @@ export const IconNameMapV2 = {
   presentation: Presentation,
   prohibition: Prohibition,
   project: Project,
+  'prompt-repository': PromptRepository,
   'question-mark': QuestionMark,
   quote: Quote,
   'redo-action': RedoAction,

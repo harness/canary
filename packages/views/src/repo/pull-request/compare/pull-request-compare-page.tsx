@@ -296,7 +296,7 @@ export const PullRequestComparePage: FC<PullRequestComparePageProps> = ({
                   )}
                   {mergeability === false && (
                     <>
-                      {apiError === "head branch doesn't contain any new commits." ? (
+                      {apiError === "head branch doesn't contain any new commits." || isNoNewCommits ? (
                         <>
                           <IconV2 name="xmark" className="text-cn-3" />
                           <Text variant="body-single-line-normal">

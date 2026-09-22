@@ -1,6 +1,6 @@
 import { KeyboardEvent, useEffect, useState } from 'react'
 
-import { Input } from '../input'
+import { TextInput } from '@/components'
 
 const digitsOnly = (raw: string) => raw.replace(/\D/g, '')
 
@@ -32,7 +32,7 @@ export const PositiveAmountInput = ({ value, onChange, 'aria-label': ariaLabel }
   }
 
   return (
-    <Input
+    <TextInput
       aria-label={ariaLabel}
       type="text"
       inputMode="numeric"
@@ -52,9 +52,7 @@ export const PositiveAmountInput = ({ value, onChange, 'aria-label': ariaLabel }
         setText(String(next))
         if (next !== value) onChange(next)
       }}
-      // `rounded` (Input's default) resolves to an unset token, so the field renders
-      // square next to the Select beside it. Force the same radius Select/Button use.
-      className="!rounded-cn-3 px-cn-xs text-center"
+      className="px-cn-xs text-center"
       // shrink-0 keeps the digits readable when the row runs out of room.
       wrapperClassName="w-16 shrink-0"
     />

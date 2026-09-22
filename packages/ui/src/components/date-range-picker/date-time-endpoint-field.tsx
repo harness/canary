@@ -1,5 +1,6 @@
 import { ChangeEvent, KeyboardEvent, useEffect, useState } from 'react'
 
+import { TextInput } from '@/components'
 import { cn } from '@utils/cn'
 import { addDays, addHours, addMonths, format } from 'date-fns'
 
@@ -166,7 +167,7 @@ export const DateTimeEndpointField = ({
         className
       )}
     >
-      <input
+      <TextInput
         type="text"
         value={text}
         disabled={disabled}
@@ -178,13 +179,17 @@ export const DateTimeEndpointField = ({
         onChange={handleChange}
         onKeyDown={handleKeyDown}
         onBlur={handleBlur}
+        // The shared outer container already supplies the border/background, so this instance
+        // is stripped down to a borderless, transparent field docked flush against it.
+        wrapperClassName="min-w-0"
+        inputContainerClassName="h-full border-none bg-transparent p-0"
         // Sized to the longest formatted date so the time sits beside it, not across the field.
-        className="font-body-single-line-normal h-full w-28 min-w-0 bg-transparent pl-cn-sm pr-cn-2xs text-cn-1 outline-none disabled:text-cn-disabled"
+        className="font-body-single-line-normal h-full w-28 min-w-0 pl-cn-sm pr-cn-2xs text-cn-1 disabled:text-cn-disabled"
       />
       {time !== undefined && onTimeChange && (
         <>
           <Separator orientation="vertical" className="h-4" />
-          <input
+          <TextInput
             type="text"
             value={timeText}
             disabled={disabled}
@@ -206,7 +211,9 @@ export const DateTimeEndpointField = ({
               }
               commitTime(timeText)
             }}
-            className="font-body-single-line-normal h-full w-20 shrink-0 bg-transparent px-cn-xs text-center text-cn-1 outline-none disabled:text-cn-disabled"
+            wrapperClassName="shrink-0"
+            inputContainerClassName="h-full border-none bg-transparent p-0"
+            className="font-body-single-line-normal h-full w-20 shrink-0 text-center text-cn-1 disabled:text-cn-disabled"
           />
         </>
       )}

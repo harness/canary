@@ -438,6 +438,47 @@ describe('DateRangePicker', () => {
     )
   })
 
+  test('disables Apply for a future-direction duration preset when allowFuture is false', async () => {
+    render(<DateRangePicker value={undefined} onChange={vi.fn()} allowFuture={false} />)
+
+    await openPicker()
+    // getDisabledMatchers/updateEndpointDate only guard the Fixed calendar and its text
+    // fields. A "Next" duration preset never touches either, so it must be blocked here too.
+    await choosePresetDirection('Last', 'Next')
+    await userEvent.click(screen.getByRole('radio', { name: '7D' }))
+
+    expect(screen.getByRole('button', { name: 'Apply' })).toBeDisabled()
+  })
+
+  test('clamps a future rolling draft to today when switching to Fixed with allowFuture false', async () => {
+    const onChange = vi.fn()
+    render(
+      <DateRangePicker
+        value={{ kind: 'relative', direction: 'future', amount: 7, unit: 'day', timeZone: 'UTC' }}
+        onChange={onChange}
+        allowFuture={false}
+      />
+    )
+
+    await openPicker()
+    // Converting a future rolling/preset draft straight into an absolute range must clamp
+    // to today too, or the pre-filled Fixed selection could still commit a future range.
+    await userEvent.click(screen.getByRole('menuitem', { name: 'Fixed' }))
+
+    const today = format(new Date(), 'MMM d, yyyy')
+    expect(screen.getByLabelText('Start date')).toHaveValue(today)
+    expect(screen.getByLabelText('End date')).toHaveValue(today)
+
+    await userEvent.click(screen.getByRole('button', { name: 'Apply' }))
+    expect(onChange).toHaveBeenCalledWith(
+      expect.objectContaining({
+        kind: 'absolute',
+        from: expect.objectContaining({ date: toCivilDate(new Date()) }),
+        to: expect.objectContaining({ date: toCivilDate(new Date()) })
+      })
+    )
+  })
+
   test('only shows rolling adjustments when enabled', async () => {
     const { rerender } = render(<DateRangePicker value={rollingValue} onChange={vi.fn()} />)
     await openPicker()

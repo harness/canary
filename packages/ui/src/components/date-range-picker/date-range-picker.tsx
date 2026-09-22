@@ -254,18 +254,25 @@ export const DateRangePickerContent = ({
       : selectedForValue(draft, weekStartsOn)
     : undefined
   const fixedComplete = mode !== 'fixed' || Boolean(fixedSelection?.from && fixedSelection.to)
+  // getDisabledMatchers/updateEndpointDate only block future *days on the Fixed calendar/text
+  // fields*. Rolling "Next" ranges and next_* calendar presets resolve into the future by
+  // construction and never touch those guards, so they need their own check here.
+  const draftTargetsFuture =
+    (draft.kind === 'relative' && draft.direction === 'future') ||
+    (draft.kind === 'calendar' && draft.period.startsWith('next_'))
   // A complete draft can still fail to resolve (e.g. a fixed range whose end time is
   // earlier than its start time on the same day). Guard here so Apply can't commit a
   // range that would later crash resolveDateRange/formatDateRangeLabel downstream.
   const draftResolves = useMemo(() => {
     if (!hasDraftValue || !fixedComplete) return false
+    if (!allowFuture && draftTargetsFuture) return false
     try {
       resolveDateRange(draft, { weekStartsOn })
       return true
     } catch {
       return false
     }
-  }, [draft, fixedComplete, hasDraftValue, weekStartsOn])
+  }, [allowFuture, draft, draftTargetsFuture, fixedComplete, hasDraftValue, weekStartsOn])
   const draftValid = hasDraftValue && fixedComplete && draftResolves
   // The trash button empties the draft so the user can commit "no range" for an already
   // applied value. Apply must stay enabled for that intentional clear even though the
@@ -303,7 +310,16 @@ export const DateRangePickerContent = ({
 
   const switchToFixed = () => {
     const selection = selectedForValue(draft, weekStartsOn)
-    const nextSelection = selection?.from && selection.to ? selection : { from: new Date(), to: new Date() }
+    const rawSelection: DateRange & { from: Date; to: Date } =
+      selection?.from && selection.to ? { from: selection.from, to: selection.to } : { from: new Date(), to: new Date() }
+    // A future rolling/preset draft (e.g. "Next 7 days") converts straight into an absolute
+    // range here. The Fixed calendar's disabled matchers only block *clicking* future days, so
+    // without this the pre-filled selection could still commit a future range on Apply.
+    const now = new Date()
+    const nextSelection: DateRange =
+      allowFuture || (rawSelection.from <= now && rawSelection.to <= now)
+        ? rawSelection
+        : { from: rawSelection.from > now ? now : rawSelection.from, to: rawSelection.to > now ? now : rawSelection.to }
     const previous = draft.kind === 'absolute' ? draft : undefined
     const nextDraft = fixedValueFromRange(nextSelection, timeZone, previous)
     if (nextDraft) setDraft(nextDraft)

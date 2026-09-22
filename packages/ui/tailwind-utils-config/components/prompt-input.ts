@@ -8,11 +8,11 @@ export default {
   '.cn-prompt-input': {
     borderRadius: 'var(--cn-input-ai-radius)',
     padding: 'var(--cn-input-ai-container)',
-    backgroundColor: 'var(--cn-comp-input-bg)',
+    backgroundColor: 'var(--cn-bg-1)',
     // Default: solid border using background trick for consistent transitions
     border: 'var(--cn-input-ai-border) solid transparent',
     background:
-      'linear-gradient(var(--cn-comp-input-bg), var(--cn-comp-input-bg)) padding-box, linear-gradient(var(--cn-border-2), var(--cn-border-2)) border-box',
+      'linear-gradient(var(--cn-bg-1), var(--cn-bg-1)) padding-box, linear-gradient(var(--cn-border-3), var(--cn-border-3)) border-box',
     gap: 'var(--cn-input-ai-gap)',
     display: 'flex',
     flexDirection: 'column',
@@ -58,13 +58,13 @@ export default {
     // Hover: gradient border
     '&:hover': {
       background:
-        'linear-gradient(var(--cn-comp-input-bg), var(--cn-comp-input-bg)) padding-box, conic-gradient(from 131deg, var(--cn-gradient-ai-stop-3), var(--cn-gradient-ai-stop-2), var(--cn-gradient-ai-stop-1), var(--cn-gradient-ai-stop-2), var(--cn-gradient-ai-stop-3)) border-box'
+        'linear-gradient(var(--cn-bg-1), var(--cn-bg-1)) padding-box, conic-gradient(from 131deg, var(--cn-gradient-ai-stop-3), var(--cn-gradient-ai-stop-2), var(--cn-gradient-ai-stop-1), var(--cn-gradient-ai-stop-2), var(--cn-gradient-ai-stop-3)) border-box'
     },
 
     // Focus: animated gradient border + animated glow
     '&:has(.cn-textarea:focus-visible)': {
       background:
-        'linear-gradient(var(--cn-comp-input-bg), var(--cn-comp-input-bg)) padding-box, conic-gradient(from var(--cn-angle), var(--cn-gradient-ai-stop-3), var(--cn-gradient-ai-stop-2), var(--cn-gradient-ai-stop-1), var(--cn-gradient-ai-stop-2), var(--cn-gradient-ai-stop-3)) border-box',
+        'linear-gradient(var(--cn-bg-1), var(--cn-bg-1)) padding-box, conic-gradient(from var(--cn-angle), var(--cn-gradient-ai-stop-3), var(--cn-gradient-ai-stop-2), var(--cn-gradient-ai-stop-1), var(--cn-gradient-ai-stop-2), var(--cn-gradient-ai-stop-3)) border-box',
       animation: 'cn-spin 4s linear infinite, cn-glow-in 0.3s ease-out forwards, cn-glow 5s ease-in-out infinite 0.3s'
     }
   },

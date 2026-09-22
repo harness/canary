@@ -68,9 +68,9 @@ export default {
     '&-container': {
       color: 'var(--cn-text-1)',
       height: 'var(--cn-input-size-md)',
-      border: 'var(--cn-input-border) solid var(--cn-border-2)',
+      border: 'var(--cn-input-border) solid var(--cn-border-3)',
       borderRadius: 'var(--cn-input-radius)',
-      backgroundColor: 'var(--cn-comp-input-bg)',
+      backgroundColor: 'var(--cn-bg-1)',
       '@apply w-full font-body-normal p-0 flex items-center transition-[color,box-shadow,border-color]': '',
 
       '&:where(:focus-within)': {

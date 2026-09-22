@@ -270,6 +270,20 @@ Compact body text with smaller sizing.\`}
 </Layout.Flex>`}
 />
 
+### Muted text
+
+Use the `muted` prop to render markdown content with the subdued `text-cn-3` foreground color. It defaults to `false`.
+
+<DocsPage.ComponentExample
+  client:only
+  code={`<MarkdownViewer
+  muted
+  source={\`This supporting text uses the muted foreground color.
+
+Links and other markdown formatting remain available.\`}
+/>`}
+/>
+
 ### Code suggestions
 
 The MarkdownViewer can render special code suggestion blocks with custom headers and footers. Use the `suggestionBlock`, `suggestionTitle`, and `suggestionFooter` props.
@@ -334,7 +348,7 @@ This image URL will be transformed by the imageUrlTransform function.\`}
 imageUrlTransform={(src) => {
 // Transform relative paths to absolute URLs
 if (!src.startsWith('http')) {
-return \`https://via.placeholder.com/400x200?text=\${encodeURIComponent(src)}\`;
+return \`https://placehold.co/400x200?text=\${encodeURIComponent(src)}\`;
 }
 return src;
 }}
@@ -603,6 +617,14 @@ return (
       description: "Additional CSS classes for the markdown content",
       required: false,
       value: "string",
+    },
+    {
+      name: "muted",
+      description:
+        "Render markdown content with the subdued text-cn-3 foreground color",
+      required: false,
+      defaultValue: "false",
+      value: "boolean",
     },
     {
       name: "showLineNumbers",

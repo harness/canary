@@ -85,6 +85,10 @@ code:not(.expressive-code code) {
   white-space: nowrap !important;
 }
 
+.wmde-markdown pre code {
+  white-space: pre-wrap !important;
+}
+
 /* Table text — match cn-table-v2 component */
 .cn-table-v2-head {
   font-size: var(--cn-font-size-3, 0.75rem) !important;

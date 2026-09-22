@@ -1,4 +1,13 @@
-const { container } = require('webpack')
+// pnpm can install two physically separate copies of the `webpack` package here: one pulled in
+// as a peer of `swc-loader` (which also peers on `@swc/core`), and another pulled in as a peer
+// of `webpack-cli`. `webpack-cli`'s own Compiler/Compilation classes come from the latter, so a
+// `ModuleFederationPlugin` built from the former fails an `instanceof Compilation` check at
+// build time ("The 'compilation' argument must be an instance of Compilation"). Resolving
+// `webpack` starting from `webpack-cli`'s own location guarantees we get the identical instance
+// the CLI will use to run the compiler, regardless of which copy plain `require('webpack')`
+// would otherwise pick up.
+const webpackPath = require.resolve('webpack', { paths: [require.resolve('webpack-cli')] })
+const { container } = require(webpackPath)
 const MonacoWebpackPlugin = require('monaco-editor-webpack-plugin')
 
 const { ModuleFederationPlugin } = container

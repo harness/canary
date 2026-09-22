@@ -20,7 +20,7 @@ const DropdownMenuComponent = <T extends { label: string; value: string }>({
       </DropdownMenu.Trigger>
       <DropdownMenu.Content align="end">
         {items.map(item => (
-          <DropdownMenu.Item key={item.value} onClick={() => onItemSelect(item)} title={item.label} />
+          <DropdownMenu.Item key={item.value} onSelect={() => onItemSelect(item)} title={item.label} />
         ))}
       </DropdownMenu.Content>
     </DropdownMenu.Root>

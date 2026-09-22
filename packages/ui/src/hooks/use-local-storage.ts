@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useCallback, useState } from 'react'
 
 export enum UserPreference {
   SPACE_ID = 'spaceId',
@@ -22,14 +22,17 @@ export function useLocalStorage<T>(key: UserPreference | string, initialValue: T
   })
 
   // Update both state and localStorage
-  const setValue = (value: T) => {
-    try {
-      setStoredValue(value)
-      localStorage.setItem(key, JSON.stringify(value))
-    } catch (error) {
-      console.error('Error writing to localStorage:', error)
-    }
-  }
+  const setValue = useCallback(
+    (value: T) => {
+      try {
+        setStoredValue(value)
+        localStorage.setItem(key, JSON.stringify(value))
+      } catch (error) {
+        console.error('Error writing to localStorage:', error)
+      }
+    },
+    [key]
+  )
 
   return [storedValue, setValue] as const
 }

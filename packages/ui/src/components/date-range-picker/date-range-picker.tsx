@@ -310,16 +310,17 @@ export const DateRangePickerContent = ({
 
   const switchToFixed = () => {
     const selection = selectedForValue(draft, weekStartsOn)
-    const rawSelection: DateRange & { from: Date; to: Date } =
-      selection?.from && selection.to ? { from: selection.from, to: selection.to } : { from: new Date(), to: new Date() }
+    let fromDate = selection?.from ?? new Date()
+    let toDate = selection?.to ?? new Date()
     // A future rolling/preset draft (e.g. "Next 7 days") converts straight into an absolute
     // range here. The Fixed calendar's disabled matchers only block *clicking* future days, so
     // without this the pre-filled selection could still commit a future range on Apply.
-    const now = new Date()
-    const nextSelection: DateRange =
-      allowFuture || (rawSelection.from <= now && rawSelection.to <= now)
-        ? rawSelection
-        : { from: rawSelection.from > now ? now : rawSelection.from, to: rawSelection.to > now ? now : rawSelection.to }
+    if (!allowFuture) {
+      const now = new Date()
+      if (fromDate > now) fromDate = now
+      if (toDate > now) toDate = now
+    }
+    const nextSelection: DateRange = { from: fromDate, to: toDate }
     const previous = draft.kind === 'absolute' ? draft : undefined
     const nextDraft = fixedValueFromRange(nextSelection, timeZone, previous)
     if (nextDraft) setDraft(nextDraft)

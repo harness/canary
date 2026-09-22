@@ -256,10 +256,14 @@ export const DateRangePickerContent = ({
   const fixedComplete = mode !== 'fixed' || Boolean(fixedSelection?.from && fixedSelection.to)
   // getDisabledMatchers/updateEndpointDate only block future *days on the Fixed calendar/text
   // fields*. Rolling "Next" ranges and next_* calendar presets resolve into the future by
-  // construction and never touch those guards, so they need their own check here.
+  // construction and never touch those guards, so they need their own check here. A this_*
+  // calendar period with extent 'full' also resolves its `to` at the start of the *next*
+  // period (i.e. past `now`), so it needs the same guard even though its period name doesn't
+  // start with "next_".
   const draftTargetsFuture =
     (draft.kind === 'relative' && draft.direction === 'future') ||
-    (draft.kind === 'calendar' && draft.period.startsWith('next_'))
+    (draft.kind === 'calendar' && draft.period.startsWith('next_')) ||
+    (draft.kind === 'calendar' && draft.period.startsWith('this_') && draft.extent !== 'to_now')
   // A complete draft can still fail to resolve (e.g. a fixed range whose end time is
   // earlier than its start time on the same day). Guard here so Apply can't commit a
   // range that would later crash resolveDateRange/formatDateRangeLabel downstream.

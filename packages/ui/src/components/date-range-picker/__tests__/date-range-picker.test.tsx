@@ -450,6 +450,32 @@ describe('DateRangePicker', () => {
     expect(screen.getByRole('button', { name: 'Apply' })).toBeDisabled()
   })
 
+  test('disables Apply for a full-extent this_* calendar preset when allowFuture is false', async () => {
+    // A this_month preset with extent 'full' (the default shape returned by
+    // getDefaultDateRangePresets/a custom saved preset) resolves its `to` at the start of
+    // *next* month, i.e. in the future, even though its period name doesn't start with "next_".
+    render(
+      <DateRangePicker
+        value={undefined}
+        onChange={vi.fn()}
+        allowFuture={false}
+        presets={[
+          {
+            id: 'this-month-full',
+            label: 'This month',
+            group: 'recommended',
+            value: { kind: 'calendar', period: 'this_month', extent: 'full', timeZone: 'UTC' }
+          }
+        ]}
+      />
+    )
+
+    await openPicker()
+    await userEvent.click(screen.getByRole('button', { name: 'This month' }))
+
+    expect(screen.getByRole('button', { name: 'Apply' })).toBeDisabled()
+  })
+
   test('clamps a future rolling draft to today when switching to Fixed with allowFuture false', async () => {
     const onChange = vi.fn()
     render(

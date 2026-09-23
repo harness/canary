@@ -9,7 +9,7 @@ export interface BaseInputProps
     VariantProps<typeof inputVariants> {}
 
 const inputVariants = cva(
-  'bg-cn-1 px-cn-sm py-cn-3xs text-cn-1 disabled:cursor-not-allowed disabled:bg-cn-3 disabled:text-cn-3',
+  'bg-cn-2 px-cn-sm py-cn-3xs text-cn-1 disabled:cursor-not-allowed disabled:bg-cn-3 disabled:text-cn-3',
   {
     variants: {
       variant: {
@@ -23,7 +23,7 @@ const inputVariants = cva(
       },
       theme: {
         default:
-          'border-cn-3 focus-within:border-cn-1 focus-visible:border-cn-1 disabled:border-cn-disabled disabled:placeholder:text-cn-disabled',
+          'border-cn-2 focus-within:border-cn-1 focus-visible:border-cn-1 disabled:border-cn-disabled disabled:placeholder:text-cn-disabled',
         danger: 'border-cn-danger',
         clean: 'bg-transparent outline-none focus:outline-none'
       }

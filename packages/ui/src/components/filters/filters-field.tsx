@@ -20,7 +20,7 @@ import {
   FilterOptionConfig,
   FilterValueTypes
 } from './types'
-import { getFilterLabelValue } from './utils'
+import { getDateRangeFilterLabels, getFilterLabelValue } from './utils'
 
 export interface FiltersFieldProps<
   T extends string,
@@ -78,14 +78,12 @@ const FilterFieldInternal = <T extends string, V extends FilterValueTypes, Custo
       return (
         <DateRangeField
           filter={dateRangeFilter}
-          presets={filterOption.filterFieldConfig?.presets}
-          showCustomRange={filterOption.filterFieldConfig?.showCustomRange}
-          calendarProps={filterOption.filterFieldConfig?.calendarProps}
-          calendarClassNames={filterOption.filterFieldConfig?.calendarClassNames}
+          {...filterOption.filterFieldConfig}
           onUpdateFilter={values => {
             onUpdateFilter(values as V)
-            values && setIsOpen(false)
+            setIsOpen(false)
           }}
+          onCancel={() => setIsOpen(false)}
         />
       )
     }
@@ -196,6 +194,13 @@ const FiltersField = <T extends string, V extends FilterValueTypes, CustomValue 
   }
 
   const valueLabel = getFilterLabelValue(filterOption, activeFilterOption)
+  const tooltipContent =
+    filterOption.type === FilterFieldTypes.DateRange
+      ? getDateRangeFilterLabels(
+          activeFilterOption.value as DateRangeValue | undefined,
+          filterOption.filterFieldConfig?.weekStartsOn
+        ).full
+      : valueLabel
 
   return (
     <FilterBoxWrapper
@@ -205,6 +210,15 @@ const FiltersField = <T extends string, V extends FilterValueTypes, CustomValue 
         filterOption.type === FilterFieldTypes.MultiTag ? 'cn-dropdown-menu-overflow-visible' : '',
         dropdownContentClassName
       )}
+      scrollAreaClassName={
+        // The date range picker's sidebar + calendar + footer can exceed the default
+        // ~360px dropdown cap (e.g. the Presets tab's two-month calendar), which clipped
+        // the timezone/Cancel/Apply footer and forced an extra internal scroll that also
+        // scrolled the section sidebar out of view. Let it grow with the viewport instead.
+        filterOption.type === FilterFieldTypes.DateRange
+          ? 'max-h-[min(560px,calc(var(--radix-dropdown-menu-content-available-height)_-_8px))]'
+          : undefined
+      }
       handleRemoveFilter={() => removeFilter()}
       isOpen={isOpen}
       setIsOpen={setIsOpen}
@@ -212,7 +226,7 @@ const FiltersField = <T extends string, V extends FilterValueTypes, CustomValue 
       defaultOpen={shouldOpenFilter}
       filterLabel={filterOption.label}
       valueLabel={valueLabel}
-      tooltipContent={valueLabel}
+      tooltipContent={tooltipContent}
       variant={variant}
     >
       <FilterFieldInternal<T, V, CustomValue>

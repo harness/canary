@@ -21,6 +21,13 @@ interface FiltersProps {
   tooltipContent?: ReactNode
   contentClassName?: string
   /**
+   * Overrides the inner scroll area's class (default caps at `--cn-dropdown-max-height`,
+   * ~360px). Filters whose body can legitimately grow taller than that (e.g. the date range
+   * picker's two-month calendar) pass a taller, viewport-aware max-height here so the footer
+   * (Cancel/Apply) doesn't get clipped and require an extra scroll to reach.
+   */
+  scrollAreaClassName?: string
+  /**
    * Trigger button look. Defaults to `secondary` so existing filter groups stay unchanged.
    * Use `outline` for standalone filters that should match other outline filter controls.
    */
@@ -39,6 +46,7 @@ const FilterBoxWrapper = ({
   tooltipContent,
   onOpenChange,
   contentClassName,
+  scrollAreaClassName,
   variant = 'secondary'
 }: FiltersProps) => {
   const { t } = useTranslation()
@@ -86,7 +94,13 @@ const FilterBoxWrapper = ({
         </Button>
       </DropdownMenu.Trigger>
 
-      <DropdownMenu.Content className={cn('w-[276px]', contentClassName)} align="start">
+      <DropdownMenu.Content
+        className={cn('w-[276px]', contentClassName)}
+        scrollAreaProps={
+          scrollAreaClassName ? { className: cn('cn-dropdown-menu-content', scrollAreaClassName) } : undefined
+        }
+        align="start"
+      >
         <DropdownMenu.Header>
           <Layout.Flex align="center" justify="between">
             <Text as="span">{filterLabel}</Text>

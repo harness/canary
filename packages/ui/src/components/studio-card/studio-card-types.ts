@@ -1,5 +1,6 @@
 import { JSX } from 'react'
 
+import type { IconV2NamesType } from '@components/icon-v2'
 import { StatusBadgeTheme } from '@components/status-badge/status-badge'
 
 export type ExecutionStatusType = 'executing' | 'success' | 'warning' | 'error' | 'queued' | undefined
@@ -7,12 +8,18 @@ export type ExecutionStatusType = 'executing' | 'success' | 'warning' | 'error' 
 export interface StudioCardRootProps {
   isGroupCard?: boolean
   onClick?: React.MouseEventHandler<HTMLDivElement>
-  theme?: 'default' | 'success' | 'warning' | 'danger'
+  theme?: 'default' | 'success' | 'warning' | 'danger' | 'info'
   selected?: boolean
   // It will be updated to a generic value later
   variant?: 'default' | 'stage'
   execution?: boolean
   size?: 'xs' | 'sm' | 'md'
+}
+
+export interface StudioCardTagProps {
+  tagText: string
+  icon?: IconV2NamesType
+  theme?: 'purple' | 'blue' | 'gray'
 }
 
 export interface StudioCardHeaderProps {

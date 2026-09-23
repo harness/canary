@@ -11,6 +11,7 @@ import DataTableDemo from '@subjects/views/data-table-demo'
 import DataTableGroupedHeadersDemo from '@subjects/views/data-table-grouped-headers-demo'
 import DataTablePinnedRowsDemo from '@subjects/views/data-table-pinned-rows-demo'
 import DataTableStickyHeaderDemo from '@subjects/views/data-table-sticky-header-demo'
+import DateRangePickerDemo from '@subjects/views/date-range-picker-demo'
 import DraggableCardsDemo from '@subjects/views/draggable-cards-demo'
 import ExecutionListWrapper from '@subjects/views/execution-list/execution-list'
 import GaugeDemo from '@subjects/views/gauge-demo'
@@ -599,6 +600,14 @@ export const viewPreviews: Record<string, ViewPreviewGroup> = {
   components: {
     label: 'Components',
     items: {
+      'date-range-picker-demo': {
+        label: 'Date Range Picker',
+        element: (
+          <RootViewWrapper>
+            <DateRangePickerDemo />
+          </RootViewWrapper>
+        )
+      },
       'waterfall-progress-demo': {
         label: 'Waterfall Progress',
         element: (

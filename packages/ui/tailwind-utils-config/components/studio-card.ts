@@ -86,7 +86,15 @@ export default {
       '&[data-theme="danger"]': {
         border: '1px solid var(--cn-border-danger) !important',
         boxShadow: '0 0 0 3px color-mix(in srgb, var(--cn-border-danger) 20%, transparent) !important'
+      },
+      '&[data-theme="info"]': {
+        border: '1px solid var(--cn-set-blue-outline-border) !important',
+        boxShadow: '0 0 0 3px color-mix(in srgb, var(--cn-set-blue-outline-border) 20%, transparent) !important'
       }
+    },
+
+    '&[data-theme="info"]': {
+      backgroundColor: 'var(--cn-set-blue-outline-bg)'
     },
 
     '&:has(.cn-studio-card-group:hover)': {
@@ -289,9 +297,24 @@ export default {
   '.cn-studio-card-tag': {
     '@apply flex gap-cn-3xs p-cn-2xs border rounded-t-cn-4 top-[-28px] right-0 absolute select-none': '',
     maxWidth: StudioCardTagMaxWidth,
-    color: 'var(--cn-set-purple-secondary-text)',
-    'background-color': 'var(--cn-set-purple-outline-bg)',
-    'border-color': 'var(--cn-set-purple-outline-border)',
+    '--cn-studio-card-tag-text': 'var(--cn-set-purple-secondary-text)',
+    '--cn-studio-card-tag-outline-bg': 'var(--cn-set-purple-outline-bg)',
+    '--cn-studio-card-tag-outline-border': 'var(--cn-set-purple-outline-border)',
+    color: 'var(--cn-studio-card-tag-text)',
+    'background-color': 'var(--cn-studio-card-tag-outline-bg)',
+    'border-color': 'var(--cn-studio-card-tag-outline-border)',
+
+    '&[data-theme="blue"]': {
+      '--cn-studio-card-tag-text': 'var(--cn-set-blue-secondary-text)',
+      '--cn-studio-card-tag-outline-bg': 'var(--cn-set-blue-outline-bg)',
+      '--cn-studio-card-tag-outline-border': 'var(--cn-set-blue-outline-border)'
+    },
+
+    '&[data-theme="gray"]': {
+      '--cn-studio-card-tag-text': 'var(--cn-set-gray-secondary-text)',
+      '--cn-studio-card-tag-outline-bg': 'var(--cn-set-gray-outline-bg)',
+      '--cn-studio-card-tag-outline-border': 'var(--cn-set-gray-outline-border)'
+    },
 
     // NOT a reusable pattern — values are hand-tuned to --cn-rounded-6.
     // Width, height, bottom offset, and gradient stops must all be
@@ -303,8 +326,8 @@ export default {
       right: '-1px',
       width: 'var(--cn-rounded-6)',
       height: 'var(--cn-rounded-6)',
-      background: `radial-gradient(circle at bottom left, transparent 0px, transparent calc(var(--cn-rounded-6) - 1px), var(--cn-set-purple-outline-border) calc(var(--cn-rounded-6) - 1px), var(--cn-set-purple-outline-border) var(--cn-rounded-6), var(--cn-set-purple-outline-bg) calc(var(--cn-rounded-6) - 1px))`,
-      borderRight: '1px solid var(--cn-set-purple-outline-border)'
+      background: `radial-gradient(circle at bottom left, transparent 0px, transparent calc(var(--cn-rounded-6) - 1px), var(--cn-studio-card-tag-outline-border) calc(var(--cn-rounded-6) - 1px), var(--cn-studio-card-tag-outline-border) var(--cn-rounded-6), var(--cn-studio-card-tag-outline-bg) calc(var(--cn-rounded-6) - 1px))`,
+      borderRight: '1px solid var(--cn-studio-card-tag-outline-border)'
     }
   },
 

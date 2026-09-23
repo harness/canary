@@ -12,13 +12,18 @@ interface IPullRequestStore {
   setPullReqError: (error: UsererrorError | null) => void
   setPullReqLoading: (loading: boolean) => void
   setRefetchPullReq: (refetch: () => void) => void
+  reset: () => void
 }
 
-export const usePullRequestStore = create<IPullRequestStore>(set => ({
+const initialPullRequestStore = {
   pullRequest: null,
   pullReqError: null,
   pullReqLoading: false,
-  refetchPullReq: () => {},
+  refetchPullReq: () => {}
+}
+
+export const usePullRequestStore = create<IPullRequestStore>(set => ({
+  ...initialPullRequestStore,
 
   setPullRequest: data => {
     set({
@@ -39,5 +44,8 @@ export const usePullRequestStore = create<IPullRequestStore>(set => ({
     set({
       refetchPullReq: refetch
     })
+  },
+  reset: () => {
+    set({ ...initialPullRequestStore, pullReqLoading: true })
   }
 }))

@@ -112,6 +112,7 @@ export interface TypesDiffStats {
 
 export interface IPullRequestStore {
   pullRequest?: TypesPullReq | null
+  pullReqError?: UsererrorError | null
 }
 
 export interface TypesPullReq {

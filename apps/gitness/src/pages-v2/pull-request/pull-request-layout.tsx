@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import { useEffect, useLayoutEffect } from 'react'
 import { useParams } from 'react-router-dom'
 
 import { capitalize } from 'lodash-es'
@@ -16,12 +16,11 @@ import { useGetRepoRef } from '../../framework/hooks/useGetRepoPath'
 import useGetPullRequestTab from '../../hooks/useGetPullRequestTab'
 import { useUpstreamRepoUrl } from '../../hooks/useUpstreamRepoUrl'
 import { PathParams } from '../../RouteDefinitions'
-import { usePullRequestProviderStore } from './stores/pull-request-provider-store'
 import { usePullRequestStore } from './stores/pull-request-store'
+import { matchesPullRequestId } from './utils/pull-request-identity'
 
 const PullRequestLayout = () => {
-  const { setPullRequest, setRefetchPullReq, setPullReqError, setPullReqLoading } = usePullRequestStore()
-  const { setPullReqMetadata } = usePullRequestProviderStore()
+  const { setPullRequest, setRefetchPullReq, setPullReqError, setPullReqLoading, reset } = usePullRequestStore()
 
   const { pullRequestId, spaceId, repoId } = useParams<PathParams>()
 
@@ -34,19 +33,25 @@ const PullRequestLayout = () => {
     error: pullReqError,
     isFetching: pullReqLoading,
     refetch: refetchPullReq
-  } = useGetPullReqQuery({
-    repo_ref: repoRef,
-    pullreq_number: Number(pullRequestId),
-    queryParams: {}
-  })
+  } = useGetPullReqQuery(
+    {
+      repo_ref: repoRef,
+      pullreq_number: Number(pullRequestId),
+      queryParams: {}
+    },
+    // repoRef is empty until the scope resolves. Firing before then requests `/repos//+/...`,
+    // and with `retry: false` on the query client that failure stays in the cache.
+    { enabled: !!repoRef && Number.isFinite(Number(pullRequestId)) }
+  )
 
   const pullRequestTab = useGetPullRequestTab({ spaceId, repoId, pullRequestId })
 
-  useEffect(() => {
-    return () => {
-      setPullReqMetadata(undefined)
+  useLayoutEffect(() => {
+    const stored = usePullRequestStore.getState().pullRequest
+    if (stored && !matchesPullRequestId(stored.number, pullRequestId)) {
+      reset()
     }
-  }, [setPullReqMetadata])
+  }, [pullRequestId, reset])
 
   useEffect(() => {
     if (!pullReqData && !pullRequestTab) return
@@ -85,11 +90,14 @@ const PullRequestLayout = () => {
     }
   )
   useEffect(() => {
-    if (pullReqData) {
+    setRefetchPullReq(refetchPullReq)
+    setPullReqLoading(pullReqLoading)
+    setPullReqError(pullReqError ?? null)
+
+    // Only overwrite on success, so a background refetch doesn't blank the header.
+    // Skip payloads that aren't this route — a reset in layoutEffect can race this effect.
+    if (pullReqData && matchesPullRequestId(pullReqData.number, pullRequestId)) {
       setPullRequest(pullReqData)
-      setRefetchPullReq(refetchPullReq)
-      setPullReqLoading(pullReqLoading)
-      setPullReqError(pullReqError)
     }
   }, [
     pullReqData,
@@ -99,7 +107,8 @@ const PullRequestLayout = () => {
     pullReqLoading,
     pullReqError,
     setPullReqError,
-    setPullReqLoading
+    setPullReqLoading,
+    pullRequestId
   ])
 
   const handleUpdateTitleAndDescription = (title: string, description: string) => {

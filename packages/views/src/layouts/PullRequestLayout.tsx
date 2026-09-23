@@ -1,6 +1,6 @@
 import { FC } from 'react'
 
-import { Tabs } from '@harnessio/ui/components'
+import { Skeleton, Tabs } from '@harnessio/ui/components'
 import { useRouterContext, useTranslation } from '@harnessio/ui/context'
 import { SandboxLayout } from '@views/layouts/SandboxLayout'
 import { BranchSelectorContainerProps } from '@views/repo'
@@ -33,13 +33,13 @@ export const PullRequestLayout: FC<PullRequestLayoutProps> = ({
   toUpstreamRepo
 }) => {
   const { Outlet } = useRouterContext()
-  const { pullRequest } = usePullRequestStore()
+  const { pullRequest, pullReqError } = usePullRequestStore()
   const { t } = useTranslation()
 
   return (
     <SandboxLayout.Main fullWidth>
       <SandboxLayout.Content>
-        {pullRequest && (
+        {pullRequest ? (
           <PullRequestHeader
             className="mb-cn-xl"
             updateTitle={(title: string) => {
@@ -50,6 +50,13 @@ export const PullRequestLayout: FC<PullRequestLayoutProps> = ({
             branchSelectorRenderer={branchSelectorRenderer}
             toUpstreamRepo={toUpstreamRepo}
           />
+        ) : (
+          !pullReqError && (
+            <>
+              <Skeleton.Box className="mb-cn-md h-cn-7 w-1/2" />
+              <Skeleton.Box className="mb-cn-xl h-cn-5 w-1/3" />
+            </>
+          )
         )}
 
         <Tabs.NavRoot>

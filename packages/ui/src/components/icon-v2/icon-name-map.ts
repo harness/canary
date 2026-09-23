@@ -436,6 +436,7 @@ import Share from './icons/share.svg'
 import Shield from './icons/shield.svg'
 import Sidebar from './icons/sidebar.svg'
 import SingleView from './icons/single-view.svg'
+import Skills from './icons/skills.svg'
 import SlashSquare from './icons/slash-square.svg'
 import Slash from './icons/slash.svg'
 import Snowflake from './icons/snowflake.svg'
@@ -970,6 +971,7 @@ export const IconNameMapV2 = {
   shield: Shield,
   sidebar: Sidebar,
   'single-view': SingleView,
+  skills: Skills,
   'slash-square': SlashSquare,
   slash: Slash,
   snowflake: Snowflake,

@@ -12,7 +12,8 @@ import {
   StudioCardHeaderProps,
   StudioCardMessageProps,
   StudioCardRootProps,
-  StudioCardStatusProps
+  StudioCardStatusProps,
+  StudioCardTagProps
 } from './studio-card-types'
 
 /**
@@ -267,11 +268,11 @@ function Status({ status, theme, children }: PropsWithChildren<StudioCardStatusP
  * ====================
  */
 
-function Tag({ tagText, icon }: PropsWithChildren<{ tagText: string; icon?: IconV2NamesType }>): JSX.Element {
+function Tag({ tagText, icon, theme = 'purple' }: StudioCardTagProps): JSX.Element {
   const truncatedText = tagText.length > 12 ? `${tagText.slice(0, 12)}...` : tagText
 
   return (
-    <div className="cn-studio-card-tag">
+    <div className="cn-studio-card-tag" data-theme={theme}>
       {icon && <IconV2 name={icon} size="xs" />}
       <Text title={tagText} color="inherit" variant="caption-single-line-normal" truncate>
         {truncatedText}

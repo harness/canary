@@ -5,6 +5,7 @@
 
 import AccountSolid from './icons/account-solid.svg'
 import Account from './icons/account.svg'
+import AgentDlc from './icons/agent-dlc.svg'
 import AgentServices from './icons/agent-services.svg'
 import Agents from './icons/agents.svg'
 import Agile from './icons/agile.svg'
@@ -539,6 +540,7 @@ import ZoomOut from './icons/zoom-out.svg'
 export const IconNameMapV2 = {
   'account-solid': AccountSolid,
   account: Account,
+  'agent-dlc': AgentDlc,
   'agent-services': AgentServices,
   agents: Agents,
   agile: Agile,

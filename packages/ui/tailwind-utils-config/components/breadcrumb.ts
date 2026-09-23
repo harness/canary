@@ -7,9 +7,15 @@ export default {
   // Shared styles for last item highlighting
   '.cn-breadcrumb-sm, .cn-breadcrumb-xs': {
     '@apply font-caption-normal': '',
+    '& .cn-breadcrumb-link': {
+      '@apply font-caption-normal': '' // non-active crumbs: 12px / 400
+    },
     '& .cn-breadcrumb-item:last-child, & .cn-breadcrumb-page:last-child': {
       '@apply font-caption-strong': '',
       color: 'var(--cn-text-1)'
+    },
+    '& .cn-breadcrumb-item:last-child .cn-breadcrumb-link': {
+      '@apply font-caption-strong': '' // a link that IS the last crumb: 12px / 500
     },
     '& .cn-breadcrumb-item:last-child .cn-breadcrumb-prefix-icon, & .cn-breadcrumb-page:last-child .cn-breadcrumb-prefix-icon':
       {

@@ -1,4 +1,8 @@
+import { get } from 'lodash-es'
+import { z } from 'zod/v3'
+
 import {
+  AnyFormValue,
   arrayToObjectOutputTransformer,
   IFormDefinition,
   objectToArrayInputTransformer,
@@ -37,7 +41,20 @@ const getInputs = (propertyName: RUN_STEP_FAMILY): InputDefinition[] => [
     inputType: 'textarea',
     path: `${propertyName}.script`,
     label: 'Script',
-    required: true,
+    validation: {
+      // Script is only mandatory when no container image is set - a container's own
+      // entrypoint can run the step without a script.
+      schema: (values: AnyFormValue) =>
+        z.any().superRefine((val, ctx) => {
+          const stepValues = get(values, propertyName)
+          if (!val && !stepValues?.container?.image) {
+            ctx.addIssue({
+              code: z.ZodIssueCode.custom,
+              message: 'Script or container image is required'
+            })
+          }
+        })
+    },
     inputTransform: shorthandObjectInputTransformer('run'),
     outputTransform: shorthandObjectOutputTransformer('run'),
     inputConfig: {

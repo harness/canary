@@ -33,7 +33,7 @@ export default {
     '&-container': {
       color: 'var(--cn-text-1)',
       minHeight: 'var(--cn-input-size-md)',
-      border: 'var(--cn-input-border) solid var(--cn-border-2)',
+      border: 'var(--cn-input-border) solid var(--cn-border-3)',
       borderRadius: 'var(--cn-input-radius)',
       backgroundColor: 'var(--cn-comp-input-bg)',
       '@apply w-full font-body-normal transition-[color,box-shadow,border-color] px-cn-sm py-cn-xs': '',

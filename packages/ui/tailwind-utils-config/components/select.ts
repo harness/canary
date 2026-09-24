@@ -37,7 +37,7 @@ export default {
     alignItems: 'center',
     borderRadius: 'var(--cn-input-radius)',
     height: 'var(--cn-input-size-md)',
-    border: 'var(--cn-input-border) solid var(--cn-border-2)',
+    border: 'var(--cn-input-border) solid var(--cn-border-3)',
     backgroundColor: 'var(--cn-comp-input-bg)',
     color: 'var(--cn-text-1)',
     textAlign: 'start',

@@ -101,7 +101,7 @@ export default {
       width: 'fit-content',
       padding: 'var(--cn-tabs-container)',
       borderRadius: 'var(--cn-tabs-container-radius)',
-      border: 'var(--cn-tabs-container-border) solid var(--cn-border-2)',
+      border: 'var(--cn-tabs-container-border) solid var(--cn-border-3)',
       backgroundColor: 'var(--cn-bg-2)',
       '@apply font-body-normal': ''
     },

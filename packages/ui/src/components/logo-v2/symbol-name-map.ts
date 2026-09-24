@@ -31,6 +31,7 @@ import Bandit from './symbols/bandit.svg'
 import Barrier from './symbols/barrier.svg'
 import Bitbucket from './symbols/bitbucket.svg'
 import Blackduck from './symbols/blackduck.svg'
+import Bolt from './symbols/bolt.svg'
 import Brakeman from './symbols/brakeman.svg'
 import BuildKite from './symbols/build-kite.svg'
 import Burb from './symbols/burb.svg'
@@ -61,6 +62,7 @@ import Databricks from './symbols/databricks.svg'
 import Debian from './symbols/debian.svg'
 import DefaultSecretManager from './symbols/default-secret-manager.svg'
 import Devin from './symbols/devin.svg'
+import DigitalOcean from './symbols/digital-ocean.svg'
 import Docker from './symbols/docker.svg'
 import Dynatrace from './symbols/dynatrace.svg'
 import Elastic from './symbols/elastic.svg'
@@ -100,6 +102,7 @@ import Kustomize from './symbols/kustomize.svg'
 import Linux from './symbols/linux.svg'
 import Liquibase from './symbols/liquibase.svg'
 import Local from './symbols/local.svg'
+import Lovable from './symbols/lovable.svg'
 import Maven from './symbols/maven.svg'
 import McpConnector from './symbols/mcp-connector.svg'
 import Mcp from './symbols/mcp.svg'
@@ -109,6 +112,7 @@ import Microsoft from './symbols/microsoft.svg'
 import Modelscan from './symbols/modelscan.svg'
 import Mongodb from './symbols/mongodb.svg'
 import MsTeams from './symbols/ms-teams.svg'
+import Netlify from './symbols/netlify.svg'
 import NewRelic from './symbols/new-relic.svg'
 import Nexus from './symbols/nexus.svg'
 import Nikto from './symbols/nikto.svg'
@@ -170,6 +174,7 @@ import Terraform from './symbols/terraform.svg'
 import Terragrunt from './symbols/terragrunt.svg'
 import Traceable from './symbols/traceable.svg'
 import TravisCi from './symbols/travis-ci.svg'
+import V0 from './symbols/v0.svg'
 import Veracode from './symbols/veracode.svg'
 import VueJs from './symbols/vue-js.svg'
 import Windows from './symbols/windows.svg'
@@ -208,6 +213,7 @@ export const SymbolNameMap = {
   barrier: Barrier,
   bitbucket: Bitbucket,
   blackduck: Blackduck,
+  bolt: Bolt,
   brakeman: Brakeman,
   'build-kite': BuildKite,
   burb: Burb,
@@ -238,6 +244,7 @@ export const SymbolNameMap = {
   debian: Debian,
   'default-secret-manager': DefaultSecretManager,
   devin: Devin,
+  'digital-ocean': DigitalOcean,
   docker: Docker,
   dynatrace: Dynatrace,
   elastic: Elastic,
@@ -277,6 +284,7 @@ export const SymbolNameMap = {
   linux: Linux,
   liquibase: Liquibase,
   local: Local,
+  lovable: Lovable,
   maven: Maven,
   'mcp-connector': McpConnector,
   mcp: Mcp,
@@ -286,6 +294,7 @@ export const SymbolNameMap = {
   modelscan: Modelscan,
   mongodb: Mongodb,
   'ms-teams': MsTeams,
+  netlify: Netlify,
   'new-relic': NewRelic,
   nexus: Nexus,
   nikto: Nikto,
@@ -347,6 +356,7 @@ export const SymbolNameMap = {
   terragrunt: Terragrunt,
   traceable: Traceable,
   'travis-ci': TravisCi,
+  v0: V0,
   veracode: Veracode,
   'vue-js': VueJs,
   windows: Windows,

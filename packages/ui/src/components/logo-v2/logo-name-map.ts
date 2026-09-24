@@ -31,6 +31,7 @@ import Bandit from './logos/bandit.svg'
 import Barrier from './logos/barrier.svg'
 import Bitbucket from './logos/bitbucket.svg'
 import Blackduck from './logos/blackduck.svg'
+import Bolt from './logos/bolt.svg'
 import Brakeman from './logos/brakeman.svg'
 import BuildKite from './logos/build-kite.svg'
 import Burb from './logos/burb.svg'
@@ -61,6 +62,7 @@ import Databricks from './logos/databricks.svg'
 import Debian from './logos/debian.svg'
 import DefaultSecretManager from './logos/default-secret-manager.svg'
 import Devin from './logos/devin.svg'
+import DigitalOcean from './logos/digital-ocean.svg'
 import Docker from './logos/docker.svg'
 import Dynatrace from './logos/dynatrace.svg'
 import Elastic from './logos/elastic.svg'
@@ -100,6 +102,7 @@ import Kustomize from './logos/kustomize.svg'
 import Linux from './logos/linux.svg'
 import Liquibase from './logos/liquibase.svg'
 import Local from './logos/local.svg'
+import Lovable from './logos/lovable.svg'
 import Maven from './logos/maven.svg'
 import McpConnector from './logos/mcp-connector.svg'
 import Mcp from './logos/mcp.svg'
@@ -109,6 +112,7 @@ import Microsoft from './logos/microsoft.svg'
 import Modelscan from './logos/modelscan.svg'
 import Mongodb from './logos/mongodb.svg'
 import MsTeams from './logos/ms-teams.svg'
+import Netlify from './logos/netlify.svg'
 import NewRelic from './logos/new-relic.svg'
 import Nexus from './logos/nexus.svg'
 import Nikto from './logos/nikto.svg'
@@ -170,6 +174,7 @@ import Terraform from './logos/terraform.svg'
 import Terragrunt from './logos/terragrunt.svg'
 import Traceable from './logos/traceable.svg'
 import TravisCi from './logos/travis-ci.svg'
+import V0 from './logos/v0.svg'
 import Veracode from './logos/veracode.svg'
 import VueJs from './logos/vue-js.svg'
 import Windows from './logos/windows.svg'
@@ -208,6 +213,7 @@ export const LogoNameMapV2 = {
   barrier: Barrier,
   bitbucket: Bitbucket,
   blackduck: Blackduck,
+  bolt: Bolt,
   brakeman: Brakeman,
   'build-kite': BuildKite,
   burb: Burb,
@@ -238,6 +244,7 @@ export const LogoNameMapV2 = {
   debian: Debian,
   'default-secret-manager': DefaultSecretManager,
   devin: Devin,
+  'digital-ocean': DigitalOcean,
   docker: Docker,
   dynatrace: Dynatrace,
   elastic: Elastic,
@@ -277,6 +284,7 @@ export const LogoNameMapV2 = {
   linux: Linux,
   liquibase: Liquibase,
   local: Local,
+  lovable: Lovable,
   maven: Maven,
   'mcp-connector': McpConnector,
   mcp: Mcp,
@@ -286,6 +294,7 @@ export const LogoNameMapV2 = {
   modelscan: Modelscan,
   mongodb: Mongodb,
   'ms-teams': MsTeams,
+  netlify: Netlify,
   'new-relic': NewRelic,
   nexus: Nexus,
   nikto: Nikto,
@@ -347,6 +356,7 @@ export const LogoNameMapV2 = {
   terragrunt: Terragrunt,
   traceable: Traceable,
   'travis-ci': TravisCi,
+  v0: V0,
   veracode: Veracode,
   'vue-js': VueJs,
   windows: Windows,

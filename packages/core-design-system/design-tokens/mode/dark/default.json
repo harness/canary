@@ -17,7 +17,7 @@
     },
     "3": {
       "$type": "color",
-      "$value": "{gray.950}",
+      "$value": "{gray.900}",
       "$description": "Level 3. Represents elements that sit on top of the middle layer. Creates strong visual emphasis through maximum elevation.\n\nCommon uses: Popovers, tooltips, highlighted containers."
     }
   },
@@ -111,7 +111,7 @@
         "studio.tokens": {
           "modify": {
             "type": "alpha",
-            "value": "0.2",
+            "value": "0.4",
             "space": "lch"
           }
         }

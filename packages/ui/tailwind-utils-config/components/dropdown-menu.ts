@@ -114,14 +114,20 @@ export default {
       '&:not(:where([aria-disabled=true]))': {
         '&:where([data-highlighted]), &:where([data-state="open"])': {
           backgroundColor: 'var(--cn-state-hover)',
-          cursor: 'default'
+          cursor: 'default',
+          // Radix programmatically focuses the item (a tabindex=-1 div) on pointer move,
+          // so the browser's default focus outline — or a :focus-visible outline inherited
+          // from opening the menu via keyboard — can paint a ring on plain mouse hover.
+          // Suppress it here for every highlighted/open item; the keyboard-only rule below
+          // re-adds our ring when the pointer isn't over the item.
+          outline: 'none'
         },
-        // Ring only for keyboard navigation. Radix roving-focus programmatically focuses
-        // the item on pointer move, which trips :focus-visible on plain mouse hover — so
-        // we key off Radix's own [data-highlighted] (set reliably for both mouse and
-        // keyboard) and suppress the ring whenever the pointer is over the item
-        // (:not(:hover)). Keyboard nav leaves the pointer elsewhere, so the ring shows
-        // there; mouse hover gets only the background overlay above.
+        // Ring only for keyboard navigation. We key off Radix's own [data-highlighted]
+        // (set reliably for both mouse and keyboard) and show the ring only when the
+        // pointer is NOT over the item (:not(:hover)). Keyboard nav leaves the pointer
+        // elsewhere, so the ring shows there; mouse hover gets only the background overlay.
+        // Same specificity as the rule above but later in source order, so it wins for
+        // keyboard nav while the outline:none above still governs mouse hover.
         '&:where([data-highlighted]):not(:where(:hover))': {
           outline: 'var(--cn-focus)',
           '@apply outline-offset-cn-tight': ''

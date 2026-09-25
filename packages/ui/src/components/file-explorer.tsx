@@ -126,6 +126,8 @@ interface FolderItemProps extends Partial<Omit<BaseItemProps, 'actionButtons'>> 
   children: ReactNode
   level: number
   value: string
+  className?: string
+  wrapperClassName?: string
   content?: ReactNode
   onClick?: (value: string) => void
   link?: string
@@ -137,6 +139,8 @@ function FolderItem({
   isActive,
   content,
   link,
+  className,
+  wrapperClassName,
   onClick,
   icon = 'folder',
   ...otherProps
@@ -147,6 +151,7 @@ function FolderItem({
       isActive={isActive}
       link={link}
       isFolder
+      className={className}
       onClick={() => onClick?.(value)}
       {...otherProps}
     >
@@ -155,11 +160,15 @@ function FolderItem({
   )
 
   return (
-    <Accordion.Item value={value} className="border-none group">
+    <Accordion.Item value={value} className="group border-none">
       <Layout.Flex
-        className={cn('cn-file-tree-folder-item cn-file-tree-item-wrapper pl-0', {
-          'cn-file-tree-item-active': isActive
-        })}
+        className={cn(
+          'cn-file-tree-folder-item cn-file-tree-item-wrapper pl-0',
+          {
+            'cn-file-tree-item-active': isActive
+          },
+          wrapperClassName
+        )}
       >
         <Accordion.Trigger
           className="cn-file-tree-folder-trigger"

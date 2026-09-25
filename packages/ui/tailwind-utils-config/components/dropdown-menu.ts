@@ -116,7 +116,13 @@ export default {
           backgroundColor: 'var(--cn-state-hover)',
           cursor: 'default'
         },
-        '&:where(:focus-visible)': {
+        // Ring only for keyboard navigation. Radix roving-focus programmatically focuses
+        // the item on pointer move, which trips :focus-visible on plain mouse hover — so
+        // we key off Radix's own [data-highlighted] (set reliably for both mouse and
+        // keyboard) and suppress the ring whenever the pointer is over the item
+        // (:not(:hover)). Keyboard nav leaves the pointer elsewhere, so the ring shows
+        // there; mouse hover gets only the background overlay above.
+        '&:where([data-highlighted]):not(:where(:hover))': {
           outline: 'var(--cn-focus)',
           '@apply outline-offset-cn-tight': ''
         }

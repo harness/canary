@@ -739,7 +739,9 @@ describe('DataTable', () => {
     })
   })
 
-  describe('Column Resizing (Internal)', () => {
+  describe('Column Resizing', () => {
+    const parseWidth = (element: HTMLElement | null) => Number.parseFloat(element?.style.width || '0')
+
     test('should not show resize handles by default', () => {
       render(
         <TestWrapper>
@@ -747,11 +749,10 @@ describe('DataTable', () => {
         </TestWrapper>
       )
 
-      const resizeHandles = screen.queryAllByLabelText('Resize column')
-      expect(resizeHandles).toHaveLength(0)
+      expect(screen.queryAllByLabelText(/Resize .+ column/)).toHaveLength(0)
     })
 
-    test('should show resize handles when _enableColumnResizing is true', () => {
+    test('should show resize handles when enableColumnResizing is true', () => {
       const resizableColumns: ColumnDef<TestData>[] = [
         {
           accessorKey: 'name',
@@ -762,11 +763,11 @@ describe('DataTable', () => {
 
       render(
         <TestWrapper>
-          <DataTable data={mockData} columns={resizableColumns} _enableColumnResizing={true} />
+          <DataTable data={mockData} columns={resizableColumns} enableColumnResizing />
         </TestWrapper>
       )
 
-      const resizeHandles = screen.getAllByLabelText('Resize column')
+      const resizeHandles = screen.getAllByLabelText(/Resize .+ column/)
       expect(resizeHandles.length).toBeGreaterThan(0)
     })
 
@@ -781,12 +782,189 @@ describe('DataTable', () => {
 
       render(
         <TestWrapper>
-          <DataTable data={mockData} columns={resizableColumns} _enableColumnResizing={true} />
+          <DataTable data={mockData} columns={resizableColumns} enableColumnResizing />
         </TestWrapper>
       )
 
-      const resizeHandles = screen.queryAllByLabelText('Resize column')
-      expect(resizeHandles).toHaveLength(0)
+      expect(screen.queryAllByLabelText(/Resize .+ column/)).toHaveLength(0)
+    })
+
+    test('should keep a non-resizable column sizing state unchanged when a sibling is resized', () => {
+      const columns: ColumnDef<TestData>[] = [
+        {
+          accessorKey: 'name',
+          header: 'Name',
+          size: 120
+        },
+        {
+          accessorKey: 'age',
+          header: 'Age',
+          size: 140,
+          minSize: 100,
+          enableResizing: false
+        }
+      ]
+
+      render(
+        <TestWrapper>
+          <DataTable data={mockData} columns={columns} enableColumnResizing />
+        </TestWrapper>
+      )
+
+      const nameHandle = screen.getByLabelText('Resize name column')
+      const ageHead = screen.getByText('Age').closest('th') as HTMLElement
+
+      fireEvent.mouseDown(nameHandle, { clientX: 100, clientY: 0, buttons: 1 })
+      fireEvent.mouseMove(document, { clientX: 140, clientY: 0, buttons: 1 })
+      fireEvent.mouseUp(document, { clientX: 140, clientY: 0 })
+
+      expect(screen.queryByLabelText('Resize age column')).not.toBeInTheDocument()
+      expect(parseWidth(ageHead)).toBe(140)
+      expect(ageHead.style.minWidth).toBe('100px')
+    })
+
+    test('should not show resize handles on injected select or expander columns', () => {
+      render(
+        <TestWrapper>
+          <DataTable data={mockData} columns={mockColumns} enableColumnResizing enableRowSelection enableExpanding />
+        </TestWrapper>
+      )
+
+      expect(screen.queryByLabelText('Resize select column')).not.toBeInTheDocument()
+      expect(screen.queryByLabelText('Resize expander column')).not.toBeInTheDocument()
+      expect(screen.getByLabelText('Resize name column')).toBeInTheDocument()
+    })
+
+    test('should render each handle as a direct child of its header cell', () => {
+      render(
+        <TestWrapper>
+          <DataTable data={mockData} columns={mockColumns} enableColumnResizing />
+        </TestWrapper>
+      )
+
+      const handle = screen.getByLabelText('Resize name column')
+      const head = screen.getByText('Name').closest('th') as HTMLElement
+
+      expect(handle.parentElement).toBe(head)
+      expect(head).toHaveClass('cn-table-v2-head-resizable')
+      expect(handle).toHaveAttribute('data-column-resizer')
+      expect(handle).toHaveAttribute('data-column-id', 'name')
+      expect(handle).not.toHaveAttribute('data-resizing')
+    })
+
+    test('should change a leaf column width when the handle is dragged', () => {
+      render(
+        <TestWrapper>
+          <DataTable data={mockData} columns={mockColumns} enableColumnResizing />
+        </TestWrapper>
+      )
+
+      const nameHead = screen.getByText('Name').closest('th') as HTMLElement
+      const ageHead = screen.getByText('Age').closest('th') as HTMLElement
+      const startNameWidth = parseWidth(nameHead)
+      const startAgeWidth = parseWidth(ageHead)
+      const handle = screen.getByLabelText('Resize name column')
+
+      fireEvent.mouseDown(handle, { clientX: 100, clientY: 0, buttons: 1 })
+      expect(handle).toHaveAttribute('data-resizing', 'true')
+      const indicator = document.querySelector('[data-column-resize-indicator]') as HTMLElement
+      expect(indicator).toBeInTheDocument()
+      expect(indicator.style.transform).toMatch(/translate\(/)
+      expect(indicator.style.height).toBeTruthy()
+      fireEvent.mouseMove(document, { clientX: 140, clientY: 0, buttons: 1 })
+      fireEvent.mouseUp(document, { clientX: 140, clientY: 0 })
+
+      expect(parseWidth(nameHead)).toBe(startNameWidth + 40)
+      expect(parseWidth(ageHead)).toBe(startAgeWidth)
+      expect(parseWidth(screen.getByText('John Doe').closest('td'))).toBe(startNameWidth + 40)
+    })
+
+    test('should start resizing from a touch event', () => {
+      render(
+        <TestWrapper>
+          <DataTable data={mockData} columns={mockColumns} enableColumnResizing />
+        </TestWrapper>
+      )
+
+      const nameHead = screen.getByText('Name').closest('th') as HTMLElement
+      const startNameWidth = parseWidth(nameHead)
+      const handle = screen.getByLabelText('Resize name column')
+
+      fireEvent.touchStart(handle, { touches: [{ clientX: 100, clientY: 0 }] })
+      fireEvent.touchMove(document, { touches: [{ clientX: 125, clientY: 0 }] })
+      fireEvent.touchEnd(document)
+
+      expect(parseWidth(nameHead)).toBe(startNameWidth + 25)
+    })
+
+    test('should not sort when a resize handle is used on a sortable column', async () => {
+      const handleSortingChange = vi.fn()
+      const sortableColumns: ColumnDef<TestData>[] = [
+        {
+          accessorKey: 'name',
+          header: 'Name',
+          enableSorting: true
+        }
+      ]
+
+      render(
+        <TestWrapper>
+          <DataTable
+            data={mockData}
+            columns={sortableColumns}
+            enableColumnResizing
+            onSortingChange={handleSortingChange}
+          />
+        </TestWrapper>
+      )
+
+      const handle = screen.getByLabelText('Resize name column')
+      const nameHead = screen.getByText('Name').closest('th') as HTMLElement
+      fireEvent.mouseDown(handle, { clientX: 100, clientY: 0, buttons: 1 })
+      fireEvent.mouseMove(document, { clientX: 130, clientY: 0, buttons: 1 })
+      fireEvent.mouseUp(nameHead, { clientX: 130, clientY: 0 })
+      fireEvent.click(nameHead)
+
+      expect(handleSortingChange).not.toHaveBeenCalled()
+
+      await userEvent.click(screen.getByText('Name'))
+      expect(handleSortingChange).toHaveBeenCalled()
+    })
+
+    test('should resize with arrow keys and clamp to minSize and maxSize', () => {
+      const constrainedColumns: ColumnDef<TestData>[] = [
+        {
+          accessorKey: 'name',
+          header: 'Name',
+          size: 120,
+          minSize: 100,
+          maxSize: 160
+        }
+      ]
+
+      render(
+        <TestWrapper>
+          <DataTable data={mockData} columns={constrainedColumns} enableColumnResizing />
+        </TestWrapper>
+      )
+
+      const nameHead = screen.getByText('Name').closest('th') as HTMLElement
+      const handle = screen.getByLabelText('Resize name column')
+
+      fireEvent.keyDown(handle, { key: 'ArrowRight' })
+      expect(parseWidth(nameHead)).toBe(130)
+
+      fireEvent.keyDown(handle, { key: 'ArrowRight', shiftKey: true })
+      expect(parseWidth(nameHead)).toBe(160)
+
+      fireEvent.keyDown(handle, { key: 'ArrowLeft', shiftKey: true })
+      expect(parseWidth(nameHead)).toBe(110)
+
+      fireEvent.keyDown(handle, { key: 'ArrowLeft' })
+      expect(parseWidth(nameHead)).toBe(100)
+
+      fireEvent.keyDown(handle, { key: 'ArrowLeft' })
+      expect(parseWidth(nameHead)).toBe(100)
     })
   })
 
@@ -1054,12 +1232,11 @@ describe('DataTable', () => {
 
       render(
         <TestWrapper>
-          <DataTable data={mockData} columns={resizableColumns} _enableColumnResizing={true} />
+          <DataTable data={mockData} columns={resizableColumns} enableColumnResizing />
         </TestWrapper>
       )
 
-      const resizeHandles = screen.getAllByLabelText('Resize column')
-      expect(resizeHandles.length).toBeGreaterThan(0)
+      expect(screen.getByLabelText('Resize name column')).toBeInTheDocument()
     })
   })
 
@@ -1310,6 +1487,69 @@ describe('DataTable', () => {
       await userEvent.click(screen.getByText('Name'))
       expect(handleSortingChange).toHaveBeenCalled()
     })
+
+    test('should expose resize handles only on leaf headers', () => {
+      render(
+        <TestWrapper>
+          <DataTable data={mockData} columns={groupedColumns} enableColumnResizing />
+        </TestWrapper>
+      )
+
+      expect(screen.getByLabelText('Resize name column')).toBeInTheDocument()
+      expect(screen.getByLabelText('Resize age column')).toBeInTheDocument()
+      expect(screen.getByLabelText('Resize email column')).toBeInTheDocument()
+      expect(screen.queryByLabelText('Resize contact column')).not.toBeInTheDocument()
+
+      const nameHead = screen.getByText('Name').closest('th') as HTMLElement
+      expect(nameHead).toHaveAttribute('rowspan', '2')
+      expect(screen.getByLabelText('Resize name column').parentElement).toBe(nameHead)
+
+      const leafRow = document.querySelector('thead tr[data-header-depth="1"]')
+      expect(leafRow?.querySelector('[data-column-id="name"]')).not.toBeInTheDocument()
+    })
+
+    test('should resize a grouped leaf without changing group colSpan or sibling widths', () => {
+      const parseWidth = (element: HTMLElement | null) => Number.parseFloat(element?.style.width || '0')
+
+      render(
+        <TestWrapper>
+          <DataTable data={mockData} columns={groupedColumns} enableColumnResizing />
+        </TestWrapper>
+      )
+
+      const contactHead = screen.getByText('Contact').closest('th') as HTMLElement
+      const ageHead = screen.getByText('Age').closest('th') as HTMLElement
+      const emailHead = screen.getByText('Email').closest('th') as HTMLElement
+      const startAgeWidth = parseWidth(ageHead)
+      const startEmailWidth = parseWidth(emailHead)
+      const startContactWidth = parseWidth(contactHead)
+
+      fireEvent.keyDown(screen.getByLabelText('Resize age column'), { key: 'ArrowRight', shiftKey: true })
+
+      expect(parseWidth(ageHead)).toBe(startAgeWidth + 50)
+      expect(parseWidth(emailHead)).toBe(startEmailWidth)
+      expect(parseWidth(contactHead)).toBe(startContactWidth + 50)
+      expect(contactHead).toHaveAttribute('colspan', '2')
+      expect(screen.getByText('Name').closest('th')).toHaveAttribute('rowspan', '2')
+    })
+
+    test('should not sort grouped headers when a child leaf is resized', () => {
+      const handleSortingChange = vi.fn()
+
+      render(
+        <TestWrapper>
+          <DataTable
+            data={mockData}
+            columns={groupedColumns}
+            enableColumnResizing
+            onSortingChange={handleSortingChange}
+          />
+        </TestWrapper>
+      )
+
+      fireEvent.keyDown(screen.getByLabelText('Resize age column'), { key: 'ArrowRight' })
+      expect(handleSortingChange).not.toHaveBeenCalled()
+    })
   })
 
   describe('Table Structure', () => {
@@ -1434,14 +1674,14 @@ describe('DataTable', () => {
       expect(screen.queryAllByLabelText('Toggle Row Expanded')).toHaveLength(0)
     })
 
-    test('should use default _enableColumnResizing', () => {
+    test('should use default enableColumnResizing', () => {
       render(
         <TestWrapper>
           <DataTable data={mockData} columns={mockColumns} />
         </TestWrapper>
       )
 
-      expect(screen.queryAllByLabelText('Resize column')).toHaveLength(0)
+      expect(screen.queryAllByLabelText(/Resize .+ column/)).toHaveLength(0)
     })
   })
 
@@ -1813,6 +2053,79 @@ describe('DataTable', () => {
         // jsdom reports zero layout height, so the CSS variable fallback is used
         expect(head).toHaveStyle({ position: 'sticky', top: 'var(--cn-table-header-row-h)' })
       })
+    })
+
+    test('should update the second header row offset when the first row height changes', () => {
+      const originalResizeObserver = globalThis.ResizeObserver
+      let notify: (() => void) | undefined
+
+      class MockResizeObserver {
+        private readonly callback: ResizeObserverCallback
+
+        constructor(callback: ResizeObserverCallback) {
+          this.callback = callback
+          notify = () => this.callback([], this as unknown as ResizeObserver)
+        }
+
+        observe() {}
+        unobserve() {}
+        disconnect() {}
+      }
+
+      vi.stubGlobal('ResizeObserver', MockResizeObserver)
+
+      try {
+        const { container } = render(
+          <TestWrapper>
+            <DataTable data={mockData} columns={stickyGroupedColumns} stickyHeader maxHeight={300} />
+          </TestWrapper>
+        )
+
+        const firstRow = container.querySelector('thead tr[data-header-depth="0"]') as HTMLTableRowElement
+        vi.spyOn(firstRow, 'getBoundingClientRect').mockReturnValue({
+          height: 48,
+          width: 0,
+          top: 0,
+          left: 0,
+          bottom: 48,
+          right: 0,
+          x: 0,
+          y: 0,
+          toJSON: () => ({})
+        })
+
+        notify?.()
+
+        const depth1Heads = container.querySelectorAll('thead tr[data-header-depth="1"] th')
+        depth1Heads.forEach(head => {
+          expect(head).toHaveStyle({ position: 'sticky', top: '48px' })
+        })
+      } finally {
+        vi.stubGlobal('ResizeObserver', originalResizeObserver)
+      }
+    })
+
+    test('should keep a pinned row-spanned leaf sticky after it is resized', () => {
+      render(
+        <TestWrapper>
+          <DataTable
+            data={mockData}
+            columns={stickyGroupedColumns}
+            stickyHeader
+            maxHeight={300}
+            enableColumnResizing
+            columnPinning={{ left: ['name'], right: [] }}
+          />
+        </TestWrapper>
+      )
+
+      const nameHead = screen.getByText('Name').closest('th') as HTMLElement
+      expect(nameHead).toHaveStyle({ position: 'sticky', left: '0px' })
+
+      fireEvent.keyDown(screen.getByLabelText('Resize name column'), { key: 'ArrowRight' })
+
+      expect(nameHead).toHaveStyle({ position: 'sticky', left: '0px' })
+      expect(Number.parseFloat(nameHead.style.width)).toBeGreaterThan(0)
     })
 
     test('should layer sticky headers above pinned columns', () => {

@@ -147,6 +147,26 @@ describe('Table.Root', () => {
     const wrapper = container.firstElementChild as HTMLElement
     expect(wrapper.className).toContain('cn-table-v2-highlight-hover')
   })
+
+  it('wraps the table with an overlay host when overlay is provided', () => {
+    const { container } = render(
+      <Table.Root overlay={<div data-testid="table-overlay" />} style={{ minWidth: 480 }}>
+        <Table.Body>
+          <tr>
+            <td>Row</td>
+          </tr>
+        </Table.Body>
+      </Table.Root>
+    )
+
+    const host = container.querySelector('.cn-table-v2-overlay-host') as HTMLElement
+    const table = host.querySelector('table') as HTMLTableElement
+
+    expect(host).toContainElement(table)
+    expect(host).toContainElement(screen.getByTestId('table-overlay'))
+    expect(host.style.minWidth).toBe('480px')
+    expect(table.style.minWidth).toBe('480px')
+  })
 })
 
 describe('Table.Row', () => {
@@ -370,6 +390,43 @@ describe('Table.Head', () => {
 
     const headCell = screen.getAllByRole('columnheader')[0]
     expect(headCell.textContent).toBe('')
+  })
+
+  it('renders a resize handle as a direct child of the header cell', () => {
+    render(
+      <table>
+        <thead>
+          <tr>
+            <Table.Head sortable resizeHandle={<button type="button" aria-label="Resize test column" />}>
+              Column
+            </Table.Head>
+          </tr>
+        </thead>
+      </table>
+    )
+
+    const handle = screen.getByLabelText('Resize test column')
+    const headCell = screen.getByText('Column').closest('th') as HTMLElement
+
+    expect(handle.parentElement).toBe(headCell)
+    expect(headCell.className).toContain('cn-table-v2-head-resizable')
+    expect(screen.getByTestId('layout-horizontal').contains(handle)).toBe(false)
+    expect(screen.getByTestId('mock-text').contains(handle)).toBe(false)
+  })
+
+  it('does not mark the header as resizable when no handle is provided', () => {
+    render(
+      <table>
+        <thead>
+          <tr>
+            <Table.Head sortable>Column</Table.Head>
+          </tr>
+        </thead>
+      </table>
+    )
+
+    const headCell = screen.getByText('Column').closest('th') as HTMLElement
+    expect(headCell.className).not.toContain('cn-table-v2-head-resizable')
   })
 })
 

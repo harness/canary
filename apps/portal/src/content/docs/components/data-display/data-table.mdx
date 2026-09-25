@@ -380,6 +380,54 @@ return (
 
 When `enableRowSelection` or `enableExpanding` is enabled, the injected columns are prepended as ungrouped leaf columns and automatically span both header rows.
 
+## Column resizing
+
+Enable live column resizing with `enableColumnResizing`. Only **leaf** columns expose a handle on the header boundary. Group parent widths follow the combined width of their visible children. Opt a leaf out with `enableResizing: false`, and configure sizing with `size`, `minSize`, and `maxSize`.
+
+Resize by dragging the handle with a mouse or touch, or by focusing the handle and using the arrow keys (Shift for larger steps). Sorting stays on the header label — using the handle does not toggle sort.
+
+`enableResizing: false` prevents direct resizing and leaves that column's sizing state unchanged when a neighboring column is resized. It does not lock the rendered pixel width in a full-width table: the browser's automatic table layout may redistribute available space. `size` is the preferred width, `minSize` is the lower bound, and `maxSize` limits direct resizing; set `minSize` equal to `size` when the column must not shrink below its configured width.
+
+<DocsPage.ComponentExample
+  client:only
+  code={`() => {
+  const people = [
+    { name: 'Alice Chen', age: 28, visits: 142, status: 'active' },
+    { name: 'Bob Martinez', age: 35, visits: 67, status: 'inactive' },
+    { name: 'Priya Patel', age: 31, visits: 203, status: 'active' }
+  ]
+
+const columns = [
+{ id: 'name', accessorKey: 'name', header: 'Name', enableSorting: true, size: 180, minSize: 120, maxSize: 320 },
+{
+id: 'info',
+header: 'Info',
+enableSorting: false,
+columns: [
+{ id: 'age', accessorKey: 'age', header: 'Age', enableSorting: true, size: 100, minSize: 80, maxSize: 180 },
+{ id: 'visits', accessorKey: 'visits', header: 'Visits', enableSorting: true, size: 120 },
+{ id: 'status', accessorKey: 'status', header: 'Status', enableSorting: false, enableResizing: false, size: 140, minSize: 140 }
+]
+}
+]
+
+return (
+
+<DataTable
+  columns={columns}
+  data={people}
+  getRowId={(row) => row.name}
+  enableColumnResizing
+/>
+) }`} />
+
+### Guidelines
+
+- Turn resizing on at the table with `enableColumnResizing`. It is off by default.
+- Use `ColumnDef.enableResizing: false` to remove a leaf column's resize handle and prevent direct resizing. This does not lock its rendered width in an auto-layout table.
+- Set `size`, `minSize`, and `maxSize` on leaf columns. Use `minSize: size` when a non-resizable column must not shrink below its configured width. Group headers do not get handles; their width is derived from child leaves.
+- Injected `select` and `expander` columns are not resizable.
+
 ## Props
 
 <DocsPage.PropsTable

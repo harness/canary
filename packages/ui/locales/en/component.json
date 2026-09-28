@@ -108,6 +108,9 @@
     "cancel": "Cancel",
     "bypassButton": "Bypass rule and confirm delete"
   },
+  "drawer": {
+    "close": "Close"
+  },
   "dropdownMenu": {
     "noOptions": "No options available"
   },

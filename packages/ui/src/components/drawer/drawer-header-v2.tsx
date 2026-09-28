@@ -1,5 +1,6 @@
 import { forwardRef, type FC, type ReactNode } from 'react'
 
+import { useTranslation } from '@/context'
 import { cn } from '@/utils'
 import { Drawer as DrawerPrimitive } from 'vaul'
 
@@ -51,6 +52,8 @@ export const DrawerHeaderV2 = forwardRef<HTMLDivElement, DrawerHeaderV2Props>(
     { title, tagline, description, icon, actions, tabs, hideClose = false, isLoading = false, children, className },
     ref
   ) => {
+    const { t } = useTranslation()
+
     const IconOrLogoComp =
       (!!icon && typeof icon === 'object' && (
         <LogoV2 className="cn-drawer-header-v2-icon" name={icon.logo} size="sm" />
@@ -62,7 +65,13 @@ export const DrawerHeaderV2 = forwardRef<HTMLDivElement, DrawerHeaderV2Props>(
 
     const closeButton = !hideClose ? (
       <DrawerPrimitive.Close asChild>
-        <Button className="cn-drawer-close-button" variant="ghost" iconOnly ignoreIconOnlyTooltip>
+        <Button
+          className="cn-drawer-close-button"
+          variant="ghost"
+          iconOnly
+          ignoreIconOnlyTooltip
+          aria-label={t('component:drawer.close', 'Close')}
+        >
           <IconV2 className="cn-drawer-close-button-icon" name="xmark" skipSize />
         </Button>
       </DrawerPrimitive.Close>

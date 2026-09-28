@@ -11,7 +11,8 @@
     "astro": "astro",
     "lint": "astro check",
     "pretty": "prettier --check ./src",
-    "pretty:fix": "prettier --write ./src"
+    "pretty:fix": "prettier --write ./src",
+    "schemas": "node scripts/extract-props.mjs"
   },
   "dependencies": {
     "@astrojs/react": "^4.2.3",
@@ -41,9 +42,11 @@
   "devDependencies": {
     "@astrojs/check": "^0.9.4",
     "@types/react": "^17.0.3",
+    "globby": "^14.0.2",
     "lint-staged": "^15.2.9",
     "prettier": "^3.4.2",
-    "prettier-plugin-astro": "^0.14.1"
+    "prettier-plugin-astro": "^0.14.1",
+    "react-docgen-typescript": "^2.2.2"
   },
   "engines": {
     "node": ">=18.17.1"

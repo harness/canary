@@ -1,6 +1,7 @@
 import { Children, forwardRef, HTMLAttributes, ReactNode } from 'react'
 
 import { Button, IconV2, IconV2NamesType, LogoV2, LogoV2NamesType } from '@/components'
+import { useTranslation } from '@/context'
 import { cn, getComponentDisplayName } from '@/utils'
 import { Drawer as DrawerPrimitive } from 'vaul'
 
@@ -48,6 +49,8 @@ const isStructured = (props: DrawerHeaderProps): props is DrawerHeaderStructured
   'title' in props && props.title != null
 
 export const DrawerHeader = forwardRef<HTMLDivElement, DrawerHeaderProps>((props, ref) => {
+  const { t } = useTranslation()
+
   if (isStructured(props)) {
     return <DrawerHeaderV2 ref={ref} {...props} />
   }
@@ -94,7 +97,13 @@ export const DrawerHeader = forwardRef<HTMLDivElement, DrawerHeaderProps>((props
           </div>
           {!hideClose && (
             <DrawerPrimitive.Close asChild>
-              <Button className="cn-drawer-close-button" variant="ghost" iconOnly ignoreIconOnlyTooltip>
+              <Button
+                className="cn-drawer-close-button"
+                variant="ghost"
+                iconOnly
+                ignoreIconOnlyTooltip
+                aria-label={t('component:drawer.close', 'Close')}
+              >
                 <IconV2 className="cn-drawer-close-button-icon" name="xmark" skipSize />
               </Button>
             </DrawerPrimitive.Close>

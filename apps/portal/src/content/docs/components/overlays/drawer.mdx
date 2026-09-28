@@ -74,18 +74,14 @@ import { DocsPage } from "@/components/docs-page";
           </p>
         </Drawer.Body>
 
-        <Drawer.Footer>
-          <ButtonLayout.Root>
-            <ButtonLayout.Primary>
-              <Button>Action</Button>
-            </ButtonLayout.Primary>
-            <ButtonLayout.Secondary>
-              <Drawer.Close asChild>
-                <Button variant="outline">Cancel</Button>
-              </Drawer.Close>
-            </ButtonLayout.Secondary>
-          </ButtonLayout.Root>
-        </Drawer.Footer>
+        <Drawer.Footer
+          secondaryButton={
+            <Drawer.Close asChild>
+              <Button variant="outline">Cancel</Button>
+            </Drawer.Close>
+          }
+          primaryButton={<Button>Action</Button>}
+        />
       </Drawer.Content>
     </Drawer.Root>
 
@@ -140,18 +136,14 @@ return (
         </Drawer.Root>
       </Drawer.Body>
 
-      <Drawer.Footer>
-        <ButtonLayout.Root>
-          <ButtonLayout.Primary>
-            <Button>Action</Button>
-          </ButtonLayout.Primary>
-          <ButtonLayout.Secondary>
-            <Drawer.Close asChild>
-              <Button variant="outline">Cancel</Button>
-            </Drawer.Close>
-          </ButtonLayout.Secondary>
-        </ButtonLayout.Root>
-      </Drawer.Footer>
+      <Drawer.Footer
+        secondaryButton={
+          <Drawer.Close asChild>
+            <Button variant="outline">Cancel</Button>
+          </Drawer.Close>
+        }
+        primaryButton={<Button>Action</Button>}
+      />
     </Drawer.Content>
   </Drawer.Root>
 )
@@ -303,11 +295,7 @@ When a wider drawer opens over a narrower one, the narrower drawer automatically
           </p>
         </Drawer.Body>
 
-        <Drawer.Footer>
-          <ButtonLayout>
-            <Button>Action</Button>
-          </ButtonLayout>
-        </Drawer.Footer>
+        <Drawer.Footer primaryButton={<Button>Action</Button>} />
       </Drawer.Content>
     </Drawer.Root>
 
@@ -423,15 +411,13 @@ The `Drawer.Content` component accepts a `size` prop to control its width (or he
 
         <Drawer.Body />
 
-        <Drawer.Footer>
-          <ButtonLayout.Root>
-            <ButtonLayout.Secondary>
-              <Drawer.Close asChild>
-                <Button variant="outline">Cancel</Button>
-              </Drawer.Close>
-            </ButtonLayout.Secondary>
-          </ButtonLayout.Root>
-        </Drawer.Footer>
+        <Drawer.Footer
+          secondaryButton={
+            <Drawer.Close asChild>
+              <Button variant="outline">Cancel</Button>
+            </Drawer.Close>
+          }
+        />
       </Drawer.Content>
     </Drawer.Root>
 
@@ -447,15 +433,13 @@ The `Drawer.Content` component accepts a `size` prop to control its width (or he
 
         <Drawer.Body />
 
-        <Drawer.Footer>
-          <ButtonLayout.Root>
-            <ButtonLayout.Secondary>
-              <Drawer.Close asChild>
-                <Button variant="outline">Cancel</Button>
-              </Drawer.Close>
-            </ButtonLayout.Secondary>
-          </ButtonLayout.Root>
-        </Drawer.Footer>
+        <Drawer.Footer
+          secondaryButton={
+            <Drawer.Close asChild>
+              <Button variant="outline">Cancel</Button>
+            </Drawer.Close>
+          }
+        />
       </Drawer.Content>
     </Drawer.Root>
 
@@ -471,15 +455,13 @@ The `Drawer.Content` component accepts a `size` prop to control its width (or he
 
         <Drawer.Body />
 
-        <Drawer.Footer>
-          <ButtonLayout.Root>
-            <ButtonLayout.Secondary>
-              <Drawer.Close asChild>
-                <Button variant="outline">Cancel</Button>
-              </Drawer.Close>
-            </ButtonLayout.Secondary>
-          </ButtonLayout.Root>
-        </Drawer.Footer>
+        <Drawer.Footer
+          secondaryButton={
+            <Drawer.Close asChild>
+              <Button variant="outline">Cancel</Button>
+            </Drawer.Close>
+          }
+        />
       </Drawer.Content>
     </Drawer.Root>
 
@@ -495,15 +477,13 @@ The `Drawer.Content` component accepts a `size` prop to control its width (or he
 
         <Drawer.Body />
 
-        <Drawer.Footer>
-          <ButtonLayout.Root>
-            <ButtonLayout.Secondary>
-              <Drawer.Close asChild>
-                <Button variant="outline">Cancel</Button>
-              </Drawer.Close>
-            </ButtonLayout.Secondary>
-          </ButtonLayout.Root>
-        </Drawer.Footer>
+        <Drawer.Footer
+          secondaryButton={
+            <Drawer.Close asChild>
+              <Button variant="outline">Cancel</Button>
+            </Drawer.Close>
+          }
+        />
       </Drawer.Content>
     </Drawer.Root>
 
@@ -519,15 +499,13 @@ The `Drawer.Content` component accepts a `size` prop to control its width (or he
 
         <Drawer.Body />
 
-        <Drawer.Footer>
-          <ButtonLayout.Root>
-            <ButtonLayout.Secondary>
-              <Drawer.Close asChild>
-                <Button variant="outline">Cancel</Button>
-              </Drawer.Close>
-            </ButtonLayout.Secondary>
-          </ButtonLayout.Root>
-        </Drawer.Footer>
+        <Drawer.Footer
+          secondaryButton={
+            <Drawer.Close asChild>
+              <Button variant="outline">Cancel</Button>
+            </Drawer.Close>
+          }
+        />
       </Drawer.Content>
     </Drawer.Root>
 
@@ -543,15 +521,13 @@ The `Drawer.Content` component accepts a `size` prop to control its width (or he
 
         <Drawer.Body />
 
-        <Drawer.Footer>
-          <ButtonLayout.Root>
-            <ButtonLayout.Secondary>
-              <Drawer.Close asChild>
-                <Button variant="outline">Cancel</Button>
-              </Drawer.Close>
-            </ButtonLayout.Secondary>
-          </ButtonLayout.Root>
-        </Drawer.Footer>
+        <Drawer.Footer
+          secondaryButton={
+            <Drawer.Close asChild>
+              <Button variant="outline">Cancel</Button>
+            </Drawer.Close>
+          }
+        />
       </Drawer.Content>
     </Drawer.Root>
 
@@ -567,15 +543,13 @@ The `Drawer.Content` component accepts a `size` prop to control its width (or he
 
         <Drawer.Body />
 
-        <Drawer.Footer>
-          <ButtonLayout.Root>
-            <ButtonLayout.Secondary>
-              <Drawer.Close asChild>
-                <Button variant="outline">Cancel</Button>
-              </Drawer.Close>
-            </ButtonLayout.Secondary>
-          </ButtonLayout.Root>
-        </Drawer.Footer>
+        <Drawer.Footer
+          secondaryButton={
+            <Drawer.Close asChild>
+              <Button variant="outline">Cancel</Button>
+            </Drawer.Close>
+          }
+        />
       </Drawer.Content>
     </Drawer.Root>
 
@@ -603,15 +577,13 @@ The `Drawer.Root` component accepts a `direction` prop to control which side the
 
         <Drawer.Body />
 
-        <Drawer.Footer>
-          <ButtonLayout.Root>
-            <ButtonLayout.Secondary>
-              <Drawer.Close asChild>
-                <Button variant="outline">Cancel</Button>
-              </Drawer.Close>
-            </ButtonLayout.Secondary>
-          </ButtonLayout.Root>
-        </Drawer.Footer>
+        <Drawer.Footer
+          secondaryButton={
+            <Drawer.Close asChild>
+              <Button variant="outline">Cancel</Button>
+            </Drawer.Close>
+          }
+        />
       </Drawer.Content>
     </Drawer.Root>
 
@@ -627,15 +599,13 @@ The `Drawer.Root` component accepts a `direction` prop to control which side the
 
         <Drawer.Body />
 
-        <Drawer.Footer>
-          <ButtonLayout.Root>
-            <ButtonLayout.Secondary>
-              <Drawer.Close asChild>
-                <Button variant="outline">Cancel</Button>
-              </Drawer.Close>
-            </ButtonLayout.Secondary>
-          </ButtonLayout.Root>
-        </Drawer.Footer>
+        <Drawer.Footer
+          secondaryButton={
+            <Drawer.Close asChild>
+              <Button variant="outline">Cancel</Button>
+            </Drawer.Close>
+          }
+        />
       </Drawer.Content>
     </Drawer.Root>
 
@@ -651,15 +621,13 @@ The `Drawer.Root` component accepts a `direction` prop to control which side the
 
         <Drawer.Body />
 
-        <Drawer.Footer>
-          <ButtonLayout.Root>
-            <ButtonLayout.Secondary>
-              <Drawer.Close asChild>
-                <Button variant="outline">Cancel</Button>
-              </Drawer.Close>
-            </ButtonLayout.Secondary>
-          </ButtonLayout.Root>
-        </Drawer.Footer>
+        <Drawer.Footer
+          secondaryButton={
+            <Drawer.Close asChild>
+              <Button variant="outline">Cancel</Button>
+            </Drawer.Close>
+          }
+        />
       </Drawer.Content>
     </Drawer.Root>
 
@@ -675,15 +643,13 @@ The `Drawer.Root` component accepts a `direction` prop to control which side the
 
         <Drawer.Body />
 
-        <Drawer.Footer>
-          <ButtonLayout.Root>
-            <ButtonLayout.Secondary>
-              <Drawer.Close asChild>
-                <Button variant="outline">Cancel</Button>
-              </Drawer.Close>
-            </ButtonLayout.Secondary>
-          </ButtonLayout.Root>
-        </Drawer.Footer>
+        <Drawer.Footer
+          secondaryButton={
+            <Drawer.Close asChild>
+              <Button variant="outline">Cancel</Button>
+            </Drawer.Close>
+          }
+        />
       </Drawer.Content>
     </Drawer.Root>
 
@@ -737,9 +703,7 @@ return (
             Lorem ipsum dolor sit amet, consectetur adipiscing elit
           </p>
         </Drawer.Body>
-        <Drawer.Footer>
-          <Drawer.Close>Close</Drawer.Close>
-        </Drawer.Footer>
+        <Drawer.Footer primaryButton={<Drawer.Close asChild><Button>Close</Button></Drawer.Close>} />
       </Drawer.Content>
 
     </Drawer.Root>
@@ -775,18 +739,14 @@ return (
         <Drawer.Body>
           <p>Drawer body content goes here.</p>
         </Drawer.Body>
-        <Drawer.Footer>
-          <ButtonLayout.Root>
-            <ButtonLayout.Primary>
-              <Button>Save</Button>
-            </ButtonLayout.Primary>
-            <ButtonLayout.Secondary>
-              <Drawer.Close asChild>
-                <Button variant="outline">Cancel</Button>
-              </Drawer.Close>
-            </ButtonLayout.Secondary>
-          </ButtonLayout.Root>
-        </Drawer.Footer>
+        <Drawer.Footer
+          secondaryButton={
+            <Drawer.Close asChild>
+              <Button variant="outline">Cancel</Button>
+            </Drawer.Close>
+          }
+          primaryButton={<Button>Save</Button>}
+        />
       </Drawer.Content>
     </Drawer.Root>
 
@@ -1051,6 +1011,8 @@ Each entry in the `tabs` array accepts the following fields.
 
 Content passed as `children` in the structured mode renders as a slot above the action bar.
 
+**Button placement rule.** When you have two actions, a primary and a secondary, default to **two buttons on the right** (`secondaryButton` + `primaryButton`). The left ghost slot (`backButton`) is reserved for a **backward action** (e.g. "Back" in a multi-step flow) — or for a **cancel/close**, but only when the `secondaryButton` position isn't already a cancel/close. In other words, never place a cancel/close in both the left slot and the secondary slot: if the secondary action is a cancel/close, leave the left slot empty; if it isn't, the left slot may hold the cancel/close (or a back action). The [dual pane wizard](#dual-pane-drawer) below shows this — "Back" sits in the left slot while stepping through, and on the first step (where there's no backward action) the "Cancel" takes the left slot instead.
+
 ### Basic
 
 <DocsPage.ComponentExample
@@ -1216,32 +1178,30 @@ Use `size="md"`, `size="lg"`, or `size="xl"` on `Drawer.Content` so the rail and
                 </div>
               </Drawer.Body>
 
-              <Drawer.Footer>
-                <ButtonLayout.Root>
-                  <ButtonLayout.Primary>
-                    {currentIndex < steps.length - 1 ? (
-                      <Button onClick={goNext}>
-                        Continue
-                        <IconV2 name="arrow-right" />
-                      </Button>
-                    ) : (
-                      <Button>Finish</Button>
-                    )}
-                  </ButtonLayout.Primary>
-                  <ButtonLayout.Secondary>
-                    {currentIndex > 0 ? (
-                      <Button variant="outline" onClick={goBack}>
-                        <IconV2 name="arrow-left" />
-                        Back
-                      </Button>
-                    ) : (
-                      <Drawer.Close asChild>
-                        <Button variant="outline">Cancel</Button>
-                      </Drawer.Close>
-                    )}
-                  </ButtonLayout.Secondary>
-                </ButtonLayout.Root>
-              </Drawer.Footer>
+              <Drawer.Footer
+                backButton={
+                  currentIndex > 0 ? (
+                    <Button variant="ghost" onClick={goBack}>
+                      <IconV2 name="arrow-left" />
+                      Back
+                    </Button>
+                  ) : (
+                    <Drawer.Close asChild>
+                      <Button variant="ghost">Cancel</Button>
+                    </Drawer.Close>
+                  )
+                }
+                primaryButton={
+                  currentIndex < steps.length - 1 ? (
+                    <Button onClick={goNext}>
+                      Continue
+                      <IconV2 name="arrow-right" />
+                    </Button>
+                  ) : (
+                    <Button>Finish</Button>
+                  )
+                }
+              />
             </Drawer.DualPaneMain>
           </Drawer.DualPane>
         </Drawer.Content>
@@ -1279,18 +1239,14 @@ Use `size="md"`, `size="lg"`, or `size="xl"` on `Drawer.Content` so the rail and
           </div>
         </Drawer.Body>
 
-        <Drawer.Footer>
-          <ButtonLayout.Root>
-            <ButtonLayout.Primary>
-              <Button onClick={goNext}>Continue</Button>
-            </ButtonLayout.Primary>
-            <ButtonLayout.Secondary>
-              <Drawer.Close asChild>
-                <Button variant="outline">Cancel</Button>
-              </Drawer.Close>
-            </ButtonLayout.Secondary>
-          </ButtonLayout.Root>
-        </Drawer.Footer>
+        <Drawer.Footer
+          secondaryButton={
+            <Drawer.Close asChild>
+              <Button variant="outline">Cancel</Button>
+            </Drawer.Close>
+          }
+          primaryButton={<Button onClick={goNext}>Continue</Button>}
+        />
       </Drawer.DualPaneMain>
     </Drawer.DualPane>
   </Drawer.Content>
@@ -1404,18 +1360,14 @@ Use `Drawer.Rail` when the rail holds reference material that the user scans whi
                 </div>
               </Drawer.Body>
 
-              <Drawer.Footer>
-                <ButtonLayout.Root>
-                  <ButtonLayout.Primary>
-                    <Button>Create pipeline</Button>
-                  </ButtonLayout.Primary>
-                  <ButtonLayout.Secondary>
-                    <Drawer.Close asChild>
-                      <Button variant="outline">Cancel</Button>
-                    </Drawer.Close>
-                  </ButtonLayout.Secondary>
-                </ButtonLayout.Root>
-              </Drawer.Footer>
+              <Drawer.Footer
+                secondaryButton={
+                  <Drawer.Close asChild>
+                    <Button variant="outline">Cancel</Button>
+                  </Drawer.Close>
+                }
+                primaryButton={<Button>Create pipeline</Button>}
+              />
             </Drawer.DualPaneMain>
           </Drawer.DualPane>
         </Drawer.Content>
@@ -1451,18 +1403,14 @@ Use `Drawer.Rail` when the rail holds reference material that the user scans whi
           </div>
         </Drawer.Body>
 
-        <Drawer.Footer>
-          <ButtonLayout.Root>
-            <ButtonLayout.Primary>
-              <Button>Create pipeline</Button>
-            </ButtonLayout.Primary>
-            <ButtonLayout.Secondary>
-              <Drawer.Close asChild>
-                <Button variant="outline">Cancel</Button>
-              </Drawer.Close>
-            </ButtonLayout.Secondary>
-          </ButtonLayout.Root>
-        </Drawer.Footer>
+        <Drawer.Footer
+          secondaryButton={
+            <Drawer.Close asChild>
+              <Button variant="outline">Cancel</Button>
+            </Drawer.Close>
+          }
+          primaryButton={<Button>Create pipeline</Button>}
+        />
       </Drawer.DualPaneMain>
     </Drawer.DualPane>
   </Drawer.Content>
@@ -1519,36 +1467,30 @@ While the nested drawer is open the parent dual pane stays mounted (its state, s
                       </div>
                     </Drawer.Body>
 
-                    <Drawer.Footer>
-                      <ButtonLayout.Root>
-                        <ButtonLayout.Primary>
-                          <Drawer.Close asChild>
-                            <Button>Create connector</Button>
-                          </Drawer.Close>
-                        </ButtonLayout.Primary>
-                        <ButtonLayout.Secondary>
-                          <Drawer.Close asChild>
-                            <Button variant="outline">Cancel</Button>
-                          </Drawer.Close>
-                        </ButtonLayout.Secondary>
-                      </ButtonLayout.Root>
-                    </Drawer.Footer>
+                    <Drawer.Footer
+                      secondaryButton={
+                        <Drawer.Close asChild>
+                          <Button variant="outline">Cancel</Button>
+                        </Drawer.Close>
+                      }
+                      primaryButton={
+                        <Drawer.Close asChild>
+                          <Button>Create connector</Button>
+                        </Drawer.Close>
+                      }
+                    />
                   </Drawer.Content>
                 </Drawer.Root>
               </Drawer.Body>
 
-              <Drawer.Footer>
-                <ButtonLayout.Root>
-                  <ButtonLayout.Primary>
-                    <Button onClick={() => setStep('trigger')}>Continue</Button>
-                  </ButtonLayout.Primary>
-                  <ButtonLayout.Secondary>
-                    <Drawer.Close asChild>
-                      <Button variant="outline">Cancel</Button>
-                    </Drawer.Close>
-                  </ButtonLayout.Secondary>
-                </ButtonLayout.Root>
-              </Drawer.Footer>
+              <Drawer.Footer
+                secondaryButton={
+                  <Drawer.Close asChild>
+                    <Button variant="outline">Cancel</Button>
+                  </Drawer.Close>
+                }
+                primaryButton={<Button onClick={() => setStep('trigger')}>Continue</Button>}
+              />
             </Drawer.DualPaneMain>
           </Drawer.DualPane>
         </Drawer.Content>
@@ -1596,20 +1538,18 @@ While the nested drawer is open the parent dual pane stays mounted (its state, s
                     <p className="font-heading-section text-cn-3">Content</p>
                   </div>
                 </Drawer.Body>
-              <Drawer.Footer>
-                <ButtonLayout.Root>
-                  <ButtonLayout.Primary>
-                    <Drawer.Close asChild>
-                      <Button>Create connector</Button>
-                    </Drawer.Close>
-                  </ButtonLayout.Primary>
-                  <ButtonLayout.Secondary>
-                    <Drawer.Close asChild>
-                      <Button variant="outline">Cancel</Button>
-                    </Drawer.Close>
-                  </ButtonLayout.Secondary>
-                </ButtonLayout.Root>
-              </Drawer.Footer>
+              <Drawer.Footer
+                secondaryButton={
+                  <Drawer.Close asChild>
+                    <Button variant="outline">Cancel</Button>
+                  </Drawer.Close>
+                }
+                primaryButton={
+                  <Drawer.Close asChild>
+                    <Button>Create connector</Button>
+                  </Drawer.Close>
+                }
+              />
             </Drawer.Content>
           </Drawer.Root>
         </Drawer.Body>
@@ -1688,18 +1628,14 @@ You can override the right pane's floor by setting `--cn-drawer-dual-pane-main-m
                     </p>
                   </Drawer.Body>
 
-                  <Drawer.Footer>
-                    <ButtonLayout.Root>
-                      <ButtonLayout.Primary>
-                        <Button>Continue</Button>
-                      </ButtonLayout.Primary>
-                      <ButtonLayout.Secondary>
-                        <Drawer.Close asChild>
-                          <Button variant="outline">Cancel</Button>
-                        </Drawer.Close>
-                      </ButtonLayout.Secondary>
-                    </ButtonLayout.Root>
-                  </Drawer.Footer>
+                  <Drawer.Footer
+                    secondaryButton={
+                      <Drawer.Close asChild>
+                        <Button variant="outline">Cancel</Button>
+                      </Drawer.Close>
+                    }
+                    primaryButton={<Button>Continue</Button>}
+                  />
                 </Drawer.DualPaneMain>
               </Drawer.DualPane>
             </Drawer.Content>

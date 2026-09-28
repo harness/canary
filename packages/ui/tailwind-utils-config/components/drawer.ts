@@ -140,7 +140,8 @@ export default {
       '&-top': {
         '@apply grid items-start': '',
         gridTemplateColumns: 'minmax(0, 1fr) auto',
-        columnGap: 'var(--cn-spacing-half)',
+        gap: '0px var(--cn-spacing-half)',
+        rowGap: '0px',
 
         '& .cn-drawer-close-button': {
           gridColumn: '2',

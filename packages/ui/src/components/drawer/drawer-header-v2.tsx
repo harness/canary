@@ -56,7 +56,9 @@ export const DrawerHeaderV2 = forwardRef<HTMLDivElement, DrawerHeaderV2Props>(
       (!!icon && typeof icon === 'object' && (
         <LogoV2 className="cn-drawer-header-v2-icon" name={icon.logo} size="sm" />
       )) ||
-      (!!icon && typeof icon === 'string' && <IconV2 className="cn-drawer-header-v2-icon" name={icon} size="lg" />) ||
+      (!!icon && typeof icon === 'string' && (
+        <IconV2 className="cn-drawer-header-v2-icon cn-drawer-header-v2-icon-color" name={icon} size="lg" />
+      )) ||
       null
 
     const closeButton = !hideClose ? (

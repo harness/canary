@@ -120,7 +120,8 @@ export default {
       },
 
       '&-icon-color': {
-        color: 'var(--cn-text-2)'
+        // Icons inherit the title color (text-1); logos keep their own brand colors.
+        color: 'var(--cn-text-1)'
       },
 
       '&-top': {
@@ -514,6 +515,11 @@ export default {
       // tagline spanning above — spacing handled by the ContainerHeader layout.
       '&-icon': {
         '@apply shrink-0': ''
+      },
+
+      '&-icon-color': {
+        // Icons inherit the title color (text-1); logos keep their own brand colors.
+        color: 'var(--cn-text-1)'
       },
 
       '&-description': {

@@ -4,7 +4,6 @@ import { cn } from '@/utils'
 import { Drawer as DrawerPrimitive } from 'vaul'
 
 import { Button } from '../button'
-import { ContainerHeader } from '../container-header'
 import { IconV2, type IconV2NamesType } from '../icon-v2'
 import { Layout } from '../layout'
 import { LogoV2, type LogoV2NamesType } from '../logo-v2'
@@ -15,10 +14,10 @@ import { Text } from '../text'
 import { DrawerTagline } from './Drawer.Tagline'
 
 export interface DrawerHeaderV2Props {
-  title: string
+  title: ReactNode
   /** Tagline / breadcrumb rendered above the title. */
   tagline?: ReactNode
-  description?: string
+  description?: ReactNode
   icon?: IconV2NamesType | { logo: LogoV2NamesType }
   actions?: ReactNode
   tabs?: HeaderV2TabItem[]
@@ -89,18 +88,24 @@ export const DrawerHeaderV2 = forwardRef<HTMLDivElement, DrawerHeaderV2Props>(
     return (
       <div ref={ref} className={cn('cn-drawer-header-v2', tabs?.length && 'border-b-0', className)}>
         <div className="cn-drawer-header-v2-main">
-          <ContainerHeader
-            title={title}
-            titleVariant="heading-default"
-            titleLeading={IconOrLogoComp}
-            caption={tagline ? <DrawerTagline>{tagline}</DrawerTagline> : undefined}
-            className="cn-drawer-header-v2-title-group min-w-0"
-          />
+          <Layout.Vertical gap="4xs" className="cn-drawer-header-v2-title-group min-w-0">
+            {tagline ? <DrawerTagline>{tagline}</DrawerTagline> : null}
+            <Layout.Horizontal gap="2xs" align="center" className="min-w-0">
+              {IconOrLogoComp}
+              <DrawerPrimitive.Title asChild>
+                <Text variant="heading-default" color="foreground-1" truncate className="cn-drawer-title min-w-0 flex-1">
+                  {title}
+                </Text>
+              </DrawerPrimitive.Title>
+            </Layout.Horizontal>
+          </Layout.Vertical>
           {headerActions}
           {description && (
-            <Text className="cn-drawer-header-v2-description" color="foreground-2">
-              {description}
-            </Text>
+            <DrawerPrimitive.Description asChild>
+              <Text className="cn-drawer-header-v2-description" color="foreground-2">
+                {description}
+              </Text>
+            </DrawerPrimitive.Description>
           )}
         </div>
         {children && (

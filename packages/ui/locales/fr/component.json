@@ -108,7 +108,8 @@
     "cancel": "Annuler"
   },
   "drawer": {
-    "close": "Fermer"
+    "close": "Fermer",
+    "noDescription": "Aucune description disponible"
   },
   "dropdownMenu": {
     "noOptions": "Aucune option disponible"

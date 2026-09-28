@@ -109,11 +109,18 @@ export const DrawerHeaderV2 = forwardRef<HTMLDivElement, DrawerHeaderV2Props>(
             </Layout.Horizontal>
           </Layout.Vertical>
           {headerActions}
-          {description && (
+          {/* The description is optional. When present it renders visibly; when omitted we still
+              emit a screen-reader-only Description so the dialog keeps an accessible description
+              (matching Radix's optional-description contract) instead of warning about a missing one. */}
+          {description ? (
             <DrawerPrimitive.Description asChild>
               <Text className="cn-drawer-header-v2-description" color="foreground-2">
                 {description}
               </Text>
+            </DrawerPrimitive.Description>
+          ) : (
+            <DrawerPrimitive.Description className="sr-only">
+              {t('component:drawer.noDescription', 'No description available')}
             </DrawerPrimitive.Description>
           )}
         </div>

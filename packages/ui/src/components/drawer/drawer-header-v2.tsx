@@ -6,6 +6,7 @@ import { Drawer as DrawerPrimitive } from 'vaul'
 import { Button } from '../button'
 import { ContainerHeader } from '../container-header'
 import { IconV2, type IconV2NamesType } from '../icon-v2'
+import { Layout } from '../layout'
 import { LogoV2, type LogoV2NamesType } from '../logo-v2'
 import { type HeaderV2TabItem } from '../page/page-header-v2'
 import { Skeleton } from '../skeletons'
@@ -58,6 +59,30 @@ export const DrawerHeaderV2 = forwardRef<HTMLDivElement, DrawerHeaderV2Props>(
       (!!icon && typeof icon === 'string' && <IconV2 className="cn-drawer-header-v2-icon" name={icon} size="lg" />) ||
       null
 
+    const closeButton = !hideClose ? (
+      <DrawerPrimitive.Close asChild>
+        <Button className="cn-drawer-close-button" variant="ghost" iconOnly ignoreIconOnlyTooltip>
+          <IconV2 className="cn-drawer-close-button-icon" name="xmark" skipSize />
+        </Button>
+      </DrawerPrimitive.Close>
+    ) : null
+
+    // The actions and the close button live in one group aligned with the title line
+    // (2px between the actions and close, matching the Figma spec) so they never drift
+    // apart when a tagline or description makes the title column taller.
+    const showActions = !isLoading && !!actions
+    const headerActions =
+      showActions || closeButton ? (
+        <Layout.Horizontal gap="4xs" align="center">
+          {showActions && (
+            <Layout.Horizontal gap="xs" align="center">
+              {actions}
+            </Layout.Horizontal>
+          )}
+          {closeButton}
+        </Layout.Horizontal>
+      ) : undefined
+
     return (
       <div ref={ref} className={cn('cn-drawer-header-v2', tabs?.length && 'border-b-0', className)}>
         <div className="cn-drawer-header-v2-main">
@@ -67,16 +92,9 @@ export const DrawerHeaderV2 = forwardRef<HTMLDivElement, DrawerHeaderV2Props>(
               titleVariant="heading-default"
               titleLeading={IconOrLogoComp}
               caption={tagline ? <DrawerTagline>{tagline}</DrawerTagline> : undefined}
-              actions={!isLoading ? actions : undefined}
+              actions={headerActions}
               className="min-w-0 flex-1"
             />
-            {!hideClose && (
-              <DrawerPrimitive.Close asChild>
-                <Button className="cn-drawer-close-button" variant="ghost" iconOnly ignoreIconOnlyTooltip>
-                  <IconV2 className="cn-drawer-close-button-icon" name="xmark" skipSize />
-                </Button>
-              </DrawerPrimitive.Close>
-            )}
           </div>
           {description && (
             <Text className="cn-drawer-header-v2-description" color="foreground-2">

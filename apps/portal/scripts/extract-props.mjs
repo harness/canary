@@ -31,21 +31,38 @@ const TSCONFIG_PATH = path.join(REPO_ROOT, 'packages/ui/tsconfig.json')
 const parser = withCustomConfig(TSCONFIG_PATH, {
   savePropValueAsString: true,
   shouldExtractLiteralValuesFromEnum: true,
-  shouldRemoveUndefinedFromOptional: true
+  shouldRemoveUndefinedFromOptional: true,
+  // Most Canary components spread `HTMLAttributes`/`AriaAttributes` into their
+  // prop type; without this filter every schema balloons with onClick,
+  // aria-*, etc. Only keep props actually declared in the component's own file.
+  propFilter: prop => (prop.parent ? !prop.parent.fileName.includes('node_modules') : true)
 })
+
+/** cva `VariantProps<...>['x']` types come through as a raw union string
+ *  (e.g. `"outline" | "secondary" | null`), not react-docgen's `enum` kind. */
+function splitUnion(typeName) {
+  return typeName
+    .split('|')
+    .map(s => s.trim())
+    .filter(s => s && s !== 'null' && s !== 'undefined')
+}
 
 /** Map a react-docgen-typescript prop descriptor to a control type + options. */
 function inferControlType(prop) {
   const typeName = prop.type.name
 
+  if (typeName === 'boolean') return { type: 'boolean' }
+  if (typeName === 'number') return { type: 'number' }
   if (typeName === 'enum') {
     return {
       type: 'select',
       options: prop.type.value.map(v => String(v.value).replace(/^"(.*)"$/, '$1'))
     }
   }
-  if (typeName === 'boolean') return { type: 'boolean' }
-  if (typeName === 'number') return { type: 'number' }
+  if (typeName.includes('|')) {
+    const options = splitUnion(typeName).map(s => s.replace(/^"(.*)"$/, '$1'))
+    if (options.length > 0) return { type: 'select', options }
+  }
   if (/color$/i.test(prop.name)) return { type: 'color' }
   return { type: 'text' }
 }

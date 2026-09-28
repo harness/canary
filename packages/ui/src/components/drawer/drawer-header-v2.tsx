@@ -10,6 +10,7 @@ import { LogoV2, type LogoV2NamesType } from '../logo-v2'
 import { type HeaderV2TabItem } from '../page/page-header-v2'
 import { Skeleton } from '../skeletons'
 import { Tabs } from '../tabs'
+import { Text } from '../text'
 import { DrawerTagline } from './Drawer.Tagline'
 
 export interface DrawerHeaderV2Props {
@@ -52,29 +53,35 @@ export const DrawerHeaderV2 = forwardRef<HTMLDivElement, DrawerHeaderV2Props>(
   ) => {
     const IconOrLogoComp =
       (!!icon && typeof icon === 'object' && (
-        <LogoV2 className="cn-drawer-header-v2-icon" name={icon.logo} size="md" />
+        <LogoV2 className="cn-drawer-header-v2-icon" name={icon.logo} size="sm" />
       )) ||
-      (!!icon && typeof icon === 'string' && <IconV2 className="cn-drawer-header-v2-icon" name={icon} size="xl" />) ||
+      (!!icon && typeof icon === 'string' && <IconV2 className="cn-drawer-header-v2-icon" name={icon} size="lg" />) ||
       null
 
     return (
       <div ref={ref} className={cn('cn-drawer-header-v2', tabs?.length && 'border-b-0', className)}>
-        <div className="cn-drawer-header-v2-title-row">
-          {IconOrLogoComp}
-          <ContainerHeader
-            title={title}
-            caption={tagline ? <DrawerTagline>{tagline}</DrawerTagline> : undefined}
-            description={description}
-            descriptionClassName="cn-drawer-header-v2-description"
-            actions={!isLoading ? actions : undefined}
-            className="min-w-0 flex-1"
-          />
-          {!hideClose && (
-            <DrawerPrimitive.Close asChild>
-              <Button className="cn-drawer-close-button" variant="ghost" iconOnly ignoreIconOnlyTooltip>
-                <IconV2 className="cn-drawer-close-button-icon" name="xmark" skipSize />
-              </Button>
-            </DrawerPrimitive.Close>
+        <div className="cn-drawer-header-v2-main">
+          <div className="cn-drawer-header-v2-title-row">
+            <ContainerHeader
+              title={title}
+              titleVariant="heading-default"
+              titleLeading={IconOrLogoComp}
+              caption={tagline ? <DrawerTagline>{tagline}</DrawerTagline> : undefined}
+              actions={!isLoading ? actions : undefined}
+              className="min-w-0 flex-1"
+            />
+            {!hideClose && (
+              <DrawerPrimitive.Close asChild>
+                <Button className="cn-drawer-close-button" variant="ghost" iconOnly ignoreIconOnlyTooltip>
+                  <IconV2 className="cn-drawer-close-button-icon" name="xmark" skipSize />
+                </Button>
+              </DrawerPrimitive.Close>
+            )}
+          </div>
+          {description && (
+            <Text className="cn-drawer-header-v2-description" color="foreground-2">
+              {description}
+            </Text>
           )}
         </div>
         {children && (

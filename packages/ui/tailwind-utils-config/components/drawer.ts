@@ -110,7 +110,8 @@ export default {
     '&-header': {
       borderBottomWidth: 'var(--cn-border-width-1)',
       borderBottomColor: 'var(--cn-border-3)',
-      gap: 'var(--cn-drawer-gap)',
+      // 8px between the title group and the description, matching the V2 header.
+      gap: 'var(--cn-spacing-2)',
       padding: 'var(--cn-drawer-container)',
       '@apply flex flex-col border-b': '',
 
@@ -123,12 +124,28 @@ export default {
       },
 
       '&-top': {
-        gap: 'var(--cn-spacing-2-half)',
+        gap: 'var(--cn-spacing-half)',
         '@apply flex items-center': ''
       },
 
-      '&-title': {
+      // Tagline stacks above; the title line holds the icon/logo inline with the title.
+      '&-strings': {
+        gap: 'var(--cn-spacing-half)',
         '@apply flex flex-col': ''
+      },
+
+      '&-title-line': {
+        gap: 'var(--cn-spacing-1-half)',
+        '@apply flex items-center': ''
+      },
+
+      // Match the V2 header typography for the legacy composition API. Scoped to the
+      // legacy header so Drawer.Title / Drawer.Tagline used elsewhere are unaffected.
+      '& .cn-drawer-title': {
+        font: 'var(--cn-heading-default)'
+      },
+      '& .cn-drawer-tagline': {
+        font: 'var(--cn-caption-normal)'
       }
     },
 
@@ -222,7 +239,9 @@ export default {
     },
 
     '&-dual-pane-rail-header-title': {
-      font: 'var(--cn-heading-section)',
+      // Match the drawer header title (heading-default) so the rail and main
+      // pane headers read as one consistent header row.
+      font: 'var(--cn-heading-default)',
       letterSpacing: 'var(--cn-tracking-tight)',
       color: 'var(--cn-text-1)',
       margin: '0',
@@ -461,11 +480,24 @@ export default {
       '@apply flex flex-col border-b': '',
       gap: 'var(--cn-spacing-3)',
 
-      '&-title-row': {
-        '@apply flex items-start': '',
+      '&-main': {
+        '@apply flex flex-col w-full': '',
         gap: 'var(--cn-spacing-2)'
       },
 
+      '&-title-row': {
+        '@apply flex items-center': '',
+        gap: 'var(--cn-spacing-half)',
+
+        // Figma spec uses caption/normal (400) for the V2 tagline.
+        // Scoped to V2 so the legacy Drawer.Tagline (caption-light) is unaffected.
+        '& .cn-drawer-tagline': {
+          font: 'var(--cn-caption-normal)'
+        }
+      },
+
+      // The icon/logo sits inline with the title (centered with it), with the
+      // tagline spanning above — spacing handled by the ContainerHeader layout.
       '&-icon': {
         '@apply shrink-0': ''
       },

@@ -124,6 +124,14 @@ export default {
         color: 'var(--cn-text-1)'
       },
 
+      // Title group + any following content (description, custom nodes) stack in one column.
+      // The 8px gap here is what separates the title from the description, and it is measured
+      // from the title group — independent of the taller close button sitting beside it.
+      '&-content': {
+        gap: 'var(--cn-spacing-2)',
+        '@apply flex flex-col': ''
+      },
+
       '&-top': {
         // Top-align so the close button anchors to the top-right corner rather than
         // centering on the title group (which drifts when a tagline is present).

@@ -82,15 +82,21 @@ export const DrawerHeader = forwardRef<HTMLDivElement, DrawerHeaderProps>((props
 
   return (
     <div className={cn('cn-drawer-header', className)} ref={ref} {...rest}>
-      {hasTitleGroup && (
+      {hasTitleGroup ? (
         <div className="cn-drawer-header-top">
-          {/* Tagline spans above; the icon/logo sits inline with the title (matches the V2 header). */}
-          <div className="cn-drawer-header-strings min-w-0 flex-1">
-            {taglineChildren}
-            <div className="cn-drawer-header-title-line">
-              {IconOrLogoComp}
-              {titleChildren}
+          {/* Title group and any following content (e.g. the description) share one column so
+              the 8px title→description gap is measured from the title — not from the taller
+              close button, which sits beside this column and would otherwise inflate it. */}
+          <div className="cn-drawer-header-content min-w-0 flex-1">
+            {/* Tagline spans above; the icon/logo sits inline with the title (matches the V2 header). */}
+            <div className="cn-drawer-header-strings">
+              {taglineChildren}
+              <div className="cn-drawer-header-title-line">
+                {IconOrLogoComp}
+                {titleChildren}
+              </div>
             </div>
+            {otherChildren}
           </div>
           {!hideClose && (
             <DrawerPrimitive.Close asChild>
@@ -100,8 +106,9 @@ export const DrawerHeader = forwardRef<HTMLDivElement, DrawerHeaderProps>((props
             </DrawerPrimitive.Close>
           )}
         </div>
+      ) : (
+        otherChildren
       )}
-      {otherChildren}
     </div>
   )
 })

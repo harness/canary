@@ -11,7 +11,7 @@ export type DrawerFooterLegacyProps = HTMLAttributes<HTMLDivElement> & {
 
 /**
  * Structured API — a single standardized footer action bar driven by props. Every button is
- * optional; the layout (ghost button pinned left, secondary + primary right-aligned) and spacing
+ * optional; the layout (tertiary button pinned left, secondary + primary right-aligned) and spacing
  * stay fixed regardless of which buttons are present. Prefer this for new usage.
  */
 export interface DrawerFooterStructuredProps {
@@ -20,10 +20,11 @@ export interface DrawerFooterStructuredProps {
   /** Secondary action — right-aligned, rendered to the left of the primary button. */
   secondaryButton?: ReactNode
   /**
-   * Ghost button pinned to the far left of the action bar — reserved for a backward action
-   * (e.g. a ghost `Back`) or a cancel/close when the secondary slot isn't already one.
+   * Tertiary action pinned to the far left of the action bar — reserved for a backward action
+   * or a cancel/close when the secondary slot isn't already one. Typically a ghost-variant
+   * button (e.g. a ghost `Back`).
    */
-  ghostButton?: ReactNode
+  tertiaryButton?: ReactNode
   /** Optional custom content rendered above the action bar (the footer "slot"). */
   children?: ReactNode
   className?: string
@@ -33,19 +34,19 @@ export type DrawerFooterProps = DrawerFooterLegacyProps | DrawerFooterStructured
 
 /** Structured mode is selected when any footer button prop is provided; otherwise children compose the footer. */
 const isStructured = (props: DrawerFooterProps): props is DrawerFooterStructuredProps =>
-  'primaryButton' in props || 'secondaryButton' in props || 'ghostButton' in props
+  'primaryButton' in props || 'secondaryButton' in props || 'tertiaryButton' in props
 
 export const DrawerFooter = forwardRef<HTMLDivElement, DrawerFooterProps>((props, ref) => {
   if (isStructured(props)) {
-    const { primaryButton, secondaryButton, ghostButton, children, className } = props
-    const hasActions = !!ghostButton || !!secondaryButton || !!primaryButton
+    const { primaryButton, secondaryButton, tertiaryButton, children, className } = props
+    const hasActions = !!tertiaryButton || !!secondaryButton || !!primaryButton
 
     return (
       <div className={cn('cn-drawer-footer', className)} ref={ref}>
         {children}
         {hasActions && (
           <div className="cn-drawer-footer-action-bar">
-            {ghostButton}
+            {tertiaryButton}
             <div className="cn-drawer-footer-actions">
               {secondaryButton}
               {primaryButton}

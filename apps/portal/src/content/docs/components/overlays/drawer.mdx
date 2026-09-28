@@ -1007,11 +1007,11 @@ Each entry in the `tabs` array accepts the following fields.
 
 ## Structured footer (props API)
 
-`Drawer.Footer` accepts a structured, opinionated set of props that standardize the footer's action bar: a `ghostButton` pinned to the far left, plus `secondaryButton` and `primaryButton` right-aligned. Every button is optional and takes a `ReactNode`, so you keep full control over each button (wrap it in `Drawer.Close`, set `loading`, `disabled`, `iconOnly`, etc.) while the layout and spacing stay consistent across every drawer. Pass any of `primaryButton` / `secondaryButton` / `ghostButton` to opt into this layout; pass children only (e.g. `ButtonLayout`) to use the legacy compositional layout instead. Both are supported on the same component so existing usage keeps working.
+`Drawer.Footer` accepts a structured, opinionated set of props that standardize the footer's action bar: a `tertiaryButton` pinned to the far left, plus `secondaryButton` and `primaryButton` right-aligned. Every button is optional and takes a `ReactNode`, so you keep full control over each button (wrap it in `Drawer.Close`, set `loading`, `disabled`, `iconOnly`, etc.) while the layout and spacing stay consistent across every drawer. Pass any of `primaryButton` / `secondaryButton` / `tertiaryButton` to opt into this layout; pass children only (e.g. `ButtonLayout`) to use the legacy compositional layout instead. Both are supported on the same component so existing usage keeps working.
 
 Content passed as `children` in the structured mode renders as a slot above the action bar.
 
-**Button placement rule.** When you have two actions, a primary and a secondary, default to **two buttons on the right** (`secondaryButton` + `primaryButton`). The left `ghostButton` slot holds a **ghost-variant button** (`<Button variant="ghost">`) reserved for a **backward action** (e.g. a "Back" button in a multi-step flow) — or for a **cancel/close**, but only when the `secondaryButton` position isn't already a cancel/close. In other words, never place a cancel/close in both the left slot and the secondary slot: if the secondary action is a cancel/close, leave the left slot empty; if it isn't, the left slot may hold the cancel/close (or a back action). The [dual pane wizard](#dual-pane-drawer) below shows this — a ghost "Back" sits in the left slot while stepping through, and on the first step (where there's no backward action) the "Cancel" takes the left slot instead.
+**Button placement rule.** When you have two actions, a primary and a secondary, default to **two buttons on the right** (`secondaryButton` + `primaryButton`). The left `tertiaryButton` slot is reserved for a **backward action** (e.g. a "Back" button in a multi-step flow) — or for a **cancel/close**, but only when the `secondaryButton` position isn't already a cancel/close. Pass a ghost-variant button (`<Button variant="ghost">`) here so it reads as the lowest-emphasis action. In other words, never place a cancel/close in both the left slot and the secondary slot: if the secondary action is a cancel/close, leave the left slot empty; if it isn't, the left slot may hold the cancel/close (or a back action). The [dual pane wizard](#dual-pane-drawer) below shows this — a ghost "Back" sits in the left slot while stepping through, and on the first step (where there's no backward action) the "Cancel" takes the left slot instead.
 
 ### Basic
 
@@ -1029,7 +1029,7 @@ Content passed as `children` in the structured mode renders as a slot above the 
           <p>Drawer body content goes here.</p>
         </Drawer.Body>
         <Drawer.Footer
-          ghostButton={<Button variant="ghost">Back</Button>}
+          tertiaryButton={<Button variant="ghost">Back</Button>}
           secondaryButton={
             <Drawer.Close asChild>
               <Button variant="outline">Secondary action</Button>
@@ -1179,7 +1179,7 @@ Use `size="md"`, `size="lg"`, or `size="xl"` on `Drawer.Content` so the rail and
               </Drawer.Body>
 
               <Drawer.Footer
-                ghostButton={
+                tertiaryButton={
                   currentIndex > 0 ? (
                     <Button variant="ghost" onClick={goBack}>
                       <IconV2 name="arrow-left" />
@@ -2121,7 +2121,7 @@ A scrollable wrapper for all content that doesn’t belong to the [`Drawer.Heade
 
 ### `Footer`
 
-An optional footer wrapper. Supports two modes on the same component: a **structured** action bar driven by props (see [Structured footer](#structured-footer-props-api)), or **legacy composition** where you pass arbitrary children (e.g. `ButtonLayout`). Structured mode is selected when any of `primaryButton` / `secondaryButton` / `ghostButton` is provided; otherwise children compose the footer.
+An optional footer wrapper. Supports two modes on the same component: a **structured** action bar driven by props (see [Structured footer](#structured-footer-props-api)), or **legacy composition** where you pass arbitrary children (e.g. `ButtonLayout`). Structured mode is selected when any of `primaryButton` / `secondaryButton` / `tertiaryButton` is provided; otherwise children compose the footer.
 
 <DocsPage.PropsTable
   props={[
@@ -2142,9 +2142,9 @@ An optional footer wrapper. Supports two modes on the same component: a **struct
       defaultValue: "undefined",
     },
     {
-      name: "ghostButton",
+      name: "tertiaryButton",
       description:
-        "Structured mode. Ghost-variant button pinned to the far left of the action bar — reserved for a backward action (e.g. a ghost 'Back') or a cancel/close when the secondary slot isn't already one.",
+        "Structured mode. Tertiary action pinned to the far left of the action bar — reserved for a backward action or a cancel/close when the secondary slot isn't already one. Typically a ghost-variant button (e.g. a ghost 'Back').",
       required: false,
       value: "ReactNode",
       defaultValue: "undefined",

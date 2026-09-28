@@ -623,6 +623,21 @@ describe('FileExplorer', () => {
       expect(wrapper?.className).toContain('cn-file-tree-item-wrapper')
     })
 
+    test('applies custom item and wrapper class names', () => {
+      render(
+        <FolderItem level={1} value="folder1" className="custom-item" wrapperClassName="custom-wrapper">
+          Folder
+        </FolderItem>
+      )
+
+      const flexElements = screen.getAllByTestId('layout-flex')
+      const wrapper = flexElements.find(el => el.className.includes('cn-file-tree-folder-item'))
+      const item = flexElements.find(el => el.tagName === 'BUTTON')
+
+      expect(wrapper).toHaveClass('custom-wrapper')
+      expect(item).toHaveClass('custom-item')
+    })
+
     test('renders with default value when value is empty string', () => {
       render(
         <FolderItem level={1} value="">

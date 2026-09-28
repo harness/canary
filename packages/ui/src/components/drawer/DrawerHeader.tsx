@@ -84,19 +84,13 @@ export const DrawerHeader = forwardRef<HTMLDivElement, DrawerHeaderProps>((props
     <div className={cn('cn-drawer-header', className)} ref={ref} {...rest}>
       {hasTitleGroup ? (
         <div className="cn-drawer-header-top">
-          {/* Title group and any following content (e.g. the description) share one column so
-              the 8px title→description gap is measured from the title — not from the taller
-              close button, which sits beside this column and would otherwise inflate it. */}
-          <div className="cn-drawer-header-content min-w-0 flex-1">
-            {/* Tagline spans above; the icon/logo sits inline with the title (matches the V2 header). */}
-            <div className="cn-drawer-header-strings">
-              {taglineChildren}
-              <div className="cn-drawer-header-title-line">
-                {IconOrLogoComp}
-                {titleChildren}
-              </div>
+          {/* Tagline spans above; the icon/logo sits inline with the title (matches the V2 header). */}
+          <div className="cn-drawer-header-strings">
+            {taglineChildren}
+            <div className="cn-drawer-header-title-line">
+              {IconOrLogoComp}
+              {titleChildren}
             </div>
-            {otherChildren}
           </div>
           {!hideClose && (
             <DrawerPrimitive.Close asChild>
@@ -105,6 +99,9 @@ export const DrawerHeader = forwardRef<HTMLDivElement, DrawerHeaderProps>((props
               </Button>
             </DrawerPrimitive.Close>
           )}
+          {/* Description and any other composed children render full-width, one row below the
+              title group (8px down) — not squeezed into the column beside the close button. */}
+          {otherChildren.length > 0 && <div className="cn-drawer-header-content">{otherChildren}</div>}
         </div>
       ) : (
         otherChildren

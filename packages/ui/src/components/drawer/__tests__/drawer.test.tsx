@@ -616,8 +616,15 @@ describe('Drawer', () => {
           </Drawer.Root>
         )
 
-        const titleWrapper = container.querySelector('.cn-drawer-header-title')
+        // The title sits in its own line wrapper, separated from other composed children
+        // which render full-width in the content row below.
+        const titleWrapper = container.querySelector('.cn-drawer-header-title-line')
         expect(titleWrapper).toBeInTheDocument()
+        expect(titleWrapper).toHaveTextContent('Title')
+
+        const contentWrapper = container.querySelector('.cn-drawer-header-content')
+        expect(contentWrapper).toBeInTheDocument()
+        expect(contentWrapper).toHaveTextContent('Other content')
       })
 
       test('should render header top when title is present', () => {

@@ -69,10 +69,10 @@ export const DrawerHeaderV2 = forwardRef<HTMLDivElement, DrawerHeaderV2Props>(
       </DrawerPrimitive.Close>
     ) : null
 
-    // The actions and the close button share one group (2px between them, matching the
-    // Figma spec) that is anchored to the top-right of the header. Keeping them top-aligned
-    // — rather than centered on the title — stops them drifting down when a tagline or
-    // description makes the title column taller.
+    // The actions and the close button share one cluster (2px between them, matching the
+    // Figma spec). It is placed in the grid's second column, spanning both rows and top-
+    // anchored, so its height never dictates the title row — keeping the description exactly
+    // 8px below the title even when the cluster is taller than a single-line title.
     const showActions = !isLoading && !!actions
     const headerActions =
       showActions || closeButton ? (
@@ -89,16 +89,14 @@ export const DrawerHeaderV2 = forwardRef<HTMLDivElement, DrawerHeaderV2Props>(
     return (
       <div ref={ref} className={cn('cn-drawer-header-v2', tabs?.length && 'border-b-0', className)}>
         <div className="cn-drawer-header-v2-main">
-          <div className="cn-drawer-header-v2-title-row">
-            <ContainerHeader
-              title={title}
-              titleVariant="heading-default"
-              titleLeading={IconOrLogoComp}
-              caption={tagline ? <DrawerTagline>{tagline}</DrawerTagline> : undefined}
-              className="min-w-0 flex-1"
-            />
-            {headerActions}
-          </div>
+          <ContainerHeader
+            title={title}
+            titleVariant="heading-default"
+            titleLeading={IconOrLogoComp}
+            caption={tagline ? <DrawerTagline>{tagline}</DrawerTagline> : undefined}
+            className="cn-drawer-header-v2-title-group min-w-0"
+          />
+          {headerActions}
           {description && (
             <Text className="cn-drawer-header-v2-description" color="foreground-2">
               {description}

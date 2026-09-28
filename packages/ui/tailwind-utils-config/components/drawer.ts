@@ -110,7 +110,7 @@ export default {
     '&-header': {
       borderBottomWidth: 'var(--cn-border-width-1)',
       borderBottomColor: 'var(--cn-border-3)',
-      // 8px between the title group and the description, matching the V2 header.
+      // 8px between stacked blocks (used by the description-only fallback with no title group).
       gap: 'var(--cn-spacing-2)',
       padding: 'var(--cn-drawer-container)',
       '@apply flex flex-col border-b': '',
@@ -124,30 +124,37 @@ export default {
         color: 'var(--cn-text-1)'
       },
 
-      // Title group + any following content (description, custom nodes) stack in one column.
-      // The 8px gap here is what separates the title from the description, and it is measured
-      // from the title group — independent of the taller close button sitting beside it.
+      // Description and any other composed children: full-width row below the title group,
+      // offset 8px from it. Own gap handles spacing between multiple children.
       '&-content': {
+        gridColumn: '1 / -1',
+        gridRow: '2',
+        marginTop: 'var(--cn-spacing-2)',
         gap: 'var(--cn-spacing-2)',
         '@apply flex flex-col': ''
       },
 
+      // Grid so the close button (column 2, spanning both rows) anchors to the top-right
+      // without dictating the row height — keeps the description 8px below the title, not
+      // below the taller close button.
       '&-top': {
-        // Top-align so the close button anchors to the top-right corner rather than
-        // centering on the title group (which drifts when a tagline is present).
-        gap: 'var(--cn-spacing-half)',
-        '@apply flex items-start': '',
+        '@apply grid items-start': '',
+        gridTemplateColumns: 'minmax(0, 1fr) auto',
+        columnGap: 'var(--cn-spacing-half)',
 
-        // 2px top offset on the close, matching the V2 header actions.
         '& .cn-drawer-close-button': {
-          marginTop: 'var(--cn-spacing-half)'
+          gridColumn: '2',
+          gridRow: '1 / span 2',
+          '@apply self-start': ''
         }
       },
 
       // Tagline stacks above; the title line holds the icon/logo inline with the title.
       '&-strings': {
+        gridColumn: '1',
+        gridRow: '1',
         gap: 'var(--cn-spacing-half)',
-        '@apply flex flex-col': ''
+        '@apply flex flex-col min-w-0': ''
       },
 
       '&-title-line': {
@@ -496,16 +503,13 @@ export default {
       '@apply flex flex-col border-b': '',
       gap: 'var(--cn-spacing-3)',
 
+      // Grid so the actions/close cluster (column 2, spanning both rows) can anchor to the
+      // top-right WITHOUT dictating the row height. That keeps the description exactly 8px
+      // below the title even when the cluster is taller than a single-line title.
       '&-main': {
-        '@apply flex flex-col w-full': '',
-        gap: 'var(--cn-spacing-2)'
-      },
-
-      '&-title-row': {
-        // Top-align so the actions/close group anchors to the top-right corner instead
-        // of centering on the title (which drifts when a tagline/description is present).
-        '@apply flex items-start': '',
-        gap: 'var(--cn-spacing-half)',
+        '@apply grid w-full items-start': '',
+        gridTemplateColumns: 'minmax(0, 1fr) auto',
+        columnGap: 'var(--cn-spacing-half)',
 
         // Figma spec uses caption/normal (400) for the V2 tagline.
         // Scoped to V2 so the legacy Drawer.Tagline (caption-light) is unaffected.
@@ -514,9 +518,18 @@ export default {
         }
       },
 
-      // Actions + close anchored to the top-right; 2px top offset matches the Figma spec.
+      // Tagline + icon + title, grouped in the first column of the first row.
+      '&-title-group': {
+        gridColumn: '1',
+        gridRow: '1'
+      },
+
+      // Actions + close cluster: second column, spanning both rows and top-anchored so its
+      // height never pushes the description down.
       '&-actions': {
-        paddingTop: 'var(--cn-spacing-half)'
+        gridColumn: '2',
+        gridRow: '1 / span 2',
+        '@apply self-start': ''
       },
 
       // The icon/logo sits inline with the title (centered with it), with the
@@ -530,7 +543,11 @@ export default {
         color: 'var(--cn-text-1)'
       },
 
+      // Full-width row directly below the title group, offset 8px from it.
       '&-description': {
+        gridColumn: '1 / -1',
+        gridRow: '2',
+        marginTop: 'var(--cn-spacing-2)',
         '@apply line-clamp-2': ''
       },
 

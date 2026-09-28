@@ -230,7 +230,7 @@ export default {
       padding: 'var(--cn-drawer-container)',
       '@apply flex flex-col border-t': '',
 
-      // Structured footer: one action bar row — an optional back button pinned to the far
+      // Structured footer: one action bar row — an optional ghost button pinned to the far
       // left (2px from the actions), with secondary + primary actions right-aligned. The
       // layout and spacing stay fixed; only which buttons appear varies (Figma footer spec).
       '&-action-bar': {

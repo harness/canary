@@ -109,7 +109,8 @@
   },
   "drawer": {
     "close": "Fermer",
-    "noDescription": "Aucune description disponible"
+    "noDescription": "Aucune description disponible",
+    "title": "Tiroir"
   },
   "dropdownMenu": {
     "noOptions": "Aucune option disponible"

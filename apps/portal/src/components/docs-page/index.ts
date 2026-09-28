@@ -2,6 +2,7 @@ import ComponentExample from "./component-example";
 import ComponentExampleWithZodAndForm from "./component-example-with-form.tsx";
 import Example from "./example";
 import { FigureGrid } from "./figure-grid.tsx";
+import Playground from "./playground/Playground.tsx";
 import PropsTable from "./props-table.tsx";
 
 export const DocsPage = {
@@ -10,4 +11,5 @@ export const DocsPage = {
   ComponentExampleWithZodAndForm,
   PropsTable,
   FigureGrid,
+  Playground,
 };

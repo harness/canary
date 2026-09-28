@@ -61,7 +61,8 @@ export const DrawerHeader = forwardRef<HTMLDivElement, DrawerHeaderProps>((props
     (!!logo && <LogoV2 className="cn-drawer-header-icon" name={logo} size="sm" />) ||
     null
 
-  const { taglineChildren, titleChildren, otherChildren } = Children.toArray(children).reduce<{
+  const childArray = Children.toArray(children)
+  const { taglineChildren, titleChildren, otherChildren } = childArray.reduce<{
     taglineChildren: ReactNode[]
     titleChildren: ReactNode[]
     otherChildren: ReactNode[]
@@ -83,8 +84,26 @@ export const DrawerHeader = forwardRef<HTMLDivElement, DrawerHeaderProps>((props
 
   const hasTitleGroup = !!taglineChildren.length || !!titleChildren.length || !!IconOrLogoComp
 
+  // Backwards-compatibility a11y safety net: the legacy composition API lets consumers omit a
+  // `Drawer.Title` and/or `Drawer.Description`. Radix requires an accessible title (hard error
+  // without one) and warns when a description is missing. When either is absent we emit a
+  // screen-reader-only fallback so every drawer stays accessible; consumers that DO compose their
+  // own title/description are unaffected (the fallback isn't rendered).
+  const hasTitle = titleChildren.length > 0
+  const hasDescription = childArray.some(
+    child => getComponentDisplayName(child) === DrawerPrimitive.Description.displayName
+  )
+
   return (
     <div className={cn('cn-drawer-header', className)} ref={ref} {...rest}>
+      {!hasTitle && (
+        <DrawerPrimitive.Title className="sr-only">{t('component:drawer.title', 'Drawer')}</DrawerPrimitive.Title>
+      )}
+      {!hasDescription && (
+        <DrawerPrimitive.Description className="sr-only">
+          {t('component:drawer.noDescription', 'No description available')}
+        </DrawerPrimitive.Description>
+      )}
       {hasTitleGroup ? (
         <div className="cn-drawer-header-top">
           {/* Tagline spans above; the icon/logo sits inline with the title (matches the V2 header). */}

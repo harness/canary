@@ -107,6 +107,9 @@
     },
     "cancel": "Annuler"
   },
+  "drawer": {
+    "close": "Fermer"
+  },
   "dropdownMenu": {
     "noOptions": "Aucune option disponible"
   },

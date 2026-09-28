@@ -881,13 +881,20 @@ When `isLoading` is true, actions are hidden and the children (metadata) slot re
       name: "title",
       description: "The drawer title displayed as heading text.",
       required: true,
-      value: "string",
+      value: "ReactNode",
+    },
+    {
+      name: "tagline",
+      description: "Optional tagline / breadcrumb rendered above the title.",
+      required: false,
+      value: "ReactNode",
+      defaultValue: "undefined",
     },
     {
       name: "description",
       description: "Optional description displayed below the title.",
       required: false,
-      value: "string",
+      value: "ReactNode",
       defaultValue: "undefined",
     },
     {
@@ -1463,9 +1470,14 @@ This is the same dual pane drawer as above — a navigable `Drawer.Steps` rail, 
             title="Drawer Title"
             description="This placeholder text explains the action and provides additional context for user understanding and clarity."
             actions={
-              <Button variant="ghost" iconOnly tooltipProps={{ content: 'Reset' }}>
-                <IconV2 name="refresh" />
-              </Button>
+              <ButtonLayout.Root>
+                <ButtonLayout.Primary>
+                  <Button size="sm">Save</Button>
+                </ButtonLayout.Primary>
+                <ButtonLayout.Secondary>
+                  <Button size="sm" variant="outline">Discard</Button>
+                </ButtonLayout.Secondary>
+              </ButtonLayout.Root>
             }
           />
 
@@ -1534,9 +1546,14 @@ This is the same dual pane drawer as above — a navigable `Drawer.Steps` rail, 
     title="Drawer Title"
     description="This placeholder text explains the action and provides additional context for user understanding and clarity."
     actions={
-      <Button variant="ghost" iconOnly tooltipProps={{ content: 'Reset' }}>
-        <IconV2 name="refresh" />
-      </Button>
+      <ButtonLayout.Root>
+        <ButtonLayout.Primary>
+          <Button size="sm">Save</Button>
+        </ButtonLayout.Primary>
+        <ButtonLayout.Secondary>
+          <Button size="sm" variant="outline">Discard</Button>
+        </ButtonLayout.Secondary>
+      </ButtonLayout.Root>
     }
   />
 

@@ -110,7 +110,8 @@
   },
   "drawer": {
     "close": "Close",
-    "noDescription": "No description available"
+    "noDescription": "No description available",
+    "title": "Drawer"
   },
   "dropdownMenu": {
     "noOptions": "No options available"

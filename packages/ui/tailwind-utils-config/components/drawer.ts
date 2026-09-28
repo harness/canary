@@ -124,8 +124,15 @@ export default {
       },
 
       '&-top': {
+        // Top-align so the close button anchors to the top-right corner rather than
+        // centering on the title group (which drifts when a tagline is present).
         gap: 'var(--cn-spacing-half)',
-        '@apply flex items-center': ''
+        '@apply flex items-start': '',
+
+        // 2px top offset on the close, matching the V2 header actions.
+        '& .cn-drawer-close-button': {
+          marginTop: 'var(--cn-spacing-half)'
+        }
       },
 
       // Tagline stacks above; the title line holds the icon/logo inline with the title.
@@ -486,7 +493,9 @@ export default {
       },
 
       '&-title-row': {
-        '@apply flex items-center': '',
+        // Top-align so the actions/close group anchors to the top-right corner instead
+        // of centering on the title (which drifts when a tagline/description is present).
+        '@apply flex items-start': '',
         gap: 'var(--cn-spacing-half)',
 
         // Figma spec uses caption/normal (400) for the V2 tagline.
@@ -494,6 +503,11 @@ export default {
         '& .cn-drawer-tagline': {
           font: 'var(--cn-caption-normal)'
         }
+      },
+
+      // Actions + close anchored to the top-right; 2px top offset matches the Figma spec.
+      '&-actions': {
+        paddingTop: 'var(--cn-spacing-half)'
       },
 
       // The icon/logo sits inline with the title (centered with it), with the

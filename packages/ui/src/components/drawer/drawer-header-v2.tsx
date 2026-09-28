@@ -67,13 +67,14 @@ export const DrawerHeaderV2 = forwardRef<HTMLDivElement, DrawerHeaderV2Props>(
       </DrawerPrimitive.Close>
     ) : null
 
-    // The actions and the close button live in one group aligned with the title line
-    // (2px between the actions and close, matching the Figma spec) so they never drift
-    // apart when a tagline or description makes the title column taller.
+    // The actions and the close button share one group (2px between them, matching the
+    // Figma spec) that is anchored to the top-right of the header. Keeping them top-aligned
+    // — rather than centered on the title — stops them drifting down when a tagline or
+    // description makes the title column taller.
     const showActions = !isLoading && !!actions
     const headerActions =
       showActions || closeButton ? (
-        <Layout.Horizontal gap="4xs" align="center">
+        <Layout.Horizontal gap="4xs" align="start" className="cn-drawer-header-v2-actions">
           {showActions && (
             <Layout.Horizontal gap="xs" align="center">
               {actions}
@@ -81,7 +82,7 @@ export const DrawerHeaderV2 = forwardRef<HTMLDivElement, DrawerHeaderV2Props>(
           )}
           {closeButton}
         </Layout.Horizontal>
-      ) : undefined
+      ) : null
 
     return (
       <div ref={ref} className={cn('cn-drawer-header-v2', tabs?.length && 'border-b-0', className)}>
@@ -92,9 +93,9 @@ export const DrawerHeaderV2 = forwardRef<HTMLDivElement, DrawerHeaderV2Props>(
               titleVariant="heading-default"
               titleLeading={IconOrLogoComp}
               caption={tagline ? <DrawerTagline>{tagline}</DrawerTagline> : undefined}
-              actions={headerActions}
               className="min-w-0 flex-1"
             />
+            {headerActions}
           </div>
           {description && (
             <Text className="cn-drawer-header-v2-description" color="foreground-2">

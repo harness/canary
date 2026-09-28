@@ -54,33 +54,44 @@ export const DrawerHeader = forwardRef<HTMLDivElement, DrawerHeaderProps>((props
 
   const { className, children, icon, logo, hideClose = false, ...rest } = props
   const IconOrLogoComp =
-    (!!icon && <IconV2 className="cn-drawer-header-icon cn-drawer-header-icon-color" name={icon} size="xl" />) ||
-    (!!logo && <LogoV2 className="cn-drawer-header-icon" name={logo} size="md" />) ||
+    (!!icon && <IconV2 className="cn-drawer-header-icon cn-drawer-header-icon-color" name={icon} size="lg" />) ||
+    (!!logo && <LogoV2 className="cn-drawer-header-icon" name={logo} size="sm" />) ||
     null
 
-  const { titleChildren, otherChildren } = Children.toArray(children).reduce<{
+  const { taglineChildren, titleChildren, otherChildren } = Children.toArray(children).reduce<{
+    taglineChildren: ReactNode[]
     titleChildren: ReactNode[]
     otherChildren: ReactNode[]
   }>(
     (acc, child) => {
       const displayName = getComponentDisplayName(child)
 
-      if (displayName === DrawerPrimitive.Title.displayName || displayName === DrawerTagline.displayName) {
+      if (displayName === DrawerTagline.displayName) {
+        acc.taglineChildren.push(child)
+      } else if (displayName === DrawerPrimitive.Title.displayName) {
         acc.titleChildren.push(child)
       } else {
         acc.otherChildren.push(child)
       }
       return acc
     },
-    { titleChildren: [], otherChildren: [] }
+    { taglineChildren: [], titleChildren: [], otherChildren: [] }
   )
+
+  const hasTitleGroup = !!taglineChildren.length || !!titleChildren.length || !!IconOrLogoComp
 
   return (
     <div className={cn('cn-drawer-header', className)} ref={ref} {...rest}>
-      {(!!titleChildren.length || !!IconOrLogoComp) && (
-        <div className="cn-drawer-header-top gap-cn-xs flex items-center">
-          {IconOrLogoComp}
-          <div className="cn-drawer-header-title flex-1 overflow-hidden">{titleChildren}</div>
+      {hasTitleGroup && (
+        <div className="cn-drawer-header-top">
+          {/* Tagline spans above; the icon/logo sits inline with the title (matches the V2 header). */}
+          <div className="cn-drawer-header-strings min-w-0 flex-1">
+            {taglineChildren}
+            <div className="cn-drawer-header-title-line">
+              {IconOrLogoComp}
+              {titleChildren}
+            </div>
+          </div>
           {!hideClose && (
             <DrawerPrimitive.Close asChild>
               <Button className="cn-drawer-close-button" variant="ghost" iconOnly ignoreIconOnlyTooltip>

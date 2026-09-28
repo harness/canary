@@ -12,7 +12,7 @@ import {
 import { DrawerDescription } from './DrawerDescription'
 import { DrawerDualPane } from './DrawerDualPane'
 import { DrawerDualPaneMain } from './DrawerDualPaneMain'
-import { DrawerFooter } from './DrawerFooter'
+import { DrawerFooter, type DrawerFooterProps } from './DrawerFooter'
 import { DrawerHeader, DrawerHeaderProps } from './DrawerHeader'
 import { DrawerRail, type DrawerRailProps } from './DrawerRail'
 import { DrawerRoot } from './DrawerRoot'
@@ -30,6 +30,7 @@ export type {
   DrawerContentProps,
   DrawerHeaderProps,
   DrawerHeaderV2Props,
+  DrawerFooterProps,
   DrawerRailProps,
   DrawerStepProps,
   DrawerStepsProps,

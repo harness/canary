@@ -228,7 +228,21 @@ export default {
       borderTopColor: 'var(--cn-border-3)',
       gap: 'var(--cn-drawer-gap)',
       padding: 'var(--cn-drawer-container)',
-      '@apply flex flex-col border-t': ''
+      '@apply flex flex-col border-t': '',
+
+      // Structured footer: one action bar row — an optional back button pinned to the far
+      // left (2px from the actions), with secondary + primary actions right-aligned. The
+      // layout and spacing stay fixed; only which buttons appear varies (Figma footer spec).
+      '&-action-bar': {
+        gap: 'var(--cn-spacing-half)',
+        '@apply flex w-full items-start': ''
+      },
+
+      // Secondary + primary cluster: fills the row and right-aligns, 12px between buttons.
+      '&-actions': {
+        gap: 'var(--cn-spacing-3)',
+        '@apply flex min-w-0 flex-1 items-center justify-end': ''
+      }
     },
 
     '&-dual-pane': {

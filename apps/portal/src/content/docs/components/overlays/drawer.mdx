@@ -1045,6 +1045,93 @@ Each entry in the `tabs` array accepts the following fields.
   ]}
 />
 
+## Structured footer (props API)
+
+`Drawer.Footer` accepts a structured, opinionated set of props that standardize the footer's action bar: a `backButton` pinned to the far left, plus `secondaryButton` and `primaryButton` right-aligned. Every button is optional and takes a `ReactNode`, so you keep full control over each button (wrap it in `Drawer.Close`, set `loading`, `disabled`, `iconOnly`, etc.) while the layout and spacing stay consistent across every drawer. Pass any of `primaryButton` / `secondaryButton` / `backButton` to opt into this layout; pass children only (e.g. `ButtonLayout`) to use the legacy compositional layout instead. Both are supported on the same component so existing usage keeps working.
+
+Content passed as `children` in the structured mode renders as a slot above the action bar.
+
+### Basic
+
+<DocsPage.ComponentExample
+  client:only
+  code={`
+    <Drawer.Root>
+      <Drawer.Trigger>
+        <Button>Open Drawer with structured footer</Button>
+      </Drawer.Trigger>
+
+      <Drawer.Content size="md">
+        <Drawer.Header title="Deploy service" description="Review and confirm your deployment" icon="deploy-solid" />
+        <Drawer.Body>
+          <p>Drawer body content goes here.</p>
+        </Drawer.Body>
+        <Drawer.Footer
+          backButton={<Button variant="ghost">Back</Button>}
+          secondaryButton={
+            <Drawer.Close asChild>
+              <Button variant="outline">Secondary action</Button>
+            </Drawer.Close>
+          }
+          primaryButton={<Button>Primary action</Button>}
+        />
+      </Drawer.Content>
+    </Drawer.Root>
+
+`}
+/>
+
+### Actions only (no back button)
+
+<DocsPage.ComponentExample
+  client:only
+  code={`
+    <Drawer.Root>
+      <Drawer.Trigger>
+        <Button>Actions-only footer</Button>
+      </Drawer.Trigger>
+
+      <Drawer.Content size="md">
+        <Drawer.Header title="Edit settings" icon="settings" />
+        <Drawer.Body>
+          <p>The back button is optional — omit it and the actions stay right-aligned.</p>
+        </Drawer.Body>
+        <Drawer.Footer
+          secondaryButton={
+            <Drawer.Close asChild>
+              <Button variant="outline">Cancel</Button>
+            </Drawer.Close>
+          }
+          primaryButton={<Button>Save</Button>}
+        />
+      </Drawer.Content>
+    </Drawer.Root>
+
+`}
+/>
+
+### Primary action only
+
+<DocsPage.ComponentExample
+  client:only
+  code={`
+    <Drawer.Root>
+      <Drawer.Trigger>
+        <Button>Single-action footer</Button>
+      </Drawer.Trigger>
+
+      <Drawer.Content size="md">
+        <Drawer.Header title="Confirmation" icon="info-circle" />
+        <Drawer.Body>
+          <p>A single primary action is right-aligned on its own.</p>
+        </Drawer.Body>
+        <Drawer.Footer primaryButton={<Drawer.Close asChild><Button>Got it</Button></Drawer.Close>} />
+      </Drawer.Content>
+    </Drawer.Root>
+
+`}
+/>
+
 ## Dual pane drawer
 
 The dual pane drawer renders a fixed left rail beside a scrollable main pane. Use it whenever content benefits from a side-by-side layout, for example:
@@ -2098,4 +2185,48 @@ A scrollable wrapper for all content that doesn’t belong to the [`Drawer.Heade
 
 ### `Footer`
 
-An optional footer wrapper.
+An optional footer wrapper. Supports two modes on the same component: a **structured** action bar driven by props (see [Structured footer](#structured-footer-props-api)), or **legacy composition** where you pass arbitrary children (e.g. `ButtonLayout`). Structured mode is selected when any of `primaryButton` / `secondaryButton` / `backButton` is provided; otherwise children compose the footer.
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "primaryButton",
+      description:
+        "Structured mode. Primary action, right-aligned (rightmost). Pass your own Button node.",
+      required: false,
+      value: "ReactNode",
+      defaultValue: "undefined",
+    },
+    {
+      name: "secondaryButton",
+      description:
+        "Structured mode. Secondary action, right-aligned to the left of the primary button.",
+      required: false,
+      value: "ReactNode",
+      defaultValue: "undefined",
+    },
+    {
+      name: "backButton",
+      description:
+        "Structured mode. Back / tertiary action, pinned to the far left of the action bar.",
+      required: false,
+      value: "ReactNode",
+      defaultValue: "undefined",
+    },
+    {
+      name: "children",
+      description:
+        "Structured mode: optional slot content rendered above the action bar. Legacy mode: the footer content itself.",
+      required: false,
+      value: "ReactNode",
+      defaultValue: "undefined",
+    },
+    {
+      name: "className",
+      description: "Class to apply to the footer wrapper.",
+      required: false,
+      value: "string",
+      defaultValue: "undefined",
+    },
+  ]}
+/>

@@ -1259,6 +1259,172 @@ Use `Drawer.Rail` when the rail holds reference material that the user scans whi
 </Drawer.Root>
 ```
 
+### Full-width header and footer
+
+This is the same dual pane drawer as above — a navigable `Drawer.Steps` rail, per-step content in the main pane, and the Back / Continue / Finish footer flow — with one layout change: `Drawer.HeaderV2` and `Drawer.Footer` are direct children of `Drawer.Content` (siblings of `Drawer.DualPane`) instead of nested inside `Drawer.DualPaneMain`, so the header and footer span the full width of the drawer across both panes. The rail and main pane fill the band between them, the header keeps its full-width bottom border, and the footer keeps its full-width top border. Use this when the title, header actions, and footer action bar apply to the whole drawer rather than just the main pane. All step navigation (clicking a visited step, Back, Continue, Skip to end, Finish) behaves exactly as it does in the standard dual pane drawer.
+
+<DocsPage.ComponentExample
+  client:only
+  code={`() => {
+    const [open, setOpen] = React.useState(false);
+    const [currentStep, setCurrentStep] = React.useState('details');
+
+    const steps = [
+      { value: 'details', title: 'Step Title', description: 'Description' },
+      { value: 'configuration', title: 'Step Title', description: 'Description' },
+      { value: 'permissions', title: 'Step Title', description: 'Description' },
+      { value: 'review', title: 'Step Title', description: 'Description' },
+    ];
+
+    const currentIndex = steps.findIndex((step) => step.value === currentStep);
+    const isLastStep = currentIndex === steps.length - 1;
+
+    const goNext = () => {
+      if (currentIndex < steps.length - 1) {
+        setCurrentStep(steps[currentIndex + 1].value);
+      }
+    };
+
+    const goBack = () => {
+      if (currentIndex > 0) {
+        setCurrentStep(steps[currentIndex - 1].value);
+      }
+    };
+
+    const goToEnd = () => setCurrentStep(steps[steps.length - 1].value);
+
+    return (
+      <Drawer.Root open={open} onOpenChange={setOpen}>
+        <Drawer.Trigger>
+          <Button>Open dual pane drawer with full-width header</Button>
+        </Drawer.Trigger>
+
+        <Drawer.Content size="lg">
+          <Drawer.HeaderV2
+            tagline={(currentIndex + 1) + ' out of ' + steps.length + ' steps'}
+            title="Drawer Title"
+            description="This placeholder text explains the action and provides additional context for user understanding and clarity."
+            actions={
+              <Button variant="ghost" iconOnly tooltipProps={{ content: 'Reset' }}>
+                <IconV2 name="refresh" />
+              </Button>
+            }
+          />
+
+          <Drawer.DualPane>
+            <Drawer.Steps value={currentStep} onValueChange={setCurrentStep} title="Title">
+              {steps.map((step) => (
+                <Drawer.Step
+                  key={step.value}
+                  value={step.value}
+                  title={step.title}
+                  description={step.description}
+                />
+              ))}
+            </Drawer.Steps>
+
+            <Drawer.DualPaneMain>
+              <Drawer.Body>
+                <div className="flex h-full items-center justify-center">
+                  <p className="font-heading-section text-cn-3">Content</p>
+                </div>
+              </Drawer.Body>
+            </Drawer.DualPaneMain>
+          </Drawer.DualPane>
+
+          <Drawer.Footer
+            tertiaryButton={
+              currentIndex > 0 ? (
+                <Button variant="ghost" onClick={goBack}>
+                  <IconV2 name="arrow-left" />
+                  Back
+                </Button>
+              ) : (
+                <Drawer.Close asChild>
+                  <Button variant="ghost">Cancel</Button>
+                </Drawer.Close>
+              )
+            }
+            secondaryButton={
+              !isLastStep ? (
+                <Button variant="outline" onClick={goToEnd}>Skip to end</Button>
+              ) : undefined
+            }
+            primaryButton={
+              !isLastStep ? (
+                <Button onClick={goNext}>
+                  Continue
+                  <IconV2 name="arrow-right" />
+                </Button>
+              ) : (
+                <Button>Finish</Button>
+              )
+            }
+          />
+        </Drawer.Content>
+      </Drawer.Root>
+    );
+
+}`}
+/>
+
+```typescript jsx
+<Drawer.Content size="lg">
+  {/* Header and footer are siblings of Drawer.DualPane, so they span the full drawer width. */}
+  <Drawer.HeaderV2
+    tagline={`${currentIndex + 1} out of ${steps.length} steps`}
+    title="Drawer Title"
+    description="This placeholder text explains the action and provides additional context for user understanding and clarity."
+    actions={
+      <Button variant="ghost" iconOnly tooltipProps={{ content: 'Reset' }}>
+        <IconV2 name="refresh" />
+      </Button>
+    }
+  />
+
+  <Drawer.DualPane>
+    <Drawer.Steps value={currentStep} onValueChange={setCurrentStep} title="Title">
+      <Drawer.Step value="details" title="Step Title" description="Description" />
+      <Drawer.Step value="configuration" title="Step Title" description="Description" />
+      <Drawer.Step value="permissions" title="Step Title" description="Description" />
+      <Drawer.Step value="review" title="Step Title" description="Description" />
+    </Drawer.Steps>
+
+    <Drawer.DualPaneMain>
+      <Drawer.Body>
+        <div className="flex h-full items-center justify-center">
+          <p className="font-heading-section text-cn-3">Content</p>
+        </div>
+      </Drawer.Body>
+    </Drawer.DualPaneMain>
+  </Drawer.DualPane>
+
+  <Drawer.Footer
+    tertiaryButton={
+      currentIndex > 0 ? (
+        <Button variant="ghost" onClick={goBack}>
+          <IconV2 name="arrow-left" />
+          Back
+        </Button>
+      ) : (
+        <Drawer.Close asChild>
+          <Button variant="ghost">Cancel</Button>
+        </Drawer.Close>
+      )
+    }
+    secondaryButton={!isLastStep ? <Button variant="outline" onClick={goToEnd}>Skip to end</Button> : undefined}
+    primaryButton={
+      isLastStep ? <Button>Finish</Button> : (
+        <Button onClick={goNext}>
+          Continue
+          <IconV2 name="arrow-right" />
+        </Button>
+      )
+    }
+  />
+</Drawer.Content>
+```
+
 ### Nested drawer
 
 A dual pane drawer can host [nested drawers](#nested-drawers) the same way any other drawer can — drop a `Drawer.Root` anywhere inside the parent's content (typically inside `Drawer.DualPaneMain`, but the rail works too) and it automatically becomes a nested drawer. Use this when an action inside the dual pane needs its own focused workspace — for example creating a sub-resource referenced by the parent form, viewing a record's full detail, or confirming a destructive change — without losing the user's place in the parent flow.

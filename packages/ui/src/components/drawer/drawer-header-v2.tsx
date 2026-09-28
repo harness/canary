@@ -94,8 +94,10 @@ export const DrawerHeaderV2 = forwardRef<HTMLDivElement, DrawerHeaderV2Props>(
         </Layout.Horizontal>
       ) : null
 
+    // Keep the header's full-width bottom border even with tabs — it spans the whole drawer;
+    // the underlined tab strip's own bottom border overlaps it, which is intentional.
     return (
-      <div ref={ref} className={cn('cn-drawer-header-v2', tabs?.length && 'border-b-0', className)}>
+      <div ref={ref} className={cn('cn-drawer-header-v2', className)}>
         <div className="cn-drawer-header-v2-main">
           <Layout.Vertical gap="4xs" className="cn-drawer-header-v2-title-group min-w-0">
             {tagline ? <DrawerTagline>{tagline}</DrawerTagline> : null}

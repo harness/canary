@@ -78,9 +78,12 @@ function generateCode(s: State): string {
 
   const body = indent(attrs.join("\n"), 2);
   const open = `<Drawer.Header\n${body}`;
-  const header = s.metadata
-    ? `${open}\n>\n  <Layout.Horizontal gap="lg">\n    <Text color="foreground-3">Last deployed: 2 hours ago</Text>\n    <Text color="foreground-3">Region: us-west-2</Text>\n  </Layout.Horizontal>\n</Drawer.Header>`
-    : `${open}\n/>`;
+  // isLoading skeletons the children (metadata) slot, so the snippet shows children
+  // whenever metadata OR isLoading is set — matching what the preview renders.
+  const header =
+    s.metadata || s.isLoading
+      ? `${open}\n>\n  <Layout.Horizontal gap="lg">\n    <Text color="foreground-3">Last deployed: 2 hours ago</Text>\n    <Text color="foreground-3">Region: us-west-2</Text>\n  </Layout.Horizontal>\n</Drawer.Header>`
+      : `${open}\n/>`;
 
   // With tabs, the header must sit inside a Tabs.Root for the strip to switch.
   return s.tabs ? `<Tabs.Root value={tab} onValueChange={setTab}>\n${indent(header, 2)}\n</Tabs.Root>` : header;
@@ -117,7 +120,11 @@ const DrawerHeaderPlayground: FC = () => {
     { name: "tabs", type: "boolean", description: "Show a sample tab strip" },
     { name: "metadata", type: "boolean", description: "Show sample metadata slot" },
     { name: "hideClose", type: "boolean" },
-    { name: "isLoading", type: "boolean" },
+    {
+      name: "isLoading",
+      type: "boolean",
+      description: "Skeletons the metadata slot and hides actions",
+    },
   ];
 
   const iconProp =
@@ -140,7 +147,12 @@ const DrawerHeaderPlayground: FC = () => {
     </ButtonLayout.Root>
   ) : undefined;
 
-  const metadataNode: ReactNode = state.metadata ? (
+  // `isLoading` renders a skeleton in place of the metadata slot (children) and
+  // hides actions — it has no other visible effect. So surface the metadata slot
+  // whenever metadata OR isLoading is on; otherwise toggling isLoading alone would
+  // have nothing to skeletonize and appear to do nothing.
+  const showMetadata = state.metadata || state.isLoading;
+  const metadataNode: ReactNode = showMetadata ? (
     <Layout.Horizontal gap="lg">
       <Text color="foreground-3">Last deployed: 2 hours ago</Text>
       <Text color="foreground-3">Region: us-west-2</Text>
@@ -205,7 +217,9 @@ const DrawerHeaderPlayground: FC = () => {
           </Drawer.Root>
         </div>
 
-        <div className="bg-cn-2 grid grid-cols-[repeat(auto-fill,minmax(180px,1fr))] gap-cn-md border-t p-cn-md">
+        {/* bg-cn-1 (not cn-2): the DS Input fills with bg-cn-2, so it needs a
+            cn-1 surface underneath to read as a field rather than a faint outline. */}
+        <div className="bg-cn-1 grid grid-cols-[repeat(auto-fill,minmax(180px,1fr))] gap-cn-md border-t p-cn-md">
           {controls.map((prop) => (
             <ControlField
               key={prop.name}

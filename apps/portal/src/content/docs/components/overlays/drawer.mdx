@@ -922,6 +922,95 @@ When `isLoading` is true, actions are hidden and the children (metadata) slot re
 `}
 />
 
+## Structured footer (props API)
+
+`Drawer.Footer` accepts a structured, opinionated set of props that standardize the footer's action bar: a `tertiaryButton` pinned to the far left, plus `secondaryButton` and `primaryButton` right-aligned. Every button is optional and takes a `ReactNode`, so you keep full control over each button (wrap it in `Drawer.Close`, set `loading`, `disabled`, `iconOnly`, etc.) while the layout and spacing stay consistent across every drawer. Pass any of `primaryButton` / `secondaryButton` / `tertiaryButton` to opt into this layout; pass children only (e.g. `ButtonLayout`) to use the legacy compositional layout instead. Both are supported on the same component so existing usage keeps working.
+
+Content passed as `children` in the structured mode renders as a slot above the action bar.
+
+**Button placement rule.** When you have two actions, a primary and a secondary, default to **two buttons on the right** (`secondaryButton` + `primaryButton`). The left `tertiaryButton` slot is reserved for a **backward action** (e.g. a "Back" button in a multi-step flow) — or for a **cancel/close**, but only when the `secondaryButton` position isn't already a cancel/close. Pass a ghost-variant button (`<Button variant="ghost">`) here so it reads as the lowest-emphasis action. In other words, never place a cancel/close in both the left slot and the secondary slot: if the secondary action is a cancel/close, leave the left slot empty; if it isn't, the left slot may hold the cancel/close (or a back action). The [dual pane wizard](#dual-pane-drawer) below shows this — a ghost "Back" sits in the left slot while stepping through, and on the first step (where there's no backward action) the "Cancel" takes the left slot instead.
+
+### Basic
+
+<DocsPage.ComponentExample
+  client:only
+  code={`
+    <Drawer.Root>
+      <Drawer.Trigger>
+        <Button>Open Drawer with structured footer</Button>
+      </Drawer.Trigger>
+
+      <Drawer.Content size="md">
+        <Drawer.Header title="Deploy service" description="Review and confirm your deployment" icon="deploy-solid" />
+        <Drawer.Body>
+          <p>Drawer body content goes here.</p>
+        </Drawer.Body>
+        <Drawer.Footer
+          tertiaryButton={<Button variant="ghost">Back</Button>}
+          secondaryButton={
+            <Drawer.Close asChild>
+              <Button variant="outline">Secondary action</Button>
+            </Drawer.Close>
+          }
+          primaryButton={<Button>Primary action</Button>}
+        />
+      </Drawer.Content>
+    </Drawer.Root>
+
+`}
+/>
+
+### Actions only (no back button)
+
+<DocsPage.ComponentExample
+  client:only
+  code={`
+    <Drawer.Root>
+      <Drawer.Trigger>
+        <Button>Actions-only footer</Button>
+      </Drawer.Trigger>
+
+      <Drawer.Content size="md">
+        <Drawer.Header title="Edit settings" icon="settings" />
+        <Drawer.Body>
+          <p>The back button is optional — omit it and the actions stay right-aligned.</p>
+        </Drawer.Body>
+        <Drawer.Footer
+          secondaryButton={
+            <Drawer.Close asChild>
+              <Button variant="outline">Cancel</Button>
+            </Drawer.Close>
+          }
+          primaryButton={<Button>Save</Button>}
+        />
+      </Drawer.Content>
+    </Drawer.Root>
+
+`}
+/>
+
+### Primary action only
+
+<DocsPage.ComponentExample
+  client:only
+  code={`
+    <Drawer.Root>
+      <Drawer.Trigger>
+        <Button>Single-action footer</Button>
+      </Drawer.Trigger>
+
+      <Drawer.Content size="md">
+        <Drawer.Header title="Confirmation" icon="info-circle" />
+        <Drawer.Body>
+          <p>A single primary action is right-aligned on its own.</p>
+        </Drawer.Body>
+        <Drawer.Footer primaryButton={<Drawer.Close asChild><Button>Got it</Button></Drawer.Close>} />
+      </Drawer.Content>
+    </Drawer.Root>
+
+`}
+/>
+
 ## Dual pane drawer
 
 The dual pane drawer renders a fixed left rail beside a scrollable main pane. Use it whenever content benefits from a side-by-side layout, for example:
@@ -936,7 +1025,7 @@ For non-stepped content (reference, browse, anything where the rail isn't a wiza
 
 For multi-step flows, compose the rail with `Drawer.Steps` and `Drawer.Step` — a numbered list with active / completed / upcoming states. Each step renders an indicator circle (check mark for completed, number for active or upcoming) plus a title and optional description. Put the active step content in `Drawer.DualPaneMain` with a separate scrollable `Drawer.Body`. Control the active step with `Drawer.Steps`' `value` and `onValueChange`. Any step the user has previously visited stays clickable — including steps ahead of the current one if they've already been reached — so the user can jump back and forth freely. Only steps the user has never visited are read-only.
 
-For sub-flows inside a step, nest `Drawer.SubStep` children inside a `Drawer.Step`. Substeps stay hidden until their parent step has been reached, then appear under it (progressive disclosure) with simpler indicators — check mark for completed, filled dot for active, number for upcoming. Every substep of the reached step is navigable, so the user can jump directly to any substep of the step they're on. Setting `Drawer.Steps` `value` to a substep's value automatically marks the parent step as active; setting it to the parent step's own value activates that step's first substep.
+For sub-flows inside a step, nest `Drawer.SubStep` children inside a `Drawer.Step`. Substeps stay hidden until their parent step has been reached, then appear under it (progressive disclosure), with simpler indicators — check mark for completed, filled dot for active, number for upcoming — and every substep of the reached step is navigable. Setting `Drawer.Steps` `value` to a substep's value automatically marks the parent step as active; setting it to the parent step's own value activates that step's first substep.
 
 Use `size="md"`, `size="lg"`, or `size="xl"` on `Drawer.Content` so the rail and the main pane both have room. The panes never stack — the right pane stays beside the rail and shrinks with the viewport down to the `xs` drawer width as a [minimum](#sizes); past that point the dual pane scrolls horizontally. This applies at every `size` (including the fixed sizes), because `Drawer.Content` is also capped at the viewport's width.
 
@@ -1089,7 +1178,7 @@ Use `size="md"`, `size="lg"`, or `size="xl"` on `Drawer.Content` so the rail and
 
 ### Substeps
 
-Nest `Drawer.SubStep` children inside a `Drawer.Step` to give that step its own sub-flow. Substeps stay hidden while their parent step is still upcoming and appear once it has been reached — driven by setting `Drawer.Steps`' `value` to the parent's value or to any of its substep values. They use simpler indicators — check mark for completed, filled dot for active, number for upcoming — and every substep of the reached step is navigable, so the user can move freely between them. Setting the rail's `value` to the parent step's own value activates that step's first substep.
+Nest `Drawer.SubStep` children inside a `Drawer.Step` to give that step its own sub-flow. Substeps stay hidden while their parent step is still upcoming and appear once it has been reached (progressive disclosure), driven by setting `Drawer.Steps`' `value` to the parent's value or to any of its substep values. They use simpler indicators — check mark for completed, filled dot for active, number for upcoming — and every substep of the reached step is navigable, so the user can move freely between them.
 
 <DocsPage.ComponentExample
   client:only
@@ -1257,139 +1346,6 @@ Use `Drawer.Rail` when the rail holds reference material that the user scans whi
     </Drawer.DualPane>
   </Drawer.Content>
 </Drawer.Root>
-```
-
-### Full-width header and footer
-
-This is a dual pane drawer with a full-width header and footer: `Drawer.HeaderV2` and `Drawer.Footer` are direct children of `Drawer.Content` (siblings of `Drawer.DualPane`) instead of nested inside `Drawer.DualPaneMain`, so they span the full width of the drawer across both panes. Here the rail holds design-system [`Sidebar.Item`](/components/navigation/sidebar/) navigation menu items, the main pane holds the selected item's content, the header keeps its full-width bottom border, and the footer keeps its full-width top border. Use this when the title, header actions, and footer action bar apply to the whole drawer rather than just the main pane.
-
-<DocsPage.ComponentExample
-  client:only
-  code={`() => {
-    const [open, setOpen] = React.useState(false);
-    const [active, setActive] = React.useState('dashboard');
-
-    // Placeholder navigation entries rendered as design-system Sidebar.Item menu items in the rail.
-    const menuItems = [
-      { value: 'dashboard', label: 'Dashboard', icon: 'dashboard-solid' },
-      { value: 'projects', label: 'Projects', icon: 'folder-solid' },
-      { value: 'members', label: 'Members', icon: 'account-solid' },
-      { value: 'reports', label: 'Reports', icon: 'area-chart' },
-      { value: 'schedule', label: 'Schedule', icon: 'calendar-check' },
-      { value: 'settings', label: 'Settings', icon: 'settings-solid' },
-    ];
-
-    return (
-      <Drawer.Root open={open} onOpenChange={setOpen}>
-        <Drawer.Trigger>
-          <Button>Open dual pane drawer with full-width header</Button>
-        </Drawer.Trigger>
-
-        <Drawer.Content size="lg">
-          <Drawer.HeaderV2
-            title="Drawer Title"
-            description="This placeholder text explains the action and provides additional context for user understanding and clarity."
-            actions={
-              <Button variant="ghost" iconOnly tooltipProps={{ content: 'Reset' }}>
-                <IconV2 name="refresh" />
-              </Button>
-            }
-          />
-
-          <Drawer.DualPane>
-            <Drawer.Rail aria-label="Navigation">
-              {/* Genuine design-system sidebar menu items; pt-cn-lg keeps them off the header. */}
-              <Sidebar.Provider className="pt-cn-lg">
-                <Sidebar.Group className="content-start w-full py-0">
-                  {menuItems.map((item) => (
-                    <Sidebar.Item
-                      key={item.value}
-                      icon={item.icon}
-                      title={item.label}
-                      active={active === item.value}
-                      onClick={() => setActive(item.value)}
-                    />
-                  ))}
-                </Sidebar.Group>
-              </Sidebar.Provider>
-            </Drawer.Rail>
-
-            <Drawer.DualPaneMain>
-              <Drawer.Body>
-                <div className="flex h-full items-center justify-center">
-                  <p className="font-heading-section text-cn-3">Content</p>
-                </div>
-              </Drawer.Body>
-            </Drawer.DualPaneMain>
-          </Drawer.DualPane>
-
-          <Drawer.Footer
-            tertiaryButton={<Button variant="ghost">Ghost</Button>}
-            secondaryButton={<Button variant="outline">Outline</Button>}
-            primaryButton={<Button>Primary</Button>}
-          />
-        </Drawer.Content>
-      </Drawer.Root>
-    );
-
-}`}
-/>
-
-```typescript jsx
-const menuItems = [
-  { value: 'dashboard', label: 'Dashboard', icon: 'dashboard-solid' },
-  { value: 'projects', label: 'Projects', icon: 'folder-solid' },
-  { value: 'members', label: 'Members', icon: 'account-solid' },
-  { value: 'reports', label: 'Reports', icon: 'area-chart' },
-  { value: 'schedule', label: 'Schedule', icon: 'calendar-check' },
-  { value: 'settings', label: 'Settings', icon: 'settings-solid' },
-]
-
-<Drawer.Content size="lg">
-  {/* Header and footer are siblings of Drawer.DualPane, so they span the full drawer width. */}
-  <Drawer.HeaderV2
-    title="Drawer Title"
-    description="This placeholder text explains the action and provides additional context for user understanding and clarity."
-    actions={
-      <Button variant="ghost" iconOnly tooltipProps={{ content: 'Reset' }}>
-        <IconV2 name="refresh" />
-      </Button>
-    }
-  />
-
-  <Drawer.DualPane>
-    {/* Design-system Sidebar.Item menu items in the rail; pt-cn-lg keeps them off the header. */}
-    <Drawer.Rail aria-label="Navigation">
-      <Sidebar.Provider className="pt-cn-lg">
-        <Sidebar.Group className="content-start w-full py-0">
-          {menuItems.map((item) => (
-            <Sidebar.Item
-              key={item.value}
-              icon={item.icon}
-              title={item.label}
-              active={active === item.value}
-              onClick={() => setActive(item.value)}
-            />
-          ))}
-        </Sidebar.Group>
-      </Sidebar.Provider>
-    </Drawer.Rail>
-
-    <Drawer.DualPaneMain>
-      <Drawer.Body>
-        <div className="flex h-full items-center justify-center">
-          <p className="font-heading-section text-cn-3">Content</p>
-        </div>
-      </Drawer.Body>
-    </Drawer.DualPaneMain>
-  </Drawer.DualPane>
-
-  <Drawer.Footer
-    tertiaryButton={<Button variant="ghost">Ghost</Button>}
-    secondaryButton={<Button variant="outline">Outline</Button>}
-    primaryButton={<Button>Primary</Button>}
-  />
-</Drawer.Content>
 ```
 
 ### Nested drawer
@@ -1650,13 +1606,13 @@ You can override the right pane's floor by setting `--cn-drawer-dual-pane-main-m
       name: "title",
       description: "The drawer title displayed as heading text.",
       required: true,
-      value: "string",
+      value: "ReactNode",
     },
     {
       name: "description",
       description: "Optional description displayed below the title.",
       required: false,
-      value: "string",
+      value: "ReactNode",
       defaultValue: "undefined",
     },
     {
@@ -1882,7 +1838,7 @@ Left step rail with independent scrolling and controlled active step state.
 
 ### `Step`
 
-A single step in the step rail. Renders an indicator circle with the step number for active and upcoming steps, and a check mark for completed steps. Active and completed steps are rendered as buttons; upcoming steps are read-only. Pass `Drawer.SubStep` children to give the step its own sub-flow — substeps stay hidden until the step has been reached, then appear under it.
+A single step in the step rail. Renders an indicator circle with the step number for active and upcoming steps, and a check mark for completed steps. Active and completed steps are rendered as buttons; upcoming steps are read-only. Pass `Drawer.SubStep` children to give the step its own sub-flow — substeps stay hidden until the step has been reached, then appear under it (progressive disclosure).
 
 <DocsPage.PropsTable
   props={[
@@ -1908,7 +1864,7 @@ A single step in the step rail. Renders an indicator circle with the step number
     {
       name: "children",
       description:
-        "Optional Drawer.SubStep children. Substeps render under the step when the step is active (when the rail's value matches the step or any of its substeps).",
+        "Optional Drawer.SubStep children. Substeps stay hidden until the step has been reached, then render under it (when the rail's value matches the step or any of its substeps).",
       required: false,
       value: "ReactNode",
       defaultValue: "undefined",
@@ -1918,7 +1874,7 @@ A single step in the step rail. Renders an indicator circle with the step number
 
 ### `SubStep`
 
-A single substep nested inside a `Drawer.Step`. Renders a smaller, no-circle indicator (check mark for completed, filled dot for active, number for upcoming) plus a title. Every substep of the reached step is rendered as a navigable button, so the user can jump directly to any substep of the step they're on. The parent step is automatically treated as active whenever any of its substeps is the rail's `value` (and setting the rail's `value` to the parent step's own value activates its first substep); top-level steps after the parent stay upcoming until the user moves past the parent.
+A single substep nested inside a `Drawer.Step`. Renders a smaller, no-circle indicator (check mark for completed, filled dot for active, number for upcoming) plus a title. Every substep of the reached step is rendered as a navigable button. The parent step is automatically treated as active whenever any of its substeps is the rail's `value` (and setting the rail's value to the parent step's own value activates its first substep), and top-level steps after the parent stay upcoming until the user moves past the parent.
 
 <DocsPage.PropsTable
   props={[
@@ -2246,7 +2202,42 @@ A scrollable wrapper for all content that doesn’t belong to the [`Drawer.Heade
 
 ### `Footer`
 
-An optional footer wrapper.
+An optional footer wrapper. Supports two layouts: pass any of the structured button props below to render the standardized action bar (`tertiaryButton` far-left, `secondaryButton` + `primaryButton` right-aligned), or pass `children` only to use the legacy compositional layout. See [Structured footer](#structured-footer-props-api).
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "primaryButton",
+      description:
+        "Right-aligned primary action. Passing this (or any button prop) opts into the structured layout.",
+      required: false,
+      value: "ReactNode",
+      defaultValue: "undefined",
+    },
+    {
+      name: "secondaryButton",
+      description: "Right-aligned secondary action, placed left of the primary button.",
+      required: false,
+      value: "ReactNode",
+      defaultValue: "undefined",
+    },
+    {
+      name: "tertiaryButton",
+      description:
+        "Far-left action, reserved for a backward (e.g. 'Back') or cancel/close action. Use a ghost-variant button.",
+      required: false,
+      value: "ReactNode",
+      defaultValue: "undefined",
+    },
+    {
+      name: "children",
+      description:
+        "Legacy compositional content (e.g. ButtonLayout). In structured mode, renders as a slot above the action bar.",
+      required: false,
+      value: "ReactNode",
+    },
+  ]}
+/>
 
 </TabItem>
 

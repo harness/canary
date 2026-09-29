@@ -27,7 +27,7 @@ For non-stepped content (reference, browse, anything where the rail isn't a wiza
 
 For multi-step flows, compose the rail with `Drawer.Steps` and `Drawer.Step` — a numbered list with active / completed / upcoming states. Each step renders an indicator circle (check mark for completed, number for active or upcoming) plus a title and optional description. Put the active step content in `Drawer.DualPaneMain` with a separate scrollable `Drawer.Body`. Control the active step with `Drawer.Steps`' `value` and `onValueChange`. Any step the user has previously visited stays clickable — including steps ahead of the current one if they've already been reached — so the user can jump back and forth freely. Only steps the user has never visited are read-only.
 
-For sub-flows inside a step, nest `Drawer.SubStep` children inside a `Drawer.Step`. Substeps appear under their parent step when the parent is active, with simpler indicators (check mark for completed, dot for active, dash for upcoming) and the same navigation rules: any visited substep stays clickable. Setting `Drawer.Steps` `value` to a substep's value automatically marks the parent step as active.
+For sub-flows inside a step, nest `Drawer.SubStep` children inside a `Drawer.Step`. Substeps stay hidden until their parent step has been reached, then appear under it (progressive disclosure) with simpler indicators — check mark for completed, filled dot for active, number for upcoming. Every substep of the reached step is navigable, so the user can jump directly to any substep of the step they're on. Setting `Drawer.Steps` `value` to a substep's value automatically marks the parent step as active; setting it to the parent step's own value activates that step's first substep.
 
 Use `size="md"`, `size="lg"`, or `size="xl"` on `Drawer.Content` so the rail and the main pane both have room. The panes never stack — the right pane stays beside the rail and shrinks with the viewport down to the `xs` drawer width as a [minimum](#sizes); past that point the dual pane scrolls horizontally. This applies at every `size` (including the fixed sizes), because `Drawer.Content` is also capped at the viewport's width.
 
@@ -180,7 +180,7 @@ Use `size="md"`, `size="lg"`, or `size="xl"` on `Drawer.Content` so the rail and
 
 ## Substeps
 
-Nest `Drawer.SubStep` children inside a `Drawer.Step` to give that step its own sub-flow. Substeps appear under their parent when the parent is the active step (driven by setting `Drawer.Steps`' `value` to the parent's value or to any of its substep values). They use simpler indicators — check mark for completed, filled dot for active, dash for upcoming — and follow the same navigation rules as top-level steps: any substep the user has previously visited stays clickable so they can move freely between them, while substeps that have never been reached are read-only.
+Nest `Drawer.SubStep` children inside a `Drawer.Step` to give that step its own sub-flow. Substeps stay hidden while their parent step is still upcoming and appear once it has been reached — driven by setting `Drawer.Steps`' `value` to the parent's value or to any of its substep values. They use simpler indicators — check mark for completed, filled dot for active, number for upcoming — and every substep of the reached step is navigable, so the user can move freely between them. Setting the rail's `value` to the parent step's own value activates that step's first substep.
 
 <DocsPage.ComponentExample
   client:only
@@ -348,6 +348,149 @@ Use `Drawer.Rail` when the rail holds reference material that the user scans whi
     </Drawer.DualPane>
   </Drawer.Content>
 </Drawer.Root>
+```
+
+## Full-width header and footer
+
+This is a dual pane drawer with a full-width header and footer: `Drawer.HeaderV2` and `Drawer.Footer` are direct children of `Drawer.Content` (siblings of `Drawer.DualPane`) instead of nested inside `Drawer.DualPaneMain`, so they span the full width of the drawer across both panes. Here the rail holds design-system [`Sidebar.Item`](/components/navigation/sidebar/) navigation menu items, the main pane holds the selected item's content, the header keeps its full-width bottom border, and the footer keeps its full-width top border. Use this when the title, header actions, and footer action bar apply to the whole drawer rather than just the main pane.
+
+<DocsPage.ComponentExample
+  client:only
+  code={`() => {
+    const [open, setOpen] = React.useState(false);
+    const [active, setActive] = React.useState('dashboard');
+
+    // Placeholder navigation entries rendered as design-system Sidebar.Item menu items in the rail.
+    const menuItems = [
+      { value: 'dashboard', label: 'Dashboard', icon: 'dashboard-solid' },
+      { value: 'projects', label: 'Projects', icon: 'folder-solid' },
+      { value: 'members', label: 'Members', icon: 'account-solid' },
+      { value: 'reports', label: 'Reports', icon: 'area-chart' },
+      { value: 'schedule', label: 'Schedule', icon: 'calendar-check' },
+      { value: 'settings', label: 'Settings', icon: 'settings-solid' },
+    ];
+
+    return (
+      <Drawer.Root open={open} onOpenChange={setOpen}>
+        <Drawer.Trigger>
+          <Button>Open dual pane drawer with full-width header</Button>
+        </Drawer.Trigger>
+
+        <Drawer.Content size="lg">
+          <Drawer.HeaderV2
+            title="Drawer Title"
+            description="This placeholder text explains the action and provides additional context for user understanding and clarity."
+            actions={
+              <ButtonLayout.Root>
+                <ButtonLayout.Primary>
+                  <Button size="sm">Save</Button>
+                </ButtonLayout.Primary>
+                <ButtonLayout.Secondary>
+                  <Button size="sm" variant="outline">Discard</Button>
+                </ButtonLayout.Secondary>
+              </ButtonLayout.Root>
+            }
+          />
+
+          <Drawer.DualPane>
+            <Drawer.Rail aria-label="Navigation">
+              {/* Genuine design-system sidebar menu items; pt-cn-lg keeps them off the header. */}
+              <Sidebar.Provider className="pt-cn-lg">
+                <Sidebar.Group className="content-start w-full py-0">
+                  {menuItems.map((item) => (
+                    <Sidebar.Item
+                      key={item.value}
+                      icon={item.icon}
+                      title={item.label}
+                      active={active === item.value}
+                      onClick={() => setActive(item.value)}
+                    />
+                  ))}
+                </Sidebar.Group>
+              </Sidebar.Provider>
+            </Drawer.Rail>
+
+            <Drawer.DualPaneMain>
+              <Drawer.Body>
+                <div className="flex h-full items-center justify-center">
+                  <p className="font-heading-section text-cn-3">Content</p>
+                </div>
+              </Drawer.Body>
+            </Drawer.DualPaneMain>
+          </Drawer.DualPane>
+
+          <Drawer.Footer
+            tertiaryButton={<Button variant="ghost">Ghost</Button>}
+            secondaryButton={<Button variant="outline">Outline</Button>}
+            primaryButton={<Button>Primary</Button>}
+          />
+        </Drawer.Content>
+      </Drawer.Root>
+    );
+
+}`}
+/>
+
+```typescript jsx
+const menuItems = [
+  { value: 'dashboard', label: 'Dashboard', icon: 'dashboard-solid' },
+  { value: 'projects', label: 'Projects', icon: 'folder-solid' },
+  { value: 'members', label: 'Members', icon: 'account-solid' },
+  { value: 'reports', label: 'Reports', icon: 'area-chart' },
+  { value: 'schedule', label: 'Schedule', icon: 'calendar-check' },
+  { value: 'settings', label: 'Settings', icon: 'settings-solid' },
+]
+
+<Drawer.Content size="lg">
+  {/* Header and footer are siblings of Drawer.DualPane, so they span the full drawer width. */}
+  <Drawer.HeaderV2
+    title="Drawer Title"
+    description="This placeholder text explains the action and provides additional context for user understanding and clarity."
+    actions={
+      <ButtonLayout.Root>
+        <ButtonLayout.Primary>
+          <Button size="sm">Save</Button>
+        </ButtonLayout.Primary>
+        <ButtonLayout.Secondary>
+          <Button size="sm" variant="outline">Discard</Button>
+        </ButtonLayout.Secondary>
+      </ButtonLayout.Root>
+    }
+  />
+
+  <Drawer.DualPane>
+    {/* Design-system Sidebar.Item menu items in the rail; pt-cn-lg keeps them off the header. */}
+    <Drawer.Rail aria-label="Navigation">
+      <Sidebar.Provider className="pt-cn-lg">
+        <Sidebar.Group className="content-start w-full py-0">
+          {menuItems.map((item) => (
+            <Sidebar.Item
+              key={item.value}
+              icon={item.icon}
+              title={item.label}
+              active={active === item.value}
+              onClick={() => setActive(item.value)}
+            />
+          ))}
+        </Sidebar.Group>
+      </Sidebar.Provider>
+    </Drawer.Rail>
+
+    <Drawer.DualPaneMain>
+      <Drawer.Body>
+        <div className="flex h-full items-center justify-center">
+          <p className="font-heading-section text-cn-3">Content</p>
+        </div>
+      </Drawer.Body>
+    </Drawer.DualPaneMain>
+  </Drawer.DualPane>
+
+  <Drawer.Footer
+    tertiaryButton={<Button variant="ghost">Ghost</Button>}
+    secondaryButton={<Button variant="outline">Outline</Button>}
+    primaryButton={<Button>Primary</Button>}
+  />
+</Drawer.Content>
 ```
 
 ## Nested drawer
@@ -708,7 +851,7 @@ Left step rail with independent scrolling and controlled active step state.
 
 ### `Step`
 
-A single step in the step rail. Renders an indicator circle with the step number for active and upcoming steps, and a check mark for completed steps. Active and completed steps are rendered as buttons; upcoming steps are read-only. Pass `Drawer.SubStep` children to give the step its own sub-flow — substeps appear under the step when it is active.
+A single step in the step rail. Renders an indicator circle with the step number for active and upcoming steps, and a check mark for completed steps. Active and completed steps are rendered as buttons; upcoming steps are read-only. Pass `Drawer.SubStep` children to give the step its own sub-flow — substeps stay hidden until the step has been reached, then appear under it.
 
 <DocsPage.PropsTable
   props={[
@@ -734,7 +877,7 @@ A single step in the step rail. Renders an indicator circle with the step number
     {
       name: "children",
       description:
-        "Optional Drawer.SubStep children. Substeps render under the step when the step is active (when the rail's value matches the step or any of its substeps).",
+        "Optional Drawer.SubStep children. Substeps stay hidden until the step has been reached, then render under it (when the rail's value matches the step or any of its substeps).",
       required: false,
       value: "ReactNode",
       defaultValue: "undefined",
@@ -744,7 +887,7 @@ A single step in the step rail. Renders an indicator circle with the step number
 
 ### `SubStep`
 
-A single substep nested inside a `Drawer.Step`. Renders a smaller, no-circle indicator (check mark for completed, filled dot for active, dash for upcoming) plus a title. Completed and active substeps are rendered as buttons; upcoming substeps are read-only. The parent step is automatically treated as active whenever any of its substeps is the rail's `value`, and top-level steps after the parent stay upcoming until the user moves past the parent.
+A single substep nested inside a `Drawer.Step`. Renders a smaller, no-circle indicator (check mark for completed, filled dot for active, number for upcoming) plus a title. Every substep of the reached step is rendered as a navigable button, so the user can jump directly to any substep of the step they're on. The parent step is automatically treated as active whenever any of its substeps is the rail's `value` (and setting the rail's `value` to the parent step's own value activates its first substep); top-level steps after the parent stay upcoming until the user moves past the parent.
 
 <DocsPage.PropsTable
   props={[

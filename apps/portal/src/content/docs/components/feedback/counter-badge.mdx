@@ -6,6 +6,7 @@ description: Display simple numerical or textual count indicators
 import { DocsPage } from "@/components/docs-page";
 import { Tabs, TabItem } from "@astrojs/starlight/components";
 import PageTabsToc from "@/components/page-tabs-toc.astro";
+import counterBadgeSchema from "@/data/component-schemas/CounterBadge.json";
 
 <PageTabsToc />
 
@@ -16,6 +17,14 @@ import PageTabsToc from "@/components/page-tabs-toc.astro";
 <TabItem label="Overview">
 
 The `CounterBadge` component is used to highlight and display numerical values or simple count indicators. It is designed to be non-interactive (read-only) and supports different color themes.
+
+## Playground
+
+<DocsPage.Playground
+  client:only
+  schema={counterBadgeSchema}
+  fixedProps={{ children: "42" }}
+/>
 
 <DocsPage.ComponentExample
   client:only

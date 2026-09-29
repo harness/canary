@@ -328,6 +328,12 @@ export default {
           '@apply items-center': '',
 
           '& .cn-drawer-header-v2-actions': {
+            // Collapse the actions back into row 1 so the title group and the actions
+            // share ONE row and center against the same track. Left at its default
+            // `1 / span 2`, the taller actions grow row 2 as well, so the two items sit
+            // in differently-sized areas and their centers never line up. No description
+            // exists in the centered case, so row 2 is unused anyway.
+            gridRow: '1',
             '@apply self-center': ''
           }
         }

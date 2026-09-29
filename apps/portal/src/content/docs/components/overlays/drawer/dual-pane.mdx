@@ -745,33 +745,7 @@ const [currentStep, setCurrentStep] = useState('step2.2');
 
 <TabItem label="Usage">
 
-## When to use a dual pane drawer
-
-Reach for a dual pane drawer whenever content benefits from a side-by-side layout, for example:
-
-- **Multi-step flows** — a numbered step list in the rail and the active step's form in the main pane.
-- **Reference while you work** — a glossary, definition list, file tree, related records, or other supporting content in the rail that the user can scan while completing a form, editor, or other primary task in the main pane.
-- **Browse and detail** — a list of items in the rail with the selected item's detail view in the main pane.
-
-## Full-width header and footer
-
-Reach for the full-width header and footer when the drawer's primary actions apply to the whole drawer, not one section at a time. The tell is in the footer: if **Save** and **Discard** commit or discard everything across every section, the action bar should span both panes so it clearly belongs to the entire drawer.
-
-### Use it when
-
-- **Actions are global** — Save, Discard, or Submit apply to every section at once, not just the one in view.
-- **Navigation is non-sequential** — the user moves freely between sections (for example Deploy, Code & build, Execution controls, Stage details) in any order, with no next/back progression.
-- **The rail breaks up a long form** or groups related sections, rather than tracking steps in a wizard.
-
-### Use a main-pane footer instead when
-
-- The drawer is a **wizard or stepper** — the flow is sequential and the user goes back and forth between steps.
-- The CTAs act on the **current step** (Next, Back, Continue), not the whole drawer.
-- This is the pattern for PLG onboarding and creation flows such as stage creation.
-
-### Consider a single pane instead when
-
-- The rail isn't genuine navigation — it's only a way to chunk one long form into tabs or filters — and the actions already apply to the whole form. If the second pane adds no navigational or reference value, a single-pane drawer with tabs reflects the interaction more honestly than a dual pane.
+For guidance on when to reach for a dual pane drawer — and when a main-pane footer or a single pane fits better — see the Usage tab on the [Drawer overview page](/components/overlays/drawer/).
 
 </TabItem>
 

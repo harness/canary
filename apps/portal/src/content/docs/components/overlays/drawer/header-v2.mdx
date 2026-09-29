@@ -31,8 +31,6 @@ import PageTabsToc from "@/components/page-tabs-toc.astro";
 
 `Drawer.HeaderV2` is the recommended structured header. It exposes the fullest set of props — tagline/breadcrumb, icon/logo, title, description, actions, metadata (children), and tabs — consolidated into a single standardized layout with an optional loading state, so it covers the widest range of use cases. Pass a `title` prop to opt into this layout; the legacy compositional pattern (`Drawer.Header` > `Drawer.Title` > `Drawer.Description`) still works for simpler headers.
 
-> **Recommended:** Reach for `Drawer.HeaderV2` by default — its richer prop set handles the most use cases. Fall back to the compositional `Drawer.Header` only for simple, one-off headers.
-
 ### Basic
 
 <DocsPage.ComponentExample
@@ -196,8 +194,6 @@ When `isLoading` is true, actions are hidden and the children (metadata) slot re
 
 Content passed as `children` in the structured mode renders as a slot above the action bar.
 
-**Button placement rule.** When you have two actions, a primary and a secondary, default to **two buttons on the right** (`secondaryButton` + `primaryButton`). The left `tertiaryButton` slot is reserved for a **backward action** (e.g. a "Back" button in a multi-step flow) — or for a **cancel/close**, but only when the `secondaryButton` position isn't already a cancel/close. Pass a ghost-variant button (`<Button variant="ghost">`) here so it reads as the lowest-emphasis action. In other words, never place a cancel/close in both the left slot and the secondary slot: if the secondary action is a cancel/close, leave the left slot empty; if it isn't, the left slot may hold the cancel/close (or a back action). The [dual pane wizard](/components/overlays/drawer/#dual-pane-drawer) shows this — a ghost "Back" sits in the left slot while stepping through, and on the first step (where there's no backward action) the "Cancel" takes the left slot instead.
-
 ### Basic
 
 <DocsPage.ComponentExample
@@ -283,7 +279,17 @@ Content passed as `children` in the structured mode renders as a slot above the 
 
 <TabItem label="Usage">
 
-_Usage guidance coming soon._
+## Best practices
+
+### Prefer `Drawer.HeaderV2`
+
+Reach for `Drawer.HeaderV2` by default — its richer prop set handles the most use cases. Fall back to the compositional `Drawer.Header` pattern (`Drawer.Header` > `Drawer.Title` > `Drawer.Description`) only for simple, one-off headers.
+
+### Footer button placement
+
+When you have two actions, a primary and a secondary, default to **two buttons on the right** (`secondaryButton` + `primaryButton`). The left `tertiaryButton` slot is reserved for a **backward action** (e.g. a "Back" button in a multi-step flow) — or for a **cancel/close**, but only when the `secondaryButton` position isn't already a cancel/close. Pass a ghost-variant button (`<Button variant="ghost">`) here so it reads as the lowest-emphasis action.
+
+Never place a cancel/close in both the left slot and the secondary slot: if the secondary action is a cancel/close, leave the left slot empty; if it isn't, the left slot may hold the cancel/close (or a back action). The [dual pane wizard](/components/overlays/drawer/dual-pane/) shows this — a ghost "Back" sits in the left slot while stepping through, and on the first step (where there's no backward action) the "Cancel" takes the left slot instead.
 
 </TabItem>
 

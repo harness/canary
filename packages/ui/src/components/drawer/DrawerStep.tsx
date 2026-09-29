@@ -1,9 +1,6 @@
-import { ReactNode, useEffect } from 'react'
+import { ReactNode } from 'react'
 
-import { IconV2 } from '@/components'
-import { cn } from '@/utils'
-
-import { ParentStepProvider, useDrawerDualPaneContext } from './drawer-dual-pane-context'
+import { Stepper } from '../stepper'
 
 export type DrawerStepProps = {
   value: string
@@ -12,74 +9,16 @@ export type DrawerStepProps = {
   children?: ReactNode
 }
 
-export const DrawerStep = ({ value, title, description, children }: DrawerStepProps) => {
-  const {
-    value: activeValue,
-    registerStep,
-    getStepState,
-    getStepIndex,
-    isStepNavigable,
-    selectStep
-  } = useDrawerDualPaneContext()
-  const state = getStepState(value)
-  const navigable = isStepNavigable(value)
-  const index = getStepIndex(value)
-  const stepNumber = index >= 0 ? index + 1 : null
-  const isExactlyActive = activeValue === value
-  const hasSubsteps = children !== undefined && children !== null && children !== false
-
-  useEffect(() => registerStep(value), [registerStep, value])
-
-  const stepClassName = cn('cn-drawer-dual-pane-step', {
-    'cn-drawer-dual-pane-step-active': state === 'active',
-    'cn-drawer-dual-pane-step-completed': state === 'completed',
-    'cn-drawer-dual-pane-step-upcoming': state === 'upcoming'
-  })
-
-  const indicator = (
-    <span className="cn-drawer-dual-pane-step-indicator" aria-hidden="true">
-      {state === 'completed' ? (
-        <IconV2 className="cn-drawer-dual-pane-step-indicator-icon" name="check" size="xs" skipSize />
-      ) : (
-        <span className="cn-drawer-dual-pane-step-indicator-number">{stepNumber}</span>
-      )}
-    </span>
-  )
-
-  const content = (
-    <>
-      {indicator}
-      <span className="cn-drawer-dual-pane-step-content">
-        <span className="cn-drawer-dual-pane-step-title">{title}</span>
-        {description ? <span className="cn-drawer-dual-pane-step-description">{description}</span> : null}
-      </span>
-    </>
-  )
-
-  return (
-    <li className="cn-drawer-dual-pane-step-item">
-      {navigable ? (
-        <button
-          type="button"
-          className={stepClassName}
-          aria-current={isExactlyActive ? 'step' : undefined}
-          onClick={() => selectStep(value)}
-        >
-          {content}
-        </button>
-      ) : (
-        <div className={stepClassName} aria-disabled="true">
-          {content}
-        </div>
-      )}
-      {hasSubsteps ? (
-        <ParentStepProvider value={value}>
-          <ol className="cn-drawer-dual-pane-substeps-list" data-state={state === 'active' ? 'expanded' : 'collapsed'}>
-            {children}
-          </ol>
-        </ParentStepProvider>
-      ) : null}
-    </li>
-  )
-}
+// A drawer step maps directly onto Stepper.StepGroup: the group provides the ParentStepProvider that
+// Drawer.SubStep (a nested Stepper.Step) registers under, and the base Stepper derives this step's
+// state (active/completed/upcoming) from the shared value — including treating the parent as active
+// when one of its substeps is the active value. Substeps render only once the group is reached
+// (progressive disclosure), matching the design-system stepper. `hasNestedSteps` is deliberately
+// omitted: the drawer's substep list is fully declared, so we don't want the "…" predicted-step
+// placeholder that flag turns on for PLG flows with unknown future steps.
+export const DrawerStep = ({ value, title, description, children }: DrawerStepProps) => (
+  <Stepper.StepGroup value={value} title={title} description={description}>
+    {children}
+  </Stepper.StepGroup>
+)
 DrawerStep.displayName = 'DrawerStep'

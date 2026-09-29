@@ -936,7 +936,7 @@ For non-stepped content (reference, browse, anything where the rail isn't a wiza
 
 For multi-step flows, compose the rail with `Drawer.Steps` and `Drawer.Step` — a numbered list with active / completed / upcoming states. Each step renders an indicator circle (check mark for completed, number for active or upcoming) plus a title and optional description. Put the active step content in `Drawer.DualPaneMain` with a separate scrollable `Drawer.Body`. Control the active step with `Drawer.Steps`' `value` and `onValueChange`. Any step the user has previously visited stays clickable — including steps ahead of the current one if they've already been reached — so the user can jump back and forth freely. Only steps the user has never visited are read-only.
 
-For sub-flows inside a step, nest `Drawer.SubStep` children inside a `Drawer.Step`. Substeps appear under their parent step when the parent is active, with simpler indicators (check mark for completed, dot for active, dash for upcoming) and the same navigation rules: any visited substep stays clickable. Setting `Drawer.Steps` `value` to a substep's value automatically marks the parent step as active.
+For sub-flows inside a step, nest `Drawer.SubStep` children inside a `Drawer.Step`. Substeps stay hidden until their parent step has been reached, then appear under it (progressive disclosure) with simpler indicators — check mark for completed, filled dot for active, number for upcoming. Every substep of the reached step is navigable, so the user can jump directly to any substep of the step they're on. Setting `Drawer.Steps` `value` to a substep's value automatically marks the parent step as active; setting it to the parent step's own value activates that step's first substep.
 
 Use `size="md"`, `size="lg"`, or `size="xl"` on `Drawer.Content` so the rail and the main pane both have room. The panes never stack — the right pane stays beside the rail and shrinks with the viewport down to the `xs` drawer width as a [minimum](#sizes); past that point the dual pane scrolls horizontally. This applies at every `size` (including the fixed sizes), because `Drawer.Content` is also capped at the viewport's width.
 
@@ -1089,7 +1089,7 @@ Use `size="md"`, `size="lg"`, or `size="xl"` on `Drawer.Content` so the rail and
 
 ### Substeps
 
-Nest `Drawer.SubStep` children inside a `Drawer.Step` to give that step its own sub-flow. Substeps appear under their parent when the parent is the active step (driven by setting `Drawer.Steps`' `value` to the parent's value or to any of its substep values). They use simpler indicators — check mark for completed, filled dot for active, dash for upcoming — and follow the same navigation rules as top-level steps: any substep the user has previously visited stays clickable so they can move freely between them, while substeps that have never been reached are read-only.
+Nest `Drawer.SubStep` children inside a `Drawer.Step` to give that step its own sub-flow. Substeps stay hidden while their parent step is still upcoming and appear once it has been reached — driven by setting `Drawer.Steps`' `value` to the parent's value or to any of its substep values. They use simpler indicators — check mark for completed, filled dot for active, number for upcoming — and every substep of the reached step is navigable, so the user can move freely between them. Setting the rail's `value` to the parent step's own value activates that step's first substep.
 
 <DocsPage.ComponentExample
   client:only
@@ -1157,6 +1157,156 @@ const [currentStep, setCurrentStep] = useState('step2.2');
 
   <Drawer.Step value="step3" title="Step 3" description="Description" />
 </Drawer.Steps>
+```
+
+### Flow-driven steps (PLG)
+
+`Drawer.Steps` is the right tool when _you_ own the wizard state — you hold the current step in a `useState` and advance it yourself. For product-led-growth (PLG) onboarding flows, where the next step depends on the user's earlier choices, drop the [`DualPaneStepper`](/growth-patterns/dual-pane-stepper/) into `Drawer.Content` instead. It brings its own dual-pane layout — a flow-driven rail on the left and a card stack on the right — and the flow engine derives the rail states for you from a declarative `FlowConfig`. Each card calls `useFlowCard()` to `complete`, `skip`, or `error` its step, and the engine routes to the next card (via each step's `next`, or an explicit id passed to `complete`).
+
+Use this when the path branches on the user's input, when steps are discovered dynamically, or when a card needs to open a nested drawer mid-flow. For a fixed, linear wizard where you control the step, keep `Drawer.Steps` / `Drawer.Step`. Because `DualPaneStepper.Root` renders the whole dual pane itself, it replaces `Drawer.DualPane` — it is the direct child of `Drawer.Content`, not nested inside it.
+
+<DocsPage.ComponentExample
+  client:only
+  code={`() => {
+    const [open, setOpen] = React.useState(false);
+
+    // Each step is a self-contained card that drives the flow engine via useFlowCard().
+    // complete(data, nextId?) advances the flow; the rail states are derived automatically.
+    function ProviderCard() {
+      const { complete } = useFlowCard();
+      return (
+        <DualPaneStepper.Card title="Where is your code?" description="Pick a provider to connect.">
+          <div className="flex flex-col gap-cn-xs">
+            <Button variant="outline" onClick={() => complete({ provider: 'GitHub' })}>GitHub</Button>
+            <Button variant="outline" onClick={() => complete({ provider: 'GitLab' })}>GitLab</Button>
+          </div>
+        </DualPaneStepper.Card>
+      );
+    }
+
+    function ConfigureCard() {
+      const { complete, state } = useFlowCard();
+      return (
+        <DualPaneStepper.Card
+          title="Configure connection"
+          description={'Set up access to ' + (state.provider || 'your provider') + '.'}
+        >
+          <div className="flex flex-col gap-cn-md">
+            <p className="text-cn-2">
+              Harness will create a connector for <strong>{state.provider}</strong>.
+            </p>
+            <Button onClick={() => complete({ connector: 'connector-123' })}>
+              Continue
+              <IconV2 name="arrow-right" />
+            </Button>
+          </div>
+        </DualPaneStepper.Card>
+      );
+    }
+
+    function ReviewCard() {
+      const { complete, state } = useFlowCard();
+      return (
+        <DualPaneStepper.Card title="Review and create" description="Confirm the details below.">
+          <div className="flex flex-col gap-cn-md">
+            <ul className="text-cn-2 flex flex-col gap-cn-2xs">
+              <li>Provider: <strong>{state.provider}</strong></li>
+              <li>Connector: <strong>{state.connector}</strong></li>
+            </ul>
+            <Button onClick={() => complete()}>Create service</Button>
+          </div>
+        </DualPaneStepper.Card>
+      );
+    }
+
+    // Memoized so the flow engine keeps a stable config across re-renders.
+    const flow = React.useMemo(() => ({
+      stepGroups: {
+        source: { title: 'Source', description: 'Choose a provider' },
+        configure: { title: 'Configure', description: 'Set up the connector' },
+        review: { title: 'Review', description: 'Create the service' },
+      },
+      steps: {
+        'choose-provider': { step: 'source', component: ProviderCard, next: 'configure-connector' },
+        'configure-connector': { step: 'configure', component: ConfigureCard, next: 'review-create' },
+        // terminal: the final step's complete() ends the flow and fires onComplete (which closes the drawer).
+        'review-create': { step: 'review', component: ReviewCard, terminal: true },
+      },
+      initialStep: 'choose-provider',
+    }), []);
+
+    return (
+      <Drawer.Root open={open} onOpenChange={setOpen}>
+        <Drawer.Trigger>
+          <Button>Open flow-driven drawer</Button>
+        </Drawer.Trigger>
+
+        <Drawer.Content size="lg">
+          {/* DualPaneStepper renders its own header, so the drawer only needs an accessible title + description. */}
+          <Drawer.Title className="sr-only">Create a service</Drawer.Title>
+          <Drawer.Description className="sr-only">Guided flow to connect a provider and create a service.</Drawer.Description>
+          <DualPaneStepper.Root
+            flow={flow}
+            className="h-full"
+            title="Create a service"
+            onClose={() => setOpen(false)}
+            onComplete={() => setOpen(false)}
+          />
+        </Drawer.Content>
+      </Drawer.Root>
+    );
+
+}`}
+/>
+
+```typescript jsx
+import { Drawer, DualPaneStepper, useFlowCard } from '@harnessio/ui/components'
+import type { FlowConfig } from '@harnessio/ui/components'
+
+// Each step is a card; useFlowCard() advances the flow and the rail derives its own states.
+function ProviderCard() {
+  const { complete } = useFlowCard()
+  return (
+    <DualPaneStepper.Card title="Where is your code?" description="Pick a provider to connect.">
+      <Button variant="outline" onClick={() => complete({ provider: 'GitHub' })}>GitHub</Button>
+      <Button variant="outline" onClick={() => complete({ provider: 'GitLab' })}>GitLab</Button>
+    </DualPaneStepper.Card>
+  )
+}
+
+const flow: FlowConfig = {
+  stepGroups: {
+    source: { title: 'Source', description: 'Choose a provider' },
+    configure: { title: 'Configure', description: 'Set up the connector' },
+    review: { title: 'Review', description: 'Create the service' },
+  },
+  steps: {
+    'choose-provider': { step: 'source', component: ProviderCard, next: 'configure-connector' },
+    'configure-connector': { step: 'configure', component: ConfigureCard, next: 'review-create' },
+    // terminal: the final step's complete() ends the flow and fires onComplete (which closes the drawer).
+    'review-create': { step: 'review', component: ReviewCard, terminal: true },
+  },
+  initialStep: 'choose-provider',
+}
+
+// DualPaneStepper.Root brings its own dual-pane layout, so it replaces Drawer.DualPane.
+<Drawer.Root open={open} onOpenChange={setOpen}>
+  <Drawer.Trigger>
+    <Button>Open flow-driven drawer</Button>
+  </Drawer.Trigger>
+
+  <Drawer.Content size="lg">
+    <Drawer.Title className="sr-only">Create a service</Drawer.Title>
+    <Drawer.Description className="sr-only">Guided flow to connect a provider and create a service.</Drawer.Description>
+    <DualPaneStepper.Root
+      flow={flow}
+      className="h-full"
+      title="Create a service"
+      onClose={() => setOpen(false)}
+      onComplete={() => setOpen(false)}
+    />
+  </Drawer.Content>
+</Drawer.Root>
 ```
 
 ### Reference content
@@ -1915,7 +2065,7 @@ Left step rail with independent scrolling and controlled active step state.
 
 ### `Step`
 
-A single step in the step rail. Renders an indicator circle with the step number for active and upcoming steps, and a check mark for completed steps. Active and completed steps are rendered as buttons; upcoming steps are read-only. Pass `Drawer.SubStep` children to give the step its own sub-flow — substeps appear under the step when it is active.
+A single step in the step rail. Renders an indicator circle with the step number for active and upcoming steps, and a check mark for completed steps. Active and completed steps are rendered as buttons; upcoming steps are read-only. Pass `Drawer.SubStep` children to give the step its own sub-flow — substeps stay hidden until the step has been reached, then appear under it.
 
 <DocsPage.PropsTable
   props={[
@@ -1951,7 +2101,7 @@ A single step in the step rail. Renders an indicator circle with the step number
 
 ### `SubStep`
 
-A single substep nested inside a `Drawer.Step`. Renders a smaller, no-circle indicator (check mark for completed, filled dot for active, dash for upcoming) plus a title. Completed and active substeps are rendered as buttons; upcoming substeps are read-only. The parent step is automatically treated as active whenever any of its substeps is the rail's `value`, and top-level steps after the parent stay upcoming until the user moves past the parent.
+A single substep nested inside a `Drawer.Step`. Renders a smaller, no-circle indicator (check mark for completed, filled dot for active, number for upcoming) plus a title. Every substep of the reached step is rendered as a navigable button, so the user can jump directly to any substep of the step they're on. The parent step is automatically treated as active whenever any of its substeps is the rail's `value` (and setting the rail's `value` to the parent step's own value activates its first substep); top-level steps after the parent stay upcoming until the user moves past the parent.
 
 <DocsPage.PropsTable
   props={[

@@ -4,6 +4,7 @@ import {
   ButtonLayout,
   CopyButton,
   Drawer,
+  IconV2,
   Layout,
   Tabs,
   Text,
@@ -51,6 +52,21 @@ interface State {
   isLoading: boolean;
 }
 
+// Defaults for the initial render and the "reset" button.
+const INITIAL_STATE: State = {
+  title: "Pipeline Settings",
+  tagline: "",
+  description: "Configure your pipeline execution settings",
+  icon: "icon",
+  actions: false,
+  tabs: false,
+  metadata: false,
+  hideClose: false,
+  isLoading: false,
+};
+
+const INITIAL_TAB = "overview";
+
 function indent(block: string, spaces: number): string {
   const pad = " ".repeat(spaces);
   return block
@@ -90,21 +106,16 @@ function generateCode(s: State): string {
 }
 
 const DrawerHeaderPlayground: FC = () => {
-  const [state, setState] = useState<State>({
-    title: "Pipeline Settings",
-    tagline: "",
-    description: "Configure your pipeline execution settings",
-    icon: "icon",
-    actions: false,
-    tabs: false,
-    metadata: false,
-    hideClose: false,
-    isLoading: false,
-  });
-  const [activeTab, setActiveTab] = useState("overview");
+  const [state, setState] = useState<State>(INITIAL_STATE);
+  const [activeTab, setActiveTab] = useState(INITIAL_TAB);
 
   const set = <K extends keyof State>(key: K, value: State[K]) =>
     setState((prev) => ({ ...prev, [key]: value }));
+
+  const reset = () => {
+    setState(INITIAL_STATE);
+    setActiveTab(INITIAL_TAB);
+  };
 
   const controls: PropControl[] = [
     { name: "title", type: "text", required: true },
@@ -204,7 +215,18 @@ const DrawerHeaderPlayground: FC = () => {
         {/* Inline, always-open drawer context so Drawer.Title/Description/Close
             resolve without portaling into an overlay — the header stays on screen
             beside the controls. The bordered panel stands in for Drawer.Content. */}
-        <div className="bg-cn-2 flex justify-center p-cn-3xl">
+        <div className="bg-cn-2 relative flex justify-center p-cn-3xl">
+          {/* Reset the controls to their defaults. */}
+          <Button
+            variant="outline"
+            size="sm"
+            iconOnly
+            onClick={reset}
+            className="absolute right-cn-sm top-cn-sm z-10"
+            tooltipProps={{ content: "Reset to defaults" }}
+          >
+            <IconV2 name="refresh" />
+          </Button>
           <Drawer.Root open modal={false} onOpenChange={() => {}}>
             {/* Stands in for Drawer.Content — matches the drawer panel's radius,
                 border and shadow, and shows a short, clipped peek of the body

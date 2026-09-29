@@ -1,5 +1,5 @@
 import type { FC } from "react";
-import { Input, Select, Switch } from "@harnessio/ui/components";
+import { Input, Select, Switch, TextInput } from "@harnessio/ui/components";
 import type { PropControl } from "./types";
 
 export interface ControlFieldProps {
@@ -61,7 +61,7 @@ const ControlField: FC<ControlFieldProps> = ({ prop, value, onChange }) => {
 
     default:
       return (
-        <Input
+        <TextInput
           label={prop.name}
           caption={prop.description}
           optional={!prop.required}

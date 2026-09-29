@@ -1,11 +1,20 @@
 ---
 title: Logo
 description: Logo and LogoSymbol components for brand representation
-beta: true
 ---
 
 import { DocsPage } from "@/components/docs-page";
+import { Tabs, TabItem } from "@astrojs/starlight/components";
+import PageTabsToc from "@/components/page-tabs-toc.astro";
 import LinkCard from "@/components/LinkCard.astro";
+
+<PageTabsToc />
+
+<div id="page-level-tabs">
+
+<Tabs>
+
+<TabItem label="Overview">
 
 The design system provides two logo components for different use cases:
 
@@ -24,19 +33,9 @@ The design system provides two logo components for different use cases:
   `}
 />
 
-## Usage
+## Variations
 
-```typescript jsx
-import { LogoV2, LogoSymbol } from '@harnessio/ui/components'
-
-// Full-color logo with brand background
-<LogoV2 name="github" size="lg" />
-
-// Monochrome symbol (inherits text color)
-<LogoSymbol name="github" size="lg" />
-```
-
-## LogoV2 vs LogoSymbol
+### LogoV2 vs LogoSymbol
 
 Use **LogoV2** when you need the official brand appearance. Use **LogoSymbol** when you need the logo to blend with your UI's color scheme.
 
@@ -56,7 +55,7 @@ Use **LogoV2** when you need the official brand appearance. Use **LogoSymbol** w
   `}
 />
 
-## Size Variants
+### Sizes
 
 Both components support the same size variants: `xs`, `sm`, `md`, and `lg`. The default size is `lg`.
 
@@ -84,7 +83,7 @@ Both components support the same size variants: `xs`, `sm`, `md`, and `lg`. The 
   `}
 />
 
-## LogoSymbol Colors
+### LogoSymbol colors
 
 Since `LogoSymbol` uses `currentColor`, it inherits color from its parent element.
 
@@ -100,88 +99,17 @@ Since `LogoSymbol` uses `currentColor`, it inherits color from its parent elemen
   `}
 />
 
-## API Reference
-
-### LogoV2
+## Installation
 
 ```typescript jsx
-<LogoV2
-  name="logo-name"     // name of the logo
-  size="lg"            // [OPTIONAL] size variant
-  className="my-class" // [OPTIONAL] custom class name
-/>
+import { LogoV2, LogoSymbol } from '@harnessio/ui/components'
+
+// Full-color logo with brand background
+<LogoV2 name="github" size="lg" />
+
+// Monochrome symbol (inherits text color)
+<LogoSymbol name="github" size="lg" />
 ```
-
-<DocsPage.PropsTable
-  props={[
-    {
-      name: "name",
-      description: "Name of the logo (see All Logos page for available names)",
-      required: true,
-      value: "string",
-    },
-    {
-      name: "size",
-      description: "Size variant of the logo",
-      required: false,
-      value: "'xs' | 'sm' | 'md' | 'lg'",
-      defaultValue: "'lg'",
-    },
-    {
-      name: "className",
-      description: "Custom class name",
-      required: false,
-      value: "string",
-    },
-    {
-      name: "fallback",
-      description: "Fallback logo name if the specified logo is not found",
-      required: false,
-      value: "string",
-    },
-  ]}
-/>
-
-### LogoSymbol
-
-```typescript jsx
-<LogoSymbol
-  name="logo-name"     // name of the symbol
-  size="lg"            // [OPTIONAL] size variant
-  className="my-class" // [OPTIONAL] custom class name
-/>
-```
-
-<DocsPage.PropsTable
-  props={[
-    {
-      name: "name",
-      description: "Name of the symbol (same names as LogoV2)",
-      required: true,
-      value: "string",
-    },
-    {
-      name: "size",
-      description: "Size variant of the symbol",
-      required: false,
-      value: "'xs' | 'sm' | 'md' | 'lg'",
-      defaultValue: "'lg'",
-    },
-    {
-      name: "className",
-      description:
-        "Custom class name (use text color utilities to change color)",
-      required: false,
-      value: "string",
-    },
-    {
-      name: "fallback",
-      description: "Fallback symbol name if the specified symbol is not found",
-      required: false,
-      value: "string",
-    },
-  ]}
-/>
 
 ## Related Pages
 
@@ -196,4 +124,149 @@ Since `LogoSymbol` uses `currentColor`, it inherits color from its parent elemen
     title="Icons"
     description="Icon component reference"
   />
+</div>
+
+</TabItem>
+
+<TabItem label="Usage">
+
+## Anatomy
+
+Both components render an inline SVG selected by `name`. The difference is how they carry color.
+
+```tsx
+<LogoV2 name="github" size="lg" />
+<LogoSymbol name="github" size="lg" />
+```
+
+- **LogoV2** — resolves a full-color brand mark (glyph plus the brand's own background) from the logo set. Its colors are fixed; it does not follow the surrounding text color.
+- **LogoSymbol** — resolves a monochrome mark drawn with `currentColor`, so it inherits the color of its parent (set it with a text-color utility like `text-cn-1`).
+- **Sizing** — `size` (`xs`/`sm`/`md`/`lg`, default `lg`) applies a size class. Set `skipSize` when you're sizing via CSS and want to skip the built-in class.
+- **Name lookup & fallback** — `name` selects the mark. If it isn't found and a `fallback` name is given, the component warns and renders the fallback; with no fallback, it warns and renders nothing.
+
+## Best practices
+
+{/* TODO: editorial — please review against product guidance. */}
+
+**Do**
+
+- Use `LogoV2` where the official brand appearance matters (marketing, brand cards, connector logos).
+- Use `LogoSymbol` when the mark should blend with the UI — inside buttons, mono toolbars, or on colored surfaces.
+- Provide a `fallback` when the logo name comes from data you don't fully control, so a missing mark degrades gracefully.
+
+**Don't**
+
+- Don't recolor a `LogoV2` — its brand colors are intentional. Reach for `LogoSymbol` when you need a single color.
+- Don't stretch a logo with mismatched dimensions; use `size` (or CSS with `skipSize`).
+
+## Content
+
+{/* TODO: editorial — please review against product guidance. */}
+
+- Pick the correct brand `name` — browse the [All Logos](/foundations/logos) page for available marks.
+- When a logo represents an item in a list (a connector, a provider), keep a text label alongside it rather than relying on the mark alone.
+
+## Accessibility
+
+### Labeling
+
+- Logos are decorative SVGs with no accessible name. Convey the brand through adjacent text, or add an accessible name on the parent control when a logo stands alone.
+
+### Known limitations
+
+- **No built-in text alternative.** Neither component emits an `alt`/`aria-label`; supply meaning through surrounding text.
+
+</TabItem>
+
+<TabItem label="Properties">
+
+{/* Visually hidden — anchors the section headings below in the TOC without showing a redundant title in the panel body (the tab already says "Properties"). Hidden via #page-level-tabs h2#properties in styles.css. */}
+
+## Properties
+
+### LogoV2
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "name",
+      description:
+        "Name of the logo (see All Logos page for available names). Required unless a fallback is provided.",
+      required: true,
+      value: "LogoV2NamesType",
+    },
+    {
+      name: "size",
+      description: "Size variant of the logo",
+      required: false,
+      value: "'xs' | 'sm' | 'md' | 'lg'",
+      defaultValue: "'lg'",
+    },
+    {
+      name: "skipSize",
+      description: "Skip applying the size class when sizing via CSS.",
+      required: false,
+      value: "boolean",
+      defaultValue: "false",
+    },
+    {
+      name: "fallback",
+      description: "Fallback logo name if the specified logo is not found.",
+      required: false,
+      value: "LogoV2NamesType",
+    },
+    {
+      name: "className",
+      description: "Custom class name",
+      required: false,
+      value: "string",
+    },
+  ]}
+/>
+
+### LogoSymbol
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "name",
+      description:
+        "Name of the symbol (same names as LogoV2). Required unless a fallback is provided.",
+      required: true,
+      value: "SymbolNamesType",
+    },
+    {
+      name: "size",
+      description: "Size variant of the symbol",
+      required: false,
+      value: "'xs' | 'sm' | 'md' | 'lg'",
+      defaultValue: "'lg'",
+    },
+    {
+      name: "skipSize",
+      description: "Skip applying the size class when sizing via CSS.",
+      required: false,
+      value: "boolean",
+      defaultValue: "false",
+    },
+    {
+      name: "fallback",
+      description: "Fallback symbol name if the specified symbol is not found.",
+      required: false,
+      value: "SymbolNamesType",
+    },
+    {
+      name: "className",
+      description:
+        "Custom class name (use text color utilities to change color)",
+      required: false,
+      value: "string",
+    },
+  ]}
+/>
+
+</TabItem>
+
+</Tabs>
+
 </div>

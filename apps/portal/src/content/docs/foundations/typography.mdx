@@ -7,8 +7,6 @@ import { DocsPage } from "@/components/docs-page";
 import { Text } from "@harnessio/ui/components";
 import { Aside } from "@astrojs/starlight/components";
 
-Consistency in typography helps users navigate content with ease. Always use hierarchy to guide attention and improve readability.
-
 Our typography system is built around a set of predefined text styles that provide consistent visual hierarchy and readability across the application. The `Text` component is the primary way to implement these typographic styles.
 
 ## Font Families
@@ -72,7 +70,7 @@ Each text style maps to a composite Tailwind utility class (`.font-*`) that appl
 
 Headings establish the information hierarchy and provide structure to content.
 
-<div className="cn-table-v2 cn-table-v2-normal not-content">
+<div className="cn-table-v2 cn-table-v2-normal not-content ds-type-specimen">
   <div className="cn-table-v2-container">
     <table className="cn-table-v2-element">
       <thead className="cn-table-v2-header">
@@ -183,7 +181,7 @@ Headings establish the information hierarchy and provide structure to content.
 
 Body text is used for the main content.
 
-<div className="cn-table-v2 cn-table-v2-normal not-content">
+<div className="cn-table-v2 cn-table-v2-normal not-content ds-type-specimen">
   <div className="cn-table-v2-container">
     <table className="cn-table-v2-element">
       <thead className="cn-table-v2-header">
@@ -206,7 +204,7 @@ Body text is used for the main content.
             <code>body-normal</code>
           </td>
           <td className="cn-table-v2-cell">
-            <span className="font-body-normal text-cn-2">
+            <span className="font-body-normal text-cn-1">
               The quick brown fox jumps over the lazy dog.
             </span>
           </td>
@@ -220,7 +218,7 @@ Body text is used for the main content.
             <code>body-strong</code>
           </td>
           <td className="cn-table-v2-cell">
-            <span className="font-body-strong text-cn-2">
+            <span className="font-body-strong text-cn-1">
               The quick brown fox jumps over the lazy dog.
             </span>
           </td>
@@ -234,7 +232,7 @@ Body text is used for the main content.
             <code>body-light</code>
           </td>
           <td className="cn-table-v2-cell">
-            <span className="font-body-light text-cn-2">
+            <span className="font-body-light text-cn-1">
               The quick brown fox jumps over the lazy dog.
             </span>
           </td>
@@ -248,7 +246,7 @@ Body text is used for the main content.
             <code>body-code</code>
           </td>
           <td className="cn-table-v2-cell">
-            <span className="font-body-code text-cn-2">
+            <span className="font-body-code text-cn-1">
               npm install @harnessio/ui
             </span>
           </td>
@@ -262,7 +260,7 @@ Body text is used for the main content.
             <code>body-single-line-normal</code>
           </td>
           <td className="cn-table-v2-cell">
-            <span className="font-body-single-line-normal text-cn-2">
+            <span className="font-body-single-line-normal text-cn-1">
               For UI components
             </span>
           </td>
@@ -276,7 +274,7 @@ Body text is used for the main content.
             <code>body-single-line-strong</code>
           </td>
           <td className="cn-table-v2-cell">
-            <span className="font-body-single-line-strong text-cn-2">
+            <span className="font-body-single-line-strong text-cn-1">
               For UI components
             </span>
           </td>
@@ -294,7 +292,7 @@ Body text is used for the main content.
 
 Captions are used for labels and metadata.
 
-<div className="cn-table-v2 cn-table-v2-normal not-content">
+<div className="cn-table-v2 cn-table-v2-normal not-content ds-type-specimen">
   <div className="cn-table-v2-container">
     <table className="cn-table-v2-element">
       <thead className="cn-table-v2-header">
@@ -317,7 +315,7 @@ Captions are used for labels and metadata.
             <code>caption-normal</code>
           </td>
           <td className="cn-table-v2-cell">
-            <span className="font-caption-normal text-cn-2">
+            <span className="font-caption-normal text-cn-1">
               Label text for UI elements
             </span>
           </td>
@@ -331,7 +329,7 @@ Captions are used for labels and metadata.
             <code>caption-strong</code>
           </td>
           <td className="cn-table-v2-cell">
-            <span className="font-caption-strong text-cn-2">
+            <span className="font-caption-strong text-cn-1">
               Label text for UI elements
             </span>
           </td>
@@ -345,7 +343,7 @@ Captions are used for labels and metadata.
             <code>caption-light</code>
           </td>
           <td className="cn-table-v2-cell">
-            <span className="font-caption-light text-cn-2">
+            <span className="font-caption-light text-cn-1">
               Label text for UI elements
             </span>
           </td>
@@ -359,7 +357,7 @@ Captions are used for labels and metadata.
             <code>caption-code</code>
           </td>
           <td className="cn-table-v2-cell">
-            <span className="font-caption-code text-cn-2">v2.4.1-beta</span>
+            <span className="font-caption-code text-cn-1">v2.4.1-beta</span>
           </td>
           <td className="cn-table-v2-cell">12px · mono</td>
           <td className="cn-table-v2-cell">
@@ -371,7 +369,7 @@ Captions are used for labels and metadata.
             <code>caption-single-line-normal</code>
           </td>
           <td className="cn-table-v2-cell">
-            <span className="font-caption-single-line-normal text-cn-2">
+            <span className="font-caption-single-line-normal text-cn-1">
               For compact UI
             </span>
           </td>
@@ -387,7 +385,7 @@ Captions are used for labels and metadata.
 
 ### Micro
 
-<div className="cn-table-v2 cn-table-v2-normal not-content">
+<div className="cn-table-v2 cn-table-v2-normal not-content ds-type-specimen">
   <div className="cn-table-v2-container">
     <table className="cn-table-v2-element">
       <thead className="cn-table-v2-header">
@@ -469,7 +467,9 @@ Text colors help establish visual hierarchy and convey meaning.
               The quick brown fox
             </span>
           </td>
-          <td className="cn-table-v2-cell">Body text (default)</td>
+          <td className="cn-table-v2-cell">
+            Body text (default), placeholder, Labels, secondary info
+          </td>
           <td className="cn-table-v2-cell">
             <code>text-cn-2</code>
           </td>
@@ -483,7 +483,7 @@ Text colors help establish visual hierarchy and convey meaning.
               The quick brown fox
             </span>
           </td>
-          <td className="cn-table-v2-cell">Labels, secondary info</td>
+          <td className="cn-table-v2-cell">Disabled text</td>
           <td className="cn-table-v2-cell">
             <code>text-cn-3</code>
           </td>
@@ -497,7 +497,9 @@ Text colors help establish visual hierarchy and convey meaning.
               The quick brown fox
             </span>
           </td>
-          <td className="cn-table-v2-cell">Placeholders, disabled</td>
+          <td className="cn-table-v2-cell">
+            To be Deprecated, use foreground-3
+          </td>
           <td className="cn-table-v2-cell">
             <code>text-cn-4</code>
           </td>
@@ -506,6 +508,12 @@ Text colors help establish visual hierarchy and convey meaning.
     </table>
   </div>
 </div>
+
+<Aside type="caution" title="Upcoming change — target Oct '26">
+  `foreground-4` will be merged into `foreground-3` and is slated for
+  deprecation. Prefer `foreground-3` (`text-cn-3`) for new work instead of
+  `foreground-4` (`text-cn-4`).
+</Aside>
 
 ### Semantic
 

@@ -1,23 +1,33 @@
 ---
 title: Typing Animation
 description: Animated text typing effect for AI chat interfaces
-beta: true
 ---
 
 import { DocsPage } from "@/components/docs-page";
+import { Tabs, TabItem } from "@astrojs/starlight/components";
+import { Aside } from "@astrojs/starlight/components";
+import PageTabsToc from "@/components/page-tabs-toc.astro";
 
-The `TypingAnimation` component creates an animated typing effect, commonly used for AI assistant responses or chat interfaces to simulate real-time text generation.
+<PageTabsToc />
 
-## Usage
+<div id="page-level-tabs">
+
+<Tabs>
+
+<TabItem label="Overview">
+
+The `TypingAnimation` component reveals text one character at a time, simulating real-time text generation. It's commonly used for AI assistant responses and chat interfaces. Since it extends the `Text` component, it accepts all of Text's styling props.
 
 <DocsPage.ComponentExample
   client:only
   code={`<TypingAnimation text="Hello! How can I help you today?" />`}
 />
 
-## With Custom Speed
+## Variations
 
-Control the typing speed using the `typingSpeed` prop (in milliseconds per character).
+### Custom speed
+
+Control the typing speed with `typingSpeed` (milliseconds per character).
 
 <DocsPage.ComponentExample
   client:only
@@ -28,18 +38,18 @@ Control the typing speed using the `typingSpeed` prop (in milliseconds per chara
 </div>`}
 />
 
-## With Delay
+### With delay
 
-Add a delay before the typing animation starts using the `delay` prop (in milliseconds).
+Add a delay before the animation starts with `delay` (milliseconds).
 
 <DocsPage.ComponentExample
   client:only
   code={`<TypingAnimation text="This appears after 1 second..." delay={1000} />`}
 />
 
-## With Text Variants
+### With text variants
 
-Since TypingAnimation extends TextProps, you can use all Text component variants.
+Because `TypingAnimation` extends `TextProps`, you can use any Text variant.
 
 <DocsPage.ComponentExample
   client:only
@@ -50,7 +60,7 @@ Since TypingAnimation extends TextProps, you can use all Text component variants
 </div>`}
 />
 
-## With Colors
+### With colors
 
 <DocsPage.ComponentExample
   client:only
@@ -61,61 +71,159 @@ Since TypingAnimation extends TextProps, you can use all Text component variants
 </div>`}
 />
 
-## Usage
+## Installation
 
-```typescript jsx
-import { TypingAnimation } from '@harnessio/ui/components'
+```tsx
+import { TypingAnimation } from "@harnessio/ui/components";
 
 // Basic usage
 <TypingAnimation text="Hello, world!" />
 
 // With custom speed and delay
-<TypingAnimation
-  text="Welcome to the chat!"
-  typingSpeed={30}
-  delay={500}
-/>
+<TypingAnimation text="Welcome to the chat!" typingSpeed={30} delay={500} />
 
-// With completion callback
+// With a completion callback
 <TypingAnimation
   text="Processing complete."
-  onComplete={() => console.log('Typing finished!')}
+  onComplete={() => console.log("Typing finished!")}
 />
 
 // With Text styling
-<TypingAnimation
-  text="Important message"
-  variant="heading-small"
-  color="foreground-1"
-/>
+<TypingAnimation text="Important message" variant="heading-small" color="foreground-1" />;
 ```
 
-## API Reference
+</TabItem>
 
-### Props
-
-| Prop          | Type         | Default | Description                                        |
-| ------------- | ------------ | ------- | -------------------------------------------------- |
-| `text`        | `string`     | —       | The text to animate                                |
-| `typingSpeed` | `number`     | `50`    | Milliseconds between each character                |
-| `delay`       | `number`     | `0`     | Milliseconds to wait before starting the animation |
-| `onComplete`  | `() => void` | —       | Callback fired when typing animation completes     |
-
-Additionally, all props from the `Text` component are supported (except `children` and `ref`), including:
-
-| Prop        | Type                                          | Default          | Description            |
-| ----------- | --------------------------------------------- | ---------------- | ---------------------- |
-| `variant`   | `TextVariant`                                 | `"body-normal"`  | Typography variant     |
-| `color`     | `TextColor`                                   | `"foreground-2"` | Text color             |
-| `align`     | `"left" \| "center" \| "right"`               | —                | Text alignment         |
-| `truncate`  | `boolean`                                     | `false`          | Enable text truncation |
-| `lineClamp` | `1 \| 2 \| 3 \| 4 \| 5 \| 6`                  | `1`              | Limit visible lines    |
-| `wrap`      | `"wrap" \| "nowrap" \| "pretty" \| "balance"` | —                | Text wrapping behavior |
+<TabItem label="Usage">
 
 ## Behavior
 
-1. **Single animation**: The typing effect only plays once. After completion, subsequent renders show the full text immediately.
+- **Plays once.** The typing effect runs a single time. After it completes, later re-renders of the same instance show the full text immediately.
+- **Changing `text`.** If `text` changes _before_ the first animation finishes, it resets and replays with the new value. Once the animation has completed, a new `text` value is shown immediately without replaying.
+- **Line clamping.** The component applies `lineClamp={1}` by default to reduce layout shift as characters are revealed. You can override it by passing your own `lineClamp`.
 
-2. **Text changes**: When the `text` prop changes, the animation resets and plays again.
+<Aside type="note">
+  `onComplete` fires when the last character has been revealed. It does not fire
+  when text is shown immediately (for example, on a re-render after the
+  animation has already completed).
+</Aside>
 
-3. **Line clamping**: By default, `lineClamp={1}` is applied to prevent layout shifts during animation.
+## Best practices
+
+{/* TODO: editorial — please review against product guidance. */}
+
+**Do**
+
+- Use it for streamed or assistant-style responses where the reveal reinforces that content is being generated.
+- Keep `typingSpeed` fast enough that readers aren't waiting on the effect — the default of 50ms works for short messages.
+- Override `lineClamp` when the message is expected to wrap across multiple lines.
+
+**Don't**
+
+- Don't animate long-form or critical content a user needs to read immediately — the reveal delays comprehension.
+- Don't rely on the animation replaying when `text` changes after it has finished; it won't.
+
+## Accessibility
+
+### Labeling & semantics
+
+- The text is revealed character by character in the DOM and is **not** wrapped in an `aria-live` region, so assistive tech is not notified as it types, and there is no `prefers-reduced-motion` handling. Treat the animation as decorative.
+- When the message content matters for assistive tech, expose the full `text` through a live region or a visually-hidden node you control, rather than depending on this component to announce it.
+
+</TabItem>
+
+<TabItem label="Properties">
+
+{/* Visually hidden — anchors the section headings below in the TOC without showing a redundant title in the panel body (the tab already says "Properties"). Hidden via #page-level-tabs h2#properties in styles.css. */}
+
+## Properties
+
+### Component props
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "text",
+      description: "The text to animate.",
+      required: true,
+      value: "string",
+    },
+    {
+      name: "typingSpeed",
+      description: "Milliseconds between each revealed character.",
+      required: false,
+      defaultValue: "50",
+      value: "number",
+    },
+    {
+      name: "delay",
+      description: "Milliseconds to wait before the animation starts.",
+      required: false,
+      defaultValue: "0",
+      value: "number",
+    },
+    {
+      name: "onComplete",
+      description: "Called once the typing animation completes.",
+      required: false,
+      value: "() => void",
+    },
+  ]}
+/>
+
+### Inherited Text props
+
+All props from the `Text` component are supported except `children` and `ref`. The most common ones:
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "variant",
+      description: "Typography variant.",
+      required: false,
+      defaultValue: "'body-normal'",
+      value: "TextVariant",
+    },
+    {
+      name: "color",
+      description:
+        "Text color. Defaults to 'foreground-2' for body and caption variants, and 'foreground-1' for heading variants.",
+      required: false,
+      defaultValue: "'foreground-2'",
+      value: "TextColor",
+    },
+    {
+      name: "align",
+      description: "Text alignment.",
+      required: false,
+      value: "'left' | 'center' | 'right'",
+    },
+    {
+      name: "truncate",
+      description: "Enable text truncation.",
+      required: false,
+      defaultValue: "false",
+      value: "boolean",
+    },
+    {
+      name: "lineClamp",
+      description:
+        "Limit the number of visible lines. Applied as 1 by default to reduce layout shift; pass your own value to override.",
+      required: false,
+      defaultValue: "1",
+      value: "1 | 2 | 3 | 4 | 5 | 6",
+    },
+    {
+      name: "wrap",
+      description: "Text wrapping behavior.",
+      required: false,
+      value: "'wrap' | 'nowrap' | 'pretty' | 'balance'",
+    },
+  ]}
+/>
+
+</TabItem>
+
+</Tabs>
+
+</div>

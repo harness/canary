@@ -53,9 +53,9 @@ export default defineConfig({
           collapsed: false,
           items: [
             {
-              slug: "getting-started/introduction",
-              label: "Introduction",
-              attrs: { "data-icon": "view-grid" },
+              slug: "design-system/principles",
+              label: "Principles",
+              attrs: { "data-icon": "light-bulb-on" },
             },
             {
               slug: "design-system/architecture-overview",
@@ -85,7 +85,7 @@ export default defineConfig({
           items: [
             {
               slug: "changelog",
-              label: "Overview",
+              label: "Change log",
               attrs: { "data-icon": "clipboard-check" },
             },
           ],
@@ -143,75 +143,249 @@ export default defineConfig({
         {
           label: "Components",
           items: [
+            {
+              slug: "components/examples",
+              label: "Examples",
+              attrs: { "data-divider-after": "true" },
+            },
             "components/data-display/accordion",
             "components/data-display/alert-item",
             "components/feedback/alert",
             "components/overlays/alert-dialog",
             "components/visual/avatar",
             "components/navigation/breadcrumb",
-            "components/actions/button",
-            "components/actions/button-group",
-            "components/actions/button-layout",
-            "components/form/calendar",
+            {
+              label: "Button",
+              collapsed: true,
+              items: [
+                {
+                  slug: "components/actions/button",
+                  label: "Button",
+                },
+                "components/actions/button-group",
+                "components/actions/button-layout",
+                "components/actions/split-button",
+              ],
+            },
+            {
+              label: "Icon Button",
+              collapsed: true,
+              items: [
+                {
+                  slug: "components/actions/icon-button",
+                  label: "Icon Button",
+                },
+                "components/actions/copy-button",
+                {
+                  slug: "components/actions/icon-button-group",
+                  label: "Button Group",
+                },
+              ],
+            },
+            {
+              label: "Calendar",
+              collapsed: true,
+              items: [
+                {
+                  slug: "components/form/calendar",
+                  label: "Calendar",
+                },
+                {
+                  slug: "components/form/calendar/calendar-input",
+                  label: "Calendar Input",
+                },
+              ],
+            },
             "components/form/caption",
-            "components/data-display/card",
-            "components/data-display/card-select",
+            {
+              label: "Card",
+              collapsed: true,
+              items: [
+                {
+                  slug: "components/data-display/card",
+                  label: "Card",
+                },
+                {
+                  slug: "components/data-display/card-select",
+                  label: "Card Select",
+                },
+                {
+                  slug: "components/data-display/draggable-card",
+                  label: "Draggable Card",
+                },
+              ],
+            },
             "components/visual/carousel",
-            "components/form/checkbox",
-            "components/form/checkbox-tree",
-            "components/actions/copy-button",
+            {
+              label: "Checkbox",
+              collapsed: true,
+              items: [
+                {
+                  slug: "components/form/checkbox",
+                  label: "Checkbox",
+                },
+                {
+                  slug: "components/form/checkbox-tree",
+                  label: "Checkbox Tree",
+                },
+              ],
+            },
             "components/feedback/counter-badge",
-            "components/data-display/data-table",
             "components/form/date-range-filter",
             "components/overlays/dialog",
             "components/markdown-display/diff-viewer",
-            "components/data-display/draggable-card",
-            "components/overlays/drawer",
-            "components/overlays/dropdown-menu",
+            {
+              label: "Drawer",
+              collapsed: true,
+              items: [
+                {
+                  slug: "components/overlays/drawer",
+                  label: "Overview",
+                },
+                {
+                  slug: "components/overlays/drawer/header-v2",
+                  label: "HeaderV2",
+                },
+                {
+                  slug: "components/overlays/drawer/dual-pane",
+                  label: "Dual Pane",
+                },
+              ],
+            },
+            {
+              label: "Dropdown Menu",
+              collapsed: true,
+              items: [
+                {
+                  slug: "components/overlays/dropdown-menu",
+                  label: "Overview",
+                },
+                "components/overlays/dropdown-menu/grouped-items",
+                "components/overlays/dropdown-menu/submenus",
+                "components/overlays/dropdown-menu/header-and-footer",
+                "components/overlays/dropdown-menu/checkbox-items",
+                "components/overlays/dropdown-menu/radio-items",
+                "components/overlays/dropdown-menu/avatar-items",
+                "components/overlays/dropdown-menu/logo-items",
+                "components/overlays/dropdown-menu/icon-items",
+                "components/overlays/dropdown-menu/indicator-items",
+                "components/overlays/dropdown-menu/spinner",
+                "components/overlays/dropdown-menu/no-options",
+                "components/overlays/dropdown-menu/slot",
+              ],
+            },
             "components/navigation/file-explorer",
-            "components/form/form",
+            {
+              label: "Form",
+              collapsed: true,
+              items: [
+                {
+                  slug: "components/form/form",
+                  label: "Form",
+                },
+                {
+                  slug: "components/form/form-input",
+                  label: "Form Input",
+                },
+              ],
+            },
             "components/visual/icon",
             "components/visual/illustration",
+            {
+              label: "Input",
+              collapsed: true,
+              items: [
+                {
+                  slug: "components/form/text-input",
+                  label: "Text Input",
+                },
+                {
+                  slug: "components/form/time-input",
+                  label: "Time Input",
+                },
+                {
+                  slug: "components/form/number-input",
+                  label: "Number Input",
+                },
+              ],
+            },
             "components/form/label",
             "components/foundations/layout",
             "components/navigation/link",
             "components/visual/logo",
             "components/markdown-display/markdown-viewer",
             "components/chat/message-bubble",
-            "components/form/multi-select",
-            "components/form/number-input",
+            "components/data-display/no-data",
+            "components/foundations/page",
             "components/navigation/pagination",
             "components/overlays/popover",
             "components/feedback/progress",
             "components/chat/prompt-input",
             "components/form/radio",
             "components/chat/reasoning",
+            "components/foundations/sandbox-layout",
             "components/utilities/scroll-area",
             "components/form/search-input",
-            "components/form/select",
+            {
+              label: "Select",
+              collapsed: true,
+              items: [
+                {
+                  slug: "components/form/select",
+                  label: "Select",
+                },
+                {
+                  slug: "components/form/multi-select",
+                  label: "Multi Select",
+                },
+              ],
+            },
             "components/overlays/sheet",
             "components/chat/shimmer",
             "components/navigation/sidebar",
             "components/feedback/skeleton",
             "components/form/slider",
             "components/utilities/spacer",
-            "components/actions/split-button",
             "components/data-display/stacked-list",
+            "components/data-display/stats-panel",
             "components/navigation/stepper",
             "components/utilities/sticky-list-section",
             "components/feedback/status-badge",
             "components/form/switch",
             "components/navigation/tabs",
-            "components/data-display/table-v2",
+            {
+              label: "Table",
+              collapsed: true,
+              items: [
+                {
+                  slug: "components/data-display/table-v2",
+                  label: "Table",
+                },
+                {
+                  slug: "components/data-display/data-table",
+                  label: "Data Table",
+                },
+              ],
+            },
             "components/feedback/tag",
             "components/foundations/text",
-            "components/form/text-input",
             "components/form/textarea",
-            "components/form/time-input",
             "components/overlays/time-ago-card",
             "components/feedback/toast",
-            "components/actions/toggle",
-            "components/actions/toggle-group",
+            {
+              label: "Toggle",
+              collapsed: true,
+              items: [
+                {
+                  slug: "components/actions/toggle",
+                  label: "Toggle",
+                },
+                {
+                  slug: "components/actions/toggle-group",
+                  label: "Toggle Group",
+                },
+              ],
+            },
             "components/overlays/tooltip",
             "components/navigation/tree-view",
             "components/chat/typing-animation",
@@ -243,6 +417,16 @@ export default defineConfig({
             },
           ],
         },
+        {
+          label: "Data Viz",
+          items: [
+            {
+              slug: "data-viz/overview",
+              label: "Overview",
+              attrs: { "data-icon": "circle-with-sector" },
+            },
+          ],
+        },
       ],
       customCss: [
         "./src/tailwind.css",
@@ -266,7 +450,8 @@ export default defineConfig({
     react(),
   ],
   redirects: {
-    "/": "/getting-started/introduction",
+    // Old Introduction page now lives at the homepage.
+    "/getting-started/introduction": "/",
     "/components/navigation/single-pane-stepper":
       "/growth-patterns/single-pane-stepper",
     "/components/navigation/dual-pane-stepper":

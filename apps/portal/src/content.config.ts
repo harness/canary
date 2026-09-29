@@ -6,7 +6,11 @@ export const collections = {
   docs: defineCollection({
     loader: docsLoader(),
     schema: docsSchema({
-      extend: z.object({ beta: z.boolean().optional().default(false) }),
+      extend: z.object({
+        beta: z.boolean().optional().default(false),
+        // Marks the full-width landing page (rendered without the docs sidebar).
+        home: z.boolean().optional().default(false),
+      }),
     }),
   }),
 };

@@ -1,13 +1,22 @@
 ---
 title: Spacer
 description: Spacer component
-beta: true
 ---
 
 import { Aside } from "@astrojs/starlight/components";
 import { DocsPage } from "@/components/docs-page";
+import { Tabs, TabItem } from "@astrojs/starlight/components";
+import PageTabsToc from "@/components/page-tabs-toc.astro";
 
-The `Spacer` component is used to add vertical spacing between elements.
+<PageTabsToc />
+
+<div id="page-level-tabs">
+
+<Tabs>
+
+<TabItem label="Overview">
+
+The `Spacer` component adds vertical space between two elements. Pick the amount with the `size` prop, which maps to the design system's spacing scale.
 
 <Aside>
   It is preferable to control spacing between elements using CSS layouts with
@@ -45,7 +54,7 @@ The `Spacer` component is used to add vertical spacing between elements.
 </div>`}
 />
 
-## Usage
+## Installation
 
 ```typescript jsx
 import { Spacer } from '@harnessio/ui/components'
@@ -61,32 +70,74 @@ return (
 )
 ```
 
-## API Reference
+</TabItem>
 
-The `Spacer` component can be used to add vertical spacing between elements. It accepts a `size` prop that specifies the
-height of the spacer.
+<TabItem label="Usage">
 
-```typescript jsx
-<Spacer
-  size={4}          // [OPTIONAL] height of the spacer
-  className="class" // [OPTIONAL] additional CSS classes to apply
-/>
+## Anatomy
+
+`Spacer` renders a single empty, decorative `<div>` that pushes the element after it down by a fixed amount of space (applied as a top margin from the spacing scale).
+
+```tsx
+<SomeComponent />
+<Spacer size={4} />
+<SomeOtherComponent />
 ```
+
+- **`size`** picks a step from the spacing scale (defaulting to `4`); it isn't an arbitrary pixel value, so use one of the supported steps.
+- The element is purely for spacing — it has no content and is hidden from assistive tech.
+
+## Best practices
+
+{/* TODO: editorial — please review against product guidance. */}
+
+**Do**
+
+- Prefer laying out with flex or grid and a `gap` — it keeps spacing declarative and survives reflow better than inserting spacer elements.
+- Reach for `Spacer` for one-off vertical gaps where adding a flex/grid container would be heavier than the problem.
+
+**Don't**
+
+- Don't chain several `Spacer`s to build up a large gap — pick the `size` step that matches, or use layout spacing.
+- Don't rely on `Spacer` for horizontal spacing; it only adds vertical space.
+
+## Accessibility
+
+### Focus & states
+
+- `Spacer` is decorative: it's rendered with `aria-hidden`, holds no content, and is skipped by screen readers and the tab order.
+
+</TabItem>
+
+<TabItem label="Properties">
+
+{/* Visually hidden — anchors the section headings below in the TOC without showing a redundant title in the panel body (the tab already says "Properties"). Hidden via #page-level-tabs h2#properties in styles.css. */}
+
+## Properties
 
 <DocsPage.PropsTable
   props={[
     {
       name: "size",
-      description: "Height of the spacer",
+      description:
+        "Amount of vertical space, as a step on the spacing scale (not an arbitrary pixel value).",
       required: false,
       value: "number",
       defaultValue: "4",
     },
     {
       name: "className",
-      description: "Additional CSS classes to apply",
+      description: "Additional CSS classes to apply.",
       required: false,
       value: "string",
     },
   ]}
 />
+
+`Spacer` also accepts standard `<div>` attributes.
+
+</TabItem>
+
+</Tabs>
+
+</div>

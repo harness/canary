@@ -3,10 +3,19 @@ title: Number Input
 description: NumberInput component
 ---
 
-The `NumberInput` component is used to handle user input, providing options for styling via themes and sizes.
-The component also offers options for adding icons, captions, custom content, and error text for the field.
-
 import { DocsPage } from "@/components/docs-page";
+import { Tabs, TabItem } from "@astrojs/starlight/components";
+import PageTabsToc from "@/components/page-tabs-toc.astro";
+
+<PageTabsToc />
+
+<div id="page-level-tabs">
+
+<Tabs>
+
+<TabItem label="Overview">
+
+The `NumberInput` component handles numeric input, providing options for styling via themes and sizes. It also offers options for adding stepper controls, captions, suffixes, tooltips, and error or warning text for the field.
 
 <DocsPage.ComponentExample
   client:only
@@ -17,26 +26,9 @@ import { DocsPage } from "@/components/docs-page";
 `}
 />
 
-## Usage
+## Variations
 
-```typescript jsx
-import { NumberInput } from '@harnessio/ui/components'
-
-// ..
-return (
-  <NumberInput
-    integerOnly
-    label="Quantity"
-    placeholder="Enter a number"
-    min={0}
-    max={100}
-    defaultValue={1}
-    onChange={(e) => handleQuantityChange(e.target.value)}
-  />
-)
-```
-
-## Disable
+### Disable
 
 <DocsPage.ComponentExample
   client:only
@@ -46,7 +38,7 @@ return (
   </Layout.Vertical>`}
 />
 
-## Read only
+### Read only
 
 <DocsPage.ComponentExample
   client:only
@@ -56,17 +48,17 @@ return (
   </Layout.Vertical>`}
 />
 
-## Optional
+### Optional
 
 <DocsPage.ComponentExample
   client:only
   code={`
   <Layout.Vertical gap="xl" className="min-w-[400px]">
-    <NumberInput id="read-only-number" label="Number Input" placeholder="Enter a number" optional />
+    <NumberInput id="optional-number" label="Number Input" placeholder="Enter a number" optional />
   </Layout.Vertical>`}
 />
 
-## Without Stepper UI
+### Without stepper UI
 
 <DocsPage.ComponentExample
   client:only
@@ -81,13 +73,11 @@ return (
   </Layout.Vertical>`}
 />
 
-## Theme
+### Theme
 
 The `NumberInput` component accepts a `theme` prop, which defines the visual state of the input: either `success`, `warning`, or `danger`.
 
-When an error occurs, set `theme="danger"` and pass the error message to the `error` prop.
-
-For warnings, set `theme="warning"` and provide the warning message via the `warning` prop.
+Passing a message to `error` forces the `danger` theme, and passing a message to `warning` forces the `warning` theme — these override any explicit `theme`.
 
 <DocsPage.ComponentExample
   client:only
@@ -103,19 +93,17 @@ For warnings, set `theme="warning"` and provide the warning message via the `war
       id="error-input"
       label="With Error"
       error="Please enter a valid number"
-      theme="danger"
     />
     <NumberInput
       id="warning-input"
       label="With Warning"
       warning="This is a high value"
-      theme="warning"
       defaultValue={95}
     />
   </Layout.Vertical>`}
 />
 
-## Min / Max limits
+### Min / Max limits
 
 <DocsPage.ComponentExample
   client:only
@@ -127,12 +115,14 @@ For warnings, set `theme="warning"` and provide the warning message via the `war
       min={0}
       max={10}
       defaultValue={5}
-      onChange={(value) => console.log("Value changed:", value)}
+      onChange={(e) => console.log("Value changed:", e.target.value)}
     />
   </Layout.Vertical>`}
 />
 
-## Integer / Decimal value
+### Integer and decimal values
+
+By default the input accepts decimals. Set `integerOnly` to block decimal points and restrict entry to whole numbers.
 
 <DocsPage.ComponentExample
   client:only
@@ -140,21 +130,20 @@ For warnings, set `theme="warning"` and provide the warning message via the `war
   <Layout.Vertical gap="xl" className="min-w-[400px]">
     <NumberInput
       id="decimal-input"
-      allowDecimal
       label="With Decimals"
-      decimalScale={2}
+      step={0.1}
       defaultValue={3.14}
     />
     <NumberInput
       id="integer-only"
       label="Integer Only"
-      allowDecimal={false}
+      integerOnly
       defaultValue={42}
     />
   </Layout.Vertical>`}
 />
 
-## Positive / Negative value
+### Positive and negative values
 
 <DocsPage.ComponentExample
   client:only
@@ -170,7 +159,7 @@ For warnings, set `theme="warning"` and provide the warning message via the `war
   </Layout.Vertical>`}
 />
 
-## Custom Steppers
+### Custom steppers
 
 <DocsPage.ComponentExample
   client:only
@@ -180,13 +169,12 @@ For warnings, set `theme="warning"` and provide the warning message via the `war
       id="small-increment"
       label="Increment by 0.1"
       step={0.1}
-      allowDecimal={true}
       defaultValue={1.0}
     />
   </Layout.Vertical>`}
 />
 
-## With Suffix
+### With suffix
 
 <DocsPage.ComponentExample
   client:only
@@ -203,7 +191,7 @@ For warnings, set `theme="warning"` and provide the warning message via the `war
   </Layout.Vertical>`}
 />
 
-## With Tooltip
+### With tooltip
 
 `tooltipContent` is used to display the content of the tooltip. `tooltipProps` is used to pass additional props to the tooltip.
 
@@ -226,10 +214,9 @@ For warnings, set `theme="warning"` and provide the warning message via the `war
   </Layout.Vertical>`}
 />
 
-## Orientation
+### Orientation
 
-The `NumberInput` component accepts an optional `orientation` prop, which defines the layout direction of the input and its label.
-Available options are `horizontal` and `vertical` (default).
+The `NumberInput` component accepts an optional `orientation` prop, which defines the layout direction of the input and its label. Available options are `horizontal` and `vertical` (default).
 
 <DocsPage.ComponentExample
   client:only
@@ -240,45 +227,214 @@ Available options are `horizontal` and `vertical` (default).
   </Layout.Vertical>`}
 />
 
-## API Reference
+## Installation
 
-```typescript
-interface IconWithTooltipProps extends Omit<TooltipProps, "children"> {
-  className?: string;
-  /**
-   * If disabled, the tooltip will not be shown
-   */
-  disabled?: boolean;
-  iconProps?: IconPropsV2;
-}
+```typescript jsx
+import { NumberInput } from '@harnessio/ui/components'
+
+// ..
+return (
+  <NumberInput
+    integerOnly
+    label="Quantity"
+    placeholder="Enter a number"
+    min={0}
+    max={100}
+    defaultValue={1}
+    onChange={(e) => handleQuantityChange(e.target.value)}
+  />
+)
 ```
+
+</TabItem>
+
+<TabItem label="Usage">
+
+## Anatomy
+
+`NumberInput` is a native `<input type="number">` wrapped with a label, optional caption, and stepper controls.
+
+```tsx
+<NumberInput
+  label="Quantity"
+  min={0}
+  max={100}
+  step={1}
+  defaultValue={1}
+  onChange={(e) => handleChange(e.target.value)}
+/>
+```
+
+- **Label** — associated with the input via `htmlFor`; add `optional`, `labelSuffix`, or `tooltipContent` / `tooltipProps` for extra affordances.
+- **Input** — a real numeric input. `value` (controlled) or `defaultValue` (uncontrolled) sets the number; `onChange` is the native change handler, so read `event.target.value`.
+- **Stepper controls** — up / down buttons rendered in the input's suffix that call the native step behavior by `step`. Hidden when `hideStepper` or `readOnly` is set.
+- **Caption / message** — `error` shows first, then `warning`, then `caption` below the field (in horizontal orientation the caption moves up beside the label).
+
+## Best practices
+
+{/* TODO: editorial — please review against product guidance. */}
+
+**Do**
+
+- Set `min`, `max`, and `step` to match the real constraints of the value so the steppers and validation behave sensibly.
+- Use `integerOnly` for counts and quantities that can't be fractional.
+- Provide a `suffix` (e.g. a unit) or `caption` when the number's meaning isn't obvious from the label alone.
+
+**Don't**
+
+- Don't use `NumberInput` for values that aren't really numbers (phone numbers, IDs, codes) — use a text input so leading zeros and formatting are preserved.
+- Don't rely on `integerOnly` alone to guarantee whole numbers on submit — validate the final value as well (see limitations).
+
+## Content
+
+{/* TODO: editorial — please review against product guidance. */}
+
+- Label the input with the noun it captures ("Quantity", "Replicas"), not an instruction.
+- Keep captions to a short constraint or hint ("Between 0 and 100").
+- Put units in the `suffix` rather than the label when space allows.
+
+## Accessibility
+
+### Keyboard
+
+- The input is a native numeric field: **Up / Down arrows** increment and decrement by `step` when the field is focused.
+- The stepper buttons are intentionally removed from the tab order (`tabIndex={-1}`), so keyboard users step with the arrow keys rather than tabbing to the buttons.
+
+### Labeling
+
+- The label is tied to the input with `htmlFor`; when no `id` is supplied one is generated automatically so the association still holds.
+- The increment / decrement buttons carry `aria-label`s ("Increment value" / "Decrement value").
+
+### Focus & states
+
+- `disabled`, `readOnly`, and `optional` are supported. When `readOnly` is set the steppers are hidden along with `hideStepper`.
+- `inputMode` is set (`numeric` when `integerOnly`, otherwise `decimal`) so mobile keyboards show the right keys.
+
+### Known limitations
+
+- **`integerOnly` doesn't cover paste.** It blocks a typed decimal point but does not sanitize a pasted decimal value, so validate the committed value if whole numbers are required.
+
+</TabItem>
+
+<TabItem label="Properties">
+
+{/* Visually hidden — anchors the section headings below in the TOC without showing a redundant title in the panel body (the tab already says "Properties"). Hidden via #page-level-tabs h2#properties in styles.css. */}
+
+## Properties
+
+### NumberInput
 
 <DocsPage.PropsTable
   props={[
     {
-      name: "wrapperClassName",
-      description: "Additional CSS classes for the wrapper element",
-      required: false,
-      defaultValue: "",
-      value: "string",
-    },
-    {
       name: "label",
       description: "Label text for the input field",
       required: false,
-      defaultValue: "",
       value: "string",
     },
     {
       name: "id",
-      description: "Unique identifier for the input element",
+      description:
+        "Unique identifier for the input element. Auto-generated when omitted.",
       required: false,
-      defaultValue: "",
+      value: "string",
+    },
+    {
+      name: "value",
+      description: "Controlled value for the input",
+      required: false,
+      value: "number",
+    },
+    {
+      name: "defaultValue",
+      description: "Default value for uncontrolled input",
+      required: false,
+      value: "number",
+    },
+    {
+      name: "onChange",
+      description:
+        "Native change handler; read the value from event.target.value.",
+      required: false,
+      value: "React.ChangeEventHandler<HTMLInputElement>",
+    },
+    {
+      name: "min",
+      description: "Minimum allowed value",
+      required: false,
+      value: "number",
+    },
+    {
+      name: "max",
+      description: "Maximum allowed value",
+      required: false,
+      value: "number",
+    },
+    {
+      name: "step",
+      description:
+        "Amount to increment/decrement when using the stepper buttons or arrow keys.",
+      required: false,
+      defaultValue: "1",
+      value: "number",
+    },
+    {
+      name: "integerOnly",
+      description:
+        "Blocks typed decimal points and restricts entry to whole numbers.",
+      required: false,
+      defaultValue: "false",
+      value: "boolean",
+    },
+    {
+      name: "hideStepper",
+      description: "Whether to hide the increment/decrement buttons",
+      required: false,
+      defaultValue: "false",
+      value: "boolean",
+    },
+    {
+      name: "theme",
+      description:
+        "Visual state of the input. error and warning messages override this.",
+      required: false,
+      defaultValue: "'default'",
+      value: "'default' | 'success' | 'danger' | 'warning'",
+    },
+    {
+      name: "error",
+      description: "Error message to display (forces the danger theme)",
+      required: false,
+      value: "string",
+    },
+    {
+      name: "warning",
+      description: "Warning message to display (forces the warning theme)",
+      required: false,
+      value: "string",
+    },
+    {
+      name: "caption",
+      description: "Helper text displayed below the input",
+      required: false,
+      value: "string",
+    },
+    {
+      name: "placeholder",
+      description: "Placeholder text for the input field",
+      required: false,
       value: "string",
     },
     {
       name: "disabled",
       description: "Whether the input is disabled",
+      required: false,
+      defaultValue: "false",
+      value: "boolean",
+    },
+    {
+      name: "readOnly",
+      description: "Whether the input is read-only (also hides the steppers).",
       required: false,
       defaultValue: "false",
       value: "boolean",
@@ -291,111 +447,6 @@ interface IconWithTooltipProps extends Omit<TooltipProps, "children"> {
       value: "boolean",
     },
     {
-      name: "caption",
-      description: "Helper text displayed below the input",
-      required: false,
-      defaultValue: "",
-      value: "string",
-    },
-    {
-      name: "suffix",
-      description:
-        "Optional element to display after the input. Can be a React component or any other node.",
-      required: false,
-      value: "ReactNode",
-    },
-    {
-      name: "error",
-      description: "Error message to display (will use danger theme)",
-      required: false,
-      defaultValue: "",
-      value: "string",
-    },
-    {
-      name: "warning",
-      description: "Warning message to display (will use warning theme)",
-      required: false,
-      defaultValue: "",
-      value: "string",
-    },
-    {
-      name: "hideStepper",
-      description: "Whether to hide the increment/decrement buttons",
-      required: false,
-      defaultValue: "false",
-      value: "boolean",
-    },
-    {
-      name: "integerOnly",
-      description: "Whether to allow only integer values (no decimals)",
-      required: false,
-      defaultValue: "false",
-      value: "boolean",
-    },
-    {
-      name: "min",
-      description: "Minimum allowed value",
-      required: false,
-      defaultValue: "",
-      value: "number",
-    },
-    {
-      name: "max",
-      description: "Maximum allowed value",
-      required: false,
-      defaultValue: "",
-      value: "number",
-    },
-    {
-      name: "step",
-      description: "Amount to increment/decrement when using stepper buttons",
-      required: false,
-      defaultValue: "1",
-      value: "number",
-    },
-    {
-      name: "placeholder",
-      description: "Placeholder text for the input field",
-      required: false,
-      defaultValue: "",
-      value: "string",
-    },
-    {
-      name: "className",
-      description: "Additional CSS classes for the input element",
-      required: false,
-      defaultValue: "",
-      value: "string",
-    },
-    {
-      name: "theme",
-      description: "Theme styling for the input and caption",
-      required: false,
-      defaultValue: "'default'",
-      value: "'default' | 'success' | 'danger' | 'warning'",
-    },
-    {
-      name: "defaultValue",
-      description: "Default value for uncontrolled input",
-      required: false,
-      defaultValue: "",
-      value: "number",
-    },
-    {
-      name: "value",
-      description: "Controlled value for the input",
-      required: false,
-      defaultValue: "",
-      value: "number",
-    },
-    {
-      name: "onChange",
-      description: "Callback when value changes",
-      required: false,
-      defaultValue: "",
-      value: "React.ChangeEventHandler<HTMLInputElement>",
-    },
-    {
       name: "size",
       description: "Size of the input field",
       required: false,
@@ -403,11 +454,17 @@ interface IconWithTooltipProps extends Omit<TooltipProps, "children"> {
       value: "'md' | 'sm'",
     },
     {
-      name: "readOnly",
-      description: "Whether the input is read-only.",
+      name: "prefix",
+      description: "Optional element to display before the input.",
       required: false,
-      defaultValue: "false",
-      value: "boolean",
+      value: "ReactNode",
+    },
+    {
+      name: "suffix",
+      description:
+        "Optional element to display after the input. Can be a React component or any other node.",
+      required: false,
+      value: "ReactNode",
     },
     {
       name: "tooltipContent",
@@ -424,7 +481,7 @@ interface IconWithTooltipProps extends Omit<TooltipProps, "children"> {
     {
       name: "labelSuffix",
       description:
-        "Customized with a suffix element that appears on the right side of the label.",
+        "Customized suffix element that appears on the right side of the label.",
       required: false,
       value: "ReactNode",
     },
@@ -435,5 +492,36 @@ interface IconWithTooltipProps extends Omit<TooltipProps, "children"> {
       defaultValue: "'vertical'",
       value: "'vertical' | 'horizontal'",
     },
+    {
+      name: "className",
+      description: "Additional CSS classes for the input element",
+      required: false,
+      value: "string",
+    },
+    {
+      name: "wrapperClassName",
+      description: "Additional CSS classes for the wrapper element",
+      required: false,
+      value: "string",
+    },
   ]}
 />
+
+### IconWithTooltipProps
+
+```typescript
+interface IconWithTooltipProps extends Omit<TooltipProps, "children"> {
+  className?: string;
+  /**
+   * If disabled, the tooltip will not be shown
+   */
+  disabled?: boolean;
+  iconProps?: IconPropsV2;
+}
+```
+
+</TabItem>
+
+</Tabs>
+
+</div>

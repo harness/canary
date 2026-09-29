@@ -123,7 +123,7 @@ const Example: FC<ExampleProps> = ({
       >
         <DialogProvider>
           <TooltipProvider>
-            <div className="bg-cn-1 not-content my-cn-3xl rounded-cn-6 overflow-hidden border">
+            <div className="bg-cn-1 not-content my-[20px] rounded-cn-6 overflow-hidden border">
               <LiveProvider
                 code={currentCode}
                 scope={scopeWithLayout}
@@ -131,7 +131,7 @@ const Example: FC<ExampleProps> = ({
               >
                 <div
                   className={cn(
-                    "grid place-items-center p-cn-3xl live-provider-router-wrapper",
+                    "grid place-items-center p-[20px] live-provider-router-wrapper",
                     contentClassName,
                   )}
                 >

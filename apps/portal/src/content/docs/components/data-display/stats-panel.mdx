@@ -1,0 +1,165 @@
+---
+title: Stats Panel (Key Value Pairs)
+description: Compact key–value pairs for entity metadata
+---
+
+import { DocsPage } from "@/components/docs-page";
+import { Tabs, TabItem } from "@astrojs/starlight/components";
+import PageTabsToc from "@/components/page-tabs-toc.astro";
+
+<PageTabsToc />
+
+<div id="page-level-tabs">
+
+<Tabs>
+
+<TabItem label="Overview">
+
+The `StatsPanel` component renders a horizontal set of key–value pairs — a label above its value — used across the application to surface entity metadata such as created/updated timestamps, status, ownership, and counts.
+
+Each value accepts a React element, so it can be plain text, a `StatusBadge`, a `TimeAgoCard`, an icon, and more. A missing value renders as `-`, and passing `isLoading` shows skeleton placeholders.
+
+<DocsPage.ComponentExample
+  client:only
+  code={`
+    <StatsPanel
+      data={[
+        { label: 'Created', value: <TimeAgoCard timestamp="Dec 6, 2024" /> },
+        { label: 'Last updated', value: undefined },
+        {
+          label: 'Connection status',
+          value: (
+            <StatusBadge variant="status" theme="success">
+              Success
+            </StatusBadge>
+          )
+        },
+        { label: 'Owner', value: <span>jane.doe</span> }
+      ]}
+    />
+`}
+/>
+
+## Variations
+
+### Loading
+
+Pass `isLoading` to render skeleton placeholders while data is being fetched.
+
+<DocsPage.ComponentExample
+  client:only
+  code={`
+    <StatsPanel
+      isLoading
+      data={[
+        { label: 'Created', value: <span>—</span> },
+        { label: 'Last updated', value: <span>—</span> },
+        { label: 'Connection status', value: <span>—</span> },
+        { label: 'Owner', value: <span>—</span> }
+      ]}
+    />
+`}
+/>
+
+## Installation
+
+```tsx
+import { StatsPanel, StatusBadge, TimeAgoCard } from "@harnessio/ui/components";
+
+<StatsPanel
+  data={[
+    { label: "Created", value: <TimeAgoCard timestamp="Dec 6, 2024" /> },
+    { label: "Last updated", value: undefined }, // renders as "-"
+    {
+      label: "Connection status",
+      value: (
+        <StatusBadge variant="status" theme="success">
+          Success
+        </StatusBadge>
+      ),
+    },
+  ]}
+/>;
+```
+
+</TabItem>
+
+<TabItem label="Usage">
+
+## Anatomy
+
+`StatsPanel` takes a single `data` array and lays each entry out as a vertical label-over-value pair, arranging the pairs in a horizontal row.
+
+- Each entry is `{ label: string; value?: JSX.Element }`. The `label` is rendered as small secondary text above the `value`.
+- The `value` must be a React element — wrap plain strings or numbers (e.g. `value: <span>jane.doe</span>`).
+- When a `value` is missing, the panel renders a `-` placeholder so the layout stays aligned.
+- `gap` controls the vertical spacing between each label and its value.
+- If `data` is empty, the component renders nothing.
+
+## Best practices
+
+{/* TODO: editorial — please review against product guidance. */}
+
+**Do**
+
+- Keep labels short and consistent (e.g. "Created", "Owner") so the row scans quickly.
+- Use `isLoading` to show skeletons while fetching rather than briefly rendering empty `-` placeholders.
+- Reach for richer value nodes (`StatusBadge`, `TimeAgoCard`) where they add meaning over plain text.
+
+**Don't**
+
+- Don't pack long, wrapping values into a stat — the panel is meant for compact metadata.
+- Don't rely on order alone to convey which value belongs to which label; every value needs its label.
+
+## Accessibility
+
+### Labeling
+
+- Each pair's meaning comes from its visible `label` text sitting above the value, so always provide a clear, human-readable `label`.
+- Give icon-only or badge values their own accessible text where the visual alone isn't sufficient.
+
+### Focus & states
+
+- `StatsPanel` renders static text and has no interactive behavior of its own. Any interactive value you pass in (a link, a button) keeps its own focus and keyboard behavior.
+
+</TabItem>
+
+<TabItem label="Properties">
+
+{/* Visually hidden — anchors the section headings below in the TOC without showing a redundant title in the panel body (the tab already says "Properties"). Hidden via #page-level-tabs h2#properties in styles.css. */}
+
+## Properties
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "data",
+      description:
+        'Array of key–value pairs to display. Each item has a string label and an optional value element; a missing value renders as "-".',
+      required: true,
+      value: "{ label: string; value?: JSX.Element }[]",
+    },
+    {
+      name: "isLoading",
+      description:
+        "When true, renders skeleton placeholders instead of values.",
+      required: false,
+      defaultValue: "false",
+      value: "boolean",
+    },
+    {
+      name: "gap",
+      description: "Vertical gap between each label and its value.",
+      required: false,
+      defaultValue: "'3xs'",
+      value:
+        "'none' | '4xs' | '3xs' | '2xs' | 'xs' | 'sm' | 'md' | 'lg' | 'xl' | '2xl' | '3xl' | '4xl'",
+    },
+  ]}
+/>
+
+</TabItem>
+
+</Tabs>
+
+</div>

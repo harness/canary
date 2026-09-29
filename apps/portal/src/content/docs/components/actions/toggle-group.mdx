@@ -1,12 +1,22 @@
 ---
 title: Toggle Group
-description: Toggle Group component documentation
-beta: true
+description: A set of toggle buttons for switching between related options
 ---
 
-The `ToggleGroup` component provides a set of toggle buttons that can be used to switch between different states or options. It is composed of subcomponents such as `ToggleGroup.Root` and `ToggleGroup.Item` to offer a structured and customizable interface.
-
 import { DocsPage } from "@/components/docs-page";
+import { Tabs, TabItem } from "@astrojs/starlight/components";
+import { Aside } from "@astrojs/starlight/components";
+import PageTabsToc from "@/components/page-tabs-toc.astro";
+
+<PageTabsToc />
+
+<div id="page-level-tabs">
+
+<Tabs>
+
+<TabItem label="Overview">
+
+The `ToggleGroup` component groups a set of toggle buttons for switching between related states or options. It is composed of `ToggleGroup.Root` and `ToggleGroup.Item`, and supports single or multiple selection.
 
 <DocsPage.ComponentExample
   client:only
@@ -19,52 +29,43 @@ import { DocsPage } from "@/components/docs-page";
   `}
 />
 
-## Usage
+## Variations
 
-```typescript jsx
-import { ToggleGroup } from '@harnessio/ui/components'
+### Types
 
-// ...
+The `type` prop defines the selection behavior: `single` (default) allows one active item, `multiple` allows several.
 
-return (
-  <ToggleGroup.Root
-    type="multiple"
-    value={['2']}
-    orientation="vertical"
-    variant="outline-secondary"
-    onValueChange={() => {}}
->
-    <ToggleGroup.Item
-        value="1"
-        text="Option 1"
-        tooltipProps={{
-            title: 'Title',
-            content: <p>This is a tooltip</p>
-        }}
-    />
-    <ToggleGroup.Item value="2" text="Option 2" />
-    <ToggleGroup.Item value="3" text="Option 3" />
-  </ToggleGroup.Root>
-)
-```
+<DocsPage.ComponentExample
+  client:only
+  code={`
+    <Layout.Vertical gap="xl">
+      <Layout.Vertical gap="xs">
+        <Text variant="heading-subsection">Single type</Text>
+        <ToggleGroup.Root value="2">
+          <ToggleGroup.Item value="1" text="Option 1" />
+          <ToggleGroup.Item value="2" text="Option 2" />
+          <ToggleGroup.Item value="3" text="Option 3" />
+        </ToggleGroup.Root>
+      </Layout.Vertical>
+      <Layout.Vertical gap="xs">
+        <Text variant="heading-subsection">Multiple type</Text>
+        <ToggleGroup.Root type="multiple" value={['2']}>
+          <ToggleGroup.Item value="1" text="Option 1" />
+          <ToggleGroup.Item value="2" text="Option 2" />
+          <ToggleGroup.Item value="3" text="Option 3" />
+        </ToggleGroup.Root>
+      </Layout.Vertical>
+    </Layout.Vertical>
+`}
+/>
 
-## Anatomy
+### Controlled and uncontrolled
 
-All parts of the `ToggleGroup` component can be imported and composed as required.
+`ToggleGroup.Root` can be used as a controlled or uncontrolled component.
 
-```typescript jsx
-<ToggleGroup.Root>
-  <ToggleGroup.Item />
-</ToggleGroup.Root>
-```
-
-## Controlled and Uncontrolled Usage
-
-The `ToggleGroup.Root` component can be used as a controlled or uncontrolled component.
-
-- **Controlled**: Pass both the `value` prop and the `onValueChange` handler to fully control the selected value from outside the component.
-- **Uncontrolled with default value**: Pass the `value` prop to set an initial selection. The component will manage its own state internally.
-- **Fully uncontrolled**: Do not pass `value`. The component will manage its state entirely on its own.
+- **Controlled**: pass both `value` and the `onChange` handler to fully control the selection from outside.
+- **Uncontrolled with default value**: pass `value` to set an initial selection; the component then manages its own state.
+- **Fully uncontrolled**: omit `value` and the component manages its state entirely on its own.
 
 <DocsPage.ComponentExample
   client:only
@@ -72,7 +73,7 @@ The `ToggleGroup.Root` component can be used as a controlled or uncontrolled com
     <Layout.Vertical gap="xl">
       <Layout.Vertical gap="xs">
         <Text variant="heading-subsection">Controlled type</Text>
-        <ToggleGroup.Root value="2" onValueChange={() => {}}>
+        <ToggleGroup.Root value="2" onChange={() => {}}>
           <ToggleGroup.Item value="1" text="Option 1" />
           <ToggleGroup.Item value="2" text="Option 2" />
           <ToggleGroup.Item value="3" text="Option 3" />
@@ -98,39 +99,14 @@ The `ToggleGroup.Root` component can be used as a controlled or uncontrolled com
 `}
 />
 
-## Types
+### Variants
 
-The `ToggleGroup.Root` component accepts a `type` prop to define selection behavior. Supported values are: `single` and `multiple`.
+The `variant` prop controls the unselected appearance: `outline`, `ghost`, or `transparent`. The `selectedVariant` prop controls the style when an item is pressed, with options `primary` and `secondary`.
 
-<DocsPage.ComponentExample
-  client:only
-  code={`
-    <Layout.Vertical gap="xl">
-      <Layout.Vertical gap="xs">
-        <Text variant="heading-subsection">Single type</Text>
-        <ToggleGroup.Root value="2">
-          <ToggleGroup.Item value="1" text="Option 1" />
-          <ToggleGroup.Item value="2" text="Option 2" />
-          <ToggleGroup.Item value="3" text="Option 3" />
-        </ToggleGroup.Root>
-      </Layout.Vertical>
-      <Layout.Vertical gap="xs">
-        <Text variant="heading-subsection">Multiple type</Text>
-        <ToggleGroup.Root type="multiple" value={[2]}>
-          <ToggleGroup.Item value="1" text="Option 1" />
-          <ToggleGroup.Item value="2" text="Option 2" />
-          <ToggleGroup.Item value="3" text="Option 3" />
-        </ToggleGroup.Root>
-      </Layout.Vertical>
-    </Layout.Vertical>
-`}
-/>
-
-## Variants
-
-The `ToggleGroup.Root` component accepts a `variant` prop to control its appearance in active state. Supported values are: `outline`, `ghost`, and `transparent`. `selectedVariant` prop controls the style when the toggle is pressed, with options for `primary` and `secondary`.
-
-**Note**: When the variant is set to `transparent`, the `selectedVariant` is ignored — the selected state will also remain `transparent`, following the design specification.
+<Aside type="note">
+  When `variant` is set to `transparent`, `selectedVariant` is ignored — the
+  selected state also stays `transparent`, following the design specification.
+</Aside>
 
 <DocsPage.ComponentExample
   client:only
@@ -181,9 +157,9 @@ The `ToggleGroup.Root` component accepts a `variant` prop to control its appeara
 `}
 />
 
-## Sizes
+### Sizes
 
-The `ToggleGroup.Root` component accepts a `size` prop to control its overall dimensions. Supported values are: `default`, `sm`, and `xs`.
+The `size` prop controls the buttons' overall dimensions. Supported values are `md` (default), `sm`, and `xs`.
 
 <DocsPage.ComponentExample
   client:only
@@ -217,9 +193,9 @@ The `ToggleGroup.Root` component accepts a `size` prop to control its overall di
 `}
 />
 
-## Orientations
+### Orientations
 
-The `ToggleGroup.Root` component accepts a `orientation` prop to control the direction in which the items are laid out. Supported values are: `horizontal` and `vertical`.
+The `orientation` prop controls the direction the items are laid out. Supported values are `horizontal` (default) and `vertical`.
 
 <DocsPage.ComponentExample
   client:only
@@ -245,9 +221,9 @@ The `ToggleGroup.Root` component accepts a `orientation` prop to control the dir
 `}
 />
 
-## Unselectable
+### Unselectable
 
-The `ToggleGroup.Root` component accepts a `unselectable` prop to control whether the last selected item can be deselected. When set to `true`, the component prevents users from unselecting the last remaining active toggle.
+Pass `unselectable` to prevent users from deselecting the last remaining active item, keeping at least one option selected at all times.
 
 <DocsPage.ComponentExample
   client:only
@@ -260,25 +236,24 @@ The `ToggleGroup.Root` component accepts a `unselectable` prop to control whethe
   `}
 />
 
-## Icon only
+### Icon only
 
-The `ToggleGroup.Item` component accepts a `iconOnly` prop. When this prop is set, the `ToggleGroup.Item` is styled to fit the dimensions of an icon, making it suitable for icon-only buttons.
-Note that when `iconOnly` is set, the `text` prop will be used for the `area-label`, and the `prefixIcon` prop will be used as the only icon displayed.
+Pass `iconOnly` on an item to size it to fit a single icon. When set, the `prefixIcon` is the only icon displayed and the `text` prop becomes the item's `aria-label`.
 
 <DocsPage.ComponentExample
   client:only
   code={`
     <ToggleGroup.Root type="multiple" value={['2']}>
-      <ToggleGroup.Item value="1" prefixIcon="plus" iconOnly />
-      <ToggleGroup.Item value="2" iconOnly prefixIcon="minus" />
-      <ToggleGroup.Item value="3" iconOnly prefixIcon="xmark" />
+      <ToggleGroup.Item value="1" prefixIcon="plus" iconOnly text="Add" />
+      <ToggleGroup.Item value="2" iconOnly prefixIcon="minus" text="Subtract" />
+      <ToggleGroup.Item value="3" iconOnly prefixIcon="xmark" text="Clear" />
     </ToggleGroup.Root>
   `}
 />
 
-## With tooltip
+### With tooltip
 
-The `ToggleGroup.Item` component accepts a `tooltipProps` prop. When provided, the `ToggleGroup.Item` will be wrapped in a `Tooltip` component. The `tooltipProps` object can include the following properties from `TooltipProps`: `title`, `content`, `side`, and `align`.
+Pass `tooltipProps` on an item to wrap it in a `Tooltip`. It accepts the `title`, `content`, `side`, and `align` properties from `TooltipProps`.
 
 <DocsPage.ComponentExample
   client:only
@@ -318,161 +293,245 @@ The `ToggleGroup.Item` component accepts a `tooltipProps` prop. When provided, t
   `}
 />
 
-## API Reference
+## Installation
+
+```tsx
+import { ToggleGroup } from "@harnessio/ui/components";
+
+<ToggleGroup.Root
+  type="multiple"
+  value={["2"]}
+  orientation="vertical"
+  variant="outline"
+  selectedVariant="secondary"
+  onChange={() => {}}
+>
+  <ToggleGroup.Item
+    value="1"
+    text="Option 1"
+    tooltipProps={{
+      title: "Title",
+      content: <p>This is a tooltip</p>,
+    }}
+  />
+  <ToggleGroup.Item value="2" text="Option 2" />
+  <ToggleGroup.Item value="3" text="Option 3" />
+</ToggleGroup.Root>;
+```
+
+</TabItem>
+
+<TabItem label="Usage">
+
+## Anatomy
+
+All parts of `ToggleGroup` can be imported and composed as needed.
+
+```tsx
+<ToggleGroup.Root>
+  <ToggleGroup.Item />
+</ToggleGroup.Root>
+```
+
+- `ToggleGroup.Root` is the container. It sets the selection `type`, shared `variant` / `selectedVariant` / `size` / `orientation`, and owns the selected value(s).
+- Each `ToggleGroup.Item` is a pressable button identified by a required `value`. It renders an optional `prefixIcon`, `text` label, and optional `suffixIcon`.
+- Selection can be controlled (`value` + `onChange`), seeded (`value` only), or fully uncontrolled.
+
+<Aside type="note">
+  The change handler is `onChange` (not `onValueChange`). In `single` mode it
+  fires with a `string`; in `multiple` mode it fires with a `string[]`.
+</Aside>
+
+## Best practices
+
+{/* TODO: editorial — please review against product guidance. */}
+
+**Do**
+
+- Use a `ToggleGroup` when a small set of related options share one context (e.g. view or alignment switches).
+- Match `type` to intent: `single` for mutually-exclusive choices, `multiple` when several can be active.
+- Use `unselectable` when at least one option must always stay selected.
+
+**Don't**
+
+- Don't mix numeric and string item values — `value` is always a `string`; pass `['2']`, not `[2]`.
+- Don't overload a group with many items — for long lists use a `Select` or menu instead.
+
+## Accessibility
+
+### Keyboard
+
+- Focus moves between items with the arrow keys (roving tabindex), following the group's `orientation`. Items activate with <kbd>Space</kbd> or <kbd>Enter</kbd>.
+
+### Labeling & semantics
+
+- The group and its items expose their roles and pressed state through the underlying Radix Toggle Group primitive.
+- In `iconOnly` mode the `text` prop becomes each item's `aria-label`; always provide it so icon-only items have accessible names.
+
+</TabItem>
+
+<TabItem label="Properties">
+
+{/* Visually hidden — anchors the section headings below in the TOC without showing a redundant title in the panel body (the tab already says "Properties"). Hidden via #page-level-tabs h2#properties in styles.css. */}
+
+## Properties
 
 ### Root
-
-The `Root` component serves as the main container for all toggle group elements.
 
 <DocsPage.PropsTable
   props={[
     {
       name: "children",
-      description: "You can pass in your `ToggleGroup.Item` as childrens.",
+      description: "The ToggleGroup.Item elements to render inside the group.",
       required: true,
       value: "ReactNode",
     },
     {
-      name: "className",
-      description: "Additional class names to apply to the root element.",
-      required: false,
-      value: "string",
-    },
-    {
-      name: "variant",
-      description: "The visual style variant of the not selected buttons.",
-      required: false,
-      value: "'outline' | 'ghost' | 'transparent'",
-      defaultValue: "outline",
-    },
-    {
-      name: "selectedVariant",
-      description: "The visual style variant of the selected buttons.",
-      required: false,
-      value: "'primary' | 'secondary'",
-      defaultValue: "primary",
-    },
-    {
       name: "type",
       description:
-        "Determines whether a single or multiple items can be pressed at a time.",
+        "Whether a single item or multiple items can be pressed at a time.",
       required: false,
+      defaultValue: "'single'",
       value: "'single' | 'multiple'",
-      defaultValue: "single",
     },
     {
       name: "value",
       description:
-        "Controlled stateful value of the item(s) that is/are pressed or Value of the item(s) that is/are pressed when initially rendered.",
+        "The pressed item value(s). A string in single mode, a string[] in multiple mode. Provide with onChange to control, or alone to seed the initial selection.",
       required: false,
       value: "string | string[]",
     },
     {
       name: "onChange",
       description:
-        "Callback that fires when the value of the toggle group changes.",
+        "Called when the selection changes. Fires with a string in single mode and a string[] in multiple mode.",
       required: false,
-      value: "(value: string) => void | (value: string[]) => void",
+      value: "((value: string) => void) | ((value: string[]) => void)",
     },
     {
-      name: "disabled",
-      description: "Whether the group is disabled from user interaction.",
+      name: "variant",
+      description: "The visual style variant of the unselected buttons.",
       required: false,
-      value: "boolean",
-      defaultValue: "false",
+      defaultValue: "'outline'",
+      value: "'outline' | 'ghost' | 'transparent'",
     },
     {
-      name: "unselectable",
+      name: "selectedVariant",
       description:
-        "To control whether the last selected item can be deselected.",
+        "The visual style variant of the selected buttons. Ignored when variant is 'transparent'.",
       required: false,
-      value: "boolean",
-      defaultValue: "false",
-    },
-    {
-      name: "orientation",
-      description:
-        "Orientation of the toggle group as how focus moves using arrows.",
-      required: false,
-      value: "'horizontal' | 'vertical'",
-      defaultValue: "horizontal",
+      value: "'primary' | 'secondary'",
     },
     {
       name: "size",
       description: "The size of the buttons.",
       required: false,
-      value: "'md' | 'sm' | 'xs'",
       defaultValue: "'md'",
+      value: "'md' | 'sm' | 'xs'",
+    },
+    {
+      name: "orientation",
+      description:
+        "Layout direction of the group and the direction focus moves with arrow keys.",
+      required: false,
+      defaultValue: "'horizontal'",
+      value: "'horizontal' | 'vertical'",
+    },
+    {
+      name: "unselectable",
+      description:
+        "When true, prevents deselecting the last remaining selected item.",
+      required: false,
+      defaultValue: "false",
+      value: "boolean",
+    },
+    {
+      name: "disabled",
+      description: "Whether the whole group is disabled from user interaction.",
+      required: false,
+      defaultValue: "false",
+      value: "boolean",
+    },
+    {
+      name: "className",
+      description: "Additional CSS classes to apply to the root element.",
+      required: false,
+      value: "string",
     },
   ]}
 />
 
 ### Item
 
-The `Item` component is used to define each toggle button within the group.
-
 <DocsPage.PropsTable
   props={[
     {
       name: "value",
-      description: "Value of the toggle item.",
+      description: "The value of the toggle item. Used as its selection key.",
       required: true,
       value: "string",
     },
     {
-      name: "disabled",
-      description: "Whether the item is disabled from user interaction.",
-      required: false,
-      value: "boolean",
-      defaultValue: "false",
-    },
-    {
-      name: "tooltipProps",
-      description:
-        "If provided, wraps the Button in a tooltip with the specified properties.",
-      required: false,
-      defaultValue: "undefined",
-      value: "Pick<TooltipProps, 'title' | 'content' | 'side' | 'align'>",
-    },
-    {
       name: "text",
-      description: "Text content to display inside the toggle item.",
+      description:
+        "Text content to display inside the item. In iconOnly mode it is used as the accessibility label.",
       required: false,
       value: "string",
     },
     {
       name: "iconOnly",
-      description: "Whether the toggle item is displayed as an icon only.",
+      description:
+        "Whether the item is sized to fit an icon only. When true, prefixIcon is required and tooltipProps must be provided.",
       required: false,
-      value: "boolean",
       defaultValue: "false",
+      value: "boolean",
     },
     {
       name: "prefixIcon",
       description:
-        "An optional icon to display before the text. When `iconOnly` is true, this will be the only icon displayed.",
+        "An icon displayed before the text. In iconOnly mode this is the only icon shown (and is required).",
       required: false,
-      value: "IconV2NamesType",
+      value: "IconName",
     },
     {
       name: "prefixIconProps",
-      description:
-        "Additional properties to pass to the prefix icon component.",
+      description: "Additional props for the prefix icon.",
       required: false,
-      value: "IconPropsV2",
+      value: "Omit<IconPropsV2, 'name'>",
     },
     {
       name: "suffixIcon",
-      description: "An optional icon to display after the text.",
+      description:
+        "An icon displayed after the text. Not available in iconOnly mode.",
       required: false,
-      value: "IconV2NamesType",
+      value: "IconName",
     },
     {
       name: "suffixIconProps",
-      description:
-        "Additional properties to pass to the suffix icon component.",
+      description: "Additional props for the suffix icon.",
       required: false,
       value: "IconPropsV2",
     },
+    {
+      name: "tooltipProps",
+      description:
+        "If provided, wraps the item in a tooltip. Required in iconOnly mode.",
+      required: false,
+      value: "Pick<TooltipProps, 'title' | 'content' | 'side' | 'align'>",
+    },
+    {
+      name: "disabled",
+      description:
+        "Whether the item is disabled. Also disabled when the group is disabled.",
+      required: false,
+      defaultValue: "false",
+      value: "boolean",
+    },
   ]}
 />
+
+</TabItem>
+
+</Tabs>
+
+</div>

@@ -1,14 +1,23 @@
 ---
 title: Checkbox Tree
 description: Hierarchical checkbox tree with Select All and cascading tri-state selection
-beta: true
 ---
+
+import { DocsPage } from "@/components/docs-page";
+import { Tabs, TabItem } from "@astrojs/starlight/components";
+import PageTabsToc from "@/components/page-tabs-toc.astro";
+
+<PageTabsToc />
+
+<div id="page-level-tabs">
+
+<Tabs>
+
+<TabItem label="Overview">
 
 The `CheckboxTree` component renders a hierarchical tree where every node has a checkbox. Checking a group cascades to all of its descendants, and parent groups automatically show an `indeterminate` (mixed) state when only some of their descendants are selected. It supports an optional **Select All** row and expand/collapse of groups.
 
 It is a compound component composed of `CheckboxTree.Root`, `CheckboxTree.Group`, and `CheckboxTree.Item`. Selection is controlled via `selectedIds` + `onSelectionChange` (leaf ids only); parent/child relationships are derived from JSX nesting. Enable `showCount` on the `Root` to render each group's leaf-descendant count (e.g. "Resources (16)") — it is computed automatically, with no `count` prop to maintain.
-
-import { DocsPage } from "@/components/docs-page";
 
 <DocsPage.ComponentExample
   client:only
@@ -47,30 +56,9 @@ import { DocsPage } from "@/components/docs-page";
 }`}
 />
 
-## Usage
+## Variations
 
-```typescript jsx
-import { CheckboxTree } from '@harnessio/ui/components'
-
-const [selectedIds, setSelectedIds] = useState<string[]>([])
-
-return (
-  <CheckboxTree.Root
-    className="w-full rounded-cn-2 border border-cn-3"
-    selectedIds={selectedIds}
-    onSelectionChange={setSelectedIds}
-    defaultExpandedIds={['resources']}
-    showSelectAll
-  >
-    <CheckboxTree.Group id="resources" label="Resources">
-      <CheckboxTree.Item id="audit-logs" label="Audit logs" />
-      <CheckboxTree.Item id="roles" label="Roles" />
-    </CheckboxTree.Group>
-  </CheckboxTree.Root>
-)
-```
-
-## Deeply Nested Groups
+### Deeply nested groups
 
 Groups can be nested to any depth. Each level indents its content, and every group reflects the aggregate state of all leaves beneath it.
 
@@ -104,7 +92,7 @@ Groups can be nested to any depth. Each level indents its content, and every gro
 }`}
 />
 
-## Custom Group Icons
+### Custom group icons
 
 Each group renders a `folder` icon before its label by default. Pass the `icon` prop to override it with any `IconV2` icon name.
 
@@ -133,7 +121,7 @@ Each group renders a `folder` icon before its label by default. Pass the `icon` 
 }`}
 />
 
-## Disabled Nodes
+### Disabled nodes
 
 Set `disabled` on the `Root` to disable the whole tree, or on an individual `Group`/`Item`.
 
@@ -160,9 +148,117 @@ Set `disabled` on the `Root` to disable the whole tree, or on an individual `Gro
 }`}
 />
 
-## API Reference
+## Installation
 
-### CheckboxTree.Root Props
+```typescript jsx
+import { CheckboxTree } from '@harnessio/ui/components'
+
+const [selectedIds, setSelectedIds] = useState<string[]>([])
+
+return (
+  <CheckboxTree.Root
+    className="w-full rounded-cn-2 border border-cn-3"
+    selectedIds={selectedIds}
+    onSelectionChange={setSelectedIds}
+    defaultExpandedIds={['resources']}
+    showSelectAll
+  >
+    <CheckboxTree.Group id="resources" label="Resources">
+      <CheckboxTree.Item id="audit-logs" label="Audit logs" />
+      <CheckboxTree.Item id="roles" label="Roles" />
+    </CheckboxTree.Group>
+  </CheckboxTree.Root>
+)
+```
+
+</TabItem>
+
+<TabItem label="Usage">
+
+## Anatomy
+
+`CheckboxTree` is a compound component. You nest `Group` and `Item` parts inside `Root`, and the hierarchy is derived from that JSX nesting:
+
+```typescript jsx
+<CheckboxTree.Root selectedIds={selectedIds} onSelectionChange={setSelectedIds} showSelectAll>
+  <CheckboxTree.Group id="resources" label="Resources">
+    <CheckboxTree.Group id="pipelines" label="Pipelines">
+      <CheckboxTree.Item id="audit-logs" label="Audit logs" />
+    </CheckboxTree.Group>
+  </CheckboxTree.Group>
+</CheckboxTree.Root>
+```
+
+- **Root** — the container. It renders a scrollable `role="tree"` region, owns the selection and expand/collapse state, and shares it with every part through context. When `showSelectAll` is set, it renders a **Select All** row above the tree; it draws no border of its own, so pass a `className` (e.g. `rounded-cn-2 border`) to frame it.
+- **Group** — a collapsible branch. Each group renders a row with its own checkbox plus an expand/collapse trigger (an arrow, a `folder` icon by default, and the label). Checking it cascades to every descendant; it shows a checked, unchecked, or `indeterminate` state derived from its leaves. With `showCount`, the automatically-computed leaf count appears next to the label.
+- **Item** — a leaf. It renders a checkbox and a label, and its `id` is what appears in `selectedIds`. Only leaf ids are tracked — group state is always derived.
+
+Groups can nest to any depth, and each level indents its contents. Collapsed groups keep their descendants mounted so parent and Select All states stay accurate.
+
+## Best practices
+
+{/* TODO: editorial — please review against product guidance. */}
+
+**Do**
+
+- Use a checkbox tree when items form a genuine hierarchy and people need to select across levels — not for a short, flat list of options.
+- Turn on `showSelectAll` when selecting everything at once is a common action.
+- Turn on `showCount` when the size of each group helps people decide what to select.
+- Give each group and item a clear, scannable `label`, and start the most relevant groups expanded with `defaultExpandedIds`.
+
+**Don't**
+
+- Don't nest so deeply that the indentation becomes hard to follow — flatten the hierarchy where you can.
+- Don't rely on the tree to communicate a partial selection by the mixed checkbox alone; pair it with a count or summary when the exact selection matters.
+- Don't disable a group or item without making it clear elsewhere why it can't be selected.
+
+## Content
+
+{/* TODO: editorial — please review against product guidance. */}
+
+- Write group and item labels as short noun phrases in sentence case.
+- Keep sibling labels parallel in structure so the tree scans cleanly.
+- Use the `selectAllLabel` to say what "all" means in context when the default "Select All" is ambiguous.
+
+## Accessibility
+
+`CheckboxTree` renders tree semantics (`role="tree"` with `treeitem` rows and `group` branches) and each node's checkbox carries an accessible name.
+
+### Keyboard
+
+- Each checkbox is in the tab order and toggles with **Space**; toggling a group cascades to its descendants.
+- Each group's expand/collapse trigger is a separate tab stop and activates with **Enter**/**Space**.
+- Disabled groups and items are skipped by keyboard navigation.
+
+### Labeling
+
+- `Root` renders `role="tree"`, each row is a `role="treeitem"`, and each group's descendants are wrapped in a `role="group"`.
+- Every checkbox gets an `aria-label` from its `label` (falling back to its `id` when the label isn't a plain string).
+- Groups expose `aria-expanded`, and each node reflects its selection through `aria-selected`/`aria-checked`.
+
+### Focus & states
+
+- The checkboxes and triggers use the standard keyboard focus ring, and disabled nodes render with distinct styling.
+- A group whose descendants are only partially selected shows the mixed (`indeterminate`) checkbox state.
+
+### Known limitations
+
+- **The tree has no accessible name by default.** `role="tree"` isn't labeled out of the box. `Root` forwards extra props onto the tree element, so pass an `aria-label` (or `aria-labelledby`) describing what the tree contains.
+- **No arrow-key tree navigation.** The full WAI-ARIA tree pattern moves between nodes with the arrow keys and expands/collapses with **←**/**→**. Here you **Tab** between the individual checkboxes and triggers instead; there's no single roving focus that walks the tree.
+- **`aria-selected` only reflects the fully-checked state.** A group with a mixed selection reports `aria-selected="false"` even though its checkbox shows `indeterminate`, so the partial state is conveyed visually more clearly than it is to assistive tech.
+- **The Select All row isn't a tree node.** It renders as a labeled checkbox above the tree rather than a `treeitem`, so it sits outside the tree's node structure.
+
+</TabItem>
+
+<TabItem label="Properties">
+
+{/* Visually hidden — anchors the section headings below in the TOC without showing a redundant title in the panel body (the tab already says "Properties"). Hidden via #page-level-tabs h2#properties in styles.css. */}
+
+## Properties
+
+### Root
+
+The container that owns selection and expand state and renders the tree.
 
 <DocsPage.PropsTable
   props={[
@@ -223,7 +319,11 @@ Set `disabled` on the `Root` to disable the whole tree, or on an individual `Gro
   ]}
 />
 
-### CheckboxTree.Group Props
+`CheckboxTree.Root` also forwards any other `HTMLAttributes<HTMLDivElement>` (e.g. `aria-label`) onto the tree element.
+
+### Group
+
+A collapsible branch. Its state is derived from the leaves beneath it.
 
 <DocsPage.PropsTable
   props={[
@@ -255,7 +355,9 @@ Set `disabled` on the `Root` to disable the whole tree, or on an individual `Gro
   ]}
 />
 
-### CheckboxTree.Item Props
+### Item
+
+A leaf node. Its `id` is what appears in `selectedIds`.
 
 <DocsPage.PropsTable
   props={[
@@ -280,3 +382,9 @@ Set `disabled` on the `Root` to disable the whole tree, or on an individual `Gro
     },
   ]}
 />
+
+</TabItem>
+
+</Tabs>
+
+</div>

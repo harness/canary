@@ -3,9 +3,20 @@ title: Tree View
 description: TreeView component for displaying hierarchical data structures
 ---
 
-The `TreeView` component is used to display hierarchical data in an expandable/collapsible tree structure. It supports features like selection, status indicators, execution details, and RTL/LTR text direction.
-
 import { DocsPage } from "@/components/docs-page";
+import { Tabs, TabItem } from "@astrojs/starlight/components";
+import { Aside } from "@astrojs/starlight/components";
+import PageTabsToc from "@/components/page-tabs-toc.astro";
+
+<PageTabsToc />
+
+<div id="page-level-tabs">
+
+<Tabs>
+
+<TabItem label="Overview">
+
+The `TreeView` component displays hierarchical data in an expandable/collapsible tree. It's built from `Tree`, `Folder`, `File`, and an optional `CollapseButton`, and supports selection, status indicators, execution details, and RTL/LTR text direction.
 
 <DocsPage.ComponentExample
   client:only
@@ -42,31 +53,9 @@ return <Tree className="h-64 w-full rounded-cn-3 border">
 }`}
 />
 
-## Usage
+## Variations
 
-```typescript jsx
-import { Tree, Folder, File, CollapseButton, type TreeViewElement } from '@harnessio/ui/components'
-import { ExecutionState } from '@harnessio/ui/views'
-
-//...
-
-return (
-  <Tree initialSelectedId="1-1" className="h-96 w-full rounded-cn-3 border">
-    <Folder
-      element="Documents"
-      value="folder-1"
-      status={ExecutionState.SUCCESS}
-      level={0}
-    >
-      <File value="1-1" status={ExecutionState.SUCCESS} level={1}>
-        File 1
-      </File>
-    </Folder>
-  </Tree>
-)
-```
-
-## Basic Tree Structure
+### Basic tree structure
 
 Create a simple tree with folders and files. The tree automatically handles expand/collapse interactions.
 
@@ -126,9 +115,9 @@ return <Tree className="h-80 w-full rounded-cn-3 border">
 }`}
 />
 
-## With Status Indicators
+### With status indicators
 
-The TreeView component displays status icons based on the `ExecutionState`. It supports states like `SUCCESS`, `RUNNING`, `FAILURE`, `PENDING`, and more.
+The tree displays status icons based on the `ExecutionState`. It supports states like `SUCCESS`, `RUNNING`, `FAILURE`, `PENDING`, and more.
 
 <DocsPage.ComponentExample
   client:only
@@ -195,9 +184,9 @@ return <Tree className="h-80 w-full rounded-cn-3 border">
 }`}
 />
 
-## With Initial Selection
+### With initial selection
 
-You can specify an initial selected item using the `initialSelectedId` prop. The tree will automatically expand parent folders to show the selected item.
+Specify an initially selected item with `initialSelectedId`. The tree automatically expands the parent folders to reveal it.
 
 <DocsPage.ComponentExample
   client:only
@@ -243,9 +232,14 @@ return <Tree initialSelectedId="target-file" className="h-64 w-full rounded-cn-3
 }`}
 />
 
-## With Initial Expanded Items
+### With initial expanded items
 
-Control which folders are initially expanded using the `initialExpendedItems` prop.
+Control which folders start expanded with `initialExpendedItems`.
+
+<Aside type="note">
+  The prop name is `initialExpendedItems` — the misspelling ("Expended") is part
+  of the real API.
+</Aside>
 
 <DocsPage.ComponentExample
   client:only
@@ -288,9 +282,9 @@ className="h-64 w-full rounded-cn-3 border"
 }`}
 />
 
-## Non-Selectable Items
+### Non-selectable items
 
-You can make specific items non-selectable by setting `isSelectable: false` on the element.
+Make specific items non-selectable by setting `isSelectable={false}`.
 
 <DocsPage.ComponentExample
   client:only
@@ -342,9 +336,9 @@ return <Tree className="h-64 w-full rounded-cn-3 border">
 }`}
 />
 
-## With Collapse Button
+### With collapse button
 
-Add a collapse/expand all button using the `CollapseButton` component.
+Add an expand/collapse-all control with the `CollapseButton` component.
 
 <DocsPage.ComponentExample
   client:only
@@ -401,9 +395,9 @@ return <div className="relative">
 }`}
 />
 
-## RTL Support
+### RTL support
 
-The TreeView component supports right-to-left (RTL) text direction using the `dir` prop.
+The tree supports right-to-left text direction with the `dir` prop.
 
 <DocsPage.ComponentExample
   client:only
@@ -435,17 +429,9 @@ return <Tree dir="rtl" className="h-64 w-full rounded-cn-3 border">
 }`}
 />
 
-## Complex Example - Full-Featured Pipeline Execution Tree
+### Full-featured pipeline execution tree
 
-This comprehensive example demonstrates all features of the TreeView component including:
-
-- Multiple nested levels
-- Various execution states with status icons
-- Duration display for each item
-- Initial selection and expansion
-- Collapse/expand all functionality
-- Mix of selectable and non-selectable items
-- Real-world CI/CD pipeline structure
+A comprehensive example combining multiple nested levels, various execution states, durations, initial selection and expansion, collapse/expand all, and a mix of selectable and non-selectable items in a real-world CI/CD structure.
 
 <DocsPage.ComponentExample
   client:only
@@ -796,9 +782,200 @@ return <div className="relative">
 }`}
 />
 
-## API Reference
+## Installation
 
-### TreeViewElement Type
+```tsx
+import {
+  Tree,
+  Folder,
+  File,
+  CollapseButton,
+  type TreeViewElement,
+} from "@harnessio/ui/components";
+import { ExecutionState } from "@harnessio/ui/types";
+
+<Tree initialSelectedId="1-1" className="h-96 w-full rounded-cn-3 border">
+  <Folder
+    element="Documents"
+    value="folder-1"
+    status={ExecutionState.SUCCESS}
+    level={0}
+  >
+    <File value="1-1" status={ExecutionState.SUCCESS} level={1}>
+      File 1
+    </File>
+  </Folder>
+</Tree>;
+```
+
+</TabItem>
+
+<TabItem label="Usage">
+
+## Anatomy
+
+A tree is composed of nested `Folder` and `File` nodes inside a `Tree` container.
+
+- `Tree` is the scrollable container and manages selection and expansion state for everything beneath it.
+- `Folder` is an expandable branch. Its `element` prop is the folder's label (a string), and its `children` are the nested `Folder` and `File` nodes it reveals when expanded. A child count is shown next to the label.
+- `File` is a leaf node. Its `children` are the file's label text — not further nodes.
+- Every `Folder` and `File` needs a `status` (an `ExecutionState`, which drives the status icon) and a `level` (its nesting depth, which drives indentation). An optional `duration` string renders on the right.
+- `CollapseButton` is an optional control that expands or collapses the whole tree; it needs the same `elements` array so it knows what to toggle.
+
+<Aside type="note">
+  `Folder.element` is the label string, whereas `File`'s label comes from its
+  `children`. Both take a required `value` (a unique id) and `level`.
+</Aside>
+
+## Rendering from data
+
+When your tree comes from a data array, a small recursive helper keeps the markup manageable:
+
+```tsx
+import { ReactNode } from "react";
+import { File, Folder, type TreeViewElement } from "@harnessio/ui/components";
+
+interface RenderTreeElementProps {
+  element: TreeViewElement;
+  handleClick?: (params: {
+    parentNode: TreeViewElement | null;
+    childNode: TreeViewElement;
+  }) => void;
+  parentElement?: TreeViewElement | null;
+  level?: number;
+}
+
+// Main render function
+export const renderTree = (
+  elements: TreeViewElement[],
+  handleClick?: (params: {
+    parentNode: TreeViewElement | null;
+    childNode: TreeViewElement;
+  }) => void,
+): ReactNode => {
+  if (elements.length === 0) return [];
+  return elements.map((element) => (
+    <div key={element.id}>
+      {renderTreeElement({ element, handleClick, parentElement: null })}
+    </div>
+  ));
+};
+
+// Render folder with children
+const renderTreeFolder = ({
+  element: folderElement,
+  handleClick,
+  level = 0,
+}: RenderTreeElementProps): ReactNode => {
+  return (
+    <Folder
+      element={folderElement.name}
+      value={folderElement.id}
+      status={folderElement.status}
+      duration={folderElement.duration}
+      isSelectable={folderElement.isSelectable}
+      level={level}
+    >
+      {folderElement.children?.map((childElement) => (
+        <div key={childElement.id}>
+          {renderTreeElement({
+            parentElement: folderElement,
+            element: childElement,
+            handleClick,
+            level: level + 1,
+          })}
+        </div>
+      ))}
+    </Folder>
+  );
+};
+
+// Render file (leaf node)
+const renderTreeFile = ({
+  element: fileElement,
+  handleClick,
+  parentElement,
+  level = 0,
+}: RenderTreeElementProps): ReactNode => {
+  return (
+    <File
+      value={fileElement.id}
+      status={fileElement.status}
+      duration={fileElement.duration}
+      isSelectable={fileElement.isSelectable}
+      handleSelect={() =>
+        handleClick?.({ parentNode: parentElement, childNode: fileElement })
+      }
+      level={level}
+    >
+      {fileElement.name}
+    </File>
+  );
+};
+
+// Decide whether to render folder or file
+const renderTreeElement = ({
+  element,
+  handleClick,
+  parentElement,
+  level = 0,
+}: RenderTreeElementProps): ReactNode => {
+  if (element.children && element.children.length > 0) {
+    return renderTreeFolder({ element, handleClick, parentElement, level });
+  }
+  return renderTreeFile({ element, handleClick, parentElement, level });
+};
+
+// Usage
+<Tree className="h-96 w-full rounded-cn-3 border">
+  {renderTree(treeData, ({ parentNode, childNode }) => {
+    console.log("Selected:", childNode.name);
+  })}
+</Tree>;
+```
+
+## Best practices
+
+{/* TODO: editorial — please review against product guidance. */}
+
+**Do**
+
+- Give every node a `status` so its state is visible at a glance, and a correct `level` so indentation matches the hierarchy.
+- Use `initialExpendedItems` to open the path a user cares about, and `initialSelectedId` to highlight it — the tree expands ancestors automatically for a selected id.
+- Set `isSelectable={false}` on structural nodes (stages, groups) that users shouldn't be able to select.
+
+**Don't**
+
+- Don't nest `File` nodes to represent branches — use a `Folder` for anything with children.
+- Don't hand-manage the `level` inconsistently; mismatched levels break the visual hierarchy.
+
+## Accessibility
+
+<Aside type="caution">
+  This component is built on Radix Accordion and does not expose true ARIA tree
+  semantics (`role="tree"` / `treeitem`) or tree-style arrow-key navigation. Its
+  keyboard and screen-reader behaviour is that of nested accordions.
+</Aside>
+
+### Keyboard
+
+- Folders are accordion triggers: <kbd>Tab</kbd> moves between them and <kbd>Space</kbd> or <kbd>Enter</kbd> toggles expansion.
+- There is no up/down/left/right arrow-key navigation between nodes.
+
+### Labeling & semantics
+
+- Selection is conveyed visually only; there is no `aria-selected` on the selected node. If selection state must be announced, pair the tree with your own live region.
+- File rows expose an accessible label, and the `CollapseButton` includes visually-hidden "Toggle" text.
+
+</TabItem>
+
+<TabItem label="Properties">
+
+{/* Visually hidden — anchors the section headings below in the TOC without showing a redundant title in the panel body (the tab already says "Properties"). Hidden via #page-level-tabs h2#properties in styles.css. */}
+
+## Properties
+
+### TreeViewElement
 
 ```typescript
 type TreeViewElement = {
@@ -811,7 +988,9 @@ type TreeViewElement = {
 };
 ```
 
-### ExecutionState Enum
+### ExecutionState
+
+Imported from `@harnessio/ui/types`.
 
 ```typescript
 enum ExecutionState {
@@ -825,30 +1004,33 @@ enum ExecutionState {
   BLOCKED = "blocked",
   WAITING_ON_DEPENDENCIES = "waiting_on_dependencies",
   UNKNOWN = "unknown",
+  FAILURE_IGNORED = "failure_ignored",
+  IGNORE_FAILED = "ignorefailed",
 }
 ```
 
-### Tree Component Props
+### Tree
 
 <DocsPage.PropsTable
   props={[
     {
       name: "elements",
       description:
-        "Array of tree elements to render. Each element can have nested children.",
+        "Array of tree elements. Required by CollapseButton to expand/collapse all items.",
       required: false,
       value: "TreeViewElement[]",
     },
     {
       name: "initialSelectedId",
       description:
-        "ID of the initially selected item. The tree will automatically expand parent folders to show this item.",
+        "ID of the initially selected item. The tree automatically expands parent folders to reveal it.",
       required: false,
       value: "string",
     },
     {
       name: "initialExpendedItems",
-      description: "Array of IDs for items that should be initially expanded.",
+      description:
+        "IDs of items that should start expanded. (Note the 'Expended' spelling.)",
       required: false,
       value: "string[]",
     },
@@ -887,13 +1069,13 @@ enum ExecutionState {
   ]}
 />
 
-### Folder Component Props
+### Folder
 
 <DocsPage.PropsTable
   props={[
     {
       name: "element",
-      description: "Name of the folder to display.",
+      description: "The folder's label text.",
       required: true,
       value: "string",
     },
@@ -911,16 +1093,16 @@ enum ExecutionState {
       value: "ExecutionState",
     },
     {
-      name: "duration",
-      description: "Formatted duration string displayed on the right side.",
-      required: false,
-      value: "string",
-    },
-    {
       name: "level",
       description: "Nesting level of the folder (affects indentation).",
       required: true,
       value: "number",
+    },
+    {
+      name: "duration",
+      description: "Formatted duration string displayed on the right side.",
+      required: false,
+      value: "string",
     },
     {
       name: "isSelectable",
@@ -935,16 +1117,10 @@ enum ExecutionState {
       required: false,
       value: "boolean",
     },
-    {
-      name: "expendedItems",
-      description: "Array of expanded item IDs (internal state management).",
-      required: false,
-      value: "string[]",
-    },
   ]}
 />
 
-### File Component Props
+### File
 
 <DocsPage.PropsTable
   props={[
@@ -956,7 +1132,7 @@ enum ExecutionState {
     },
     {
       name: "children",
-      description: "Display name of the file.",
+      description: "The file's label text.",
       required: true,
       value: "React.ReactNode",
     },
@@ -968,16 +1144,16 @@ enum ExecutionState {
       value: "ExecutionState",
     },
     {
-      name: "duration",
-      description: "Formatted duration string displayed on the right side.",
-      required: false,
-      value: "string",
-    },
-    {
       name: "level",
       description: "Nesting level of the file (affects indentation).",
       required: true,
       value: "number",
+    },
+    {
+      name: "duration",
+      description: "Formatted duration string displayed on the right side.",
+      required: false,
+      value: "string",
     },
     {
       name: "isSelectable",
@@ -994,14 +1170,14 @@ enum ExecutionState {
     },
     {
       name: "handleSelect",
-      description: "Callback function when the file is selected.",
+      description: "Callback fired with the file's value when it is selected.",
       required: false,
       value: "(id: string) => void",
     },
   ]}
 />
 
-### CollapseButton Component Props
+### CollapseButton
 
 <DocsPage.PropsTable
   props={[
@@ -1028,108 +1204,8 @@ enum ExecutionState {
   ]}
 />
 
-## Helper Utility: Rendering Tree Elements
+</TabItem>
 
-You can create a helper utility to recursively render tree elements from data:
+</Tabs>
 
-```typescript jsx
-import { ReactNode } from 'react'
-import { File, Folder, type TreeViewElement } from '@harnessio/ui/components'
-
-interface RenderTreeElementProps {
-  element: TreeViewElement
-  handleClick?: (params: { parentNode: TreeViewElement | null; childNode: TreeViewElement }) => void
-  parentElement?: TreeViewElement | null
-  level?: number
-}
-
-// Main render function
-export const renderTree = (
-  elements: TreeViewElement[],
-  handleClick?: (params: { parentNode: TreeViewElement | null; childNode: TreeViewElement }) => void
-): ReactNode => {
-  if (elements.length === 0) return []
-  return elements.map(element => (
-    <div key={element.id}>
-      {renderTreeElement({ element, handleClick, parentElement: null })}
-    </div>
-  ))
-}
-
-// Render folder with children
-const renderTreeFolder = ({ element: folderElement, handleClick, level = 0 }: RenderTreeElementProps): ReactNode => {
-  return (
-    <Folder
-      element={folderElement.name}
-      value={folderElement.id}
-      status={folderElement.status}
-      duration={folderElement.duration}
-      isSelectable={folderElement.isSelectable}
-      level={level}
-    >
-      {folderElement.children?.map(childElement => (
-        <div key={childElement.id}>
-          {renderTreeElement({
-            parentElement: folderElement,
-            element: childElement,
-            handleClick,
-            level: level + 1
-          })}
-        </div>
-      ))}
-    </Folder>
-  )
-}
-
-// Render file (leaf node)
-const renderTreeFile = ({
-  element: fileElement,
-  handleClick,
-  parentElement,
-  level = 0
-}: RenderTreeElementProps): ReactNode => {
-  return (
-    <File
-      value={fileElement.id}
-      status={fileElement.status}
-      duration={fileElement.duration}
-      isSelectable={fileElement.isSelectable}
-      handleSelect={() => handleClick?.({ parentNode: parentElement, childNode: fileElement })}
-      level={level}
-    >
-      {fileElement.name}
-    </File>
-  )
-}
-
-// Decide whether to render folder or file
-const renderTreeElement = ({
-  element,
-  handleClick,
-  parentElement,
-  level = 0
-}: RenderTreeElementProps): ReactNode => {
-  if (element.children && element.children.length > 0) {
-    return renderTreeFolder({ element, handleClick, parentElement, level })
-  }
-  return renderTreeFile({ element, handleClick, parentElement, level })
-}
-
-// Usage example:
-const treeData: TreeViewElement[] = [
-  {
-    id: '1',
-    name: 'Folder',
-    status: 'success',
-    children: [
-      { id: '1-1', name: 'File 1', status: 'success' }
-    ]
-  }
-]
-
-<Tree className="h-96 w-full rounded-cn-3 border">
-  {renderTree(treeData, ({ parentNode, childNode }) => {
-    console.log('Selected:', childNode.name)
-  })}
-</Tree>
-```
+</div>

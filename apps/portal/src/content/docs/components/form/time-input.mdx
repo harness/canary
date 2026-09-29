@@ -1,77 +1,146 @@
 ---
 title: Time Input
-description: A time input with a configurable leading icon, built on BaseInput.
-beta: true
+description: A time input with a configurable leading icon, built on BaseInput
 ---
+
+import { DocsPage } from "@/components/docs-page";
+import { Tabs, TabItem } from "@astrojs/starlight/components";
+import { Aside } from "@astrojs/starlight/components";
+import PageTabsToc from "@/components/page-tabs-toc.astro";
+
+<PageTabsToc />
+
+<div id="page-level-tabs">
+
+<Tabs>
+
+<TabItem label="Overview">
 
 The `TimeInput` component provides a styled time input field. It is built on top of `BaseInput`, using the same `cn-input-container` foundation as `TextInput` and `NumberInput`, and hides the browser's native clock indicator in favour of a configurable `IconV2` leading icon.
 
-import { DocsPage } from "@/components/docs-page";
-
 <DocsPage.ComponentExample
   client:only
-  code={`<div className="flex flex-col gap-cn-md items-baseline min-w-[320px]">
-  <TimeInput label="Start time" id="start-time" defaultValue="09:30" />
-  <TimeInput label="End time" id="end-time" defaultValue="17:00" step={1} caption="Includes seconds" />
-  <TimeInput label="Duration" id="duration" error="Required" />
-  <TimeInput label="Disabled" id="disabled-time" defaultValue="08:00" disabled />
+  code={`<div className="space-y-cn-sm w-full">
+  <div className="flex items-start gap-cn-md border-b border-cn-borders-3 pb-cn-sm">
+    <span className="text-cn-size-2 text-cn-3 w-40 shrink-0 font-mono pt-cn-xs">default</span>
+    <div className="flex-1 min-w-0 max-w-[360px]">
+      <TimeInput label="Start time" id="start-time" defaultValue="09:30" />
+    </div>
+  </div>
+  <div className="flex items-start gap-cn-md border-b border-cn-borders-3 pb-cn-sm">
+    <span className="text-cn-size-2 text-cn-3 w-40 shrink-0 font-mono pt-cn-xs">with seconds</span>
+    <div className="flex-1 min-w-0 max-w-[360px]">
+      <TimeInput label="End time" id="end-time" defaultValue="17:00" step={1} caption="Includes seconds" />
+    </div>
+  </div>
+  <div className="flex items-start gap-cn-md border-b border-cn-borders-3 pb-cn-sm">
+    <span className="text-cn-size-2 text-cn-3 w-40 shrink-0 font-mono pt-cn-xs">error</span>
+    <div className="flex-1 min-w-0 max-w-[360px]">
+      <TimeInput label="Duration" id="duration" error="Required" />
+    </div>
+  </div>
+  <div className="flex items-start gap-cn-md">
+    <span className="text-cn-size-2 text-cn-3 w-40 shrink-0 font-mono pt-cn-xs">disabled</span>
+    <div className="flex-1 min-w-0 max-w-[360px]">
+      <TimeInput label="Disabled" id="disabled-time" defaultValue="08:00" disabled />
+    </div>
+  </div>
 </div>`}
 />
 
-## Usage
+## Variations
 
-```typescript jsx
-import { TimeInput } from '@harnessio/ui/components'
-
-return (
-  <TimeInput
-    label="Start time"
-    id="start-time"
-    defaultValue="09:30"
-    caption="Select a time"
-  />
-)
-```
-
-## Icon
+### Icon
 
 The leading icon defaults to `clock`. Pass any `IconV2` name via the `icon` prop, or pass `undefined` to hide the icon entirely.
 
 <DocsPage.ComponentExample
   client:only
-  code={`<div className="flex flex-col gap-cn-md items-baseline min-w-[320px]">
-  <TimeInput label="Default icon (clock)" id="icon-default" defaultValue="09:00" />
-  <TimeInput label="Custom icon (clock-solid)" id="icon-solid" icon="clock-solid" defaultValue="09:00" />
-  <TimeInput label="No icon" id="icon-none" icon={undefined} defaultValue="09:00" />
+  code={`<div className="space-y-cn-sm w-full">
+  <div className="flex items-start gap-cn-md border-b border-cn-borders-3 pb-cn-sm">
+    <span className="text-cn-size-2 text-cn-3 w-40 shrink-0 font-mono pt-cn-xs">default (clock)</span>
+    <div className="flex-1 min-w-0 max-w-[360px]">
+      <TimeInput label="Default icon" id="icon-default" defaultValue="09:00" />
+    </div>
+  </div>
+  <div className="flex items-start gap-cn-md border-b border-cn-borders-3 pb-cn-sm">
+    <span className="text-cn-size-2 text-cn-3 w-40 shrink-0 font-mono pt-cn-xs">clock-solid</span>
+    <div className="flex-1 min-w-0 max-w-[360px]">
+      <TimeInput label="Custom icon" id="icon-solid" icon="clock-solid" defaultValue="09:00" />
+    </div>
+  </div>
+  <div className="flex items-start gap-cn-md">
+    <span className="text-cn-size-2 text-cn-3 w-40 shrink-0 font-mono pt-cn-xs">no icon</span>
+    <div className="flex-1 min-w-0 max-w-[360px]">
+      <TimeInput label="No icon" id="icon-none" icon={undefined} defaultValue="09:00" />
+    </div>
+  </div>
 </div>`}
 />
 
-## Form integration
+### Form states
 
 `TimeInput` accepts all standard form field props via `CommonInputsProp` — `label`, `caption`, `error`, `warning`, and `optional`.
 
 <DocsPage.ComponentExample
   client:only
-  code={`<div className="flex flex-col gap-cn-md items-baseline min-w-[320px]">
-  <TimeInput label="Required field" id="required" />
-  <TimeInput label="Optional field" id="optional-field" optional caption="Leave blank to use default" />
-  <TimeInput label="With error" id="with-error" error="Please select a valid time" />
-  <TimeInput label="With warning" id="with-warning" warning="Outside business hours" />
-  <TimeInput label="With caption" id="with-caption" caption="Use 24-hour format" />
+  code={`<div className="space-y-cn-sm w-full">
+  <div className="flex items-start gap-cn-md border-b border-cn-borders-3 pb-cn-sm">
+    <span className="text-cn-size-2 text-cn-3 w-40 shrink-0 font-mono pt-cn-xs">required</span>
+    <div className="flex-1 min-w-0 max-w-[360px]">
+      <TimeInput label="Required field" id="required" />
+    </div>
+  </div>
+  <div className="flex items-start gap-cn-md border-b border-cn-borders-3 pb-cn-sm">
+    <span className="text-cn-size-2 text-cn-3 w-40 shrink-0 font-mono pt-cn-xs">optional</span>
+    <div className="flex-1 min-w-0 max-w-[360px]">
+      <TimeInput label="Optional field" id="optional-field" optional caption="Leave blank to use default" />
+    </div>
+  </div>
+  <div className="flex items-start gap-cn-md border-b border-cn-borders-3 pb-cn-sm">
+    <span className="text-cn-size-2 text-cn-3 w-40 shrink-0 font-mono pt-cn-xs">error</span>
+    <div className="flex-1 min-w-0 max-w-[360px]">
+      <TimeInput label="With error" id="with-error" error="Please select a valid time" />
+    </div>
+  </div>
+  <div className="flex items-start gap-cn-md border-b border-cn-borders-3 pb-cn-sm">
+    <span className="text-cn-size-2 text-cn-3 w-40 shrink-0 font-mono pt-cn-xs">warning</span>
+    <div className="flex-1 min-w-0 max-w-[360px]">
+      <TimeInput label="With warning" id="with-warning" warning="Outside business hours" />
+    </div>
+  </div>
+  <div className="flex items-start gap-cn-md">
+    <span className="text-cn-size-2 text-cn-3 w-40 shrink-0 font-mono pt-cn-xs">caption</span>
+    <div className="flex-1 min-w-0 max-w-[360px]">
+      <TimeInput label="With caption" id="with-caption" caption="Use 24-hour format" />
+    </div>
+  </div>
 </div>`}
 />
 
-## Disabled & Read-only
+### Disabled & read-only
 
 <DocsPage.ComponentExample
   client:only
-  code={`<div className="flex flex-col gap-cn-md items-baseline min-w-[320px]">
-  <TimeInput label="Disabled" id="disabled" defaultValue="14:30" disabled />
-  <TimeInput label="Read-only" id="readonly" defaultValue="14:30" readOnly />
+  code={`<div className="space-y-cn-sm w-full">
+  <div className="flex items-start gap-cn-md border-b border-cn-borders-3 pb-cn-sm">
+    <span className="text-cn-size-2 text-cn-3 w-40 shrink-0 font-mono pt-cn-xs">disabled</span>
+    <div className="flex-1 min-w-0 max-w-[360px]">
+      <TimeInput label="Disabled" id="disabled" defaultValue="14:30" disabled />
+    </div>
+  </div>
+  <div className="flex items-start gap-cn-md">
+    <span className="text-cn-size-2 text-cn-3 w-40 shrink-0 font-mono pt-cn-xs">read-only</span>
+    <div className="flex-1 min-w-0 max-w-[360px]">
+      <TimeInput label="Read-only" id="readonly" defaultValue="14:30" readOnly />
+    </div>
+  </div>
 </div>`}
 />
 
-## Controlled
+### Controlled
+
+Pass `value` together with `onChange` to control the input. `onChange` receives the change event — read `e.target.value` for the new time.
 
 <DocsPage.ComponentExample
   client:only
@@ -91,99 +160,238 @@ The leading icon defaults to `clock`. Pass any `IconV2` name via the `icon` prop
 }`}
 />
 
-## API Reference
+## Installation
+
+```tsx
+import { TimeInput } from "@harnessio/ui/components";
+
+<TimeInput
+  label="Start time"
+  id="start-time"
+  defaultValue="09:30"
+  caption="Select a time"
+/>;
+```
+
+</TabItem>
+
+<TabItem label="Usage">
+
+## Anatomy
+
+`TimeInput` composes a label, the time field, and a caption inside a control group, and is built on `BaseInput`.
+
+- The `label` renders above (or beside, when `orientation="horizontal"`) the input. `tooltipContent` adds an info icon with a tooltip next to the label, and `labelSuffix` adds a custom element on the right of the label.
+- The field is a native `<input type="time">` inside a `cn-input-container`. A configurable `IconV2` leading icon (default `clock`) sits over the left of the input; pass `icon={undefined}` to remove it.
+- Below the input, a caption area shows the `error` message (in the `danger` theme), then the `warning` message (in the `warning` theme), otherwise the plain `caption`.
+- Every input gets an `id`; if you don't provide one it's generated automatically and used to associate the label. The component forwards its `ref` to the underlying `<input>`.
+
+<Aside type="note">
+  `error` and `warning` drive the theme automatically: `error` forces the
+  `danger` theme and `warning` forces the `warning` theme (error taking
+  precedence), overriding any `theme` you set.
+</Aside>
+
+## Best practices
+
+{/* TODO: editorial — please review against product guidance. */}
+
+**Do**
+
+- Always provide a `label` (or an `aria-label`) so the field's purpose is clear.
+- Use `step={1}` when seconds matter; otherwise leave it off so the field shows only hours and minutes.
+- Use `error` for validation messages — it both shows the message and switches the field to the `danger` theme.
+- Add `optional` to fields that aren't required so the required `*` marker reflects reality.
+
+**Don't**
+
+- Don't remove the leading icon (`icon={undefined}`) unless the field's purpose is obvious from its label and surroundings — the icon is a helpful affordance.
+- Don't rely on the placeholder to explain the expected format; the native time control manages its own display.
+
+## Accessibility
+
+### Labeling
+
+- The `label` is associated with the input through a shared `id` (auto-generated when omitted), so clicking the label focuses the field.
+- When there's no visible label, provide an `aria-label`.
+- The leading icon is decorative (`pointer-events-none`) and does not receive focus.
+
+### Focus & states
+
+- `disabled` removes the field from the tab order; `readOnly` keeps it focusable but non-editable.
+- `error` applies the `danger` theme and renders the message beneath the field so the validation state is both visible and adjacent to the input.
+
+</TabItem>
+
+<TabItem label="Properties">
+
+{/* Visually hidden — anchors the section headings below in the TOC without showing a redundant title in the panel body (the tab already says "Properties"). Hidden via #page-level-tabs h2#properties in styles.css. */}
+
+## Properties
 
 <DocsPage.PropsTable
   props={[
     {
       name: "icon",
       description:
-        "Leading icon rendered inside the input. Defaults to 'clock'. Pass undefined to hide.",
-      required: "false",
+        "Leading icon rendered inside the input. Pass undefined to hide it.",
+      required: false,
       defaultValue: "'clock'",
-      value: "IconPropsV2['name'] | undefined",
+      value: "IconName | undefined",
     },
     {
       name: "label",
       description: "Label displayed above the input field.",
-      required: "false",
-      defaultValue: "",
+      required: false,
       value: "string",
     },
     {
       name: "caption",
       description: "Helper text displayed below the input.",
-      required: "false",
-      defaultValue: "",
+      required: false,
       value: "string",
     },
     {
       name: "error",
       description:
-        "Error message displayed below the input. Applies danger theme to the border.",
-      required: "false",
-      defaultValue: "",
+        "Error message displayed below the input. Automatically applies the danger theme.",
+      required: false,
       value: "string",
     },
     {
       name: "warning",
       description:
-        "Warning message displayed below the input. Applies warning theme to the border.",
-      required: "false",
-      defaultValue: "",
+        "Warning message displayed below the input. Automatically applies the warning theme.",
+      required: false,
       value: "string",
     },
     {
       name: "optional",
       description:
-        "Marks the field as optional and shows an 'optional' label beside the field label.",
-      required: "false",
-      defaultValue: "",
+        "When true, marks the field as optional by removing the required * marker from the label.",
+      required: false,
+      defaultValue: "false",
       value: "boolean",
+    },
+    {
+      name: "theme",
+      description:
+        "Visual state of the input. Automatically overridden to danger when error is set, or warning when warning is set.",
+      required: false,
+      defaultValue: "'default'",
+      value: "'default' | 'success' | 'danger' | 'warning'",
     },
     {
       name: "size",
       description: "Controls the height of the input container.",
-      required: "false",
+      required: false,
       defaultValue: "'md'",
-      value: "md | sm",
+      value: "'md' | 'sm'",
+    },
+    {
+      name: "orientation",
+      description: "Layout direction of the input and its label.",
+      required: false,
+      defaultValue: "'vertical'",
+      value: "'vertical' | 'horizontal'",
     },
     {
       name: "step",
       description:
         "Granularity of the time value in seconds. Use 1 to enable seconds input.",
-      required: "false",
-      defaultValue: "",
+      required: false,
       value: "number",
+    },
+    {
+      name: "value",
+      description: "Controlled value for the input (e.g. '09:30').",
+      required: false,
+      value: "string",
+    },
+    {
+      name: "defaultValue",
+      description: "Initial value when the input is uncontrolled.",
+      required: false,
+      value: "string",
+    },
+    {
+      name: "onChange",
+      description:
+        "Called with the change event when the value changes. Read e.target.value for the new time.",
+      required: false,
+      value: "React.ChangeEventHandler<HTMLInputElement>",
     },
     {
       name: "disabled",
       description: "Disables the input.",
-      required: "false",
-      defaultValue: "",
+      required: false,
+      defaultValue: "false",
       value: "boolean",
     },
     {
       name: "readOnly",
       description: "Makes the input read-only.",
-      required: "false",
-      defaultValue: "",
+      required: false,
+      defaultValue: "false",
       value: "boolean",
+    },
+    {
+      name: "id",
+      description:
+        "Identifier for the input, used to associate the label. Auto-generated when omitted.",
+      required: false,
+      value: "string",
+    },
+    {
+      name: "tooltipContent",
+      description: "Content to display in the label tooltip.",
+      required: false,
+      value: "Exclude<ReactNode, boolean | null | undefined>",
+    },
+    {
+      name: "tooltipProps",
+      description: "Additional props for configuring the label tooltip.",
+      required: false,
+      value: "IconWithTooltipProps",
+    },
+    {
+      name: "labelSuffix",
+      description:
+        "A suffix element that appears on the right side of the label.",
+      required: false,
+      value: "ReactNode",
     },
     {
       name: "className",
       description: "Additional class names applied to the inner input element.",
-      required: "false",
-      defaultValue: "",
+      required: false,
+      value: "string",
+    },
+    {
+      name: "inputContainerClassName",
+      description:
+        "Additional class names applied to the bordered input container.",
+      required: false,
       value: "string",
     },
     {
       name: "wrapperClassName",
       description:
         "Additional class names applied to the outer ControlGroup wrapper.",
-      required: "false",
-      defaultValue: "",
+      required: false,
       value: "string",
     },
   ]}
 />
+
+<Aside type="note">
+  `TimeInput` also accepts standard `<input>` attributes (such as `name`, `min`,
+  `max`, `required`, `onFocus`, `onBlur`), which are forwarded to the underlying
+  time input, and forwards its `ref` to that input.
+</Aside>
+
+</TabItem>
+
+</Tabs>
+
+</div>

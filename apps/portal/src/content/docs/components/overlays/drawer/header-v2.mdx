@@ -29,9 +29,9 @@ import PageTabsToc from "@/components/page-tabs-toc.astro";
 
 ## Headers
 
-`Drawer.Header` accepts a structured, opinionated set of props that consolidate tagline/breadcrumb, icon/logo, title, description, actions, metadata (children), and tabs into a single standardized layout with optional loading state. Pass a `title` prop to opt into this layout; pass children (`Drawer.Title`, `Drawer.Tagline`, `Drawer.Description`) to use the legacy compositional layout instead. Both are supported on the same component so existing usage keeps working.
+`Drawer.HeaderV2` is the recommended structured header. It exposes the fullest set of props — tagline/breadcrumb, icon/logo, title, description, actions, metadata (children), and tabs — consolidated into a single standardized layout with an optional loading state, so it covers the widest range of use cases. Pass a `title` prop to opt into this layout; the legacy compositional pattern (`Drawer.Header` > `Drawer.Title` > `Drawer.Description`) still works for simpler headers.
 
-> **Deprecated:** `Drawer.HeaderV2` is now an alias of `Drawer.Header` with these props. Prefer `Drawer.Header` for new usage.
+> **Recommended:** Reach for `Drawer.HeaderV2` by default — its richer prop set handles the most use cases. Fall back to the compositional `Drawer.Header` only for simple, one-off headers.
 
 ### Basic
 

@@ -1261,7 +1261,7 @@ Use `Drawer.Rail` when the rail holds reference material that the user scans whi
 
 ### Full-width header and footer
 
-This is a dual pane drawer with a full-width header and footer: `Drawer.HeaderV2` and `Drawer.Footer` are direct children of `Drawer.Content` (siblings of `Drawer.DualPane`) instead of nested inside `Drawer.DualPaneMain`, so they span the full width of the drawer across both panes. Here the rail holds sidebar-style navigation menu items, the main pane holds the selected item's content, the header keeps its full-width bottom border, and the footer keeps its full-width top border. Use this when the title, header actions, and footer action bar apply to the whole drawer rather than just the main pane.
+This is a dual pane drawer with a full-width header and footer: `Drawer.HeaderV2` and `Drawer.Footer` are direct children of `Drawer.Content` (siblings of `Drawer.DualPane`) instead of nested inside `Drawer.DualPaneMain`, so they span the full width of the drawer across both panes. Here the rail holds design-system [`Sidebar.Item`](/components/navigation/sidebar/) navigation menu items, the main pane holds the selected item's content, the header keeps its full-width bottom border, and the footer keeps its full-width top border. Use this when the title, header actions, and footer action bar apply to the whole drawer rather than just the main pane.
 
 <DocsPage.ComponentExample
   client:only
@@ -1269,7 +1269,7 @@ This is a dual pane drawer with a full-width header and footer: `Drawer.HeaderV2
     const [open, setOpen] = React.useState(false);
     const [active, setActive] = React.useState('dashboard');
 
-    // Placeholder sidebar-navigation menu items rendered in the rail.
+    // Placeholder navigation entries rendered as design-system Sidebar.Item menu items in the rail.
     const menuItems = [
       { value: 'dashboard', label: 'Dashboard', icon: 'dashboard-solid' },
       { value: 'projects', label: 'Projects', icon: 'folder-solid' },
@@ -1298,19 +1298,20 @@ This is a dual pane drawer with a full-width header and footer: `Drawer.HeaderV2
 
           <Drawer.DualPane>
             <Drawer.Rail aria-label="Navigation">
-              <nav className="flex flex-col gap-cn-3xs">
-                {menuItems.map((item) => (
-                  <Button
-                    key={item.value}
-                    variant="ghost"
-                    onClick={() => setActive(item.value)}
-                    className={'w-full justify-start gap-cn-xs ' + (active === item.value ? 'bg-cn-selected text-cn-1' : 'text-cn-2')}
-                  >
-                    <IconV2 name={item.icon} />
-                    {item.label}
-                  </Button>
-                ))}
-              </nav>
+              {/* Genuine design-system sidebar menu items; pt-[20px] keeps them off the header. */}
+              <Sidebar.Provider className="pt-[20px]">
+                <Sidebar.Group className="content-start">
+                  {menuItems.map((item) => (
+                    <Sidebar.Item
+                      key={item.value}
+                      icon={item.icon}
+                      title={item.label}
+                      active={active === item.value}
+                      onClick={() => setActive(item.value)}
+                    />
+                  ))}
+                </Sidebar.Group>
+              </Sidebar.Provider>
             </Drawer.Rail>
 
             <Drawer.DualPaneMain>
@@ -1357,21 +1358,21 @@ const menuItems = [
   />
 
   <Drawer.DualPane>
-    {/* Sidebar-style navigation menu items live in the rail. */}
+    {/* Design-system Sidebar.Item menu items in the rail; pt-[20px] keeps them off the header. */}
     <Drawer.Rail aria-label="Navigation">
-      <nav className="flex flex-col gap-cn-3xs">
-        {menuItems.map((item) => (
-          <Button
-            key={item.value}
-            variant="ghost"
-            onClick={() => setActive(item.value)}
-            className={`w-full justify-start gap-cn-xs ${active === item.value ? 'bg-cn-selected text-cn-1' : 'text-cn-2'}`}
-          >
-            <IconV2 name={item.icon} />
-            {item.label}
-          </Button>
-        ))}
-      </nav>
+      <Sidebar.Provider className="pt-[20px]">
+        <Sidebar.Group className="content-start">
+          {menuItems.map((item) => (
+            <Sidebar.Item
+              key={item.value}
+              icon={item.icon}
+              title={item.label}
+              active={active === item.value}
+              onClick={() => setActive(item.value)}
+            />
+          ))}
+        </Sidebar.Group>
+      </Sidebar.Provider>
     </Drawer.Rail>
 
     <Drawer.DualPaneMain>

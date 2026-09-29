@@ -359,6 +359,11 @@ export default {
       },
 
       '&-tabs': {
+        // A touch of breathing room above the tab strip: the header's 12px flex gap is
+        // cancelled by the negative top margin (tabs would otherwise sit flush), so this
+        // padding is the only space between the content above and the strip. It pads the
+        // wrapper around <Tabs.List>, never the tab component itself.
+        paddingTop: 'var(--cn-spacing-2)',
         marginTop: 'calc(-1 * var(--cn-spacing-3))',
         marginBottom: 'calc(-1 * var(--cn-drawer-container))'
       }

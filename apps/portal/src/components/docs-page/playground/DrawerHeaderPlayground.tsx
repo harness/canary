@@ -219,7 +219,7 @@ const DrawerHeaderPlayground: FC = () => {
 
         {/* bg-cn-1 (not cn-2): the DS Input fills with bg-cn-2, so it needs a
             cn-1 surface underneath to read as a field rather than a faint outline. */}
-        <div className="bg-cn-1 grid grid-cols-[repeat(auto-fill,minmax(180px,1fr))] gap-cn-md border-t p-cn-md">
+        <div className="bg-cn-1 grid grid-cols-3 gap-cn-lg border-t p-cn-md">
           {controls.map((prop) => (
             <ControlField
               key={prop.name}

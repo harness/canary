@@ -26,6 +26,7 @@ const ControlField: FC<ControlFieldProps> = ({ prop, value, onChange }) => {
         <Input
           label={prop.name}
           caption={prop.description}
+          optional={!prop.required}
           type="number"
           value={typeof value === "number" ? value : ""}
           onChange={(e) => onChange(Number(e.target.value))}
@@ -63,6 +64,7 @@ const ControlField: FC<ControlFieldProps> = ({ prop, value, onChange }) => {
         <Input
           label={prop.name}
           caption={prop.description}
+          optional={!prop.required}
           type="color"
           value={typeof value === "string" ? value : "#000000"}
           onChange={(e) => onChange(e.target.value)}
@@ -74,6 +76,7 @@ const ControlField: FC<ControlFieldProps> = ({ prop, value, onChange }) => {
         <Input
           label={prop.name}
           caption={prop.description}
+          optional={!prop.required}
           type="text"
           value={typeof value === "string" ? value : ""}
           onChange={(e) => onChange(e.target.value)}

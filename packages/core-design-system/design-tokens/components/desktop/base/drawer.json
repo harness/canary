@@ -30,7 +30,7 @@
     },
     "container": {
       "$type": "spacing",
-      "$value": "{spacing.5}"
+      "$value": "{spacing.4}"
     },
     "gap": {
       "$type": "spacing",

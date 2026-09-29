@@ -1298,8 +1298,8 @@ This is a dual pane drawer with a full-width header and footer: `Drawer.HeaderV2
 
           <Drawer.DualPane>
             <Drawer.Rail aria-label="Navigation">
-              {/* Genuine design-system sidebar menu items; pt-[20px] keeps them off the header. */}
-              <Sidebar.Provider className="pt-[20px]">
+              {/* Genuine design-system sidebar menu items; pt-cn-lg keeps them off the header. */}
+              <Sidebar.Provider className="pt-cn-lg">
                 <Sidebar.Group className="content-start w-full py-0">
                   {menuItems.map((item) => (
                     <Sidebar.Item
@@ -1358,10 +1358,10 @@ const menuItems = [
   />
 
   <Drawer.DualPane>
-    {/* Design-system Sidebar.Item menu items in the rail; pt-[20px] keeps them off the header. */}
+    {/* Design-system Sidebar.Item menu items in the rail; pt-cn-lg keeps them off the header. */}
     <Drawer.Rail aria-label="Navigation">
-      <Sidebar.Provider className="pt-[20px]">
-        <Sidebar.Group className="content-start">
+      <Sidebar.Provider className="pt-cn-lg">
+        <Sidebar.Group className="content-start w-full py-0">
           {menuItems.map((item) => (
             <Sidebar.Item
               key={item.value}

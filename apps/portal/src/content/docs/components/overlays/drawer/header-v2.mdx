@@ -27,7 +27,7 @@ import PageTabsToc from "@/components/page-tabs-toc.astro";
 
 <TabItem label="Overview">
 
-## Structured header (props API)
+## Headers
 
 `Drawer.Header` accepts a structured, opinionated set of props that consolidate tagline/breadcrumb, icon/logo, title, description, actions, metadata (children), and tabs into a single standardized layout with optional loading state. Pass a `title` prop to opt into this layout; pass children (`Drawer.Title`, `Drawer.Tagline`, `Drawer.Description`) to use the legacy compositional layout instead. Both are supported on the same component so existing usage keeps working.
 
@@ -190,7 +190,7 @@ When `isLoading` is true, actions are hidden and the children (metadata) slot re
 `}
 />
 
-## Structured footer (props API)
+## Footers
 
 `Drawer.Footer` accepts a structured, opinionated set of props that standardize the footer's action bar: a `tertiaryButton` pinned to the far left, plus `secondaryButton` and `primaryButton` right-aligned. Every button is optional and takes a `ReactNode`, so you keep full control over each button (wrap it in `Drawer.Close`, set `loading`, `disabled`, `iconOnly`, etc.) while the layout and spacing stay consistent across every drawer. Pass any of `primaryButton` / `secondaryButton` / `tertiaryButton` to opt into this layout; pass children only (e.g. `ButtonLayout`) to use the legacy compositional layout instead. Both are supported on the same component so existing usage keeps working.
 

@@ -318,6 +318,16 @@ export default {
         // Scoped to V2 so the legacy Drawer.Tagline (caption-light) is unaffected.
         '& .cn-drawer-tagline': {
           font: 'var(--cn-caption-normal)'
+        },
+
+        // No tagline and no description: the header is a single row, so vertically center
+        // the title/icon with the actions + close cluster rather than top-aligning them.
+        '&:where(.cn-drawer-header-v2-main-centered)': {
+          '@apply items-center': '',
+
+          '& .cn-drawer-header-v2-actions': {
+            '@apply self-center': ''
+          }
         }
       },
 

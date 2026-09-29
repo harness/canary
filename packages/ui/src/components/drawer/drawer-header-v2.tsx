@@ -94,11 +94,21 @@ export const DrawerHeaderV2 = forwardRef<HTMLDivElement, DrawerHeaderV2Props>(
         </Layout.Horizontal>
       ) : null
 
+    // With neither a tagline nor a description, the header collapses to a single row.
+    // In that case vertically center the title/icon with the actions + close cluster
+    // instead of top-aligning them (top alignment is only needed when stacked tagline/
+    // description content makes the header taller than the actions cluster).
+    const centerContent = !tagline && !description
+
     // Keep the header's full-width bottom border even with tabs — it spans the whole drawer;
     // the underlined tab strip's own bottom border overlaps it, which is intentional.
     return (
       <div ref={ref} className={cn('cn-drawer-header-v2', className)}>
-        <div className="cn-drawer-header-v2-main">
+        <div
+          className={cn('cn-drawer-header-v2-main', {
+            'cn-drawer-header-v2-main-centered': centerContent
+          })}
+        >
           <Layout.Vertical gap="4xs" className="cn-drawer-header-v2-title-group min-w-0">
             {tagline ? <DrawerTagline>{tagline}</DrawerTagline> : null}
             <Layout.Horizontal gap="2xs" align="center" className="min-w-0">

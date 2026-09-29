@@ -1,6 +1,5 @@
 import type { FC } from "react";
-import { Input, Switch } from "@harnessio/ui/components";
-import { cn } from "@harnessio/ui/utils";
+import { Input, Select, Switch } from "@harnessio/ui/components";
 import type { PropControl } from "./types";
 
 export interface ControlFieldProps {
@@ -35,28 +34,17 @@ const ControlField: FC<ControlFieldProps> = ({ prop, value, onChange }) => {
 
     case "select":
       return (
-        <div className="flex flex-col gap-cn-3xs">
-          <label
-            htmlFor={prop.name}
-            className="text-cn-2 text-cn-size-2 font-medium"
-          >
-            {prop.name}
-          </label>
-          <select
-            id={prop.name}
-            className={cn(
-              "bg-cn-2 border-cn-2 text-cn-1 h-9 rounded border px-cn-sm text-cn-size-2",
-            )}
-            value={typeof value === "string" ? value : ""}
-            onChange={(e) => onChange(e.target.value)}
-          >
-            {prop.options?.map((opt) => (
-              <option key={opt} value={opt}>
-                {opt}
-              </option>
-            ))}
-          </select>
-        </div>
+        <Select
+          label={prop.name}
+          caption={prop.description}
+          optional={!prop.required}
+          value={typeof value === "string" ? value : undefined}
+          onChange={(v) => onChange(v)}
+          options={(prop.options ?? []).map((opt) => ({
+            label: opt,
+            value: opt,
+          }))}
+        />
       );
 
     case "color":

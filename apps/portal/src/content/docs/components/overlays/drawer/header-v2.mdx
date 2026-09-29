@@ -29,7 +29,9 @@ import PageTabsToc from "@/components/page-tabs-toc.astro";
 
 ## Headers
 
-`Drawer.HeaderV2` is the recommended structured header. It exposes the fullest set of props — tagline/breadcrumb, icon/logo, title, description, actions, metadata (children), and tabs — consolidated into a single standardized layout with an optional loading state, so it covers the widest range of use cases. Pass a `title` prop to opt into this layout; the legacy compositional pattern (`Drawer.Header` > `Drawer.Title` > `Drawer.Description`) still works for simpler headers.
+`Drawer.Header` is the recommended header. Pass a `title` prop to opt into the **structured** layout — a single standardized header exposing the fullest set of props (tagline/breadcrumb, icon/logo, title, description, actions, metadata (children), and tabs) with an optional loading state, so it covers the widest range of use cases. The same component still supports the legacy **compositional** pattern (`Drawer.Header` > `Drawer.Title` > `Drawer.Description`) for simpler headers — omit `title` and pass those children instead.
+
+`Drawer.HeaderV2` is a **deprecated alias** for the structured header: it renders identically to `Drawer.Header` with a `title`, so existing usage keeps working, but new code should use `Drawer.Header`.
 
 Toggle props to explore the header. The preview updates live, and **Show code** reflects the current configuration.
 
@@ -128,9 +130,9 @@ Content passed as `children` in the structured mode renders as a slot above the 
 
 ## Best practices
 
-### Prefer `Drawer.HeaderV2`
+### Prefer the structured `Drawer.Header`
 
-Reach for `Drawer.HeaderV2` by default — its richer prop set handles the most use cases. Fall back to the compositional `Drawer.Header` pattern (`Drawer.Header` > `Drawer.Title` > `Drawer.Description`) only for simple, one-off headers.
+Reach for `Drawer.Header` with a `title` (the structured layout) by default — its richer prop set handles the most use cases. Fall back to the compositional pattern (`Drawer.Header` > `Drawer.Title` > `Drawer.Description`) only for simple, one-off headers. Avoid `Drawer.HeaderV2` in new code; it's a deprecated alias for the same structured header.
 
 ### Don't number a title that has an icon
 

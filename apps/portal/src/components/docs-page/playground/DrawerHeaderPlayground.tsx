@@ -13,9 +13,11 @@ import ControlField from "./ControlField";
 import type { PropControl } from "./types";
 
 /**
- * Bespoke, Storybook-style playground for `Drawer.HeaderV2`.
+ * Bespoke, Storybook-style playground for the structured `Drawer.Header`
+ * (passing a `title` opts into the structured layout; `Drawer.HeaderV2` is a
+ * deprecated alias for the same thing).
  *
- * The generic schema-driven `Playground` can't drive this component: HeaderV2
+ * The generic schema-driven `Playground` can't drive this component: the header
  * needs a Drawer (vaul) context for its Title/Description/Close, and its most
  * interesting props (`actions`, `tabs`, `icon`, metadata `children`) are
  * ReactNode/unions rather than the primitives the generic controls cover. So
@@ -75,9 +77,9 @@ function generateCode(s: State): string {
     );
 
   const body = indent(attrs.join("\n"), 2);
-  const open = `<Drawer.HeaderV2\n${body}`;
+  const open = `<Drawer.Header\n${body}`;
   const header = s.metadata
-    ? `${open}\n>\n  <Layout.Horizontal gap="lg">\n    <Text color="foreground-3">Last deployed: 2 hours ago</Text>\n    <Text color="foreground-3">Region: us-west-2</Text>\n  </Layout.Horizontal>\n</Drawer.HeaderV2>`
+    ? `${open}\n>\n  <Layout.Horizontal gap="lg">\n    <Text color="foreground-3">Last deployed: 2 hours ago</Text>\n    <Text color="foreground-3">Region: us-west-2</Text>\n  </Layout.Horizontal>\n</Drawer.Header>`
     : `${open}\n/>`;
 
   // With tabs, the header must sit inside a Tabs.Root for the strip to switch.
@@ -146,7 +148,7 @@ const DrawerHeaderPlayground: FC = () => {
   ) : undefined;
 
   const header = (
-    <Drawer.HeaderV2
+    <Drawer.Header
       title={state.title}
       tagline={state.tagline || undefined}
       description={state.description || undefined}
@@ -157,7 +159,7 @@ const DrawerHeaderPlayground: FC = () => {
       isLoading={state.isLoading}
     >
       {metadataNode}
-    </Drawer.HeaderV2>
+    </Drawer.Header>
   );
 
   const preview = state.tabs ? (

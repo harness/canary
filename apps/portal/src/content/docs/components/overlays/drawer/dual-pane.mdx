@@ -280,7 +280,7 @@ Use `Drawer.Rail` when the rail holds reference material that the user scans whi
 
 ## Full-width header and footer
 
-This is a dual pane drawer with a full-width header and footer: `Drawer.HeaderV2` and `Drawer.Footer` are direct children of `Drawer.Content` (siblings of `Drawer.DualPane`) instead of nested inside `Drawer.DualPaneMain`, so they span the full width of the drawer across both panes. Here the rail holds design-system [`Sidebar.Item`](/components/navigation/sidebar/) navigation menu items, the main pane holds the selected item's content, the header keeps its full-width bottom border, and the footer keeps its full-width top border. Use this when the title, header actions, and footer action bar apply to the whole drawer rather than just the main pane.
+This is a dual pane drawer with a full-width header and footer: `Drawer.Header` and `Drawer.Footer` are direct children of `Drawer.Content` (siblings of `Drawer.DualPane`) instead of nested inside `Drawer.DualPaneMain`, so they span the full width of the drawer across both panes. Here the rail holds design-system [`Sidebar.Item`](/components/navigation/sidebar/) navigation menu items, the main pane holds the selected item's content, the header keeps its full-width bottom border, and the footer keeps its full-width top border. Use this when the title, header actions, and footer action bar apply to the whole drawer rather than just the main pane.
 
 <DocsPage.ComponentExample
   client:only
@@ -305,7 +305,7 @@ This is a dual pane drawer with a full-width header and footer: `Drawer.HeaderV2
         </Drawer.Trigger>
 
         <Drawer.Content size="lg">
-          <Drawer.HeaderV2
+          <Drawer.Header
             title="Drawer Title"
             description="This placeholder text explains the action and provides additional context for user understanding and clarity."
             actions={
@@ -371,7 +371,7 @@ const menuItems = [
 
 <Drawer.Content size="lg">
   {/* Header and footer are siblings of Drawer.DualPane, so they span the full drawer width. */}
-  <Drawer.HeaderV2
+  <Drawer.Header
     title="Drawer Title"
     description="This placeholder text explains the action and provides additional context for user understanding and clarity."
     actions={

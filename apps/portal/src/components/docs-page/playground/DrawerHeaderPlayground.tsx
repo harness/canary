@@ -119,8 +119,8 @@ const DrawerHeaderPlayground: FC = () => {
 
   const controls: PropControl[] = [
     { name: "title", type: "text", required: true },
-    { name: "tagline", type: "text" },
-    { name: "description", type: "text" },
+    { name: "tagline", type: "text", description: "Empty hides the prop" },
+    { name: "description", type: "text", description: "Empty hides the prop" },
     {
       name: "icon",
       type: "select",

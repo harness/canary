@@ -1,4 +1,10 @@
-import { type FC, type ReactNode, useMemo, useState } from "react";
+import {
+  type ComponentProps,
+  type FC,
+  type ReactNode,
+  useMemo,
+  useState,
+} from "react";
 import {
   Button,
   ButtonLayout,
@@ -152,7 +158,10 @@ const DrawerHeaderPlayground: FC = () => {
     />
   );
 
-  const iconProp =
+  // Annotate with the header's own `icon` type so the sample string/logo literals
+  // are checked against it directly. Without it the `{ logo }` object literal
+  // widens to `{ logo: string }`, which isn't assignable to `{ logo: LogoV2NamesType }`.
+  const iconProp: ComponentProps<typeof Drawer.Header>["icon"] =
     state.icon === "icon"
       ? SAMPLE_ICON
       : state.icon === "logo"

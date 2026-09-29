@@ -322,7 +322,9 @@ export default {
 
         // No tagline and no description: the header is a single row, so vertically center
         // the title/icon with the actions + close cluster rather than top-aligning them.
-        '&:where(.cn-drawer-header-v2-main-centered)': {
+        // Compound class (not :where) so it outweighs the base `items-start` above —
+        // :where contributes 0 specificity, leaving both rules equal and the base winning.
+        '&.cn-drawer-header-v2-main-centered': {
           '@apply items-center': '',
 
           '& .cn-drawer-header-v2-actions': {

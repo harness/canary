@@ -7,6 +7,18 @@ import { DocsPage } from "@/components/docs-page";
 import { Tabs, TabItem } from "@astrojs/starlight/components";
 import PageTabsToc from "@/components/page-tabs-toc.astro";
 
+<style is:global>{`
+  /* Cap every code block on this page at 400px tall with an internal vertical scroll:
+     Expressive Code fenced blocks and the react-live "Show code" editor.
+     is:global so the rule reaches the react-live island (no scope hash); the style
+     still only loads on this page, so it stays scoped to the Drawer docs. */
+  .expressive-code pre,
+  .sl-markdown-content .example-expand .prism-code {
+    max-height: 400px !important;
+    overflow-y: auto !important;
+  }
+`}</style>
+
 <PageTabsToc />
 
 <div id="page-level-tabs">
@@ -176,78 +188,6 @@ Use `size="md"`, `size="lg"`, or `size="xl"` on `Drawer.Content` so the rail and
     </Drawer.DualPane>
   </Drawer.Content>
 </Drawer.Root>
-```
-
-## Substeps
-
-Nest `Drawer.SubStep` children inside a `Drawer.Step` to give that step its own sub-flow. Substeps stay hidden while their parent step is still upcoming and appear once it has been reached — driven by setting `Drawer.Steps`' `value` to the parent's value or to any of its substep values. They use simpler indicators — check mark for completed, filled dot for active, number for upcoming — and every substep of the reached step is navigable, so the user can move freely between them. Setting the rail's `value` to the parent step's own value activates that step's first substep.
-
-<DocsPage.ComponentExample
-  client:only
-  code={`() => {
-    const [open, setOpen] = React.useState(false);
-    const [currentStep, setCurrentStep] = React.useState('step2.2');
-
-    return (
-      <Drawer.Root open={open} onOpenChange={setOpen}>
-        <Drawer.Trigger>
-          <Button>Open dual pane drawer with substeps</Button>
-        </Drawer.Trigger>
-
-        <Drawer.Content size="md">
-          <Drawer.DualPane>
-            <Drawer.Steps
-              value={currentStep}
-              onValueChange={setCurrentStep}
-              title="Title"
-              aria-label="Workspace creation steps"
-            >
-              <Drawer.Step value="step1" title="Step 1" description="Description" />
-              <Drawer.Step value="step2" title="Step 2" description="Description">
-                <Drawer.SubStep value="step2.1" title="Step 2.1" />
-                <Drawer.SubStep value="step2.2" title="Step 2.2" />
-                <Drawer.SubStep value="step2.3" title="Step 2.3" />
-              </Drawer.Step>
-              <Drawer.Step value="step3" title="Step 3" description="Description" />
-            </Drawer.Steps>
-
-            <Drawer.DualPaneMain>
-              <Drawer.Header>
-                <Drawer.Title>{currentStep}</Drawer.Title>
-                <Drawer.Description>
-                  Click any step or substep you've already visited — even ones ahead of where you are now — to
-                  jump straight to it. Setting the rail's <code>value</code> to a substep automatically marks
-                  the parent step as active.
-                </Drawer.Description>
-              </Drawer.Header>
-
-              <Drawer.Body>
-                <p>Active value: <strong>{currentStep}</strong></p>
-              </Drawer.Body>
-            </Drawer.DualPaneMain>
-          </Drawer.DualPane>
-        </Drawer.Content>
-      </Drawer.Root>
-    );
-
-}`}
-/>
-
-```typescript jsx
-const [currentStep, setCurrentStep] = useState('step2.2');
-
-<Drawer.Steps value={currentStep} onValueChange={setCurrentStep} title="Title">
-  <Drawer.Step value="step1" title="Step 1" description="Description" />
-
-  {/* Drawer.Step accepts Drawer.SubStep children for sub-flows. */}
-  <Drawer.Step value="step2" title="Step 2" description="Description">
-    <Drawer.SubStep value="step2.1" title="Step 2.1" />
-    <Drawer.SubStep value="step2.2" title="Step 2.2" />
-    <Drawer.SubStep value="step2.3" title="Step 2.3" />
-  </Drawer.Step>
-
-  <Drawer.Step value="step3" title="Step 3" description="Description" />
-</Drawer.Steps>
 ```
 
 ## Reference content
@@ -734,6 +674,78 @@ You can override the right pane's floor by setting `--cn-drawer-dual-pane-main-m
 
 }`}
 />
+
+## Substeps
+
+Nest `Drawer.SubStep` children inside a `Drawer.Step` to give that step its own sub-flow. Substeps stay hidden while their parent step is still upcoming and appear once it has been reached — driven by setting `Drawer.Steps`' `value` to the parent's value or to any of its substep values. They use simpler indicators — check mark for completed, filled dot for active, number for upcoming — and every substep of the reached step is navigable, so the user can move freely between them. Setting the rail's `value` to the parent step's own value activates that step's first substep.
+
+<DocsPage.ComponentExample
+  client:only
+  code={`() => {
+    const [open, setOpen] = React.useState(false);
+    const [currentStep, setCurrentStep] = React.useState('step2.2');
+
+    return (
+      <Drawer.Root open={open} onOpenChange={setOpen}>
+        <Drawer.Trigger>
+          <Button>Open dual pane drawer with substeps</Button>
+        </Drawer.Trigger>
+
+        <Drawer.Content size="md">
+          <Drawer.DualPane>
+            <Drawer.Steps
+              value={currentStep}
+              onValueChange={setCurrentStep}
+              title="Title"
+              aria-label="Workspace creation steps"
+            >
+              <Drawer.Step value="step1" title="Step 1" description="Description" />
+              <Drawer.Step value="step2" title="Step 2" description="Description">
+                <Drawer.SubStep value="step2.1" title="Step 2.1" />
+                <Drawer.SubStep value="step2.2" title="Step 2.2" />
+                <Drawer.SubStep value="step2.3" title="Step 2.3" />
+              </Drawer.Step>
+              <Drawer.Step value="step3" title="Step 3" description="Description" />
+            </Drawer.Steps>
+
+            <Drawer.DualPaneMain>
+              <Drawer.Header>
+                <Drawer.Title>{currentStep}</Drawer.Title>
+                <Drawer.Description>
+                  Click any step or substep you've already visited — even ones ahead of where you are now — to
+                  jump straight to it. Setting the rail's <code>value</code> to a substep automatically marks
+                  the parent step as active.
+                </Drawer.Description>
+              </Drawer.Header>
+
+              <Drawer.Body>
+                <p>Active value: <strong>{currentStep}</strong></p>
+              </Drawer.Body>
+            </Drawer.DualPaneMain>
+          </Drawer.DualPane>
+        </Drawer.Content>
+      </Drawer.Root>
+    );
+
+}`}
+/>
+
+```typescript jsx
+const [currentStep, setCurrentStep] = useState('step2.2');
+
+<Drawer.Steps value={currentStep} onValueChange={setCurrentStep} title="Title">
+  <Drawer.Step value="step1" title="Step 1" description="Description" />
+
+  {/* Drawer.Step accepts Drawer.SubStep children for sub-flows. */}
+  <Drawer.Step value="step2" title="Step 2" description="Description">
+    <Drawer.SubStep value="step2.1" title="Step 2.1" />
+    <Drawer.SubStep value="step2.2" title="Step 2.2" />
+    <Drawer.SubStep value="step2.3" title="Step 2.3" />
+  </Drawer.Step>
+
+  <Drawer.Step value="step3" title="Step 3" description="Description" />
+</Drawer.Steps>
+```
 
 </TabItem>
 

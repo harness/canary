@@ -7,6 +7,18 @@ import { DocsPage } from "@/components/docs-page";
 import { Tabs, TabItem } from "@astrojs/starlight/components";
 import PageTabsToc from "@/components/page-tabs-toc.astro";
 
+<style is:global>{`
+  /* Cap every code block on this page at 400px tall with an internal vertical scroll:
+     Expressive Code fenced blocks and the react-live "Show code" editor.
+     is:global so the rule reaches the react-live island (no scope hash); the style
+     still only loads on this page, so it stays scoped to the Drawer docs. */
+  .expressive-code pre,
+  .sl-markdown-content .example-expand .prism-code {
+    max-height: 400px !important;
+    overflow-y: auto !important;
+  }
+`}</style>
+
 <PageTabsToc />
 
 <div id="page-level-tabs">

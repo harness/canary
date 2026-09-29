@@ -3,6 +3,12 @@ import { ThreadListItemState } from './thread'
 
 export interface StreamAdapter {
   stream(request: StreamRequest): AsyncIterable<StreamChunk>
+  /**
+   * Optional server-side cancel for an in-flight conversation. Invoked by
+   * `cancelRun` before the local AbortController fires, so the UI can stay
+   * in a running/stop state until the backend acknowledges cancel.
+   */
+  cancel?(conversationId: string): Promise<void>
 }
 
 export type StreamEvent =

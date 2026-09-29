@@ -45,8 +45,22 @@ function makeControllableAdapter() {
       }
       runs.push(run)
 
-      // Block until the test explicitly releases this run.
-      await released
+      const aborted = new Promise<never>((_, reject) => {
+        const signal = request.signal
+        if (!signal) return
+        const onAbort = () => {
+          const err = new Error('Aborted')
+          err.name = 'AbortError'
+          reject(err)
+        }
+        if (signal.aborted) {
+          onAbort()
+          return
+        }
+        signal.addEventListener('abort', onAbort, { once: true })
+      })
+
+      await Promise.race([released, aborted])
 
       // Emit a single metadata event so the run actually produces
       // something observable in the core's message list.
@@ -268,7 +282,7 @@ describe('ThreadRuntime background tasks', () => {
     expect(core.isRunning).toBe(false)
   })
 
-  it('cancelRun cancels background tasks and invokes their onCancel callbacks', () => {
+  it('cancelRun cancels background tasks and invokes their onCancel callbacks', async () => {
     const { adapter } = makeControllableAdapter()
     const core = new ThreadRuntimeCore({ streamAdapter: adapter })
     const runtime = new ThreadRuntime(core)
@@ -278,6 +292,7 @@ describe('ThreadRuntime background tasks', () => {
     expect(runtime.isRunning).toBe(true)
 
     runtime.cancelRun()
+    await Promise.resolve()
 
     expect(onCancel).toHaveBeenCalledTimes(1)
     expect(runtime.isRunning).toBe(false)
@@ -300,11 +315,139 @@ describe('ThreadRuntime background tasks', () => {
     runtime.startBackgroundTask({ onCancel })
 
     runtime.cancelRun()
+    await Promise.resolve()
     runs[0].release()
     await runPromise
 
     expect(onCancel).toHaveBeenCalledTimes(1)
     expect(core.isRunning).toBe(false)
+  })
+
+  it('awaits streamAdapter.cancel before aborting, keeping isRunning true meanwhile', async () => {
+    let releaseCancel!: () => void
+    const cancelCalled = jest.fn()
+    const { adapter, runs } = makeControllableAdapter()
+    adapter.cancel = async (conversationId: string) => {
+      cancelCalled(conversationId)
+      await new Promise<void>(resolve => {
+        releaseCancel = resolve
+      })
+    }
+
+    const core = new ThreadRuntimeCore({ streamAdapter: adapter })
+    core.setConversationId('conv-cancel')
+    const runtime = new ThreadRuntime(core)
+
+    const runPromise = runtime.sendSystemEvent({
+      event_type: 'action_completed',
+      capability_id: 'cap-run'
+    })
+    await Promise.resolve()
+    await Promise.resolve()
+    expect(runs).toHaveLength(1)
+
+    runtime.cancelRun()
+    await Promise.resolve()
+
+    expect(cancelCalled).toHaveBeenCalledWith('conv-cancel')
+    expect(core.isRunning).toBe(true)
+
+    releaseCancel()
+    await Promise.resolve()
+    await Promise.resolve()
+    runs[0].release()
+    await runPromise
+
+    expect(core.isRunning).toBe(false)
+  })
+
+  it('does not abort a follow-on run that started while server cancel was in flight', async () => {
+    let releaseCancel!: () => void
+    const { adapter, runs } = makeControllableAdapter()
+    adapter.cancel = async () => {
+      await new Promise<void>(resolve => {
+        releaseCancel = resolve
+      })
+    }
+
+    const core = new ThreadRuntimeCore({ streamAdapter: adapter })
+    core.setConversationId('conv-cancel')
+    const runtime = new ThreadRuntime(core)
+
+    const firstRun = runtime.sendSystemEvent({
+      event_type: 'action_completed',
+      capability_id: 'cap-first'
+    })
+    await Promise.resolve()
+    await Promise.resolve()
+
+    runtime.cancelRun()
+    await Promise.resolve()
+
+    // Server cancel ended the original stream without a local abort.
+    runs[0].release()
+    await firstRun
+
+    const secondRun = runtime.sendSystemEvent({
+      event_type: 'action_completed',
+      capability_id: 'cap-second'
+    })
+    await Promise.resolve()
+    await Promise.resolve()
+    expect(runs).toHaveLength(2)
+    expect(core.isRunning).toBe(true)
+
+    releaseCancel()
+    await Promise.resolve()
+    await Promise.resolve()
+
+    expect(core.isRunning).toBe(true)
+    runs[1].release()
+    await secondRun
+    expect(core.isRunning).toBe(false)
+  })
+
+  it('still aborts when streamAdapter.cancel rejects', async () => {
+    const { adapter, runs } = makeControllableAdapter()
+    adapter.cancel = async () => {
+      throw new Error('cancel failed')
+    }
+
+    const core = new ThreadRuntimeCore({ streamAdapter: adapter })
+    core.setConversationId('conv-cancel')
+    const runtime = new ThreadRuntime(core)
+
+    const runPromise = runtime.sendSystemEvent({
+      event_type: 'action_completed',
+      capability_id: 'cap-run'
+    })
+    await Promise.resolve()
+    await Promise.resolve()
+
+    runtime.cancelRun()
+    await Promise.resolve()
+    await Promise.resolve()
+    runs[0].release()
+    await runPromise
+
+    expect(core.isRunning).toBe(false)
+  })
+
+  it('skips streamAdapter.cancel for temporary conversation ids', async () => {
+    const cancelCalled = jest.fn()
+    const { adapter } = makeControllableAdapter()
+    adapter.cancel = cancelCalled
+
+    const core = new ThreadRuntimeCore({ streamAdapter: adapter })
+    core.setConversationId('temp-123')
+    const runtime = new ThreadRuntime(core)
+
+    runtime.startBackgroundTask()
+    runtime.cancelRun()
+    await Promise.resolve()
+
+    expect(cancelCalled).not.toHaveBeenCalled()
+    expect(runtime.isRunning).toBe(false)
   })
 
   it('waitForIdle is not blocked by background tasks (only by stream runs)', async () => {

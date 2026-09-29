@@ -378,7 +378,7 @@ Public API wrapping `ThreadRuntimeCore`:
 | `send(text)` | Appends user message and starts a streaming run |
 | `sendSystemEvent(event)` | Starts a system event run (no user message appended) |
 | `append(message)` | Appends a message directly (no streaming) |
-| `cancelRun()` | Aborts the current stream via `AbortController` |
+| `cancelRun()` | Calls optional `streamAdapter.cancel`, then aborts the stream via `AbortController` |
 | `clear()` | Empties all messages |
 | `reset(messages?)` | Replaces messages with a provided list |
 | `setConversationId(id)` | Updates the tracked conversation ID |

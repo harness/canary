@@ -287,6 +287,21 @@ Always `client:only` — it's interactive.
    resolve without portaling into an overlay). If the component changes, the
    playground stays honest.
 
+7. **Document "empty hides the prop" via the control's caption.** Optional text
+   controls that map an empty string to *omitting* the prop (e.g. `tagline`,
+   `description` on `Drawer.Header` — passed as `state.tagline || undefined`) aren't
+   self-explanatory: a reader can't tell whether blank means "empty string" or "not
+   rendered." Put that in the control's `description`, which `ControlField` renders as
+   the field caption:
+
+   ```tsx
+   { name: "tagline", type: "text", description: "Empty hides the prop" },
+   { name: "description", type: "text", description: "Empty hides the prop" },
+   ```
+
+   Keep the caption and the render logic in sync — if the code coerces empty → `undefined`,
+   the caption must say so; if empty is passed through literally, don't claim it hides.
+
 ---
 
 ## Verifying a new playground

@@ -285,6 +285,10 @@ Content passed as `children` in the structured mode renders as a slot above the 
 
 Reach for `Drawer.HeaderV2` by default — its richer prop set handles the most use cases. Fall back to the compositional `Drawer.Header` pattern (`Drawer.Header` > `Drawer.Title` > `Drawer.Description`) only for simple, one-off headers.
 
+### Don't number a title that has an icon
+
+Don't combine an icon or logo with a number in the title — for example, avoid `[icon/logo] 1. Step description`. Pick one leading element: an icon or logo for identity, or a number for sequence, but not both.
+
 ### Footer button placement
 
 When you have two actions, a primary and a secondary, default to **two buttons on the right** (`secondaryButton` + `primaryButton`). The left `tertiaryButton` slot is reserved for a **backward action** (e.g. a "Back" button in a multi-step flow) — or for a **cancel/close**, but only when the `secondaryButton` position isn't already a cancel/close. Pass a ghost-variant button (`<Button variant="ghost">`) here so it reads as the lowest-emphasis action.

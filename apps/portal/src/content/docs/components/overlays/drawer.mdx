@@ -1261,37 +1261,23 @@ Use `Drawer.Rail` when the rail holds reference material that the user scans whi
 
 ### Full-width header and footer
 
-This is the same dual pane drawer as above — a navigable `Drawer.Steps` rail, per-step content in the main pane, and the Back / Continue / Finish footer flow — with one layout change: `Drawer.HeaderV2` and `Drawer.Footer` are direct children of `Drawer.Content` (siblings of `Drawer.DualPane`) instead of nested inside `Drawer.DualPaneMain`, so the header and footer span the full width of the drawer across both panes. The rail and main pane fill the band between them, the header keeps its full-width bottom border, and the footer keeps its full-width top border. Use this when the title, header actions, and footer action bar apply to the whole drawer rather than just the main pane. All step navigation (clicking a visited step, Back, Continue, Skip to end, Finish) behaves exactly as it does in the standard dual pane drawer.
+This is a dual pane drawer with a full-width header and footer: `Drawer.HeaderV2` and `Drawer.Footer` are direct children of `Drawer.Content` (siblings of `Drawer.DualPane`) instead of nested inside `Drawer.DualPaneMain`, so they span the full width of the drawer across both panes. Here the rail holds sidebar-style navigation menu items, the main pane holds the selected item's content, the header keeps its full-width bottom border, and the footer keeps its full-width top border. Use this when the title, header actions, and footer action bar apply to the whole drawer rather than just the main pane.
 
 <DocsPage.ComponentExample
   client:only
   code={`() => {
     const [open, setOpen] = React.useState(false);
-    const [currentStep, setCurrentStep] = React.useState('details');
+    const [active, setActive] = React.useState('dashboard');
 
-    const steps = [
-      { value: 'details', title: 'Step Title', description: 'Description' },
-      { value: 'configuration', title: 'Step Title', description: 'Description' },
-      { value: 'permissions', title: 'Step Title', description: 'Description' },
-      { value: 'review', title: 'Step Title', description: 'Description' },
+    // Placeholder sidebar-navigation menu items rendered in the rail.
+    const menuItems = [
+      { value: 'dashboard', label: 'Dashboard', icon: 'dashboard-solid' },
+      { value: 'projects', label: 'Projects', icon: 'folder-solid' },
+      { value: 'members', label: 'Members', icon: 'account-solid' },
+      { value: 'reports', label: 'Reports', icon: 'area-chart' },
+      { value: 'schedule', label: 'Schedule', icon: 'calendar-check' },
+      { value: 'settings', label: 'Settings', icon: 'settings-solid' },
     ];
-
-    const currentIndex = steps.findIndex((step) => step.value === currentStep);
-    const isLastStep = currentIndex === steps.length - 1;
-
-    const goNext = () => {
-      if (currentIndex < steps.length - 1) {
-        setCurrentStep(steps[currentIndex + 1].value);
-      }
-    };
-
-    const goBack = () => {
-      if (currentIndex > 0) {
-        setCurrentStep(steps[currentIndex - 1].value);
-      }
-    };
-
-    const goToEnd = () => setCurrentStep(steps[steps.length - 1].value);
 
     return (
       <Drawer.Root open={open} onOpenChange={setOpen}>
@@ -1301,7 +1287,6 @@ This is the same dual pane drawer as above — a navigable `Drawer.Steps` rail, 
 
         <Drawer.Content size="lg">
           <Drawer.HeaderV2
-            tagline={(currentIndex + 1) + ' out of ' + steps.length + ' steps'}
             title="Drawer Title"
             description="This placeholder text explains the action and provides additional context for user understanding and clarity."
             actions={
@@ -1312,16 +1297,21 @@ This is the same dual pane drawer as above — a navigable `Drawer.Steps` rail, 
           />
 
           <Drawer.DualPane>
-            <Drawer.Steps value={currentStep} onValueChange={setCurrentStep} title="Title">
-              {steps.map((step) => (
-                <Drawer.Step
-                  key={step.value}
-                  value={step.value}
-                  title={step.title}
-                  description={step.description}
-                />
-              ))}
-            </Drawer.Steps>
+            <Drawer.Rail aria-label="Navigation">
+              <nav className="flex flex-col gap-cn-3xs">
+                {menuItems.map((item) => (
+                  <Button
+                    key={item.value}
+                    variant="ghost"
+                    onClick={() => setActive(item.value)}
+                    className={'w-full justify-start gap-cn-xs ' + (active === item.value ? 'bg-cn-selected text-cn-1' : 'text-cn-2')}
+                  >
+                    <IconV2 name={item.icon} />
+                    {item.label}
+                  </Button>
+                ))}
+              </nav>
+            </Drawer.Rail>
 
             <Drawer.DualPaneMain>
               <Drawer.Body>
@@ -1333,33 +1323,9 @@ This is the same dual pane drawer as above — a navigable `Drawer.Steps` rail, 
           </Drawer.DualPane>
 
           <Drawer.Footer
-            tertiaryButton={
-              currentIndex > 0 ? (
-                <Button variant="ghost" onClick={goBack}>
-                  <IconV2 name="arrow-left" />
-                  Back
-                </Button>
-              ) : (
-                <Drawer.Close asChild>
-                  <Button variant="ghost">Cancel</Button>
-                </Drawer.Close>
-              )
-            }
-            secondaryButton={
-              !isLastStep ? (
-                <Button variant="outline" onClick={goToEnd}>Skip to end</Button>
-              ) : undefined
-            }
-            primaryButton={
-              !isLastStep ? (
-                <Button onClick={goNext}>
-                  Continue
-                  <IconV2 name="arrow-right" />
-                </Button>
-              ) : (
-                <Button>Finish</Button>
-              )
-            }
+            tertiaryButton={<Button variant="ghost">Ghost</Button>}
+            secondaryButton={<Button variant="outline">Outline</Button>}
+            primaryButton={<Button>Primary</Button>}
           />
         </Drawer.Content>
       </Drawer.Root>
@@ -1369,10 +1335,18 @@ This is the same dual pane drawer as above — a navigable `Drawer.Steps` rail, 
 />
 
 ```typescript jsx
+const menuItems = [
+  { value: 'dashboard', label: 'Dashboard', icon: 'dashboard-solid' },
+  { value: 'projects', label: 'Projects', icon: 'folder-solid' },
+  { value: 'members', label: 'Members', icon: 'account-solid' },
+  { value: 'reports', label: 'Reports', icon: 'area-chart' },
+  { value: 'schedule', label: 'Schedule', icon: 'calendar-check' },
+  { value: 'settings', label: 'Settings', icon: 'settings-solid' },
+]
+
 <Drawer.Content size="lg">
   {/* Header and footer are siblings of Drawer.DualPane, so they span the full drawer width. */}
   <Drawer.HeaderV2
-    tagline={`${currentIndex + 1} out of ${steps.length} steps`}
     title="Drawer Title"
     description="This placeholder text explains the action and provides additional context for user understanding and clarity."
     actions={
@@ -1383,12 +1357,22 @@ This is the same dual pane drawer as above — a navigable `Drawer.Steps` rail, 
   />
 
   <Drawer.DualPane>
-    <Drawer.Steps value={currentStep} onValueChange={setCurrentStep} title="Title">
-      <Drawer.Step value="details" title="Step Title" description="Description" />
-      <Drawer.Step value="configuration" title="Step Title" description="Description" />
-      <Drawer.Step value="permissions" title="Step Title" description="Description" />
-      <Drawer.Step value="review" title="Step Title" description="Description" />
-    </Drawer.Steps>
+    {/* Sidebar-style navigation menu items live in the rail. */}
+    <Drawer.Rail aria-label="Navigation">
+      <nav className="flex flex-col gap-cn-3xs">
+        {menuItems.map((item) => (
+          <Button
+            key={item.value}
+            variant="ghost"
+            onClick={() => setActive(item.value)}
+            className={`w-full justify-start gap-cn-xs ${active === item.value ? 'bg-cn-selected text-cn-1' : 'text-cn-2'}`}
+          >
+            <IconV2 name={item.icon} />
+            {item.label}
+          </Button>
+        ))}
+      </nav>
+    </Drawer.Rail>
 
     <Drawer.DualPaneMain>
       <Drawer.Body>
@@ -1400,27 +1384,9 @@ This is the same dual pane drawer as above — a navigable `Drawer.Steps` rail, 
   </Drawer.DualPane>
 
   <Drawer.Footer
-    tertiaryButton={
-      currentIndex > 0 ? (
-        <Button variant="ghost" onClick={goBack}>
-          <IconV2 name="arrow-left" />
-          Back
-        </Button>
-      ) : (
-        <Drawer.Close asChild>
-          <Button variant="ghost">Cancel</Button>
-        </Drawer.Close>
-      )
-    }
-    secondaryButton={!isLastStep ? <Button variant="outline" onClick={goToEnd}>Skip to end</Button> : undefined}
-    primaryButton={
-      isLastStep ? <Button>Finish</Button> : (
-        <Button onClick={goNext}>
-          Continue
-          <IconV2 name="arrow-right" />
-        </Button>
-      )
-    }
+    tertiaryButton={<Button variant="ghost">Ghost</Button>}
+    secondaryButton={<Button variant="outline">Outline</Button>}
+    primaryButton={<Button>Primary</Button>}
   />
 </Drawer.Content>
 ```

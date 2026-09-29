@@ -1300,7 +1300,7 @@ This is a dual pane drawer with a full-width header and footer: `Drawer.HeaderV2
             <Drawer.Rail aria-label="Navigation">
               {/* Genuine design-system sidebar menu items; pt-[20px] keeps them off the header. */}
               <Sidebar.Provider className="pt-[20px]">
-                <Sidebar.Group className="content-start">
+                <Sidebar.Group className="content-start w-full py-0">
                   {menuItems.map((item) => (
                     <Sidebar.Item
                       key={item.value}

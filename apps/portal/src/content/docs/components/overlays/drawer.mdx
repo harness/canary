@@ -1231,7 +1231,7 @@ A scrollable wrapper for all content that doesn’t belong to the [`Drawer.Heade
 
 ### `Footer`
 
-An optional footer wrapper. Supports two layouts: pass any of the structured button props below to render the standardized action bar (`tertiaryButton` far-left, `secondaryButton` + `primaryButton` right-aligned), or pass `children` only to use the legacy compositional layout. See [Structured footer](#structured-footer-props-api).
+An optional footer wrapper. Supports two layouts: pass any of the structured button props below to render the standardized action bar (`tertiaryButton` far-left, `secondaryButton` + `primaryButton` right-aligned), or pass `children` only to use the legacy compositional layout. See [Headers & Footers](/components/overlays/drawer/header-v2/#footers).
 
 <DocsPage.PropsTable
   props={[
@@ -1264,6 +1264,14 @@ An optional footer wrapper. Supports two layouts: pass any of the structured but
         "Legacy compositional content (e.g. ButtonLayout). In structured mode, renders as a slot above the action bar.",
       required: false,
       value: "ReactNode",
+      defaultValue: "undefined",
+    },
+    {
+      name: "className",
+      description: "Class to apply to the footer wrapper.",
+      required: false,
+      value: "string",
+      defaultValue: "undefined",
     },
   ]}
 />

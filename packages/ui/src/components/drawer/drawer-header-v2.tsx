@@ -109,6 +109,7 @@ export const DrawerHeaderV2 = forwardRef<HTMLDivElement, DrawerHeaderV2Props>(
             'cn-drawer-header-v2-main-centered': centerContent
           })}
         >
+
           <Layout.Vertical gap="4xs" className="cn-drawer-header-v2-title-group min-w-0">
             {tagline ? <DrawerTagline>{tagline}</DrawerTagline> : null}
             <Layout.Horizontal gap="2xs" align="center" className="min-w-0">

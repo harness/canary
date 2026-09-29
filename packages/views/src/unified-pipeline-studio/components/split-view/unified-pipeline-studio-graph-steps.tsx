@@ -1,7 +1,5 @@
 import { useEffect, useMemo, useState } from 'react'
 
-import { parse } from 'yaml'
-
 import { AnyContainerNodeType, CanvasProvider, PipelineGraph } from '@harnessio/pipeline-graph'
 
 import { CanvasControls } from '../graph-implementation/canvas/canvas-controls'
@@ -9,6 +7,7 @@ import { processSteps } from '../graph-implementation/utils/yaml-to-pipeline-gra
 
 import '@harnessio/pipeline-graph/dist/index.css'
 
+import { parseYamlSafe } from '@harnessio/yaml-editor'
 import { get } from 'lodash-es'
 
 import { useUnifiedPipelineStudioContext } from '../../context/unified-pipeline-studio-context'
@@ -23,7 +22,12 @@ export const PipelineStudioGraphViewSteps = ({ data: _data }: { data: AnyContain
 
   useEffect(() => {
     if (selectedPath?.stages) {
-      const yamlJson = parse(yamlRevision.yaml)
+      const { yamlObject: yamlJson, isYamlSyntaxValid } = parseYamlSafe<Record<string, any>>(yamlRevision.yaml)
+
+      if (!isYamlSyntaxValid) {
+        return
+      }
+
       const stage = get(yamlJson, selectedPath.stages)
 
       const newData = processSteps(stage.steps, selectedPath.stages + '.steps', yamlParserOptions ?? {})

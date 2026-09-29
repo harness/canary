@@ -1,7 +1,6 @@
 import { ElementType, Fragment, useEffect, useState } from 'react'
 
 import { get } from 'lodash-es'
-import { parse } from 'yaml'
 
 import {
   getTransformers,
@@ -12,6 +11,7 @@ import {
   useZodValidationResolver
 } from '@harnessio/forms'
 import { Button, ButtonLayout, Drawer, EntityFormLayout, IconV2 } from '@harnessio/ui/components'
+import { parseYamlSafe } from '@harnessio/yaml-editor'
 
 import { useUnifiedPipelineStudioContext } from '../../context/unified-pipeline-studio-context'
 import { basicStageFormDefinition } from './form-definition/stage-form-definition'
@@ -69,7 +69,12 @@ export const UnifiedPipelineStudioStageConfigForm = (props: UnifiedPipelineStudi
 
   useEffect(() => {
     if (editStageIntention) {
-      const yamlJson = parse(yamlRevision.yaml)
+      const { yamlObject: yamlJson, isYamlSyntaxValid } = parseYamlSafe<Record<string, any>>(yamlRevision.yaml)
+
+      if (!isYamlSyntaxValid) {
+        return
+      }
+
       const step = get(yamlJson, editStageIntention.path)
 
       const transformers = getTransformers(stageFormDefinition ?? { inputs: [] })

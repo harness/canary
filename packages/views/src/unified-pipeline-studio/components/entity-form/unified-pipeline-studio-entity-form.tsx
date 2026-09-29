@@ -3,7 +3,6 @@ import { useEffect, useMemo, useState } from 'react'
 import { useUnifiedPipelineStudioContext } from '@views/unified-pipeline-studio/context/unified-pipeline-studio-context'
 import { addNameInput } from '@views/unified-pipeline-studio/utils/entity-form-utils'
 import { get, isEmpty, isUndefined, omit, omitBy } from 'lodash-es'
-import { parse } from 'yaml'
 
 import {
   getTransformers,
@@ -15,6 +14,7 @@ import {
   useZodValidationResolver
 } from '@harnessio/forms'
 import { Button, ButtonLayout, Drawer, IconV2, Skeleton, Text } from '@harnessio/ui/components'
+import { parseYamlSafe } from '@harnessio/yaml-editor'
 
 import { getHarnessSteOrGroupIdentifier, getHarnessStepOrGroupDefinition, isHarnessGroup } from '../steps/harness-steps'
 import { TEMPLATE_CD_STEP_IDENTIFIER, TEMPLATE_CI_STEP_IDENTIFIER } from '../steps/types'
@@ -47,7 +47,12 @@ export const UnifiedPipelineStudioEntityForm = (props: UnifiedPipelineStudioEnti
 
   useEffect(() => {
     if (editStepIntention) {
-      const yamlJson = parse(yamlRevision.yaml)
+      const { yamlObject: yamlJson, isYamlSyntaxValid } = parseYamlSafe<Record<string, any>>(yamlRevision.yaml)
+
+      if (!isYamlSyntaxValid) {
+        return
+      }
+
       const step = get(yamlJson, editStepIntention.path)
 
       const harnessStepIdentifier = getHarnessSteOrGroupIdentifier(step)

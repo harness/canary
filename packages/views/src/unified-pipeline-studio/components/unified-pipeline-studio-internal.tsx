@@ -1,8 +1,7 @@
 import { useEffect, useState } from 'react'
 
-import { parse } from 'yaml'
-
 import { AnyContainerNodeType } from '@harnessio/pipeline-graph'
+import { parseYamlSafe } from '@harnessio/yaml-editor'
 
 import { useUnifiedPipelineStudioContext } from '../context/unified-pipeline-studio-context'
 import { UnifiedPipelineStudioNodeContextProvider } from './graph-implementation/context/UnifiedPipelineStudioNodeContext'
@@ -31,8 +30,13 @@ export default function PipelineStudioView() {
   }, [])
 
   useEffect(() => {
-    const yamlJson = parse(yamlRevision.yaml)
-    const newData = yaml2Nodes(yamlJson, yamlParserOptions)
+    const { yamlObject: yamlJson, isYamlSyntaxValid } = parseYamlSafe<Record<string, any>>(yamlRevision.yaml)
+
+    if (!isYamlSyntaxValid) {
+      return
+    }
+
+    const newData = yaml2Nodes(yamlJson ?? {}, yamlParserOptions)
 
     if (newData.length === 0) {
       newData.push({

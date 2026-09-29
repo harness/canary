@@ -2,7 +2,6 @@ import { ElementType, Fragment, useEffect, useState } from 'react'
 
 import { Button, ButtonLayout, Drawer, EntityFormLayout } from '@harnessio/ui/components'
 import { get } from 'lodash-es'
-import { parse } from 'yaml'
 
 import {
   getTransformers,
@@ -12,6 +11,7 @@ import {
   RootForm,
   useZodValidationResolver
 } from '@harnessio/forms'
+import { parseYamlSafe } from '@harnessio/yaml-editor'
 
 import { useUnifiedPipelineStudioContext } from '../../context/unified-pipeline-studio-context'
 import { basicPipelineFormDefinition } from './form-definition/pipeline-form-definition'
@@ -67,7 +67,12 @@ export const UnifiedPipelineStudioPipelineConfigForm = (props: UnifiedPipelineSt
 
   useEffect(() => {
     if (editPipelineIntention) {
-      const yamlJson = parse(yamlRevision.yaml)
+      const { yamlObject: yamlJson, isYamlSyntaxValid } = parseYamlSafe<Record<string, any>>(yamlRevision.yaml)
+
+      if (!isYamlSyntaxValid) {
+        return
+      }
+
       const pipeline = get(yamlJson, editPipelineIntention.path)
 
       const transformers = getTransformers(pipelineFormDefinition ?? { inputs: [] })

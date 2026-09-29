@@ -178,8 +178,27 @@ const DrawerHeaderPlayground: FC = () => {
             beside the controls. The bordered panel stands in for Drawer.Content. */}
         <div className="bg-cn-2 flex justify-center p-cn-3xl">
           <Drawer.Root open modal={false} onOpenChange={() => {}}>
-            <div className="bg-cn-1 w-full max-w-[520px] overflow-hidden rounded-cn-6 border">
+            {/* Stands in for Drawer.Content — matches the drawer panel's radius,
+                border and shadow, and shows a short, clipped peek of the body
+                below the header so the header reads as the top of a real drawer
+                rather than a floating card. */}
+            <div className="bg-cn-1 shadow-cn-5 flex w-full max-w-[520px] flex-col overflow-hidden rounded-cn-4 border">
               {preview}
+              {/* Body peek: real Drawer.Body for authentic padding and the
+                  bottom fade, capped to a short fixed height and clipped so the
+                  content visibly continues past the fold. Placeholder bars stand
+                  in for whatever content the drawer would hold. */}
+              <Drawer.Body
+                scrollable={false}
+                className="cn-drawer-body-wrap-top !h-[140px] !flex-none"
+              >
+                <div className="flex flex-col gap-cn-sm" aria-hidden>
+                  <div className="bg-cn-gray-secondary h-2 w-11/12 rounded" />
+                  <div className="bg-cn-gray-secondary h-2 w-full rounded" />
+                  <div className="bg-cn-gray-secondary h-2 w-4/5 rounded" />
+                  <div className="bg-cn-gray-secondary h-2 w-2/3 rounded" />
+                </div>
+              </Drawer.Body>
             </div>
           </Drawer.Root>
         </div>

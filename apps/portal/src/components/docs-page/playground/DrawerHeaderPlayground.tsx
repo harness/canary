@@ -127,6 +127,20 @@ const DrawerHeaderPlayground: FC = () => {
     },
   ];
 
+  // Split so the boolean toggles hard-break onto their own row(s) instead of
+  // flowing inline after the input-type (text/select) controls.
+  const inputControls = controls.filter((c) => c.type !== "boolean");
+  const booleanControls = controls.filter((c) => c.type === "boolean");
+
+  const renderControl = (prop: PropControl) => (
+    <ControlField
+      key={prop.name}
+      prop={prop}
+      value={state[prop.name as keyof State]}
+      onChange={(v) => set(prop.name as keyof State, v as never)}
+    />
+  );
+
   const iconProp =
     state.icon === "icon"
       ? SAMPLE_ICON
@@ -217,17 +231,17 @@ const DrawerHeaderPlayground: FC = () => {
           </Drawer.Root>
         </div>
 
-        {/* bg-cn-1 (not cn-2): the DS Input fills with bg-cn-2, so it needs a
-            cn-1 surface underneath to read as a field rather than a faint outline. */}
+        {/* Input-type controls (text + select). bg-cn-1 (not cn-2): the DS inputs
+            fill with bg-cn-2, so they need a cn-1 surface underneath to read as
+            fields rather than faint outlines. */}
         <div className="bg-cn-1 grid grid-cols-3 gap-cn-lg border-t p-cn-md">
-          {controls.map((prop) => (
-            <ControlField
-              key={prop.name}
-              prop={prop}
-              value={state[prop.name as keyof State]}
-              onChange={(v) => set(prop.name as keyof State, v as never)}
-            />
-          ))}
+          {inputControls.map(renderControl)}
+        </div>
+
+        {/* Hard break: boolean toggles start on their own row(s), separated from
+            the input-type controls by a divider instead of flowing inline. */}
+        <div className="bg-cn-1 grid grid-cols-3 gap-cn-lg border-t p-cn-md">
+          {booleanControls.map(renderControl)}
         </div>
 
         <details className="example-expand bg-cn-2 relative border-t p-cn-sm">

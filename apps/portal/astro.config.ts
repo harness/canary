@@ -244,7 +244,7 @@ export default defineConfig({
                 },
                 {
                   slug: "components/overlays/drawer/header-v2",
-                  label: "HeaderV2",
+                  label: "Headers & Footers",
                 },
                 {
                   slug: "components/overlays/drawer/dual-pane",

@@ -1,6 +1,6 @@
 ---
-title: HeaderV2
-description: Structured, opinionated drawer header with icon, title, actions, metadata, and tabs
+title: Headers & Footers
+description: Structured, opinionated drawer header and footer with a props-based layout
 ---
 
 import { DocsPage } from "@/components/docs-page";
@@ -27,9 +27,13 @@ import PageTabsToc from "@/components/page-tabs-toc.astro";
 
 <TabItem label="Overview">
 
-`Drawer.HeaderV2` is a structured, opinionated header that consolidates icon/logo, title, description, actions, metadata (children), and tabs into a single component. It replaces the compositional pattern of `Drawer.Header` > `Drawer.Title` > `Drawer.Description` when you want a standardized layout with optional loading state.
+## Structured header (props API)
 
-## Basic
+`Drawer.Header` accepts a structured, opinionated set of props that consolidate tagline/breadcrumb, icon/logo, title, description, actions, metadata (children), and tabs into a single standardized layout with optional loading state. Pass a `title` prop to opt into this layout; pass children (`Drawer.Title`, `Drawer.Tagline`, `Drawer.Description`) to use the legacy compositional layout instead. Both are supported on the same component so existing usage keeps working.
+
+> **Deprecated:** `Drawer.HeaderV2` is now an alias of `Drawer.Header` with these props. Prefer `Drawer.Header` for new usage.
+
+### Basic
 
 <DocsPage.ComponentExample
   client:only
@@ -66,7 +70,7 @@ import PageTabsToc from "@/components/page-tabs-toc.astro";
 `}
 />
 
-## With logo, actions, and metadata
+### With logo, actions, and metadata
 
 <DocsPage.ComponentExample
   client:only
@@ -106,7 +110,7 @@ import PageTabsToc from "@/components/page-tabs-toc.astro";
 `}
 />
 
-## With tabs
+### With tabs
 
 Wrap the drawer content in a `Tabs.Root` to enable tab switching. `Drawer.HeaderV2` renders the tab strip at the bottom of the header when `tabs` is provided.
 
@@ -123,8 +127,9 @@ Wrap the drawer content in a `Tabs.Root` to enable tab switching. `Drawer.Header
 
         <Drawer.Content size="md">
           <Tabs.Root value={tab} onValueChange={setTab}>
-            <Drawer.HeaderV2
+            <Drawer.Header
               title="Build #1234"
+              tagline="Pipelines / main"
               description="Triggered by push to main"
               icon="pipeline"
               tabs={[
@@ -154,7 +159,7 @@ Wrap the drawer content in a `Tabs.Root` to enable tab switching. `Drawer.Header
 }`}
 />
 
-## Loading state
+### Loading state
 
 When `isLoading` is true, actions are hidden and the children (metadata) slot renders a skeleton placeholder.
 
@@ -185,6 +190,95 @@ When `isLoading` is true, actions are hidden and the children (metadata) slot re
 `}
 />
 
+## Structured footer (props API)
+
+`Drawer.Footer` accepts a structured, opinionated set of props that standardize the footer's action bar: a `tertiaryButton` pinned to the far left, plus `secondaryButton` and `primaryButton` right-aligned. Every button is optional and takes a `ReactNode`, so you keep full control over each button (wrap it in `Drawer.Close`, set `loading`, `disabled`, `iconOnly`, etc.) while the layout and spacing stay consistent across every drawer. Pass any of `primaryButton` / `secondaryButton` / `tertiaryButton` to opt into this layout; pass children only (e.g. `ButtonLayout`) to use the legacy compositional layout instead. Both are supported on the same component so existing usage keeps working.
+
+Content passed as `children` in the structured mode renders as a slot above the action bar.
+
+**Button placement rule.** When you have two actions, a primary and a secondary, default to **two buttons on the right** (`secondaryButton` + `primaryButton`). The left `tertiaryButton` slot is reserved for a **backward action** (e.g. a "Back" button in a multi-step flow) — or for a **cancel/close**, but only when the `secondaryButton` position isn't already a cancel/close. Pass a ghost-variant button (`<Button variant="ghost">`) here so it reads as the lowest-emphasis action. In other words, never place a cancel/close in both the left slot and the secondary slot: if the secondary action is a cancel/close, leave the left slot empty; if it isn't, the left slot may hold the cancel/close (or a back action). The [dual pane wizard](/components/overlays/drawer/#dual-pane-drawer) shows this — a ghost "Back" sits in the left slot while stepping through, and on the first step (where there's no backward action) the "Cancel" takes the left slot instead.
+
+### Basic
+
+<DocsPage.ComponentExample
+  client:only
+  code={`
+    <Drawer.Root>
+      <Drawer.Trigger>
+        <Button>Open Drawer with structured footer</Button>
+      </Drawer.Trigger>
+
+      <Drawer.Content size="md">
+        <Drawer.Header title="Deploy service" description="Review and confirm your deployment" icon="deploy-solid" />
+        <Drawer.Body>
+          <p>Drawer body content goes here.</p>
+        </Drawer.Body>
+        <Drawer.Footer
+          tertiaryButton={<Button variant="ghost">Back</Button>}
+          secondaryButton={
+            <Drawer.Close asChild>
+              <Button variant="outline">Secondary action</Button>
+            </Drawer.Close>
+          }
+          primaryButton={<Button>Primary action</Button>}
+        />
+      </Drawer.Content>
+    </Drawer.Root>
+
+`}
+/>
+
+### Actions only (no back button)
+
+<DocsPage.ComponentExample
+  client:only
+  code={`
+    <Drawer.Root>
+      <Drawer.Trigger>
+        <Button>Actions-only footer</Button>
+      </Drawer.Trigger>
+
+      <Drawer.Content size="md">
+        <Drawer.Header title="Edit settings" icon="settings" />
+        <Drawer.Body>
+          <p>The back button is optional — omit it and the actions stay right-aligned.</p>
+        </Drawer.Body>
+        <Drawer.Footer
+          secondaryButton={
+            <Drawer.Close asChild>
+              <Button variant="outline">Cancel</Button>
+            </Drawer.Close>
+          }
+          primaryButton={<Button>Save</Button>}
+        />
+      </Drawer.Content>
+    </Drawer.Root>
+
+`}
+/>
+
+### Primary action only
+
+<DocsPage.ComponentExample
+  client:only
+  code={`
+    <Drawer.Root>
+      <Drawer.Trigger>
+        <Button>Single-action footer</Button>
+      </Drawer.Trigger>
+
+      <Drawer.Content size="md">
+        <Drawer.Header title="Confirmation" icon="info-circle" />
+        <Drawer.Body>
+          <p>A single primary action is right-aligned on its own.</p>
+        </Drawer.Body>
+        <Drawer.Footer primaryButton={<Drawer.Close asChild><Button>Got it</Button></Drawer.Close>} />
+      </Drawer.Content>
+    </Drawer.Root>
+
+`}
+/>
+
 </TabItem>
 
 <TabItem label="Properties">
@@ -193,7 +287,7 @@ When `isLoading` is true, actions are hidden and the children (metadata) slot re
 
 ## Properties
 
-### `HeaderV2`
+### `Header`
 
 <DocsPage.PropsTable
   props={[
@@ -260,6 +354,51 @@ When `isLoading` is true, actions are hidden and the children (metadata) slot re
     {
       name: "className",
       description: "Class to apply to the header wrapper.",
+      required: false,
+      value: "string",
+      defaultValue: "undefined",
+    },
+  ]}
+/>
+
+### `Footer`
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "primaryButton",
+      description:
+        "Primary action, right-aligned. Wrap in Drawer.Close to dismiss on click.",
+      required: false,
+      value: "ReactNode",
+      defaultValue: "undefined",
+    },
+    {
+      name: "secondaryButton",
+      description: "Secondary action, right-aligned next to the primary button.",
+      required: false,
+      value: "ReactNode",
+      defaultValue: "undefined",
+    },
+    {
+      name: "tertiaryButton",
+      description:
+        "Lowest-emphasis action pinned to the far left — a backward action or a cancel/close.",
+      required: false,
+      value: "ReactNode",
+      defaultValue: "undefined",
+    },
+    {
+      name: "children",
+      description:
+        "Slot rendered above the action bar. Use for legacy ButtonLayout composition or supplemental content.",
+      required: false,
+      value: "ReactNode",
+      defaultValue: "undefined",
+    },
+    {
+      name: "className",
+      description: "Class to apply to the footer wrapper.",
       required: false,
       value: "string",
       defaultValue: "undefined",

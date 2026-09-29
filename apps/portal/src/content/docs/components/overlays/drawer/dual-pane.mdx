@@ -29,12 +29,6 @@ import PageTabsToc from "@/components/page-tabs-toc.astro";
 
 The dual pane drawer renders a fixed left rail beside a scrollable main pane. The rail and the main pane each have their own scroll area, so users keep context on one side while moving through the other.
 
-For non-stepped content (reference, browse, anything where the rail isn't a wizard), use `Drawer.Rail`. It provides the rail's chrome — fixed width, surface, border, optional title header, and an independent scroll area — and accepts arbitrary children, so you can drop in a definition list, file tree, navigation menu, or any other content.
-
-For multi-step flows, compose the rail with `Drawer.Steps` and `Drawer.Step` — a numbered list with active / completed / upcoming states. Each step renders an indicator circle (check mark for completed, number for active or upcoming) plus a title and optional description. Put the active step content in `Drawer.DualPaneMain` with a separate scrollable `Drawer.Body`. Control the active step with `Drawer.Steps`' `value` and `onValueChange`. Any step the user has previously visited stays clickable — including steps ahead of the current one if they've already been reached — so the user can jump back and forth freely. Only steps the user has never visited are read-only.
-
-For sub-flows inside a step, nest `Drawer.SubStep` children inside a `Drawer.Step`. Substeps stay hidden until their parent step has been reached, then appear under it (progressive disclosure) with simpler indicators — check mark for completed, filled dot for active, number for upcoming. Every substep of the reached step is navigable, so the user can jump directly to any substep of the step they're on. Setting `Drawer.Steps` `value` to a substep's value automatically marks the parent step as active; setting it to the parent step's own value activates that step's first substep.
-
 Use `size="md"`, `size="lg"`, or `size="xl"` on `Drawer.Content` so the rail and the main pane both have room. The panes never stack — the right pane stays beside the rail and shrinks with the viewport down to the `xs` drawer width as a [minimum](#sizes); past that point the dual pane scrolls horizontally. This applies at every `size` (including the fixed sizes), because `Drawer.Content` is also capped at the viewport's width.
 
 <DocsPage.ComponentExample
@@ -746,6 +740,14 @@ const [currentStep, setCurrentStep] = useState('step2.2');
 <TabItem label="Usage">
 
 For guidance on when to reach for a dual pane drawer — and when a main-pane footer or a single pane fits better — see the Usage tab on the [Drawer overview page](/components/overlays/drawer/).
+
+## Composing the rail
+
+For non-stepped content (reference, browse, anything where the rail isn't a wizard), use `Drawer.Rail`. It provides the rail's chrome — fixed width, surface, border, optional title header, and an independent scroll area — and accepts arbitrary children, so you can drop in a definition list, file tree, navigation menu, or any other content.
+
+For multi-step flows, compose the rail with `Drawer.Steps` and `Drawer.Step` — a numbered list with active / completed / upcoming states. Each step renders an indicator circle (check mark for completed, number for active or upcoming) plus a title and optional description. Put the active step content in `Drawer.DualPaneMain` with a separate scrollable `Drawer.Body`. Control the active step with `Drawer.Steps`' `value` and `onValueChange`. Any step the user has previously visited stays clickable — including steps ahead of the current one if they've already been reached — so the user can jump back and forth freely. Only steps the user has never visited are read-only.
+
+For sub-flows inside a step, nest `Drawer.SubStep` children inside a `Drawer.Step`. Substeps stay hidden until their parent step has been reached, then appear under it (progressive disclosure) with simpler indicators — check mark for completed, filled dot for active, number for upcoming. Every substep of the reached step is navigable, so the user can jump directly to any substep of the step they're on. Setting `Drawer.Steps` `value` to a substep's value automatically marks the parent step as active; setting it to the parent step's own value activates that step's first substep.
 
 </TabItem>
 

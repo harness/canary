@@ -108,7 +108,9 @@ function generateCode(s: State): string {
       : `${open}\n/>`;
 
   // With tabs, the header must sit inside a Tabs.Root for the strip to switch.
-  return s.tabs ? `<Tabs.Root value={tab} onValueChange={setTab}>\n${indent(header, 2)}\n</Tabs.Root>` : header;
+  return s.tabs
+    ? `<Tabs.Root value={tab} onValueChange={setTab}>\n${indent(header, 2)}\n</Tabs.Root>`
+    : header;
 }
 
 const DrawerHeaderPlayground: FC = () => {
@@ -133,9 +135,17 @@ const DrawerHeaderPlayground: FC = () => {
       options: ["none", "icon", "logo"],
       description: "None, an IconV2, or a product LogoV2",
     },
-    { name: "actions", type: "boolean", description: "Show sample action buttons" },
+    {
+      name: "actions",
+      type: "boolean",
+      description: "Show sample action buttons",
+    },
     { name: "tabs", type: "boolean", description: "Show a sample tab strip" },
-    { name: "metadata", type: "boolean", description: "Show sample metadata slot" },
+    {
+      name: "metadata",
+      type: "boolean",
+      description: "Show sample metadata slot",
+    },
     { name: "hideClose", type: "boolean" },
     {
       name: "isLoading",

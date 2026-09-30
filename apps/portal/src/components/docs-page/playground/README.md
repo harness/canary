@@ -6,10 +6,10 @@ collapsible **Show code** panel that always reflects the current configuration.
 
 There are two flavors. Pick based on the component's props:
 
-| Flavor | File | Use when |
-|--------|------|----------|
-| **Generic (schema-driven)** | `Playground.tsx` | The component's props are all primitives (string / boolean / number / select / color) and it renders standalone without any surrounding context. |
-| **Bespoke (hand-built)** | `DrawerHeaderPlayground.tsx` (reference implementation) | The component needs a surrounding context (a provider, a portal-free host, a parent like `Drawer.Root`/`Tabs.Root`), **or** its interesting props are `ReactNode`/union types (`actions`, `icon`, `tabs`, metadata `children`) that the generic primitive controls can't express. |
+| Flavor                      | File                                                    | Use when                                                                                                                                                                                                                                                                          |
+| --------------------------- | ------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Generic (schema-driven)** | `Playground.tsx`                                        | The component's props are all primitives (string / boolean / number / select / color) and it renders standalone without any surrounding context.                                                                                                                                  |
+| **Bespoke (hand-built)**    | `DrawerHeaderPlayground.tsx` (reference implementation) | The component needs a surrounding context (a provider, a portal-free host, a parent like `Drawer.Root`/`Tabs.Root`), **or** its interesting props are `ReactNode`/union types (`actions`, `icon`, `tabs`, metadata `children`) that the generic primitive controls can't express. |
 
 Both share the same building blocks — `ControlField`, the bordered frame, and the
 **Show code** panel — so a bespoke playground is really "the generic frame, but you
@@ -129,7 +129,11 @@ const FooPlayground: FC = () => {
   // ④ The curated control set.
   const controls: PropControl[] = [
     { name: "title", type: "text", required: true },
-    { name: "actions", type: "boolean", description: "Show sample action buttons" },
+    {
+      name: "actions",
+      type: "boolean",
+      description: "Show sample action buttons",
+    },
     // ...
   ];
 
@@ -248,7 +252,7 @@ Always `client:only` — it's interactive.
   `tooltipProps` or `ignoreIconOnlyTooltip` — we use `tooltipProps={{ content: "Reset to defaults" }}`.
   Restore state from the hoisted `INITIAL_STATE` constant (and any extra UI state
   like the active tab).
-- **Hard break** — put boolean toggles in a *second* grid so they start on their
+- **Hard break** — put boolean toggles in a _second_ grid so they start on their
   own row separated by a divider, instead of flowing inline after the inputs.
   Side benefit: the switch captions stop truncating.
 
@@ -261,7 +265,7 @@ Always `client:only` — it's interactive.
    rather than fields. A `bg-cn-1` surface underneath gives the needed contrast.
 
 2. **Use plain `grid-cols-3`, not `md:grid-cols-3`.** The `md:` breakpoint is
-   viewport-based, and the embedded browser preview sits *below* `md` (~768px), so
+   viewport-based, and the embedded browser preview sits _below_ `md` (~768px), so
    `md:grid-cols-3` renders as 2 columns. Plain `grid-cols-3` guarantees 3-per-row.
 
 3. **Show code: put text directly in `<pre>` with NO inner `<code>`, and set
@@ -271,7 +275,7 @@ Always `client:only` — it's interactive.
    background. Avoid `<code>` here entirely.
 
 4. **Keep the preview and the generated code in sync.** Drive both from the same
-   `SAMPLE_*` constants and the same conditions. If a prop only has a *visible* effect
+   `SAMPLE_*` constants and the same conditions. If a prop only has a _visible_ effect
    under some condition, surface it that way in **both** places. Example: `isLoading`
    on `DrawerHeaderV2` only skeletons the metadata (`children`) slot — so the
    playground surfaces the metadata slot whenever `metadata || isLoading`, and
@@ -288,7 +292,7 @@ Always `client:only` — it's interactive.
    playground stays honest.
 
 7. **Document "empty hides the prop" via the control's caption.** Optional text
-   controls that map an empty string to *omitting* the prop (e.g. `tagline`,
+   controls that map an empty string to _omitting_ the prop (e.g. `tagline`,
    `description` on `Drawer.Header` — passed as `state.tagline || undefined`) aren't
    self-explanatory: a reader can't tell whether blank means "empty string" or "not
    rendered." Put that in the control's `description`, which `ControlField` renders as

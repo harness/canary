@@ -187,10 +187,7 @@ describe('Drawer dual pane layout', () => {
     await waitFor(() => {
       expect(screen.getByText('Basic information')).toBeInTheDocument()
       expect(
-        screen
-          .getByText('Configuration')
-          .closest('.cn-stepper-step')
-          ?.querySelector('.cn-stepper-step-description')
+        screen.getByText('Configuration').closest('.cn-stepper-step')?.querySelector('.cn-stepper-step-description')
       ).toBeNull()
       expect(screen.getByText('Confirm before submitting')).toBeInTheDocument()
     })
@@ -285,7 +282,9 @@ describe('Drawer.SubStep', () => {
     renderWithSubsteps('step2')
 
     await waitFor(() => {
-      expect(screen.getByText('Step 2.1').closest('.cn-stepper-nested-step')).toHaveClass('cn-stepper-nested-step-active')
+      expect(screen.getByText('Step 2.1').closest('.cn-stepper-nested-step')).toHaveClass(
+        'cn-stepper-nested-step-active'
+      )
       expect(screen.getByText('Step 2.2').closest('.cn-stepper-nested-step')).toHaveClass(
         'cn-stepper-nested-step-upcoming'
       )

@@ -65,7 +65,10 @@ function generateCode(s: State): string {
       `secondaryButton={\n  <Drawer.Close asChild>\n    <Button variant="outline">${s.secondaryButton}</Button>\n  </Drawer.Close>\n}`,
     );
   if (s.primaryButton) {
-    const flags = [s.primaryLoading ? "loading" : "", s.primaryDisabled ? "disabled" : ""]
+    const flags = [
+      s.primaryLoading ? "loading" : "",
+      s.primaryDisabled ? "disabled" : "",
+    ]
       .filter(Boolean)
       .join(" ");
     const openTag = flags ? `<Button ${flags}>` : "<Button>";
@@ -89,16 +92,36 @@ const DrawerFooterPlayground: FC = () => {
   const reset = () => setState(INITIAL_STATE);
 
   const controls: PropControl[] = [
-    { name: "primaryButton", type: "text", description: "Empty hides the button" },
-    { name: "secondaryButton", type: "text", description: "Empty hides the button" },
+    {
+      name: "primaryButton",
+      type: "text",
+      description: "Empty hides the button",
+    },
+    {
+      name: "secondaryButton",
+      type: "text",
+      description: "Empty hides the button",
+    },
     {
       name: "tertiaryButton",
       type: "text",
       description: "Empty hides it (ghost, pinned left)",
     },
-    { name: "slot", type: "boolean", description: "Show content above the action bar" },
-    { name: "primaryLoading", type: "boolean", description: "Loading state on primary" },
-    { name: "primaryDisabled", type: "boolean", description: "Disable the primary button" },
+    {
+      name: "slot",
+      type: "boolean",
+      description: "Show content above the action bar",
+    },
+    {
+      name: "primaryLoading",
+      type: "boolean",
+      description: "Loading state on primary",
+    },
+    {
+      name: "primaryDisabled",
+      type: "boolean",
+      description: "Disable the primary button",
+    },
   ];
 
   // Split so the boolean toggles hard-break onto their own row(s) instead of

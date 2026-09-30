@@ -5,22 +5,14 @@
       "name": "variant",
       "required": false,
       "type": "select",
-      "options": [
-        "outline",
-        "secondary"
-      ]
+      "options": ["outline", "secondary"]
     },
     {
       "name": "theme",
       "required": false,
       "defaultValue": "default",
       "type": "select",
-      "options": [
-        "default",
-        "info",
-        "success",
-        "danger"
-      ]
+      "options": ["default", "info", "success", "danger"]
     }
   ]
 }

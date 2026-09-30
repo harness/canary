@@ -1122,6 +1122,17 @@ button[aria-label="Search"] {
   background-position: bottom;
 }
 
+/* Dark-mode counterparts: Gray.950 base with a Blue.1000 wash — the mirror
+   positions of the light theme's Gray.50 / Blue.25 on the same primitive scales */
+[data-theme="dark"] .cn-home-bg {
+  background-color: lch(8.7% 7.7 276);
+  background-image: linear-gradient(
+    to top,
+    lch(11% 6 262) 0%,
+    transparent 100%
+  );
+}
+
 /* Square dots, masked so the color stays theme-driven */
 .cn-home-bg::before {
   content: "";

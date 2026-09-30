@@ -5,14 +5,16 @@ import ConditionalPageSidebar from "./ConditionalPageSidebar.astro";
 import TopNav from "./TopNav.astro";
 ---
 
-<div class="flex flex-col min-h-screen bg-cn-1">
+<!-- App shell: pinned to the viewport height so the rails stay fixed and only
+     the middle content column scrolls. min-h-0 lets the row shrink to fit. -->
+<div class="flex flex-col h-screen bg-cn-1">
   <!-- Top navigation -->
   <TopNav />
 
   <div class="flex flex-1 min-h-0">
-    <!-- Sidebar -->
+    <!-- Sidebar: full height of the shell, scrolls internally -->
     <nav
-      class="cn-portal-sidebar flex flex-col w-[248px] shrink-0 sticky top-14 h-[calc(100vh-3.5rem)] border-r border-cn-3"
+      class="cn-portal-sidebar flex flex-col w-[248px] shrink-0 h-full border-r border-cn-3"
     >
       <!-- Component-scoped search (Components section only) -->
       <ComponentSidebarSearch />
@@ -27,19 +29,21 @@ import TopNav from "./TopNav.astro";
       </div>
     </nav>
 
-    <!-- Content + TOC -->
-    <div class="flex-1 flex justify-center" style="padding-top: 20px;">
-      <div
-        class="flex gap-cn-xl w-full"
-        style="max-width: 1200px; padding: 0 40px;"
-      >
-        <!-- Main Content -->
-        <div class="flex-1 min-w-0">
-          <slot />
-        </div>
+    <!-- Content + TOC: the page's only vertical scroll area -->
+    <div class="flex-1 min-w-0 overflow-y-auto">
+      <div class="flex justify-center" style="padding-top: 20px;">
+        <div
+          class="flex gap-cn-xl w-full"
+          style="max-width: 1200px; padding: 0 40px;"
+        >
+          <!-- Main Content -->
+          <div class="flex-1 min-w-0">
+            <slot />
+          </div>
 
-        <!-- TOC Sidebar (only rendered when has headings) -->
-        <ConditionalPageSidebar />
+          <!-- TOC Sidebar (only rendered when has headings) -->
+          <ConditionalPageSidebar />
+        </div>
       </div>
     </div>
   </div>

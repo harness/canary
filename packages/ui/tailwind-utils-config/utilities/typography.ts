@@ -30,7 +30,7 @@ export const typography = {
     },
     '&-body-strong': {
       font: 'var(--cn-body-strong)',
-      letterSpacing: 'var(--cn-tracking-tight)'
+      letterSpacing: 'var(--cn-tracking-normal)'
     },
     '&-body-code': {
       font: 'var(--cn-body-code)',
@@ -56,11 +56,11 @@ export const typography = {
     },
     '&-body-single-line-strong': {
       font: 'var(--cn-body-single-line-strong)',
-      letterSpacing: 'var(--cn-tracking-tight)'
+      letterSpacing: 'var(--cn-tracking-normal)'
     },
     '&-body-single-line-normal': {
       font: 'var(--cn-body-single-line-normal)',
-      letterSpacing: 'var(--cn-tracking-tight)'
+      letterSpacing: 'var(--cn-tracking-normal)'
     },
     '&-caption-single-line-normal': {
       font: 'var(--cn-caption-single-line-normal)',

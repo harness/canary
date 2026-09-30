@@ -165,6 +165,27 @@ code:not(.expressive-code code) {
   @apply text-cn-2 !important;
 }
 
+/*
+ * Top-nav tabs are static markup reusing the DS tab classes, so the component's
+ * JS width reservation never runs on them. Reserve the bold (hover/active) width
+ * in CSS with a hidden bold clone of the label, stacked under the visible text,
+ * so the label bolds in place instead of widening the tab.
+ */
+.cn-topnav-tabs .cn-tabs-trigger {
+  flex-direction: column;
+  justify-content: center;
+}
+
+.cn-topnav-tabs .cn-tabs-trigger::after {
+  content: attr(data-label);
+  height: 0;
+  overflow: hidden;
+  visibility: hidden;
+  pointer-events: none;
+  font: var(--cn-body-strong);
+  letter-spacing: var(--cn-tracking-normal);
+}
+
 /* Global search button (top nav) */
 .cn-topnav-search {
   flex-shrink: 0;

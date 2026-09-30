@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { render, screen } from '@testing-library/react'
+import { render, screen, within } from '@testing-library/react'
 import { vi } from 'vitest'
 
 import { Drawer } from '../index'
@@ -845,6 +845,86 @@ describe('Drawer', () => {
 
       test('should have correct display name', () => {
         expect(Drawer.Footer.displayName).toBe('DrawerFooter')
+      })
+    })
+
+    describe('Structured layout', () => {
+      test('should render the action bar with the button props', () => {
+        const { container } = renderComponent(
+          <Drawer.Root open>
+            <Drawer.Content>
+              <Drawer.Footer
+                tertiaryButton={<button>Back</button>}
+                secondaryButton={<button>Cancel</button>}
+                primaryButton={<button>Save</button>}
+              />
+            </Drawer.Content>
+          </Drawer.Root>
+        )
+
+        expect(container.querySelector('.cn-drawer-footer-action-bar')).toBeInTheDocument()
+        expect(screen.getByText('Back')).toBeInTheDocument()
+        expect(screen.getByText('Cancel')).toBeInTheDocument()
+        expect(screen.getByText('Save')).toBeInTheDocument()
+      })
+
+      test('should pin the tertiary button left and right-align secondary + primary in order', () => {
+        const { container } = renderComponent(
+          <Drawer.Root open>
+            <Drawer.Content>
+              <Drawer.Footer
+                tertiaryButton={<button>Back</button>}
+                secondaryButton={<button>Cancel</button>}
+                primaryButton={<button>Save</button>}
+              />
+            </Drawer.Content>
+          </Drawer.Root>
+        )
+
+        // The tertiary button sits directly in the action bar (pinned far left), outside the
+        // right-aligned actions group.
+        const actionBar = container.querySelector('.cn-drawer-footer-action-bar') as HTMLElement
+        expect(within(actionBar).getAllByRole('button')[0]).toHaveTextContent('Back')
+
+        // The secondary + primary share the right-aligned actions group, secondary first.
+        const actions = container.querySelector('.cn-drawer-footer-actions') as HTMLElement
+        const grouped = within(actions).getAllByRole('button')
+        expect(grouped.map(b => b.textContent)).toEqual(['Cancel', 'Save'])
+      })
+
+      test('should suppress the action bar when no button is passed', () => {
+        const { container } = renderComponent(
+          <Drawer.Root open>
+            <Drawer.Content>
+              {/* Structured mode (a button key is present) but every button is undefined —
+                  hasActions is false, so the action bar must not render. */}
+              <Drawer.Footer primaryButton={undefined} secondaryButton={undefined} tertiaryButton={undefined}>
+                <span>Slot content</span>
+              </Drawer.Footer>
+            </Drawer.Content>
+          </Drawer.Root>
+        )
+
+        expect(container.querySelector('.cn-drawer-footer-action-bar')).not.toBeInTheDocument()
+        expect(screen.getByText('Slot content')).toBeInTheDocument()
+      })
+
+      test('should render children above the action bar', () => {
+        const { container } = renderComponent(
+          <Drawer.Root open>
+            <Drawer.Content>
+              <Drawer.Footer primaryButton={<button>Save</button>}>
+                <span>Slot content</span>
+              </Drawer.Footer>
+            </Drawer.Content>
+          </Drawer.Root>
+        )
+
+        const slot = screen.getByText('Slot content')
+        const actionBar = container.querySelector('.cn-drawer-footer-action-bar') as HTMLElement
+        expect(actionBar).toBeInTheDocument()
+        // The children slot appears before the action bar in DOM order.
+        expect(slot.compareDocumentPosition(actionBar) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy()
       })
     })
   })

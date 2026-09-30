@@ -7,6 +7,7 @@ import AiVerify from './symbols/ai-verify.svg'
 import Alpine from './symbols/alpine.svg'
 import Anchore from './symbols/anchore.svg'
 import Android from './symbols/android.svg'
+import Ansible from './symbols/ansible.svg'
 import AppDynamics from './symbols/app-dynamics.svg'
 import Apple from './symbols/apple.svg'
 import Approval from './symbols/approval.svg'
@@ -189,6 +190,7 @@ export const SymbolNameMap = {
   alpine: Alpine,
   anchore: Anchore,
   android: Android,
+  ansible: Ansible,
   'app-dynamics': AppDynamics,
   apple: Apple,
   approval: Approval,

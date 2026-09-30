@@ -3,9 +3,19 @@ title: File Explorer
 description: FileExplorer component for displaying hierarchical file and folder structures
 ---
 
-The `FileExplorer` component is used to display file and folder hierarchies in a collapsible/expandable structure. It supports features like active states, links, nested levels, and tooltips.
-
 import { DocsPage } from "@/components/docs-page";
+import { Tabs, TabItem } from "@astrojs/starlight/components";
+import PageTabsToc from "@/components/page-tabs-toc.astro";
+
+<PageTabsToc />
+
+<div id="page-level-tabs">
+
+<Tabs>
+
+<TabItem label="Overview">
+
+The `FileExplorer` component is used to display file and folder hierarchies in a collapsible/expandable structure. It supports features like active states, links, nested levels, and tooltips.
 
 <DocsPage.ComponentExample
   client:only
@@ -51,38 +61,9 @@ return <FileExplorer.Root value={expandedFolders} onValueChange={setExpandedFold
 }`}
 />
 
-## Usage
+## Variations
 
-```typescript jsx
-import { FileExplorer } from '@harnessio/ui/components'
-
-//...
-
-const [expandedFolders, setExpandedFolders] = useState(['src']);
-
-return (
-  <FileExplorer.Root value={expandedFolders} onValueChange={setExpandedFolders}>
-    <FileExplorer.FolderItem
-      value="src"
-      level={0}
-      content={
-        <FileExplorer.Root value={expandedFolders} onValueChange={setExpandedFolders}>
-          <FileExplorer.FileItem level={1}>index.ts</FileExplorer.FileItem>
-          <FileExplorer.FileItem level={1}>App.tsx</FileExplorer.FileItem>
-          {/* Use CustomItem for custom non-interactive content */}
-          <FileExplorer.CustomItem className="text-cn-3 pl-cn-lg">
-            2 files total
-          </FileExplorer.CustomItem>
-        </FileExplorer.Root>
-      }
-    >
-      src
-    </FileExplorer.FolderItem>
-  </FileExplorer.Root>
-)
-```
-
-## Basic File Explorer
+### Basic file explorer
 
 Create a simple file explorer with folders and files. The explorer automatically handles expand/collapse interactions.
 
@@ -111,7 +92,7 @@ return <FileExplorer.Root value={expanded} onValueChange={setExpanded}>
 }`}
 />
 
-## Nested Folders
+### Nested folders
 
 You can nest folders within folders to create deep hierarchies.
 
@@ -165,7 +146,7 @@ return <FileExplorer.Root value={expanded} onValueChange={setExpanded}>
 }`}
 />
 
-## With Active State
+### Active file
 
 Highlight the currently active file or folder using the `isActive` prop.
 
@@ -213,7 +194,7 @@ return <FileExplorer.Root value={expanded} onValueChange={setExpanded}>
 }`}
 />
 
-## With Links
+### Links
 
 Make files and folders navigable by providing the `link` prop.
 
@@ -249,7 +230,7 @@ return <FileExplorer.Root value={expanded} onValueChange={setExpanded}>
 }`}
 />
 
-## With Tooltips
+### Tooltips
 
 Add tooltips to files for additional information.
 
@@ -284,7 +265,7 @@ return <FileExplorer.Root value={expanded} onValueChange={setExpanded}>
 }`}
 />
 
-## Active Folder
+### Active folder
 
 You can also highlight folders using the `isActive` prop.
 
@@ -324,7 +305,7 @@ return <FileExplorer.Root value={expanded} onValueChange={setExpanded}>
 }`}
 />
 
-## Complex Example - Full Project Structure
+### Full project structure
 
 This comprehensive example demonstrates all features of the FileExplorer component including:
 
@@ -510,7 +491,7 @@ components
 }`}
 />
 
-## Custom Content with CustomItem
+### Custom content
 
 The `FileExplorer.CustomItem` component allows you to add custom, non-interactive content to your file explorer. Use it when you need to display informational content, placeholders, or any custom elements that don't require file/folder interactive behavior.
 
@@ -562,9 +543,122 @@ return <FileExplorer.Root value={expanded} onValueChange={setExpanded}>
 }`}
 />
 
-## API Reference
+## Installation
 
-### Root Component Props
+```typescript jsx
+import { FileExplorer } from '@harnessio/ui/components'
+
+//...
+
+const [expandedFolders, setExpandedFolders] = useState(['src']);
+
+return (
+  <FileExplorer.Root value={expandedFolders} onValueChange={setExpandedFolders}>
+    <FileExplorer.FolderItem
+      value="src"
+      level={0}
+      content={
+        <FileExplorer.Root value={expandedFolders} onValueChange={setExpandedFolders}>
+          <FileExplorer.FileItem level={1}>index.ts</FileExplorer.FileItem>
+          <FileExplorer.FileItem level={1}>App.tsx</FileExplorer.FileItem>
+          {/* Use CustomItem for custom non-interactive content */}
+          <FileExplorer.CustomItem className="text-cn-3 pl-cn-lg">
+            2 files total
+          </FileExplorer.CustomItem>
+        </FileExplorer.Root>
+      }
+    >
+      src
+    </FileExplorer.FolderItem>
+  </FileExplorer.Root>
+)
+```
+
+</TabItem>
+
+<TabItem label="Usage">
+
+## Anatomy
+
+`FileExplorer` is a compound component built on top of the [Accordion](/components/layout/accordion/) primitive. You compose a tree by nesting a `Root` inside each folder's `content`.
+
+```tsx
+<FileExplorer.Root value={expanded} onValueChange={setExpanded}>
+  <FileExplorer.FolderItem
+    value="src"
+    level={0}
+    content={
+      <FileExplorer.Root value={expanded} onValueChange={setExpanded}>
+        <FileExplorer.FileItem level={1}>index.ts</FileExplorer.FileItem>
+        <FileExplorer.CustomItem>2 files total</FileExplorer.CustomItem>
+      </FileExplorer.Root>
+    }
+  >
+    src
+  </FileExplorer.FolderItem>
+</FileExplorer.Root>
+```
+
+- **Root** — an accordion (`type="multiple"`) whose `value` is the array of expanded folder ids and `onValueChange` updates it. Every level of the tree is its own `Root`, wrapping the children of the folder above.
+- **FolderItem** — a folder row: an expand/collapse trigger plus a folder icon and label. Its `content` (usually a nested `Root`) renders when the folder's `value` is in the expanded list. Folders can be links and can show an active state.
+- **FileItem** — a leaf row rendered as a button (or a link when `link` is set), with a file icon and label. It supports `isActive`, `onClick`, a `tooltip`, and `actionButtons` shown at the end of the row.
+- **CustomItem** — a non-interactive wrapper for arbitrary content (counts, hints, empty states) that should sit in the tree without file/folder behavior.
+- **level** — every item takes a `level` number that sets its indentation. Folders start at `0`; files directly under a root folder start at `1`, incrementing by one per nesting level.
+
+## Best practices
+
+{/* TODO: editorial — please review against product guidance. */}
+
+**Do**
+
+- Keep `level` consistent with the nesting depth so indentation matches the hierarchy — folders from `0`, their files from `1`, and so on.
+- Give each `FolderItem` a unique `value`; it's the key the accordion uses to track expand/collapse state.
+- Track the active file in your own state and pass `isActive` so the current selection stays highlighted.
+- Use `CustomItem` for supplementary, non-interactive rows rather than styling a `FileItem` you don't want to be clickable.
+
+**Don't**
+
+- Don't rely on tooltips to carry essential information — treat them as supplementary context on top of a clear file name.
+- Don't render very large trees eagerly if you can avoid it; consider memoizing rows or loading folder contents on expand.
+
+## Content
+
+{/* TODO: editorial — please review against product guidance. */}
+
+- Show real file and folder names; they're the primary way people scan a tree.
+- Keep tooltips short — a phrase describing the file's purpose ("Main configuration file"), not a sentence.
+
+## Accessibility
+
+The tree is built on the Accordion primitive, so folders come with the accordion's expand/collapse semantics, and rows are real buttons or links.
+
+### Keyboard
+
+- Folder triggers are buttons: **Enter** or **Space** expands and collapses them. **Tab** / **Shift+Tab** move between the interactive rows.
+- File items are buttons (or links when `link` is set), so they're focusable and activate with **Enter**.
+
+### Labeling
+
+- Each row shows an icon plus its label; the label text is what's announced. Tooltips add supplementary context on hover and focus.
+- Action buttons on a row are [Button](/components/actions/button/)s — give icon-only ones a title or accessible label so their purpose is announced.
+
+### Focus & states
+
+- The active row is highlighted via `isActive`; keep it in sync with your selection state so the highlight and focus tell the same story.
+
+### Known limitations
+
+- **Expansion is fully controlled.** The tree doesn't track its own open state — you own the `value` array and must update it from `onValueChange`, or folders won't expand.
+
+</TabItem>
+
+<TabItem label="Properties">
+
+{/* Visually hidden — anchors the section headings below in the TOC without showing a redundant title in the panel body (the tab already says "Properties"). Hidden via #page-level-tabs h2#properties in styles.css. */}
+
+## Properties
+
+### Root
 
 <DocsPage.PropsTable
   props={[
@@ -590,7 +684,7 @@ return <FileExplorer.Root value={expanded} onValueChange={setExpanded}>
   ]}
 />
 
-### FolderItem Component Props
+### FolderItem
 
 <DocsPage.PropsTable
   props={[
@@ -636,10 +730,23 @@ return <FileExplorer.Root value={expanded} onValueChange={setExpanded}>
       required: false,
       value: "string",
     },
+    {
+      name: "icon",
+      description: "Icon shown next to the folder label.",
+      required: false,
+      defaultValue: "'folder'",
+      value: "IconV2NamesType",
+    },
+    {
+      name: "onClick",
+      description: "Click handler for the folder. Receives the folder's value.",
+      required: false,
+      value: "(value: string) => void",
+    },
   ]}
 />
 
-### FileItem Component Props
+### FileItem
 
 <DocsPage.PropsTable
   props={[
@@ -672,10 +779,9 @@ return <FileExplorer.Root value={expanded} onValueChange={setExpanded}>
     },
     {
       name: "onClick",
-      description:
-        "Click handler for the file. Called when the file is clicked.",
+      description: "Click handler for the file. Receives the file's value.",
       required: false,
-      value: "() => void",
+      value: "(value: string) => void",
     },
     {
       name: "tooltip",
@@ -683,12 +789,19 @@ return <FileExplorer.Root value={expanded} onValueChange={setExpanded}>
       required: false,
       value: "React.ReactNode",
     },
+    {
+      name: "actionButtons",
+      description:
+        "Buttons rendered at the end of the row. Each accepts Button props plus optional title / iconName.",
+      required: false,
+      value: "ActionButton[]",
+    },
   ]}
 />
 
-### CustomItem Component Props
+### CustomItem
 
-The `FileExplorer.CustomItem` component is a simple wrapper for custom, non-interactive content within the file explorer structure.
+The `FileExplorer.CustomItem` component is a simple wrapper for custom, non-interactive content within the file explorer structure. Use it when you need full control over the content and styling without the standard file/folder behavior.
 
 <DocsPage.PropsTable
   props={[
@@ -715,29 +828,8 @@ The `FileExplorer.CustomItem` component is a simple wrapper for custom, non-inte
   ]}
 />
 
-Use `FileExplorer.CustomItem` when you need full control over the content and styling without the standard file/folder behavior.
+</TabItem>
 
-## Best Practices
+</Tabs>
 
-### Level Numbering
-
-- **Folders**: Start at `level={0}` for root folders, increment by 1 for each nesting level
-- **Files**: Start at `level={1}` for files directly under root folders, increment by 1 for each nesting level
-
-### State Management
-
-```typescript
-// Initialize with folders you want expanded by default
-const [expanded, setExpanded] = useState(['src', 'components']);
-
-// The Root component will handle the expand/collapse state
-<Root value={expanded} onValueChange={setExpanded}>
-  ...
-</Root>
-```
-
-### Performance Tips
-
-- Use `React.memo()` for FileItem components if you have a large file tree
-- Keep track of active file in state to avoid unnecessary re-renders
-- Use the `value` prop on FolderItem to uniquely identify folders for proper accordion behavior
+</div>

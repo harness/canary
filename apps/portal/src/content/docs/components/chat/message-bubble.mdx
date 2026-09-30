@@ -1,16 +1,21 @@
 ---
 title: Message Bubble
 description: Conversational message component for AI and chat interfaces
-beta: true
 ---
 
 import { DocsPage } from "@/components/docs-page";
+import { Tabs, TabItem } from "@astrojs/starlight/components";
+import PageTabsToc from "@/components/page-tabs-toc.astro";
 
-The `MessageBubble` component is a compound component for displaying conversational messages in AI and chat interfaces. It supports both user and assistant messages with different styling and layouts.
+<PageTabsToc />
 
-## Usage
+<div id="page-level-tabs">
 
-The MessageBubble component uses a compound pattern with `MessageBubble.Root`, `MessageBubble.Content`, and `MessageBubble.Footer` sub-components.
+<Tabs>
+
+<TabItem label="Overview">
+
+The `MessageBubble` component displays conversational messages in AI and chat interfaces. It's a compound component — `MessageBubble.Root` sets the message role, `MessageBubble.Content` holds the body, `MessageBubble.Text` / `MessageBubble.Markdown` render the message, and `MessageBubble.Footer` carries actions like copy, edit, and timestamps. User and assistant messages get distinct styling and alignment.
 
 <DocsPage.ComponentExample
   client:only
@@ -40,7 +45,7 @@ The MessageBubble component uses a compound pattern with `MessageBubble.Root`, `
 </div>`}
 />
 
-## Import
+## Installation
 
 ```typescript jsx
 import {
@@ -50,64 +55,185 @@ import {
   IconV2,
   Text,
 } from "@harnessio/ui/components";
+
+// ...
+
+return (
+  <MessageBubble.Root role="user">
+    <MessageBubble.Content>
+      <MessageBubble.Text>Your message here</MessageBubble.Text>
+    </MessageBubble.Content>
+    <MessageBubble.Footer>
+      <CopyButton name="Your message here" buttonVariant="ghost" size="sm" />
+      <Button iconOnly variant="ghost" size="sm" onClick={handleEdit}>
+        <IconV2 name="edit" />
+      </Button>
+      <Text variant="caption-normal" color="foreground-3">
+        {formatTime(timestamp)}
+      </Text>
+    </MessageBubble.Footer>
+  </MessageBubble.Root>
+)
 ```
 
-## Basic Usage
+</TabItem>
 
-```typescript jsx
-<MessageBubble.Root role="user">
+<TabItem label="Usage">
+
+## Anatomy
+
+`MessageBubble` is a compound component. Compose the parts inside a `Root` that declares who the message is from.
+
+```tsx
+<MessageBubble.Root role="assistant">
   <MessageBubble.Content>
-    <MessageBubble.Text>
-      Your message here
-    </MessageBubble.Text>
+    <MessageBubble.Text>Here's the answer.</MessageBubble.Text>
   </MessageBubble.Content>
+  <MessageBubble.Footer>{/* actions, timestamp */}</MessageBubble.Footer>
 </MessageBubble.Root>
 ```
 
-## With Footer Actions
+- **`MessageBubble.Root`** — the container. `role` (`user` / `assistant`) is a styling discriminator that drives the bubble's alignment and appearance; it's optional, and when omitted neither role style is applied. Extends `HTMLAttributes<HTMLDivElement>`.
+- **`MessageBubble.Content`** — the body wrapper that carries the role-based content styling. Extends `HTMLAttributes<HTMLDivElement>`.
+- **`MessageBubble.Text`** — renders the message as body text. Accepts the same props as `Text`, plus an optional `speed` for a typewriter reveal (character-by-character) when the child is a string.
+- **`MessageBubble.Markdown`** — renders the message from a markdown string (its `children`) using `MarkdownViewer` at the small variant, for assistant replies that contain formatting or code.
+- **`MessageBubble.Footer`** — a flexible row for actions (copy, edit), timestamps, or any custom content. Extends `HTMLAttributes<HTMLDivElement>`.
 
-```typescript jsx
-<MessageBubble.Root role="user">
-  <MessageBubble.Content>
-    <MessageBubble.Text>Your message here</MessageBubble.Text>
-  </MessageBubble.Content>
-  <MessageBubble.Footer>
-    <CopyButton name="Your message here" buttonVariant="ghost" size="sm" />
-    <Button iconOnly variant="ghost" size="sm" onClick={handleEdit}>
-      <IconV2 name="edit" />
-    </Button>
-    <Text variant="caption-normal" color="foreground-3">
-      {formatTime(timestamp)}
-    </Text>
-  </MessageBubble.Footer>
-</MessageBubble.Root>
-```
+## Best practices
 
-## Component Structure
+{/* TODO: editorial — please review against product guidance. */}
+
+**Do**
+
+- Set `role` on every `Root` so user and assistant messages align and read distinctly.
+- Use `MessageBubble.Markdown` for assistant responses that include lists, code, or links; use `MessageBubble.Text` for plain conversational text.
+- Keep `Footer` actions minimal and consistent (e.g. copy + edit + timestamp) so the pattern is predictable across the thread.
+
+**Don't**
+
+- Don't put primary content in the `Footer` — it's for secondary actions and metadata.
+- Don't rely on the `role` styling alone to convey who is speaking in contexts where color/alignment isn't enough; include an author label or avatar nearby.
+
+## Content
+
+{/* TODO: editorial — please review against product guidance. */}
+
+- Keep timestamps in the `Footer` short and localized (e.g. "2:30 PM").
+- For copy actions, pass the message's plain text to `CopyButton` so what's copied matches what's shown.
+
+## Accessibility
+
+### Labeling
+
+- The component renders plain containers with no built-in author labeling. Convey who sent each message through visible cues — an author name, avatar, or the role styling — so the sender is clear without relying on color alone.
+
+### Known limitations
+
+- **No live-region announcements.** `MessageBubble` adds no `aria-live`, so newly arriving messages aren't automatically announced by screen readers. If you're streaming assistant replies, manage an appropriate live region at the conversation level.
+- **`role` is styling only.** The `role` prop is a visual discriminator (`user` / `assistant`), not an ARIA role — it doesn't change the element's accessibility semantics.
+
+</TabItem>
+
+<TabItem label="Properties">
+
+{/* Visually hidden — anchors the section headings below in the TOC without showing a redundant title in the panel body (the tab already says "Properties"). Hidden via #page-level-tabs h2#properties in styles.css. */}
+
+## Properties
 
 ### MessageBubble.Root
 
-The root container that defines the message role and layout.
+Extends `HTMLAttributes<HTMLDivElement>`.
 
-**Props:**
-
-- `role`: `"user" | "assistant"` - Determines the message role and styling
-- Extends `HTMLAttributes<HTMLDivElement>`
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "role",
+      description:
+        "The message sender. Drives the bubble's alignment and styling. When omitted, no role style is applied.",
+      required: false,
+      value: "'user' | 'assistant'",
+    },
+    {
+      name: "children",
+      description: "The message content (Content and optional Footer).",
+      required: true,
+      value: "ReactNode",
+    },
+  ]}
+/>
 
 ### MessageBubble.Content
 
-The content wrapper with role-based styling.
+Extends `HTMLAttributes<HTMLDivElement>`.
 
-**Props:**
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "children",
+      description:
+        "The message body, e.g. MessageBubble.Text or MessageBubble.Markdown.",
+      required: true,
+      value: "ReactNode",
+    },
+  ]}
+/>
 
-- `children`: React node - The message content
-- Extends `HTMLAttributes<HTMLDivElement>`
+### MessageBubble.Text
+
+Extends `Text` props (`Omit<TextProps, 'ref'>`).
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "children",
+      description:
+        "The message text. Rendered with the body-normal text variant.",
+      required: true,
+      value: "ReactNode",
+    },
+    {
+      name: "speed",
+      description:
+        "Typewriter speed in ms per character. When set and the child is a string, the text is revealed progressively.",
+      required: false,
+      value: "number",
+    },
+  ]}
+/>
+
+### MessageBubble.Markdown
+
+Extends `MarkdownViewer` props (`Omit<MarkdownViewerProps, 'source'>`).
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "children",
+      description:
+        "The markdown string to render (used as the MarkdownViewer source).",
+      required: true,
+      value: "string",
+    },
+  ]}
+/>
 
 ### MessageBubble.Footer
 
-A flexible container for actions like copy, edit buttons, and timestamps.
+Extends `HTMLAttributes<HTMLDivElement>`.
 
-**Props:**
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "children",
+      description: "Action buttons, timestamps, or any custom content.",
+      required: false,
+      value: "ReactNode",
+    },
+  ]}
+/>
 
-- `children`: React node - Action buttons, timestamps, or any custom content
-- Extends `HTMLAttributes<HTMLDivElement>`
+</TabItem>
+
+</Tabs>
+
+</div>

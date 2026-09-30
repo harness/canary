@@ -1,13 +1,22 @@
 ---
 title: Sticky List Section
 description: Compound component for sticky section headers inside scrollable containers
-beta: true
 ---
-
-The `StickyListSection` component provides sticky section headers that pin to the top of a scroll container while the section is visible, then push out as the next section scrolls in. Built with IntersectionObserver, it detects when a header becomes stuck and applies a subtle shadow.
 
 import { DocsPage } from "@/components/docs-page";
 import { Aside } from "@astrojs/starlight/components";
+import { Tabs, TabItem } from "@astrojs/starlight/components";
+import PageTabsToc from "@/components/page-tabs-toc.astro";
+
+<PageTabsToc />
+
+<div id="page-level-tabs">
+
+<Tabs>
+
+<TabItem label="Overview">
+
+The `StickyListSection` component provides sticky section headers that pin to the top of a scroll container while the section is visible, then push out as the next section scrolls in. Built with `IntersectionObserver`, it detects when a header becomes stuck and applies a subtle shadow.
 
 <DocsPage.ComponentExample
   client:only
@@ -35,7 +44,7 @@ const ListItem = ({ icon, label }) => (
 <Card.Root size="sm" interactive={false}>
   <Card.Content>
     <Layout.Horizontal align="center" gap="sm">
-      <IconV2 name={icon} size="sm" color="neutral" />
+      <IconV2 name={icon} size="sm" color="inherit" />
       <Text className="text-sm" color="foreground-1">
         {label}
       </Text>
@@ -112,7 +121,9 @@ return (
   over.
 </Aside>
 
-## Contained Mode
+## Variations
+
+### Contained mode
 
 Use `contained` when the `StickyListSection` is nested inside intermediate wrapper elements (form inputs, layout stacks, cards) but the **drawer body** is still the scroll container. This mode uses `--cn-sticky-container-padding` to bleed the header out to the drawer edges through the wrapper layers.
 
@@ -185,7 +196,7 @@ const SecretRow = ({ name, type }) => (
   <Card.Content>
     <Layout.Horizontal align="center" className="justify-between">
       <Layout.Horizontal align="center" gap="sm">
-        <IconV2 name="lock" size="sm" color="neutral" />
+        <IconV2 name="lock" size="sm" color="inherit" />
         <Text className="text-sm font-mono" color="foreground-1">
           {name}
         </Text>
@@ -288,7 +299,7 @@ return (
   remains the scroll container.
 </Aside>
 
-## Usage
+## Installation
 
 ```typescript jsx
 import { StickyListSection } from '@harnessio/ui/components'
@@ -323,6 +334,10 @@ import { StickyListSection } from '@harnessio/ui/components'
   API.
 </Aside>
 
+</TabItem>
+
+<TabItem label="Usage">
+
 ## Anatomy
 
 ```typescript jsx
@@ -336,17 +351,59 @@ import { StickyListSection } from '@harnessio/ui/components'
 </StickyListSection.Root>
 ```
 
-## API Reference
+- **`StickyListSection.Root`** wraps the section and renders an invisible sentinel just above the header. An `IntersectionObserver` watches that sentinel; when it scrolls out of view the header is "stuck", and `Root` exposes that state to the header (also reflected as `data-stuck`).
+- **`StickyListSection.Header`** is the pinned header. It picks up a shadow while stuck. Put the section title and any actions here.
+- **`StickyListSection.Content`** holds the scrollable body of the section.
 
-### `StickyListSection.Root`
+All three parts forward their ref and accept standard `<div>` attributes.
 
-The container component that manages stuck detection via IntersectionObserver.
+## Best practices
+
+{/* TODO: editorial — please review against product guidance. */}
+
+**Do**
+
+- Keep the header content compact — a title and at most one or two actions — since it stays on screen while scrolling.
+- Use it inside a scroll container (typically a `Drawer.Body`) where sticky positioning has something to pin against.
+- Reach for `contained` only when wrapper elements sit between the section and the scroll container and you need the header to bleed to the edges.
+
+**Don't**
+
+- Don't nest a `StickyListSection` inside its own scrolling child — the header pins to the nearest scroll container, not the page.
+- Don't rely on the stuck shadow alone to separate sections; keep clear header text for each.
+
+## Accessibility
+
+### Labeling
+
+- `StickyListSection` renders plain containers with no landmark or list roles, so each section's meaning comes from the visible header content you provide. Give every section a clear text heading.
+
+### Focus & states
+
+- The stuck state is a purely visual affordance (a shadow) and is not announced to assistive tech.
+- The internal sentinel used for stuck detection is `aria-hidden` and never focusable.
+
+### Known limitations
+
+- Sticky behavior depends on `IntersectionObserver` and on the header having a scroll container to pin against; without one (or in environments without the observer) the header simply scrolls normally.
+
+</TabItem>
+
+<TabItem label="Properties">
+
+{/* Visually hidden — anchors the section headings below in the TOC without showing a redundant title in the panel body (the tab already says "Properties"). Hidden via #page-level-tabs h2#properties in styles.css. */}
+
+## Properties
+
+### Root
+
+The container component that manages stuck detection via `IntersectionObserver`.
 
 <DocsPage.PropsTable
   props={[
     {
       name: "children",
-      description: "Header and Content sub-components",
+      description: "Header and Content sub-components.",
       required: true,
       value: "ReactNode",
     },
@@ -359,14 +416,16 @@ The container component that manages stuck detection via IntersectionObserver.
     },
     {
       name: "className",
-      description: "Additional CSS classes",
+      description: "Additional CSS classes.",
       required: false,
       value: "string",
     },
   ]}
 />
 
-### `StickyListSection.Header`
+`Root` also accepts standard `<div>` attributes.
+
+### Header
 
 The sticky header that pins to the top of the scroll container. Applies a shadow when stuck.
 
@@ -374,20 +433,22 @@ The sticky header that pins to the top of the scroll container. Applies a shadow
   props={[
     {
       name: "children",
-      description: "Header content (e.g. title, action buttons)",
+      description: "Header content (e.g. title, action buttons).",
       required: true,
       value: "ReactNode",
     },
     {
       name: "className",
-      description: "Additional CSS classes",
+      description: "Additional CSS classes.",
       required: false,
       value: "string",
     },
   ]}
 />
 
-### `StickyListSection.Content`
+`Header` also accepts standard `<div>` attributes.
+
+### Content
 
 Wrapper for the section's scrollable content.
 
@@ -395,15 +456,23 @@ Wrapper for the section's scrollable content.
   props={[
     {
       name: "children",
-      description: "Section content (e.g. a list of cards)",
+      description: "Section content (e.g. a list of cards).",
       required: true,
       value: "ReactNode",
     },
     {
       name: "className",
-      description: "Additional CSS classes",
+      description: "Additional CSS classes.",
       required: false,
       value: "string",
     },
   ]}
 />
+
+`Content` also accepts standard `<div>` attributes.
+
+</TabItem>
+
+</Tabs>
+
+</div>

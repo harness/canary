@@ -1,25 +1,130 @@
 ---
 title: Counter Badge
 description: Display simple numerical or textual count indicators
-beta: true
 ---
+
+import { DocsPage } from "@/components/docs-page";
+import { Tabs, TabItem } from "@astrojs/starlight/components";
+import PageTabsToc from "@/components/page-tabs-toc.astro";
+
+<PageTabsToc />
+
+<div id="page-level-tabs">
+
+<Tabs>
+
+<TabItem label="Overview">
 
 The `CounterBadge` component is used to highlight and display numerical values or simple count indicators. It is designed to be non-interactive (read-only) and supports different color themes.
 
-import { DocsPage } from "@/components/docs-page";
+<DocsPage.ComponentExample
+  client:only
+  code={`<div className="space-y-cn-sm w-full">
+  <div className="flex items-center gap-cn-md">
+    <span className="text-cn-size-2 text-cn-3 w-32 shrink-0 font-mono">themes</span>
+    <div className="flex gap-cn-lg">
+      <CounterBadge>1</CounterBadge>
+      <CounterBadge theme="info">42</CounterBadge>
+      <CounterBadge theme="success">+2345</CounterBadge>
+      <CounterBadge theme="danger">-123</CounterBadge>
+    </div>
+  </div>
+</div>`}
+/>
+
+## Variations
+
+### Outline
+
+The outline variant (the default) provides a subtle border-based appearance, ideal for secondary information display.
 
 <DocsPage.ComponentExample
   client:only
-  code={`<div className="flex gap-cn-lg">
-        <CounterBadge>1</CounterBadge>
-        <CounterBadge theme="info">42</CounterBadge>
-        <CounterBadge theme="success">+2345</CounterBadge>
-        <CounterBadge theme="danger">-123</CounterBadge>
+  code={`<div className="space-y-cn-sm w-full">
+  <div className="flex items-center gap-cn-md">
+    <span className="text-cn-size-2 text-cn-3 w-32 shrink-0 font-mono">outline</span>
+    <div className="flex gap-cn-lg">
+      <CounterBadge variant="outline">1</CounterBadge>
+      <CounterBadge variant="outline" theme="info">42</CounterBadge>
+      <CounterBadge variant="outline" theme="success">+2345</CounterBadge>
+      <CounterBadge variant="outline" theme="danger">-123</CounterBadge>
     </div>
-`}
+  </div>
+</div>`}
 />
 
-## Usage
+### Secondary
+
+The secondary variant uses a soft background appearance for more prominent display while maintaining subtlety.
+
+<DocsPage.ComponentExample
+  client:only
+  code={`<div className="space-y-cn-sm w-full">
+  <div className="flex items-center gap-cn-md">
+    <span className="text-cn-size-2 text-cn-3 w-32 shrink-0 font-mono">secondary</span>
+    <div className="flex gap-cn-lg">
+      <CounterBadge variant="secondary">1</CounterBadge>
+      <CounterBadge variant="secondary" theme="info">42</CounterBadge>
+      <CounterBadge variant="secondary" theme="success">+2345</CounterBadge>
+      <CounterBadge variant="secondary" theme="danger">-123</CounterBadge>
+    </div>
+  </div>
+</div>`}
+/>
+
+### Comparison
+
+Compare both variants side by side to see the visual differences:
+
+<DocsPage.ComponentExample
+  client:only
+  code={`<div className="space-y-cn-sm w-full">
+  <div className="flex items-center gap-cn-md border-b border-cn-borders-3 pb-cn-sm">
+    <span className="text-cn-size-2 text-cn-3 w-32 shrink-0 font-mono">outline</span>
+    <div className="flex gap-cn-sm">
+      <CounterBadge variant="outline">12</CounterBadge>
+      <CounterBadge variant="outline" theme="info">42</CounterBadge>
+      <CounterBadge variant="outline" theme="success">+99</CounterBadge>
+      <CounterBadge variant="outline" theme="danger">-5</CounterBadge>
+    </div>
+  </div>
+  <div className="flex items-center gap-cn-md">
+    <span className="text-cn-size-2 text-cn-3 w-32 shrink-0 font-mono">secondary</span>
+    <div className="flex gap-cn-sm">
+      <CounterBadge variant="secondary">12</CounterBadge>
+      <CounterBadge variant="secondary" theme="info">42</CounterBadge>
+      <CounterBadge variant="secondary" theme="success">+99</CounterBadge>
+      <CounterBadge variant="secondary" theme="danger">-5</CounterBadge>
+    </div>
+  </div>
+</div>`}
+/>
+
+### Themes
+
+The badge supports four color themes. `default` and `info` read as neutral indicators for general counts, while `success` and `danger` are status indicators that signal an improvement or a concern.
+
+<DocsPage.ComponentExample
+  client:only
+  code={`<div className="space-y-cn-sm w-full">
+  <div className="flex items-center gap-cn-md border-b border-cn-borders-3 pb-cn-sm">
+    <span className="text-cn-size-2 text-cn-3 w-32 shrink-0 font-mono">neutral</span>
+    <div className="flex gap-cn-lg">
+      <CounterBadge>0</CounterBadge>
+      <CounterBadge theme="info">42</CounterBadge>
+    </div>
+  </div>
+  <div className="flex items-center gap-cn-md">
+    <span className="text-cn-size-2 text-cn-3 w-32 shrink-0 font-mono">status</span>
+    <div className="flex gap-cn-lg">
+      <CounterBadge theme="success">+2345</CounterBadge>
+      <CounterBadge theme="danger">-123</CounterBadge>
+    </div>
+  </div>
+</div>`}
+/>
+
+## Installation
 
 ```typescript jsx
 import { CounterBadge } from '@harnessio/ui/components'
@@ -39,106 +144,69 @@ import { CounterBadge } from '@harnessio/ui/components'
 <CounterBadge theme="danger">99+</CounterBadge>
 ```
 
-## Variants
+</TabItem>
 
-The `CounterBadge` component supports two variants: `outline` (default) and `secondary`.
+<TabItem label="Usage">
 
-### Outline Variant
+## Anatomy
 
-The outline variant provides a subtle border-based appearance, ideal for secondary information display.
+`CounterBadge` is a single, self-contained element — there are no parts to compose:
 
-<DocsPage.ComponentExample
-  client:only
-  code={`<div className="flex gap-cn-lg">
-        <CounterBadge variant="outline">1</CounterBadge>
-        <CounterBadge variant="outline" theme="info">42</CounterBadge>
-        <CounterBadge variant="outline" theme="success">+2345</CounterBadge>
-        <CounterBadge variant="outline" theme="danger">-123</CounterBadge>
-    </div>
-`}
-/>
+```typescript jsx
+<CounterBadge theme="info">42</CounterBadge>
+```
 
-### Secondary Variant
+- It renders one `<div>` styled by the `variant` (outline or secondary) and `theme` (default, info, success, danger) you pass, and shows its `children` as-is — a number, a short string like `99+`, or a signed value like `-123`.
+- It's read-only by design: the props that would make it interactive or reassign its semantics — `role`, `onClick`, `tabIndex`, `aria-readonly`, `color` — are removed from its type, so it stays a plain, non-interactive indicator.
+- Any remaining `HTMLAttributes` (including `className` and `aria-*`) pass straight through to that div.
 
-The secondary variant uses a soft background appearance for more prominent display while maintaining subtlety.
+## Best practices
 
-<DocsPage.ComponentExample
-  client:only
-  code={`<div className="flex gap-cn-lg">
-        <CounterBadge variant="secondary">1</CounterBadge>
-        <CounterBadge variant="secondary" theme="info">42</CounterBadge>
-        <CounterBadge variant="secondary" theme="success">+2345</CounterBadge>
-        <CounterBadge variant="secondary" theme="danger">-123</CounterBadge>
-    </div>
-`}
-/>
+{/* TODO: editorial — please review against product guidance. */}
 
-### Variant Comparison
+**Do**
 
-Compare both variants side by side to see the visual differences:
+- Use a counter badge to surface a count or short value next to the thing it describes — a tab, a list heading, a menu item.
+- Keep the content to a compact number or short token (`8`, `+99`, `99+`), and cap large numbers (e.g. `99+`) so the badge stays small.
+- Choose the `theme` for meaning: `default`/`info` for a neutral count, `success` for a positive change, `danger` for a problem count.
 
-<DocsPage.ComponentExample
-  client:only
-  code={`<div className="flex flex-col gap-cn-md">
-    <div className="flex gap-cn-sm">
-      <Text variant="heading-subsection" as="h4" className="min-w-[80px]">Outline:</Text>
-      <div className="flex gap-cn-sm">
-        <CounterBadge variant="outline">12</CounterBadge>
-        <CounterBadge variant="outline" theme="info">42</CounterBadge>
-        <CounterBadge variant="outline" theme="success">+99</CounterBadge>
-        <CounterBadge variant="outline" theme="danger">-5</CounterBadge>
-      </div>
-    </div>
-    <div className="flex gap-cn-sm">
-      <Text variant="heading-subsection" as="h4" className="min-w-[80px]">Secondary:</Text>
-      <div className="flex gap-cn-sm">
-        <CounterBadge variant="secondary">12</CounterBadge>
-        <CounterBadge variant="secondary" theme="info">42</CounterBadge>
-        <CounterBadge variant="secondary" theme="success">+99</CounterBadge>
-        <CounterBadge variant="secondary" theme="danger">-5</CounterBadge>
-      </div>
-    </div>
-  </div>
-`}
-/>
+**Don't**
 
-## Themes
+- Don't put a counter badge on something people are meant to click _through the badge_ — it's non-interactive; make the surrounding element the control.
+- Don't use it for long text or full labels; reach for [Tag](/components/feedback/tag/) or [Status Badge](/components/feedback/status-badge/) when you need words.
+- Don't rely on theme color alone to carry meaning — see the accessibility notes.
 
-The `CounterBadge` component supports four color themes that can be categorized into different groups based on their semantic meaning.
+## Content
 
-### Theme Categories
+{/* TODO: editorial — please review against product guidance. */}
 
-#### Neutral Indicators
+- Keep it to a number or a short count token; avoid words and punctuation beyond what a count needs (`+`, `-`, `%`).
+- Pick a consistent overflow convention (e.g. `99+`) and use it everywhere counts can get large.
 
-Neutral indicators are used for displaying general counts or values that don't carry specific positive or negative connotations.
+## Accessibility
 
-<DocsPage.ComponentExample
-  client:only
-  code={`
-    <div className="flex gap-cn-xs">
-        <CounterBadge>0</CounterBadge>
-        <CounterBadge theme="info">42</CounterBadge>
-    </div>
-`}
-/>
+`CounterBadge` is a visual, non-interactive indicator: it renders its content as plain text inside a `<div>` with no semantic role of its own.
 
-#### Status Indicators
+### Labeling
 
-Status indicators communicate the nature of the change or value - whether it represents an improvement (success) or a concern (danger).
+- The badge's content is read inline as text, but nothing ties it to what it counts — a bare `3` gives no context on its own. Make sure the surrounding label supplies the meaning ("Errors 3"), or add an `aria-label` on the badge (or its container) that spells it out.
 
-<DocsPage.ComponentExample
-  client:only
-  code={`
-    <div className="flex gap-cn-xs">
-        <CounterBadge theme="success">+2345</CounterBadge>
-        <CounterBadge theme="danger">-123</CounterBadge>
-    </div>
-`}
-/>
+### Focus & states
 
-## API Reference
+- The badge isn't focusable and has no interactive states — it never enters the tab order. When the count belongs to an interactive element, put the behavior and focus on that element, not the badge.
 
-The `CounterBadge` component has the following props to control its appearance:
+### Known limitations
+
+- **A changing count isn't announced.** The badge is a plain `<div>`, not a live region (`role="status"`/`aria-live`), so screen-reader users aren't notified when the number updates. If announcing the change matters, wrap it in your own live region.
+- **Theme color isn't meaning.** `success` and `danger` convey improvement/concern only through color. Keep the value itself explicit (a sign like `+`/`-`, or an adjacent label) so the meaning survives without color perception.
+
+</TabItem>
+
+<TabItem label="Properties">
+
+{/* Visually hidden — anchors the section headings below in the TOC without showing a redundant title in the panel body (the tab already says "Properties"). Hidden via #page-level-tabs h2#properties in styles.css. */}
+
+## Properties
 
 <DocsPage.PropsTable
   props={[
@@ -170,3 +238,11 @@ The `CounterBadge` component has the following props to control its appearance:
     },
   ]}
 />
+
+`CounterBadge` also forwards the remaining `HTMLAttributes<HTMLDivElement>` (e.g. `aria-*`, `id`) onto the underlying div — except `color`, `role`, `aria-readonly`, `tabIndex`, and `onClick`, which are removed to keep it read-only.
+
+</TabItem>
+
+</Tabs>
+
+</div>

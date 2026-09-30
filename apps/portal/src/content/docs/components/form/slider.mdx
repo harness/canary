@@ -1,122 +1,148 @@
 ---
 title: Slider
 description: Slider component
-beta: true
 ---
 
-The `Slider` component allows users to select a single value or a range by dragging thumbs along a track.
-Built on [Radix UI Slider](https://www.radix-ui.com/primitives/docs/components/slider) with custom styling.
-
 import { DocsPage } from "@/components/docs-page";
+import { Tabs, TabItem } from "@astrojs/starlight/components";
+import PageTabsToc from "@/components/page-tabs-toc.astro";
+
+<PageTabsToc />
+
+<div id="page-level-tabs">
+
+<Tabs>
+
+<TabItem label="Overview">
+
+The `Slider` component lets people pick a single value or a range by dragging thumbs along a track. It's built on [Radix UI Slider](https://www.radix-ui.com/primitives/docs/components/slider) with a label, an optional live value, and description or min/max captions.
 
 <DocsPage.ComponentExample
   client:only
-  code={`<div className="w-[400px] flex flex-col gap-cn-lg">
-    <h5>Single value</h5>
-    <Slider
-      label="Pipeline timeout"
-      description="Maximum execution time in minutes"
-      showValue
-      defaultValue={[30]}
-      min={5}
-      max={120}
-      step={5}
-      formatValue={(v) => v[0] + 'm'}
-    />
-
-    <hr className="my-cn-xs" />
-
-    <h5>Range</h5>
-    <Slider
-      label="CPU cores"
-      description="Min and max cores for build containers"
-      showValue
-      defaultValue={[2, 8]}
-      min={1}
-      max={16}
-    />
-
-    <hr className="my-cn-xs" />
-
-    <h5>Min / Max labels</h5>
-    <Slider
-      label="Deployment rollout"
-      caption="min-max"
-      minLabel="0%"
-      maxLabel="100%"
-      defaultValue={[25]}
-    />
-
-    <hr className="my-cn-xs" />
-
-    <h5>Custom format</h5>
-    <Slider
-      label="Canary rollout"
-      description="Percentage of traffic to route to canary"
-      showValue
-      defaultValue={[25]}
-      step={5}
-      formatValue={(v) => v[0] + '%'}
-    />
-
-    <hr className="my-cn-xs" />
-
-    <h5>Disabled</h5>
-    <Slider
-      label="Max replicas"
-      description="Upgrade your plan to adjust scaling limits"
-      showValue
-      defaultValue={[3]}
-      min={1}
-      max={10}
-      disabled
-    />
-
-    <Slider
-      label="Failure rate threshold"
-      showValue
-      defaultValue={[20, 80]}
-      disabled
-    />
-
+  code={`<div className="space-y-cn-sm w-full">
+  <div className="flex items-start gap-cn-md border-b border-cn-borders-3 pb-cn-sm">
+    <span className="text-cn-size-2 text-cn-3 w-40 shrink-0 font-mono pt-cn-xs">single value</span>
+    <div className="flex-1 min-w-0 max-w-[420px]">
+      <Slider
+        label="Pipeline timeout"
+        description="Maximum execution time in minutes"
+        showValue
+        defaultValue={[30]}
+        min={5}
+        max={120}
+        step={5}
+        formatValue={(v) => v[0] + 'm'}
+      />
+    </div>
+  </div>
+  <div className="flex items-start gap-cn-md border-b border-cn-borders-3 pb-cn-sm">
+    <span className="text-cn-size-2 text-cn-3 w-40 shrink-0 font-mono pt-cn-xs">range</span>
+    <div className="flex-1 min-w-0 max-w-[420px]">
+      <Slider
+        label="CPU cores"
+        description="Min and max cores for build containers"
+        showValue
+        defaultValue={[2, 8]}
+        min={1}
+        max={16}
+      />
+    </div>
+  </div>
+  <div className="flex items-start gap-cn-md border-b border-cn-borders-3 pb-cn-sm">
+    <span className="text-cn-size-2 text-cn-3 w-40 shrink-0 font-mono pt-cn-xs">min-max labels</span>
+    <div className="flex-1 min-w-0 max-w-[420px]">
+      <Slider
+        label="Deployment rollout"
+        caption="min-max"
+        minLabel="0%"
+        maxLabel="100%"
+        defaultValue={[25]}
+      />
+    </div>
+  </div>
+  <div className="flex items-start gap-cn-md border-b border-cn-borders-3 pb-cn-sm">
+    <span className="text-cn-size-2 text-cn-3 w-40 shrink-0 font-mono pt-cn-xs">custom format</span>
+    <div className="flex-1 min-w-0 max-w-[420px]">
+      <Slider
+        label="Canary rollout"
+        description="Percentage of traffic to route to canary"
+        showValue
+        defaultValue={[25]}
+        step={5}
+        formatValue={(v) => v[0] + '%'}
+      />
+    </div>
+  </div>
+  <div className="flex items-start gap-cn-md border-b border-cn-borders-3 pb-cn-sm">
+    <span className="text-cn-size-2 text-cn-3 w-40 shrink-0 font-mono pt-cn-xs">disabled</span>
+    <div className="flex-1 min-w-0 max-w-[420px]">
+      <Slider
+        label="Max replicas"
+        description="Upgrade your plan to adjust scaling limits"
+        showValue
+        defaultValue={[3]}
+        min={1}
+        max={10}
+        disabled
+      />
+    </div>
+  </div>
+  <div className="flex items-start gap-cn-md">
+    <span className="text-cn-size-2 text-cn-3 w-40 shrink-0 font-mono pt-cn-xs">disabled range</span>
+    <div className="flex-1 min-w-0 max-w-[420px]">
+      <Slider
+        label="Failure rate threshold"
+        showValue
+        defaultValue={[20, 80]}
+        disabled
+      />
+    </div>
+  </div>
 </div>`}
 />
 
-## Severity Slider
+## Variations
 
-A specialized variant with a gradient track and two thumbs for defining severity thresholds.
+### Severity slider
+
+`SeveritySlider` is a specialized variant with a gradient track and two thumbs for defining severity thresholds.
 
 <DocsPage.ComponentExample
   client:only
-  code={`<div className="w-[400px] flex flex-col gap-cn-lg">
-    <h5>Default</h5>
-    <SeveritySlider
-      label="Alert thresholds"
-      defaultValue={[25, 75]}
-    />
-
-    <hr className="my-cn-xs" />
-
-    <h5>Custom labels</h5>
-    <SeveritySlider
-      label="Incident priority"
-      labels={["Info", "Warning", "Error", "Fatal"]}
-      defaultValue={[20, 60]}
-    />
-
-    <hr className="my-cn-xs" />
-
-    <h5>Disabled</h5>
-    <SeveritySlider
-      label="SLO thresholds (locked)"
-      defaultValue={[30, 70]}
-      disabled
-    />
-
+  code={`<div className="space-y-cn-sm w-full">
+  <div className="flex items-start gap-cn-md border-b border-cn-borders-3 pb-cn-sm">
+    <span className="text-cn-size-2 text-cn-3 w-40 shrink-0 font-mono pt-cn-xs">default</span>
+    <div className="flex-1 min-w-0 max-w-[420px]">
+      <SeveritySlider
+        label="Alert thresholds"
+        defaultValue={[25, 75]}
+      />
+    </div>
+  </div>
+  <div className="flex items-start gap-cn-md border-b border-cn-borders-3 pb-cn-sm">
+    <span className="text-cn-size-2 text-cn-3 w-40 shrink-0 font-mono pt-cn-xs">custom labels</span>
+    <div className="flex-1 min-w-0 max-w-[420px]">
+      <SeveritySlider
+        label="Incident priority"
+        labels={["Info", "Warning", "Error", "Fatal"]}
+        defaultValue={[20, 60]}
+      />
+    </div>
+  </div>
+  <div className="flex items-start gap-cn-md">
+    <span className="text-cn-size-2 text-cn-3 w-40 shrink-0 font-mono pt-cn-xs">disabled</span>
+    <div className="flex-1 min-w-0 max-w-[420px]">
+      <SeveritySlider
+        label="SLO thresholds (locked)"
+        defaultValue={[30, 70]}
+        disabled
+      />
+    </div>
+  </div>
 </div>`}
 />
 
-## Usage
+## Installation
 
 ```typescript jsx
 import { Slider, SeveritySlider } from '@harnessio/ui/components'
@@ -161,7 +187,68 @@ import { Slider, SeveritySlider } from '@harnessio/ui/components'
 />
 ```
 
-## API Reference — Slider
+</TabItem>
+
+<TabItem label="Usage">
+
+## Anatomy
+
+`Slider` wraps a Radix Slider (track, filled range, and one thumb per value) with a `label` above and a caption below. It renders one thumb for a single value and two for a range — the shape of `value` / `defaultValue` decides which.
+
+```tsx
+<Slider
+  label="Pipeline timeout"
+  showValue
+  defaultValue={[30]}
+  min={5}
+  max={120}
+/>
+```
+
+- **Single vs range** — pass one number for a single-value slider (`[30]`) or two for a range (`[2, 8]`). The number of thumbs follows the array length.
+- **Value display** — `showValue` shows the current value next to the track, formatted by `formatValue` (defaults to the raw number, or `min – max` for a range).
+- **Caption** — `caption="description"` (the default) shows `description` text below the track; `caption="min-max"` shows `minLabel` / `maxLabel` at the two ends instead.
+- **`SeveritySlider`** — a specialized always-range variant with a gradient track and evenly-spaced `labels` beneath it, for defining severity thresholds.
+
+## Best practices
+
+{/* TODO: editorial — please review against product guidance. */}
+
+**Do**
+
+- Give every slider a `label`, and add a `description` or `min`/`max` labels so the range's meaning and units are clear.
+- Turn on `showValue` (with a `formatValue` that includes the unit, like `30m` or `25%`) whenever the exact number matters.
+- Set a sensible `step` for the domain so people can land on valid values by dragging or with the arrow keys.
+
+**Don't**
+
+- Don't use a slider when precision matters more than quick approximate adjustment — a number input is better for exact entry.
+- Don't rely on color alone in the `SeveritySlider` gradient; keep the `labels` so the thresholds stay legible.
+
+## Accessibility
+
+### Keyboard
+
+- Each thumb is a Radix slider thumb: **arrow keys** nudge by `step`, **Home** / **End** jump to `min` / `max`, and **Page Up** / **Page Down** move in larger increments. In a range, the two thumbs can't cross.
+
+### Labeling
+
+- The `label` is associated with the slider via `htmlFor`, so it names the control for assistive tech. In a range, the two thumbs are additionally labeled "Minimum value" and "Maximum value".
+- Each thumb exposes its current value through the underlying `role="slider"` (`aria-valuenow` / `aria-valuemin` / `aria-valuemax`).
+
+### Focus & states
+
+- Thumbs are focusable and show a focus ring. A `disabled` slider is skipped in the tab order and doesn't respond to pointer or keyboard input.
+
+</TabItem>
+
+<TabItem label="Properties">
+
+{/* Visually hidden — anchors the section headings below in the TOC without showing a redundant title in the panel body (the tab already says "Properties"). Hidden via #page-level-tabs h2#properties in styles.css. */}
+
+## Properties
+
+### Slider
 
 <DocsPage.PropsTable
   props={[
@@ -283,7 +370,9 @@ import { Slider, SeveritySlider } from '@harnessio/ui/components'
   ]}
 />
 
-## API Reference — SeveritySlider
+The `Slider` also accepts the underlying Radix Slider `Root` props (except `orientation`).
+
+### SeveritySlider
 
 <DocsPage.PropsTable
   props={[
@@ -362,3 +451,9 @@ import { Slider, SeveritySlider } from '@harnessio/ui/components'
     },
   ]}
 />
+
+</TabItem>
+
+</Tabs>
+
+</div>

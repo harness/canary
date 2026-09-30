@@ -1,12 +1,21 @@
 ---
 title: Progress
 description: Progress component
-beta: true
 ---
 
-The `Progress` component provides a flexible UI element for displaying progress indicators.
-
 import { DocsPage } from "@/components/docs-page";
+import { Tabs, TabItem } from "@astrojs/starlight/components";
+import PageTabsToc from "@/components/page-tabs-toc.astro";
+
+<PageTabsToc />
+
+<div id="page-level-tabs">
+
+<Tabs>
+
+<TabItem label="Overview">
+
+The `Progress` component provides a flexible UI element for displaying progress indicators — either a measurable (determinate) bar or an ongoing (indeterminate) loading state.
 
 <DocsPage.ComponentExample
   client:only
@@ -15,7 +24,216 @@ import { DocsPage } from "@/components/docs-page";
 </div>`}
 />
 
-## Usage
+## Variations
+
+### Variants
+
+The `variant` prop indicates the type of progress. It accepts `default` and `indeterminate` — whether the progress is measurable or ongoing without a known completion percentage.
+
+<DocsPage.ComponentExample
+  client:only
+  code={`<div className="space-y-cn-sm w-full">
+  <div className="flex items-start gap-cn-md border-b border-cn-borders-3 pb-cn-sm">
+    <span className="text-cn-size-2 text-cn-3 w-40 shrink-0 font-mono pt-cn-xs">default</span>
+    <div className="flex-1 min-w-0 max-w-[600px]">
+      <Progress value={0.75} state="processing" />
+    </div>
+  </div>
+  <div className="flex items-start gap-cn-md">
+    <span className="text-cn-size-2 text-cn-3 w-40 shrink-0 font-mono pt-cn-xs">indeterminate</span>
+    <div className="flex-1 min-w-0 max-w-[600px]">
+      <Progress variant="indeterminate" />
+    </div>
+  </div>
+</div>`}
+/>
+
+### States
+
+The `state` prop reflects the current status of the operation. It accepts `completed`, `paused`, `failed`, `processing`, and `default`, controlling the visual feedback based on the progress state.
+
+<DocsPage.ComponentExample
+  client:only
+  code={`<div className="space-y-cn-sm w-full">
+  <div className="flex items-start gap-cn-md border-b border-cn-borders-3 pb-cn-sm">
+    <span className="text-cn-size-2 text-cn-3 w-40 shrink-0 font-mono pt-cn-xs">completed</span>
+    <div className="flex-1 min-w-0 max-w-[600px]">
+      <Progress
+        value={1}
+        subtitle="Completed"
+        label="Analytics_Report_March.csv"
+        state="completed"
+      />
+    </div>
+  </div>
+  <div className="flex items-start gap-cn-md border-b border-cn-borders-3 pb-cn-sm">
+    <span className="text-cn-size-2 text-cn-3 w-40 shrink-0 font-mono pt-cn-xs">paused</span>
+    <div className="flex-1 min-w-0 max-w-[600px]">
+      <Progress
+        value={0.5}
+        label="Analytics_Report_March.csv"
+        subtitle="Paused"
+        state="paused"
+      />
+    </div>
+  </div>
+  <div className="flex items-start gap-cn-md border-b border-cn-borders-3 pb-cn-sm">
+    <span className="text-cn-size-2 text-cn-3 w-40 shrink-0 font-mono pt-cn-xs">failed</span>
+    <div className="flex-1 min-w-0 max-w-[600px]">
+      <Progress
+        value={0.5}
+        label="Analytics_Report_March.csv"
+        subtitle="Failed"
+        description="Upload process failed due to connection issues."
+        state="failed"
+      />
+    </div>
+  </div>
+  <div className="flex items-start gap-cn-md border-b border-cn-borders-3 pb-cn-sm">
+    <span className="text-cn-size-2 text-cn-3 w-40 shrink-0 font-mono pt-cn-xs">processing</span>
+    <div className="flex-1 min-w-0 max-w-[600px]">
+      <Progress
+        value={0.5}
+        label="Analytics_Report_March.csv"
+        subtitle="5 min left"
+        state="processing"
+      />
+    </div>
+  </div>
+  <div className="flex items-start gap-cn-md">
+    <span className="text-cn-size-2 text-cn-3 w-40 shrink-0 font-mono pt-cn-xs">default</span>
+    <div className="flex-1 min-w-0 max-w-[600px]">
+      <Progress
+        value={0.5}
+        label="Analytics_Report_March.csv"
+        subtitle="Subtitle"
+        description="This is a description text"
+      />
+    </div>
+  </div>
+</div>`}
+/>
+
+### Colors
+
+The `color` prop accepts a closed enum of palette themes — `gray`, `blue`, `brown`, `cyan`, `green`, `forest-green`, `indigo`, `lime`, `mint`, `orange`, `pink`, `purple`, `red`, `violet`, and `yellow` — matching the `Tag` theme set. The bar fill resolves to the corresponding design-system token (e.g. `--cn-set-blue-primary-bg`).
+
+`color` and `state` are mutually exclusive — pass one or the other, never both. When `color` is set, the bar uses the chosen theme color while the status icon falls back to the neutral default; use `hideIcon` to remove the icon entirely. `color` works with both the `default` and `indeterminate` variants.
+
+<DocsPage.ComponentExample
+  client:only
+  code={`<div className="space-y-cn-sm w-full">
+  <div className="flex items-start gap-cn-md border-b border-cn-borders-3 pb-cn-sm">
+    <span className="text-cn-size-2 text-cn-3 w-40 shrink-0 font-mono pt-cn-xs">blue</span>
+    <div className="flex-1 min-w-0 max-w-[600px]">
+      <Progress
+        value={0.6}
+        color="blue"
+        label="Analytics_Report_March.csv"
+        subtitle="60%"
+      />
+    </div>
+  </div>
+  <div className="flex items-start gap-cn-md border-b border-cn-borders-3 pb-cn-sm">
+    <span className="text-cn-size-2 text-cn-3 w-40 shrink-0 font-mono pt-cn-xs">purple</span>
+    <div className="flex-1 min-w-0 max-w-[600px]">
+      <Progress
+        value={0.4}
+        color="purple"
+        label="Analytics_Report_March.csv"
+        subtitle="40%"
+      />
+    </div>
+  </div>
+  <div className="flex items-start gap-cn-md border-b border-cn-borders-3 pb-cn-sm">
+    <span className="text-cn-size-2 text-cn-3 w-40 shrink-0 font-mono pt-cn-xs">forest-green</span>
+    <div className="flex-1 min-w-0 max-w-[600px]">
+      <Progress
+        value={0.8}
+        color="forest-green"
+        label="Analytics_Report_March.csv"
+        subtitle="80%"
+      />
+    </div>
+  </div>
+  <div className="flex items-start gap-cn-md">
+    <span className="text-cn-size-2 text-cn-3 w-40 shrink-0 font-mono pt-cn-xs">indeterminate + cyan</span>
+    <div className="flex-1 min-w-0 max-w-[600px]">
+      <Progress
+        variant="indeterminate"
+        color="cyan"
+        label="Loading"
+      />
+    </div>
+  </div>
+</div>`}
+/>
+
+### Sizes
+
+The `size` prop adjusts the height of the progress bar. It accepts `sm`, `md`, and `lg` to fit different UI contexts.
+
+<DocsPage.ComponentExample
+  client:only
+  code={`<div className="space-y-cn-sm w-full">
+  <div className="flex items-start gap-cn-md border-b border-cn-borders-3 pb-cn-sm">
+    <span className="text-cn-size-2 text-cn-3 w-40 shrink-0 font-mono pt-cn-xs">small</span>
+    <div className="flex-1 min-w-0 max-w-[600px]">
+      <Progress
+        size="sm"
+        value={0.5}
+        label="Title"
+        subtitle="Subtitle"
+        description="This is a description text"
+      />
+    </div>
+  </div>
+  <div className="flex items-start gap-cn-md border-b border-cn-borders-3 pb-cn-sm">
+    <span className="text-cn-size-2 text-cn-3 w-40 shrink-0 font-mono pt-cn-xs">medium</span>
+    <div className="flex-1 min-w-0 max-w-[600px]">
+      <Progress
+        size="md"
+        value={0.5}
+        label="Title"
+        subtitle="Subtitle"
+        description="This is a description text"
+      />
+    </div>
+  </div>
+  <div className="flex items-start gap-cn-md border-b border-cn-borders-3 pb-cn-sm">
+    <span className="text-cn-size-2 text-cn-3 w-40 shrink-0 font-mono pt-cn-xs">large</span>
+    <div className="flex-1 min-w-0 max-w-[600px]">
+      <Progress
+        size="lg"
+        value={0.5}
+        label="Title"
+        subtitle="Subtitle"
+        description="This is a description text"
+      />
+    </div>
+  </div>
+  <div className="flex items-center gap-cn-md border-b border-cn-borders-3 pb-cn-sm">
+    <span className="text-cn-size-2 text-cn-3 w-40 shrink-0 font-mono">sm · processing</span>
+    <div className="flex-1 min-w-0 max-w-[600px]">
+      <Progress size="sm" value={0.75} state="processing" />
+    </div>
+  </div>
+  <div className="flex items-center gap-cn-md border-b border-cn-borders-3 pb-cn-sm">
+    <span className="text-cn-size-2 text-cn-3 w-40 shrink-0 font-mono">md · processing</span>
+    <div className="flex-1 min-w-0 max-w-[600px]">
+      <Progress size="md" value={0.75} state="processing" />
+    </div>
+  </div>
+  <div className="flex items-center gap-cn-md">
+    <span className="text-cn-size-2 text-cn-3 w-40 shrink-0 font-mono">lg · processing</span>
+    <div className="flex-1 min-w-0 max-w-[600px]">
+      <Progress size="lg" value={0.75} state="processing" />
+    </div>
+  </div>
+</div>`}
+/>
+
+## Installation
 
 ```typescript jsx
 import { Progress } from '@harnessio/ui/components'
@@ -27,201 +245,71 @@ return (
 )
 ```
 
-### Variants
+</TabItem>
 
-The `Progress` component supports the `variant` prop to indicate the type of progress being displayed. It accepts `default` and `indeterminate` values. This defines whether the progress is measurable or ongoing without a known completion percentage.
+<TabItem label="Usage">
 
-<DocsPage.ComponentExample
-  client:only
-  code={`<div className="w-[600px] grid gap-cn-md">
-    <div>
-      <Text variant="heading-base" className="underline mb-cn-3xs">default:</Text>
-      <Progress
-        value={0.75}
-        state="processing"
-      />
-    </div>
+## Anatomy
 
-    <div>
-      <Text variant="heading-base" className="underline mb-cn-3xs">indeterminate:</Text>
-      <Progress
-        variant="indeterminate"
-      />
-    </div>
+`Progress` renders a bar with optional label, subtitle, description, a percentage, and a status icon.
 
-</div>`}
+- **`variant`** — `default` for a measurable bar driven by `value`, or `indeterminate` for an ongoing animation with no known completion.
+- **`value`** — a number from 0 to 1 (clamped) shown as a percentage. Required for the `default` variant; not accepted when `indeterminate`.
+- **`state` vs `color`** — choose one. `state` maps to semantic feedback (processing, completed, paused, failed) with a matching icon; `color` sets a palette theme for the bar fill.
+- **Text** — `label` sits above the bar (with the percentage unless `hidePercentage`), and `subtitle` / `description` sit below.
+
+```tsx
+<Progress
+  value={0.5}
+  state="processing"
+  label="Analytics_Report_March.csv"
+  subtitle="5 min left"
 />
+```
 
-### States
+## Best practices
 
-The `Progress` component supports the `state` prop to reflect the current status of the operation. It accepts `completed`, `paused`, `failed`, `processing`, and `default` values. This controls the visual feedback based on the progress state.
+{/* TODO: editorial — please review against product guidance. */}
 
-<DocsPage.ComponentExample
-  client:only
-  code={`<div className="w-[600px] grid gap-cn-md">
-    
-    <div>
-      <Text variant="heading-base" className="underline mb-cn-3xs">completed:</Text>
-      <Progress 
-        value={1}
-        subtitle="Completed"
-        label="Analytics_Report_March.csv"
-        state="completed"
-      />
-    </div>
-    
-    <div>
-      <Text variant="heading-base" className="underline mb-cn-3xs">paused:</Text>
-      <Progress 
-        value={0.5}
-        label="Analytics_Report_March.csv"
-        subtitle="Paused"
-        state="paused"
-      />
-    </div>
+**Do**
 
-    <div>
-      <Text variant="heading-base" className="underline mb-cn-3xs">failed:</Text>
-      <Progress
-        value={0.5}
-        label="Analytics_Report_March.csv"
-        subtitle="Failed"
-        description="Upload process failed due to connection issues."
-        state="failed"
-      />
-    </div>
+- Use the `default` variant with a real `value` whenever you can estimate completion; reserve `indeterminate` for waits of unknown length.
+- Use `state` to communicate outcome (completed, paused, failed) rather than encoding it only in the color.
+- Pair a `label` with the percentage so people know what's progressing.
 
-    <div>
-      <Text variant="heading-base" className="underline mb-cn-3xs">processing:</Text>
-      <Progress
-        value={0.5}
-        label="Analytics_Report_March.csv"
-        subtitle="5 min left"
-        state="processing"
-      />
-    </div>
+**Don't**
 
-    <div>
-      <Text variant="heading-base" className="underline mb-cn-3xs">default:</Text>
-      <Progress
-        value={0.5}
-        label="Analytics_Report_March.csv"
-        subtitle="Subtitle"
-        description="This is a description text"
-      />
-    </div>
+- Don't pass both `state` and `color` — they're mutually exclusive.
+- Don't leave a bar stuck at an indeterminate animation once you know the actual progress; switch to a determinate value.
 
-</div>`}
-/>
+## Accessibility
 
-### Colors
+### Labeling
 
-The `Progress` component supports a `color` prop that accepts a closed enum of palette themes — `gray`, `blue`, `brown`, `cyan`, `green`, `forest-green`, `indigo`, `lime`, `mint`, `orange`, `pink`, `purple`, `red`, `violet`, and `yellow` — matching the `Tag` theme set. The bar fill resolves to the corresponding design-system token (e.g. `--cn-set-blue-primary-bg`).
+- `Progress` renders a native HTML `<progress>` element, which carries built-in progress-bar semantics — no extra ARIA roles are added.
+- When you pass an `id` (or let one be generated), the `label` is associated with the bar via `htmlFor`, so the label is announced with the progress value.
 
-`color` and `state` are mutually exclusive — pass one or the other, never both. When `color` is set, the bar uses the chosen theme color, while the status icon falls back to the neutral default; use `hideIcon` if you want to remove the icon entirely. `color` works with both the `default` and `indeterminate` variants.
+### Known limitations
 
-<DocsPage.ComponentExample
-  client:only
-  code={`<div className="w-[600px] grid gap-cn-md">
+- **No explicit ARIA value attributes.** Value semantics come from the native element (`value` / `max`) rather than explicit `aria-valuenow` / `aria-valuemin` / `aria-valuemax`. In the indeterminate variant the element has no value, matching the native indeterminate state.
+- **Icon reflects `state`, not `color`.** When `color` is set (and `state` is therefore unset) the status icon falls back to the neutral default; use `hideIcon` if that icon isn't meaningful.
 
-    <div>
-      <Text variant="heading-base" className="underline mb-cn-3xs">blue:</Text>
-      <Progress
-        value={0.6}
-        color="blue"
-        label="Analytics_Report_March.csv"
-        subtitle="60%"
-      />
-    </div>
+</TabItem>
 
-    <div>
-      <Text variant="heading-base" className="underline mb-cn-3xs">purple:</Text>
-      <Progress
-        value={0.4}
-        color="purple"
-        label="Analytics_Report_March.csv"
-        subtitle="40%"
-      />
-    </div>
+<TabItem label="Properties">
 
-    <div>
-      <Text variant="heading-base" className="underline mb-cn-3xs">forest-green:</Text>
-      <Progress
-        value={0.8}
-        color="forest-green"
-        label="Analytics_Report_March.csv"
-        subtitle="80%"
-      />
-    </div>
+{/* Visually hidden — anchors the section headings below in the TOC without showing a redundant title in the panel body (the tab already says "Properties"). Hidden via #page-level-tabs h2#properties in styles.css. */}
 
-    <div>
-      <Text variant="heading-base" className="underline mb-cn-3xs">indeterminate + cyan:</Text>
-      <Progress
-        variant="indeterminate"
-        color="cyan"
-        label="Loading"
-      />
-    </div>
+## Properties
 
-  </div>`}
-/>
-
-### Sizes
-
-The `Progress` component supports the `size` prop to adjust the height of the progress bar. It accepts `sm`, `md`, and `lg` values. This allows customization of the component’s visual size to fit different UI contexts.
-
-<DocsPage.ComponentExample
-  client:only
-  code={`<div className="w-[600px] grid gap-cn-md">
-    
-    <div>
-      <Text variant="heading-base" className="underline mb-cn-3xs">small:</Text>
-      <Progress
-        size="sm"
-        value={0.5}
-        label="Title"
-        subtitle="Subtitle"
-        description="This is a description text"
-      />
-    </div>
-
-    <div>
-      <Text variant="heading-base" className="underline mb-cn-3xs">medium:</Text>
-      <Progress
-        size="md"
-        value={0.5}
-        label="Title"
-        subtitle="Subtitle"
-        description="This is a description text"
-      />
-    </div>
-
-    <div>
-      <Text variant="heading-base" className="underline mb-cn-3xs">large:</Text>
-      <Progress
-        size="lg"
-        value={0.5}
-        label="Title"
-        subtitle="Subtitle"
-        description="This is a description text"
-      />
-    </div>
-
-    <Progress size="sm" value={0.75} state="processing"  />
-    <Progress size="md" value={0.75} state="processing" />
-    <Progress size="lg" value={0.75} state="processing" />
-
-  </div>`}
-/>
-
-## API Reference
+### Progress
 
 <DocsPage.PropsTable
   props={[
     {
       name: "variant",
       description:
-        "Type of progress. Use 'default' for determinate progress or 'indeterminate' for loading state.",
+        "Type of progress. Use 'default' for determinate progress or 'indeterminate' for a loading state.",
       required: false,
       defaultValue: "'default'",
       value: "'default' | 'indeterminate'",
@@ -229,14 +317,14 @@ The `Progress` component supports the `size` prop to adjust the height of the pr
     {
       name: "value",
       description:
-        "Progress value from 0 to 1. Required when variant is 'default'.",
+        "Progress value from 0 to 1 (clamped), shown as a percentage. Required for the 'default' variant; not accepted when 'indeterminate'.",
       required: false,
       value: "number",
     },
     {
       name: "state",
       description:
-        "Visual state of the progress. Affects bar color, status icon, and description/subtitle colors. Mutually exclusive with 'color' — pass one or the other.",
+        "Visual state of the progress. Affects bar color, status icon, and description/subtitle colors. Mutually exclusive with 'color'.",
       required: false,
       defaultValue: "'default'",
       value: "'default' | 'processing' | 'completed' | 'paused' | 'failed'",
@@ -244,7 +332,7 @@ The `Progress` component supports the `size` prop to adjust the height of the pr
     {
       name: "color",
       description:
-        "Theme color for the bar fill, drawn from the same palette as Tag (with 'green', 'red', 'yellow' resolving to success/danger/warning tokens). Mutually exclusive with 'state'.",
+        "Theme color for the bar fill, drawn from the same palette as Tag (green/red/yellow resolve to success/danger/warning tokens). Mutually exclusive with 'state'.",
       required: false,
       value:
         "'gray' | 'blue' | 'brown' | 'cyan' | 'green' | 'forest-green' | 'indigo' | 'lime' | 'mint' | 'orange' | 'pink' | 'purple' | 'red' | 'violet' | 'yellow'",
@@ -263,14 +351,14 @@ The `Progress` component supports the `size` prop to adjust the height of the pr
       value: "string",
     },
     {
-      name: "description",
-      description: "Additional description shown below the progress bar.",
+      name: "subtitle",
+      description: "Secondary subtitle shown below the progress bar.",
       required: false,
       value: "string",
     },
     {
-      name: "subtitle",
-      description: "Secondary subtitle shown below the description.",
+      name: "description",
+      description: "Additional description shown below the progress bar.",
       required: false,
       value: "string",
     },
@@ -283,7 +371,15 @@ The `Progress` component supports the `size` prop to adjust the height of the pr
     },
     {
       name: "hideIcon",
-      description: "If true, hides the status icon depending on the state.",
+      description: "If true, hides the status icon.",
+      required: false,
+      defaultValue: "false",
+      value: "boolean",
+    },
+    {
+      name: "hideContainer",
+      description:
+        "If true, caps the bar's max at the current value rather than 100.",
       required: false,
       defaultValue: "false",
       value: "boolean",
@@ -303,3 +399,9 @@ The `Progress` component supports the `size` prop to adjust the height of the pr
     },
   ]}
 />
+
+</TabItem>
+
+</Tabs>
+
+</div>

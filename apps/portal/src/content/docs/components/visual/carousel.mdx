@@ -1,12 +1,21 @@
 ---
 title: Carousel
-description: Carousel component documentation
-beta: true
+description: A composable slideshow for stepping through a set of slides one at a time
 ---
 
-The `Carousel` component provides a flexible UI element for displaying a carousel of items. It is composed of several subcomponents such as `CarouselContent`, `CarouselItem`, `CarouselPrevious`, and `CarouselNext` to offer a structured and customizable interface.
-
 import { DocsPage } from "@/components/docs-page";
+import { Tabs, TabItem } from "@astrojs/starlight/components";
+import PageTabsToc from "@/components/page-tabs-toc.astro";
+
+<PageTabsToc />
+
+<div id="page-level-tabs">
+
+<Tabs>
+
+<TabItem label="Overview">
+
+The `Carousel` component provides a flexible UI element for stepping through a set of slides one at a time. It's built on [Embla Carousel](https://www.embla-carousel.com/) and composed from `Carousel.Content`, `Carousel.Item`, `Carousel.Previous`, and `Carousel.Next`, so you assemble exactly the structure you need.
 
 <DocsPage.ComponentExample
   client:only
@@ -29,7 +38,34 @@ import { DocsPage } from "@/components/docs-page";
   </div>`}
 />
 
-## Usage
+## Variations
+
+### Vertical
+
+Set `orientation="vertical"` to scroll slides up and down instead of left to right. Give `Carousel.Content` a fixed height via `carouselBlockClassName` so the viewport can clip to one slide.
+
+<DocsPage.ComponentExample
+  client:only
+  code={`<div className="flex items-center justify-center py-cn-3xl">
+    <Carousel.Root orientation="vertical" className="w-1/2">
+      <Carousel.Previous />
+      <Carousel.Content carouselBlockClassName="h-64">
+        <Carousel.Item>
+          <div className="h-64 w-full bg-cn-blue-primary text-cn-1 flex items-center justify-center">Slide 1</div>
+        </Carousel.Item>
+        <Carousel.Item>
+          <div className="h-64 w-full bg-cn-success-primary text-cn-1 flex items-center justify-center">Slide 2</div>
+        </Carousel.Item>
+        <Carousel.Item>
+          <div className="h-64 w-full bg-cn-danger-primary text-cn-1 flex items-center justify-center">Slide 3</div>
+        </Carousel.Item>
+      </Carousel.Content>
+      <Carousel.Next />
+    </Carousel.Root>
+  </div>`}
+/>
+
+## Installation
 
 ```typescript jsx
 import { Carousel } from '@harnessio/ui/components'
@@ -53,110 +89,165 @@ return (
 )
 ```
 
+</TabItem>
+
+<TabItem label="Usage">
+
 ## Anatomy
 
-All parts of the `Carousel` component can be imported and composed as required.
+All parts of the `Carousel` are imported from the `Carousel` object and composed together:
 
 ```typescript jsx
 <Carousel.Root>
   <Carousel.Previous />
   <Carousel.Content>
-    <Carousel.Item />
+    <Carousel.Item>{/* slide */}</Carousel.Item>
   </Carousel.Content>
   <Carousel.Next />
 </Carousel.Root>
 ```
 
-## API Reference
+- **Root** — the container. It sets up the Embla instance, shares it through context, and renders a positioned `role="region"` wrapper. It also listens for **←**/**→** to move between slides. Configure it with `orientation`, `opts` (Embla options), `plugins`, `initialSlide`, and `setApi` (to grab the Embla API for custom controls).
+- **Content** — the viewport. It renders an `overflow-hidden` frame (styled via `carouselBlockClassName`) wrapping the flex track that holds the items. `className` targets the track itself.
+- **Item** — a single slide. Each item is `role="group"` / `aria-roledescription="slide"` and takes the full width (or height) of the viewport, so one slide shows at a time.
+- **Previous** / **Next** — icon [buttons](/components/actions/button/) that step backward and forward. They're positioned just outside the viewport, disable themselves at the ends, and carry their own accessible labels. They accept any [Button](/components/actions/button/) prop except `iconOnly`, `tooltipProps`, and `ignoreIconOnlyTooltip`.
+
+The order you place `Previous`, `Content`, and `Next` in is up to you — the buttons are absolutely positioned relative to `Root`, not laid out inline.
+
+## Best practices
+
+{/* TODO: editorial — please review against product guidance. */}
+
+**Do**
+
+- Give `Root` a width (and, for vertical carousels, give `Content` a height) so the viewport clips cleanly to one slide.
+- Leave room around the carousel for the Previous/Next buttons — they sit just outside the viewport edges.
+- Keep each slide's content self-contained and roughly equal in size so the frame doesn't jump between slides.
+- Reach for `opts`/`plugins` (Embla) for behaviors like looping or autoplay rather than rebuilding them.
+
+**Don't**
+
+- Don't hide essential content behind a carousel that people might not swipe through — surface anything critical outside it.
+- Don't put horizontally keyboard-navigable controls (a text field, a slider) inside a slide; the carousel intercepts the arrow keys (see the accessibility notes).
+- Don't rely on the carousel alone to convey how many slides there are — pair it with visible position cues when order matters.
+
+## Content
+
+{/* TODO: editorial — please review against product guidance. */}
+
+- Keep the number of slides small enough that stepping through them stays reasonable.
+- If a slide carries a call to action, make sure it's reachable without depending on auto-advance.
+
+## Accessibility
+
+`Carousel` ships with region and slide semantics and keyboard navigation, and its buttons carry built-in labels.
+
+### Keyboard
+
+- With focus anywhere inside the carousel region, **←** moves to the previous slide and **→** to the next.
+- The Previous and Next buttons are in the tab order and activate with **Enter**/**Space**; each disables itself when there are no more slides in that direction.
+
+### Labeling
+
+- `Root` renders `role="region"` with `aria-roledescription="carousel"`, and each `Item` is `role="group"` with `aria-roledescription="slide"`.
+- The Previous and Next buttons show a "Previous"/"Next" tooltip and include visually hidden "Previous slide"/"Next slide" text, so they always have an accessible name.
+
+### Focus & states
+
+- The nav buttons use the standard button focus ring and reflect their disabled state at the start and end of the carousel.
+
+### Known limitations
+
+- **The carousel has no accessible name by default.** The region isn't labeled out of the box. `Root` forwards extra props, so pass an `aria-label` (or `aria-labelledby`) to name what the carousel contains.
+- **Slides don't announce their position.** Each slide is described as "slide", but there's no "1 of 3" context and no live region announcing when the active slide changes.
+- **The arrow-key handler is greedy.** `Root` captures **←**/**→** and calls `preventDefault`, so those keys move the carousel even when focus is on interactive content inside a slide. Avoid placing horizontally-navigable controls (text inputs, sliders) in slides, or they'll fight the carousel for the arrow keys.
+
+</TabItem>
+
+<TabItem label="Properties">
+
+{/* Visually hidden — anchors the section headings below in the TOC without showing a redundant title in the panel body (the tab already says "Properties"). Hidden via #page-level-tabs h2#properties in styles.css. */}
+
+## Properties
 
 ### Root
 
-The `Root` component serves as the main container for all carousel elements.
+The main container for all carousel elements.
 
 <DocsPage.PropsTable
   props={[
     {
       name: "children",
       description:
-        "You can pass in your `Carousel.Previous`, `Carousel.Content`, and `Carousel.Next` as children",
+        "The carousel parts to render — typically Carousel.Previous, Carousel.Content, and Carousel.Next.",
       required: true,
       value: "ReactNode",
     },
     {
-      name: "opts",
-      description: "Options for the carousel",
-      required: false,
-      value: "CarouselOptions",
-    },
-    {
-      name: "plugins",
-      description: "Plugins for the carousel",
-      required: false,
-      value: "CarouselPlugin",
-    },
-    {
       name: "orientation",
-      description: "Orientation of the carousel",
+      description: "Direction the carousel scrolls.",
       required: false,
       value: "'horizontal' | 'vertical'",
       defaultValue: "'horizontal'",
     },
     {
+      name: "opts",
+      description: "Embla Carousel options.",
+      required: false,
+      value: "CarouselOptions",
+    },
+    {
+      name: "plugins",
+      description: "Embla Carousel plugins (e.g. autoplay).",
+      required: false,
+      value: "CarouselPlugin",
+    },
+    {
       name: "setApi",
-      description: "Function to set the carousel API",
+      description:
+        "Receives the Embla API so you can drive the carousel programmatically.",
       required: false,
       value: "(api: CarouselApi) => void",
     },
     {
       name: "initialSlide",
-      description: "Initial slide to display",
+      description: "Index of the slide to show first.",
       required: false,
       value: "number",
     },
     {
       name: "className",
-      description: "Additional class names to apply to the carousel",
+      description: "Additional class names to apply to the carousel region.",
       required: false,
       value: "string",
     },
   ]}
 />
 
+`Carousel.Root` also forwards any other `HTMLAttributes<HTMLDivElement>` (e.g. `aria-label`) onto the region element.
+
 ### Content
 
-The `Content` component defines the main content area of the carousel.
-
-```typescript jsx
-<Carousel.Content>
-  <Carousel.Item>
-    <div className="h-64 w-full bg-cn-blue-primary text-cn-1 flex items-center justify-center">Slide 1</div>
-  </Carousel.Item>
-  <Carousel.Item>
-    <div className="h-64 w-full bg-cn-success-primary text-cn-1 flex items-center justify-center">Slide 2</div>
-  </Carousel.Item>
-  <Carousel.Item>
-    <div className="h-64 w-full bg-cn-danger-primary text-cn-1 flex items-center justify-center">Slide 3</div>
-  </Carousel.Item>
-</Carousel.Content>
-```
+The viewport that clips to the active slide and holds the item track.
 
 <DocsPage.PropsTable
   props={[
     {
       name: "children",
-      description: "Content to display",
+      description: "The Carousel.Item slides.",
       required: true,
       value: "ReactNode",
     },
     {
       name: "className",
-      description: "Additional class names to apply to the content",
+      description: "Additional class names to apply to the item track.",
       required: false,
       value: "string",
     },
     {
       name: "carouselBlockClassName",
-      description: "Additional class names to apply to the carousel block",
+      description:
+        "Additional class names for the outer viewport frame (set a height here for vertical carousels).",
       required: false,
       value: "string",
     },
@@ -165,25 +256,19 @@ The `Content` component defines the main content area of the carousel.
 
 ### Item
 
-The `Item` component defines an individual item within the carousel.
-
-```typescript jsx
-<Carousel.Item>
-  <div className="h-64 w-full bg-cn-blue-primary text-cn-1 flex items-center justify-center">Slide 1</div>
-</Carousel.Item>
-```
+An individual slide within the carousel.
 
 <DocsPage.PropsTable
   props={[
     {
       name: "children",
-      description: "Content to display",
+      description: "Content to display in the slide.",
       required: true,
       value: "ReactNode",
     },
     {
       name: "className",
-      description: "Additional class names to apply to the item",
+      description: "Additional class names to apply to the slide.",
       required: false,
       value: "string",
     },
@@ -192,66 +277,78 @@ The `Item` component defines an individual item within the carousel.
 
 ### Previous
 
-The `Previous` component is used to navigate to the previous slide.
-
-```typescript jsx
-<Carousel.Previous />
-```
+Steps to the previous slide. Accepts any [Button](/components/actions/button/) prop except `iconOnly`, `tooltipProps`, and `ignoreIconOnlyTooltip`.
 
 <DocsPage.PropsTable
   props={[
     {
-      name: "className",
-      description: "Additional class names to apply to the button",
-      required: false,
-      value: "string",
-    },
-    {
       name: "variant",
-      description: "Button variant",
+      description: "Button variant.",
       required: false,
-      value: "string",
+      value: "ButtonProps['variant']",
       defaultValue: "'outline'",
     },
     {
+      name: "theme",
+      description: "Button theme.",
+      required: false,
+      value: "ButtonProps['theme']",
+      defaultValue: "'default'",
+    },
+    {
       name: "size",
-      description: "Button size",
+      description: "Button size.",
+      required: false,
+      value: "ButtonProps['size']",
+      defaultValue: "'sm'",
+    },
+    {
+      name: "className",
+      description: "Additional class names to apply to the button.",
       required: false,
       value: "string",
-      defaultValue: "'icon'",
     },
   ]}
 />
 
 ### Next
 
-The `Next` component is used to navigate to the next slide.
-
-```typescript jsx
-<Carousel.Next />
-```
+Steps to the next slide. Accepts any [Button](/components/actions/button/) prop except `iconOnly`, `tooltipProps`, and `ignoreIconOnlyTooltip`.
 
 <DocsPage.PropsTable
   props={[
     {
-      name: "className",
-      description: "Additional class names to apply to the button",
-      required: false,
-      value: "string",
-    },
-    {
       name: "variant",
-      description: "Button variant",
+      description: "Button variant.",
       required: false,
-      value: "string",
+      value: "ButtonProps['variant']",
       defaultValue: "'outline'",
     },
     {
+      name: "theme",
+      description: "Button theme.",
+      required: false,
+      value: "ButtonProps['theme']",
+      defaultValue: "'default'",
+    },
+    {
       name: "size",
-      description: "Button size",
+      description: "Button size.",
+      required: false,
+      value: "ButtonProps['size']",
+      defaultValue: "'sm'",
+    },
+    {
+      name: "className",
+      description: "Additional class names to apply to the button.",
       required: false,
       value: "string",
-      defaultValue: "'icon'",
     },
   ]}
 />
+
+</TabItem>
+
+</Tabs>
+
+</div>

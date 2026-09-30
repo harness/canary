@@ -7,6 +7,7 @@ import AiVerify from './logos/ai-verify.svg'
 import Alpine from './logos/alpine.svg'
 import Anchore from './logos/anchore.svg'
 import Android from './logos/android.svg'
+import Ansible from './logos/ansible.svg'
 import AppDynamics from './logos/app-dynamics.svg'
 import Apple from './logos/apple.svg'
 import Approval from './logos/approval.svg'
@@ -189,6 +190,7 @@ export const LogoNameMapV2 = {
   alpine: Alpine,
   anchore: Anchore,
   android: Android,
+  ansible: Ansible,
   'app-dynamics': AppDynamics,
   apple: Apple,
   approval: Approval,

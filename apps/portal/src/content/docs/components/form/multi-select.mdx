@@ -1,12 +1,21 @@
 ---
 title: Multi Select
 description: MultiSelect component
-beta: true
 ---
 
-The `MultiSelect` component allows users to select multiple options from a dropdown list. It is useful for scenarios where multiple selections are needed.
-
 import { DocsPage } from "@/components/docs-page";
+import { Tabs, TabItem } from "@astrojs/starlight/components";
+import PageTabsToc from "@/components/page-tabs-toc.astro";
+
+<PageTabsToc />
+
+<div id="page-level-tabs">
+
+<Tabs>
+
+<TabItem label="Overview">
+
+The `MultiSelect` component lets users select multiple options from a dropdown list. Selected options appear as removable tags, and users can optionally create new options by typing. It's suited to scenarios where more than one value is needed — tags, frameworks, labels, and similar.
 
 <DocsPage.ComponentExample
   client:only
@@ -28,29 +37,9 @@ import { DocsPage } from "@/components/docs-page";
   `}
 />
 
-## Usage
+## Variations
 
-```tsx
-import { MultiSelect, MultiSelectOption } from "@harnessio/ui/components";
-import { useState } from "react";
-
-// Basic usage with controlled component
-const MyComponent = () => {
-  const [selected, setSelected] = useState<MultiSelectOption[]>([]);
-
-  return (
-    <MultiSelect
-      label="Select frameworks"
-      placeholder="Select options..."
-      options={[{ key: "react" }, { key: "vue" }, { key: "angular" }]}
-      value={selected}
-      onChange={setSelected}
-    />
-  );
-};
-```
-
-## Disallow Creation
+### Disallow creation
 
 The `MultiSelect` component accepts an optional `disallowCreation` prop.
 When set to `true`, it disables the ability to add new items that are not part of the existing options list.
@@ -73,9 +62,9 @@ When set to `true`, it disables the ability to add new items that are not part o
 `}
 />
 
-## Form Integration
+### Form integration
 
-The `MultiSelect` component integrates seamlessly with form elements like labels, captions, and validation messages.
+The `MultiSelect` component integrates seamlessly with form elements like labels, captions, and validation messages. A non-empty `error` sets the theme to `danger`; a non-empty `warning` sets it to `warning`.
 
 <DocsPage.ComponentExample
   client:only
@@ -123,7 +112,7 @@ The `MultiSelect` component integrates seamlessly with form elements like labels
 `}
 />
 
-## With Tooltip
+### With tooltip
 
 `tooltipContent` is used to display the content of the tooltip. `tooltipProps` is used to pass additional props to the tooltip.
 
@@ -149,7 +138,7 @@ The `MultiSelect` component integrates seamlessly with form elements like labels
 `}
 />
 
-## Orientation
+### Orientation
 
 The `MultiSelect` component accepts an optional `orientation` prop, which defines the layout direction of the input and its label.
 Available options are `horizontal` and `vertical` (default).
@@ -187,26 +176,117 @@ Available options are `horizontal` and `vertical` (default).
 `}
 />
 
-## MultiSelectOption Type
+## Installation
 
-```typescript
-interface MultiSelectOption {
-  id: string | number; // Required - the unique identifier for the option
-  key: string; // Required - the main identifier for the option
-  value?: string; // Optional - used for key-value pairs
-  label?: ReactNode; // Optional - custom dropdown content; selected tags still use `key`
-  disable?: boolean; // Optional - disables the option in the dropdown
-  onReset?: () => void; // Optional - custom reset handler for the option
-}
+```tsx
+import { MultiSelect, MultiSelectOption } from "@harnessio/ui/components";
+import { useState } from "react";
+
+// Basic usage with controlled component
+const MyComponent = () => {
+  const [selected, setSelected] = useState<MultiSelectOption[]>([]);
+
+  return (
+    <MultiSelect
+      label="Select frameworks"
+      placeholder="Select options..."
+      options={[
+        { key: "react", id: "react" },
+        { key: "vue", id: "vue" },
+        { key: "angular", id: "angular" },
+      ]}
+      value={selected}
+      onChange={setSelected}
+    />
+  );
+};
 ```
 
-## API Reference
+</TabItem>
+
+<TabItem label="Usage">
+
+## Anatomy
+
+`MultiSelect` is built on the `cmdk` command primitive. It renders a labeled input with a dropdown of `options`; chosen items show as removable tags inside the field.
+
+```tsx
+<MultiSelect
+  label="Frameworks"
+  options={[{ key: "React", id: "react" }]}
+  value={selected}
+  onChange={setSelected}
+/>
+```
+
+- **Options** — each option is a `MultiSelectOption` with a required `id` and `key`. `key` is used as the tag label and the default dropdown label; pass `label` to customize the dropdown row (selected tags still use `key`).
+- **Controlled vs uncontrolled** — pass `value` + `onChange` for a controlled selection; omit `value` and seed with `defaultValue` (default `[]`) for uncontrolled use.
+- **Creating options** — typing a value and pressing <kbd>Enter</kbd> creates a new option (comma-separated input creates several). `creationValueMode` controls parsing: `keyValue` (default) splits `key:value` pairs, `literal` uses the raw text as-is. Set `disallowCreation` to turn this off — the empty dropdown then shows "No results found" instead of the creation hint.
+- **Validation & theme** — `theme` (`default` / `danger` / `warning`) styles the field. A non-empty `error` string forces the `danger` theme and shows the error caption; a non-empty `warning` forces `warning`. Otherwise `caption` shows as helper text.
+- **Search** — filtering is client-side by default (matched against `key`). Provide `searchQuery` + `setSearchQuery` to drive search externally (e.g. server-side); the built-in filter is then bypassed.
+- **Layout & label** — `label`, `caption`, `optional`, and tooltip (`tooltipContent` / `tooltipProps`) render around the field. `orientation` (`vertical` default / `horizontal`) sets whether the label sits above or beside the input.
+- **Other states** — `disabled` disables the field and hides tag remove icons; `isLoading` shows a loading skeleton inside the open dropdown; `maxSelected` isn't supported.
+
+## Best practices
+
+{/* TODO: editorial — please review against product guidance. */}
+
+**Do**
+
+- Give every option a stable, unique `id` — removal, replacement, and change detection key off it.
+- Use `disallowCreation` when the value set is fixed (a known enum) and free-form entries would be invalid.
+- Prefer `error` / `warning` strings over setting `theme` directly, so the validation message and the color stay in sync.
+
+**Don't**
+
+- Don't use `MultiSelect` for a single choice — reach for Select instead.
+- Don't overload the list with hundreds of ungrouped options without search; wire up `searchQuery` / `setSearchQuery` for large, server-backed sets.
+
+## Content
+
+{/* TODO: editorial — please review against product guidance. */}
+
+- Write a `label` that names what's being collected ("Frameworks", "Labels") and a `placeholder` that hints at the action ("Select frameworks you like…").
+- Keep option `key`s short and human-readable — they're what users see as tags.
+
+## Accessibility
+
+### Keyboard
+
+- <kbd>Backspace</kbd> / <kbd>Delete</kbd> on an empty input removes the last
+  selected tag.
+- <kbd>Enter</kbd> creates an option from the typed text (unless
+  `disallowCreation` is set).
+- <kbd>Escape</kbd> blurs the input and closes the dropdown.
+
+### Labeling
+
+- `label` is tied to the input via `htmlFor`/`id`, so assistive tech announces the field name and clicking the label focuses the input.
+- `placeholder` is also applied as the field's `aria-label`.
+
+### Focus & states
+
+- The dropdown opens on input focus and closes on outside click or blur. Selected tags expose a remove control (hidden when `disabled`).
+
+### Known limitations
+
+- **Not a semantic combobox/listbox.** The field container uses `role="textbox"` rather than the ARIA combobox/listbox pattern — it doesn't set `aria-expanded`, `aria-activedescendant`, or listbox roles. Screen-reader users may not get the full "N of M, expanded" combobox experience.
+
+</TabItem>
+
+<TabItem label="Properties">
+
+{/* Visually hidden — anchors the section headings below in the TOC without showing a redundant title in the panel body (the tab already says "Properties"). Hidden via #page-level-tabs h2#properties in styles.css. */}
+
+## Properties
+
+### MultiSelect
 
 <DocsPage.PropsTable
   props={[
     {
       name: "label",
-      description: "Label displayed above the component.",
+      description: "Label displayed for the component.",
       value: "string",
       required: false,
     },
@@ -214,6 +294,12 @@ interface MultiSelectOption {
       name: "caption",
       description: "Helper text displayed below the component.",
       value: "string",
+      required: false,
+    },
+    {
+      name: "options",
+      description: "Available options to select from.",
+      value: "MultiSelectOption[]",
       required: false,
     },
     {
@@ -227,31 +313,7 @@ interface MultiSelectOption {
       description: "Initial selected options (uncontrolled mode).",
       value: "MultiSelectOption[]",
       required: false,
-      default: "[]",
-    },
-    {
-      name: "options",
-      description: "Available options to select from.",
-      value: "MultiSelectOption[]",
-      required: false,
-    },
-    {
-      name: "placeholder",
-      description: "Placeholder text when no options are selected.",
-      value: "string",
-      required: false,
-    },
-    {
-      name: "searchQuery",
-      description: "Current search query string (controlled search).",
-      value: "string | null",
-      required: false,
-    },
-    {
-      name: "setSearchQuery",
-      description: "Callback to update search query.",
-      value: "(query: string | null) => void",
-      required: false,
+      defaultValue: "[]",
     },
     {
       name: "onChange",
@@ -260,101 +322,158 @@ interface MultiSelectOption {
       required: false,
     },
     {
-      name: "maxSelected",
-      description: "Maximum number of items that can be selected.",
-      value: "number",
-      required: false,
-      default: "Number.MAX_SAFE_INTEGER",
-    },
-    {
-      name: "onMaxSelected",
-      description: "Callback when max selection limit is reached.",
-      value: "(maxLimit: number) => void",
-      required: false,
-    },
-    {
-      name: "disabled",
-      description: "Disables the component.",
-      value: "boolean",
-      required: false,
-      default: "false",
-    },
-    {
-      name: "className",
-      description: "Additional CSS class names.",
+      name: "placeholder",
+      description:
+        "Placeholder text when no options are selected. Also used as the field's aria-label.",
       value: "string",
+      required: false,
+    },
+    {
+      name: "searchQuery",
+      description: "Current search query string (external/controlled search).",
+      value: "string | null",
+      required: false,
+    },
+    {
+      name: "setSearchQuery",
+      description:
+        "Callback to update the search query. When provided, the built-in client-side filter is bypassed.",
+      value: "(query: string) => void",
       required: false,
     },
     {
       name: "disallowCreation",
-      description: "Prevents creating new options.",
+      description: "Prevents creating new options from typed input.",
       value: "boolean",
       required: false,
-      default: "false",
+      defaultValue: "false",
+    },
+    {
+      name: "creationValueMode",
+      description:
+        "How typed text becomes options: 'keyValue' splits key:value pairs, 'literal' uses the raw text.",
+      value: "'keyValue' | 'literal'",
+      required: false,
+      defaultValue: "'keyValue'",
+    },
+    {
+      name: "creationLabel",
+      description: "Hint shown in the empty dropdown when creation is allowed.",
+      value: "string",
+      required: false,
+      defaultValue: "'Press Enter to create'",
     },
     {
       name: "isLoading",
-      description: "Shows loading state in the dropdown.",
+      description: "Shows a loading skeleton inside the open dropdown.",
       value: "boolean",
       required: false,
-      default: "false",
+      defaultValue: "false",
+    },
+    {
+      name: "disabled",
+      description: "Disables the component and hides tag remove icons.",
+      value: "boolean",
+      required: false,
     },
     {
       name: "optional",
-      description: "Shows '(optional)' next to the label.",
-      required: false,
+      description: "Shows the optional indicator next to the label.",
       value: "boolean",
+      required: false,
       defaultValue: "false",
     },
     {
       name: "theme",
-      description: "Visual theme variant.",
-      required: false,
+      description:
+        "Visual theme variant. Overridden to 'danger' by a non-empty error, or 'warning' by a non-empty warning.",
       value: "'default' | 'danger' | 'warning'",
+      required: false,
       defaultValue: "'default'",
     },
     {
-      name: "caption",
-      description: "Helper text displayed below the select.",
-      required: false,
+      name: "error",
+      description: "Error message (forces theme to 'danger').",
       value: "string",
+      required: false,
     },
     {
-      name: "error",
-      description: "Error message (sets theme to 'danger').",
-      required: false,
+      name: "warning",
+      description: "Warning message (forces theme to 'warning').",
       value: "string",
+      required: false,
     },
     {
       name: "tooltipContent",
       description: "Content to display in the label tooltip.",
-      required: false,
       value: "Exclude<ReactNode, boolean | null | undefined>",
+      required: false,
     },
     {
       name: "tooltipProps",
       description: "Additional props for configuring the tooltip.",
-      required: false,
       value: "IconWithTooltipProps",
-    },
-    {
-      name: "warning",
-      description: "Warning message (sets theme to 'warning').",
       required: false,
-      value: "string",
-    },
-    {
-      name: "rootClassName",
-      description: "Custom class name for the root container.",
-      required: false,
-      value: "string",
     },
     {
       name: "orientation",
-      description: "Defines the layout direction of the select and its label.",
+      description: "Layout direction of the select and its label.",
+      value: "'vertical' | 'horizontal'",
       required: false,
       defaultValue: "'vertical'",
-      value: "'vertical' | 'horizontal'",
+    },
+    {
+      name: "prefix",
+      description: "Content rendered in the field's prefix slot.",
+      value: "ReactNode",
+      required: false,
+    },
+    {
+      name: "className",
+      description: "Class name for the inner select container.",
+      value: "string",
+      required: false,
+    },
+    {
+      name: "wrapperClassName",
+      description: "Class name for the outer wrapper.",
+      value: "string",
+      required: false,
+    },
+    {
+      name: "commandProps",
+      description: "Props spread onto the underlying cmdk Command.Root.",
+      value: "ComponentPropsWithoutRef<typeof Command.Root>",
+      required: false,
+    },
+    {
+      name: "inputProps",
+      description:
+        "Props spread onto the input (excluding value/placeholder/disabled).",
+      value: "Omit<CommandInputProps, 'value' | 'placeholder' | 'disabled'>",
+      required: false,
     },
   ]}
 />
+
+### MultiSelectOption
+
+```typescript
+interface MultiSelectOption {
+  id: string | number; // Required — unique identifier for the option
+  key: string; // Required — tag label and default dropdown label
+  value?: string; // Optional — secondary value for key-value pairs
+  label?: ReactNode; // Optional — custom dropdown content; selected tags still use `key`
+  icon?: IconV2NamesType; // Optional — icon shown in the dropdown item
+  title?: string; // Optional — title attribute for the option
+  disable?: boolean; // Optional — disables the option in the dropdown
+  theme?: TagTheme; // Optional — tag color for the selected item
+  onReset?: () => void; // Optional — called when the option is removed
+}
+```
+
+</TabItem>
+
+</Tabs>
+
+</div>

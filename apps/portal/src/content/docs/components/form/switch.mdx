@@ -1,61 +1,74 @@
 ---
 title: Switch
-description: Switch component
-beta: true
+description: Toggle control for a single on/off setting
 ---
 
-The `Switch` component provides a toggle switch for on/off states.  
-It is built on top of the Radix UI Switch primitive with additional styling.
-
 import { DocsPage } from "@/components/docs-page";
+import { Tabs, TabItem } from "@astrojs/starlight/components";
+import { Aside } from "@astrojs/starlight/components";
+import PageTabsToc from "@/components/page-tabs-toc.astro";
+
+<PageTabsToc />
+
+<div id="page-level-tabs">
+
+<Tabs>
+
+<TabItem label="Overview">
+
+The `Switch` component provides a toggle for a single on/off setting that takes effect immediately. It is built on the Radix UI Switch primitive with design-system styling, and can be paired with an optional `label` and `caption`.
 
 <DocsPage.ComponentExample
   client:only
-  code={`<div className="flex flex-col gap-cn-md">
-    <h5>Standard usage</h5>
-    <Switch 
-      id="airplane-mode"
-      label="Airplane mode"
-      caption="Enable or disable airplane mode to control all wireless communication."
-    />
-
-    <hr className="my-cn-md" />
-
-    <h5>Optional Field</h5>
-    <Switch
-      id="notifications"
-      label="Enable notifications"
-      caption="Toggle to enable or disable notifications."
-      optional
-    />
-
-    <hr className="my-cn-md" />
-
-    <h5>Disabled</h5>
-    <Switch
-      id="god-mode"
-      label="God mode"
-      caption="Toggle to enable or disable God mode, which grants unrestricted access and control."
-      disabled
-    />
-
-    <hr className="my-cn-md" />
-
-    <h5>Without Label and Caption</h5>
-    <div className="flex gap-cn-md">
+  code={`<div className="space-y-cn-sm w-full">
+  <div className="flex items-start gap-cn-md border-b border-cn-borders-3 pb-cn-sm">
+    <span className="text-cn-size-2 text-cn-3 w-40 shrink-0 font-mono pt-cn-xs">standard</span>
+    <div className="flex-1 min-w-0 max-w-[520px]">
+      <Switch
+        id="airplane-mode"
+        label="Airplane mode"
+        caption="Enable or disable airplane mode to control all wireless communication."
+      />
+    </div>
+  </div>
+  <div className="flex items-start gap-cn-md border-b border-cn-borders-3 pb-cn-sm">
+    <span className="text-cn-size-2 text-cn-3 w-40 shrink-0 font-mono pt-cn-xs">required</span>
+    <div className="flex-1 min-w-0 max-w-[520px]">
+      <Switch
+        id="notifications"
+        label="Enable notifications"
+        caption="Toggle to enable or disable notifications."
+        showOptionalLabel={false}
+      />
+    </div>
+  </div>
+  <div className="flex items-start gap-cn-md border-b border-cn-borders-3 pb-cn-sm">
+    <span className="text-cn-size-2 text-cn-3 w-40 shrink-0 font-mono pt-cn-xs">disabled</span>
+    <div className="flex-1 min-w-0 max-w-[520px]">
+      <Switch
+        id="god-mode"
+        label="God mode"
+        caption="Toggle to enable or disable God mode, which grants unrestricted access and control."
+        disabled
+      />
+    </div>
+  </div>
+  <div className="flex items-start gap-cn-md">
+    <span className="text-cn-size-2 text-cn-3 w-40 shrink-0 font-mono pt-cn-xs">no label / caption</span>
+    <div className="flex-1 min-w-0 flex gap-cn-md">
       <Switch id="no-label-caption" />
       <Switch id="no-label-caption-disabled" disabled />
     </div>
-
+  </div>
 </div>`}
 />
 
-## Usage
+## Installation
 
-```typescript jsx
-import { Switch } from '@harnessio/ui/components'
+```tsx
+import { Switch } from "@harnessio/ui/components";
 
-// Standard usage
+// Controlled
 <Switch
   id="airplane-mode"
   checked={airplaneModeEnabled}
@@ -64,116 +77,157 @@ import { Switch } from '@harnessio/ui/components'
   caption="Enable or disable airplane mode to control all wireless communication."
 />
 
-// Optional field
-<Switch
-  id="notifications"
-  checked={notificationsEnabled}
-  onCheckedChange={setNotificationsEnabled}
-  label="Enable notifications"
-  caption="Toggle to enable or disable notifications."
-  optional
-/>
-
-// Disabled
-<Switch
-  id="god-mode"
-  checked={false}
-  onCheckedChange={() => {}}
-  label="God mode"
-  caption="Toggle to enable or disable God mode, which grants unrestricted access and control."
-  disabled
-/>
-
-// Without Label and Caption
-<Switch id="no-label-caption" checked={true} onCheckedChange={() => {}} />
-<Switch id="no-label-caption-disabled" checked={false} disabled />
+// Uncontrolled — set the initial state with defaultChecked
+<Switch id="notifications" defaultChecked label="Enable notifications" />
 ```
 
-## API Reference
+</TabItem>
 
-The `Switch` component can be used either controlled with the `checked` and `onCheckedChange` props, or uncontrolled.  
-When used uncontrolled, the `defaultChecked` prop can be used to set the initial state of the switch.
+<TabItem label="Usage">
 
-```typescript jsx
-<Switch
-  id="airplane-mode"             // [OPTIONAL] ID of the switch
-  checked                        // [OPTIONAL] whether the switch is checked
-  defaultChecked                 // [OPTIONAL] initial checked state
-  required                       // [OPTIONAL] whether the switch is required
-  onCheckedChange={handleChange} // [OPTIONAL] callback called when the checked state changes
-  disabled                       // [OPTIONAL] whether the switch is disabled
-  label                          // [OPTIONAL] a label for the switch
-  caption                        // [OPTIONAL] a caption for the switch
-  optional                       // [OPTIONAL] indicates if the field is optional
-/>
-```
+## Anatomy
+
+`Switch` renders a toggle control with an optional label block beside it.
+
+- The toggle itself is a `role="switch"` button with a sliding thumb; its `data-state` reflects `checked` or `unchecked`.
+- When you pass a `label` and/or `caption`, they render in a block next to the toggle: the `label` above and the `caption` (secondary text) below.
+- The component holds no state of its own — pass `checked` + `onCheckedChange` to control it, or `defaultChecked` to run it uncontrolled.
+- Every switch needs an `id`. If you omit it, one is generated automatically and used to associate the label with the toggle (clicking the label toggles the switch).
+
+<Aside type="caution">
+  `showOptionalLabel` has inverted semantics: leave it unset (or `true`) and the
+  field is treated as optional with no marker. Pass `showOptionalLabel={false}`
+  to mark the field as required, which renders a `*` next to the label. There is
+  no "(optional)" text — the prop only controls the required asterisk.
+</Aside>
+
+## Best practices
+
+{/* TODO: editorial — please review against product guidance. */}
+
+**Do**
+
+- Use a switch for a setting that applies immediately, with no separate save step.
+- Give every switch a clear `label` (or an `aria-label` when there's no visible text) so its purpose is obvious.
+- Keep captions short and phrase the label as the "on" state ("Enable notifications") so the toggle direction is unambiguous.
+
+**Don't**
+
+- Don't use a switch where a submit action is required to apply the change — use a checkbox in a form instead.
+- Don't rely on the caption to carry the switch's meaning; the label alone should say what it toggles.
+
+## Content
+
+{/* TODO: editorial — please review against product guidance. */}
+
+- Write labels as a positive statement of what turning the switch on does.
+- Reserve the caption for a brief clarification, not for restating the label.
+
+## Accessibility
+
+### Keyboard
+
+- The switch is focusable and toggles with <kbd>Space</kbd> (and <kbd>Enter</kbd>), following the underlying Radix button behavior.
+
+### Labeling
+
+- A visible `label` is associated with the toggle through the shared `id`, so clicking the label text toggles the switch and screen readers announce it.
+- When there's no visible label, pass an `aria-label` so the control still has an accessible name.
+- `captionTooltip` sets a native `title` attribute on the caption for hover text; it is not a design-system tooltip.
+
+### Focus & states
+
+- `disabled` disables the toggle and suppresses `onCheckedChange`.
+- The `role="switch"` and on/off state (`data-state`) are provided by the primitive, so assistive tech announces the current state.
+
+</TabItem>
+
+<TabItem label="Properties">
+
+{/* Visually hidden — anchors the section headings below in the TOC without showing a redundant title in the panel body (the tab already says "Properties"). Hidden via #page-level-tabs h2#properties in styles.css. */}
+
+## Properties
 
 <DocsPage.PropsTable
   props={[
     {
-      name: "id",
-      description: "Unique identifier for the switch.",
-      required: false,
-      value: "string",
-    },
-    {
       name: "checked",
-      description: "Indicates whether the switch is checked.",
+      description:
+        "Controlled checked state. Pair with onCheckedChange to control the switch.",
       required: false,
       value: "boolean",
-      defaultValue: "false",
     },
     {
       name: "defaultChecked",
-      description: "Initial checked state of the switch.",
+      description: "Initial checked state when the switch is uncontrolled.",
       required: false,
       value: "boolean",
-      defaultValue: "false",
-    },
-    {
-      name: "required",
-      description: "Indicates whether the switch is required.",
-      required: false,
-      value: "boolean",
-      defaultValue: "false",
     },
     {
       name: "onCheckedChange",
-      description: "Function to handle checked state change.",
+      description:
+        "Called with the new boolean state when the switch is toggled.",
       required: false,
       value: "(checked: boolean) => void",
     },
     {
       name: "disabled",
-      description: "Indicates whether the switch is disabled.",
+      description: "Disables the switch and suppresses onCheckedChange.",
       required: false,
-      value: "boolean",
       defaultValue: "false",
+      value: "boolean",
     },
     {
       name: "label",
-      description: "Label for the switch.",
+      description:
+        "Text label rendered beside the switch and associated with it.",
       required: false,
       value: "string",
     },
     {
       name: "caption",
-      description: "Caption for the switch.",
+      description: "Secondary description text rendered below the label.",
       required: false,
       value: "string",
     },
     {
-      name: "optional",
-      description: "Indicates if the field is optional.",
+      name: "showOptionalLabel",
+      description:
+        "Controls the required marker. When false, renders a * next to the label to mark the field as required; otherwise the field is treated as optional with no marker.",
       required: false,
+      defaultValue: "true",
       value: "boolean",
-      defaultValue: "false",
+    },
+    {
+      name: "captionTooltip",
+      description: "Native title (hover) text applied to the caption element.",
+      required: false,
+      value: "string",
+    },
+    {
+      name: "id",
+      description:
+        "Identifier for the toggle, used to associate the label. Auto-generated when omitted.",
+      required: false,
+      value: "string",
     },
     {
       name: "className",
-      description: "Additional class names to apply to the switch.",
+      description: "Additional class names applied to the switch.",
       required: false,
       value: "string",
     },
   ]}
 />
+
+<Aside type="note">
+  `Switch` also accepts the standard Radix Switch props (such as `name` and
+  `value`). Note it does not accept a `required` prop — use `showOptionalLabel=
+  {false}` to show the required marker.
+</Aside>
+
+</TabItem>
+
+</Tabs>
+
+</div>

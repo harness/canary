@@ -1,12 +1,22 @@
 ---
 title: Widgets
 description: Widgets component for displaying content in a flexible widget layout
-beta: true
 ---
 
-The `Widgets` component provides a flexible container for displaying content in widget-style layouts. It supports single-column and two-column configurations, with optional titles and "View more" links for each widget item.
-
 import { DocsPage } from "@/components/docs-page";
+import { Tabs, TabItem } from "@astrojs/starlight/components";
+import { Aside } from "@astrojs/starlight/components";
+import PageTabsToc from "@/components/page-tabs-toc.astro";
+
+<PageTabsToc />
+
+<div id="page-level-tabs">
+
+<Tabs>
+
+<TabItem label="Overview">
+
+The `Widgets` component is a flexible container for content laid out as widgets. It's a compound of `Widgets.Root` (the container) and `Widgets.Item` (each widget), with support for single- or two-column layouts, optional titles, and a "View more" link per widget.
 
 <DocsPage.ComponentExample
   client:only
@@ -20,25 +30,11 @@ import { DocsPage } from "@/components/docs-page";
   </Widgets.Root>`}
 />
 
-## Usage
+## Variations
 
-```typescript jsx
-import { Widgets } from '@harnessio/ui'
+### Two-column layout
 
-// ...
-
-return (
-  <Widgets.Root>
-    <Widgets.Item title="Widget Title">
-      {/* Widget content */}
-    </Widgets.Item>
-  </Widgets.Root>
-)
-```
-
-## Two-Column Layout
-
-The `Widgets` component supports a two-column layout when `isTwoColumn` is set to `true` and there are more than one child items.
+Set `isTwoColumn` on the root to flow widgets across two columns. It applies only when there is more than one item.
 
 <DocsPage.ComponentExample
   client:only
@@ -58,9 +54,9 @@ The `Widgets` component supports a two-column layout when `isTwoColumn` is set t
   </Widgets.Root>`}
 />
 
-## With "View More" Link
+### With "View more" link
 
-Each widget item can include a "View more" link that navigates to additional content.
+Each widget item can include a "View more" link. The link renders only when the item also has a `title`.
 
 <DocsPage.ComponentExample
   client:only
@@ -71,9 +67,9 @@ Each widget item can include a "View more" link that navigates to additional con
   </Widgets.Root>`}
 />
 
-## Widget Table Mode
+### Widget table mode
 
-The `isWidgetTable` prop removes the default border and padding, useful when the widget contains a table or similar content that provides its own styling.
+`isWidgetTable` removes the default border and padding — useful when the widget holds a table or other content that brings its own styling.
 
 <DocsPage.ComponentExample
   client:only
@@ -87,9 +83,9 @@ The `isWidgetTable` prop removes the default border and padding, useful when the
   </Widgets.Root>`}
 />
 
-## Without Title
+### Without title
 
-Widget items can be rendered without a title for simpler layouts.
+Widget items can render without a title for simpler layouts.
 
 <DocsPage.ComponentExample
   client:only
@@ -100,32 +96,78 @@ Widget items can be rendered without a title for simpler layouts.
   </Widgets.Root>`}
 />
 
-## API Reference
+## Installation
 
-### `Root`
+```tsx
+import { Widgets } from "@harnessio/ui/components";
 
-The root container component for widgets.
-
-```typescript jsx
-<Widgets.Root
-  isTwoColumn={false}  // [OPTIONAL] Enable two-column layout
->
-  {/* Widget items */}
-</Widgets.Root>
+<Widgets.Root>
+  <Widgets.Item title="Widget Title">{/* Widget content */}</Widgets.Item>
+</Widgets.Root>;
 ```
+
+</TabItem>
+
+<TabItem label="Usage">
+
+## Anatomy
+
+`Widgets` is composed of a root container and one or more item widgets.
+
+- `Widgets.Root` wraps the set of widgets and owns the column layout. With `isTwoColumn`, widgets flow across two columns (using CSS multi-column), but only when there's more than one item — with a single child it stays single-column.
+- `Widgets.Item` is an individual widget. It renders an optional `title` heading, its `children` as the body, and — when a `title` is present — an optional "View more" link built from `moreLink`.
+- `isWidgetTable` strips the item's border, padding, and rounded corners so table-like content can sit flush.
+
+<Aside type="note">
+  The "View more" link only renders when the item has a `title` — the whole
+  header row (title + link) is omitted otherwise. Give an item a title if it
+  needs a `moreLink`.
+</Aside>
+
+## Best practices
+
+{/* TODO: editorial — please review against product guidance. */}
+
+**Do**
+
+- Give each widget a clear `title` so the dashboard is scannable, and use `moreLink` to point to the full view when a widget shows a summary.
+- Use `isTwoColumn` for dashboards with several short widgets; keep it off when a single widget should span the full width.
+- Turn on `isWidgetTable` when the content is a table or already draws its own frame, so borders don't double up.
+
+**Don't**
+
+- Don't set `isTwoColumn` expecting a single widget to split — it's a no-op with one item.
+- Don't pass `moreLink` without a `title`; the link won't appear.
+
+## Accessibility
+
+### Labeling & semantics
+
+- An item's `title` renders as a heading, giving each widget a semantic label. There is no configurable heading level, so check the resulting heading order fits the surrounding page.
+- The "View more" link takes its accessible name from the literal "View more" text. When several widgets share the page, that name repeats — pair it with a well-labelled `title` so the destination is clear in context.
+
+</TabItem>
+
+<TabItem label="Properties">
+
+{/* Visually hidden — anchors the section headings below in the TOC without showing a redundant title in the panel body (the tab already says "Properties"). Hidden via #page-level-tabs h2#properties in styles.css. */}
+
+## Properties
+
+### Root
 
 <DocsPage.PropsTable
   props={[
     {
       name: "children",
-      description: "The widget items to render",
+      description: "The widget items to render.",
       required: true,
       value: "ReactNode",
     },
     {
       name: "isTwoColumn",
       description:
-        "When true and there are more than one child, displays widgets in a two-column layout",
+        "When true and there is more than one child, flows widgets across two columns.",
       required: false,
       value: "boolean",
       defaultValue: "false",
@@ -133,55 +175,49 @@ The root container component for widgets.
   ]}
 />
 
-### `Item`
-
-Individual widget item component.
-
-```typescript jsx
-<Widgets.Item
-  title="Widget Title"           // [OPTIONAL] Title displayed at the top of the widget
-  moreLink={{ to: "/path" }}     // [OPTIONAL] Link props for "View more" link
-  isWidgetTable={false}          // [OPTIONAL] Removes default border and padding
-  className="custom-class"       // [OPTIONAL] Custom class name
->
-  {/* Widget content */}
-</Widgets.Item>
-```
+### Item
 
 <DocsPage.PropsTable
   props={[
     {
       name: "children",
-      description: "The content to render inside the widget",
+      description: "The content rendered inside the widget.",
       required: true,
       value: "ReactNode",
     },
     {
       name: "title",
-      description: "The title displayed at the top of the widget",
+      description:
+        "Title displayed at the top of the widget. Required for the 'View more' link to appear.",
       required: false,
       value: "string",
     },
     {
       name: "moreLink",
       description:
-        "Link props for the 'View more' link. Uses react-router-dom LinkProps.",
+        "Props for the 'View more' link (react-router-dom LinkProps). Only renders when title is set.",
       required: false,
       value: "LinkProps",
     },
     {
       name: "isWidgetTable",
       description:
-        "When true, removes the default border and padding from the widget container",
+        "When true, removes the widget's default border, padding, and rounded corners.",
       required: false,
       value: "boolean",
       defaultValue: "false",
     },
     {
       name: "className",
-      description: "Custom class name for the widget container",
+      description: "Custom class name for the widget's content container.",
       required: false,
       value: "string",
     },
   ]}
 />
+
+</TabItem>
+
+</Tabs>
+
+</div>

@@ -1,0 +1,49 @@
+---
+import Search from "@astrojs/starlight/components/Search.astro";
+import SocialIcons from "@astrojs/starlight/components/SocialIcons.astro";
+import SidebarLogo from "./SidebarLogo.astro";
+import ThemeSelect from "./ThemeSelect.astro";
+import { NAV_CATEGORIES, getActiveCategory } from "../../lib/nav-categories";
+
+const active = getActiveCategory(Astro.url.pathname);
+---
+
+<header
+  class="cn-topnav sticky top-0 z-30 flex items-center gap-cn-lg h-14 px-cn-lg border-b border-cn-3 bg-cn-1"
+>
+  <div class="cn-topnav-logo flex-shrink-0">
+    <SidebarLogo />
+  </div>
+
+  <nav
+    class="cn-topnav-tabs cn-tabs-list cn-tabs-list-ghost ml-auto"
+    aria-label="Primary"
+  >
+    {
+      NAV_CATEGORIES.map((category) => (
+        <a
+          href={category.href}
+          role="tab"
+          class:list={[
+            "cn-tabs-trigger",
+            "cn-tabs-trigger-ghost",
+            { "cn-tabs-trigger-active": category.id === active?.id },
+          ]}
+          aria-current={category.id === active?.id ? "page" : undefined}
+        >
+          {category.label}
+        </a>
+      ))
+    }
+  </nav>
+
+  <!-- Global search — sits to the right of the Data Viz tab -->
+  <div class="cn-topnav-search flex-shrink-0">
+    <Search />
+  </div>
+
+  <div class="cn-topnav-actions flex items-center gap-cn-sm">
+    <SocialIcons />
+    <ThemeSelect />
+  </div>
+</header>

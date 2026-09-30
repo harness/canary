@@ -1,0 +1,174 @@
+---
+title: Radio items
+description: Radio items in a DropdownMenu
+---
+
+import { DocsPage } from "@/components/docs-page";
+
+The `DropdownMenu` component supports radio items using the `DropdownMenu.RadioItem` component. This allows you to create items with radio buttons that can be selected.
+
+<DocsPage.ComponentExample
+  client:only
+  code={`() => {
+  const [selectedOption, setSelectedOption] = React.useState('option5');
+
+return (
+
+  <DropdownMenu.Root>
+    <DropdownMenu.Trigger aria-label="options menu" asChild>
+        <Button variant="ghost" iconOnly>
+            <IconV2 name="more-horizontal" />
+        </Button>
+    </DropdownMenu.Trigger>
+
+    <DropdownMenu.Content>
+      <DropdownMenu.RadioGroup label="Group 2" value={selectedOption} onValueChange={setSelectedOption}>
+        <DropdownMenu.RadioItem value="option4" title="Default" />
+        <DropdownMenu.RadioItem value="option5" title="Checked" />
+        <DropdownMenu.RadioItem value="option6" title="Disabled" disabled />
+      </DropdownMenu.RadioGroup>
+
+    </DropdownMenu.Content>
+
+</DropdownMenu.Root>)
+  }`}
+
+/>
+
+## Properties
+
+### `RadioGroup`
+
+The `RadioGroup` component groups together `RadioItem` components and controls the selected radio item.
+
+```typescript jsx
+<DropdownMenu.RadioGroup
+  value                    // [OPTIONAL] the selected radio item
+  onValueChange={onChange} // [OPTIONAL] callback when selection changes
+  label="Group label"      // [OPTIONAL] label for the group
+  className="my-class"     // [OPTIONAL] custom class
+>
+  {/* RadioItem components */}
+</DropdownMenu.RadioGroup>
+```
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "value",
+      description: "The value of the selected radio item",
+      required: false,
+      value: "string",
+    },
+    {
+      name: "onValueChange",
+      description: "Callback called when the selected radio item changes",
+      required: false,
+      value: "(value: string) => void",
+    },
+    {
+      name: "label",
+      description: "Label text for the group",
+      required: false,
+      value: "string",
+    },
+    {
+      name: "className",
+      description: "Custom class name",
+      required: false,
+      value: "string",
+    },
+    {
+      name: "children",
+      description: "Collection of RadioItem components",
+      required: true,
+      value: "ReactNode",
+    },
+  ]}
+/>
+
+### `RadioItem`
+
+The `RadioItem` component displays a radio button next to the item. When the user interacts with the radio button, the
+the `onValueChange` prop of the parent `RadioGroup` component is called with the `value` from the clicked `RadioItem`.
+
+```typescript jsx
+<DropdownMenu.RadioGroup
+  value={currentItem}
+  onValueChange={setCurrentItem}
+>
+  <DropdownMenu.RadioItem
+    value="item-1"           // value of the item
+    title="Item title"       // title of the item
+    description="Description" // [OPTIONAL] description text
+    label="Label"            // [OPTIONAL] right-aligned label
+    shortcut="⌘K"            // [OPTIONAL] keyboard shortcut
+    checkmark                // [OPTIONAL] show checkmark icon
+    className="my-class"     // [OPTIONAL] custom class
+    disabled                 // [OPTIONAL] disable the item
+  >
+    {/* Item content */}
+  </DropdownMenu.RadioItem>
+</DropdownMenu.RadioGroup>
+```
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "value",
+      description: "The value of the radio item",
+      required: true,
+      value: "string",
+    },
+    {
+      name: "title",
+      description: "Title of the item",
+      required: true,
+      value: "ReactNode",
+    },
+    {
+      name: "description",
+      description: "Description text shown below the title",
+      required: false,
+      value: "string",
+    },
+    {
+      name: "label",
+      description: "Right-aligned label text",
+      required: false,
+      value: "string",
+    },
+    {
+      name: "shortcut",
+      description: "Keyboard shortcut text",
+      required: false,
+      value: "string",
+    },
+    {
+      name: "checkmark",
+      description: "Show checkmark icon on the right",
+      required: false,
+      value: "boolean",
+      defaultValue: "false",
+    },
+    {
+      name: "tag",
+      description: "Tag to show after the title (e.g. 'New', 'Beta')",
+      required: false,
+      value: "TagProps",
+    },
+    {
+      name: "className",
+      description: "Custom class name",
+      required: false,
+      value: "string",
+    },
+    {
+      name: "disabled",
+      description: "Disable the item",
+      required: false,
+      value: "boolean",
+      defaultValue: "false",
+    },
+  ]}
+/>

@@ -1,12 +1,22 @@
 ---
 title: Textarea
-description: Textarea component
-beta: true
+description: Multi-line text input with label, caption, character counter, and validation states
 ---
 
-The `Textarea` component is used to create a multi-line text input field.
-
 import { DocsPage } from "@/components/docs-page";
+import { Tabs, TabItem } from "@astrojs/starlight/components";
+import { Aside } from "@astrojs/starlight/components";
+import PageTabsToc from "@/components/page-tabs-toc.astro";
+
+<PageTabsToc />
+
+<div id="page-level-tabs">
+
+<Tabs>
+
+<TabItem label="Overview">
+
+The `Textarea` component is a multi-line text input with options for a label, caption, character counter, resizing behaviour, validation states, and an info tooltip.
 
 <DocsPage.ComponentExample
   client:only
@@ -24,24 +34,9 @@ import { DocsPage } from "@/components/docs-page";
   `}
 />
 
-## Usage
+## Variations
 
-```typescript jsx
-import { Textarea } from '@harnessio/ui/components'
-
-//...
-
-return (
-  <Textarea
-    label="Textarea label"
-    placeholder="Placeholder"
-    name="textarea-name"
-    onChange={handleChange}
-  />
-)
-```
-
-## Disable
+### Disabled
 
 <DocsPage.ComponentExample
   client:only
@@ -59,7 +54,7 @@ return (
 `}
 />
 
-## Resizable
+### Resizable
 
 <DocsPage.ComponentExample
   client:only
@@ -77,9 +72,9 @@ return (
 `}
 />
 
-## Auto Resize
+### Auto resize
 
-The `Textarea` component supports automatic height adjustment based on content with the `autoResize` prop. When enabled, the textarea will automatically grow and shrink to fit its content, eliminating the need for manual scrolling.
+The `Textarea` component supports automatic height adjustment based on content with the `autoResize` prop. When enabled, the textarea grows and shrinks to fit its content, eliminating the need for manual scrolling.
 
 <DocsPage.ComponentExample
   client:only
@@ -96,19 +91,11 @@ The `Textarea` component supports automatic height adjustment based on content w
 `}
 />
 
-**Key Features:**
+`autoResize` uses the native CSS `field-sizing: content` when the browser supports it, and respects a maximum height limit to prevent excessive growth. It may not work as expected in Firefox, which does not yet support `field-sizing: content`.
 
-- **Modern CSS Support**: Uses native `field-sizing: content` when supported by the browser
-- **Known Firefox issue**: The `autoResize` prop may not work as expected in Firefox due to its support of `field-sizing: content`.
-- **Max Height Constraint**: Respects maximum height limits to prevent excessive growth
+### Theme
 
-## Theme
-
-The `Textarea` component accepts a `theme` prop, which defines the visual state of the input: either `warning`, or `danger`.
-
-When an error occurs, set `theme="danger"` and pass the error message to the `error` prop.
-
-For warnings, set `theme="warning"` and provide the warning message via the `warning` prop.
+`Textarea` derives its visual state from `error` and `warning`: passing an `error` message applies the `danger` theme, and passing a `warning` message applies the `warning` theme. You can also set `theme` directly (`warning`) to colour the field without a message.
 
 <DocsPage.ComponentExample
   client:only
@@ -119,7 +106,6 @@ For warnings, set `theme="warning"` and provide the warning message via the `war
       name="error"
       label="This component in error state"
       placeholder="Placeholder"
-      theme="danger"
       error="Error message"
       optional
       rows={4}
@@ -129,7 +115,6 @@ For warnings, set `theme="warning"` and provide the warning message via the `war
       name="warning"
       label="This component in warning state"
       placeholder="Placeholder"
-      theme="warning"
       warning="Warning message"
       optional
       rows={4}
@@ -138,9 +123,9 @@ For warnings, set `theme="warning"` and provide the warning message via the `war
 `}
 />
 
-## Character Limit
+### Character limit
 
-The `Textarea` component supports a `maxCharacters` prop, which defines the maximum number of characters a user can enter.
+The `Textarea` component supports a `maxCharacters` prop, which shows a live `used / max` counter beside the label. The counter is informational — it does not block typing past the limit.
 
 <DocsPage.ComponentExample
   client:only
@@ -158,9 +143,9 @@ The `Textarea` component supports a `maxCharacters` prop, which defines the maxi
 `}
 />
 
-## Sizes
+### Sizes
 
-The `Textarea` component supports the following sizes: `sm` and `md`. The default size is `md`.
+The `Textarea` component supports the sizes `sm` and `md`. The default size is `md`.
 
 <DocsPage.ComponentExample
   client:only
@@ -185,9 +170,9 @@ The `Textarea` component supports the following sizes: `sm` and `md`. The defaul
 `}
 />
 
-## With Tooltip
+### With tooltip
 
-`tooltipContent` is used to display the content of the tooltip. `tooltipProps` is used to pass additional props to the tooltip.
+`tooltipContent` sets the content of the label's info tooltip. `tooltipProps` passes additional props to the tooltip.
 
 <DocsPage.ComponentExample
   client:only
@@ -220,10 +205,9 @@ The `Textarea` component supports the following sizes: `sm` and `md`. The defaul
 `}
 />
 
-## Orientation
+### Orientation
 
-The `Textarea` component accepts an optional `orientation` prop, which defines the layout direction of the textarea and its label.
-Available options are `horizontal` and `vertical` (default).
+The `Textarea` component accepts an optional `orientation` prop, which defines the layout direction of the textarea and its label. Available options are `horizontal` and `vertical` (default).
 
 <DocsPage.ComponentExample
   client:only
@@ -252,67 +236,91 @@ Available options are `horizontal` and `vertical` (default).
 `}
 />
 
-## API Reference
+## Installation
 
-The `Textarea` can be used either controlled or uncontrolled.
+```tsx
+import { Textarea } from "@harnessio/ui/components";
 
-When controlled, the `Textarea` will use the `value` prop as its value and call the `onChange` callback whenever the value changes.
-
-When uncontrolled, the `Textarea` will use the `defaultValue` prop as its initial value and will call `onChange` when its value changes.
-
-The `Textarea` also supports all attributes of the `textarea` HTML element.
-
-```typescript
-interface IconWithTooltipProps extends Omit<TooltipProps, "children"> {
-  className?: string;
-  /**
-   * If disabled, the tooltip will not be shown
-   */
-  disabled?: boolean;
-  iconProps?: IconPropsV2;
-}
+<Textarea
+  label="Textarea label"
+  placeholder="Placeholder"
+  name="textarea-name"
+  onChange={handleChange}
+/>;
 ```
+
+</TabItem>
+
+<TabItem label="Usage">
+
+## Anatomy
+
+`Textarea` composes a label, the multi-line input, and a caption inside a control group.
+
+- The `label` renders above (or beside, when `orientation="horizontal"`) the textarea. When `maxCharacters` is set, a live `used / max` counter renders alongside it.
+- The `<textarea>` itself accepts standard textarea attributes such as `rows`, `placeholder`, and `name`.
+- Below the textarea, a caption area shows the `error` message (in the `danger` theme), then the `warning` message (in the `warning` theme), otherwise the plain `caption`.
+- Every textarea gets an `id`; if you don't provide one it's generated automatically and used to associate the label.
+
+<Aside type="note">
+  `error` and `warning` drive the theme automatically: `error` forces the
+  `danger` theme and `warning` forces the `warning` theme, overriding any
+  `theme` you set. You only need `theme` on its own to colour the field when
+  there's no message.
+</Aside>
+
+<Aside type="caution">
+  `maxCharacters` shows a counter but does not enforce the limit — it does not
+  set `maxLength`, so users can still type past it. Validate the length yourself
+  if you need a hard cap.
+</Aside>
+
+## Best practices
+
+{/* TODO: editorial — please review against product guidance. */}
+
+**Do**
+
+- Give every textarea a clear `label` (or an `aria-label` when there's no visible text).
+- Use `error` for validation messages — it both shows the message and switches the field to the `danger` theme, so you don't need to set `theme` yourself.
+- Reach for `autoResize` when the expected content length varies a lot, so the field grows with the input instead of forcing a scroll.
+- Add `optional` to fields that aren't required so the required `*` marker reflects reality.
+
+**Don't**
+
+- Don't rely on `maxCharacters` to enforce a limit — pair it with your own validation.
+- Don't set both `resizable` and `autoResize` expecting them to combine cleanly; `autoResize` already manages height.
+
+## Content
+
+{/* TODO: editorial — please review against product guidance. */}
+
+- Keep labels short and noun-based; put format or length guidance in the `caption`.
+- Write `error` messages as a clear, actionable statement of what to fix.
+
+## Accessibility
+
+### Labeling
+
+- The `label` is associated with the textarea through a shared `id` (auto-generated when omitted), so clicking the label focuses the field.
+- When there's no visible label, provide an `aria-label`.
+- The character counter uses `role="status"` so assistive tech can announce the remaining count as it updates.
+
+### Focus & states
+
+- `disabled` disables the field and removes it from the tab order.
+- `error` applies the `danger` theme and renders the message beneath the field so the validation state is both visible and adjacent to the input.
+
+</TabItem>
+
+<TabItem label="Properties">
+
+{/* Visually hidden — anchors the section headings below in the TOC without showing a redundant title in the panel body (the tab already says "Properties"). Hidden via #page-level-tabs h2#properties in styles.css. */}
+
+## Properties
 
 <DocsPage.PropsTable
   props={[
-    {
-      name: "wrapperClassName",
-      description: "Additional CSS classes for the wrapper element",
-      required: false,
-      defaultValue: "",
-      value: "string",
-    },
-    {
-      name: "className",
-      description: "Additional CSS classes for the textarea element",
-      required: false,
-      defaultValue: "",
-      value: "string",
-    },
-    {
-      name: "name",
-      description: "Name of the textarea.",
-      required: false,
-      value: "string",
-    },
-    {
-      name: "id",
-      description: "Id of the textarea.",
-      required: false,
-      value: "string",
-    },
-    {
-      name: "value",
-      description: "Value of the textarea.",
-      required: false,
-      value: "string",
-    },
-    {
-      name: "onChange",
-      description: "Callback to call when the value changes.",
-      required: false,
-      value: "(value: string) => void",
-    },
     {
       name: "label",
       description: "Label for the textarea.",
@@ -327,45 +335,33 @@ interface IconWithTooltipProps extends Omit<TooltipProps, "children"> {
     },
     {
       name: "error",
-      description: "Error message to display below.",
+      description:
+        "Error message to display below the textarea. Automatically applies the danger theme.",
       required: false,
       value: "string",
     },
     {
       name: "warning",
-      description: "Warning message to display (will use warning theme)",
+      description:
+        "Warning message to display below the textarea. Automatically applies the warning theme.",
       required: false,
-      defaultValue: "",
       value: "string",
     },
     {
-      name: "optional",
-      description: "Indicate if the textarea is optional.",
-      required: false,
-      value: "boolean",
-      defaultValue: "false",
-    },
-    {
-      name: "autoResize",
+      name: "theme",
       description:
-        "Indicate if the textarea should automatically adjust its height based on content.",
+        "Visual state of the textarea. Automatically overridden to danger when error is set, or warning when warning is set.",
       required: false,
-      value: "boolean",
-      defaultValue: "false",
+      defaultValue: "'default'",
+      value: "'default' | 'danger' | 'warning'",
     },
     {
-      name: "resizable",
-      description: "Indicate if the textarea should be resizable.",
+      name: "optional",
+      description:
+        "When true, marks the field as optional by removing the required * marker from the label.",
       required: false,
-      value: "boolean",
       defaultValue: "false",
-    },
-    {
-      name: "disabled",
-      description: "Indicate if the textarea is disabled.",
-      required: false,
       value: "boolean",
-      defaultValue: "false",
     },
     {
       name: "size",
@@ -376,9 +372,72 @@ interface IconWithTooltipProps extends Omit<TooltipProps, "children"> {
     },
     {
       name: "maxCharacters",
-      description: "Defines the maximum number of characters a user can enter.",
+      description:
+        "Shows a live used / max character counter beside the label. Does not enforce the limit.",
       required: false,
       value: "number",
+    },
+    {
+      name: "autoResize",
+      description:
+        "When true, the textarea automatically adjusts its height to fit its content.",
+      required: false,
+      defaultValue: "false",
+      value: "boolean",
+    },
+    {
+      name: "resizable",
+      description:
+        "When true, the textarea can be resized manually by the user.",
+      required: false,
+      defaultValue: "false",
+      value: "boolean",
+    },
+    {
+      name: "disabled",
+      description: "Whether the textarea is disabled.",
+      required: false,
+      defaultValue: "false",
+      value: "boolean",
+    },
+    {
+      name: "orientation",
+      description: "Layout direction of the textarea and its label.",
+      required: false,
+      defaultValue: "'vertical'",
+      value: "'vertical' | 'horizontal'",
+    },
+    {
+      name: "value",
+      description: "Controlled value of the textarea.",
+      required: false,
+      value: "string",
+    },
+    {
+      name: "defaultValue",
+      description: "Initial value when the textarea is uncontrolled.",
+      required: false,
+      value: "string",
+    },
+    {
+      name: "onChange",
+      description:
+        "Called with the change event when the value changes. Read e.target.value for the new value.",
+      required: false,
+      value: "React.ChangeEventHandler<HTMLTextAreaElement>",
+    },
+    {
+      name: "name",
+      description: "Name of the textarea.",
+      required: false,
+      value: "string",
+    },
+    {
+      name: "id",
+      description:
+        "Identifier for the textarea, used to associate the label. Auto-generated when omitted.",
+      required: false,
+      value: "string",
     },
     {
       name: "tooltipContent",
@@ -388,23 +447,52 @@ interface IconWithTooltipProps extends Omit<TooltipProps, "children"> {
     },
     {
       name: "tooltipProps",
-      description: "Additional props for configuring the tooltip.",
+      description: "Additional props for configuring the label tooltip.",
       required: false,
       value: "IconWithTooltipProps",
     },
     {
       name: "labelSuffix",
       description:
-        "Customized with a suffix element that appears on the right side of the label.",
+        "A suffix element that appears on the right side of the label.",
       required: false,
       value: "ReactNode",
     },
     {
-      name: "orientation",
-      description: "Defines the layout direction of the input and its label.",
+      name: "className",
+      description: "Additional CSS classes for the textarea element.",
       required: false,
-      defaultValue: "'vertical'",
-      value: "'vertical' | 'horizontal'",
+      value: "string",
+    },
+    {
+      name: "inputGroupClassName",
+      description: "Additional CSS classes for the input wrapper.",
+      required: false,
+      value: "string",
+    },
+    {
+      name: "wrapperClassName",
+      description: "Additional CSS classes for the outer wrapper element.",
+      required: false,
+      value: "string",
     },
   ]}
 />
+
+<Aside type="note">
+  `Textarea` also accepts standard `<textarea>` attributes (such as `rows`,
+  `placeholder`, `maxLength`, `onFocus`, `onBlur`), which are forwarded to the
+  underlying element.
+</Aside>
+
+<Aside type="tip">
+  `IconWithTooltipProps` extends the Tooltip props (minus `children`) with
+  `className`, `disabled` (when true, the tooltip is not shown), and
+  `iconProps`.
+</Aside>
+
+</TabItem>
+
+</Tabs>
+
+</div>

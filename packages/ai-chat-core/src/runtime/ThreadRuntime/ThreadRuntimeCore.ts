@@ -28,6 +28,7 @@ export class ThreadRuntimeCore extends BaseSubscribable {
   private _abortController: AbortController | null = null
   private _conversationId?: string
   private _title?: string
+  private _cancelPromise: Promise<void> | null = null
 
   // Resolvers waiting for _isRunning to flip to false. Drained in the
   // finally block of every run path so callers can serialize their
@@ -181,11 +182,16 @@ export class ThreadRuntimeCore extends BaseSubscribable {
     }
   }
 
-  private cancelBackgroundTasks(): void {
-    if (this._backgroundTasks.size === 0) return
-    const tasks = [...this._backgroundTasks.values()]
-    this._backgroundTasks.clear()
-    for (const task of tasks) {
+  private cancelBackgroundTasks(taskIds?: readonly string[]): void {
+    const entries = taskIds
+      ? taskIds.flatMap(id => {
+          const task = this._backgroundTasks.get(id)
+          return task ? ([[id, task]] as const) : []
+        })
+      : [...this._backgroundTasks.entries()]
+    if (entries.length === 0) return
+    for (const [id, task] of entries) {
+      this._backgroundTasks.delete(id)
       try {
         task.onCancel?.()
       } catch {
@@ -575,14 +581,37 @@ export class ThreadRuntimeCore extends BaseSubscribable {
   }
 
   public cancelRun(): void {
-    // Abort an in-flight stream run if there is one. Background tasks are
-    // cancelled regardless, so pressing stop also halts UI-driven polling
-    // even when no stream run is active.
-    if (this._isRunning && this._abortController) {
-      this._abortController.abort()
+    if (this._cancelPromise) return
+    this._cancelPromise = this.performCancel().finally(() => {
+      this._cancelPromise = null
+    })
+  }
+
+  /**
+   * Calls optional streamAdapter.cancel first (so the composer stays in a
+   * running/stop state), then aborts the local stream and background tasks.
+   */
+  private async performCancel(): Promise<void> {
+    const conversationId = this._conversationId
+    const abortController = this._abortController
+    const backgroundTaskIds = [...this._backgroundTasks.keys()]
+    const cancel = this.config.streamAdapter.cancel
+    if (cancel && conversationId && !conversationId.startsWith('temp')) {
+      try {
+        await cancel(conversationId)
+      } catch {
+        // Local abort still runs so the user is never stuck streaming.
+      }
     }
 
-    this.cancelBackgroundTasks()
+    // Server cancel can end the original run during the await, after which
+    // drainIdleWaiters may start a new run. Only abort the controller we
+    // snapshotted — never a follow-on run the user did not stop.
+    if (abortController && this._abortController === abortController) {
+      abortController.abort()
+    }
+
+    this.cancelBackgroundTasks(backgroundTaskIds)
   }
 
   public reset(messages: Message[] = []): void {

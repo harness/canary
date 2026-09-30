@@ -1,43 +1,138 @@
 ---
 title: Caption
-description: Caption component documentation
-beta: true
+description: Supplementary helper text rendered beneath a form field
 ---
 
-The `Caption` component renders supplementary text below form inputs. It is used to provide additional context or hints for form fields.
-
 import { DocsPage } from "@/components/docs-page";
+import { Tabs, TabItem } from "@astrojs/starlight/components";
+import PageTabsToc from "@/components/page-tabs-toc.astro";
+
+<PageTabsToc />
+
+<div id="page-level-tabs">
+
+<Tabs>
+
+<TabItem label="Overview">
+
+The `Caption` component renders supplementary text below a form input — a short hint, a format requirement, or an error message that gives the field a little more context.
 
 <DocsPage.ComponentExample
   client:only
-  code={`<Caption>This is a caption</Caption>`}
+  code={`<Caption>Use lowercase letters and hyphens only.</Caption>`}
 />
 
-## Usage
+## Variations
+
+`Caption` passes `className` straight through, so you can recolor it to signal state — for example, a danger color for an error hint.
+
+<DocsPage.ComponentExample
+  client:only
+  hideCode
+  code={`<div className="space-y-cn-sm w-full">
+  <div className="flex items-center gap-cn-md border-b border-cn-borders-3 pb-cn-sm">
+    <span className="text-cn-size-2 text-cn-3 w-24 shrink-0 font-mono">default</span>
+    <Caption>Use lowercase letters and hyphens only.</Caption>
+  </div>
+  <div className="flex items-center gap-cn-md">
+    <span className="text-cn-size-2 text-cn-3 w-24 shrink-0 font-mono">error</span>
+    <Caption className="text-cn-danger">This name is already taken.</Caption>
+  </div>
+</div>`}
+/>
+
+## Installation
 
 ```typescript jsx
 import { Caption } from '@harnessio/ui/components'
 
 return (
-  <Caption>This is a caption</Caption>
+  <Caption>Use lowercase letters and hyphens only.</Caption>
 )
 ```
 
-## API Reference
+</TabItem>
+
+<TabItem label="Usage">
+
+## Anatomy
+
+`Caption` is a single, self-contained element — there are no parts to compose:
+
+```typescript jsx
+<Caption>Helper text</Caption>
+```
+
+- It renders one `<span>` through the [Text](/components/foundations/text/) primitive, styled as secondary body text (the `foreground-2` color) with a small top margin (`mt-cn-3xs`) so it sits snugly under the field above it.
+- `className` merges onto that span, so you can recolor it (e.g. for an error state) or tweak the spacing.
+- It's presentational only — it renders text and nothing else, with no built-in link to any input.
+
+## Best practices
+
+{/* TODO: editorial — please review against product guidance. */}
+
+**Do**
+
+- Use `Caption` for a brief hint or helper line directly beneath a single form field.
+- Keep it to one short sentence that reads clearly on its own.
+- Recolor it via `className` to reflect state (e.g. a danger color for an error), while keeping the text itself meaningful.
+
+**Don't**
+
+- Don't use `Caption` as the field's label — use [Label](/components/form/label/) for that.
+- Don't put long paragraphs, links, or other interactive content inside it.
+- Don't rely on it as the _only_ signal for an error — see the accessibility note below.
+
+## Content
+
+{/* TODO: editorial — please review against product guidance. */}
+
+- Write hints as plain guidance ("Use 8 or more characters"), and errors as what's wrong plus how to fix it.
+- Keep the language short and specific; the caption should add information the label doesn't already give.
+- Use sentence case.
+
+## Accessibility
+
+`Caption` is visual-only: it renders a plain `<span>` of text and nothing more.
+
+### Labeling
+
+- The text is readable on the page, but it is **not** announced as part of the field it sits under — there's no semantic relationship between the two.
+
+### Known limitations
+
+- **The caption isn't programmatically associated with any input.** `Caption` accepts only `children` and `className`; even though its prop type extends `HTMLAttributes`, the implementation doesn't forward `id` or `aria-*`, so you can't point an input's `aria-describedby` at it. Screen-reader users may not hear the hint when they focus the field. When the caption carries essential information (a format rule, an error), wire the description up yourself — render the hint with an `id` and set `aria-describedby` on the input — or reach for the form-field components that handle that association for you.
+- **Color alone isn't meaning.** If you recolor the caption to flag an error, that state is conveyed only by color. Keep the wording explicit ("This name is already taken") and pair it with a proper description association so the error isn't missed by people who don't perceive the color.
+
+</TabItem>
+
+<TabItem label="Properties">
+
+{/* Visually hidden — anchors the section headings below in the TOC without showing a redundant title in the panel body (the tab already says "Properties"). Hidden via #page-level-tabs h2#properties in styles.css. */}
+
+## Properties
 
 <DocsPage.PropsTable
   props={[
     {
       name: "children",
-      description: "Content to display",
+      description: "Content to display.",
       required: true,
       value: "ReactNode",
     },
     {
       name: "className",
-      description: "Additional class names to apply to the caption",
+      description: "Additional class names to apply to the caption span.",
       required: false,
       value: "string",
     },
   ]}
 />
+
+Note: although the props type extends `HTMLAttributes<HTMLElement>`, only `children` and `className` are applied — other attributes (`id`, `aria-*`, etc.) are not forwarded to the rendered `<span>`.
+
+</TabItem>
+
+</Tabs>
+
+</div>

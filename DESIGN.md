@@ -289,7 +289,7 @@ colors:
 # Inter for UI, JetBrains Mono for code. Variable-font weight axis maps the
 # common 100–900 scale to its own `Thin/ExtraLight/400/540/Bold/...`
 # values; in CSS the standard numeric weights resolve to those.
-# 11 semantic roles below; the underlying 17-step `cn-size-*` scale and the
+# 11 semantic roles below; the underlying 14-step `cn-size-*` scale and the
 # flat 4px line-height grid (8–40px) are documented in
 # design-tokens/core/typography.json.
 # =============================================================================
@@ -539,7 +539,7 @@ The color system has two layers and components only ever consume the second one.
 
 **Families.** `Inter` for UI (`fontFamily.default`), `JetBrains Mono` for code. Both are variable fonts — Inter's weight axis maps the standard 100–900 ladder onto a tuned numeric scale (`400`/`540` for Regular/SemiBold) for optical balance.
 
-**Size scale.** Seventeen steps (`fontSize.0`…`fontSize.16`), 0.55rem (8.8px) → 8rem (128px). The scale is consumed via the eleven semantic roles enumerated in the frontmatter — code should reach for `body-normal`, `heading-section`, `caption-strong`, etc., not raw size tokens.
+**Size scale.** Fourteen steps (`fontSize.0`…`fontSize.15`), 0.55rem (8.8px) → 6rem (96px). The scale is consumed via the eleven semantic roles enumerated in the frontmatter — code should reach for `body-normal`, `heading-section`, `caption-strong`, etc., not raw size tokens.
 
 **Line heights.** A flat 4px grid — `lineHeight.{8,12,16,20,24,28,32,36,40}` (8px–40px) — bound directly to each role rather than computed as a size ratio. (A single `multiplier.none` (1.14) and the `lineHeight.chart.*` tokens are retained only for legacy charts, pending the chart migration.)
 
@@ -548,8 +548,8 @@ The color system has two layers and components only ever consume the second one.
 **Defaults.**
 - Body copy: `body-normal` (14px / 400 weight / 20px line-height).
 - UI labels: `body-strong` (14px / 540).
-- Section headings: `heading-base` (16px / 540) or `heading-subsection` (24px / 540).
-- Code/identifiers: `body-code` (13px / JetBrains Mono).
+- Section headings: `heading-base` (16px / 540) or `heading-subsection` (18px / 540).
+- Code/identifiers: `body-code` (12px / JetBrains Mono).
 - Eyebrow / metadata: `label-caps` (11.5px / uppercase / 0.1em tracked).
 
 Two weights per surface is the practical ceiling — mixing more than that reads as noise.

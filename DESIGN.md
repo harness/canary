@@ -290,7 +290,7 @@ colors:
 # common 100–900 scale to its own `Thin/ExtraLight/400/540/Bold/...`
 # values; in CSS the standard numeric weights resolve to those.
 # 11 semantic roles below; the underlying 17-step `cn-size-*` scale and the
-# six lineHeight multipliers (none 1.14 → loose 1.75) are documented in
+# flat 4px line-height grid (8–40px) are documented in
 # design-tokens/core/typography.json.
 # =============================================================================
 typography:
@@ -541,12 +541,12 @@ The color system has two layers and components only ever consume the second one.
 
 **Size scale.** Seventeen steps (`fontSize.0`…`fontSize.16`), 0.55rem (8.8px) → 8rem (128px). The scale is consumed via the eleven semantic roles enumerated in the frontmatter — code should reach for `body-normal`, `heading-section`, `caption-strong`, etc., not raw size tokens.
 
-**Line heights.** Six multipliers — `none` (1.14), `tight` (1.25), `snug` (1.428), `normal` (1.5), `relaxed` (1.625), `loose` (1.75) — composed against each font size. Use `none`/`tight` for display, `snug`/`normal` for body.
+**Line heights.** A flat 4px grid — `lineHeight.{8,12,16,20,24,28,32,36,40}` (8px–40px) — bound directly to each role rather than computed as a size ratio. (A single `multiplier.none` (1.14) and the `lineHeight.chart.*` tokens are retained only for legacy charts, pending the chart migration.)
 
-**Tracking.** Six steps from `tighter` (-0.05em) for display down through `normal` (0em) up to `widest` (0.1em) for all-caps labels.
+**Tracking.** Three steps — `tight` (-0.02em) for headings, `normal` (0em) for body, `wide` (0.025em) for improved readability.
 
 **Defaults.**
-- Body copy: `body-normal` (14px / 400 weight / 1.428 line-height).
+- Body copy: `body-normal` (14px / 400 weight / 20px line-height).
 - UI labels: `body-strong` (14px / 540).
 - Section headings: `heading-base` (16px / 540) or `heading-subsection` (24px / 540).
 - Code/identifiers: `body-code` (13px / JetBrains Mono).

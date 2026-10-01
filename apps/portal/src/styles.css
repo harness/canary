@@ -168,18 +168,23 @@ code:not(.expressive-code code) {
 /*
  * Top-nav tabs are static markup reusing the DS tab classes, so the component's
  * JS width reservation never runs on them. Reserve the bold (hover/active) width
- * in CSS with a hidden bold clone of the label, stacked under the visible text,
- * so the label bolds in place instead of widening the tab.
+ * in CSS: the visible label and a hidden bold clone share a single grid cell, so
+ * the cell sizes to the wider (bold) text — the label bolds in place instead of
+ * widening the tab — while adding no extra height, so it stays vertically centered.
  */
 .cn-topnav-tabs .cn-tabs-trigger {
-  flex-direction: column;
-  justify-content: center;
+  display: grid;
+  align-items: center;
+  justify-items: center;
+}
+
+.cn-topnav-tabs .cn-tabs-trigger > .cn-topnav-tab-label,
+.cn-topnav-tabs .cn-tabs-trigger::after {
+  grid-area: 1 / 1;
 }
 
 .cn-topnav-tabs .cn-tabs-trigger::after {
   content: attr(data-label);
-  height: 0;
-  overflow: hidden;
   visibility: hidden;
   pointer-events: none;
   font: var(--cn-body-strong);

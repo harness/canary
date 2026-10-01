@@ -1,5 +1,8 @@
 import { FC, Fragment, useEffect, useMemo, useState } from 'react'
 
+import { EnumBypassListType, NormalizedPrincipal, PatternsButtonType } from '@views/repo/repo-branch-rules/types'
+import { getIcon } from '@views/repo/utils'
+
 import {
   Checkbox,
   ControlGroup,
@@ -8,18 +11,16 @@ import {
   IconV2,
   Label,
   Layout,
-  Text,
   MultiSelectOption,
   NumberInput,
   ResetTag,
+  Separator,
   SplitButton,
-  Switch
+  Switch,
+  Text
 } from '@harnessio/ui/components'
-import { Separator } from '@harnessio/ui/components'
 import { useTranslation } from '@harnessio/ui/context'
 import { useDebounceSearch } from '@harnessio/ui/hooks'
-import { EnumBypassListType, NormalizedPrincipal, PatternsButtonType } from '@views/repo/repo-branch-rules/types'
-import { getIcon } from '@views/repo/utils'
 
 import { PushRule, PushRuleFieldProps, PushRuleId } from '../types'
 import { getPushRules } from './repo-push-rules-data'

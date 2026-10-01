@@ -2,12 +2,25 @@ import { FC, useCallback, useState } from 'react'
 import { FieldErrors, UseFormSetValue, UseFormWatch } from 'react-hook-form'
 
 import {
+  PatternsButtonType,
+  RepoBranchSettingsFormFields,
+  RepoPushRulesSettingsFormFields,
+  RepoRepositoryOutput,
+  ScopeType,
+  TargetReposButtonType
+} from '@views'
+import { RepoTagSettingsFormFields } from '@views/repo/repo-tag-rules/types'
+import { RepoQueryObject } from '@views/repo/utils'
+
+import {
   Button,
   ButtonLayout,
   Checkbox,
   ControlGroup,
+  determineScope,
   Drawer,
   FormInput,
+  getScopedPath,
   IconV2,
   Label,
   Layout,
@@ -19,18 +32,7 @@ import {
   Table,
   Text
 } from '@harnessio/ui/components'
-import { determineScope, getScopedPath } from '@harnessio/ui/components'
 import { useTranslation } from '@harnessio/ui/context'
-import {
-  PatternsButtonType,
-  RepoBranchSettingsFormFields,
-  RepoPushRulesSettingsFormFields,
-  RepoRepositoryOutput,
-  ScopeType,
-  TargetReposButtonType
-} from '@views'
-import { RepoTagSettingsFormFields } from '@views/repo/repo-tag-rules/types'
-import { RepoQueryObject } from '@views/repo/utils'
 
 // Base interface with fields that TargetRepoSelector uses
 export interface TargetRepoSelectorFormFields {

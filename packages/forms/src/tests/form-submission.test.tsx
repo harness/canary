@@ -205,6 +205,38 @@ describe('Form Submission Integration Tests', () => {
       })
     })
 
+    it('should prevent submission when a required field sits under a missing parent object', async () => {
+      const formDefinition: IFormDefinition = {
+        inputs: [
+          {
+            inputType: 'text',
+            path: 'spec.connectorRef',
+            label: 'Connector',
+            required: true
+          }
+        ]
+      }
+
+      render(
+        <TestFormComponent
+          formDefinition={formDefinition}
+          onSubmit={mockOnSubmit}
+          onValidationChange={mockOnValidationChange}
+          mode="onSubmit"
+        />
+      )
+
+      await userEvent.click(screen.getByTestId('submit-button'))
+
+      await waitFor(() => {
+        expect(mockOnSubmit).not.toHaveBeenCalled()
+        expect(mockOnValidationChange).toHaveBeenCalledWith({
+          isValid: false,
+          isSubmitted: true
+        })
+      })
+    })
+
     it('should prevent submission when custom validation fails', async () => {
       const formDefinition: IFormDefinition = {
         inputs: [

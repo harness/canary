@@ -176,45 +176,46 @@ function generateSchemaRec(schemaObj: SchemaTreeNode, values: AnyFormValue, opti
       const enhancedSchema = getSchemaForArray(_schema, _input, values, options, arraySchema)
       objectSchemas[key] = enhancedSchema!
     } else if (_schema && _input) {
-      const enhancedSchema: zod.Schema<unknown> = getSchemaForPrimitive(_schema, _input, values, options)
-      objectSchemas[key] = enhancedSchema
-      // TODO check this
-      // objectSchemas[key] = !isEmpty(nestedSchemaObj)
-      //   ? addNestedSchema(nestedSchemaObj, enhancedSchema, options)
-      //   : enhancedSchema
+      const ownSchema = getSchemaForPrimitive(_schema, _input, values, options)
+      // Like the list/array branches, validate nested inputs after the input's own rule.
+      objectSchemas[key] = hasNestedInputs(schemaObj[key])
+        ? ownSchema.pipe(getObjectSchema(schemaObj[key], values, options))
+        : ownSchema
     } else if (_requiredOnly && _input) {
-      objectSchemas[key] = getRequiredSchema(_input, options)
-
-      // TODO check this
-      // if only required (no schema in place)
-      // let requiredSchema = chainRequiredSchema(Yup.mixed(), _input!.inputType, options)
-      // requiredSchema =
-      //   options?.globalValidationConfig?.globalValidation?.(requiredSchema, _input!) ?? requiredSchema
-      // requiredSchema.when(_input?.path!, {
-      //   is: value => {
-      //     return true
-      //   },
-      //   then: (schema2: Yup.MixedSchema) =>
-      //     options?.globalValidationConfig?.globalValidation?.(schema2, _input!) ?? schema2
-      // })
-      //const requiredSchema = _input ? composeSchema(, _input, values, options) : Yup.mixed() //getRequiredSchema(_input?.inputType!, options)
-      // ovo >>
-      // objectSchemas[key] = !isEmpty(nestedSchemaObj)
-      //   ? addNestedSchema(nestedSchemaObj, requiredSchema, options)
-      //   : requiredSchema
+      const ownSchema = getRequiredSchema(_input, options)
+      objectSchemas[key] = hasNestedInputs(schemaObj[key])
+        ? ownSchema.pipe(getObjectSchema(schemaObj[key], values, options))
+        : ownSchema
     } else {
-      const objectSchema = zod.object(generateSchemaRec(schemaObj[key], values, options)).optional()
-      // For object/group container inputs, also accept a runtime/expression string value
-      // (e.g. the whole object switched to `<+input>`). `globalValidation` decides whether the
-      // string is acceptable — mirroring the list branch above, which unions its array schema
-      // with a string schema rather than hard-failing with "Expected object, received string".
-      objectSchemas[key] = _input
-        ? zod.union([objectSchema, createStringSchemaWithGlobalValidation(_input, options)])
-        : objectSchema
+      objectSchemas[key] = getObjectSchema(schemaObj[key], values, options)
     }
   })
 
   return objectSchemas
+}
+
+function hasNestedInputs(node: SchemaTreeNode): boolean {
+  return Object.keys(node).some(key => !RESERVED_SCHEMA_KEYS.has(key))
+}
+
+function getObjectSchema(
+  node: SchemaTreeNode,
+  values: AnyFormValue,
+  options?: IGetValidationSchemaOptions
+): zod.ZodTypeAny {
+  // Validate a missing/null object as `{}` so required descendants are still enforced
+  // (`.optional()` would skip the whole branch). Parsed output is not used as form data.
+  const objectSchema = zod.preprocess(
+    value => (value == null ? {} : value),
+    zod.object(generateSchemaRec(node, values, options))
+  )
+  // For object/group container inputs, also accept a runtime/expression string value
+  // (e.g. the whole object switched to `<+input>`). `globalValidation` decides whether the
+  // string is acceptable — mirroring the list branch above, which unions its array schema
+  // with a string schema rather than hard-failing with "Expected object, received string".
+  return node._input
+    ? zod.union([objectSchema, createStringSchemaWithGlobalValidation(node._input, options)])
+    : objectSchema
 }
 
 /**

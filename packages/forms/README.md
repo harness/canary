@@ -339,6 +339,8 @@ Define validation schemas directly in input definitions:
 }
 ```
 
+**Nested required fields:** `required` is enforced even when a parent object in the path is missing from the form values. For example, `spec.connectorRef` with `required: true` fails when the values have no `spec` at all. Objects whose children are all optional still pass when missing. Nested `inputs` are also validated when their parent input has its own `required` or `validation` rule; the nested inputs are checked once the parent's rule passes.
+
 ### Global Validation Configuration
 
 Configure validation globally using `useZodValidationResolver`:

@@ -548,6 +548,8 @@ The forms package uses Zod for schema validation with a three-level validation h
 - Per-input-type required message via `requiredMessagePerInput[inputType]`
 - Global required schema via `requiredSchema`
 - Per-input-type required schema via `requiredSchemaPerInput[inputType]`
+- Enforced even when a parent object in the path is missing (e.g. `spec.connectorRef` with no `spec` in values); the missing object is validated as `{}`
+- Nested `inputs` of an input with its own `required`/`validation` are validated too (the parent's rule runs first, then `.pipe()` into the nested schema)
 
 **2. Global Validation** (Second Layer)
 

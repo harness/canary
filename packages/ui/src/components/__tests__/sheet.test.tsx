@@ -817,7 +817,7 @@ describe('Sheet', () => {
         )
 
         const title = screen.getByText('Title')
-        expect(title).toHaveClass('font-semibold')
+        expect(title).toHaveClass('[font-weight:var(--cn-font-weight-default-normal-600)]')
       })
     })
 

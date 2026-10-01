@@ -25,7 +25,7 @@
         },
         "600": {
           "$type": "fontWeights",
-          "$value": "550"
+          "$value": "535"
         },
         "700": {
           "$type": "fontWeights",

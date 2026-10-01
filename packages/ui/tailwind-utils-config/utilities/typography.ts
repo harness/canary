@@ -1,15 +1,9 @@
 /**
  * Composite typography utilities (`.font-*`), also consumed by the `<Text>` component.
  *
- * Each variant declares the optical WEIGHT bucket it resolves to and its base
- * letter-spacing (TRACKING). `buildFontUtilities` enforces one invariant:
- *
- *   the bold (700) bucket ALWAYS pairs with wide tracking.
- *
- * Mark a variant `bold` and it automatically gets `tracking-wide`, regardless of
- * its base tracking — so no bold text style can ship with tighter spacing. No
- * variant is bold today, so this currently changes nothing; it's a guardrail for
- * the future.
+ * Each variant declares the optical WEIGHT bucket it resolves to and its
+ * letter-spacing (TRACKING). Inter ships only regular and semibold — bold has
+ * been removed from the design system.
  *
  * NOTE: `weight` mirrors the composite token's `fontWeight` in
  * core-design-system/design-tokens/breakpoint/desktop.json. The CSS `font`
@@ -17,7 +11,7 @@
  * by the token — keep the two in sync.
  */
 
-type FontWeightBucket = 'regular' | 'semibold' | 'bold'
+type FontWeightBucket = 'regular' | 'semibold'
 type Tracking = 'tight' | 'normal' | 'wide'
 
 interface FontVariant {
@@ -27,7 +21,7 @@ interface FontVariant {
   cssVar?: string
   /** Optical weight bucket the composite token resolves to. */
   weight: FontWeightBucket
-  /** Base letter-spacing. Omitted = none. Forced to `wide` when `weight` is `bold`. */
+  /** Letter-spacing. Omitted = none. */
   tracking?: Tracking
 }
 
@@ -56,15 +50,12 @@ const FONT_VARIANTS: FontVariant[] = [
 const buildFontUtilities = (variants: FontVariant[]): Record<string, Record<string, string>> => {
   const utilities: Record<string, Record<string, string>> = {}
 
-  for (const { name, cssVar, weight, tracking } of variants) {
-    // The invariant: bold always reads with wide tracking.
-    const resolvedTracking: Tracking | undefined = weight === 'bold' ? 'wide' : tracking
-
+  for (const { name, cssVar, tracking } of variants) {
     const style: Record<string, string> = {
       font: `var(--cn-${cssVar ?? name})`
     }
-    if (resolvedTracking) {
-      style.letterSpacing = `var(--cn-tracking-${resolvedTracking})`
+    if (tracking) {
+      style.letterSpacing = `var(--cn-tracking-${tracking})`
     }
 
     utilities[`&-${name}`] = style

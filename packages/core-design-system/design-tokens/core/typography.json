@@ -25,11 +25,7 @@
         },
         "600": {
           "$type": "fontWeights",
-          "$value": "535"
-        },
-        "700": {
-          "$type": "fontWeights",
-          "$value": "Bold"
+          "$value": "540"
         }
       }
     },

@@ -39,7 +39,7 @@ The design system uses two typefaces with optically adjusted weights for Inter:
           <td className="cn-table-v2-cell">
             All UI text — headings, body, captions, micro
           </td>
-          <td className="cn-table-v2-cell">400 · 535 · 700</td>
+          <td className="cn-table-v2-cell">400 · 540</td>
         </tr>
         <tr className="cn-table-v2-row">
           <td className="cn-table-v2-cell">
@@ -58,7 +58,7 @@ The design system uses two typefaces with optically adjusted weights for Inter:
 
 <Aside type="note" title="Optical weights">
   Inter uses variable font instances tuned for optical balance — the semibold
-  tier `600` maps to **535**, while `400` renders at its nominal **400**. The
+  tier `600` maps to **540**, while `400` renders at its nominal **400**. The
   `.font-*` Tailwind classes apply these values automatically.
 </Aside>
 
@@ -97,7 +97,7 @@ Headings establish the information hierarchy and provide structure to content.
               The quick brown fox
             </span>
           </td>
-          <td className="cn-table-v2-cell">28px · 535</td>
+          <td className="cn-table-v2-cell">28px · 540</td>
           <td className="cn-table-v2-cell">
             <code>font-heading-hero</code>
           </td>
@@ -111,7 +111,7 @@ Headings establish the information hierarchy and provide structure to content.
               The quick brown fox
             </span>
           </td>
-          <td className="cn-table-v2-cell">24px · 535</td>
+          <td className="cn-table-v2-cell">24px · 540</td>
           <td className="cn-table-v2-cell">
             <code>font-heading-section</code>
           </td>
@@ -125,7 +125,7 @@ Headings establish the information hierarchy and provide structure to content.
               The quick brown fox
             </span>
           </td>
-          <td className="cn-table-v2-cell">20px · 535</td>
+          <td className="cn-table-v2-cell">20px · 540</td>
           <td className="cn-table-v2-cell">
             <code>font-heading-default</code>
           </td>
@@ -139,7 +139,7 @@ Headings establish the information hierarchy and provide structure to content.
               The quick brown fox
             </span>
           </td>
-          <td className="cn-table-v2-cell">18px · 535</td>
+          <td className="cn-table-v2-cell">18px · 540</td>
           <td className="cn-table-v2-cell">
             <code>font-heading-subsection</code>
           </td>
@@ -153,7 +153,7 @@ Headings establish the information hierarchy and provide structure to content.
               The quick brown fox
             </span>
           </td>
-          <td className="cn-table-v2-cell">16px · 535</td>
+          <td className="cn-table-v2-cell">16px · 540</td>
           <td className="cn-table-v2-cell">
             <code>font-heading-base</code>
           </td>
@@ -167,7 +167,7 @@ Headings establish the information hierarchy and provide structure to content.
               The quick brown fox
             </span>
           </td>
-          <td className="cn-table-v2-cell">14px · 535</td>
+          <td className="cn-table-v2-cell">14px · 540</td>
           <td className="cn-table-v2-cell">
             <code>font-heading-small</code>
           </td>
@@ -222,7 +222,7 @@ Body text is used for the main content.
               The quick brown fox jumps over the lazy dog.
             </span>
           </td>
-          <td className="cn-table-v2-cell">14px · 535</td>
+          <td className="cn-table-v2-cell">14px · 540</td>
           <td className="cn-table-v2-cell">
             <code>font-body-strong</code>
           </td>
@@ -264,7 +264,7 @@ Body text is used for the main content.
               For UI components
             </span>
           </td>
-          <td className="cn-table-v2-cell">14px · 535 · 1×</td>
+          <td className="cn-table-v2-cell">14px · 540 · 1×</td>
           <td className="cn-table-v2-cell">
             <code>font-body-single-line-strong</code>
           </td>
@@ -319,7 +319,7 @@ Captions are used for labels and metadata.
               Label text for UI elements
             </span>
           </td>
-          <td className="cn-table-v2-cell">12px · 535</td>
+          <td className="cn-table-v2-cell">12px · 540</td>
           <td className="cn-table-v2-cell">
             <code>font-caption-strong</code>
           </td>
@@ -384,7 +384,7 @@ Captions are used for labels and metadata.
               Labels, signatures, technical info
             </span>
           </td>
-          <td className="cn-table-v2-cell">11px · 535</td>
+          <td className="cn-table-v2-cell">11px · 540</td>
           <td className="cn-table-v2-cell">
             <code>font-micro-normal</code>
           </td>
@@ -918,7 +918,7 @@ For the occasional **layout** case — e.g. sizing a placeholder box to a line o
 Weight tokens are **named buckets**. The bucket name is the conventional CSS weight
 number (`400`, `600`, `700`), but its value is the **optically-tuned variable-font
 instance** that actually renders — which is why the bucket name and the rendered weight
-don't always match (e.g. the `600` bucket renders `535`). Reach for these via `.font-*`
+don't always match (e.g. the `600` bucket renders `540`). Reach for these via `.font-*`
 classes or `<Text>`, not raw weights.
 
 <div className="cn-table-v2 cn-table-v2-normal not-content">
@@ -950,23 +950,10 @@ classes or `<Text>`, not raw weights.
           <td className="cn-table-v2-cell">
             <code>600</code>
           </td>
-          <td className="cn-table-v2-cell">535</td>
+          <td className="cn-table-v2-cell">540</td>
           <td className="cn-table-v2-cell">Semibold</td>
           <td className="cn-table-v2-cell">
-            <span style={{ fontWeight: 535 }}>The quick brown fox jumps over the lazy dog.</span>
-          </td>
-        </tr>
-        <tr className="cn-table-v2-row">
-          <td className="cn-table-v2-cell">Inter</td>
-          <td className="cn-table-v2-cell">
-            <code>700</code>
-          </td>
-          <td className="cn-table-v2-cell">700</td>
-          <td className="cn-table-v2-cell">Bold</td>
-          <td className="cn-table-v2-cell">
-            <span style={{ fontWeight: 700, letterSpacing: 'var(--cn-tracking-wide)' }}>
-              The quick brown fox jumps over the lazy dog.
-            </span>
+            <span style={{ fontWeight: 540 }}>The quick brown fox jumps over the lazy dog.</span>
           </td>
         </tr>
         <tr className="cn-table-v2-row">

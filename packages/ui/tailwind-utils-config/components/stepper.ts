@@ -157,7 +157,7 @@ export default {
     background: 'var(--cn-bg-1)',
     border: 'var(--cn-spacing-px) solid transparent',
     fontSize: 'var(--cn-font-size-2)',
-    fontWeight: 'var(--cn-font-weight-default-normal-700)',
+    fontWeight: 'var(--cn-font-weight-default-normal-600)',
     lineHeight: '1',
     letterSpacing: 'var(--cn-tracking-wide)'
   },
@@ -690,7 +690,7 @@ export default {
 
   '.cn-stepper-nested-step-item:has(.cn-stepper-nested-step-completed):hover .cn-stepper-nested-step-title, .cn-stepper-nested-step-item:has(.cn-stepper-nested-step-skipped):hover .cn-stepper-nested-step-title':
     {
-      fontWeight: 'var(--cn-font-weight-default-normal-700)'
+      fontWeight: 'var(--cn-font-weight-default-normal-600)'
     },
 
   '.cn-stepper-nested-step-description': {

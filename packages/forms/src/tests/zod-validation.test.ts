@@ -663,9 +663,172 @@ describe('Zod Validation System', () => {
       expect((await schema.safeParseAsync({ ref: { name: 'main' } })).success).toBe(false)
     })
 
-    it('treats an undefined object container as valid (optional)', async () => {
-      const schema = getValidationSchema(objectContainerFormDefinition, {}, nonFixedGlobalValidation)
+    it('treats an undefined object container as valid when no child is required', async () => {
+      const optionalChildrenDefinition: IFormDefinition = {
+        inputs: [
+          {
+            inputType: 'object',
+            path: 'ref',
+            label: 'Ref',
+            inputs: [{ inputType: 'text', path: 'ref.name', label: 'Name' }]
+          }
+        ]
+      }
+      const schema = getValidationSchema(optionalChildrenDefinition, {}, nonFixedGlobalValidation)
       expect((await schema.safeParseAsync({})).success).toBe(true)
+    })
+
+    it('enforces required children of an undefined object container', async () => {
+      const schema = getValidationSchema(objectContainerFormDefinition, {}, nonFixedGlobalValidation)
+      const result = await schema.safeParseAsync({})
+      expect(result.success).toBe(false)
+      expect(result.error?.issues.map(issue => issue.path.join('.'))).toContain('ref.type')
+    })
+  })
+
+  describe('Required fields under a missing parent object', () => {
+    const infraFormDefinition: IFormDefinition = {
+      inputs: [
+        { inputType: 'text', path: 'spec.connectorRef', label: 'Connector', required: true },
+        { inputType: 'text', path: 'spec.namespace', label: 'Namespace', required: true }
+      ]
+    }
+
+    const getIssuePaths = (result: z.SafeParseReturnType<unknown, unknown>) =>
+      result.error?.issues.map(issue => issue.path.join('.')) ?? []
+
+    it('reports every required child when the parent object is missing', async () => {
+      const schema = getValidationSchema(infraFormDefinition, {})
+      const result = await schema.safeParseAsync({})
+      expect(result.success).toBe(false)
+      expect(getIssuePaths(result)).toEqual(expect.arrayContaining(['spec.connectorRef', 'spec.namespace']))
+    })
+
+    it('reports required children when the parent object is null', async () => {
+      const schema = getValidationSchema(infraFormDefinition, { spec: null })
+      const result = await schema.safeParseAsync({ spec: null })
+      expect(result.success).toBe(false)
+      expect(getIssuePaths(result)).toEqual(expect.arrayContaining(['spec.connectorRef', 'spec.namespace']))
+    })
+
+    it('enforces required fields through several missing levels', async () => {
+      const formDefinition: IFormDefinition = {
+        inputs: [{ inputType: 'text', path: 'a.b.c', label: 'C', required: true }]
+      }
+      const schema = getValidationSchema(formDefinition, { a: null })
+      const result = await schema.safeParseAsync({ a: null })
+      expect(result.success).toBe(false)
+      expect(getIssuePaths(result)).toEqual(['a.b.c'])
+    })
+
+    it('skips required children that are hidden', async () => {
+      const formDefinition: IFormDefinition = {
+        inputs: [
+          { inputType: 'text', path: 'spec.connectorRef', label: 'Connector', required: true, isVisible: () => false }
+        ]
+      }
+      const schema = getValidationSchema(formDefinition, {})
+      expect((await schema.safeParseAsync({})).success).toBe(true)
+    })
+
+    it('passes when the required children are filled', async () => {
+      const values = { spec: { connectorRef: 'account.k8s', namespace: 'default' } }
+      const schema = getValidationSchema(infraFormDefinition, values)
+      expect((await schema.safeParseAsync(values)).success).toBe(true)
+    })
+  })
+
+  describe('Nested inputs of an input that has its own rule', () => {
+    const nestedInputs: IInputDefinition[] = [
+      { inputType: 'text', path: 'environment.items.0.infra.spec.connectorRef', label: 'Connector', required: true },
+      { inputType: 'text', path: 'environment.items.0.infra.spec.namespace', label: 'Namespace', required: true }
+    ]
+    const hasItems = z.any().superRefine((value, ctx) => {
+      if (!Array.isArray((value as { items?: unknown })?.items)) {
+        ctx.addIssue({ code: z.ZodIssueCode.custom, message: 'Environment is required' })
+      }
+    })
+    const values = { environment: { items: [{ id: 'env1', infra: { spec: {} } }] } }
+
+    const getIssuePaths = (result: z.SafeParseReturnType<unknown, unknown>) =>
+      result.error?.issues.map(issue => issue.path.join('.')) ?? []
+
+    it('enforces nested required inputs when the parent has a custom validation', async () => {
+      const formDefinition: IFormDefinition = {
+        inputs: [
+          {
+            inputType: 'text',
+            path: 'environment',
+            label: 'Environment',
+            validation: { schema: hasItems },
+            inputs: nestedInputs
+          }
+        ]
+      }
+      const result = await getValidationSchema(formDefinition, values).safeParseAsync(values)
+      expect(getIssuePaths(result)).toEqual([
+        'environment.items.0.infra.spec.connectorRef',
+        'environment.items.0.infra.spec.namespace'
+      ])
+    })
+
+    it('enforces nested required inputs when the parent is required', async () => {
+      const formDefinition: IFormDefinition = {
+        inputs: [{ inputType: 'text', path: 'environment', label: 'Environment', required: true, inputs: nestedInputs }]
+      }
+      const result = await getValidationSchema(formDefinition, values).safeParseAsync(values)
+      expect(getIssuePaths(result)).toEqual([
+        'environment.items.0.infra.spec.connectorRef',
+        'environment.items.0.infra.spec.namespace'
+      ])
+    })
+
+    it("reports only the parent's error when its own rule fails", async () => {
+      const formDefinition: IFormDefinition = {
+        inputs: [
+          {
+            inputType: 'text',
+            path: 'environment',
+            label: 'Environment',
+            validation: { schema: hasItems },
+            inputs: nestedInputs
+          }
+        ]
+      }
+      const result = await getValidationSchema(formDefinition, {}).safeParseAsync({})
+      expect(getIssuePaths(result)).toEqual(['environment'])
+    })
+
+    it('passes when the parent rule and nested inputs are satisfied', async () => {
+      const filled = {
+        environment: { items: [{ id: 'env1', infra: { spec: { connectorRef: 'k8s', namespace: 'ns' } } }] }
+      }
+      const formDefinition: IFormDefinition = {
+        inputs: [
+          {
+            inputType: 'text',
+            path: 'environment',
+            label: 'Environment',
+            validation: { schema: hasItems },
+            inputs: nestedInputs
+          }
+        ]
+      }
+      expect((await getValidationSchema(formDefinition, filled).safeParseAsync(filled)).success).toBe(true)
+    })
+
+    it('accepts a runtime value on the parent when global validation allows it', async () => {
+      const formDefinition: IFormDefinition = {
+        inputs: [{ inputType: 'text', path: 'environment', label: 'Environment', required: true, inputs: nestedInputs }]
+      }
+      const runtimeValues = { environment: '<+input>' }
+      const options: IGetValidationSchemaOptions = {
+        validationConfig: {
+          globalValidation: value => (value === '<+input>' ? { continue: false } : { continue: true })
+        }
+      }
+      const result = await getValidationSchema(formDefinition, runtimeValues, options).safeParseAsync(runtimeValues)
+      expect(result.success).toBe(true)
     })
   })
 })

@@ -518,11 +518,11 @@ Following existing convention: `cn-{component}-{element}-{state}`
 |                                    | title/desc text | `cn-shimmer`              | Gradient shimmer sweep across text (4s linear infinite, blue highlight) |
 | **Step title**                     | text color      | `text-cn-1`               | `--cn-text-1`                                                           |
 |                                    | font size       | `text-cn-size-5`          | `--cn-font-size-5` (14px)                                               |
-|                                    | font weight     | —                         | 550 (semibold via variable font)                                        |
+|                                    | font weight     | —                         | 530 (semibold via variable font)                                        |
 | **Step description**               | text color      | `text-cn-3`               | `--cn-text-3`                                                           |
 |                                    | font size       | `body-normal`             | `--cn-font-size-5` (14px, via `Text variant="body-normal"`)             |
 | **Header title**                   | text color      | `text-cn-2`               | `--cn-text-2`                                                           |
-|                                    | font weight     | —                         | 550 (semibold via variable font)                                        |
+|                                    | font weight     | —                         | 530 (semibold via variable font)                                        |
 |                                    | font size       | `text-cn-size-5`          | `--cn-font-size-5` (14px)                                               |
 | **Step number text**               | font size       | `text-cn-size-2`          | `--cn-font-size-2` (~11.5px)                                            |
 | **Connector (completed)**          | background      | `bg-cn-success-primary`   | `--cn-set-success-primary-bg`                                           |

@@ -336,6 +336,18 @@ export default {
             gridRow: '1',
             '@apply self-center': ''
           }
+        },
+
+        // When a tagline stacks above the title, the title group is two lines tall. Center
+        // the actions + close cluster on that whole block (Figma spec) instead of top-
+        // anchoring it to the tagline. Confine the cluster to row 1 (the title group) and
+        // center it there: the title group is always taller than the single-row cluster, so
+        // it still sets the row height and the description stays 8px below it in row 2.
+        '&.cn-drawer-header-v2-main-with-tagline': {
+          '& .cn-drawer-header-v2-actions': {
+            gridRow: '1',
+            '@apply self-center': ''
+          }
         }
       },
 

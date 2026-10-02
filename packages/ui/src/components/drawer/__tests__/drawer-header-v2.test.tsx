@@ -93,6 +93,27 @@ describe('DrawerHeaderV2', () => {
     expect(screen.getByText('main branch')).toBeInTheDocument()
   })
 
+  test('backfills an sr-only Description when none is provided', () => {
+    // Radix warns when a dialog has no description; the header emits a screen-reader-only
+    // fallback so the accessible description is always present.
+    render(<HeaderV2 title="Build #142" />)
+    const description = screen.getByTestId('drawer-description')
+    expect(description).toHaveTextContent('No description available')
+    expect(description).toHaveClass('sr-only')
+  })
+
+  test('renders a visible (non sr-only) Description when provided', () => {
+    render(<HeaderV2 title="Build #142" description="main branch" />)
+    const description = screen.getByTestId('drawer-description')
+    expect(description).toHaveTextContent('main branch')
+    expect(description).not.toHaveClass('sr-only')
+  })
+
+  test('resolves the close button aria-label', () => {
+    render(<HeaderV2 title="Build #142" />)
+    expect(screen.getByRole('button', { name: 'Close' })).toBeInTheDocument()
+  })
+
   test('renders tagline above the title when provided', () => {
     const { container } = render(<HeaderV2 title="Build #142" tagline="Pipelines / main" />)
     expect(screen.getByText('Pipelines / main')).toBeInTheDocument()

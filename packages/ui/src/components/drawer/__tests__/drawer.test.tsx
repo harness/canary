@@ -674,6 +674,68 @@ describe('Drawer', () => {
         expect(header).toBeInTheDocument()
       })
     })
+
+    describe('Accessibility fallbacks', () => {
+      test('backfills sr-only Title and Description when the composition omits them', () => {
+        // Compose only non-title children (an icon gives us the title group + close button,
+        // but no Drawer.Title / Drawer.Description are passed).
+        renderComponent(
+          <Drawer.Root open>
+            <Drawer.Content>
+              <Drawer.Header icon="xmark">
+                <div>Body-only content</div>
+              </Drawer.Header>
+            </Drawer.Content>
+          </Drawer.Root>
+        )
+
+        // Radix needs an accessible name (hard error without a Title) and warns on a missing
+        // Description — the legacy path emits screen-reader-only fallbacks for both.
+        const title = screen.getByTestId('drawer-title')
+        expect(title).toHaveTextContent('Drawer')
+        expect(title).toHaveClass('sr-only')
+
+        const description = screen.getByTestId('drawer-description')
+        expect(description).toHaveTextContent('No description available')
+        expect(description).toHaveClass('sr-only')
+      })
+
+      test('resolves the close button aria-label', () => {
+        renderComponent(
+          <Drawer.Root open>
+            <Drawer.Content>
+              <Drawer.Header icon="xmark">
+                <div>Body-only content</div>
+              </Drawer.Header>
+            </Drawer.Content>
+          </Drawer.Root>
+        )
+
+        expect(screen.getByRole('button', { name: 'Close' })).toBeInTheDocument()
+      })
+
+      test('does not backfill when Title and Description are composed', () => {
+        renderComponent(
+          <Drawer.Root open>
+            <Drawer.Content>
+              <Drawer.Header>
+                <Drawer.Title>Real Title</Drawer.Title>
+                <Drawer.Description>Real Description</Drawer.Description>
+              </Drawer.Header>
+            </Drawer.Content>
+          </Drawer.Root>
+        )
+
+        // Only the composed title/description render — no sr-only backfill alongside them.
+        const title = screen.getByTestId('drawer-title')
+        expect(title).toHaveTextContent('Real Title')
+        expect(title).not.toHaveClass('sr-only')
+
+        const description = screen.getByTestId('drawer-description')
+        expect(description).toHaveTextContent('Real Description')
+        expect(description).not.toHaveClass('sr-only')
+      })
+    })
   })
 
   describe('Drawer.Body', () => {

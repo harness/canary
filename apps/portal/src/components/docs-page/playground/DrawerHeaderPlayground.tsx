@@ -11,9 +11,8 @@ import {
   CopyButton,
   Drawer,
   IconV2,
-  Layout,
+  StatsPanel,
   Tabs,
-  Text,
   TooltipProvider,
 } from "@harnessio/ui/components";
 import ControlField from "./ControlField";
@@ -104,7 +103,7 @@ function generateCode(s: State): string {
   // whenever metadata OR isLoading is set — matching what the preview renders.
   const header =
     s.metadata || s.isLoading
-      ? `${open}\n>\n  <Layout.Horizontal gap="lg">\n    <Text color="foreground-3">Last deployed: 2 hours ago</Text>\n    <Text color="foreground-3">Region: us-west-2</Text>\n  </Layout.Horizontal>\n</Drawer.Header>`
+      ? `${open}\n>\n  <StatsPanel\n    data={[\n      { label: "Last deployed", value: <>2 hours ago</> },\n      { label: "Region", value: <>us-west-2</> },\n    ]}\n  />\n</Drawer.Header>`
       : `${open}\n/>`;
 
   // With tabs, the header must sit inside a Tabs.Root for the strip to switch.
@@ -197,10 +196,12 @@ const DrawerHeaderPlayground: FC = () => {
   // have nothing to skeletonize and appear to do nothing.
   const showMetadata = state.metadata || state.isLoading;
   const metadataNode: ReactNode = showMetadata ? (
-    <Layout.Horizontal gap="lg">
-      <Text color="foreground-3">Last deployed: 2 hours ago</Text>
-      <Text color="foreground-3">Region: us-west-2</Text>
-    </Layout.Horizontal>
+    <StatsPanel
+      data={[
+        { label: "Last deployed", value: <>2 hours ago</> },
+        { label: "Region", value: <>us-west-2</> },
+      ]}
+    />
   ) : undefined;
 
   const header = (

@@ -147,6 +147,23 @@ export default {
           gridColumn: '2',
           gridRow: '1 / span 2',
           '@apply self-start': ''
+        },
+
+        // No tagline and no content row (title-only): the header is a single row, so
+        // vertically center the title/icon with the close button rather than top-aligning
+        // them — matching the V2 header's centered case. Compound class (not :where) so it
+        // outweighs the base `items-start` above; :where contributes 0 specificity, which
+        // would leave both rules equal and the base winning.
+        '&.cn-drawer-header-top-centered': {
+          '@apply items-center': '',
+
+          '& .cn-drawer-close-button': {
+            // Collapse the close button back into row 1 so it and the title group share ONE
+            // row and center against the same track. Left at `1 / span 2`, a taller button
+            // grows row 2 and the two centers never line up. Row 2 is unused in this case.
+            gridRow: '1',
+            '@apply self-center': ''
+          }
         }
       },
 

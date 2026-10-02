@@ -94,6 +94,12 @@ export const DrawerHeader = forwardRef<HTMLDivElement, DrawerHeaderProps>((props
     child => getComponentDisplayName(child) === DrawerPrimitive.Description.displayName
   )
 
+  // Title-only header (no tagline above, no description/content row below) is a single row,
+  // so vertically center the title with the close button instead of top-aligning them —
+  // matching the V2 header's centered case. Any tagline or composed content keeps the
+  // multi-row layout with the close button pinned to the top.
+  const centerContent = hasTitleGroup && !taglineChildren.length && otherChildren.length === 0
+
   return (
     <div className={cn('cn-drawer-header', className)} ref={ref} {...rest}>
       {!hasTitle && (
@@ -105,7 +111,7 @@ export const DrawerHeader = forwardRef<HTMLDivElement, DrawerHeaderProps>((props
         </DrawerPrimitive.Description>
       )}
       {hasTitleGroup ? (
-        <div className="cn-drawer-header-top">
+        <div className={cn('cn-drawer-header-top', { 'cn-drawer-header-top-centered': centerContent })}>
           {/* Tagline spans above; the icon/logo sits inline with the title (matches the V2 header). */}
           <div className="cn-drawer-header-strings">
             {taglineChildren}

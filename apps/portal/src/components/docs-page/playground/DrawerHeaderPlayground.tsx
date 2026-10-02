@@ -178,7 +178,7 @@ const DrawerHeaderPlayground: FC = () => {
         : undefined;
 
   const actionsNode: ReactNode = state.actions ? (
-    <ButtonLayout.Root>
+    <ButtonLayout.Root style={{ columnGap: "var(--cn-spacing-2)" }}>
       <ButtonLayout.Primary>
         <Button size="sm">Deploy</Button>
       </ButtonLayout.Primary>

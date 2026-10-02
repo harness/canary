@@ -100,9 +100,10 @@ export const DrawerHeaderV2 = forwardRef<HTMLDivElement, DrawerHeaderV2Props>(
     // description content makes the header taller than the actions cluster).
     const centerContent = !tagline && !description
 
-    // A tagline stacks above the title, making the title group two lines tall. The actions +
-    // close cluster must sit centered on that whole tagline/title block (Figma spec) rather
-    // than top-anchored to the tagline line, so flag the tagline case for the CSS override.
+    // A tagline stacks above the title, making the title group two lines tall. Flag that case
+    // so the CSS pins the actions + close cluster to the top of the header (flush with the
+    // tagline's top) and confines it to the title row, rather than letting it span down into
+    // the description row.
     const hasTagline = !!tagline
 
     // Keep the header's full-width bottom border even with tabs — it spans the whole drawer;

@@ -246,7 +246,7 @@ export default {
     },
 
     '&-dual-pane': {
-      '--cn-drawer-dual-pane-rail-width': '19.125rem',
+      '--cn-drawer-dual-pane-rail-width': '300px',
       '--cn-drawer-dual-pane-main-min-width': 'var(--cn-drawer-xs)',
       width: '100%',
       minWidth: '0',
@@ -267,7 +267,7 @@ export default {
     '&-dual-pane-rail-header': {
       borderBottomWidth: 'var(--cn-border-width-1)',
       borderBottomColor: 'var(--cn-border-3)',
-      padding: 'var(--cn-drawer-container) var(--cn-drawer-container) var(--cn-drawer-container) var(--cn-spacing-8)',
+      padding: 'var(--cn-drawer-container)',
       flexShrink: '0',
       '@apply flex flex-col border-b': '',
 

@@ -7,6 +7,7 @@ import AlertDialogPlayground from "./playground/AlertDialogPlayground.tsx";
 import AlertItemPlayground from "./playground/AlertItemPlayground.tsx";
 import AlertPlayground from "./playground/AlertPlayground.tsx";
 import AvatarPlayground from "./playground/AvatarPlayground.tsx";
+import BreadcrumbPlayground from "./playground/BreadcrumbPlayground.tsx";
 import IconButtonPlayground from "./playground/IconButtonPlayground.tsx";
 import LogoPlayground from "./playground/LogoPlayground.tsx";
 import Playground from "./playground/Playground.tsx";
@@ -24,6 +25,7 @@ export const DocsPage = {
   AlertItemPlayground,
   AlertPlayground,
   AvatarPlayground,
+  BreadcrumbPlayground,
   IconButtonPlayground,
   LogoPlayground,
 };

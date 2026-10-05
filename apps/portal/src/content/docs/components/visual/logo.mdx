@@ -21,83 +21,11 @@ The design system provides two logo components for different use cases:
 - **LogoV2** — Full-color logos with brand-specific backgrounds
 - **LogoSymbol** — Monochrome symbols that inherit color from parent
 
-<DocsPage.ComponentExample
-  client:only
-  code={`
-  <Layout.Flex gap="lg" justify="center" align="center">
-    <LogoV2 name="harness" size="lg" />
-    <LogoV2 name="github" size="lg" />
-    <LogoV2 name="docker" size="lg" />
-    <LogoV2 name="kubernetes" size="lg" />
-  </Layout.Flex>
-  `}
-/>
+Use **LogoV2** when you need the official brand appearance. Use **LogoSymbol** when you need the logo to blend with your UI's color scheme. Since `LogoSymbol` uses `currentColor`, it inherits color from its parent element.
 
-## Variations
+## Playground
 
-### LogoV2 vs LogoSymbol
-
-Use **LogoV2** when you need the official brand appearance. Use **LogoSymbol** when you need the logo to blend with your UI's color scheme.
-
-<DocsPage.ComponentExample
-  client:only
-  code={`
-  <Layout.Flex gap="xl" justify="center" align="center">
-    <Layout.Flex direction="column" gap="sm" align="center">
-      <LogoV2 name="docker" size="lg" />
-      <Text size="1" color="foreground-3">LogoV2</Text>
-    </Layout.Flex>
-    <Layout.Flex direction="column" gap="sm" align="center">
-      <LogoSymbol name="docker" size="lg" />
-      <Text size="1" color="foreground-3">LogoSymbol</Text>
-    </Layout.Flex>
-  </Layout.Flex>
-  `}
-/>
-
-### Sizes
-
-Both components support the same size variants: `xs`, `sm`, `md`, and `lg`. The default size is `lg`.
-
-<DocsPage.ComponentExample
-  client:only
-  code={`
-  <Layout.Flex gap="lg" justify="center" align="end">
-    <Layout.Flex direction="column" gap="xs" align="center">
-      <LogoV2 name="harness" size="xs" />
-      <Text size="1" color="foreground-3">xs</Text>
-    </Layout.Flex>
-    <Layout.Flex direction="column" gap="xs" align="center">
-      <LogoV2 name="harness" size="sm" />
-      <Text size="1" color="foreground-3">sm</Text>
-    </Layout.Flex>
-    <Layout.Flex direction="column" gap="xs" align="center">
-      <LogoV2 name="harness" size="md" />
-      <Text size="1" color="foreground-3">md</Text>
-    </Layout.Flex>
-    <Layout.Flex direction="column" gap="xs" align="center">
-      <LogoV2 name="harness" size="lg" />
-      <Text size="1" color="foreground-3">lg</Text>
-    </Layout.Flex>
-  </Layout.Flex>
-  `}
-/>
-
-### LogoSymbol colors
-
-Since `LogoSymbol` uses `currentColor`, it inherits color from its parent element.
-
-<DocsPage.ComponentExample
-  client:only
-  code={`
-  <Layout.Flex gap="lg" justify="center" align="center">
-    <div className="text-cn-1"><LogoSymbol name="docker" size="lg" /></div>
-    <div className="text-cn-2"><LogoSymbol name="docker" size="lg" /></div>
-    <div className="text-cn-3"><LogoSymbol name="docker" size="lg" /></div>
-    <div className="text-cn-4"><LogoSymbol name="docker" size="lg" /></div>
-  </Layout.Flex>
-  `}
-/>
+<DocsPage.LogoPlayground client:only />
 
 ## Installation
 

@@ -621,6 +621,7 @@ describe('Breadcrumb', () => {
     })
 
     test('should handle long text in breadcrumb items', () => {
+      // Labels over 30 chars are truncated in place; the full name moves to the title tooltip.
       const longText = 'Very Long Breadcrumb Text That Might Need Truncation'
       render(
         <Breadcrumb.Root>
@@ -631,7 +632,93 @@ describe('Breadcrumb', () => {
           </Breadcrumb.List>
         </Breadcrumb.Root>
       )
-      expect(screen.getByText(longText)).toBeInTheDocument()
+      const page = screen.getByText('Very Long Breadcrumb Text That…')
+      expect(page).toBeInTheDocument()
+      expect(page).toHaveAttribute('title', longText)
+    })
+  })
+
+  describe('Label truncation', () => {
+    const SHORT = 'Short name' // 10 chars
+    const LONG = 'A'.repeat(40) // > 30, <= 80
+    const VERY_LONG = 'B'.repeat(100) // > 80
+
+    test('should leave labels of 30 chars or fewer untouched (no title)', () => {
+      render(
+        <Breadcrumb.Root>
+          <Breadcrumb.List>
+            <Breadcrumb.Item>
+              <Breadcrumb.Link href="/short">{SHORT}</Breadcrumb.Link>
+            </Breadcrumb.Item>
+          </Breadcrumb.List>
+        </Breadcrumb.Root>
+      )
+      const link = screen.getByText(SHORT)
+      expect(link).toBeInTheDocument()
+      expect(link).not.toHaveAttribute('title')
+    })
+
+    test('should truncate a Link label over 30 chars and reveal the full name in the title', () => {
+      render(
+        <Breadcrumb.Root>
+          <Breadcrumb.List>
+            <Breadcrumb.Item>
+              <Breadcrumb.Link href="/long">{LONG}</Breadcrumb.Link>
+            </Breadcrumb.Item>
+          </Breadcrumb.List>
+        </Breadcrumb.Root>
+      )
+      const link = screen.getByText(`${'A'.repeat(30)}…`)
+      expect(link).toBeInTheDocument()
+      expect(link).toHaveAttribute('title', LONG)
+    })
+
+    test('should truncate a Page label over 30 chars and reveal the full name in the title', () => {
+      render(
+        <Breadcrumb.Root>
+          <Breadcrumb.List>
+            <Breadcrumb.Item>
+              <Breadcrumb.Page>{LONG}</Breadcrumb.Page>
+            </Breadcrumb.Item>
+          </Breadcrumb.List>
+        </Breadcrumb.Root>
+      )
+      const page = screen.getByText(`${'A'.repeat(30)}…`)
+      expect(page).toBeInTheDocument()
+      expect(page).toHaveAttribute('title', LONG)
+    })
+
+    test('should cap the title tooltip at 80 chars for very long labels', () => {
+      render(
+        <Breadcrumb.Root>
+          <Breadcrumb.List>
+            <Breadcrumb.Item>
+              <Breadcrumb.Page>{VERY_LONG}</Breadcrumb.Page>
+            </Breadcrumb.Item>
+          </Breadcrumb.List>
+        </Breadcrumb.Root>
+      )
+      const page = screen.getByText(`${'B'.repeat(30)}…`)
+      const title = page.getAttribute('title') ?? ''
+      expect(title).toBe(`${'B'.repeat(79)}…`)
+      expect(title.length).toBe(80)
+    })
+
+    test('should leave non-string labels untouched', () => {
+      render(
+        <Breadcrumb.Root>
+          <Breadcrumb.List>
+            <Breadcrumb.Item>
+              <Breadcrumb.Page>
+                <strong>Rich</strong> label
+              </Breadcrumb.Page>
+            </Breadcrumb.Item>
+          </Breadcrumb.List>
+        </Breadcrumb.Root>
+      )
+      const strong = screen.getByText('Rich')
+      expect(strong.tagName).toBe('STRONG')
+      expect(strong.closest('.cn-breadcrumb-page')).not.toHaveAttribute('title')
     })
   })
 

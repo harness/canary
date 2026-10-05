@@ -12,6 +12,7 @@ import {
   Drawer,
   IconV2,
   StatsPanel,
+  StatusBadge,
   Tabs,
   TooltipProvider,
 } from "@harnessio/ui/components";
@@ -50,6 +51,7 @@ interface State {
   tagline: string;
   description: string;
   icon: IconChoice;
+  titleSlot: boolean;
   actions: boolean;
   tabs: boolean;
   metadata: boolean;
@@ -63,6 +65,7 @@ const INITIAL_STATE: State = {
   tagline: "",
   description: "Configure your pipeline execution settings",
   icon: "icon",
+  titleSlot: false,
   actions: false,
   tabs: false,
   metadata: false,
@@ -83,6 +86,10 @@ function indent(block: string, spaces: number): string {
 function generateCode(s: State): string {
   const attrs: string[] = [`title="${s.title}"`];
   if (s.tagline) attrs.push(`tagline="${s.tagline}"`);
+  if (s.titleSlot)
+    attrs.push(
+      `titleSlot={<StatusBadge variant="status" theme="success">Active</StatusBadge>}`,
+    );
   if (s.description) attrs.push(`description="${s.description}"`);
   if (s.icon === "icon") attrs.push(`icon="${SAMPLE_ICON}"`);
   else if (s.icon === "logo") attrs.push(`icon={{ logo: "${SAMPLE_LOGO}" }}`);
@@ -135,6 +142,11 @@ const DrawerHeaderPlayground: FC = () => {
       description: "None, an IconV2, or a product LogoV2",
     },
     {
+      name: "titleSlot",
+      type: "boolean",
+      description: "Show a status badge inline with the title",
+    },
+    {
       name: "actions",
       type: "boolean",
       description: "Show sample action buttons",
@@ -177,6 +189,12 @@ const DrawerHeaderPlayground: FC = () => {
         ? { logo: SAMPLE_LOGO }
         : undefined;
 
+  const titleSlotNode: ReactNode = state.titleSlot ? (
+    <StatusBadge variant="status" theme="success">
+      Active
+    </StatusBadge>
+  ) : undefined;
+
   const actionsNode: ReactNode = state.actions ? (
     <ButtonLayout.Root style={{ columnGap: "var(--cn-spacing-2)" }}>
       <ButtonLayout.Primary>
@@ -208,6 +226,7 @@ const DrawerHeaderPlayground: FC = () => {
     <Drawer.Header
       title={state.title}
       tagline={state.tagline || undefined}
+      titleSlot={titleSlotNode}
       description={state.description || undefined}
       icon={iconProp}
       actions={actionsNode}

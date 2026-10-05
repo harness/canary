@@ -389,6 +389,13 @@ export default {
         '@apply shrink-0': ''
       },
 
+      // Opt-in slot inline with the title (e.g. a status badge). 8px from the title comes
+      // from the title line's `xs` flex gap; this never shrinks so the title truncates to
+      // make room and the slot content stays fully visible at narrow widths.
+      '&-title-slot': {
+        '@apply flex shrink-0 items-center': ''
+      },
+
       '&-icon-color': {
         // Icons inherit the title color (text-1); logos keep their own brand colors.
         color: 'var(--cn-text-1)'

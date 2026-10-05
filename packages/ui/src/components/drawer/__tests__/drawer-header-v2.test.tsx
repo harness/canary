@@ -114,6 +114,19 @@ describe('DrawerHeaderV2', () => {
     expect(screen.getByRole('button', { name: 'Close' })).toBeInTheDocument()
   })
 
+  test('renders the titleSlot inline with the title when provided', () => {
+    const { container } = render(
+      <HeaderV2 title="Build #142" titleSlot={<span data-testid="status-badge">Active</span>} />
+    )
+    expect(screen.getByTestId('status-badge')).toBeInTheDocument()
+    expect(container.querySelector('.cn-drawer-header-v2-title-slot')).toBeInTheDocument()
+  })
+
+  test('does not render the titleSlot wrapper when omitted', () => {
+    const { container } = render(<HeaderV2 title="Build #142" />)
+    expect(container.querySelector('.cn-drawer-header-v2-title-slot')).not.toBeInTheDocument()
+  })
+
   test('renders tagline above the title when provided', () => {
     const { container } = render(<HeaderV2 title="Build #142" tagline="Pipelines / main" />)
     expect(screen.getByText('Pipelines / main')).toBeInTheDocument()

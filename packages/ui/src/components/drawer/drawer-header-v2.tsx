@@ -18,6 +18,11 @@ export interface DrawerHeaderV2Props {
   title: ReactNode
   /** Tagline / breadcrumb rendered above the title. */
   tagline?: ReactNode
+  /**
+   * Opt-in slot rendered inline with the title (8px after it) — e.g. a status badge.
+   * It never shrinks: the title truncates to make room so the slot stays fully visible.
+   */
+  titleSlot?: ReactNode
   description?: ReactNode
   icon?: IconV2NamesType | { logo: LogoV2NamesType }
   actions?: ReactNode
@@ -49,7 +54,19 @@ const TabsSection: FC<{ items: HeaderV2TabItem[] }> = ({ items }) => {
 
 export const DrawerHeaderV2 = forwardRef<HTMLDivElement, DrawerHeaderV2Props>(
   (
-    { title, tagline, description, icon, actions, tabs, hideClose = false, isLoading = false, children, className },
+    {
+      title,
+      tagline,
+      titleSlot,
+      description,
+      icon,
+      actions,
+      tabs,
+      hideClose = false,
+      isLoading = false,
+      children,
+      className
+    },
     ref
   ) => {
     const { t } = useTranslation()
@@ -118,18 +135,24 @@ export const DrawerHeaderV2 = forwardRef<HTMLDivElement, DrawerHeaderV2Props>(
         >
           <Layout.Vertical gap="4xs" className="cn-drawer-header-v2-title-group min-w-0">
             {tagline ? <DrawerTagline>{tagline}</DrawerTagline> : null}
-            <Layout.Horizontal gap="2xs" align="center" className="min-w-0">
-              {IconOrLogoComp}
-              <DrawerPrimitive.Title asChild>
-                <Text
-                  variant="heading-default"
-                  color="foreground-1"
-                  truncate
-                  className="cn-drawer-title min-w-0 flex-1"
-                >
-                  {title}
-                </Text>
-              </DrawerPrimitive.Title>
+            {/* Title line: the icon + title group flexes and truncates; the optional title
+                slot sits 8px after it (the `xs` gap) and never shrinks, so a status badge
+                stays fully visible while the title ellipsifies at narrow widths. */}
+            <Layout.Horizontal gap="xs" align="center" className="min-w-0">
+              <Layout.Horizontal gap="2xs" align="center" className="min-w-0 shrink">
+                {IconOrLogoComp}
+                <DrawerPrimitive.Title asChild>
+                  <Text
+                    variant="heading-default"
+                    color="foreground-1"
+                    truncate
+                    className="cn-drawer-title min-w-0 flex-1"
+                  >
+                    {title}
+                  </Text>
+                </DrawerPrimitive.Title>
+              </Layout.Horizontal>
+              {titleSlot ? <div className="cn-drawer-header-v2-title-slot">{titleSlot}</div> : null}
             </Layout.Horizontal>
           </Layout.Vertical>
           {headerActions}

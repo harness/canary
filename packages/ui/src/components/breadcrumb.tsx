@@ -11,6 +11,30 @@ import { DropdownMenu } from './dropdown-menu'
 import { IconV2, IconV2NamesType } from './icon-v2'
 import { Link, type LinkProps } from './link'
 
+/** Max characters shown for a breadcrumb label before it's truncated with an ellipsis. */
+const MAX_LABEL_LENGTH = 30
+/** Max characters shown in the reveal-on-hover tooltip (native `title`) for a truncated label. */
+const MAX_TOOLTIP_LENGTH = 80
+
+/**
+ * Applies the breadcrumb truncation rules to a label:
+ * - string labels longer than `MAX_LABEL_LENGTH` are cut to 30 chars + an ellipsis
+ * - the full name is surfaced via a native `title` tooltip, capped at `MAX_TOOLTIP_LENGTH` chars
+ *
+ * Non-string children (custom nodes) are left untouched, and short labels get no `title`.
+ */
+function truncateLabel(children: ReactNode): { content: ReactNode; title?: string } {
+  if (typeof children !== 'string' || children.length <= MAX_LABEL_LENGTH) {
+    return { content: children }
+  }
+
+  const content = `${children.slice(0, MAX_LABEL_LENGTH)}…`
+  const title =
+    children.length > MAX_TOOLTIP_LENGTH ? `${children.slice(0, MAX_TOOLTIP_LENGTH - 1)}…` : children
+
+  return { content, title }
+}
+
 const breadcrumbVariants = cva('cn-breadcrumb', {
   variants: {
     size: {
@@ -60,16 +84,18 @@ type BreadcrumbLinkProps = ComponentPropsWithoutRef<'a'> & {
 }
 
 const BreadcrumbLink = forwardRef<HTMLAnchorElement, BreadcrumbLinkProps>(
-  ({ asChild, className, prefixIcon, children, ...props }, ref) => {
+  ({ asChild, className, prefixIcon, children, title, ...props }, ref) => {
     const Comp = asChild ? Slot : 'a'
+
+    const { content: label, title: truncatedTitle } = truncateLabel(children)
 
     const content = prefixIcon ? (
       <>
         <IconV2 name={prefixIcon} size="sm" className="cn-breadcrumb-prefix-icon" />
-        {children}
+        {label}
       </>
     ) : (
-      children
+      label
     )
 
     const linkClassName = cn('cn-breadcrumb-link', prefixIcon && 'cn-breadcrumb-link-with-icon', className)
@@ -78,14 +104,14 @@ const BreadcrumbLink = forwardRef<HTMLAnchorElement, BreadcrumbLinkProps>(
     // because Slot expects a single child element
     if (asChild && prefixIcon) {
       return (
-        <Comp ref={ref} className={linkClassName} {...props}>
+        <Comp ref={ref} className={linkClassName} title={title ?? truncatedTitle} {...props}>
           <span className="cn-breadcrumb-link-content">{content}</span>
         </Comp>
       )
     }
 
     return (
-      <Comp ref={ref} className={linkClassName} {...props}>
+      <Comp ref={ref} className={linkClassName} title={title ?? truncatedTitle} {...props}>
         {content}
       </Comp>
     )
@@ -99,14 +125,16 @@ type BreadcrumbHeaderLinkProps = LinkProps & {
 }
 
 const BreadcrumbHeaderLink = forwardRef<HTMLAnchorElement, BreadcrumbHeaderLinkProps>(
-  ({ className, isLast, prefixIcon, children, ...props }, ref) => {
+  ({ className, isLast, prefixIcon, children, title, ...props }, ref) => {
+    const { content: label, title: truncatedTitle } = truncateLabel(children)
+
     const content = prefixIcon ? (
       <>
         <IconV2 color="inherit" name={prefixIcon} size="sm" className="cn-breadcrumb-prefix-icon" />
-        {children}
+        {label}
       </>
     ) : (
-      children
+      label
     )
 
     const linkClassName = cn(
@@ -120,7 +148,14 @@ const BreadcrumbHeaderLink = forwardRef<HTMLAnchorElement, BreadcrumbHeaderLinkP
     )
 
     return (
-      <Link variant="secondary" noHoverUnderline ref={ref} className={linkClassName} {...props}>
+      <Link
+        variant="secondary"
+        noHoverUnderline
+        ref={ref}
+        className={linkClassName}
+        title={title ?? truncatedTitle}
+        {...props}
+      >
         {content}
       </Link>
     )
@@ -133,19 +168,24 @@ type BreadcrumbPageProps = ComponentPropsWithoutRef<'span'> & {
 }
 
 const BreadcrumbPage = forwardRef<HTMLSpanElement, BreadcrumbPageProps>(
-  ({ className, prefixIcon, children, ...props }, ref) => (
-    <span
-      ref={ref}
-      role="link"
-      aria-disabled="true"
-      aria-current="page"
-      className={cn('cn-breadcrumb-page', prefixIcon && 'cn-breadcrumb-page-with-icon', className)}
-      {...props}
-    >
-      {prefixIcon && <IconV2 name={prefixIcon} size="sm" className="cn-breadcrumb-prefix-icon" />}
-      {children}
-    </span>
-  )
+  ({ className, prefixIcon, children, title, ...props }, ref) => {
+    const { content: label, title: truncatedTitle } = truncateLabel(children)
+
+    return (
+      <span
+        ref={ref}
+        role="link"
+        aria-disabled="true"
+        aria-current="page"
+        title={title ?? truncatedTitle}
+        className={cn('cn-breadcrumb-page', prefixIcon && 'cn-breadcrumb-page-with-icon', className)}
+        {...props}
+      >
+        {prefixIcon && <IconV2 name={prefixIcon} size="sm" className="cn-breadcrumb-prefix-icon" />}
+        {label}
+      </span>
+    )
+  }
 )
 BreadcrumbPage.displayName = 'BreadcrumbPage'
 
@@ -234,20 +274,27 @@ type BreadcrumbRootInteractiveProps = ComponentPropsWithoutRef<'button'> & {
 }
 
 const BreadcrumbRootInteractive = forwardRef<HTMLButtonElement, BreadcrumbRootInteractiveProps>(
-  ({ className, size = 'sm', isRootOnly = false, avatar, children, ...props }, ref) => {
+  ({ className, size = 'sm', isRootOnly = false, avatar, children, title, ...props }, ref) => {
     const avatarSize: AvatarSize = size === 'sm' ? 'lg' : 'sm'
     // Default icon: 'account' only when root is the only visible item, otherwise 'organizations'
     const defaultIcon: IconV2NamesType = isRootOnly ? 'account' : 'organizations'
+    const { content: label, title: truncatedTitle } = truncateLabel(children)
 
     return (
-      <button ref={ref} type="button" className={cn('cn-breadcrumb-dropdown', className)} {...props}>
+      <button
+        ref={ref}
+        type="button"
+        title={title ?? truncatedTitle}
+        className={cn('cn-breadcrumb-dropdown', className)}
+        {...props}
+      >
         <Avatar
           size={avatarSize}
           rounded
           icon={!avatar?.src && !avatar?.name ? (avatar?.icon ?? defaultIcon) : avatar?.icon}
           {...avatar}
         />
-        <span className="cn-breadcrumb-dropdown-text">{children}</span>
+        <span className="cn-breadcrumb-dropdown-text">{label}</span>
         <IconV2 name="up-down" size="sm" className="cn-breadcrumb-dropdown-chevron" />
       </button>
     )

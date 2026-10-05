@@ -17,144 +17,9 @@ import PageTabsToc from "@/components/page-tabs-toc.astro";
 
 The `Accordion` allows content to be hidden or displayed by clicking a trigger. Multiple items can be shown simultaneously, or restricted to a single item using the `type` prop.
 
-<DocsPage.ComponentExample
-  client:only
-  code={`<div className="space-y-cn-md w-full">
-  <div className="flex items-start gap-cn-md border-b border-cn-borders-3 pb-cn-md">
-    <span className="text-cn-size-2 text-cn-3 w-32 shrink-0 font-mono pt-cn-xs">single</span>
-    <div className="flex-1 min-w-0">
-      <Accordion.Root type="single" defaultValue="item1">
-        <Accordion.Item value="item1">
-          <Accordion.Trigger>Item 1</Accordion.Trigger>
-          <Accordion.Content>
-            <p>This is the content of item 1</p>
-          </Accordion.Content>
-        </Accordion.Item>
-        <Accordion.Item value="item2">
-          <Accordion.Trigger>Item 2</Accordion.Trigger>
-          <Accordion.Content>
-            <p>This is the content of item 2</p>
-          </Accordion.Content>
-        </Accordion.Item>
-      </Accordion.Root>
-    </div>
-  </div>
+## Playground
 
-<div className="flex items-start gap-cn-md border-b border-cn-borders-3 pb-cn-md">
-  <span className="text-cn-size-2 text-cn-3 w-32 shrink-0 font-mono pt-cn-xs">
-    left indicator
-  </span>
-  <div className="flex-1 min-w-0">
-    <Accordion.Root type="single" collapsible indicatorPosition="left">
-      <Accordion.Item value="item1">
-        <Accordion.Trigger
-          suffix="3 items"
-          prefix={<IconV2 name="info-circle" size="md" />}
-        >
-          Item 1
-          <CopyButton size="xs" className="ml-cn-sm" />
-        </Accordion.Trigger>
-        <Accordion.Content>
-          <p>This is the content of item 1</p>
-          <p>This is the content of item 1</p>
-          <p>This is the content of item 1</p>
-        </Accordion.Content>
-      </Accordion.Item>
-      <Accordion.Item value="item2">
-        <Accordion.Trigger
-          suffix="5 items"
-          prefix={<IconV2 name="info-circle" size="md" />}
-        >
-          Item 2
-        </Accordion.Trigger>
-        <Accordion.Content>
-          <p>This is the content of item 2</p>
-          <p>This is the content of item 2</p>
-          <p>This is the content of item 2</p>
-          <p>This is the content of item 2</p>
-          <p>This is the content of item 2</p>
-        </Accordion.Content>
-      </Accordion.Item>
-    </Accordion.Root>
-  </div>
-</div>
-
-<div className="flex items-start gap-cn-md border-b border-cn-borders-3 pb-cn-md">
-  <span className="text-cn-size-2 text-cn-3 w-32 shrink-0 font-mono pt-cn-xs">
-    card
-  </span>
-  <div className="flex-1 min-w-0">
-    <Accordion.Root
-      type="single"
-      collapsible
-      indicatorPosition="left"
-      variant="card"
-      cardSize="md"
-    >
-      <Accordion.Item value="item1">
-        <Accordion.Trigger
-          suffix="3 items"
-          prefix={<IconV2 name="info-circle" size="md" />}
-        >
-          Item 1
-        </Accordion.Trigger>
-        <Accordion.Content>
-          <Layout.Vertical>
-            <TextInput />
-            <Textarea />
-          </Layout.Vertical>
-        </Accordion.Content>
-      </Accordion.Item>
-      <Accordion.Item value="item3">
-        <Accordion.Trigger
-          suffix="3 items"
-          prefix={<IconV2 name="info-circle" size="md" />}
-        >
-          Item 2
-        </Accordion.Trigger>
-        <Accordion.Content>
-          <p>This is the content of item 2</p>
-          <p>This is the content of item 2</p>
-          <p>This is the content of item 2</p>
-        </Accordion.Content>
-      </Accordion.Item>
-    </Accordion.Root>
-  </div>
-</div>
-
-<div className="flex items-start gap-cn-md">
-  <span className="text-cn-size-2 text-cn-3 w-32 shrink-0 font-mono pt-cn-xs">multiple</span>
-  <div className="flex-1 min-w-0">
-    <Accordion.Root type="multiple" defaultValue={["item1", "item3"]} size="md">
-      <Accordion.Item value="item1">
-        <Accordion.Trigger suffix="Suffix text" prefix={<LogoV2 name="docker" size="md" />}>
-          Item 1
-        </Accordion.Trigger>
-        <Accordion.Content>
-          <p>This is the content of item 1</p>
-        </Accordion.Content>
-      </Accordion.Item>
-      <Accordion.Item value="item2" disabled>
-        <Accordion.Trigger suffix="Suffix text" prefix={<LogoV2 name="docker" size="md" />}>
-          Item 3 (disabled/closed)
-        </Accordion.Trigger>
-        <Accordion.Content>
-          <p>This is the content of item 1</p>
-        </Accordion.Content>
-      </Accordion.Item>
-      <Accordion.Item value="item3" disabled>
-        <Accordion.Trigger suffix="Suffix text" prefix={<LogoV2 name="docker" size="md" />}>
-          Item 3 (disabled/expanded)
-        </Accordion.Trigger>
-        <Accordion.Content>
-          <p>This is the content of item 2</p>
-        </Accordion.Content>
-      </Accordion.Item>
-    </Accordion.Root>
-  </div>
-</div>
-</div>`}
-/>
+<DocsPage.AccordionPlayground client:only />
 
 ## Installation
 
@@ -198,6 +63,20 @@ All parts of the `Accordion` can be imported and composed as required:
 - **Content** — the region revealed when the item is expanded; it holds whatever you nest inside it.
 
 The `card` variant wraps each item in a [Card](/components/data-display/card/), using `cardSize` for its padding.
+
+## Trigger content
+
+`Trigger` accepts any `ReactNode` as `children`, but it's laid out as the item's **label slot**. Keep it to a short title and use the dedicated slots for everything else:
+
+- **Leading icon or logo** → `prefix`. **Short status or count** → `suffix`. Keep both non-interactive — an icon button, for example, is _not_ a supported `prefix`.
+- **A trailing action** (a [Copy Button](/components/actions/copy-button/), say) can go right after the label text inside `children`. The trigger's toggle is a separate full-width button rendered _behind_ the content, so the action handles its own click without opening or closing the item — this is the only endorsed interactive child. See the "left indicator" example in the Overview, and toggle **trailingAction** in the playground.
+- **An outlined** variant reads best for that trailing action, so it stays legible against the header without competing with the label.
+- If a header is made almost entirely of interactive controls and shouldn't toggle at all, set `clickable={false}`. That removes the overlay button — so the item can no longer be expanded from its header (see Known limitations).
+
+**Rules**
+
+- Don't place interactive elements in `prefix` or `suffix` — those slots are reserved for a leading icon/logo and short trailing text.
+- Don't rely on an interactive child for the item's accessible name. `children` renders in a sibling of the trigger `<button>`, so it doesn't name the button — always keep a plain text label, and add an explicit `aria-label` on the `Trigger` when the visible text isn't enough.
 
 ## Best practices
 

@@ -17,58 +17,13 @@ import PageTabsToc from "@/components/page-tabs-toc.astro";
 
 The `AlertDialog` component is a specialized variant of `Dialog` designed for scenarios where users need to confirm or cancel potentially destructive or irreversible actions. It provides a consistent, accessible interface with built-in support for different themes and a loading state.
 
-Each `AlertDialog` is opened by its own `AlertDialog.Trigger` — the button in each row below opens the dialog. The `theme` sets both the header icon and the confirm button's color, and `loading` keeps the dialog open with a spinner while the confirm action runs.
+Each `AlertDialog` is opened by its own `AlertDialog.Trigger`. The `theme` sets both the header icon and the confirm button's color, and `loading` keeps the dialog open with a spinner while the confirm action runs.
 
-<DocsPage.ComponentExample
-  client:only
-  code={`<div className="space-y-cn-sm w-full">
-  <div className="flex items-center gap-cn-md">
-    <span className="text-cn-size-2 text-cn-3 w-32 shrink-0 font-mono">default</span>
-    <AlertDialog.Root onConfirm={() => console.log('Confirmed')} onCancel={() => console.log('Cancelled')}>
-      <AlertDialog.Trigger>
-        <Button>Publish changes</Button>
-      </AlertDialog.Trigger>
-      <AlertDialog.Content title="Publish changes">
-        Your changes will be visible to everyone with access to this project.
-      </AlertDialog.Content>
-    </AlertDialog.Root>
-  </div>
-  <div className="flex items-center gap-cn-md">
-    <span className="text-cn-size-2 text-cn-3 w-32 shrink-0 font-mono">warning</span>
-    <AlertDialog.Root theme="warning" onConfirm={() => console.log('Confirmed')} onCancel={() => console.log('Cancelled')}>
-      <AlertDialog.Trigger>
-        <Button>Discard draft</Button>
-      </AlertDialog.Trigger>
-      <AlertDialog.Content title="Discard draft?">
-        This draft has unsaved edits. Discarding it will lose those changes.
-      </AlertDialog.Content>
-    </AlertDialog.Root>
-  </div>
-  <div className="flex items-center gap-cn-md">
-    <span className="text-cn-size-2 text-cn-3 w-32 shrink-0 font-mono">danger</span>
-    <AlertDialog.Root theme="danger" onConfirm={() => console.log('Confirmed')} onCancel={() => console.log('Cancelled')}>
-      <AlertDialog.Trigger>
-        <Button>Delete pipeline</Button>
-      </AlertDialog.Trigger>
-      <AlertDialog.Content title="Delete pipeline">
-        Are you sure you want to delete this pipeline? This action cannot be undone.
-        <AlertDialog.Confirm>Delete</AlertDialog.Confirm>
-      </AlertDialog.Content>
-    </AlertDialog.Root>
-  </div>
-  <div className="flex items-center gap-cn-md">
-    <span className="text-cn-size-2 text-cn-3 w-32 shrink-0 font-mono">loading</span>
-    <AlertDialog.Root theme="danger" loading onConfirm={() => console.log('Confirmed')}>
-      <AlertDialog.Trigger>
-        <Button>Delete (loading)</Button>
-      </AlertDialog.Trigger>
-      <AlertDialog.Content title="Deleting…">
-        The confirm and cancel buttons are disabled and the confirm button shows a spinner while the action runs.
-      </AlertDialog.Content>
-    </AlertDialog.Root>
-  </div>
-</div>`}
-/>
+The `Trigger` wraps whatever control should open the dialog — pass a `Button` (or any interactive element) as its single child. If you omit `AlertDialog.Cancel` and `AlertDialog.Confirm`, a default "Cancel" and "Confirm" pair is rendered for you.
+
+## Playground
+
+<DocsPage.AlertDialogPlayground client:only />
 
 ## Installation
 
@@ -91,8 +46,6 @@ return (
   </AlertDialog.Root>
 );
 ```
-
-The `Trigger` wraps whatever control should open the dialog — pass a `Button` (or any interactive element) as its single child. If you omit `AlertDialog.Cancel` and `AlertDialog.Confirm`, a default "Cancel" and "Confirm" pair is rendered for you.
 
 </TabItem>
 

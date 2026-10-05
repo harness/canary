@@ -88,7 +88,7 @@ function generateCode(s: State): string {
   if (s.tagline) attrs.push(`tagline="${s.tagline}"`);
   if (s.titleSlot)
     attrs.push(
-      `titleSlot={<StatusBadge variant="status" theme="success">Active</StatusBadge>}`,
+      `titleSlot={<StatusBadge variant="outline" theme="success">Active</StatusBadge>}`,
     );
   if (s.description) attrs.push(`description="${s.description}"`);
   if (s.icon === "icon") attrs.push(`icon="${SAMPLE_ICON}"`);
@@ -190,7 +190,7 @@ const DrawerHeaderPlayground: FC = () => {
         : undefined;
 
   const titleSlotNode: ReactNode = state.titleSlot ? (
-    <StatusBadge variant="status" theme="success">
+    <StatusBadge variant="outline" theme="success">
       Active
     </StatusBadge>
   ) : undefined;

@@ -1147,6 +1147,13 @@ button[aria-label="Search"] {
   mask-size: 16px 16px;
 }
 
+/* Dark mode: drop the dots one step darker on the gray scale
+   (border-2 = Gray.800 → border-3 = Gray.850) so they sit back further
+   against the darker base. Light mode keeps border-2. */
+[data-theme="dark"] .cn-home-bg::before {
+  background-color: var(--cn-border-3);
+}
+
 /* Home hero (full-width landing) */
 .cn-home-hero {
   display: flex;

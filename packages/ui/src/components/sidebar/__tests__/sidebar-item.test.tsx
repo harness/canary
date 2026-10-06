@@ -1,4 +1,4 @@
-import { forwardRef, ReactNode } from 'react'
+import { Children, forwardRef, isValidElement, ReactNode } from 'react'
 
 import { render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
@@ -21,10 +21,15 @@ vi.mock('../sidebar-context', () => ({
   useSidebar: () => sidebarContext
 }))
 
-const mockFilter = vi.fn((children: ReactNode) => {
-  const list = Array.isArray(children) ? children : [children]
-  return list.filter(child => (child as any)?.type?.displayName === 'SidebarMenuSubItem')
-})
+// Mirrors the real `filterChildrenByDisplayNames` (flattens nested arrays, skips falsy/text/DOM children)
+const mockFilter = vi.fn((children: ReactNode) =>
+  Children.toArray(children).filter(
+    child =>
+      isValidElement(child) &&
+      typeof child.type !== 'string' &&
+      (child.type as any).displayName === 'SidebarMenuSubItem'
+  )
+)
 
 vi.mock('@/utils', () => ({
   filterChildrenByDisplayNames: (children: ReactNode) => mockFilter(children)
@@ -416,6 +421,229 @@ describe('SidebarItem', () => {
       const { container } = render(<SidebarMenuSubItem to="/link" title="Active" active />)
       const indicator = container.querySelector('.cn-sidebar-submenu-item-active-indicator')
       expect(indicator).not.toBeNull()
+    })
+
+    describe('nested group (third level)', () => {
+      const renderNested = (groupProps: Record<string, unknown> = {}, leafProps: Record<string, unknown> = {}) =>
+        renderComponent({
+          defaultSubmenuOpen: true,
+          children: (
+            <SidebarMenuSubItem title="Group" {...groupProps}>
+              <SidebarMenuSubItem title="Leaf one" to="/one" {...leafProps} />
+              <SidebarMenuSubItem title="Leaf two" to="/two" />
+            </SidebarMenuSubItem>
+          )
+        })
+
+      const getGroupTrigger = () => screen.getByRole('menuitem', { name: /Group/ })
+      const getNestedGroup = () => screen.getAllByRole('group', { hidden: true })[1]
+
+      test('renders a collapsible trigger instead of a link', () => {
+        renderNested()
+        const trigger = getGroupTrigger()
+        expect(trigger.tagName).toBe('BUTTON')
+        expect(trigger).toHaveAttribute('aria-expanded', 'false')
+        expect(screen.getAllByTestId('nav-link').map(el => el.textContent)).toEqual(['Leaf one', 'Leaf two'])
+      })
+
+      test('keeps nested items mounted but hidden while closed', () => {
+        renderNested()
+        expect(getNestedGroup()).toHaveAttribute('data-state', 'closed')
+        expect(getNestedGroup()).toHaveAttribute('aria-hidden', 'true')
+      })
+
+      test('links the trigger to the nested group via aria-controls', () => {
+        renderNested()
+        const id = getGroupTrigger().getAttribute('aria-controls')
+        expect(id).toBeTruthy()
+        expect(getNestedGroup()).toHaveAttribute('id', id)
+      })
+
+      test('toggles open and closed on click', async () => {
+        renderNested()
+        await userEvent.click(getGroupTrigger())
+        expect(getGroupTrigger()).toHaveAttribute('aria-expanded', 'true')
+        expect(getNestedGroup()).toHaveAttribute('data-state', 'open')
+
+        await userEvent.click(getGroupTrigger())
+        expect(getGroupTrigger()).toHaveAttribute('aria-expanded', 'false')
+        expect(getNestedGroup()).toHaveAttribute('data-state', 'closed')
+      })
+
+      test('respects defaultOpen', () => {
+        renderNested({ defaultOpen: true })
+        expect(getGroupTrigger()).toHaveAttribute('aria-expanded', 'true')
+      })
+
+      test('starts open when a nested item is active', () => {
+        renderNested({}, { active: true })
+        expect(getGroupTrigger()).toHaveAttribute('aria-expanded', 'true')
+      })
+
+      test('opens when a nested item becomes active after mount', () => {
+        const build = (active: boolean) => (
+          <SidebarItem
+            {...({
+              ...baseProps,
+              defaultSubmenuOpen: true,
+              children: (
+                <SidebarMenuSubItem title="Group">
+                  <SidebarMenuSubItem title="Leaf one" to="/one" active={active} />
+                </SidebarMenuSubItem>
+              )
+            } as any)}
+          />
+        )
+        const { rerender } = render(build(false))
+        expect(getGroupTrigger()).toHaveAttribute('aria-expanded', 'false')
+
+        rerender(build(true))
+        expect(getGroupTrigger()).toHaveAttribute('aria-expanded', 'true')
+      })
+
+      test('shows the active indicator on a closed group with an active descendant', async () => {
+        const { container } = renderNested({}, { active: true })
+        // Leaf indicator only while open
+        expect(container.querySelectorAll('.cn-sidebar-submenu-item-active-indicator')).toHaveLength(1)
+
+        await userEvent.click(getGroupTrigger())
+        // Group indicator appears once collapsed, leaf indicator stays (hidden by the collapsed group)
+        expect(container.querySelectorAll('.cn-sidebar-submenu-item-active-indicator')).toHaveLength(2)
+      })
+
+      test('controlled: does not toggle itself and reports changes via onOpenChange', async () => {
+        const onOpenChange = vi.fn()
+        renderNested({ open: false, onOpenChange })
+
+        await userEvent.click(getGroupTrigger())
+        expect(onOpenChange).toHaveBeenCalledWith(true)
+        expect(getGroupTrigger()).toHaveAttribute('aria-expanded', 'false')
+      })
+
+      test('controlled: follows the open prop', () => {
+        const { rerender } = renderComponent({
+          defaultSubmenuOpen: true,
+          children: (
+            <SidebarMenuSubItem title="Group" open={false}>
+              <SidebarMenuSubItem title="Leaf" to="/leaf" />
+            </SidebarMenuSubItem>
+          )
+        })
+        expect(getGroupTrigger()).toHaveAttribute('aria-expanded', 'false')
+
+        rerender(
+          <SidebarItem
+            {...({
+              ...baseProps,
+              defaultSubmenuOpen: true,
+              children: (
+                <SidebarMenuSubItem title="Group" open>
+                  <SidebarMenuSubItem title="Leaf" to="/leaf" />
+                </SidebarMenuSubItem>
+              )
+            } as any)}
+          />
+        )
+        expect(getGroupTrigger()).toHaveAttribute('aria-expanded', 'true')
+      })
+
+      test('uncontrolled: still reports changes via onOpenChange', async () => {
+        const onOpenChange = vi.fn()
+        renderNested({ onOpenChange })
+        await userEvent.click(getGroupTrigger())
+        expect(onOpenChange).toHaveBeenCalledWith(true)
+        expect(getGroupTrigger()).toHaveAttribute('aria-expanded', 'true')
+      })
+
+      test('lets the user close a group that contains the active item', async () => {
+        renderNested({}, { active: true })
+        await userEvent.click(getGroupTrigger())
+        expect(getGroupTrigger()).toHaveAttribute('aria-expanded', 'false')
+      })
+
+      test('nested group does not force visibility, so a closed ancestor still hides it', () => {
+        renderNested({ defaultOpen: true })
+        const [outer, inner] = screen.getAllByRole('group', { hidden: true })
+        expect(outer).toHaveStyle({ visibility: 'inherit' })
+        expect(inner).toHaveStyle({ visibility: 'inherit' })
+      })
+
+      test('renders a link, not a group, when children contain no sub-items', () => {
+        renderComponent({
+          defaultSubmenuOpen: true,
+          children: <SidebarMenuSubItem {...({ title: 'Empty', to: '/empty', children: [] } as any)} />
+        })
+        expect(screen.getByTestId('nav-link')).toHaveTextContent('Empty')
+        expect(screen.getByText('Empty').closest('button')).toBeNull()
+      })
+
+      test('supports mapped (nested array) and conditional children, as a recursive data model produces', async () => {
+        const nodes = [
+          { title: 'Pipelines', to: '/p' },
+          { title: 'Executions', to: '/e' }
+        ]
+        renderComponent({
+          defaultSubmenuOpen: true,
+          children: (
+            <SidebarMenuSubItem title="Group">
+              {nodes.map(n => (
+                <SidebarMenuSubItem key={n.to} title={n.title} to={n.to} />
+              ))}
+              {false}
+            </SidebarMenuSubItem>
+          )
+        })
+        expect(screen.getByRole('menuitem', { name: /Group/ })).toHaveAttribute('aria-expanded', 'false')
+        expect(screen.getByText('Pipelines')).toBeInTheDocument()
+        expect(screen.getByText('Executions')).toBeInTheDocument()
+      })
+
+      test('strips group-only props from the link fallback', () => {
+        const onOpenChange = vi.fn()
+        renderComponent({
+          defaultSubmenuOpen: true,
+          children: (
+            <SidebarMenuSubItem
+              {...({ title: 'Empty', to: '/empty', children: [], open: true, defaultOpen: true, onOpenChange } as any)}
+            />
+          )
+        })
+        const link = screen.getByTestId('nav-link')
+        expect(link).not.toHaveAttribute('open')
+        expect(link).not.toHaveAttribute('defaultopen')
+      })
+
+      test('renders nothing when a group has no sub-items and no link target', () => {
+        renderComponent({
+          defaultSubmenuOpen: true,
+          children: <SidebarMenuSubItem {...({ title: 'Filtered', children: [], onOpenChange: vi.fn() } as any)} />
+        })
+        expect(screen.queryByText('Filtered')).toBeNull()
+      })
+
+      test('forwards ref and extra props to the group trigger button', async () => {
+        const ref = { current: null as HTMLButtonElement | null }
+        const onClick = vi.fn()
+        renderComponent({
+          defaultSubmenuOpen: true,
+          children: (
+            <SidebarMenuSubItem title="Group" ref={ref} data-testid="group-trigger" onClick={onClick}>
+              <SidebarMenuSubItem title="Leaf" to="/leaf" />
+            </SidebarMenuSubItem>
+          )
+        })
+        expect(ref.current).toBe(screen.getByTestId('group-trigger'))
+
+        await userEvent.click(ref.current!)
+        expect(onClick).toHaveBeenCalledTimes(1)
+        expect(ref.current).toHaveAttribute('aria-expanded', 'true')
+      })
+
+      test('marks the top-level item active when collapsed and a third-level item is active', () => {
+        sidebarContext.state = 'collapsed'
+        const { container } = renderNested({}, { active: true })
+        expect(container.querySelector('.cn-sidebar-item-wrapper')).toHaveAttribute('data-active', 'true')
+      })
     })
   })
 })

@@ -1,5 +1,5 @@
 import { SidebarProvider, useSidebar, UseSidebarSignature } from './sidebar-context'
-import { SidebarItem, SidebarItemProps, SidebarMenuSubItem } from './sidebar-item'
+import { SidebarItem, SidebarItemProps, SidebarMenuSubItem, SidebarMenuSubItemProps } from './sidebar-item'
 import { SidebarPopover } from './sidebar-popover'
 import { SidebarToggleMenuButton } from './sidebar-toggle-menu-button'
 import {
@@ -33,5 +33,5 @@ const Sidebar = {
   ToggleMenuButton: SidebarToggleMenuButton
 }
 
-export { Sidebar, useSidebar, type SidebarItemProps, type UseSidebarSignature }
+export { Sidebar, useSidebar, type SidebarItemProps, type SidebarMenuSubItemProps, type UseSidebarSignature }
 export { DraggableSidebarDivider, SIDEBAR_MIN_WIDTH, SIDEBAR_MAX_WIDTH } from './draggable-sidebar-divider'

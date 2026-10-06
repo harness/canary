@@ -33,16 +33,73 @@ import { filterChildrenByDisplayNames } from '@/utils'
 import { SyntheticListenerMap } from '@dnd-kit/core/dist/hooks/utilities'
 import { cn } from '@utils/cn'
 import omit from 'lodash-es/omit'
+import uniqueId from 'lodash-es/uniqueId'
 
 import { useSidebar } from './sidebar-context'
 
 const SUBMENU_ITEM_DISPLAY_NAME = 'SidebarMenuSubItem'
 
+/**
+ * True if any submenu item is active, at any nesting depth.
+ */
 function hasActiveSubmenuChild(children: ReactNode): boolean {
-  return filterChildrenByDisplayNames(children, [SUBMENU_ITEM_DISPLAY_NAME]).some(
-    el => !!(el.props as { active?: boolean }).active
-  )
+  return filterChildrenByDisplayNames(children, [SUBMENU_ITEM_DISPLAY_NAME]).some(el => {
+    const { active, children: nested } = el.props as { active?: boolean; children?: ReactNode }
+    return !!active || (!!nested && hasActiveSubmenuChild(nested))
+  })
 }
+
+interface SidebarSubmenuGroupProps {
+  open: boolean
+  children: ReactNode
+  /**
+   * Group nested inside another submenu item. Uses the (smaller) nested indentation.
+   */
+  nested?: boolean
+  id?: string
+}
+
+/**
+ * Animated, collapsible container for submenu items. Shared by `SidebarItem` (level 2) and
+ * `SidebarMenuSubItem` groups (level 3).
+ */
+const SidebarSubmenuGroup = ({ open, children, nested, id }: SidebarSubmenuGroupProps) => (
+  <div
+    id={id}
+    className="cn-sidebar-submenu-group"
+    role="group"
+    data-state={open ? 'open' : 'closed'}
+    aria-hidden={!open}
+    style={{
+      gridTemplateRows: open ? '1fr' : '0fr',
+      // `inherit` (not `visible`) so a closed ancestor still hides an open nested group from focus/a11y
+      visibility: open ? 'inherit' : 'hidden',
+      // Keep links visible while collapsing, then hide once fully closed.
+      transition: open
+        ? 'grid-template-rows 0.2s ease-out, visibility 0s'
+        : 'grid-template-rows 0.2s ease-out, visibility 0s linear 0.2s'
+    }}
+  >
+    <div style={{ overflow: 'hidden', minHeight: 0 }}>
+      <Layout.Grid
+        columns="1fr"
+        className={nested ? 'cn-sidebar-submenu-group-nested' : undefined}
+        style={
+          nested
+            ? undefined
+            : {
+                paddingLeft: 'var(--cn-layout-xl)',
+                paddingTop: 'var(--cn-sidebar-group-py)',
+                paddingBottom: 'var(--cn-sidebar-group-py)',
+                gap: 'var(--cn-spacing-2)'
+              }
+        }
+      >
+        {children}
+      </Layout.Grid>
+    </div>
+  </div>
+)
 
 interface SidebarBadgeProps extends Omit<StatusBadgeProps, 'children' | 'size' | 'content'> {
   content?: ReactNode
@@ -577,34 +634,7 @@ export const SidebarItem = forwardRef<HTMLButtonElement | HTMLAnchorElement, Sid
       return (
         <div className="contents">
           <WrappedItemTrigger />
-          <div
-            className="cn-sidebar-submenu-group"
-            role="group"
-            data-state={effectiveOpen ? 'open' : 'closed'}
-            aria-hidden={!effectiveOpen}
-            style={{
-              gridTemplateRows: effectiveOpen ? '1fr' : '0fr',
-              visibility: effectiveOpen ? 'visible' : 'hidden',
-              // Keep links visible while collapsing, then hide once fully closed.
-              transition: effectiveOpen
-                ? 'grid-template-rows 0.2s ease-out, visibility 0s'
-                : 'grid-template-rows 0.2s ease-out, visibility 0s linear 0.2s'
-            }}
-          >
-            <div style={{ overflow: 'hidden', minHeight: 0 }}>
-              <Layout.Grid
-                columns="1fr"
-                style={{
-                  paddingLeft: 'var(--cn-layout-xl)',
-                  paddingTop: 'var(--cn-sidebar-group-py)',
-                  paddingBottom: 'var(--cn-sidebar-group-py)',
-                  gap: 'var(--cn-spacing-2)'
-                }}
-              >
-                {filteredChildren}
-              </Layout.Grid>
-            </div>
-          </div>
+          <SidebarSubmenuGroup open={effectiveOpen}>{filteredChildren}</SidebarSubmenuGroup>
         </div>
       )
     }
@@ -614,16 +644,148 @@ export const SidebarItem = forwardRef<HTMLButtonElement | HTMLAnchorElement, Sid
 ) as SidebarItemComponent
 SidebarItem.displayName = 'SidebarItem'
 
-export const SidebarMenuSubItem = forwardRef<HTMLAnchorElement, NavLinkProps & { title: string; active?: boolean }>(
-  ({ title, className, active = false, ...props }, ref) => {
+interface SidebarMenuSubItemBaseProps {
+  title: string
+  active?: boolean
+  className?: string
+}
+
+interface SidebarMenuSubItemLinkProps
+  extends SidebarMenuSubItemBaseProps,
+    Omit<NavLinkProps, 'title' | 'className' | 'children'> {
+  children?: never
+  defaultOpen?: never
+  open?: never
+  onOpenChange?: never
+}
+
+/**
+ * Renders as a collapsible group (no link) that contains further `Sidebar.MenuSubItem`s.
+ * Nesting is supported up to a third level: Item > MenuSubItem > MenuSubItem.
+ * Remaining props (`id`, `data-*`, `aria-*`, ...) are applied to the group's trigger button.
+ */
+interface SidebarMenuSubItemGroupProps
+  extends SidebarMenuSubItemBaseProps,
+    Omit<ComponentPropsWithoutRef<'button'>, keyof SidebarMenuSubItemBaseProps | 'children' | 'type' | 'role'> {
+  children: ReactNode
+  /**
+   * Initial state when uncontrolled. Defaults to open if a descendant is active.
+   */
+  defaultOpen?: boolean
+  /**
+   * Controlled open state. When set, the parent owns the state and must update it in `onOpenChange`.
+   */
+  open?: boolean
+  onOpenChange?: (open: boolean) => void
+  to?: never
+}
+
+export type SidebarMenuSubItemProps = SidebarMenuSubItemLinkProps | SidebarMenuSubItemGroupProps
+
+const getSubItems = (children: ReactNode) => filterChildrenByDisplayNames(children, [SUBMENU_ITEM_DISPLAY_NAME])
+
+// Only a real group if it has at least one nested sub-item (e.g. not `[]` after visibility filtering)
+const isSubItemGroup = (props: SidebarMenuSubItemProps): props is SidebarMenuSubItemGroupProps =>
+  getSubItems(props.children).length > 0
+
+const SidebarMenuSubItemGroup = forwardRef<HTMLButtonElement, SidebarMenuSubItemGroupProps>(
+  (
+    { title, className, active, children, defaultOpen, open: controlledOpen, onOpenChange, onClick, ...buttonProps },
+    ref
+  ) => {
+    const nestedItems = getSubItems(children)
+    const hasActiveDescendant = hasActiveSubmenuChild(nestedItems)
+    const isControlled = controlledOpen !== undefined
+    const [uncontrolledOpen, setUncontrolledOpen] = useState(defaultOpen ?? hasActiveDescendant)
+    const open = isControlled ? controlledOpen : uncontrolledOpen
+    const [panelId] = useState(() => uniqueId('cn-sidebar-submenu-group-'))
+
+    const setOpen = useCallback(
+      (next: boolean) => {
+        if (!isControlled) setUncontrolledOpen(next)
+        onOpenChange?.(next)
+      },
+      [isControlled, onOpenChange]
+    )
+
+    // Reveal the active descendant when it becomes active after mount (e.g. route change).
+    // Only reacts to the false -> true transition, so a user can still close a group containing the active item.
+    const wasActiveRef = useRef(hasActiveDescendant)
+    useEffect(() => {
+      if (hasActiveDescendant && !wasActiveRef.current) setOpen(true)
+      wasActiveRef.current = hasActiveDescendant
+    }, [hasActiveDescendant, setOpen])
+
+    const showActiveIndicator = (active || hasActiveDescendant) && !open
+
+    return (
+      <div className="contents">
+        <Layout.Flex>
+          {showActiveIndicator && (
+            <div className="relative left-cn-4xs top-[10px] h-3 w-0.5 cn-sidebar-submenu-item-active-indicator" />
+          )}
+          <button
+            {...buttonProps}
+            ref={ref}
+            type="button"
+            className={cn('w-full cn-sidebar-submenu-item cn-sidebar-submenu-item-group-trigger', className)}
+            role="menuitem"
+            aria-expanded={open}
+            aria-controls={panelId}
+            onClick={e => {
+              onClick?.(e)
+              setOpen(!open)
+            }}
+          >
+            <Text
+              className="cn-sidebar-submenu-item-content"
+              variant="body-single-line-normal"
+              color="foreground-2"
+              truncate
+            >
+              {title}
+            </Text>
+            <IconV2
+              name="nav-arrow-right"
+              size="2xs"
+              className="cn-sidebar-submenu-item-group-chevron"
+              style={{ transform: open ? 'rotate(90deg)' : 'rotate(0deg)' }}
+            />
+          </button>
+        </Layout.Flex>
+        <SidebarSubmenuGroup id={panelId} open={open} nested>
+          {nestedItems}
+        </SidebarSubmenuGroup>
+      </div>
+    )
+  }
+)
+SidebarMenuSubItemGroup.displayName = 'SidebarMenuSubItemGroup'
+
+export const SidebarMenuSubItem = forwardRef<HTMLAnchorElement | HTMLButtonElement, SidebarMenuSubItemProps>(
+  (props, ref) => {
     const { NavLink } = useRouterContext()
+
+    if (isSubItemGroup(props)) {
+      return <SidebarMenuSubItemGroup {...props} ref={ref as Ref<HTMLButtonElement>} />
+    }
+
+    const { title, className, active = false, ...rest } = props
+    // A group whose children were all filtered out: drop the group-only props and, with no `to`, render nothing.
+    const linkProps = omit(rest, ['children', 'defaultOpen', 'open', 'onOpenChange']) as Omit<typeof rest, 'children'>
+    if (!linkProps.to) return null
 
     return (
       <Layout.Flex>
         {active && (
           <div className="relative left-cn-4xs top-[10px] h-3 w-0.5 cn-sidebar-submenu-item-active-indicator" />
         )}
-        <NavLink className={cn('w-full cn-sidebar-submenu-item', className)} role="menuitem" {...props} ref={ref}>
+        <NavLink
+          className={cn('w-full cn-sidebar-submenu-item', className)}
+          role="menuitem"
+          {...linkProps}
+          ref={ref as Ref<HTMLAnchorElement>}
+        >
           <Text
             className="cn-sidebar-submenu-item-content"
             variant="body-single-line-normal"

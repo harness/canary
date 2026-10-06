@@ -184,7 +184,13 @@ export default {
 
     '&-submenu': {
       '&-group': {
-        display: 'grid'
+        display: 'grid',
+
+        // Group nested inside a submenu item (third level)
+        '&-nested': {
+          paddingLeft: 'var(--cn-layout-sm)',
+          gap: 'var(--cn-spacing-2)'
+        }
       },
 
       '&-item': {
@@ -206,6 +212,16 @@ export default {
         },
         '&-active-indicator': {
           backgroundColor: 'var(--cn-set-brand-primary-bg)'
+        },
+
+        // Submenu item that expands to reveal nested items
+        '&-group-trigger': {
+          gridTemplateColumns: 'minmax(0, 1fr) auto',
+          gap: 'var(--cn-spacing-2)',
+          textAlign: 'left'
+        },
+        '&-group-chevron': {
+          transition: 'transform 0.2s ease-out'
         }
       }
     },

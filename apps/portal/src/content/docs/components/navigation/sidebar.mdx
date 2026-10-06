@@ -84,7 +84,11 @@ code={`() => {
                   {  iconName: 'pin' },
                 ]}
               >
-                <Sidebar.MenuSubItem title="Project Alpha" to="/projects/alpha" />
+                <Sidebar.MenuSubItem title="Project Alpha">
+                  <Sidebar.MenuSubItem title="Pipelines" to="/projects/alpha/pipelines" />
+                  <Sidebar.MenuSubItem title="Executions" to="/projects/alpha/executions" />
+                  <Sidebar.MenuSubItem title="Settings" to="/projects/alpha/settings" />
+                </Sidebar.MenuSubItem>
                 <Sidebar.MenuSubItem title="Project Beta" to="/projects/beta" />
                 <Sidebar.MenuSubItem title="Project Gamma" to="/projects/gamma" />
                 <Sidebar.MenuSubItem title="Project Delta" to="/projects/delta" />
@@ -302,7 +306,7 @@ The `Sidebar` is composed of nested parts that together form a complete navigati
 - **`Sidebar.Root`** — the container that renders the sidebar on desktop and switches to a slide-in `Sheet` on mobile. `side` places it on the left or right.
 - **`Sidebar.Content`** — the scrollable region for groups and items (`role="menu"`); **`Sidebar.Header`** / **`Sidebar.Footer`** frame it.
 - **`Sidebar.Group`** — a labeled cluster of items (`role="group"`); **`Sidebar.Item`** is the individual entry, with optional icon/logo/avatar, badge, actions, submenu, or dropdown.
-- **`Sidebar.MenuSubItem`** — a nested link revealed when an item with children expands; **`Sidebar.Popover`** shows nested items in a flyout instead.
+- **`Sidebar.MenuSubItem`** — a nested link revealed when an item with children expands. Give it `Sidebar.MenuSubItem` children to turn it into a collapsible group for a third level (`Item` › `MenuSubItem` › `MenuSubItem`); **`Sidebar.Popover`** shows nested items in a flyout instead.
 - **`Sidebar.Trigger`** / **`Sidebar.Rail`** / **`Sidebar.ToggleMenuButton`** — three ways to toggle collapse; **`Sidebar.Inset`** is the main content area that sits beside the sidebar.
 
 ## Best practices
@@ -716,7 +720,7 @@ The main navigation item. `badge`, `actionMenuItems`, `dropdownMenuContent`, `wi
 
 ### Sidebar.MenuSubItem
 
-A nested navigation link shown inside an expanded `Sidebar.Item`.
+A nested navigation link shown inside an expanded `Sidebar.Item`. When given `Sidebar.MenuSubItem` children it renders as a collapsible group (a button, not a link) that accepts button attributes and a `ref` instead of anchor props (it sets `aria-expanded` and an `aria-controls` that references its generated panel `id`), allowing a third level of nesting. Deeper nesting is not supported, and groups are not supported inside `Sidebar.Popover`. If a group's children are all filtered out at runtime (an empty array) it renders nothing, so when mapping a recursive model, render a link (`to`) for leaves and a group (`children`) only for nodes that have visible children.
 
 <DocsPage.PropsTable
   props={[
@@ -728,13 +732,43 @@ A nested navigation link shown inside an expanded `Sidebar.Item`.
     },
     {
       name: "to",
-      description: "Navigation destination.",
-      required: true,
+      description:
+        "Navigation destination. Omit when the item has children (group).",
+      required: false,
       value: "string",
     },
     {
+      name: "children",
+      description:
+        "Nested `Sidebar.MenuSubItem`s. Turns the item into a collapsible group. An uncontrolled group starts collapsed unless a descendant is active, and opens when a descendant becomes active (a descendant counts as active when it has the `active` prop).",
+      required: false,
+      value: "ReactNode",
+    },
+    {
+      name: "defaultOpen",
+      description:
+        "Whether a group starts expanded. Defaults to true when a descendant is active, otherwise false.",
+      required: false,
+      value: "boolean",
+    },
+    {
+      name: "open",
+      description:
+        "Controlled open state of a group. When set, the group never opens on its own: update it in `onOpenChange`, which is also called when a descendant becomes active after mount.",
+      required: false,
+      value: "boolean",
+    },
+    {
+      name: "onOpenChange",
+      description:
+        "Called when a group is toggled, in both controlled and uncontrolled modes.",
+      required: false,
+      value: "(open: boolean) => void",
+    },
+    {
       name: "active",
-      description: "Marks the sub-item as active.",
+      description:
+        "Marks the sub-item as active. On a group it only shows the active indicator while the group is collapsed; groups also show it automatically when a descendant is active.",
       required: false,
       value: "boolean",
       defaultValue: "false",

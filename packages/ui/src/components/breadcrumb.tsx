@@ -1,4 +1,15 @@
-import { ComponentProps, ComponentPropsWithoutRef, ComponentPropsWithRef, forwardRef, ReactNode } from 'react'
+import {
+  Children,
+  cloneElement,
+  ComponentProps,
+  ComponentPropsWithoutRef,
+  ComponentPropsWithRef,
+  forwardRef,
+  Fragment,
+  isValidElement,
+  ReactElement,
+  ReactNode
+} from 'react'
 
 import { Slot } from '@radix-ui/react-slot'
 import { cn } from '@utils/cn'
@@ -35,6 +46,83 @@ function truncateLabel(children: ReactNode): { content: ReactNode; title?: strin
   return { content, title }
 }
 
+/** Number of steps a trail can show before it collapses from the left (root side). */
+const MAX_VISIBLE_STEPS = 5
+/** How many trailing steps (current page + its nearest ancestors) stay visible once a trail collapses. */
+const STEPS_AFTER_COLLAPSE = 2
+
+/** Pulls the plain-text label out of a step's children, ignoring icons and other non-text nodes. */
+function extractStepText(node: ReactNode): string {
+  if (typeof node === 'string' || typeof node === 'number') return String(node)
+  if (Array.isArray(node)) return node.map(extractStepText).join('')
+  if (isValidElement(node)) return extractStepText((node.props as { children?: ReactNode }).children)
+  return ''
+}
+
+/** Finds the first navigable target (anchor `href` or router `to`) nested inside a step. */
+function extractStepHref(node: ReactNode): string | undefined {
+  let href: string | undefined
+  const visit = (current: ReactNode): void => {
+    if (href !== undefined || !isValidElement(current)) return
+    const props = current.props as { href?: string; to?: string; children?: ReactNode }
+    if (typeof props.href === 'string') {
+      href = props.href
+      return
+    }
+    if (typeof props.to === 'string') {
+      href = props.to
+      return
+    }
+    Children.forEach(props.children, visit)
+  }
+  visit(node)
+  return href
+}
+
+/** Flattens Fragment wrappers so interleaved steps and separators can be counted and sliced as one sequence. */
+function flattenBreadcrumbChildren(children: ReactNode): ReactElement[] {
+  const result: ReactElement[] = []
+  Children.forEach(children, child => {
+    if (!isValidElement(child)) return
+    if (child.type === Fragment) {
+      result.push(...flattenBreadcrumbChildren((child.props as { children?: ReactNode }).children))
+    } else {
+      result.push(child)
+    }
+  })
+  return result
+}
+
+/**
+ * Enforces the trail-length rule: once a breadcrumb has more than `MAX_VISIBLE_STEPS` steps, the leading
+ * steps (starting at the root, on the left) collapse into a single Ellipsis dropdown, leaving the last
+ * `STEPS_AFTER_COLLAPSE` steps visible. Shorter trails are returned exactly as authored.
+ */
+function collapseLeadingSteps(children: ReactNode): ReactNode {
+  const flat = flattenBreadcrumbChildren(children)
+  const isStep = (el: ReactElement) => el.type === BreadcrumbItem || el.type === BreadcrumbPage
+  const steps = flat.filter(isStep)
+
+  if (steps.length <= MAX_VISIBLE_STEPS) return children
+
+  const hiddenSteps = steps.slice(0, steps.length - STEPS_AFTER_COLLAPSE)
+  const firstVisibleStep = steps[steps.length - STEPS_AFTER_COLLAPSE]
+  const tail = flat.slice(flat.indexOf(firstVisibleStep))
+
+  const hiddenItems: BreadcrumbEllipsisItem[] = hiddenSteps.map(step => ({
+    label: extractStepText((step.props as { children?: ReactNode }).children) || '…',
+    href: extractStepHref(step) ?? '#'
+  }))
+
+  return (
+    <>
+      <BreadcrumbEllipsis items={hiddenItems} aria-label="Show hidden breadcrumbs" />
+      <BreadcrumbSeparator />
+      {tail.map((el, index) => cloneElement(el, { key: el.key ?? `cn-breadcrumb-step-${index}` }))}
+    </>
+  )
+}
+
 const breadcrumbVariants = cva('cn-breadcrumb', {
   variants: {
     size: {
@@ -59,8 +147,10 @@ BreadcrumbRoot.displayName = 'BreadcrumbRoot'
 
 type BreadcrumbListProps = ComponentPropsWithoutRef<'ol'>
 
-const BreadcrumbList = forwardRef<HTMLOListElement, BreadcrumbListProps>(({ className, ...props }, ref) => (
-  <ol ref={ref} className={cn('cn-breadcrumb-list', className)} {...props} />
+const BreadcrumbList = forwardRef<HTMLOListElement, BreadcrumbListProps>(({ className, children, ...props }, ref) => (
+  <ol ref={ref} className={cn('cn-breadcrumb-list', className)} {...props}>
+    {collapseLeadingSteps(children)}
+  </ol>
 ))
 BreadcrumbList.displayName = 'BreadcrumbList'
 

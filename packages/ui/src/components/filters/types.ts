@@ -4,15 +4,6 @@ import { ClassNames, DayPickerRangeProps } from 'react-day-picker'
 import { ComboBoxOptions } from '@components/filters/filters-bar/actions/variants/combo-box'
 import { MultiSelectOption, MultiSelectProps } from '@components/multi-select'
 
-import type {
-  DateRangeInput,
-  DateRangePickerCalendarProps,
-  DateRangePreset as SemanticDateRangePreset,
-  DateRangeValue as SemanticDateRangeValue,
-  TimeZoneId,
-  Weekday
-} from '../date-range-picker'
-
 export type DateRangeCalendarProps = Omit<
   DayPickerRangeProps,
   'mode' | 'numberOfMonths' | 'selected' | 'onSelect' | 'month' | 'onMonthChange' | 'classNames'
@@ -34,18 +25,18 @@ export enum FilterFieldTypes {
   MultiTag = 'multitag'
 }
 
-/** @deprecated Use DateRangeInput or SemanticDateRangeValue for new integrations. */
-export type DateRangeValue = DateRangeInput
+export interface DateRangeValue {
+  from: Date
+  to: Date
+  preset?: string
+}
 
-/** @deprecated Use SemanticDateRangePreset for new integrations. */
 export interface DateRangePreset {
   label: string
   value: string
   getRange: () => { from: Date; to: Date }
   group: 'recommended' | 'relative' | 'calendar'
 }
-
-export type DateRangeFilterPreset = DateRangePreset | SemanticDateRangePreset
 
 export type SecretListFilters = {
   secretTypes?: CheckboxOptions[]
@@ -138,15 +129,10 @@ interface CheckboxFilterOptionConfig<T extends string = string> extends FilterOp
 interface DateRangeFilterOptionConfig<T extends string = string> extends FilterOptionConfigBase<T, DateRangeValue> {
   type: FilterFieldTypes.DateRange
   filterFieldConfig?: {
-    presets?: DateRangeFilterPreset[]
+    presets?: DateRangePreset[]
     showCustomRange?: boolean
-    calendarProps?: DateRangeCalendarProps | DateRangePickerCalendarProps
+    calendarProps?: DateRangeCalendarProps
     calendarClassNames?: ClassNames
-    allowFuture?: boolean
-    enableOffset?: boolean
-    enableExclusions?: boolean
-    weekStartsOn?: Weekday
-    defaultTimeZone?: TimeZoneId
   }
 }
 
@@ -173,5 +159,3 @@ export type {
   CalendarFilterOptionConfig,
   DateRangeFilterOptionConfig
 }
-
-export type { SemanticDateRangePreset, SemanticDateRangeValue }

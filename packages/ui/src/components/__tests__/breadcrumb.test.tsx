@@ -1,3 +1,5 @@
+import { Fragment } from 'react'
+
 import { render, screen } from '@testing-library/react'
 import { describe, expect, test, vi } from 'vitest'
 
@@ -564,8 +566,10 @@ describe('Breadcrumb', () => {
       expect(screen.getByText('Only Page')).toBeInTheDocument()
     })
 
-    test('should render with many items', () => {
-      render(
+    test('should collapse the leading steps when there are more than 5', () => {
+      // Trails over 5 steps collapse from the left: the root and early ancestors fold into an
+      // Ellipsis, leaving only the last couple of steps visible.
+      const { container } = render(
         <Breadcrumb.Root>
           <Breadcrumb.List>
             {Array.from({ length: 10 }, (_, i) => (
@@ -576,8 +580,12 @@ describe('Breadcrumb', () => {
           </Breadcrumb.List>
         </Breadcrumb.Root>
       )
-      expect(screen.getByText('Page 0')).toBeInTheDocument()
+      // Last two steps stay visible; everything from the root side is hidden behind the ellipsis.
+      expect(container.querySelector('.cn-breadcrumb-ellipsis')).toBeInTheDocument()
+      expect(screen.getByText('Page 8')).toBeInTheDocument()
       expect(screen.getByText('Page 9')).toBeInTheDocument()
+      expect(screen.queryByText('Page 0')).not.toBeInTheDocument()
+      expect(screen.queryByText('Page 7')).not.toBeInTheDocument()
     })
 
     test('should render empty list', () => {
@@ -719,6 +727,124 @@ describe('Breadcrumb', () => {
       const strong = screen.getByText('Rich')
       expect(strong.tagName).toBe('STRONG')
       expect(strong.closest('.cn-breadcrumb-page')).not.toHaveAttribute('title')
+    })
+  })
+
+  describe('Trail collapse (more than 5 steps)', () => {
+    // A six-step trail: five ancestor links + the current page, with separators between them.
+    const SixStepTrail = () => (
+      <Breadcrumb.Root>
+        <Breadcrumb.List>
+          <Breadcrumb.Item>
+            <Breadcrumb.Link href="/a">Alpha</Breadcrumb.Link>
+          </Breadcrumb.Item>
+          <Breadcrumb.Separator />
+          <Breadcrumb.Item>
+            <Breadcrumb.Link href="/b">Bravo</Breadcrumb.Link>
+          </Breadcrumb.Item>
+          <Breadcrumb.Separator />
+          <Breadcrumb.Item>
+            <Breadcrumb.Link href="/c">Charlie</Breadcrumb.Link>
+          </Breadcrumb.Item>
+          <Breadcrumb.Separator />
+          <Breadcrumb.Item>
+            <Breadcrumb.Link href="/d">Delta</Breadcrumb.Link>
+          </Breadcrumb.Item>
+          <Breadcrumb.Separator />
+          <Breadcrumb.Item>
+            <Breadcrumb.Link href="/e">Echo</Breadcrumb.Link>
+          </Breadcrumb.Item>
+          <Breadcrumb.Separator />
+          <Breadcrumb.Item>
+            <Breadcrumb.Page>Foxtrot</Breadcrumb.Page>
+          </Breadcrumb.Item>
+        </Breadcrumb.List>
+      </Breadcrumb.Root>
+    )
+
+    test('should leave a 5-step trail fully expanded (no ellipsis)', () => {
+      const { container } = render(
+        <Breadcrumb.Root>
+          <Breadcrumb.List>
+            <Breadcrumb.Item>
+              <Breadcrumb.Link href="/a">Alpha</Breadcrumb.Link>
+            </Breadcrumb.Item>
+            <Breadcrumb.Separator />
+            <Breadcrumb.Item>
+              <Breadcrumb.Link href="/b">Bravo</Breadcrumb.Link>
+            </Breadcrumb.Item>
+            <Breadcrumb.Separator />
+            <Breadcrumb.Item>
+              <Breadcrumb.Link href="/c">Charlie</Breadcrumb.Link>
+            </Breadcrumb.Item>
+            <Breadcrumb.Separator />
+            <Breadcrumb.Item>
+              <Breadcrumb.Link href="/d">Delta</Breadcrumb.Link>
+            </Breadcrumb.Item>
+            <Breadcrumb.Separator />
+            <Breadcrumb.Item>
+              <Breadcrumb.Page>Echo</Breadcrumb.Page>
+            </Breadcrumb.Item>
+          </Breadcrumb.List>
+        </Breadcrumb.Root>
+      )
+      expect(container.querySelector('.cn-breadcrumb-ellipsis')).not.toBeInTheDocument()
+      ;['Alpha', 'Bravo', 'Charlie', 'Delta', 'Echo'].forEach(label =>
+        expect(screen.getByText(label)).toBeInTheDocument()
+      )
+    })
+
+    test('should collapse a trail over 5 steps, folding the root into an ellipsis on the left', () => {
+      const { container } = render(<SixStepTrail />)
+
+      // Ellipsis appears; only the last two steps remain visible.
+      expect(container.querySelector('.cn-breadcrumb-ellipsis')).toBeInTheDocument()
+      expect(screen.getByText('Echo')).toBeInTheDocument()
+      expect(screen.getByText('Foxtrot')).toBeInTheDocument()
+
+      // The root and the other early ancestors are hidden (tucked into the collapsed dropdown).
+      ;['Alpha', 'Bravo', 'Charlie', 'Delta'].forEach(label =>
+        expect(screen.queryByText(label)).not.toBeInTheDocument()
+      )
+    })
+
+    test('should keep the current page as the last visible step after collapsing', () => {
+      render(<SixStepTrail />)
+      const page = screen.getByText('Foxtrot')
+      expect(page).toHaveAttribute('aria-current', 'page')
+    })
+
+    test('should render the ellipsis before the surviving steps', () => {
+      const { container } = render(<SixStepTrail />)
+      const list = container.querySelector('.cn-breadcrumb-list')
+      const ellipsis = container.querySelector('.cn-breadcrumb-ellipsis')
+      const echo = screen.getByText('Echo')
+      // Ellipsis sits to the left of the first surviving step in document order.
+      expect(list?.contains(ellipsis)).toBe(true)
+      expect(ellipsis?.compareDocumentPosition(echo) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy()
+    })
+
+    test('should collapse trails whose steps are wrapped in fragments', () => {
+      // Mirrors how real consumers build trails: a map that returns a keyed Fragment per step.
+      const steps = ['One', 'Two', 'Three', 'Four', 'Five', 'Six', 'Seven']
+      const { container } = render(
+        <Breadcrumb.Root>
+          <Breadcrumb.List>
+            {steps.map((label, index) => (
+              <Fragment key={label}>
+                {index > 0 && <Breadcrumb.Separator />}
+                <Breadcrumb.Item>
+                  <Breadcrumb.Link href={`/${label}`}>{label}</Breadcrumb.Link>
+                </Breadcrumb.Item>
+              </Fragment>
+            ))}
+          </Breadcrumb.List>
+        </Breadcrumb.Root>
+      )
+      expect(container.querySelector('.cn-breadcrumb-ellipsis')).toBeInTheDocument()
+      expect(screen.getByText('Six')).toBeInTheDocument()
+      expect(screen.getByText('Seven')).toBeInTheDocument()
+      expect(screen.queryByText('One')).not.toBeInTheDocument()
     })
   })
 

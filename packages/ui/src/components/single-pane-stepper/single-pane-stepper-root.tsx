@@ -29,6 +29,7 @@ function SinglePaneStepperContent({
   hideHeader,
   reactivationPrompt,
   className,
+  cardClassName,
   style,
   showStepBadge,
   hideUpcomingGroups,
@@ -76,6 +77,7 @@ function SinglePaneStepperContent({
           hideUpcomingGroups={hideUpcomingGroups}
           hidePredictedSteps={hidePredictedSteps}
           disableCompletedFade={disableCompletedFade}
+          cardClassName={cardClassName}
         />
       </Layout.Vertical>
 

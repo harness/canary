@@ -56,6 +56,9 @@ export interface SharedFlowStepperRootProps {
    */
   disableCompletedFade?: boolean
   className?: string
+  /** Added to every step card's wrapper, so a consumer can style or tag all card bodies
+   *  (including cards added later) without touching each card component. */
+  cardClassName?: string
   style?: CSSProperties
   /** Rendered after the visual content, inside `FlowEngineProvider` — for context-only consumers
    *  (e.g. a persist bridge) that need engine access without affecting layout. */

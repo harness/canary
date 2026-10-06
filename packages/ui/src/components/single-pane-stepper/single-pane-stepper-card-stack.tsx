@@ -17,6 +17,7 @@ interface SinglePaneStepperCardStackProps {
   hideUpcomingGroups?: boolean
   hidePredictedSteps?: boolean
   disableCompletedFade?: boolean
+  cardClassName?: string
 }
 
 export function SinglePaneStepperCardStack({
@@ -27,7 +28,8 @@ export function SinglePaneStepperCardStack({
   showStepBadge,
   hideUpcomingGroups,
   hidePredictedSteps,
-  disableCompletedFade
+  disableCompletedFade,
+  cardClassName
 }: SinglePaneStepperCardStackProps) {
   const { flow, cardHistory, activeStepId, predictedPath, registerScrollToCard, disableAutoScroll } = useEngineContext()
   const { totalOverride, stepNumberOverrides, stepNumberOverridesComplete, handleStepperClick } =
@@ -104,7 +106,7 @@ export function SinglePaneStepperCardStack({
             const mountGeneration = cardHistory.find(e => e.stepId === stepId)?.mountGeneration ?? 0
 
             return (
-              <div key={`${stepId}-${mountGeneration}`} data-card-id={stepId}>
+              <div key={`${stepId}-${mountGeneration}`} data-card-id={stepId} className={cardClassName}>
                 <CardContextProvider stepId={stepId} status={status} contentOnly>
                   <CardComponent />
                 </CardContextProvider>

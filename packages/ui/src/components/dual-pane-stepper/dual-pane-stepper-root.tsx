@@ -34,6 +34,7 @@ function DualPaneStepperContent({
   reactivationPrompt,
   panelSizes,
   className,
+  cardClassName,
   style,
   showStepBadge,
   hideUpcomingGroups,
@@ -100,7 +101,7 @@ function DualPaneStepperContent({
                   {contentSubtitle && <p className="cn-dual-pane-stepper-content-subtitle">{contentSubtitle}</p>}
                 </Layout.Vertical>
               )}
-              <DualPaneStepperCardStack />
+              <DualPaneStepperCardStack cardClassName={cardClassName} />
             </div>
           </Resizable.Panel>
         </Resizable.PanelGroup>

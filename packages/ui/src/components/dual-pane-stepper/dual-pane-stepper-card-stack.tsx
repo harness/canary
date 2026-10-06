@@ -2,7 +2,7 @@ import { useCallback, useEffect, useRef } from 'react'
 
 import { CardContextProvider, useEngineContext } from '../flow-stepper/engine/engine-context'
 
-export function DualPaneStepperCardStack() {
+export function DualPaneStepperCardStack({ cardClassName }: { cardClassName?: string }) {
   const { flow, cardHistory, activeStepId, registerScrollToCard, disableAutoScroll } = useEngineContext()
   const containerRef = useRef<HTMLDivElement>(null)
   const activeRef = useRef(activeStepId)
@@ -51,7 +51,11 @@ export function DualPaneStepperCardStack() {
           if (!config) return null
           const CardComponent = config.component
           return (
-            <div key={`${entry.stepId}-${entry.mountGeneration ?? 0}`} data-card-id={entry.stepId}>
+            <div
+              key={`${entry.stepId}-${entry.mountGeneration ?? 0}`}
+              data-card-id={entry.stepId}
+              className={cardClassName}
+            >
               <CardContextProvider stepId={entry.stepId} status={entry.status}>
                 <CardComponent />
               </CardContextProvider>

@@ -42,3 +42,17 @@ describe('SinglePaneStepper.Root className', () => {
     expect(root).toBeInTheDocument()
   })
 })
+
+describe('SinglePaneStepper.Root cardClassName', () => {
+  test('adds cardClassName to every card wrapper', () => {
+    const { container } = render(<SinglePaneStepper.Root flow={flow} cardClassName="card-tag" />)
+    const card = container.querySelector('[data-card-id="a"]')
+    expect(card).toBeInTheDocument()
+    expect(card).toHaveClass('card-tag')
+  })
+
+  test('leaves card wrappers unclassed by default', () => {
+    const { container } = render(<SinglePaneStepper.Root flow={flow} />)
+    expect(container.querySelector('[data-card-id="a"]')).not.toHaveAttribute('class')
+  })
+})

@@ -41,10 +41,12 @@ const FONT_VARIANTS: FontVariant[] = [
   { name: 'heading-small', weight: 'semibold', tracking: 'normal' },
   { name: 'body-normal', weight: 'regular', tracking: 'tight' },
   { name: 'body-strong', weight: 'semibold', tracking: 'normal' },
+  /** @deprecated Use `body-normal`. Light weight retained for backwards-compatibility only; flagged by the deprecation lint rule in eslint/rules.js. */
   { name: 'body-light', weight: 'light', tracking: 'tight', deprecated: true },
   { name: 'body-code', weight: 'regular', tracking: 'tight' },
   { name: 'caption-normal', weight: 'regular', tracking: 'normal' },
   { name: 'caption-strong', weight: 'semibold', tracking: 'normal' },
+  /** @deprecated Use `caption-normal`. Light weight retained for backwards-compatibility only; flagged by the deprecation lint rule in eslint/rules.js. */
   { name: 'caption-light', weight: 'light', tracking: 'normal', deprecated: true },
   { name: 'caption-code', weight: 'regular', tracking: 'normal' },
   { name: 'link-default', cssVar: 'comp-link-default', weight: 'regular' },

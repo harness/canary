@@ -24,7 +24,11 @@ canary PR merges while the component exists only on a branch, the asset is in co
 main — and the next full regen drops it from the map and breaks every consumer. The skill adds an
 unticked checklist item to the PR for exactly this.
 
-Two caveats:
+Three caveats:
+- **Designers can edit branches but cannot merge them.** Only a few design leads have merge rights
+  on the main file. So the person who publishes an asset usually *cannot* complete the Figma merge
+  themselves — it is a handoff, and the PR gate must name who is responsible or the PR stalls
+  waiting on an action its author cannot take.
 - **The fallback PAT route cannot see a branch at all.** It reads the main file by ID, so on that
   route the Figma branch genuinely must be merged first.
 - **Branching requires edit access.** A view-only user cannot create a Figma branch, and Figma also

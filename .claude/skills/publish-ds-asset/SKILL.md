@@ -462,7 +462,7 @@ Present to the user, and wait:
    ```markdown
    ## ⛔ Do not merge until the Figma branch is merged
 
-   - [ ] Figma branch `<branch name>` merged into main and published
+   - [ ] Figma branch `<branch name>` merged into main and published — **needs a design lead**
 
    Exported from Figma branch `<name>` (file key `<key>`), not main. The name maps are regenerated
    from **main's** export page, so merging this PR first would leave the asset in code but absent
@@ -473,6 +473,12 @@ Present to the user, and wait:
    This is the one ordering rule that matters. Opening the PR from a branch is safe; **merging it
    before the Figma branch is merged is not.** Put the gate where the person clicking merge will see
    it, not only in the designer's head.
+
+   **Name the handoff.** Designers can edit Figma branches but **cannot merge them** — only a few
+   design leads can. So the author of this PR usually *cannot tick that box themselves*. When
+   drafting, say who needs to do it (the approver from step 3 is the obvious candidate) so the PR
+   does not silently stall waiting on an action its author is not able to take. If the user has not
+   said who approves, ask rather than guessing.
 
 Only once the user approves: create the ticket, then push and open the PR.
 

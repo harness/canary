@@ -107,6 +107,35 @@ An empty result from `harness_list(resource_type='repository', search_term=...)`
 problem, not a credential one — pass `org_id` and `project_id` explicitly. Do not conclude the
 Harness integration is broken from an empty list alone.
 
+Open a PR as a **draft** with `is_draft: true` in the body. A draft is on the remote but not
+requesting review.
+
+**`harness_update` on a pull request requires `title` even when you only want to change the
+description** — omitting it fails with `Pull request title can't be empty`. Send both fields.
+
+### PR comments — three gotchas, all hit for real
+
+| Task | Correct call |
+|---|---|
+| **Read** comments | `harness_list(resource_type='pr_activity', filters={type: ['comment','code-comment']})` — **not** `pr_comment`, which is write-only |
+| **Reply** in a thread | `harness_create(resource_type='pr_comment', body={parent_id: <id>, text: '...'})` |
+| **Resolve** a thread | `harness_execute(resource_type='pr_comment', action='resolve', org_id, project_id, params={repo_id, pr_number, comment_id})` |
+
+1. **`parent_id` belongs in `body`, not `params`.** Putting it in `params` is silently ignored and
+   your reply posts as a **new top-level comment** instead of threading. The response shows
+   `parent_id: null` — check for that rather than assuming it threaded.
+
+2. **`resolve` / `unresolve` do not accept a PR URL.** Unlike `harness_list`, they will not extract
+   identifiers from `url` and return a bare **`Not Found`**. Pass `repo_id`, `pr_number` and
+   `comment_id` explicitly, plus `org_id` / `project_id`.
+
+3. **`comment_id` must be the thread parent.** A reply id is rejected with
+   `Can't change status of replies.` Take an id from `pr_activity` whose `parent_id` is `null`.
+
+**Unresolved comments block merge**, including any stray top-level comment you posted by accident.
+If you cannot delete one (a decline is authoritative — do not retry), **resolve** it so it stops
+blocking, and tell the user it is still there.
+
 **`FF Added` is a required custom field** on Story-type tickets. Set it to `No` at creation time. If
 empty, CI fails with:
 

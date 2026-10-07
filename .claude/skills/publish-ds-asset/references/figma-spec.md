@@ -26,9 +26,13 @@ unticked checklist item to the PR for exactly this.
 
 Three caveats:
 - **Designers can edit branches but cannot merge them.** Only a few design leads have merge rights
-  on the main file. So the person who publishes an asset usually *cannot* complete the Figma merge
-  themselves — it is a handoff, and the PR gate must name who is responsible or the PR stalls
-  waiting on an action its author cannot take.
+  on the main file, and on the Figma side the **approver is the merger** — the person who signs off
+  the design is the one with admin rights to merge it. So the Figma merge is a handoff the asset
+  author cannot complete themselves; name the approver in the PR gate.
+
+  The **canary PR** is the opposite: its **author** is responsible for getting approval and for
+  clicking merge. Canary auto-adds the design lead as a reviewer, so chasing that review is a human
+  task, not something the skill should automate.
 - **The fallback PAT route cannot see a branch at all.** It reads the main file by ID, so on that
   route the Figma branch genuinely must be merged first.
 - **Branching requires edit access.** A view-only user cannot create a Figma branch, and Figma also

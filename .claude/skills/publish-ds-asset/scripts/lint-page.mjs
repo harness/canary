@@ -86,8 +86,11 @@ function lintComponent(c, type) {
   const masked = kids.filter(k => k.isMask === true)
   if (masked.length) {
     E(`has ${masked.length} mask layer(s) (${masked.map(k => k.name).join(', ')}). Masks are ` +
-      `banned on export pages — they export as a degenerate <mask x="inf" y="inf"/> and the ` +
-      `asset renders blank. Remove the mask and keep a single flattened vector`)
+      `banned on export pages. Two outcomes observed, both wrong: the export can degenerate to ` +
+      `<mask x="inf" y="inf"/> with no geometry at all, so the asset renders blank (this happened ` +
+      `to .apple); or it emits a <mask> plus a full-frame <rect>, which may render but is roughly ` +
+      `double the bytes and structurally unlike every sibling. Remove the mask and keep a single ` +
+      `flattened vector with the stroke or fill applied directly to it`)
   }
   // ── Gradient / image fills — cannot ship, need a monochrome source ──────
   //
@@ -153,10 +156,18 @@ function lintComponent(c, type) {
       `outlined — set the cap and join uniformly to ROUND and re-export`)
   }
 
-  const colorRects = kids.filter(k => k.type === 'RECTANGLE' && /icon\s*color/i.test(k.name))
-  if (colorRects.length) {
-    E(`contains an "${colorRects[0].name}" rectangle — that is the color-mask pattern from the ` +
-      `designer page. It must not appear on an export page; delete it and fill the vector directly`)
+  // The colour-mask layer appears as a RECTANGLE on some older components and as
+  // an INSTANCE on ones copied from the designer page, and is variously named
+  // "icon color", "icon-color" or "iconColor". Match on the NAME across any node
+  // type: keying on RECTANGLE missed the instance form entirely, and `\s*` did
+  // not match the hyphen. Both misses were found on real components.
+  const colorLayers = kids.filter(k => /icon[\s_-]*color/i.test(k.name))
+  if (colorLayers.length) {
+    const k = colorLayers[0]
+    E(`contains an "${k.name}" layer (${k.type}) — that is the colour-mask pattern from the ` +
+      `designer page, where a colour swatch sits above a vector mask. Export pages need the ` +
+      `opposite: one flat vector with the colour applied directly to it. Delete this layer, turn ` +
+      `off "Use as mask" on the vector, and set the vector's own stroke or fill`)
   }
 
   if (type === 'logo') {
@@ -167,7 +178,7 @@ function lintComponent(c, type) {
     // informational rather than an error — but a frame can hide nested structure
     // that violates the single-flattened-glyph rule.
     const nonVector = kids.filter(k => k.type !== 'VECTOR')
-    if (nonVector.length && !colorRects.length) {
+    if (nonVector.length && !colorLayers.length) {
       W(`child "${nonVector[0].name}" is a ${nonVector[0].type}, not a VECTOR. Confirm it is one ` +
         `flattened glyph and not a nested composition`)
     }

@@ -5,9 +5,10 @@ description: Recent changes to the Harness Design System, automatically updated 
 
 import ChangelogList from "@/components/changelog/ChangelogList";
 
-Track what's new in the Harness Design System. Each entry links to the pull request that introduced the change.
-
-## Typography weight normalization (UUI-3467)
+<div className="not-content">
+  <p className="font-caption-normal text-cn-3">October 7, 2026</p>
+  <h2 className="font-heading-default text-cn-1">Typography weight normalization (UUI-3467)</h2>
+</div>
 
 The typography scale has been normalized to two optical weights: **Regular (400)** and **Semibold (600**, which renders at optical **530)** for Inter, while JetBrains Mono keeps **Regular** and **Bold**. The in-between weights are no longer part of the recommended scale, and every `.font-*` utility and `<Text>` variant now resolves to one of these normalized weights.
 

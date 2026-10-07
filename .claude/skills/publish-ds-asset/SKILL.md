@@ -292,6 +292,35 @@ for (let i = 0; i < bytes.length; i += 4096) {
 return { svg, byteLength: bytes.length }
 ```
 
+### Verify the stroke survived the export
+
+**Do this for every outline icon.** It is the authoritative check that a stroke was not silently
+baked into a filled outline, and it beats inspecting Figma properties:
+
+```
+IF the Figma component has any child with strokes
+AND the exported SVG contains no `stroke=` attribute
+THEN the stroke was outlined into a fill — STOP.
+```
+
+An outlined stroke renders correctly at 16px but ignores the `stroke-width` set by the
+`cn-icon-*` size classes, so it will not thin out at `md`/`lg`/`xl` like its siblings. Fix by
+setting the vector's cap and join uniformly to ROUND in Figma, then re-export and re-check.
+
+Do **not** decide this from `strokeCap`/`strokeJoin` alone — `MIXED` there does not reliably mean
+outlined. Measured on two real icons:
+
+| Icon | cap | join | Exported as |
+|---|---|---|---|
+| `.ai-evals` (before fix) | MIXED | MIXED | ❌ filled outline |
+| `.ai-verify` (shipped, correct) | MIXED | ROUND | ✅ stroke preserved |
+
+`.ai-verify` is a legitimate mixed fill+stroke icon, so the linter only *warns* on MIXED. The
+export is what settles it.
+
+A genuinely solid/filled icon has no strokes in Figma at all, so the condition above never fires
+for one — which is why it is phrased around the Figma component having strokes.
+
 Write the returned `svg` verbatim to a temp file (e.g. `/tmp/<name>.svg`) — do not reformat or
 pretty-print it — then:
 

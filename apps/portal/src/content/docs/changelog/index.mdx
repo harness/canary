@@ -7,4 +7,10 @@ import ChangelogList from "@/components/changelog/ChangelogList";
 
 Track what's new in the Harness Design System. Each entry links to the pull request that introduced the change.
 
+## Typography weight normalization (UUI-3467)
+
+The typography scale has been normalized to two optical weights: **Regular (400)** and **Semibold (600**, which renders at optical **530)** for Inter, while JetBrains Mono keeps **Regular** and **Bold**. The in-between weights are no longer part of the recommended scale, and every `.font-*` utility and `<Text>` variant now resolves to one of these normalized weights.
+
+The previous **light (300)**, **medium (500)**, and **bold (700)** weights have **not been removed** — they are retained for backwards-compatibility and are now marked **deprecated** across every layer of the system: the `caption-light` Text variant, the `.font-body-light` and `.font-caption-light` utilities, the `body.light` and `caption.light` composite tokens, and the underlying weight primitives (Inter `300 / 500 / 700`, JetBrains Mono `300 / 500`). Existing usage keeps working and the deprecated specimens remain on the [Typography foundations](/foundations/typography/) page for reference, but new adoption is blocked by an ESLint rule — migrate to the `-normal` / `-strong` siblings instead.
+
 <ChangelogList client:load />

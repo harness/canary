@@ -460,9 +460,9 @@ Present to the user, and wait:
    unticked checklist item near the top:
 
    ```markdown
-   ## ⛔ Do not merge until the Figma branch is merged
+   ## ⛔ Do not merge this PR until the Figma branch is merged
 
-   - [ ] Figma branch `<branch name>` merged into main and published — **needs a design lead**
+   - [ ] Figma branch `<branch name>` merged into main and published by `<approver>`
 
    Exported from Figma branch `<name>` (file key `<key>`), not main. The name maps are regenerated
    from **main's** export page, so merging this PR first would leave the asset in code but absent
@@ -471,14 +471,22 @@ Present to the user, and wait:
    ```
 
    This is the one ordering rule that matters. Opening the PR from a branch is safe; **merging it
-   before the Figma branch is merged is not.** Put the gate where the person clicking merge will see
-   it, not only in the designer's head.
+   before the Figma branch is merged is not.**
 
-   **Name the handoff.** Designers can edit Figma branches but **cannot merge them** — only a few
-   design leads can. So the author of this PR usually *cannot tick that box themselves*. When
-   drafting, say who needs to do it (the approver from step 3 is the obvious candidate) so the PR
-   does not silently stall waiting on an action its author is not able to take. If the user has not
-   said who approves, ask rather than guessing.
+   **Who does what, so the gate lands on the right person:**
+
+   | Action | Owner |
+   |---|---|
+   | Merge the **Figma** branch | The **design approver** — they hold the admin rights, and on the Figma side approver and merger are the same person |
+   | Merge the **canary PR** | The **PR author** (usually the designer) |
+
+   The author is the one who clicks merge on the PR, so write the gate as an instruction *to them*:
+   they must wait for their approver to merge the Figma branch first. Name the approver in the
+   checklist item. If the user has not said who approved it, ask rather than guessing.
+
+   **Do not add reviewers or post chaser comments.** Canary automatically adds the design lead as a
+   PR reviewer, and chasing that review is the author's job, not the skill's. Adding reviewers
+   programmatically would duplicate repo configuration and create noise.
 
 Only once the user approves: create the ticket, then push and open the PR.
 

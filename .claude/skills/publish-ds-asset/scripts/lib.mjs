@@ -11,10 +11,19 @@
  * — importing either one would trigger a full several-hundred-asset Figma
  * download as an import side effect.
  *
- * Duplication means drift risk. That risk is contained by parity-check.mjs,
- * which re-derives an ALREADY-COMMITTED asset through this file and asserts the
- * result is byte-identical to what is on disk. Run it before trusting any
- * output from here.
+ * Duplication means drift risk. parity-check.mjs contains that risk across BOTH
+ * halves of the replica, and you must run it before trusting any output here:
+ *
+ *   1. SVG pipelines (processIcon / processLogo / processSymbol) — re-derives an
+ *      ALREADY-COMMITTED asset from a fresh Figma export and asserts the result
+ *      is byte-identical to what is on disk. Needs a fixture export.
+ *   2. Name-map templates and sort (buildTemplate / sortFilenames) — re-renders
+ *      each committed map from its own filename list and asserts byte-identity.
+ *      Needs no fixture, so it runs on every invocation and via `--maps`.
+ *
+ * Half 2 exists because a template or sort-order change upstream would sail
+ * past the SVG check: add-asset.mjs would then insert at the wrong position or
+ * in the wrong format, and the next full regen would reorder every map entry.
  *
  * If you change packages/ui/scripts/{icons,logos}.js, mirror the change here
  * and re-run the parity check.

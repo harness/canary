@@ -34,10 +34,12 @@ import {
   PATHS,
   assertRunFromPackagesUi,
   parseArgs,
+  parseMapFilenames,
   processIcon,
   processLogo,
   processSymbol,
-  readIfExists
+  readIfExists,
+  renderMap
 } from './lib.mjs'
 
 const args = parseArgs(process.argv.slice(2))
@@ -74,6 +76,57 @@ async function listCommitted(type) {
   )
 }
 
+/**
+ * Map-template parity. Needs no Figma export, so it runs on every invocation.
+ *
+ * The SVG checks below cover processIcon/processLogo/processSymbol only. This
+ * covers the OTHER half of the replica: the LiquidJS templates in
+ * `buildTemplate`, the `localeCompare` sort in `sortFilenames`, and the
+ * import-line format. Without it, an upstream change to a template or the sort
+ * order would pass the SVG check silently, `add-asset.mjs` would insert at the
+ * wrong position or in the wrong format, and the next full regen would reorder
+ * every entry in the map.
+ *
+ * Method: take the committed map's own filename list, re-render it through the
+ * replica, and require byte-identity. Self-contained — no fixture needed.
+ */
+async function checkMaps() {
+  console.log('Map-template parity (templates + sort order)\n')
+  let allOk = true
+  for (const kind of ['icon', 'logo', 'symbol']) {
+    const mapPath = PATHS[kind].map
+    const committed = await readIfExists(mapPath)
+    if (committed === null) {
+      console.log(`  ⚠️  ${kind}: ${mapPath} not found — skipped`)
+      continue
+    }
+    const filenames = parseMapFilenames(committed, kind)
+    if (!filenames.length) {
+      console.log(`  ❌ ${kind}: parsed 0 entries from ${mapPath} — the import-line regex no longer matches`)
+      allOk = false
+      continue
+    }
+    const rerendered = await renderMap(filenames, kind)
+    if (rerendered === committed) {
+      console.log(`  ✅ ${kind}: ${filenames.length} entries re-render byte-identically`)
+    } else {
+      console.log(`  ❌ ${kind}: MISMATCH re-rendering ${mapPath} (${filenames.length} entries)`)
+      console.log(describeDiff(committed, rerendered))
+      allOk = false
+    }
+  }
+  if (!allOk) {
+    console.error(
+      `\n❌ The name-map replica has DRIFTED from the committed maps.\n\n` +
+        `  Do not run add-asset.mjs — it would insert at the wrong position or in the wrong\n` +
+        `  format, and the next full regen would reorder every entry.\n\n` +
+        `  Mirror the current template and sort from packages/ui/scripts/{icons,logos}.js into\n` +
+        `  lib.mjs (buildTemplate / sortFilenames), then re-run this check.\n`
+    )
+  }
+  return allOk
+}
+
 async function compare(label, committedPath, rederived) {
   const committed = await readIfExists(committedPath)
   if (committed === null) {
@@ -90,6 +143,13 @@ async function compare(label, committedPath, rederived) {
 
 async function main() {
   await assertRunFromPackagesUi()
+
+  // Map-template parity needs no fixture, so it runs first and always. It is
+  // the only guard on the template/sort half of the replica.
+  if (args.maps) {
+    console.log('')
+    process.exit((await checkMaps()) ? 0 : 1)
+  }
 
   const type = args.type
   if (type !== 'icon' && type !== 'logo') {
@@ -108,11 +168,14 @@ async function main() {
   const raw = await readIfExists(path.resolve(args.raw))
   if (raw === null) fail(`Raw SVG not found: ${args.raw}`)
 
+  console.log('')
+  const mapsOk = await checkMaps()
+
   const filename = `${args.name}.svg`
-  console.log(`\nParity check — ${type} "${args.name}"`)
+  console.log(`\nSVG-pipeline parity — ${type} "${args.name}"`)
   console.log(`  raw export: ${args.raw} (${raw.length} bytes)\n`)
 
-  const results = []
+  const results = [mapsOk]
 
   if (type === 'icon') {
     results.push(await compare('icon', path.join(PATHS.icon.svgDir, filename), processIcon(raw)))

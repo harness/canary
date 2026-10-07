@@ -214,14 +214,23 @@ or you need a more specific name.
 
 ### First, run the parity check. Mandatory before the first asset in any session.
 
-This is what makes Route A trustworthy. It exports an asset that is **already committed**, re-derives
-it through the skill's replica pipeline, and asserts byte-identical output. That simultaneously
-proves the replica matches `scripts/icons.js` *and* that `exportAsync` matches what the Figma REST
-API returns.
+This is what makes Route A trustworthy. It covers **both halves** of the replica:
+
+| Half | What it does | Fixture needed |
+|---|---|---|
+| **SVG pipelines** | Re-derives an already-committed asset from a fresh Figma export and asserts byte-identity. Proves the replica matches `scripts/{icons,logos}.js` *and* that `exportAsync` matches the Figma REST API. | Yes — an export |
+| **Name-map templates + sort** | Re-renders each committed map from its own filename list and asserts byte-identity. Proves the LiquidJS templates, the `localeCompare` sort and the import-line format still match. | No |
+
+The map half matters independently: a template or sort change upstream would sail past the SVG
+check, `add-asset.mjs` would insert at the wrong position or format, and the next full regen would
+reorder every entry in the map. It runs automatically on every `parity-check.mjs` invocation, and
+standalone — no Figma needed, so it costs nothing to run first:
 
 ```bash
 cd packages/ui
-# list committed assets, then pick one that is ALSO still on the Figma export page
+node ../../.claude/skills/publish-ds-asset/scripts/parity-check.mjs --maps
+
+# then list committed assets to pick an SVG fixture
 node ../../.claude/skills/publish-ds-asset/scripts/parity-check.mjs --committed --type icon
 ```
 

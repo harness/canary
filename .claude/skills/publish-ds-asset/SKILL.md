@@ -87,6 +87,29 @@ worktree exists to protect unrelated in-flight work, so it only earns its cost w
 Read `references/figma-spec.md` and check every box **before** exporting. A malformed component is
 the most common cause of a broken export, and it is much cheaper to catch here.
 
+### First, record which Figma file you are reading
+
+Designers normally work in a **Figma branch**, not the main file — main is protected. The export
+works fine from a branch, but it creates an ordering requirement, so detect it up front.
+
+A Figma branch is its own file with its own key, so comparing against the main key tells you which
+you are in:
+
+```js
+// figma_execute
+const MAIN_FILE_KEY = 'NYeN8I4D3anR9it8ds0lyr'
+return {
+  fileKey: figma.fileKey,
+  fileName: figma.root.name,
+  isMainFile: figma.fileKey === MAIN_FILE_KEY,
+  // a different key means a branch (or the wrong file entirely — check the name)
+}
+```
+
+**If `isMainFile` is false you are on a branch.** That is expected and supported. Carry the file key
+and name through to the PR description, and add the merge gate described at the checkpoint. If the
+name does not look like the icons file at all, you are in the wrong file — stop.
+
 Point the bridge at the icons file and inspect — note this is a *different* file from
 `HDS | Components 3.0`, which is the one usually open:
 
@@ -430,6 +453,27 @@ Present to the user, and wait:
    confirmation that only the expected files changed (paste the `git diff --stat`), the Jira link,
    and the design sign-off with date.
 
+   **Always record the Figma source** — the file name and key you exported from, so a reviewer can
+   trace the asset back. If it was a branch, say so explicitly.
+
+   **If you exported from a Figma branch, the PR description MUST include this gate**, as an
+   unticked checklist item near the top:
+
+   ```markdown
+   ## ⛔ Do not merge until the Figma branch is merged
+
+   - [ ] Figma branch `<branch name>` merged into main and published
+
+   Exported from Figma branch `<name>` (file key `<key>`), not main. The name maps are regenerated
+   from **main's** export page, so merging this PR first would leave the asset in code but absent
+   from main — and the next full `pnpm update:icons` / `update:logos` would drop it from the map and
+   break every consumer.
+   ```
+
+   This is the one ordering rule that matters. Opening the PR from a branch is safe; **merging it
+   before the Figma branch is merged is not.** Put the gate where the person clicking merge will see
+   it, not only in the designer's head.
+
 Only once the user approves: create the ticket, then push and open the PR.
 
 ## Step 7 — Push and open the PR
@@ -445,6 +489,27 @@ mirror — it is a sync provider and the PR would never get the right checks or 
 The push output prints a "create a pull request" URL. Prefer the Harness MCP to open the PR; if it
 returns 401 or empty results its credential is scoped to the wrong account — that is not fixable by
 retrying. Fall back to handing the user the URL with the drafted title and description.
+
+## Step 7b — If you exported from a branch: verify before the PR merges
+
+Once the Figma branch has been merged and published, confirm the component is **actually on main's
+export page** rather than trusting that someone remembered. Point the bridge at the main file and
+look:
+
+```js
+// figma_execute — run against the MAIN file, not the branch
+await figma.loadAllPagesAsync()
+const page = figma.root.children.find(p => p.name === 'icons-to-dev')  // or 'brands-to-dev'
+const found = page.findOne(n => n.type === 'COMPONENT' && n.name === '.<name>')
+return { fileKey: figma.fileKey, onMain: !!found }
+```
+
+`onMain: true` → tick the checklist item and the PR is safe to merge.
+
+**This check needs read access to the main file through the bridge, which a view-only user may not
+have** (Figma restricts plugins in view-only files). If it fails on permissions, do not treat that
+as "not merged" — say so plainly and ask whoever owns the main file to confirm. The person merging
+the Figma branch has the access by definition, so the verification naturally belongs with them.
 
 ## Step 8 — CI and after merge
 

@@ -5,9 +5,33 @@ rejected or broken export, and catching it here costs minutes instead of a PR ro
 
 Figma file (HDS Icons 3.0, holds both icons and logos): `NYeN8I4D3anR9it8ds0lyr`
 
-**Always work on a Figma branch**, never the main DS file, and **merge the Figma branch before
-exporting** — both export routes read the main file, so unmerged work produces an empty diff. The
-Figma branch is unrelated to the git branch and need not share its name.
+**Always work on a Figma branch**, never the main DS file. The main file is deliberately protected.
+
+**You can export from the branch — but the Figma branch must be merged before the canary PR
+merges.** The ordering that works:
+
+```
+Figma branch → build → design approval → run the skill FROM THE BRANCH
+  → Jira + PR → review → merge the Figma branch → merge the canary PR
+```
+
+Running the skill from the branch is deliberate: the linter catches masks, mixed stroke caps, an
+empty description hex and invisible marks, and you want those fixed **on the branch**, not on main
+after the fact.
+
+The gate is the other end. The name maps are regenerated from **main's** export page, so if the
+canary PR merges while the component exists only on a branch, the asset is in code but absent from
+main — and the next full regen drops it from the map and breaks every consumer. The skill adds an
+unticked checklist item to the PR for exactly this.
+
+Two caveats:
+- **The fallback PAT route cannot see a branch at all.** It reads the main file by ID, so on that
+  route the Figma branch genuinely must be merged first.
+- **Branching requires edit access.** A view-only user cannot create a Figma branch, and Figma also
+  restricts plugins in view-only files — so a view-only user cannot use the bridge route either.
+  Their path is the PAT route, which needs only read access.
+
+The Figma branch is unrelated to the git branch and need not share its name.
 
 ---
 

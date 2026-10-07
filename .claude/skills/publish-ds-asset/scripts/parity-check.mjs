@@ -61,19 +61,42 @@ function describeDiff(expected, actual) {
   return lines.join('\n')
 }
 
+/**
+ * List usable parity fixtures.
+ *
+ * Derived from the committed MAP, not a readdir of the svg directory — the same
+ * LOAD-BEARING rule as parseMapFilenames in lib.mjs. A readdir offers the 103
+ * orphan SVGs that sit on disk with no map entry and no component on the Figma
+ * page (637 files vs 534 entries for icons); exporting one of those fails with
+ * "component not found", so listing them as fixtures sends the user down a dead
+ * end.
+ */
 async function listCommitted(type) {
-  const kinds = type === 'logo' ? ['logo'] : ['icon']
-  const dir = PATHS[kinds[0]].svgDir
-  const files = await fs.readdir(dir)
-  const names = files.filter(f => f.endsWith('.svg')).map(f => f.replace(/\.svg$/, ''))
-  names.sort()
-  console.log(`${names.length} committed ${kinds[0]}s in ${dir}:\n`)
+  const kind = type === 'logo' ? 'logo' : 'icon'
+  const mapPath = PATHS[kind].map
+  const map = await readIfExists(mapPath)
+  if (map === null) fail(`Name map not found: ${mapPath}`)
+
+  const names = parseMapFilenames(map, kind)
+    .map(f => f.replace(/\.svg$/, ''))
+    .sort()
+
+  const onDisk = (await fs.readdir(PATHS[kind].svgDir)).filter(f => f.endsWith('.svg')).length
+  const orphans = onDisk - names.length
+
+  console.log(`${names.length} live ${kind}s in ${mapPath}:\n`)
   console.log(names.join('\n'))
   console.log(
     `\nPick any one of these, export it via the Desktop Bridge, and pass it back with ` +
-      `--name/--raw. Both export pages are permanent catalogues, so every shipped asset is ` +
-      `still on its page and usable as a fixture.`
+      `--name/--raw.`
   )
+  if (orphans > 0) {
+    console.log(
+      `\nNote: ${onDisk} .svg files exist on disk but only ${names.length} are in the map. The ` +
+        `${orphans} orphans are deliberately NOT listed — they have no component on the Figma ` +
+        `export page, so exporting one fails with "component not found".`
+    )
+  }
 }
 
 /**

@@ -176,7 +176,7 @@ async function main() {
         `Processed icon contains no "currentColor" — the themify step found no ` +
           `fill/stroke to convert.\n` +
           `  The Figma component's colour must be #000000 (not a variable, not none), ` +
-          `and masks must be removed. See references/icon-spec.md.`
+          `and masks must be removed. See references/figma-spec.md.`
       )
     }
     written.push(await writeSvg('icon', filename, processed))

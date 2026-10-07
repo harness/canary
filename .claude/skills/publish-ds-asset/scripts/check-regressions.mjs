@@ -103,6 +103,17 @@ async function checkKind(kind) {
     const ref = gitShow(rel)
     if (ref === null || ref === tree) continue
 
+    // Report ANY content change on a live asset, even when no rule below fires.
+    // Without this, a modified asset that trips nothing produces no output and
+    // the summary prints "no asset changes detected" — false reassurance.
+    // Observed when load-test.svg was legitimately regenerated (422 -> 385 bytes).
+    const delta = tree.length - ref.length
+    info.push(
+      `${kind}: "${f}" content changed (${ref.length} -> ${tree.length} bytes, ` +
+        `${delta >= 0 ? '+' : ''}${delta}) — intentional? if you did not touch this asset, ` +
+        `something else regenerated it`
+    )
+
     if (kind === 'logo' && hasBackgroundRect(ref) && !hasBackgroundRect(tree)) {
       errors.push(
         `${kind}: "${f}" LOST its background rect. Its Figma component description is probably ` +

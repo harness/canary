@@ -124,24 +124,33 @@ function lintComponent(c, type) {
       `check was SKIPPED for this component. Re-dump using the current snippet in SKILL.md`)
   }
 
-  // ── Mixed stroke caps/joins silently destroy CSS stroke-width control ────
+  // ── Mixed stroke caps/joins: a RISK INDICATOR, not proof ────────────────
   //
-  // SVG has ONE stroke-linecap and ONE stroke-linejoin per path, so Figma
-  // cannot represent per-vertex variation. When caps or joins are MIXED it
-  // bakes the stroke into a filled outline instead. The glyph still looks right
-  // at 16px, but `fill` ignores the `stroke-width` that the cn-icon-* size
-  // classes set — so the icon will not thin out at md/lg/xl like its siblings.
-  // Found on `.ai-evals`: caps ROUND+NONE, joins ROUND+MITER, while every
-  // sibling is uniformly ROUND.
+  // SVG has one stroke-linecap and one stroke-linejoin per path, so Figma
+  // cannot always represent per-vertex variation and may bake the stroke into a
+  // filled outline instead. A filled outline looks right at 16px but ignores
+  // the stroke-width the cn-icon-* size classes set, so it will not thin out at
+  // md/lg/xl like its siblings.
+  //
+  // This is a WARNING, not an error, because MIXED does not reliably mean
+  // outlined. Measured:
+  //   .ai-evals  cap MIXED, join MIXED  -> outlined to fill   (bad)
+  //   .ai-verify cap MIXED, join ROUND  -> stroke preserved   (fine, shipped)
+  // `.ai-verify` is a legitimate mixed fill+stroke icon; MIXED there just
+  // reflects closed filled subpaths sitting alongside an open stroked one.
+  // Erroring on MIXED would block it.
+  //
+  // The authoritative check is the EXPORT, not this property — see the
+  // post-export verification in SKILL.md Step 4A.
   const mixedStroke = kids.filter(k => k.strokeCap === 'MIXED' || k.strokeJoin === 'MIXED')
   if (mixedStroke.length) {
     const k = mixedStroke[0]
-    E(`"${k.name}" has mixed stroke caps/joins (cap: ${k.strokeCap}, join: ${k.strokeJoin}). SVG ` +
-      `allows only one of each per path, so Figma will bake the stroke into a FILLED OUTLINE. ` +
-      `The glyph looks fine at 16px but ignores the stroke-width from the cn-icon-* size classes, ` +
-      `so it will not thin out at larger sizes like its siblings. Fix: select the vector and set ` +
-      `the cap and join uniformly (ROUND matches the rest of the set), then re-export and confirm ` +
-      `the SVG has stroke="currentColor" rather than fill="currentColor"`)
+    W(`"${k.name}" has mixed stroke caps/joins (cap: ${k.strokeCap}, join: ${k.strokeJoin}). ` +
+      `Figma may bake the stroke into a filled outline, which would ignore the stroke-width from ` +
+      `the cn-icon-* size classes and not thin out at larger sizes. This is often harmless — a ` +
+      `mixed fill+stroke icon reports MIXED legitimately. **Confirm from the export**: if the ` +
+      `component has strokes but the exported SVG has no stroke= attribute, the stroke was ` +
+      `outlined — set the cap and join uniformly to ROUND and re-export`)
   }
 
   const colorRects = kids.filter(k => k.type === 'RECTANGLE' && /icon\s*color/i.test(k.name))

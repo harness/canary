@@ -10,7 +10,8 @@ export default {
       '.cn-message-bubble-content': {
         padding: 'var(--cn-spacing-3)',
         background: 'var(--cn-comp-ai-chat-bubble)',
-        whiteSpace: 'pre-line'
+        whiteSpace: 'pre-line',
+        overflowWrap: 'anywhere'
       }
     },
     '&.cn-message-bubble-assistant': {

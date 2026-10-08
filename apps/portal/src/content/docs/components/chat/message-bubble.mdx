@@ -99,6 +99,23 @@ return (
 - **`MessageBubble.Markdown`** — renders the message from a markdown string (its `children`) using `MarkdownViewer` at the small variant, for assistant replies that contain formatting or code.
 - **`MessageBubble.Footer`** — a flexible row for actions (copy, edit), timestamps, or any custom content. Extends `HTMLAttributes<HTMLDivElement>`.
 
+## Long unbroken content
+
+User messages wrap long unbroken strings (such as URLs) inside the bubble instead of overflowing it.
+
+<DocsPage.ComponentExample
+  client:only
+  code={`<div className="w-full max-w-sm">
+  <MessageBubble.Root role="user">
+    <MessageBubble.Content>
+      <MessageBubble.Text>
+        https://app.harness.io/gateway/code/api/v1/repos/my-very-long-account-identifier/my-very-long-org-identifier/my-very-long-project-identifier/pullreq/12345/comments/67890/openapi/spec.json?includeDeleted=true&sort=created&order=desc&page=1&limit=100
+      </MessageBubble.Text>
+    </MessageBubble.Content>
+  </MessageBubble.Root>
+</div>`}
+/>
+
 ## Best practices
 
 {/* TODO: editorial — please review against product guidance. */}

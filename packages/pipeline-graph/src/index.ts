@@ -1,6 +1,7 @@
 export * from './components/canvas/canvas'
 
 export * from './pipeline-graph'
+export * from './pipeline-graph-nested'
 export * from './types/nodes'
 export * from './types/port-types'
 

@@ -227,7 +227,13 @@ function ExpandButton({
           >
             {label}
           </Text>
-          {variant === 'minimal' && <IconV2 name="expand" size="xs" className="shrink-0" />}
+          {variant === 'minimal' && (
+            <IconV2
+              name={loading ? 'loader' : 'expand'}
+              size="xs"
+              className={cn('shrink-0', loading && 'animate-spin')}
+            />
+          )}
         </div>
 
         {/* Count + expand icon */}

@@ -10,6 +10,7 @@ import AgentServices from './icons/agent-services.svg'
 import Agents from './icons/agents.svg'
 import Agile from './icons/agile.svg'
 import AiDeepResearch from './icons/ai-deep-research.svg'
+import AiEvals from './icons/ai-evals.svg'
 import AiMlOpsSolid from './icons/ai-ml-ops-solid.svg'
 import AiMlOps from './icons/ai-ml-ops.svg'
 import AiSolid from './icons/ai-solid.svg'
@@ -546,6 +547,7 @@ export const IconNameMapV2 = {
   agents: Agents,
   agile: Agile,
   'ai-deep-research': AiDeepResearch,
+  'ai-evals': AiEvals,
   'ai-ml-ops-solid': AiMlOpsSolid,
   'ai-ml-ops': AiMlOps,
   'ai-solid': AiSolid,

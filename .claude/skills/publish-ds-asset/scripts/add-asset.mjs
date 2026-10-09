@@ -52,6 +52,32 @@ function fail(msg) {
 }
 
 /**
+ * Undo log for the write phase. Each successful write registers how to reverse
+ * itself, using the pre-write content we already read into memory — a brand-new
+ * file is unlinked, an overwritten one is restored verbatim. If a later write
+ * throws partway through (e.g. a read-only map), rollback() runs these in
+ * reverse so the tree is left exactly as it was found, rather than half-applied.
+ * Nothing destructive runs unless a write already succeeded this run.
+ */
+const rollbacks = []
+
+async function rollback() {
+  if (!rollbacks.length) return
+  console.error(
+    `\n⚠️  A write failed partway through. Reverting the ${rollbacks.length} change(s) ` +
+      `already made this run so nothing is left half-applied:`
+  )
+  for (const { path: p, undo } of [...rollbacks].reverse()) {
+    try {
+      await undo()
+      console.error(`     reverted ${p}`)
+    } catch (e) {
+      console.error(`     ⚠️  could not revert ${p}: ${e.message} — check \`git status\` by hand`)
+    }
+  }
+}
+
+/**
  * Enforces the naming rules from playbook 3 that actually break the build if
  * violated, rather than the stylistic ones a human must judge.
  */
@@ -93,13 +119,15 @@ function validateHex(hex) {
 async function updateMap(kind, filename) {
   const mapPath = PATHS[kind].map
   const before = await readIfExists(mapPath)
-  if (before === null) fail(`Name map missing: ${mapPath}`)
+  // Throw rather than fail() so any writes made earlier this run get rolled back
+  // (see rollback()). fail()'s process.exit() would strand a half-applied change.
+  if (before === null) throw new Error(`Name map missing: ${mapPath}`)
 
   const existing = parseMapFilenames(before, kind)
   const key = toAssetKey(filename)
 
   if (existing.includes(filename) && !args.force) {
-    fail(
+    throw new Error(
       `"${key}" is already in ${mapPath}.\n` +
         `  Either this asset already shipped (go look at it — you may have found the ` +
         `wrong precedent to follow), or you need a more specific name.\n` +
@@ -110,11 +138,15 @@ async function updateMap(kind, filename) {
   const next = existing.includes(filename) ? existing : [...existing, filename]
   const after = await renderMap(next, kind)
   await fs.writeFile(mapPath, after, 'utf8')
+  rollbacks.push({ path: mapPath, undo: () => fs.writeFile(mapPath, before, 'utf8') })
 
   const beforeLines = before.split('\n').length
   const afterLines = after.split('\n').length
   const delta = afterLines - beforeLines
-  const occurrences = (after.match(new RegExp(`'${key}'|^\\s+${key}:`, 'gm')) || []).length
+  // key is kebab-case today (VALID_NAME forbids regex metacharacters), but escape
+  // it anyway so a future naming-rule change can't turn this into a broken match.
+  const safeKey = key.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
+  const occurrences = (after.match(new RegExp(`'${safeKey}'|^\\s+${safeKey}:`, 'gm')) || []).length
 
   // +2 = one import line, one map entry. Anything else means the regen moved
   // something it shouldn't have, and the diff needs human eyes.
@@ -134,7 +166,8 @@ async function writeSvg(kind, filename, content) {
   const target = path.join(PATHS[kind].svgDir, filename)
   const prior = await readIfExists(target)
   if (prior !== null && !args.force) {
-    fail(
+    // Throw (not fail()) so earlier writes this run roll back — see rollback().
+    throw new Error(
       `${target} already exists.\n` +
         `  Note: the repo currently carries SVGs on disk that are absent from the name ` +
         `map (orphans left behind when an asset was removed from the Figma export page ` +
@@ -146,6 +179,10 @@ async function writeSvg(kind, filename, content) {
     )
   }
   await fs.writeFile(target, content, 'utf8')
+  rollbacks.push({
+    path: target,
+    undo: () => (prior === null ? fs.unlink(target) : fs.writeFile(target, prior, 'utf8'))
+  })
   console.log(`  ✅ ${target}  (${content.length} bytes${prior !== null ? ', OVERWRITTEN' : ''})`)
   return target
 }
@@ -169,42 +206,50 @@ async function main() {
 
   console.log(`\nAdding ${type} "${name}"  (import identifier: ${toComponentName(filename)})\n`)
 
-  if (type === 'icon') {
-    const processed = processIcon(raw)
-    if (!processed.includes('currentColor')) {
-      fail(
-        `Processed icon contains no "currentColor" — the themify step found no ` +
-          `fill/stroke to convert.\n` +
-          `  The Figma component's colour must be #000000 (not a variable, not none), ` +
-          `and masks must be removed. See references/figma-spec.md.`
-      )
-    }
-    written.push(await writeSvg('icon', filename, processed))
-    written.push(await updateMap('icon', filename))
-  } else {
-    if (!args.hex) {
-      fail(
-        `Logos require --hex. The brand hex lives in the Figma component's ` +
-          `Description field; if it is empty the generated SVG gets no background ` +
-          `and no border, and LogoV2 renders as a broken-looking blank.`
-      )
-    }
-    validateHex(String(args.hex))
+  // Any throw from here on — a write guard tripping, or a genuine fs error partway
+  // through a multi-file logo — unwinds the writes already made this run before
+  // the error reaches the user, so the tree is never left half-applied.
+  try {
+    if (type === 'icon') {
+      const processed = processIcon(raw)
+      if (!processed.includes('currentColor')) {
+        fail(
+          `Processed icon contains no "currentColor" — the themify step found no ` +
+            `fill/stroke to convert.\n` +
+            `  The Figma component's colour must be #000000 (not a variable, not none), ` +
+            `and masks must be removed. See references/figma-spec.md.`
+        )
+      }
+      written.push(await writeSvg('icon', filename, processed))
+      written.push(await updateMap('icon', filename))
+    } else {
+      if (!args.hex) {
+        fail(
+          `Logos require --hex. The brand hex lives in the Figma component's ` +
+            `Description field; if it is empty the generated SVG gets no background ` +
+            `and no border, and LogoV2 renders as a broken-looking blank.`
+        )
+      }
+      validateHex(String(args.hex))
 
-    const logoSvg = processLogo(raw, String(args.hex))
-    const symbolSvg = processSymbol(raw)
+      const logoSvg = processLogo(raw, String(args.hex))
+      const symbolSvg = processSymbol(raw)
 
-    if (!logoSvg.includes(String(args.hex))) {
-      fail(`Processed logo does not contain ${args.hex} — the background rect was not applied.`)
-    }
-    if (!symbolSvg.includes('currentColor')) {
-      fail(`Processed symbol contains no "currentColor" — the mark has no fill/stroke to convert.`)
-    }
+      if (!logoSvg.includes(String(args.hex))) {
+        fail(`Processed logo does not contain ${args.hex} — the background rect was not applied.`)
+      }
+      if (!symbolSvg.includes('currentColor')) {
+        fail(`Processed symbol contains no "currentColor" — the mark has no fill/stroke to convert.`)
+      }
 
-    written.push(await writeSvg('logo', filename, logoSvg))
-    written.push(await writeSvg('symbol', filename, symbolSvg))
-    written.push(await updateMap('logo', filename))
-    written.push(await updateMap('symbol', filename))
+      written.push(await writeSvg('logo', filename, logoSvg))
+      written.push(await writeSvg('symbol', filename, symbolSvg))
+      written.push(await updateMap('logo', filename))
+      written.push(await updateMap('symbol', filename))
+    }
+  } catch (err) {
+    await rollback()
+    throw err
   }
 
   console.log(`\nStage exactly these ${written.length} paths — never \`git add .\`, so .env cannot slip in:\n`)

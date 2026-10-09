@@ -1,6 +1,6 @@
 ---
 name: publish-ds-asset
-description: Publish a new icon, logo, symbol or brand mark from the HDS Figma file into canary end-to-end — verify the Figma component, export the SVG, update the name map(s), branch, commit, then draft the Jira ticket and PR for approval. Use whenever someone wants to add, publish, export, ship, or "get into code" an icon or logo for canary / @harnessio/ui / IconV2 / LogoV2 / LogoSymbol — including "I've finished an icon in Figma, what now?", "add the <brand> logo", "this icon needs to go to dev", or questions about icons-to-dev / brands-to-dev, pnpm update:icons / update:logos, icon-name-map.ts or logo-name-map.ts.
+description: Publish an EXISTING, already-built icon, logo, symbol or brand mark from the HDS Figma file into canary end-to-end — verify the Figma component, export the SVG, update the name map(s), branch, commit, then draft the Jira ticket and PR for approval. Use whenever someone wants to publish, export, ship, or "get into code" an icon or logo that is already built/approved in Figma for canary / @harnessio/ui / IconV2 / LogoV2 / LogoSymbol — including "I've finished an icon in Figma, what now?", "publish the <brand> logo", "this icon needs to go to dev", or questions about icons-to-dev / brands-to-dev, pnpm update:icons / update:logos, icon-name-map.ts or logo-name-map.ts. If the asset does NOT exist yet and must be drawn, sourced, or created in Figma first, that is create-ds-asset, not this.
 ---
 
 # Publish an icon or logo to canary

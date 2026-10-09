@@ -41,6 +41,9 @@ yaml-editor-test/
 #cursor
 .cursor
 
+#graphify
+graphify-out/
+
 #local environment
 .env
 

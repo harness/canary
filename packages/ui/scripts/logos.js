@@ -24,6 +24,10 @@ const DEFAULT_CONFIG = {
   CONCURRENT_DOWNLOADS: 10
 }
 
+// Above this many orphans in a single run, refuse to auto-delete and ask for a
+// reviewed bulk cleanup instead (see pruneOrphanedLogos). Override: FORCE_PRUNE=1.
+const MAX_AUTO_PRUNE = 20
+
 class FigmaLogoDownloader {
   constructor(config) {
     this.config = config
@@ -492,6 +496,77 @@ export const SymbolNameMap = {
     }
   }
 
+  /**
+   * Delete `.svg` files in the logo and symbol directories that no longer have a
+   * matching component on the Figma page. Without this, removing a component from
+   * `brands-to-dev` drops its map entries (regenerated above) but leaves the files
+   * behind forever — the same orphan problem addressed for icons in UUI-4077.
+   *
+   * @param {Array} logos every COMPONENT found on the page this run
+   * @param {number} failed count of downloads that failed this run
+   */
+  async pruneOrphanedLogos(logos, failed) {
+    // The live set is every component on the page, NOT just this run's successful
+    // downloads — a transient download failure must never delete a valid asset.
+    const expected = new Set(logos.map(logo => `${this.sanitizeFilename(logo.name)}.${this.config.FORMAT}`))
+
+    // The logo and symbol directories are generated from the same page, so the
+    // same expected set prunes both.
+    const dirs = [
+      { label: 'logo', dir: this.config.OUTPUT_DIR },
+      { label: 'symbol', dir: this.config.SYMBOLS_OUTPUT_DIR }
+    ]
+
+    const orphans = []
+    for (const { label, dir } of dirs) {
+      let onDisk
+      try {
+        onDisk = await fs.readdir(dir)
+      } catch {
+        continue
+      }
+      for (const filename of onDisk) {
+        if (filename.toLowerCase().endsWith(`.${this.config.FORMAT}`) && !expected.has(filename)) {
+          orphans.push({ label, dir, filename })
+        }
+      }
+    }
+
+    if (orphans.length === 0) {
+      console.log('🧹 No orphaned logos/symbols — both directories are 1:1 with the Figma page.')
+      return
+    }
+
+    // Guard 1: a partial run means `logos` may not be the full catalogue, so we
+    // can't distinguish a real orphan from a component that just failed to download.
+    if (failed > 0) {
+      console.warn(
+        `⚠️  Skipping orphan prune: ${failed} download(s) failed this run, so the component ` +
+          `list may be incomplete. ${orphans.length} candidate orphan(s) left in place.`
+      )
+      return
+    }
+
+    // Guard 2: refuse to auto-delete a large batch. A big gap usually means a
+    // wrong/renamed page rather than genuine churn; bulk cleanup belongs in a
+    // reviewed, standalone PR (see UUI-4077). Override with FORCE_PRUNE=1.
+    if (orphans.length > MAX_AUTO_PRUNE && !process.env.FORCE_PRUNE) {
+      console.warn(
+        `⚠️  Refusing to auto-delete ${orphans.length} orphaned logo/symbol files (> ${MAX_AUTO_PRUNE}). ` +
+          `This usually signals a wrong/renamed Figma page, not real churn.\n` +
+          `  If it is a genuine bulk cleanup, review the list and re-run with FORCE_PRUNE=1:\n` +
+          orphans.map(o => `    ${o.label}/${o.filename}`).join('\n')
+      )
+      return
+    }
+
+    for (const { label, dir, filename } of orphans) {
+      await fs.unlink(path.join(dir, filename))
+      console.log(`🗑️  Pruned orphaned ${label}: ${filename}`)
+    }
+    console.log(`🧹 Pruned ${orphans.length} orphaned logo/symbol file(s) with no component on the Figma page.`)
+  }
+
   async ensureDirectoryExists(dir) {
     try {
       await fs.access(dir)
@@ -604,6 +679,9 @@ export const SymbolNameMap = {
 
       // Generate logo-name-map.ts file
       await this.generateLogoNameMap(results)
+
+      // Delete any on-disk SVGs no longer backed by a Figma component.
+      await this.pruneOrphanedLogos(logos, failed)
 
       return true
     } catch (error) {

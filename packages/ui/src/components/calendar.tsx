@@ -28,10 +28,11 @@ function Calendar({ className, classNames, showOutsideDays = true, ...props }: C
         nav_button_next: 'absolute right-cn-3xs',
         table: 'w-full border-collapse space-y-cn-3xs',
         head_row: 'flex',
-        head_cell: 'text-cn-3 rounded-cn-3 w-8 font-normal text-cn-size-1 select-none',
+        head_cell: 'text-cn-3 rounded-cn-3 h-8 w-8 shrink-0 font-normal text-cn-size-1 select-none',
         row: 'flex w-full mt-cn-xs',
         cell: cn(
-          'relative p-0 text-center text-cn-size-2 focus-within:relative focus-within:z-20 [&:has([aria-selected])]:bg-cn-brand-secondary-selected [&:has([aria-selected].day-outside)]:bg-cn-brand-secondary-selected [&:has([aria-selected].day-range-end)]:rounded-r-cn-3',
+          // Hidden outside days render an empty cell. A fixed slot keeps that weekday column in place.
+          'relative h-8 w-8 shrink-0 p-0 text-center text-cn-size-2 focus-within:relative focus-within:z-20 [&:has([aria-selected])]:bg-cn-brand-secondary-selected [&:has([aria-selected].day-outside)]:bg-cn-brand-secondary-selected [&:has([aria-selected].day-range-end)]:rounded-r-cn-3',
           props.mode === 'range'
             ? '[&:has(>.day-range-end)]:rounded-r-cn-3 [&:has(>.day-range-start)]:rounded-l-cn-3 first:[&:has([aria-selected])]:rounded-l-cn-3 last:[&:has([aria-selected])]:rounded-r-cn-3'
             : '[&:has([aria-selected])]:rounded-cn-3'

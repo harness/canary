@@ -8,6 +8,13 @@ const renderComponent = (props: CalendarProps = {}): RenderResult => {
   return render(<Calendar {...props} />)
 }
 
+const weekCells = (monthLabel: string): HTMLElement[] => {
+  const month = screen.getByText(monthLabel).closest('.space-y-cn-md')
+  const row = month?.querySelector('tr.mt-cn-xs')
+
+  return [...(row?.querySelectorAll<HTMLElement>('[role="gridcell"]') ?? [])]
+}
+
 describe('Calendar', () => {
   describe('Basic Rendering', () => {
     test('should render calendar', () => {
@@ -315,6 +322,49 @@ describe('Calendar', () => {
 
       expect(screen.getByText('January 2024')).toBeInTheDocument()
       expect(screen.getByText('February 2024')).toBeInTheDocument()
+    })
+
+    test('should keep outside days when more than one month is shown', () => {
+      const { container } = renderComponent({
+        numberOfMonths: 2,
+        month: new Date(2026, 8, 1),
+        weekStartsOn: 1
+      })
+
+      expect(container.querySelector('.day-outside')).toBeVisible()
+      // September 1, October 1, plus each repeated as an outside day on the other month.
+      expect(screen.getAllByRole('gridcell', { name: '1' })).toHaveLength(4)
+    })
+
+    test('should hide outside days when more than one month is shown and showOutsideDays is false', () => {
+      const { container } = renderComponent({
+        numberOfMonths: 2,
+        showOutsideDays: false,
+        month: new Date(2026, 8, 1),
+        weekStartsOn: 1
+      })
+
+      expect(container.querySelector('.day-outside')).not.toBeInTheDocument()
+      // September 1 and October 1 only. October 1–4 and November 1 are not repeated.
+      expect(screen.getAllByRole('gridcell', { name: '1' })).toHaveLength(2)
+      // August 31 is not repeated ahead of September. October 31 remains.
+      expect(screen.getAllByRole('gridcell', { name: '31' })).toHaveLength(1)
+
+      // September 1 is a Tuesday and October 1 is a Thursday. Blank cells keep those columns.
+      expect(weekCells('September 2026').map(cell => cell.textContent)).toEqual(['', '1', '2', '3', '4', '5', '6'])
+      expect(weekCells('October 2026').map(cell => cell.textContent)).toEqual(['', '', '', '1', '2', '3', '4'])
+      expect(weekCells('September 2026')[0]?.parentElement).toHaveClass('h-8', 'w-8', 'shrink-0')
+    })
+
+    test('should keep outside days on a single month', () => {
+      const { container } = renderComponent({
+        month: new Date(2026, 8, 1),
+        weekStartsOn: 1
+      })
+
+      expect(container.querySelector('.day-outside')).toBeVisible()
+      // September 1, plus October 1 shown as a trailing day.
+      expect(screen.getAllByRole('gridcell', { name: '1' })).toHaveLength(2)
     })
 
     test('should handle today date highlighting', () => {

@@ -45,7 +45,10 @@ function gitShow(relPath) {
   }
 }
 
-const hasBackgroundRect = svg => /<rect[^>]*rx="3"[^>]*ry="3"[^>]*fill="#/.test(svg)
+// The background rect is the only <rect> with a hex fill (the inset stroke rect
+// uses fill="none"). Match per-rect rather than one positional pattern so SVGO
+// reordering attributes can't make a present background read as missing.
+const hasBackgroundRect = svg => (svg.match(/<rect\b[^>]*>/g) || []).some(r => /fill="#/.test(r))
 const hasCurrentColor = svg => svg.includes('currentColor')
 const transformOf = svg => (svg.match(/transform="([^"]*)"/) || [])[1] || null
 

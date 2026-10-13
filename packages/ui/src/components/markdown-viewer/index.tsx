@@ -1,4 +1,14 @@
-import { CSSProperties, memo, ReactNode, useCallback, useEffect, useMemo, useRef, useState } from 'react'
+import {
+  ComponentProps,
+  CSSProperties,
+  memo,
+  ReactNode,
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState
+} from 'react'
 
 import { CopyButton, IconV2, IconV2NamesType, Text } from '@/components'
 import MarkdownPreview from '@uiw/react-markdown-preview'
@@ -26,6 +36,8 @@ export const getIsMarkdown = (language?: string) => language === 'markdown'
 const isHeadingElement = (tagName: string) => /^h(1|2|3|4|5|6)/.test(tagName)
 const isRelativeLink = (href: string) =>
   href && !href.startsWith('/') && !href.startsWith('#') && !/^https?:|mailto:|tel:|data:|javascript:|sms:/.test(href)
+
+type MarkdownComponents = ComponentProps<typeof MarkdownPreview>['components']
 
 type AlertType = 'note' | 'tip' | 'important' | 'warning' | 'caution'
 
@@ -323,165 +335,180 @@ const MarkdownViewerLocal = ({
             [rehypeVideo, { test: /\.(mp4|mov|webm|mkv|flv)$/, details: false }],
             [rehypeExternalLinks, { rel: ['nofollow noreferrer noopener'], target: '_blank' }]
           ]}
-          components={{
-            img: ({
-              alt,
-              src: originalSrc,
-              ...props
-            }: {
-              alt?: string
-              src?: string
-              node?: any
-              [key: string]: any
-            }) => {
-              // Process the image source to handle relative paths
-              let src = originalSrc || ''
+          // Memoized on purpose. A new object on every render gives the overridden elements (p, pre, code, ...) new
+          // component types, so React remounts them and drops any DOM changes made to them. Router context re-renders
+          // this component without any prop change, so that happens often.
+          components={useMemo<MarkdownComponents>(
+            () => ({
+              img: ({
+                alt,
+                src: originalSrc,
+                ...props
+              }: {
+                alt?: string
+                src?: string
+                node?: any
+                [key: string]: any
+              }) => {
+                // Process the image source to handle relative paths
+                let src = originalSrc || ''
 
-              // Handle relative image paths
-              if (imageUrlTransform) {
-                src = imageUrlTransform(src)
-              }
+                // Handle relative image paths
+                if (imageUrlTransform) {
+                  src = imageUrlTransform(src)
+                }
 
-              // XSS Protection: Sanitize props
-              const safeProps = { ...props }
-              delete safeProps.node
-              delete safeProps.dangerouslySetInnerHTML
-              delete safeProps.onLoad
-              delete safeProps.onError
+                // XSS Protection: Sanitize props
+                const safeProps = { ...props }
+                delete safeProps.node
+                delete safeProps.dangerouslySetInnerHTML
+                delete safeProps.onLoad
+                delete safeProps.onError
 
-              // Remove string-based event handlers
-              const eventHandlerProps = Object.keys(safeProps).filter(
-                prop => prop.startsWith('on') && typeof safeProps[prop] === 'string'
-              )
-              eventHandlerProps.forEach(prop => delete safeProps[prop])
-
-              // Sanitize alt text
-              const altText = typeof alt === 'string' ? alt.replace(/[<>]/g, '') : ''
-
-              return <img src={src} alt={altText} {...safeProps} />
-            },
-            input: ({ type, checked, ...props }) => {
-              // checkbox inputs
-              if (type === 'checkbox') {
-                checkboxCounter.current++
-                return (
-                  <input
-                    type="checkbox"
-                    defaultChecked={checked}
-                    {...props}
-                    data-checkbox-index={checkboxCounter.current}
-                    onChange={handleCheckboxChange}
-                    disabled={isLoading}
-                  />
+                // Remove string-based event handlers
+                const eventHandlerProps = Object.keys(safeProps).filter(
+                  prop => prop.startsWith('on') && typeof safeProps[prop] === 'string'
                 )
-              }
-              return <input type={type} checked={checked} {...props} />
-            },
-            p: ({ className, children, node }) => {
-              const isAlertTitle = className?.includes('markdown-alert-title')
+                eventHandlerProps.forEach(prop => delete safeProps[prop])
 
-              if (isAlertTitle && typeof children === 'string') {
-                const alertType = children.toLocaleLowerCase().trim() as AlertType
-                const config = alertConfig[alertType]
+                // Sanitize alt text
+                const altText = typeof alt === 'string' ? alt.replace(/[<>]/g, '') : ''
 
-                if (config) {
+                return <img src={src} alt={altText} {...safeProps} />
+              },
+              input: ({ type, checked, ...props }) => {
+                // checkbox inputs
+                if (type === 'checkbox') {
+                  checkboxCounter.current++
                   return (
-                    <p className={className}>
-                      <IconV2 name={config.icon as IconV2NamesType} size="md" />
-                      {config.title}
-                    </p>
+                    <input
+                      type="checkbox"
+                      defaultChecked={checked}
+                      {...props}
+                      data-checkbox-index={checkboxCounter.current}
+                      onChange={handleCheckboxChange}
+                      disabled={isLoading}
+                    />
                   )
                 }
-              }
+                return <input type={type} checked={checked} {...props} />
+              },
+              p: ({ className, children, node }) => {
+                const isAlertTitle = className?.includes('markdown-alert-title')
 
-              return (
-                <p className={className} {...getSourcePositionAttributes(node)}>
-                  {children}
-                </p>
-              )
-            },
-            pre: ({ children, node }) => {
-              const code = node && node.children ? getCodeString(node.children) : (children as string)
+                if (isAlertTitle && typeof children === 'string') {
+                  const alertType = children.toLocaleLowerCase().trim() as AlertType
+                  const config = alertConfig[alertType]
 
-              let codeContent = ''
+                  if (config) {
+                    return (
+                      <p className={className}>
+                        <IconV2 name={config.icon as IconV2NamesType} size="md" />
+                        {config.title}
+                      </p>
+                    )
+                  }
+                }
 
-              if (typeof code === 'string') {
-                codeContent = code
-              }
-
-              const { isSuggestion, codeLines } = getIsSuggestion(codeContent)
-
-              const filteredLines =
-                codeLines.length > 0 && codeLines[codeLines.length - 1] === '' ? codeLines.slice(0, -1) : codeLines
-              const hasLineNumbers = showLineNumbers && filteredLines.length > 1
-
-              if (isSuggestion) {
                 return (
-                  <div className="rounded-cn-2 overflow-hidden border" {...getSourcePositionAttributes(node)}>
-                    <div className="bg-cn-2 px-cn-md py-cn-sm border-b">
-                      <Text variant="body-strong" color="foreground-1" className="!m-0">
-                        {suggestionTitle}
-                      </Text>
-                    </div>
-                    <pre>{children}</pre>
-                    <div className="p-cn-md">{suggestionFooter}</div>
-                  </div>
+                  <p className={className} {...getSourcePositionAttributes(node)}>
+                    {children}
+                  </p>
                 )
-              }
+              },
+              pre: ({ children, node }) => {
+                const code = node && node.children ? getCodeString(node.children) : (children as string)
 
-              return (
-                <div
-                  className={cn(
-                    'min-h-[52px] mb-cn-md bg-cn-2 rounded-cn-2 pl-cn-md pr-cn-sm py-cn-sm relative overflow-hidden border',
-                    { '!pt-[15px]': codeLines.length === 1 }
-                  )}
-                  {...getSourcePositionAttributes(node)}
-                >
-                  <CopyButton
-                    className="right-cn-sm top-cn-sm absolute z-10"
-                    buttonVariant="outline"
-                    name={code}
-                    iconSize="xs"
-                    size="xs"
-                  />
-                  <pre>
-                    {hasLineNumbers ? (
-                      <div className="relative flex w-full bg-transparent">
-                        <div className="bg-cn-2 flex-none select-none text-right">
-                          {filteredLines.map((_, i) => (
-                            <Text as="span" key={i} className="pr-cn-sm block pt-[0.5px]">
-                              {i + 1}
-                            </Text>
-                          ))}
-                        </div>
-                        <div className="relative flex-1 overflow-hidden bg-transparent">{children}</div>
-                      </div>
-                    ) : (
-                      children
-                    )}
-                  </pre>
-                </div>
-              )
-            },
-            code: ({ children = [], className: _className, ...props }) => {
-              const code = props.node && props.node.children ? getCodeString(props.node.children) : children
+                let codeContent = ''
 
-              const isPossibleSuggestion =
-                typeof code === 'string' &&
-                typeof _className === 'string' &&
-                'language-suggestion' === _className.split(' ')[0].toLocaleLowerCase()
+                if (typeof code === 'string') {
+                  codeContent = code
+                }
 
-              if (isPossibleSuggestion) {
-                const { isSuggestion } = getIsSuggestion(code)
+                const { isSuggestion, codeLines } = getIsSuggestion(codeContent)
+
+                const filteredLines =
+                  codeLines.length > 0 && codeLines[codeLines.length - 1] === '' ? codeLines.slice(0, -1) : codeLines
+                const hasLineNumbers = showLineNumbers && filteredLines.length > 1
 
                 if (isSuggestion) {
-                  return <CodeSuggestionBlock code={code} suggestionBlock={suggestionBlock} />
+                  return (
+                    <div className="rounded-cn-2 overflow-hidden border" {...getSourcePositionAttributes(node)}>
+                      <div className="bg-cn-2 px-cn-md py-cn-sm border-b">
+                        <Text variant="body-strong" color="foreground-1" className="!m-0">
+                          {suggestionTitle}
+                        </Text>
+                      </div>
+                      <pre>{children}</pre>
+                      <div className="p-cn-md">{suggestionFooter}</div>
+                    </div>
+                  )
                 }
-              }
 
-              return <code className={`mr-cn-3xl !whitespace-pre-wrap ${String(_className)}`}>{children}</code>
-            }
-          }}
+                return (
+                  <div
+                    className={cn(
+                      'min-h-[52px] mb-cn-md bg-cn-2 rounded-cn-2 pl-cn-md pr-cn-sm py-cn-sm relative overflow-hidden border',
+                      { '!pt-[15px]': codeLines.length === 1 }
+                    )}
+                    {...getSourcePositionAttributes(node)}
+                  >
+                    <CopyButton
+                      className="right-cn-sm top-cn-sm absolute z-10"
+                      buttonVariant="outline"
+                      name={code}
+                      iconSize="xs"
+                      size="xs"
+                    />
+                    <pre>
+                      {hasLineNumbers ? (
+                        <div className="relative flex w-full bg-transparent">
+                          <div className="bg-cn-2 flex-none select-none text-right">
+                            {filteredLines.map((_, i) => (
+                              <Text as="span" key={i} className="pr-cn-sm block pt-[0.5px]">
+                                {i + 1}
+                              </Text>
+                            ))}
+                          </div>
+                          <div className="relative flex-1 overflow-hidden bg-transparent">{children}</div>
+                        </div>
+                      ) : (
+                        children
+                      )}
+                    </pre>
+                  </div>
+                )
+              },
+              code: ({ children = [], className: _className, ...props }) => {
+                const code = props.node && props.node.children ? getCodeString(props.node.children) : children
+
+                const isPossibleSuggestion =
+                  typeof code === 'string' &&
+                  typeof _className === 'string' &&
+                  'language-suggestion' === _className.split(' ')[0].toLocaleLowerCase()
+
+                if (isPossibleSuggestion) {
+                  const { isSuggestion } = getIsSuggestion(code)
+
+                  if (isSuggestion) {
+                    return <CodeSuggestionBlock code={code} suggestionBlock={suggestionBlock} />
+                  }
+                }
+
+                return <code className={`mr-cn-3xl !whitespace-pre-wrap ${String(_className)}`}>{children}</code>
+              }
+            }),
+            [
+              handleCheckboxChange,
+              getIsSuggestion,
+              imageUrlTransform,
+              isLoading,
+              showLineNumbers,
+              suggestionBlock,
+              suggestionFooter,
+              suggestionTitle
+            ]
+          )}
         />
       </div>
     </div>

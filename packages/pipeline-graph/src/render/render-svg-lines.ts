@@ -14,7 +14,8 @@ export function getPortsConnectionPath({
   customCreateSVGPath,
   edgesConfig = {},
   isCollapsed,
-  getPortSvg = getPortSvgDefault
+  getPortSvg = getPortSvgDefault,
+  scale = 1
 }: {
   parentEl: HTMLDivElement
   pipelineGraphRoot: HTMLDivElement
@@ -37,6 +38,14 @@ export function getPortsConnectionPath({
   }
   isCollapsed: (path: string) => boolean
   getPortSvg?: GetPortSvgFuncType
+  /**
+   * Effective scale applied to the graph root by an ancestor transform. Measured coords from
+   * getBoundingClientRect are in scaled screen pixels; dividing by this yields unscaled coords so
+   * the (also-scaled) SVG overlay draws edges that land on the ports. The top-level graph forces
+   * scale(1) before measuring and leaves this at the 1 default; nested graphs cannot neutralize the
+   * ancestor transform and pass the measured scale instead.
+   */
+  scale?: number
 }) {
   const edgesConfigWithDefaults = {
     radius: 10,
@@ -63,11 +72,11 @@ export function getPortsConnectionPath({
   const pathObj = getPath({
     leftPortVisible: formElBBVisible,
     rightPortVisible: toElBBVisible,
-    startX: fromElBB.left - pipelineGraphRootBB.left,
-    startY: fromElBB.top - pipelineGraphRootBB.top,
-    endX: toElBB.left - pipelineGraphRootBB.left,
-    endY: toElBB.top - pipelineGraphRootBB.top,
-    portAdjustment: fromElBB.height / 2, // center of circle
+    startX: (fromElBB.left - pipelineGraphRootBB.left) / scale,
+    startY: (fromElBB.top - pipelineGraphRootBB.top) / scale,
+    endX: (toElBB.left - pipelineGraphRootBB.left) / scale,
+    endY: (toElBB.top - pipelineGraphRootBB.top) / scale,
+    portAdjustment: fromElBB.height / 2 / scale, // center of circle
     parallel,
     serial,
     targetNode,

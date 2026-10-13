@@ -5,13 +5,13 @@ import cn from 'classnames'
 import { useCanvasContext } from './context/canvas-provider'
 import { useContainerNodeContext } from './context/container-node-provider'
 import { useGraphContext } from './context/graph-provider'
+import { drawEdges } from './render/draw-edges'
 import { renderNode } from './render/render-node'
-import { clear, CreateSVGPathType, getPortsConnectionPath } from './render/render-svg-lines'
+import { CreateSVGPathType } from './render/render-svg-lines'
 import { LayoutConfig } from './types/layout'
 import { AnyContainerNodeType } from './types/nodes'
 import { AnyNodeInternal } from './types/nodes-internal'
 import { GetPortSvgFuncType } from './types/port-types'
-import { connectPorts } from './utils/connects-utils'
 import { getNegativeTopAdjustment } from './utils/graph-position-utils'
 import { getFlexAlign } from './utils/layout-utils'
 import { addPaths } from './utils/path-utils'
@@ -77,32 +77,19 @@ export function PipelineGraphInternal(props: PipelineGraphInternalProps) {
       const nodesContainerEl = nodesContainerRef.current
       const svgEl = svgRef.current
 
-      clear(svgGroupRef.current)
-
-      // create connections
-      const connections = connectPorts(dataInternal, { left: 'start', right: 'end' }, false)
-
       // NOTE: required to get ports coordinates from DOM
       rootContainerEl.style.transform = 'scale(1)'
 
       // draw lines
-      if (svgGroupRef.current) {
-        const allPaths: { level1: string[]; level2: string[] } = { level1: [], level2: [] }
-        connections.map(portPair => {
-          const levelPaths = getPortsConnectionPath({
-            parentEl: rootContainerEl,
-            pipelineGraphRoot: rootContainerEl,
-            connection: portPair,
-            customCreateSVGPath,
-            edgesConfig,
-            isCollapsed,
-            getPortSvg: getPort
-          })
-          allPaths.level1.push(levelPaths.level1)
-          allPaths.level2.push(levelPaths.level2)
-        })
-        svgGroupRef.current.innerHTML = allPaths.level1.join('') + allPaths.level2.join('')
-      }
+      drawEdges({
+        rootEl: rootContainerEl,
+        svgGroupEl: svgGroupRef.current,
+        data: dataInternal,
+        edgesConfig,
+        getPort,
+        customCreateSVGPath,
+        isCollapsed
+      })
 
       // reset transform
       rootContainerEl.style.transform = ''

@@ -15,6 +15,11 @@ import { cn } from '@utils/cn'
 import { cva, type VariantProps } from 'class-variance-authority'
 
 import { CodeSuggestionBlock, SuggestionBlock } from './CodeSuggestionBlock'
+import {
+  getSourcePositionAttributes,
+  rehypeSourcePositions,
+  SOURCE_POSITION_PROPERTIES
+} from './markdown-source-positions'
 
 export const getIsMarkdown = (language?: string) => language === 'markdown'
 
@@ -76,6 +81,11 @@ export type MarkdownViewerProps = {
   imageUrlTransform?: (src: string) => string
   /** Use muted text color (text-cn-3) for markdown content */
   muted?: boolean
+  /**
+   * Adds `data-line-start` and `data-line-end` to block elements (1-based lines in `source`).
+   * Off by default, so existing output is unchanged.
+   */
+  withSourcePositions?: boolean
 } & VariantProps<typeof markdownViewerVariants>
 
 const MarkdownViewerLocal = ({
@@ -93,7 +103,8 @@ const MarkdownViewerLocal = ({
   isLoading = false,
   imageUrlTransform,
   variant = 'default',
-  muted = false
+  muted = false,
+  withSourcePositions = false
 }: MarkdownViewerProps) => {
   const { navigate, location } = useRouterContext()
   const refRootHref = useMemo(() => document.getElementById('repository-ref-root')?.getAttribute('href'), [])
@@ -283,7 +294,11 @@ const MarkdownViewerLocal = ({
     attributes: {
       ...(defaultSchema.attributes || {}),
       div: [...(defaultSchema.attributes?.div || []), 'className'],
-      p: [...(defaultSchema.attributes?.p || []), 'className']
+      p: [...(defaultSchema.attributes?.p || []), 'className'],
+      // Only let the source-position properties through when the consumer asked for them.
+      ...(withSourcePositions
+        ? { '*': [...(defaultSchema.attributes?.['*'] || []), ...SOURCE_POSITION_PROPERTIES] }
+        : {})
     }
   }
 
@@ -302,6 +317,8 @@ const MarkdownViewerLocal = ({
           rehypeRewrite={rehypeRewrite}
           remarkPlugins={[remarkBreaks]}
           rehypePlugins={[
+            // Must run before sanitizing so the position properties exist when the sanitizer checks them.
+            ...(withSourcePositions ? [rehypeSourcePositions] : []),
             [rehypeSanitize, sanitizeSchema],
             [rehypeVideo, { test: /\.(mp4|mov|webm|mkv|flv)$/, details: false }],
             [rehypeExternalLinks, { rel: ['nofollow noreferrer noopener'], target: '_blank' }]
@@ -360,7 +377,7 @@ const MarkdownViewerLocal = ({
               }
               return <input type={type} checked={checked} {...props} />
             },
-            p: ({ className, children }) => {
+            p: ({ className, children, node }) => {
               const isAlertTitle = className?.includes('markdown-alert-title')
 
               if (isAlertTitle && typeof children === 'string') {
@@ -377,7 +394,11 @@ const MarkdownViewerLocal = ({
                 }
               }
 
-              return <p className={className}>{children}</p>
+              return (
+                <p className={className} {...getSourcePositionAttributes(node)}>
+                  {children}
+                </p>
+              )
             },
             pre: ({ children, node }) => {
               const code = node && node.children ? getCodeString(node.children) : (children as string)
@@ -396,7 +417,7 @@ const MarkdownViewerLocal = ({
 
               if (isSuggestion) {
                 return (
-                  <div className="rounded-cn-2 overflow-hidden border">
+                  <div className="rounded-cn-2 overflow-hidden border" {...getSourcePositionAttributes(node)}>
                     <div className="bg-cn-2 px-cn-md py-cn-sm border-b">
                       <Text variant="body-strong" color="foreground-1" className="!m-0">
                         {suggestionTitle}
@@ -414,6 +435,7 @@ const MarkdownViewerLocal = ({
                     'min-h-[52px] mb-cn-md bg-cn-2 rounded-cn-2 pl-cn-md pr-cn-sm py-cn-sm relative overflow-hidden border',
                     { '!pt-[15px]': codeLines.length === 1 }
                   )}
+                  {...getSourcePositionAttributes(node)}
                 >
                   <CopyButton
                     className="right-cn-sm top-cn-sm absolute z-10"

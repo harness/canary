@@ -185,7 +185,9 @@ const FilterGroupInner = <
                             addFilterInputPlaceholder ?? t('component:filter.inputPlaceholder', 'Filter by...')
                           }
                           displayLabel={renderFilterSelectLabel({
-                            selectedFilters: filterOptions.length - availableFilters.length,
+                            selectedFilters: filterOptions.filter(
+                              option => !option.sticky && !availableFilters.includes(option.value)
+                            ).length,
                             displayLabel: t('component:filter.defaultLabel', 'Add filter')
                           })}
                         />

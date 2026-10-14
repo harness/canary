@@ -128,8 +128,12 @@ const AppSideBar: FC<{ children: React.ReactNode }> = ({ children }) => {
   const handleChangePinnedMenuItem = useCallback(
     (item: NavbarItemType, pin: boolean) => {
       setPinned(item, pin)
+
+      if (!pin && item.to === location.pathname) {
+        setRecent(item)
+      }
     },
-    [setPinned]
+    [setPinned, setRecent, location.pathname]
   )
 
   return (

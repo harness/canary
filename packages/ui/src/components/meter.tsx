@@ -21,6 +21,8 @@ interface IMeterProps {
     }
   }[]
   className?: string
+  /** ms to wait after the cursor leaves a bar before closing its popover. @default 1000 */
+  closeDelay?: number
 }
 
 const stateToBgColor: { [key in MeterState]: string } = {
@@ -31,7 +33,7 @@ const stateToBgColor: { [key in MeterState]: string } = {
   [MeterState.Info]: 'bg-cn-brand-primary'
 }
 
-function Meter({ data = [], className }: IMeterProps) {
+function Meter({ data = [], className, closeDelay = 1000 }: IMeterProps) {
   const [activeBarKey, setActiveBarKey] = useState<string | null>(null)
   const activeBarKeyRef = useRef<string | null>(null)
   const emptyBarsCount = 10 - data.length
@@ -55,7 +57,7 @@ function Meter({ data = [], className }: IMeterProps) {
               <Popover
                 triggerType="hover"
                 hoverDelay={150}
-                closeDelay={1000}
+                closeDelay={closeDelay}
                 open={activeBarKey === key}
                 onOpenChange={isOpen => {
                   if (isOpen) {

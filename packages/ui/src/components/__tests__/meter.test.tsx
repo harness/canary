@@ -508,5 +508,20 @@ describe('Meter', () => {
       expect(screen.getByRole('link', { name: 'run-2' })).toBeInTheDocument()
       expect(screen.queryByRole('link', { name: 'run-1' })).not.toBeInTheDocument()
     })
+
+    test('honors a custom closeDelay', () => {
+      const data = [{ id: 'run-1', state: MeterState.Success, tooltip: { content: <MountTracker id="run-1" /> } }]
+      const { container } = render(<Meter data={data} closeDelay={50} />)
+      const [bar] = getTooltipBars(container)
+
+      fireEvent.mouseEnter(bar)
+      advance(150)
+      fireEvent.mouseLeave(bar)
+      advance(49)
+      expect(screen.getByRole('link', { name: 'run-1' })).toBeInTheDocument()
+
+      advance(1)
+      expect(screen.queryByRole('link', { name: 'run-1' })).not.toBeInTheDocument()
+    })
   })
 })

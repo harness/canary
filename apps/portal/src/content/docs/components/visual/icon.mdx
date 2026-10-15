@@ -16,15 +16,13 @@ import LinkCard from "@/components/LinkCard.astro";
 
 <TabItem label="Overview">
 
-The `IconV2` component allows you to render various icons with customizable properties such as size, color theme, and name. It will soon replace the old `Icon` component.
+The `IconV2` component allows you to render various icons with customizable properties such as size, color theme, and name. It will soon replace the old `Icon` component. You can also set custom colors using the `className` prop to override the default styling. For inline "informer" affordances, `IconWithTooltip` pairs an icon with a tooltip — pass tooltip `content` and, optionally, `iconProps` to control the icon it renders.
 
 ## Playground
 
 <DocsPage.IconPlayground client:only />
 
 ## Custom colors
-
-You can also set custom colors using the `className` prop to override the default styling.
 
 <DocsPage.ComponentExample
   client:only
@@ -39,24 +37,6 @@ You can also set custom colors using the `className` prop to override the defaul
       <IconV2 name="xmark" size="md" color="danger" />
     </Layout.Flex>
 
-  </div>
-</div>`}
-/>
-
-## With tooltip
-
-`IconWithTooltip` pairs an icon with a tooltip — useful for inline "informer" affordances. Pass tooltip `content` and, optionally, `iconProps` to control the icon it renders.
-
-<DocsPage.ComponentExample
-  client:only
-  code={`<div className="space-y-cn-sm w-full">
-  <div className="flex items-center gap-cn-md">
-    <span className="text-cn-size-2 text-cn-3 w-32 shrink-0 font-mono">tooltip</span>
-    <Layout.Flex gap="md">
-      <IconWithTooltip content="Tooltip content" />
-      <IconWithTooltip content="Tooltip content" iconProps={{ name: 'warning-triangle', color: 'danger' }} />
-      <IconWithTooltip content="Tooltip content" iconProps={{ name: 'warning-triangle', color: 'warning', size: 'xl' }} />
-    </Layout.Flex>
   </div>
 </div>`}
 />

@@ -55,7 +55,11 @@ const CalendarInputPlayground: FC = () => {
 
   // ④ Curated control set.
   const controls: PropControl[] = [
-    { name: "placeholder", type: "text", description: "Text shown before a date is picked" },
+    {
+      name: "placeholder",
+      type: "text",
+      description: "Text shown before a date is picked",
+    },
   ];
 
   const inputControls = controls.filter((c) => c.type !== "boolean");

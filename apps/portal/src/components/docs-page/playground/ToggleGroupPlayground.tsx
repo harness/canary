@@ -1,5 +1,11 @@
 import { type FC, useMemo, useState } from "react";
-import { Button, CopyButton, IconV2, ToggleGroup, TooltipProvider } from "@harnessio/ui/components";
+import {
+  Button,
+  CopyButton,
+  IconV2,
+  ToggleGroup,
+  TooltipProvider,
+} from "@harnessio/ui/components";
 import ControlField from "./ControlField";
 import type { PropControl } from "./types";
 
@@ -40,21 +46,27 @@ const INITIAL_STATE: State = {
 };
 
 // The group starts with the first item selected.
-const seedValue = (type: State["type"]) => (type === "multiple" ? [ITEMS[0].value] : ITEMS[0].value);
+const seedValue = (type: State["type"]) =>
+  type === "multiple" ? [ITEMS[0].value] : ITEMS[0].value;
 
 // ③ Mirror exactly what the preview renders.
 function generateCode(s: State): string {
   const rootAttrs: string[] = [];
   if (s.type !== "single") rootAttrs.push(`  type="${s.type}"`);
   if (s.variant !== "outline") rootAttrs.push(`  variant="${s.variant}"`);
-  if (SELECTED_VARIANT_VARIANTS.includes(s.variant) && s.selectedVariant !== "primary") {
+  if (
+    SELECTED_VARIANT_VARIANTS.includes(s.variant) &&
+    s.selectedVariant !== "primary"
+  ) {
     rootAttrs.push(`  selectedVariant="${s.selectedVariant}"`);
   }
   if (s.size !== "md") rootAttrs.push(`  size="${s.size}"`);
-  if (s.orientation !== "horizontal") rootAttrs.push(`  orientation="${s.orientation}"`);
+  if (s.orientation !== "horizontal")
+    rootAttrs.push(`  orientation="${s.orientation}"`);
   if (s.unselectable) rootAttrs.push("  unselectable");
   if (s.disabled) rootAttrs.push("  disabled");
-  const seed = s.type === "multiple" ? `{['${ITEMS[0].value}']}` : `"${ITEMS[0].value}"`;
+  const seed =
+    s.type === "multiple" ? `{['${ITEMS[0].value}']}` : `"${ITEMS[0].value}"`;
   rootAttrs.push(`  value=${seed}`);
 
   const items = ITEMS.map((item) => {
@@ -64,7 +76,13 @@ function generateCode(s: State): string {
     return `  <ToggleGroup.Item value="${item.value}" text="${item.text}" prefixIcon="${item.icon}" />`;
   });
 
-  return ["<ToggleGroup.Root", ...rootAttrs, ">", ...items, "</ToggleGroup.Root>"].join("\n");
+  return [
+    "<ToggleGroup.Root",
+    ...rootAttrs,
+    ">",
+    ...items,
+    "</ToggleGroup.Root>",
+  ].join("\n");
 }
 
 const ToggleGroupPlayground: FC = () => {
@@ -82,7 +100,11 @@ const ToggleGroupPlayground: FC = () => {
   // ④ Curated control set.
   const controls: PropControl[] = [
     { name: "type", type: "select", options: ["single", "multiple"] },
-    { name: "variant", type: "select", options: ["outline", "ghost", "transparent"] },
+    {
+      name: "variant",
+      type: "select",
+      options: ["outline", "ghost", "transparent"],
+    },
     {
       name: "selectedVariant",
       type: "select",
@@ -90,10 +112,26 @@ const ToggleGroupPlayground: FC = () => {
       description: "Ignored by the transparent variant",
     },
     { name: "size", type: "select", options: ["md", "sm", "xs"] },
-    { name: "orientation", type: "select", options: ["horizontal", "vertical"] },
-    { name: "iconOnly", type: "boolean", description: "Render items as icons only" },
-    { name: "unselectable", type: "boolean", description: "Keep at least one item selected" },
-    { name: "disabled", type: "boolean", description: "Disable the whole group" },
+    {
+      name: "orientation",
+      type: "select",
+      options: ["horizontal", "vertical"],
+    },
+    {
+      name: "iconOnly",
+      type: "boolean",
+      description: "Render items as icons only",
+    },
+    {
+      name: "unselectable",
+      type: "boolean",
+      description: "Keep at least one item selected",
+    },
+    {
+      name: "disabled",
+      type: "boolean",
+      description: "Disable the whole group",
+    },
   ];
 
   const inputControls = controls.filter((c) => c.type !== "boolean");
@@ -132,11 +170,16 @@ const ToggleGroupPlayground: FC = () => {
             key={item.value}
             value={item.value}
             iconOnly
-            prefixIcon={item.icon}
+            prefixIcon={item.icon as never}
             tooltipProps={{ content: item.text }}
           />
         ) : (
-          <ToggleGroup.Item key={item.value} value={item.value} text={item.text} prefixIcon={item.icon} />
+          <ToggleGroup.Item
+            key={item.value}
+            value={item.value}
+            text={item.text}
+            prefixIcon={item.icon as never}
+          />
         ),
       )}
     </ToggleGroup.Root>

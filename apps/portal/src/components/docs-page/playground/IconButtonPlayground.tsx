@@ -1,5 +1,10 @@
 import { type FC, useMemo, useState } from "react";
-import { Button, CopyButton, IconV2, TooltipProvider } from "@harnessio/ui/components";
+import {
+  Button,
+  CopyButton,
+  IconV2,
+  TooltipProvider,
+} from "@harnessio/ui/components";
 import ControlField from "./ControlField";
 import type { PropControl } from "./types";
 
@@ -25,7 +30,14 @@ const ICON_NAMES = [
 // ② State — one field per control.
 interface State {
   icon: string;
-  variant: "primary" | "secondary" | "outline" | "ai" | "ghost" | "link" | "transparent";
+  variant:
+    | "primary"
+    | "secondary"
+    | "outline"
+    | "ai"
+    | "ghost"
+    | "link"
+    | "transparent";
   size: "md" | "sm" | "xs" | "2xs" | "3xs";
   tooltip: string;
   ignoreIconOnlyTooltip: boolean;
@@ -81,7 +93,15 @@ const IconButtonPlayground: FC = () => {
     {
       name: "variant",
       type: "select",
-      options: ["primary", "secondary", "outline", "ai", "ghost", "link", "transparent"],
+      options: [
+        "primary",
+        "secondary",
+        "outline",
+        "ai",
+        "ghost",
+        "link",
+        "transparent",
+      ],
     },
     { name: "size", type: "select", options: ["md", "sm", "xs", "2xs", "3xs"] },
     {
@@ -125,7 +145,7 @@ const IconButtonPlayground: FC = () => {
       disabled={state.disabled}
       {...tooltipBehavior}
     >
-      <IconV2 name={state.icon} />
+      <IconV2 name={state.icon as never} />
     </Button>
   );
 

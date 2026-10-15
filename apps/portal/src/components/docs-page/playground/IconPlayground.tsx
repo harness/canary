@@ -25,7 +25,15 @@ const MAX_VISIBLE = 10;
 interface State {
   name: string;
   size: "2xs" | "xs" | "sm" | "md" | "lg" | "xl";
-  color: "inherit" | "neutral" | "danger" | "warning" | "success" | "info" | "risk" | "merged";
+  color:
+    | "inherit"
+    | "neutral"
+    | "danger"
+    | "warning"
+    | "success"
+    | "info"
+    | "risk"
+    | "merged";
   skipSize: boolean;
   tooltip: string;
 }
@@ -82,13 +90,23 @@ const IconPlayground: FC = () => {
     {
       name: "color",
       type: "select",
-      options: ["inherit", "neutral", "danger", "warning", "success", "info", "risk", "merged"],
+      options: [
+        "inherit",
+        "neutral",
+        "danger",
+        "warning",
+        "success",
+        "info",
+        "risk",
+        "merged",
+      ],
       description: "Semantic icon color ('inherit' matches surrounding text)",
     },
     {
       name: "tooltip",
       type: "text",
-      description: "Wrap in IconWithTooltip, showing this text on hover (empty = plain icon)",
+      description:
+        "Wrap in IconWithTooltip, showing this text on hover (empty = plain icon)",
     },
     {
       name: "skipSize",
@@ -154,7 +172,9 @@ const IconPlayground: FC = () => {
               />
             )}
           </div>
-          <span className="font-body-code text-cn-size-1 text-cn-3">name="{state.name}"</span>
+          <span className="font-body-code text-cn-size-1 text-cn-3">
+            name="{state.name}"
+          </span>
         </div>
 
         {/* --- Icon picker: search + clickable gallery --- */}
@@ -176,7 +196,9 @@ const IconPlayground: FC = () => {
                   title={n}
                   onClick={() => set("name", n)}
                   className={`flex aspect-square items-center justify-center rounded-cn-2 border ${
-                    selected ? "border-cn-borders-2 bg-cn-2" : "border-transparent hover:bg-cn-2"
+                    selected
+                      ? "border-cn-borders-2 bg-cn-2"
+                      : "border-transparent hover:bg-cn-2"
                   }`}
                 >
                   <IconV2 name={n as never} />

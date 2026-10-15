@@ -1,5 +1,11 @@
 import { type FC, useMemo, useState } from "react";
-import { Button, CopyButton, IconV2, NumberInput, TooltipProvider } from "@harnessio/ui/components";
+import {
+  Button,
+  CopyButton,
+  IconV2,
+  NumberInput,
+  TooltipProvider,
+} from "@harnessio/ui/components";
 import ControlField from "./ControlField";
 import type { PropControl } from "./types";
 
@@ -50,7 +56,8 @@ function generateCode(s: State): string {
   if (s.warning) attrs.push(`warning="${s.warning}"`);
   if (s.theme !== "default") attrs.push(`theme="${s.theme}"`);
   if (s.size !== "md") attrs.push(`size="${s.size}"`);
-  if (s.orientation !== "vertical") attrs.push(`orientation="${s.orientation}"`);
+  if (s.orientation !== "vertical")
+    attrs.push(`orientation="${s.orientation}"`);
   if (s.step !== 1) attrs.push(`step={${s.step}}`);
   if (s.integerOnly) attrs.push("integerOnly");
   if (s.hideStepper) attrs.push("hideStepper");
@@ -71,29 +78,70 @@ const NumberInputPlayground: FC = () => {
 
   const controls: PropControl[] = [
     { name: "label", type: "text", description: "Label text above the field" },
-    { name: "placeholder", type: "text", description: "Placeholder shown when empty" },
-    { name: "caption", type: "text", description: "Helper text below the field" },
-    { name: "error", type: "text", description: "Error message (forces the danger theme)" },
-    { name: "warning", type: "text", description: "Warning message (forces the warning theme)" },
+    {
+      name: "placeholder",
+      type: "text",
+      description: "Placeholder shown when empty",
+    },
+    {
+      name: "caption",
+      type: "text",
+      description: "Helper text below the field",
+    },
+    {
+      name: "error",
+      type: "text",
+      description: "Error message (forces the danger theme)",
+    },
+    {
+      name: "warning",
+      type: "text",
+      description: "Warning message (forces the warning theme)",
+    },
     {
       name: "theme",
       type: "select",
       options: ["default", "success", "warning", "danger"],
       description: "Visual state (error/warning override this)",
     },
-    { name: "size", type: "select", options: ["md", "sm"], description: "Field height" },
+    {
+      name: "size",
+      type: "select",
+      options: ["md", "sm"],
+      description: "Field height",
+    },
     {
       name: "orientation",
       type: "select",
       options: ["vertical", "horizontal"],
       description: "Label position relative to the field",
     },
-    { name: "step", type: "number", description: "Amount the steppers add/subtract" },
-    { name: "integerOnly", type: "boolean", description: "Block decimal points" },
-    { name: "hideStepper", type: "boolean", description: "Hide the increment/decrement buttons" },
-    { name: "optional", type: "boolean", description: "Remove the required * marker" },
+    {
+      name: "step",
+      type: "number",
+      description: "Amount the steppers add/subtract",
+    },
+    {
+      name: "integerOnly",
+      type: "boolean",
+      description: "Block decimal points",
+    },
+    {
+      name: "hideStepper",
+      type: "boolean",
+      description: "Hide the increment/decrement buttons",
+    },
+    {
+      name: "optional",
+      type: "boolean",
+      description: "Remove the required * marker",
+    },
     { name: "disabled", type: "boolean", description: "Disable the field" },
-    { name: "readOnly", type: "boolean", description: "Make the field read-only (hides steppers)" },
+    {
+      name: "readOnly",
+      type: "boolean",
+      description: "Make the field read-only (hides steppers)",
+    },
   ];
 
   const inputControls = controls.filter((c) => c.type !== "boolean");

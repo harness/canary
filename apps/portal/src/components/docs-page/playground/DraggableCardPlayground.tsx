@@ -24,9 +24,17 @@ interface BaseCard {
 }
 
 const INITIAL_CARDS: BaseCard[] = [
-  { id: "1", title: "auth-service", description: "Handles sign-in and tokens." },
+  {
+    id: "1",
+    title: "auth-service",
+    description: "Handles sign-in and tokens.",
+  },
   { id: "2", title: "api-gateway", description: "Routes traffic to services." },
-  { id: "3", title: "billing-service", description: "Invoices and subscriptions." },
+  {
+    id: "3",
+    title: "billing-service",
+    description: "Invoices and subscriptions.",
+  },
 ];
 
 // ② State — one field per control.
@@ -51,7 +59,8 @@ function generateCode(s: State, cards: BaseCard[]): string {
     const fields = [`id: '${c.id}'`, `title: '${c.title}'`];
     if (s.descriptions) fields.push(`description: '${c.description}'`);
     if (s.size !== "md") fields.push(`size: '${s.size}'`);
-    if (s.gripPosition !== "inside") fields.push(`gripPosition: '${s.gripPosition}'`);
+    if (s.gripPosition !== "inside")
+      fields.push(`gripPosition: '${s.gripPosition}'`);
     return [`    { ${fields.join(", ")} },`];
   });
 
@@ -90,9 +99,18 @@ const DraggableCardPlayground: FC = () => {
       options: ["inside", "outside"],
       description: "Where the drag handle sits",
     },
-    { name: "size", type: "select", options: ["sm", "md", "lg"], description: "Card size" },
+    {
+      name: "size",
+      type: "select",
+      options: ["sm", "md", "lg"],
+      description: "Card size",
+    },
     { name: "listGap", type: "select", options: ["xs", "sm", "md", "lg"] },
-    { name: "descriptions", type: "boolean", description: "Show a description line" },
+    {
+      name: "descriptions",
+      type: "boolean",
+      description: "Show a description line",
+    },
   ];
 
   const inputControls = controls.filter((c) => c.type !== "boolean");
@@ -125,7 +143,11 @@ const DraggableCardPlayground: FC = () => {
 
   const preview = (
     <div className="w-[420px] max-w-full">
-      <DraggableCardList cards={rendered} setCards={handleReorder} listGap={state.listGap} />
+      <DraggableCardList
+        cards={rendered}
+        setCards={handleReorder as never}
+        listGap={state.listGap}
+      />
     </div>
   );
 

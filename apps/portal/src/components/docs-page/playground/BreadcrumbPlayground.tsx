@@ -57,10 +57,12 @@ function generateCode(s: State): string {
   lines.push(`    <Breadcrumb.Item>`);
   if (s.interactiveRoot) {
     lines.push(
-      `      <Breadcrumb.RootInteractive${rootSize}>${ROOT_LABEL}</Breadcrumb.RootInteractive>`
+      `      <Breadcrumb.RootInteractive${rootSize}>${ROOT_LABEL}</Breadcrumb.RootInteractive>`,
     );
   } else {
-    lines.push(`      <Breadcrumb.Link href="#">${ROOT_LABEL}</Breadcrumb.Link>`);
+    lines.push(
+      `      <Breadcrumb.Link href="#">${ROOT_LABEL}</Breadcrumb.Link>`,
+    );
   }
   lines.push(`    </Breadcrumb.Item>`);
   lines.push(`    <Breadcrumb.Separator />`);
@@ -71,7 +73,7 @@ function generateCode(s: State): string {
     lines.push(`      aria-label="Show hidden breadcrumbs"`);
     lines.push(`      items={[`);
     HIDDEN_ITEMS.forEach((i) =>
-      lines.push(`        { label: "${i.label}", href: "#" },`)
+      lines.push(`        { label: "${i.label}", href: "#" },`),
     );
     lines.push(`      ]}`);
     lines.push(`    />`);
@@ -79,7 +81,9 @@ function generateCode(s: State): string {
   } else {
     HIDDEN_ITEMS.forEach((i) => {
       lines.push(`    <Breadcrumb.Item>`);
-      lines.push(`      <Breadcrumb.Link href="#"${icon}>${i.label}</Breadcrumb.Link>`);
+      lines.push(
+        `      <Breadcrumb.Link href="#"${icon}>${i.label}</Breadcrumb.Link>`,
+      );
       lines.push(`    </Breadcrumb.Item>`);
       lines.push(`    <Breadcrumb.Separator />`);
     });
@@ -87,7 +91,9 @@ function generateCode(s: State): string {
 
   // Parent step and the current page.
   lines.push(`    <Breadcrumb.Item>`);
-  lines.push(`      <Breadcrumb.Link href="#"${icon}>${PARENT_LABEL}</Breadcrumb.Link>`);
+  lines.push(
+    `      <Breadcrumb.Link href="#"${icon}>${PARENT_LABEL}</Breadcrumb.Link>`,
+  );
   lines.push(`    </Breadcrumb.Item>`);
   lines.push(`    <Breadcrumb.Separator />`);
   lines.push(`    <Breadcrumb.Page>${PAGE_LABEL}</Breadcrumb.Page>`);
@@ -152,9 +158,7 @@ const BreadcrumbPlayground: FC = () => {
   );
 
   // ⑤ Render the real component from state, mirroring generateCode exactly.
-  const iconProp = state.prefixIcons
-    ? ({ prefixIcon: "folder" } as const)
-    : {};
+  const iconProp = state.prefixIcons ? ({ prefixIcon: "folder" } as const) : {};
   const preview = (
     <Breadcrumb.Root size={state.size}>
       <Breadcrumb.List>

@@ -72,7 +72,7 @@ interface State {
 
 const INITIAL_STATE: State = {
   links: false,
-  tooltips: true,
+  tooltips: false,
   actionButtons: false,
   activeFolder: false,
 };

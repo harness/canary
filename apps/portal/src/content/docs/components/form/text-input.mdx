@@ -22,26 +22,6 @@ The `TextInput` component handles single-line user input, with options for a lab
 
 <DocsPage.TextInputPlayground client:only />
 
-## With tooltip
-
-`tooltipContent` sets the content of the label's info tooltip. `tooltipProps` passes additional props to the tooltip.
-
-<DocsPage.ComponentExample
-  client:only
-  code={`
-    <Layout.Vertical gap="xl" className="min-w-[400px]">
-      <TextInput
-        label="Tooltip Input"
-        placeholder="Enter the value"
-        tooltipContent="This is a tooltip"
-        tooltipProps={{
-          disabled: false,
-        }}
-      />
-    </Layout.Vertical>
-`}
-/>
-
 ## Installation
 
 ```tsx

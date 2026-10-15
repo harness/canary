@@ -14,6 +14,7 @@ interface State {
   suffix: string;
   error: string;
   warning: string;
+  tooltipContent: string;
   theme: "default" | "success" | "warning" | "danger";
   size: "md" | "sm";
   orientation: "vertical" | "horizontal";
@@ -30,6 +31,7 @@ const INITIAL_STATE: State = {
   suffix: "",
   error: "",
   warning: "",
+  tooltipContent: "",
   theme: "default",
   size: "md",
   orientation: "vertical",
@@ -48,6 +50,7 @@ function generateCode(s: State): string {
   if (s.suffix) attrs.push(`suffix="${s.suffix}"`);
   if (s.error) attrs.push(`error="${s.error}"`);
   if (s.warning) attrs.push(`warning="${s.warning}"`);
+  if (s.tooltipContent) attrs.push(`tooltipContent="${s.tooltipContent}"`);
   if (s.theme !== "default") attrs.push(`theme="${s.theme}"`);
   if (s.size !== "md") attrs.push(`size="${s.size}"`);
   if (s.orientation !== "vertical") attrs.push(`orientation="${s.orientation}"`);
@@ -74,6 +77,11 @@ const TextInputPlayground: FC = () => {
     { name: "suffix", type: "text", description: "Content rendered after the input" },
     { name: "error", type: "text", description: "Error message (forces the danger theme)" },
     { name: "warning", type: "text", description: "Warning message (forces the warning theme)" },
+    {
+      name: "tooltipContent",
+      type: "text",
+      description: "Adds an info icon beside the label with this tooltip",
+    },
     {
       name: "theme",
       type: "select",
@@ -131,6 +139,7 @@ const TextInputPlayground: FC = () => {
               suffix={state.suffix || undefined}
               error={state.error || undefined}
               warning={state.warning || undefined}
+              tooltipContent={state.tooltipContent || undefined}
               theme={state.theme}
               size={state.size}
               orientation={state.orientation}

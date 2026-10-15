@@ -11,6 +11,8 @@ import BreadcrumbPlayground from "./playground/BreadcrumbPlayground.tsx";
 import ButtonGroupPlayground from "./playground/ButtonGroupPlayground.tsx";
 import ButtonLayoutPlayground from "./playground/ButtonLayoutPlayground.tsx";
 import ButtonPlayground from "./playground/ButtonPlayground.tsx";
+import CalendarInputPlayground from "./playground/CalendarInputPlayground.tsx";
+import CalendarPlayground from "./playground/CalendarPlayground.tsx";
 import CopyButtonPlayground from "./playground/CopyButtonPlayground.tsx";
 import IconButtonGroupPlayground from "./playground/IconButtonGroupPlayground.tsx";
 import IconButtonPlayground from "./playground/IconButtonPlayground.tsx";
@@ -37,6 +39,8 @@ export const DocsPage = {
   ButtonPlayground,
   ButtonGroupPlayground,
   ButtonLayoutPlayground,
+  CalendarPlayground,
+  CalendarInputPlayground,
   IconButtonGroupPlayground,
   SplitButtonPlayground,
   TogglePlayground,

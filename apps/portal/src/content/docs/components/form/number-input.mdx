@@ -17,93 +17,11 @@ import PageTabsToc from "@/components/page-tabs-toc.astro";
 
 The `NumberInput` component handles numeric input, providing options for styling via themes and sizes. It also offers options for adding stepper controls, captions, suffixes, tooltips, and error or warning text for the field.
 
-<DocsPage.ComponentExample
-  client:only
-  code={`
-  <Layout.Vertical gap="xl" className="min-w-[400px]">
-    <NumberInput id="basic-number" label="Basic Number Input" placeholder="Enter a number" />
-  </Layout.Vertical>
-`}
-/>
+## Playground
 
-## Variations
+<DocsPage.NumberInputPlayground client:only />
 
-### Disable
-
-<DocsPage.ComponentExample
-  client:only
-  code={`
-  <Layout.Vertical gap="xl" className="min-w-[400px]">
-    <NumberInput id="disabled-number" label="Number Input" placeholder="Enter a number" disabled />
-  </Layout.Vertical>`}
-/>
-
-### Read only
-
-<DocsPage.ComponentExample
-  client:only
-  code={`
-  <Layout.Vertical gap="xl" className="min-w-[400px]">
-    <NumberInput id="read-only-number" label="Number Input" placeholder="Enter a number" readOnly />
-  </Layout.Vertical>`}
-/>
-
-### Optional
-
-<DocsPage.ComponentExample
-  client:only
-  code={`
-  <Layout.Vertical gap="xl" className="min-w-[400px]">
-    <NumberInput id="optional-number" label="Number Input" placeholder="Enter a number" optional />
-  </Layout.Vertical>`}
-/>
-
-### Without stepper UI
-
-<DocsPage.ComponentExample
-  client:only
-  code={`
-  <Layout.Vertical gap="xl" className="min-w-[400px]">
-    <NumberInput
-      hideStepper
-      id="no-stepper"
-      label="No Stepper UI"
-      placeholder="Enter a number manually"
-    />
-  </Layout.Vertical>`}
-/>
-
-### Theme
-
-The `NumberInput` component accepts a `theme` prop, which defines the visual state of the input: either `success`, `warning`, or `danger`.
-
-Passing a message to `error` forces the `danger` theme, and passing a message to `warning` forces the `warning` theme — these override any explicit `theme`.
-
-<DocsPage.ComponentExample
-  client:only
-  code={`
-  <Layout.Vertical gap="xl" className="min-w-[400px]">
-    <NumberInput
-      id="success-input"
-      label="Success"
-      theme="success"
-      caption="Caption text"
-    />
-    <NumberInput
-      id="error-input"
-      label="With Error"
-      error="Please enter a valid number"
-    />
-    <NumberInput
-      id="warning-input"
-      label="With Warning"
-      warning="This is a high value"
-      defaultValue={95}
-    />
-  </Layout.Vertical>`}
-/>
-
-### Min / Max limits
+## Min / Max limits
 
 <DocsPage.ComponentExample
   client:only
@@ -120,30 +38,7 @@ Passing a message to `error` forces the `danger` theme, and passing a message to
   </Layout.Vertical>`}
 />
 
-### Integer and decimal values
-
-By default the input accepts decimals. Set `integerOnly` to block decimal points and restrict entry to whole numbers.
-
-<DocsPage.ComponentExample
-  client:only
-  code={`
-  <Layout.Vertical gap="xl" className="min-w-[400px]">
-    <NumberInput
-      id="decimal-input"
-      label="With Decimals"
-      step={0.1}
-      defaultValue={3.14}
-    />
-    <NumberInput
-      id="integer-only"
-      label="Integer Only"
-      integerOnly
-      defaultValue={42}
-    />
-  </Layout.Vertical>`}
-/>
-
-### Positive and negative values
+## Positive and negative values
 
 <DocsPage.ComponentExample
   client:only
@@ -159,22 +54,7 @@ By default the input accepts decimals. Set `integerOnly` to block decimal points
   </Layout.Vertical>`}
 />
 
-### Custom steppers
-
-<DocsPage.ComponentExample
-  client:only
-  code={`
-  <Layout.Vertical gap="xl" className="min-w-[400px]">
-    <NumberInput
-      id="small-increment"
-      label="Increment by 0.1"
-      step={0.1}
-      defaultValue={1.0}
-    />
-  </Layout.Vertical>`}
-/>
-
-### With suffix
+## With suffix
 
 <DocsPage.ComponentExample
   client:only
@@ -191,7 +71,7 @@ By default the input accepts decimals. Set `integerOnly` to block decimal points
   </Layout.Vertical>`}
 />
 
-### With tooltip
+## With tooltip
 
 `tooltipContent` is used to display the content of the tooltip. `tooltipProps` is used to pass additional props to the tooltip.
 
@@ -211,19 +91,6 @@ By default the input accepts decimals. Set `integerOnly` to block decimal points
         },
       }}
     />
-  </Layout.Vertical>`}
-/>
-
-### Orientation
-
-The `NumberInput` component accepts an optional `orientation` prop, which defines the layout direction of the input and its label. Available options are `horizontal` and `vertical` (default).
-
-<DocsPage.ComponentExample
-  client:only
-  code={`
-  <Layout.Vertical gap="xl" className="min-w-[400px]">
-    <NumberInput id="vertical-number" label="Vertical Number Input" placeholder="Enter a number" />
-    <NumberInput id="horizontal-number" label="Horizontal Number Input" placeholder="Enter a number" orientation="horizontal" />
   </Layout.Vertical>`}
 />
 

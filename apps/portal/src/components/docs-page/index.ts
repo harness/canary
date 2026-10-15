@@ -27,6 +27,7 @@ import FileExplorerPlayground from "./playground/FileExplorerPlayground.tsx";
 import IconButtonGroupPlayground from "./playground/IconButtonGroupPlayground.tsx";
 import IconButtonPlayground from "./playground/IconButtonPlayground.tsx";
 import IconPlayground from "./playground/IconPlayground.tsx";
+import IllustrationPlayground from "./playground/IllustrationPlayground.tsx";
 import LogoPlayground from "./playground/LogoPlayground.tsx";
 import SplitButtonPlayground from "./playground/SplitButtonPlayground.tsx";
 import TogglePlayground from "./playground/TogglePlayground.tsx";
@@ -69,5 +70,6 @@ export const DocsPage = {
   DialogPlayground,
   IconButtonPlayground,
   IconPlayground,
+  IllustrationPlayground,
   LogoPlayground,
 };

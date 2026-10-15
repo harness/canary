@@ -71,7 +71,13 @@ const IconButtonPlayground: FC = () => {
 
   // ④ Curated control set.
   const controls: PropControl[] = [
-    { name: "icon", type: "select", options: ICON_NAMES, required: true },
+    {
+      name: "icon",
+      type: "select",
+      options: ICON_NAMES,
+      required: true,
+      description: "Examples only — any IconV2 icon can be passed",
+    },
     {
       name: "variant",
       type: "select",

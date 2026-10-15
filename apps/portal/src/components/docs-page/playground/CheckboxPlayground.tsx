@@ -23,7 +23,7 @@ interface State {
 }
 
 const INITIAL_STATE: State = {
-  checked: "checked",
+  checked: "unchecked",
   label: SAMPLE_LABEL,
   caption: SAMPLE_CAPTION,
   disabled: false,
@@ -69,7 +69,11 @@ const CheckboxPlayground: FC = () => {
     { name: "label", type: "text" },
     { name: "caption", type: "text" },
     { name: "disabled", type: "boolean" },
-    { name: "error", type: "boolean", description: "Error styling (visual only)" },
+    {
+      name: "error",
+      type: "boolean",
+      description: "Error styling — shows when unchecked or indeterminate",
+    },
   ];
 
   const inputControls = controls.filter((c) => c.type !== "boolean");

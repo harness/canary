@@ -23,6 +23,7 @@ import CopyButtonPlayground from "./playground/CopyButtonPlayground.tsx";
 import CounterBadgePlayground from "./playground/CounterBadgePlayground.tsx";
 import DialogPlayground from "./playground/DialogPlayground.tsx";
 import DraggableCardPlayground from "./playground/DraggableCardPlayground.tsx";
+import FileExplorerPlayground from "./playground/FileExplorerPlayground.tsx";
 import IconButtonGroupPlayground from "./playground/IconButtonGroupPlayground.tsx";
 import IconButtonPlayground from "./playground/IconButtonPlayground.tsx";
 import LogoPlayground from "./playground/LogoPlayground.tsx";
@@ -57,6 +58,7 @@ export const DocsPage = {
   CheckboxPlayground,
   CheckboxTreePlayground,
   DraggableCardPlayground,
+  FileExplorerPlayground,
   IconButtonGroupPlayground,
   SplitButtonPlayground,
   TogglePlayground,

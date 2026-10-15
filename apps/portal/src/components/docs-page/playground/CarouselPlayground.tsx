@@ -18,15 +18,18 @@ const slideClass = (i: number) =>
 // ② State — one field per control.
 interface State {
   orientation: "horizontal" | "vertical";
-  slides: number;
+  slides: string;
   loop: boolean;
 }
 
 const INITIAL_STATE: State = {
   orientation: "horizontal",
-  slides: 3,
+  slides: "3",
   loop: false,
 };
+
+// The slide count is offered as a select, so values arrive as strings.
+const SLIDE_OPTIONS = ["1", "2", "3", "4", "5", "6", "7", "8"];
 
 // Keep the count sane — Embla needs at least one slide, and the preview stays readable
 // below a handful.
@@ -35,7 +38,7 @@ const clampSlides = (n: number) => Math.max(1, Math.min(8, Math.floor(n) || 1));
 // ③ Mirror exactly what the preview renders. Emit a prop only when it differs from its
 //    default, so the snippet stays as short as the configuration allows.
 function generateCode(s: State): string {
-  const count = clampSlides(s.slides);
+  const count = clampSlides(Number(s.slides));
   const rootAttrs: string[] = [];
   if (s.orientation !== "horizontal") rootAttrs.push(`orientation="${s.orientation}"`);
   if (s.loop) rootAttrs.push("opts={{ loop: true }}");
@@ -70,7 +73,7 @@ const CarouselPlayground: FC = () => {
   // ④ Curated control set.
   const controls: PropControl[] = [
     { name: "orientation", type: "select", options: ["horizontal", "vertical"] },
-    { name: "slides", type: "number", description: "Number of slides (1–8)" },
+    { name: "slides", type: "select", options: SLIDE_OPTIONS, description: "Number of slides" },
     { name: "loop", type: "boolean", description: "Embla loop option (opts={{ loop: true }})" },
   ];
 
@@ -90,7 +93,7 @@ const CarouselPlayground: FC = () => {
   //    buttons sit ~48px outside the viewport, so the stage gets padding on the axis
   //    being scrolled to keep them in view. Embla re-inits automatically when the slide
   //    count, orientation (axis), or loop option changes, keeping the key stable.
-  const count = clampSlides(state.slides);
+  const count = clampSlides(Number(state.slides));
   const items = Array.from({ length: count }, (_, i) => (
     <Carousel.Item key={i}>
       <div className={slideClass(i)}>Slide {i + 1}</div>

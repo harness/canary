@@ -87,48 +87,6 @@ return (
 )
 ```
 
-## Icon only
-
-The `ButtonGroup` component accepts an `iconOnly` prop. When this prop is set, each button is styled to fit the dimensions of an icon, making it suitable for icon-only buttons.
-
-<DocsPage.ComponentExample
-  client:only
-  code={`<div className="space-y-cn-sm w-full">
-  <div className="flex items-center gap-cn-md">
-    <span className="text-cn-size-2 text-cn-3 w-32 shrink-0 font-mono">icon-only</span>
-    <ButtonGroup
-      iconOnly
-      buttonsProps={[
-        { children: <IconV2 name="info-circle" />, onClick: () => { console.log('Button icon 1') } },
-        { children: <IconV2 name="key-back" />, onClick: () => { console.log('Button icon 2') } },
-        { children: <IconV2 name="more-vert" />, onClick: () => { console.log('Button icon 3') } }
-      ]}
-    />
-  </div>
-</div>`}
-/>
-
-## With tooltip
-
-Within `buttonsProps`, you can provide `tooltipProps` to define tooltip data for a specific button.
-
-<DocsPage.ComponentExample
-  client:only
-  code={`<div className="space-y-cn-sm w-full">
-  <div className="flex items-center gap-cn-md">
-    <span className="text-cn-size-2 text-cn-3 w-32 shrink-0 font-mono">tooltip</span>
-    <ButtonGroup
-      iconOnly
-      buttonsProps={[
-        { children: <IconV2 name="info-circle" />, onClick: () => { console.log('Button icon 1') }, tooltipProps: { title: 'Title', content: <p>This is a tooltip</p> } },
-        { children: <IconV2 name="key-back" />, onClick: () => { console.log('Button icon 2') }, tooltipProps: { title: 'Title', content: <p>This is a tooltip</p> } },
-        { children: <IconV2 name="more-vert" />, onClick: () => { console.log('Button icon 3') }, tooltipProps: { title: 'Title', content: <p>This is a tooltip</p> } }
-      ]}
-    />
-  </div>
-</div>`}
-/>
-
 </TabItem>
 
 <TabItem label="Usage">

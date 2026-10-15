@@ -29,6 +29,7 @@ import IconButtonPlayground from "./playground/IconButtonPlayground.tsx";
 import IconPlayground from "./playground/IconPlayground.tsx";
 import IllustrationPlayground from "./playground/IllustrationPlayground.tsx";
 import LabelPlayground from "./playground/LabelPlayground.tsx";
+import LinkPlayground from "./playground/LinkPlayground.tsx";
 import LogoPlayground from "./playground/LogoPlayground.tsx";
 import NumberInputPlayground from "./playground/NumberInputPlayground.tsx";
 import SplitButtonPlayground from "./playground/SplitButtonPlayground.tsx";
@@ -77,6 +78,7 @@ export const DocsPage = {
   IconPlayground,
   IllustrationPlayground,
   LabelPlayground,
+  LinkPlayground,
   LogoPlayground,
   NumberInputPlayground,
   TextInputPlayground,

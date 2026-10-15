@@ -20,6 +20,7 @@ import CarouselPlayground from "./playground/CarouselPlayground.tsx";
 import CheckboxPlayground from "./playground/CheckboxPlayground.tsx";
 import CheckboxTreePlayground from "./playground/CheckboxTreePlayground.tsx";
 import CopyButtonPlayground from "./playground/CopyButtonPlayground.tsx";
+import CounterBadgePlayground from "./playground/CounterBadgePlayground.tsx";
 import DraggableCardPlayground from "./playground/DraggableCardPlayground.tsx";
 import IconButtonGroupPlayground from "./playground/IconButtonGroupPlayground.tsx";
 import IconButtonPlayground from "./playground/IconButtonPlayground.tsx";
@@ -60,6 +61,7 @@ export const DocsPage = {
   TogglePlayground,
   ToggleGroupPlayground,
   CopyButtonPlayground,
+  CounterBadgePlayground,
   IconButtonPlayground,
   LogoPlayground,
 };

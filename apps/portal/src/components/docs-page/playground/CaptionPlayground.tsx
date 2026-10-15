@@ -1,5 +1,11 @@
 import { type FC, useMemo, useState } from "react";
-import { Button, Caption, CopyButton, IconV2, TooltipProvider } from "@harnessio/ui/components";
+import {
+  Button,
+  Caption,
+  CopyButton,
+  IconV2,
+  TooltipProvider,
+} from "@harnessio/ui/components";
 import ControlField from "./ControlField";
 import type { PropControl } from "./types";
 
@@ -30,7 +36,9 @@ const INITIAL_STATE: State = {
 //    actually maps to one.
 function generateCode(s: State): string {
   const cls = STATE_CLASS[s.state];
-  return cls ? `<Caption className="${cls}">${s.text}</Caption>` : `<Caption>${s.text}</Caption>`;
+  return cls
+    ? `<Caption className="${cls}">${s.text}</Caption>`
+    : `<Caption>${s.text}</Caption>`;
 }
 
 const CaptionPlayground: FC = () => {
@@ -43,7 +51,12 @@ const CaptionPlayground: FC = () => {
 
   // ④ Curated control set.
   const controls: PropControl[] = [
-    { name: "text", type: "text", required: true, description: "The caption's content" },
+    {
+      name: "text",
+      type: "text",
+      required: true,
+      description: "The caption's content",
+    },
     {
       name: "state",
       type: "select",

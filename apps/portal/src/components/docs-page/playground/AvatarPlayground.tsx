@@ -114,7 +114,8 @@ const AvatarPlayground: FC = () => {
     {
       name: "noInitials",
       type: "boolean",
-      description: "Show the name as-is instead of initials — loads a +22 count",
+      description:
+        "Show the name as-is instead of initials — loads a +22 count",
     },
   ];
 

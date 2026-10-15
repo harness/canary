@@ -1,5 +1,11 @@
 import { type FC, useMemo, useState } from "react";
-import { Button, Calendar, CopyButton, IconV2, TooltipProvider } from "@harnessio/ui/components";
+import {
+  Button,
+  Calendar,
+  CopyButton,
+  IconV2,
+  TooltipProvider,
+} from "@harnessio/ui/components";
 import ControlField from "./ControlField";
 import type { PropControl } from "./types";
 
@@ -83,7 +89,9 @@ function generateCode(s: State): string {
 
 const CalendarPlayground: FC = () => {
   const [state, setState] = useState<State>(INITIAL_STATE);
-  const [selected, setSelected] = useState<unknown>(() => initialSelection(INITIAL_STATE.mode));
+  const [selected, setSelected] = useState<unknown>(() =>
+    initialSelection(INITIAL_STATE.mode),
+  );
 
   const set = <K extends keyof State>(key: K, value: State[K]) => {
     setState((prev) => ({ ...prev, [key]: value }));
@@ -108,8 +116,16 @@ const CalendarPlayground: FC = () => {
       options: ["0", "1", "2", "3", "4", "5", "6"],
       description: "0 = Sunday … 6 = Saturday",
     },
-    { name: "showOutsideDays", type: "boolean", description: "Show muted adjacent-month days" },
-    { name: "bounded", type: "boolean", description: "Clamp selectable days to ±5 from today" },
+    {
+      name: "showOutsideDays",
+      type: "boolean",
+      description: "Show muted adjacent-month days",
+    },
+    {
+      name: "bounded",
+      type: "boolean",
+      description: "Clamp selectable days to ±5 from today",
+    },
   ];
 
   const inputControls = controls.filter((c) => c.type !== "boolean");
@@ -142,7 +158,8 @@ const CalendarPlayground: FC = () => {
   // mode switch). Its multiple mode calls `.some()` on the selection, so a single Date
   // there would throw.
   const safeSelected = useMemo(() => {
-    if (state.mode === "multiple") return Array.isArray(selected) ? selected : [];
+    if (state.mode === "multiple")
+      return Array.isArray(selected) ? selected : [];
     if (state.mode === "range") {
       return selected &&
         typeof selected === "object" &&

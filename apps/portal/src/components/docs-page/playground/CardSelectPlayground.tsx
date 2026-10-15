@@ -1,5 +1,11 @@
 import { type FC, useMemo, useState } from "react";
-import { Button, CardSelect, CopyButton, IconV2, TooltipProvider } from "@harnessio/ui/components";
+import {
+  Button,
+  CardSelect,
+  CopyButton,
+  IconV2,
+  TooltipProvider,
+} from "@harnessio/ui/components";
 import ControlField from "./ControlField";
 import type { PropControl } from "./types";
 
@@ -11,9 +17,24 @@ import type { PropControl } from "./types";
 
 // ① Sample options shared by BOTH the preview and the generated snippet.
 const OPTIONS = [
-  { value: "a", icon: "git-branch" as const, title: "Option A", description: "The first choice" },
-  { value: "b", icon: "git-commit" as const, title: "Option B", description: "The second choice" },
-  { value: "c", icon: "git-merge" as const, title: "Option C", description: "The third choice" },
+  {
+    value: "a",
+    icon: "git-branch" as const,
+    title: "Option A",
+    description: "The first choice",
+  },
+  {
+    value: "b",
+    icon: "git-commit" as const,
+    title: "Option B",
+    description: "The second choice",
+  },
+  {
+    value: "c",
+    icon: "git-merge" as const,
+    title: "Option C",
+    description: "The third choice",
+  },
 ];
 
 // A fresh selection value appropriate for the given type — one value for single,
@@ -82,7 +103,9 @@ function generateCode(s: State): string {
 
 const CardSelectPlayground: FC = () => {
   const [state, setState] = useState<State>(INITIAL_STATE);
-  const [selected, setSelected] = useState<unknown>(() => initialSelection(INITIAL_STATE.type));
+  const [selected, setSelected] = useState<unknown>(() =>
+    initialSelection(INITIAL_STATE.type),
+  );
 
   const set = <K extends keyof State>(key: K, value: State[K]) => {
     setState((prev) => ({ ...prev, [key]: value }));
@@ -99,11 +122,27 @@ const CardSelectPlayground: FC = () => {
   // ④ Curated control set.
   const controls: PropControl[] = [
     { name: "type", type: "select", options: ["single", "multiple"] },
-    { name: "layout", type: "select", options: ["vertical", "horizontal", "grid"] },
+    {
+      name: "layout",
+      type: "select",
+      options: ["vertical", "horizontal", "grid"],
+    },
     { name: "gap", type: "select", options: ["xs", "sm", "md", "lg"] },
-    { name: "disabled", type: "boolean", description: "Disable the whole group" },
-    { name: "icons", type: "boolean", description: "Show an icon on each item" },
-    { name: "glow", type: "boolean", description: "Glow ring on the selected item" },
+    {
+      name: "disabled",
+      type: "boolean",
+      description: "Disable the whole group",
+    },
+    {
+      name: "icons",
+      type: "boolean",
+      description: "Show an icon on each item",
+    },
+    {
+      name: "glow",
+      type: "boolean",
+      description: "Glow ring on the selected item",
+    },
   ];
 
   const inputControls = controls.filter((c) => c.type !== "boolean");
@@ -136,7 +175,12 @@ const CardSelectPlayground: FC = () => {
     <div className="w-[420px] max-w-full">
       <CardSelect.Root {...rootProps}>
         {OPTIONS.map((o) => (
-          <CardSelect.Item key={o.value} value={o.value} icon={state.icons ? o.icon : undefined} glow={state.glow}>
+          <CardSelect.Item
+            key={o.value}
+            value={o.value}
+            icon={state.icons ? o.icon : undefined}
+            glow={state.glow}
+          >
             <CardSelect.Title>{o.title}</CardSelect.Title>
             <CardSelect.Description>{o.description}</CardSelect.Description>
           </CardSelect.Item>

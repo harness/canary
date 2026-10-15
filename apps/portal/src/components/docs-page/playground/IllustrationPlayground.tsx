@@ -62,7 +62,8 @@ const IllustrationPlayground: FC = () => {
     {
       name: "themeDependent",
       type: "boolean",
-      description: "Use a light-theme variant (or invert) when the site is in light mode",
+      description:
+        "Use a light-theme variant (or invert) when the site is in light mode",
     },
   ];
 
@@ -108,7 +109,9 @@ const IllustrationPlayground: FC = () => {
               themeDependent={state.themeDependent}
             />
           </div>
-          <span className="font-body-code text-cn-size-1 text-cn-3">name="{state.name}"</span>
+          <span className="font-body-code text-cn-size-1 text-cn-3">
+            name="{state.name}"
+          </span>
         </div>
 
         {/* --- Illustration picker: search + clickable gallery --- */}
@@ -130,7 +133,9 @@ const IllustrationPlayground: FC = () => {
                   title={n}
                   onClick={() => set("name", n)}
                   className={`flex aspect-square items-center justify-center rounded-cn-2 border p-cn-3xs ${
-                    selected ? "border-cn-borders-2 bg-cn-2" : "border-transparent hover:bg-cn-2"
+                    selected
+                      ? "border-cn-borders-2 bg-cn-2"
+                      : "border-transparent hover:bg-cn-2"
                   }`}
                 >
                   <Illustration name={n as never} size={56} />

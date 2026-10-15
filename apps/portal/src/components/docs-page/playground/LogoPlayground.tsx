@@ -73,7 +73,8 @@ const LogoPlayground: FC = () => {
       type: "select",
       options: SHARED_NAMES,
       required: true,
-      description: "Full catalog lives in the logo gallery (Foundations → Logos)",
+      description:
+        "Full catalog lives in the logo gallery (Foundations → Logos)",
     },
     { name: "size", type: "select", options: ["xs", "sm", "md", "lg"] },
   ];
@@ -91,10 +92,10 @@ const LogoPlayground: FC = () => {
   // the preview's foreground color to show it inheriting from its parent.
   const preview =
     state.component === "LogoV2" ? (
-      <LogoV2 name={state.name} size={state.size} />
+      <LogoV2 name={state.name as never} size={state.size} />
     ) : (
       <span className="text-cn-1">
-        <LogoSymbol name={state.name} size={state.size} />
+        <LogoSymbol name={state.name as never} size={state.size} />
       </span>
     );
 
@@ -102,46 +103,46 @@ const LogoPlayground: FC = () => {
 
   return (
     <TooltipProvider>
-    <div className="bg-cn-1 not-content my-cn-3xl overflow-hidden rounded-cn-6 border">
-      {/* --- Preview stage --- */}
-      <div className="bg-cn-2 relative flex min-h-[8rem] items-center justify-center p-cn-3xl">
-        <Button
-          variant="outline"
-          size="sm"
-          iconOnly
-          onClick={reset}
-          className="absolute right-cn-sm top-cn-sm z-10"
-          tooltipProps={{ content: "Reset to defaults" }}
-        >
-          <IconV2 name="refresh" />
-        </Button>
+      <div className="bg-cn-1 not-content my-cn-3xl overflow-hidden rounded-cn-6 border">
+        {/* --- Preview stage --- */}
+        <div className="bg-cn-2 relative flex min-h-[8rem] items-center justify-center p-cn-3xl">
+          <Button
+            variant="outline"
+            size="sm"
+            iconOnly
+            onClick={reset}
+            className="absolute right-cn-sm top-cn-sm z-10"
+            tooltipProps={{ content: "Reset to defaults" }}
+          >
+            <IconV2 name="refresh" />
+          </Button>
 
-        {preview}
+          {preview}
+        </div>
+
+        {/* --- Control grid: bg-cn-1 surface, max 3 per row --- */}
+        <div className="bg-cn-1 grid grid-cols-3 gap-cn-lg border-t p-cn-md">
+          {controls.map(renderControl)}
+        </div>
+
+        {/* --- Show code --- */}
+        <details className="example-expand bg-cn-2 relative border-t p-cn-sm">
+          <CopyButton
+            buttonVariant="transparent"
+            className="absolute right-cn-sm top-cn-sm"
+            name={code}
+          />
+          <summary className="flex cursor-pointer select-none items-center gap-cn-3xs text-cn-size-2">
+            Show code
+          </summary>
+          <pre
+            className="font-body-code p-cn-3xs text-cn-size-2 leading-6"
+            style={{ whiteSpace: "pre-wrap", wordBreak: "break-word" }}
+          >
+            {code}
+          </pre>
+        </details>
       </div>
-
-      {/* --- Control grid: bg-cn-1 surface, max 3 per row --- */}
-      <div className="bg-cn-1 grid grid-cols-3 gap-cn-lg border-t p-cn-md">
-        {controls.map(renderControl)}
-      </div>
-
-      {/* --- Show code --- */}
-      <details className="example-expand bg-cn-2 relative border-t p-cn-sm">
-        <CopyButton
-          buttonVariant="transparent"
-          className="absolute right-cn-sm top-cn-sm"
-          name={code}
-        />
-        <summary className="flex cursor-pointer select-none items-center gap-cn-3xs text-cn-size-2">
-          Show code
-        </summary>
-        <pre
-          className="font-body-code p-cn-3xs text-cn-size-2 leading-6"
-          style={{ whiteSpace: "pre-wrap", wordBreak: "break-word" }}
-        >
-          {code}
-        </pre>
-      </details>
-    </div>
     </TooltipProvider>
   );
 };

@@ -1,5 +1,11 @@
 import { type FC, useMemo, useState } from "react";
-import { Button, CopyButton, IconV2, Link, TooltipProvider } from "@harnessio/ui/components";
+import {
+  Button,
+  CopyButton,
+  IconV2,
+  Link,
+  TooltipProvider,
+} from "@harnessio/ui/components";
 import ControlField from "./ControlField";
 import type { PropControl } from "./types";
 
@@ -65,7 +71,12 @@ const LinkPlayground: FC = () => {
       options: ["default", "secondary"],
       description: "Visual treatment",
     },
-    { name: "size", type: "select", options: ["md", "sm"], description: "Link scale" },
+    {
+      name: "size",
+      type: "select",
+      options: ["md", "sm"],
+      description: "Link scale",
+    },
     {
       name: "prefixIcon",
       type: "boolean",
@@ -81,7 +92,11 @@ const LinkPlayground: FC = () => {
       type: "boolean",
       description: "Renders a plain <a> with href instead of the router link",
     },
-    { name: "disabled", type: "boolean", description: "Blocks clicks and dims the link" },
+    {
+      name: "disabled",
+      type: "boolean",
+      description: "Blocks clicks and dims the link",
+    },
     {
       name: "noHoverUnderline",
       type: "boolean",

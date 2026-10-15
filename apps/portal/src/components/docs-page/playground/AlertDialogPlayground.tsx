@@ -43,7 +43,8 @@ const THEME_PRESETS: Record<State["theme"], ThemeContent> = {
   warning: {
     triggerLabel: "Discard draft",
     title: "Discard draft?",
-    message: "This draft has unsaved edits. Discarding it will lose those changes.",
+    message:
+      "This draft has unsaved edits. Discarding it will lose those changes.",
     confirmLabel: "Confirm",
   },
   danger: {
@@ -118,7 +119,8 @@ const AlertDialogPlayground: FC = () => {
       name: "theme",
       type: "select",
       options: ["default", "warning", "danger"],
-      description: "Loads that theme's example and sets the icon + confirm color",
+      description:
+        "Loads that theme's example and sets the icon + confirm color",
     },
     {
       name: "triggerLabel",
@@ -141,7 +143,8 @@ const AlertDialogPlayground: FC = () => {
     {
       name: "loading",
       type: "boolean",
-      description: "Holds the dialog open with a spinner; disables both buttons",
+      description:
+        "Holds the dialog open with a spinner; disables both buttons",
     },
   ];
 

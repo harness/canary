@@ -1,5 +1,11 @@
 import { type FC, useMemo, useState } from "react";
-import { Button, CopyButton, IconV2, Toggle, TooltipProvider } from "@harnessio/ui/components";
+import {
+  Button,
+  CopyButton,
+  IconV2,
+  Toggle,
+  TooltipProvider,
+} from "@harnessio/ui/components";
 import ControlField from "./ControlField";
 import type { PropControl } from "./types";
 
@@ -46,7 +52,10 @@ const effectivePrefix = (s: State): string =>
 function generateCode(s: State): string {
   const attrs: string[] = [];
   if (s.variant !== "outline") attrs.push(`  variant="${s.variant}"`);
-  if (SELECTED_VARIANT_VARIANTS.includes(s.variant) && s.selectedVariant !== "primary") {
+  if (
+    SELECTED_VARIANT_VARIANTS.includes(s.variant) &&
+    s.selectedVariant !== "primary"
+  ) {
     attrs.push(`  selectedVariant="${s.selectedVariant}"`);
   }
   if (s.size !== "md") attrs.push(`  size="${s.size}"`);
@@ -83,8 +92,17 @@ const TogglePlayground: FC = () => {
 
   // ④ Curated control set.
   const controls: PropControl[] = [
-    { name: "text", type: "text", required: true, description: "Label (and tooltip when iconOnly)" },
-    { name: "variant", type: "select", options: ["outline", "ghost", "transparent"] },
+    {
+      name: "text",
+      type: "text",
+      required: true,
+      description: "Label (and tooltip when iconOnly)",
+    },
+    {
+      name: "variant",
+      type: "select",
+      options: ["outline", "ghost", "transparent"],
+    },
     {
       name: "selectedVariant",
       type: "select",
@@ -99,7 +117,11 @@ const TogglePlayground: FC = () => {
       options: ICON_NAMES,
       description: "Not available when iconOnly",
     },
-    { name: "iconOnly", type: "boolean", description: "Render only the prefix icon" },
+    {
+      name: "iconOnly",
+      type: "boolean",
+      description: "Render only the prefix icon",
+    },
     { name: "rounded", type: "boolean", description: "Fully rounded corners" },
     { name: "disabled", type: "boolean", description: "Disable the toggle" },
   ];
@@ -128,7 +150,7 @@ const TogglePlayground: FC = () => {
       selectedVariant={selectedVariant}
       size={state.size}
       iconOnly
-      prefixIcon={prefix}
+      prefixIcon={prefix as never}
       tooltipProps={{ content: state.text }}
       rounded={state.rounded}
       disabled={state.disabled}
@@ -141,8 +163,10 @@ const TogglePlayground: FC = () => {
       selectedVariant={selectedVariant}
       size={state.size}
       text={state.text}
-      prefixIcon={prefix === "none" ? undefined : prefix}
-      suffixIcon={state.suffixIcon === "none" ? undefined : state.suffixIcon}
+      prefixIcon={prefix === "none" ? undefined : (prefix as never)}
+      suffixIcon={
+        state.suffixIcon === "none" ? undefined : (state.suffixIcon as never)
+      }
       rounded={state.rounded}
       disabled={state.disabled}
       selected={selected}

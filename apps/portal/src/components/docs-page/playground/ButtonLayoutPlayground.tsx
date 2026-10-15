@@ -1,5 +1,11 @@
 import { type FC, useMemo, useState } from "react";
-import { Button, ButtonLayout, CopyButton, IconV2, TooltipProvider } from "@harnessio/ui/components";
+import {
+  Button,
+  ButtonLayout,
+  CopyButton,
+  IconV2,
+  TooltipProvider,
+} from "@harnessio/ui/components";
 import ControlField from "./ControlField";
 import type { PropControl } from "./types";
 
@@ -26,7 +32,8 @@ const INITIAL_STATE: State = {
 //    horizontal, so it's omitted from the snippet in vertical orientation.
 function generateCode(s: State): string {
   const attrs: string[] = [];
-  if (s.orientation !== "horizontal") attrs.push(`orientation="${s.orientation}"`);
+  if (s.orientation !== "horizontal")
+    attrs.push(`orientation="${s.orientation}"`);
   if (s.orientation === "horizontal" && s.horizontalAlign !== "end") {
     attrs.push(`horizontalAlign="${s.horizontalAlign}"`);
   }
@@ -49,7 +56,9 @@ function generateCode(s: State): string {
   }
 
   // Keep the outline button directly beside the primary (outline → primary last).
-  const open = attrs.length ? `<ButtonLayout ${attrs.join(" ")}>` : "<ButtonLayout>";
+  const open = attrs.length
+    ? `<ButtonLayout ${attrs.join(" ")}>`
+    : "<ButtonLayout>";
   return [
     open,
     `  <Button variant="secondary">Cancel</Button>`,
@@ -75,7 +84,11 @@ const ButtonLayoutPlayground: FC = () => {
       options: ["direct", "slots"],
       description: "slots uses Primary / Secondary groups",
     },
-    { name: "orientation", type: "select", options: ["horizontal", "vertical"] },
+    {
+      name: "orientation",
+      type: "select",
+      options: ["horizontal", "vertical"],
+    },
     {
       name: "horizontalAlign",
       type: "select",
@@ -110,7 +123,10 @@ const ButtonLayoutPlayground: FC = () => {
           </ButtonLayout.Secondary>
         </ButtonLayout.Root>
       ) : (
-        <ButtonLayout orientation={state.orientation} horizontalAlign={state.horizontalAlign}>
+        <ButtonLayout
+          orientation={state.orientation}
+          horizontalAlign={state.horizontalAlign}
+        >
           <Button variant="secondary">Cancel</Button>
           <Button variant="outline">Save draft</Button>
           <Button>Publish</Button>

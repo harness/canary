@@ -41,8 +41,8 @@ function generateCode(s: State): string {
       "    <Button>Publish</Button>",
       "  </ButtonLayout.Primary>",
       "  <ButtonLayout.Secondary>",
-      `    <Button variant="outline">Cancel</Button>`,
-      `    <Button variant="secondary">Save draft</Button>`,
+      `    <Button variant="outline">Save draft</Button>`,
+      `    <Button variant="secondary">Cancel</Button>`,
       "  </ButtonLayout.Secondary>",
       "</ButtonLayout.Root>",
     ].join("\n");
@@ -52,8 +52,8 @@ function generateCode(s: State): string {
   const open = attrs.length ? `<ButtonLayout ${attrs.join(" ")}>` : "<ButtonLayout>";
   return [
     open,
-    `  <Button variant="secondary">Save draft</Button>`,
-    `  <Button variant="outline">Cancel</Button>`,
+    `  <Button variant="secondary">Cancel</Button>`,
+    `  <Button variant="outline">Save draft</Button>`,
     `  <Button>Publish</Button>`,
     "</ButtonLayout>",
   ].join("\n");
@@ -105,14 +105,14 @@ const ButtonLayoutPlayground: FC = () => {
             <Button>Publish</Button>
           </ButtonLayout.Primary>
           <ButtonLayout.Secondary>
-            <Button variant="outline">Cancel</Button>
-            <Button variant="secondary">Save draft</Button>
+            <Button variant="outline">Save draft</Button>
+            <Button variant="secondary">Cancel</Button>
           </ButtonLayout.Secondary>
         </ButtonLayout.Root>
       ) : (
         <ButtonLayout orientation={state.orientation} horizontalAlign={state.horizontalAlign}>
-          <Button variant="secondary">Save draft</Button>
-          <Button variant="outline">Cancel</Button>
+          <Button variant="secondary">Cancel</Button>
+          <Button variant="outline">Save draft</Button>
           <Button>Publish</Button>
         </ButtonLayout>
       )}

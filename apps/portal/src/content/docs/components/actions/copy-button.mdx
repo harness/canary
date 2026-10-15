@@ -17,15 +17,9 @@ import PageTabsToc from "@/components/page-tabs-toc.astro";
 
 The `CopyButton` component provides a button that copies text to the clipboard when clicked. It includes visual feedback to indicate when the text has been copied successfully. The `name` prop can be a string or a function that returns a string, allowing for dynamic text generation.
 
-<DocsPage.ComponentExample
-  client:only
-  code={`<div className="space-y-cn-sm w-full">
-  <div className="flex items-center gap-cn-md">
-    <span className="text-cn-size-2 text-cn-3 w-40 shrink-0 font-mono">default</span>
-    <CopyButton name="Text to copy" />
-  </div>
-</div>`}
-/>
+## Playground
+
+<DocsPage.CopyButtonPlayground client:only />
 
 ## Copy Button with Function Callback
 
@@ -87,10 +81,6 @@ return (
   </div>
 </div>
 ) }`} />
-
-## Playground
-
-<DocsPage.CopyButtonPlayground client:only />
 
 ## Installation
 

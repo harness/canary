@@ -20,22 +20,6 @@ The button data is passed via the `buttonsProps` prop, which should contain an a
 
 For a group of icon-only buttons, see the icon-only [Button Group](/components/actions/icon-button-group/).
 
-<DocsPage.ComponentExample
-  client:only
-  code={`<div className="space-y-cn-sm w-full">
-  <div className="flex items-center gap-cn-md">
-    <span className="text-cn-size-2 text-cn-3 w-32 shrink-0 font-mono">default</span>
-    <ButtonGroup
-      buttonsProps={[
-        { children: 'Button', onClick: () => { console.log('Button 1') } },
-        { children: 'Button', onClick: () => { console.log('Button 2') } },
-        { children: 'Button', onClick: () => { console.log('Button 3') } }
-      ]}
-    />
-  </div>
-</div>`}
-/>
-
 ## Playground
 
 <DocsPage.ButtonGroupPlayground client:only />

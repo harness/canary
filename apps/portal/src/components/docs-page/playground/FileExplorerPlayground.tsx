@@ -234,7 +234,7 @@ const FileExplorerPlayground: FC = () => {
             <IconV2 name="refresh" />
           </Button>
 
-          <div className="bg-cn-1 w-[320px] max-w-full rounded-cn-2 border p-cn-xs">
+          <div className="bg-cn-1 w-[480px] max-w-full rounded-cn-2 border p-cn-xs">
             <FileExplorer.Root value={expanded} onValueChange={setExpanded}>
               {renderNodes(TREE, 0)}
             </FileExplorer.Root>

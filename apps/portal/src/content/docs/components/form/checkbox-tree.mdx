@@ -19,42 +19,9 @@ The `CheckboxTree` component renders a hierarchical tree where every node has a 
 
 It is a compound component composed of `CheckboxTree.Root`, `CheckboxTree.Group`, and `CheckboxTree.Item`. Selection is controlled via `selectedIds` + `onSelectionChange` (leaf ids only); parent/child relationships are derived from JSX nesting. Enable `showCount` on the `Root` to render each group's leaf-descendant count (e.g. "Resources (16)") — it is computed automatically, with no `count` prop to maintain.
 
-<DocsPage.ComponentExample
-  client:only
-  code={`() => {
-    const [selectedIds, setSelectedIds] = React.useState([]);
+## Playground
 
-    return (
-      <CheckboxTree.Root
-        className="w-full rounded-cn-2 border border-cn-3"
-        selectedIds={selectedIds}
-        onSelectionChange={setSelectedIds}
-        defaultExpandedIds={['resources', 'pipelines']}
-        showSelectAll
-        showCount
-      >
-        <CheckboxTree.Group id="resources" label="Resources">
-          <CheckboxTree.Group id="pipelines" label="Pipelines">
-            <CheckboxTree.Item id="audit-logs" label="Audit logs" />
-            <CheckboxTree.Item id="default-settings" label="Default settings" />
-            <CheckboxTree.Item id="notification-templates" label="Notification default template sets" />
-            <CheckboxTree.Item id="organizations" label="Organizations" />
-            <CheckboxTree.Item id="roles" label="Roles" />
-            <CheckboxTree.Item id="streaming-destination" label="Streaming Destination" />
-            <CheckboxTree.Item id="banner" label="Banner" />
-            <CheckboxTree.Item id="resource-groups" label="Resource Groups" />
-            <CheckboxTree.Item id="user-groups" label="User Groups" />
-            <CheckboxTree.Item id="service-accounts" label="Service Accounts" />
-            <CheckboxTree.Item id="notification-rules" label="Notification Rules" />
-            <CheckboxTree.Item id="oidc-id-token" label="OIDC ID Token" />
-            <CheckboxTree.Item id="users" label="Users" />
-          </CheckboxTree.Group>
-        </CheckboxTree.Group>
-      </CheckboxTree.Root>
-    );
-
-}`}
-/>
+<DocsPage.CheckboxTreePlayground client:only />
 
 ## Variations
 

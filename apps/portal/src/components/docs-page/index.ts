@@ -17,6 +17,8 @@ import CaptionPlayground from "./playground/CaptionPlayground.tsx";
 import CardPlayground from "./playground/CardPlayground.tsx";
 import CardSelectPlayground from "./playground/CardSelectPlayground.tsx";
 import CarouselPlayground from "./playground/CarouselPlayground.tsx";
+import CheckboxPlayground from "./playground/CheckboxPlayground.tsx";
+import CheckboxTreePlayground from "./playground/CheckboxTreePlayground.tsx";
 import CopyButtonPlayground from "./playground/CopyButtonPlayground.tsx";
 import DraggableCardPlayground from "./playground/DraggableCardPlayground.tsx";
 import IconButtonGroupPlayground from "./playground/IconButtonGroupPlayground.tsx";
@@ -50,6 +52,8 @@ export const DocsPage = {
   CardPlayground,
   CardSelectPlayground,
   CarouselPlayground,
+  CheckboxPlayground,
+  CheckboxTreePlayground,
   DraggableCardPlayground,
   IconButtonGroupPlayground,
   SplitButtonPlayground,

@@ -1,5 +1,11 @@
 import { type FC, useMemo, useState } from "react";
-import { Button, CounterBadge, CopyButton, IconV2, TooltipProvider } from "@harnessio/ui/components";
+import {
+  Button,
+  CounterBadge,
+  CopyButton,
+  IconV2,
+  TooltipProvider,
+} from "@harnessio/ui/components";
 import ControlField from "./ControlField";
 import type { PropControl } from "./types";
 
@@ -30,7 +36,9 @@ function generateCode(s: State): string {
   const attrs: string[] = [];
   if (s.variant !== "outline") attrs.push(`variant="${s.variant}"`);
   if (s.theme !== "default") attrs.push(`theme="${s.theme}"`);
-  const open = attrs.length ? `<CounterBadge ${attrs.join(" ")}>` : "<CounterBadge>";
+  const open = attrs.length
+    ? `<CounterBadge ${attrs.join(" ")}>`
+    : "<CounterBadge>";
   return `${open}${s.content}</CounterBadge>`;
 }
 
@@ -45,8 +53,16 @@ const CounterBadgePlayground: FC = () => {
   // ④ Curated control set.
   const controls: PropControl[] = [
     { name: "variant", type: "select", options: ["outline", "secondary"] },
-    { name: "theme", type: "select", options: ["default", "info", "success", "danger"] },
-    { name: "content", type: "text", description: "Count shown inside the badge" },
+    {
+      name: "theme",
+      type: "select",
+      options: ["default", "info", "success", "danger"],
+    },
+    {
+      name: "content",
+      type: "text",
+      description: "Count shown inside the badge",
+    },
   ];
 
   const renderControl = (prop: PropControl) => (

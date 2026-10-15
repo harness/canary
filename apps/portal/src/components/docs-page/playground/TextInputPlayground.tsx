@@ -1,5 +1,11 @@
 import { type FC, useMemo, useState } from "react";
-import { Button, CopyButton, IconV2, TextInput, TooltipProvider } from "@harnessio/ui/components";
+import {
+  Button,
+  CopyButton,
+  IconV2,
+  TextInput,
+  TooltipProvider,
+} from "@harnessio/ui/components";
 import ControlField from "./ControlField";
 import type { PropControl } from "./types";
 
@@ -53,7 +59,8 @@ function generateCode(s: State): string {
   if (s.tooltipContent) attrs.push(`tooltipContent="${s.tooltipContent}"`);
   if (s.theme !== "default") attrs.push(`theme="${s.theme}"`);
   if (s.size !== "md") attrs.push(`size="${s.size}"`);
-  if (s.orientation !== "vertical") attrs.push(`orientation="${s.orientation}"`);
+  if (s.orientation !== "vertical")
+    attrs.push(`orientation="${s.orientation}"`);
   if (s.optional) attrs.push("optional");
   if (s.disabled) attrs.push("disabled");
   if (s.readOnly) attrs.push("readOnly");
@@ -71,12 +78,36 @@ const TextInputPlayground: FC = () => {
 
   const controls: PropControl[] = [
     { name: "label", type: "text", description: "Label text above the field" },
-    { name: "placeholder", type: "text", description: "Placeholder shown when empty" },
-    { name: "caption", type: "text", description: "Helper text below the field" },
-    { name: "prefix", type: "text", description: "Content rendered before the input" },
-    { name: "suffix", type: "text", description: "Content rendered after the input" },
-    { name: "error", type: "text", description: "Error message (forces the danger theme)" },
-    { name: "warning", type: "text", description: "Warning message (forces the warning theme)" },
+    {
+      name: "placeholder",
+      type: "text",
+      description: "Placeholder shown when empty",
+    },
+    {
+      name: "caption",
+      type: "text",
+      description: "Helper text below the field",
+    },
+    {
+      name: "prefix",
+      type: "text",
+      description: "Content rendered before the input",
+    },
+    {
+      name: "suffix",
+      type: "text",
+      description: "Content rendered after the input",
+    },
+    {
+      name: "error",
+      type: "text",
+      description: "Error message (forces the danger theme)",
+    },
+    {
+      name: "warning",
+      type: "text",
+      description: "Warning message (forces the warning theme)",
+    },
     {
       name: "tooltipContent",
       type: "text",
@@ -88,16 +119,29 @@ const TextInputPlayground: FC = () => {
       options: ["default", "success", "warning", "danger"],
       description: "Visual state (error/warning override this)",
     },
-    { name: "size", type: "select", options: ["md", "sm"], description: "Field height" },
+    {
+      name: "size",
+      type: "select",
+      options: ["md", "sm"],
+      description: "Field height",
+    },
     {
       name: "orientation",
       type: "select",
       options: ["vertical", "horizontal"],
       description: "Label position relative to the field",
     },
-    { name: "optional", type: "boolean", description: "Remove the required * marker" },
+    {
+      name: "optional",
+      type: "boolean",
+      description: "Remove the required * marker",
+    },
     { name: "disabled", type: "boolean", description: "Disable the field" },
-    { name: "readOnly", type: "boolean", description: "Make the field read-only" },
+    {
+      name: "readOnly",
+      type: "boolean",
+      description: "Make the field read-only",
+    },
   ];
 
   const inputControls = controls.filter((c) => c.type !== "boolean");

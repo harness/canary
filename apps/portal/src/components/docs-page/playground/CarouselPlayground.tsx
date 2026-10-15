@@ -1,5 +1,11 @@
 import { type FC, useMemo, useState } from "react";
-import { Button, Carousel, CopyButton, IconV2, TooltipProvider } from "@harnessio/ui/components";
+import {
+  Button,
+  Carousel,
+  CopyButton,
+  IconV2,
+  TooltipProvider,
+} from "@harnessio/ui/components";
 import ControlField from "./ControlField";
 import type { PropControl } from "./types";
 
@@ -11,7 +17,11 @@ import type { PropControl } from "./types";
 
 // ① The slide palette, shared by BOTH the preview and the generated snippet so they
 //    never drift. Slides cycle through these colors.
-const SLIDE_COLORS = ["bg-cn-blue-primary", "bg-cn-success-primary", "bg-cn-danger-primary"];
+const SLIDE_COLORS = [
+  "bg-cn-blue-primary",
+  "bg-cn-success-primary",
+  "bg-cn-danger-primary",
+];
 const slideClass = (i: number) =>
   `h-48 w-full ${SLIDE_COLORS[i % SLIDE_COLORS.length]} text-cn-1 flex items-center justify-center`;
 
@@ -40,12 +50,14 @@ const clampSlides = (n: number) => Math.max(1, Math.min(8, Math.floor(n) || 1));
 function generateCode(s: State): string {
   const count = clampSlides(Number(s.slides));
   const rootAttrs: string[] = [];
-  if (s.orientation !== "horizontal") rootAttrs.push(`orientation="${s.orientation}"`);
+  if (s.orientation !== "horizontal")
+    rootAttrs.push(`orientation="${s.orientation}"`);
   if (s.loop) rootAttrs.push("opts={{ loop: true }}");
   rootAttrs.push(`className="w-full"`);
 
   // Vertical carousels need a fixed height on the viewport so it clips to one slide.
-  const contentAttr = s.orientation === "vertical" ? ` carouselBlockClassName="h-48"` : "";
+  const contentAttr =
+    s.orientation === "vertical" ? ` carouselBlockClassName="h-48"` : "";
 
   const items = Array.from({ length: count }, (_, i) => {
     return `    <Carousel.Item>
@@ -72,9 +84,22 @@ const CarouselPlayground: FC = () => {
 
   // ④ Curated control set.
   const controls: PropControl[] = [
-    { name: "orientation", type: "select", options: ["horizontal", "vertical"] },
-    { name: "slides", type: "select", options: SLIDE_OPTIONS, description: "Number of slides" },
-    { name: "loop", type: "boolean", description: "Embla loop option (opts={{ loop: true }})" },
+    {
+      name: "orientation",
+      type: "select",
+      options: ["horizontal", "vertical"],
+    },
+    {
+      name: "slides",
+      type: "select",
+      options: SLIDE_OPTIONS,
+      description: "Number of slides",
+    },
+    {
+      name: "loop",
+      type: "boolean",
+      description: "Embla loop option (opts={{ loop: true }})",
+    },
   ];
 
   const inputControls = controls.filter((c) => c.type !== "boolean");
@@ -103,7 +128,9 @@ const CarouselPlayground: FC = () => {
   const preview = (
     <div
       className={
-        state.orientation === "vertical" ? "w-[260px] py-[52px]" : "w-[260px] px-[52px]"
+        state.orientation === "vertical"
+          ? "w-[260px] py-[52px]"
+          : "w-[260px] px-[52px]"
       }
     >
       <Carousel.Root
@@ -112,7 +139,11 @@ const CarouselPlayground: FC = () => {
         className="w-full"
       >
         <Carousel.Previous />
-        <Carousel.Content carouselBlockClassName={state.orientation === "vertical" ? "h-48" : undefined}>
+        <Carousel.Content
+          carouselBlockClassName={
+            state.orientation === "vertical" ? "h-48" : undefined
+          }
+        >
           {items}
         </Carousel.Content>
         <Carousel.Next />

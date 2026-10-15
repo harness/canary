@@ -1,5 +1,11 @@
 import { type FC, useMemo, useState } from "react";
-import { Button, CopyButton, IconV2, Label, TooltipProvider } from "@harnessio/ui/components";
+import {
+  Button,
+  CopyButton,
+  IconV2,
+  Label,
+  TooltipProvider,
+} from "@harnessio/ui/components";
 import ControlField from "./ControlField";
 import type { PropControl } from "./types";
 
@@ -61,7 +67,11 @@ const LabelPlayground: FC = () => {
       type: "boolean",
       description: "Hides the required * marker (shown by default)",
     },
-    { name: "disabled", type: "boolean", description: "Renders the label dimmed" },
+    {
+      name: "disabled",
+      type: "boolean",
+      description: "Renders the label dimmed",
+    },
   ];
 
   const inputControls = controls.filter((c) => c.type !== "boolean");

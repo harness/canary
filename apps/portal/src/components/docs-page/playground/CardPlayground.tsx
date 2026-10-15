@@ -1,5 +1,11 @@
 import { type FC, useMemo, useState } from "react";
-import { Button, Card, CopyButton, IconV2, TooltipProvider } from "@harnessio/ui/components";
+import {
+  Button,
+  Card,
+  CopyButton,
+  IconV2,
+  TooltipProvider,
+} from "@harnessio/ui/components";
 import ControlField from "./ControlField";
 import type { PropControl } from "./types";
 
@@ -39,7 +45,8 @@ const INITIAL_STATE: State = {
 //    its default, so the snippet stays as short as the configuration allows.
 function generateCode(s: State): string {
   const attrs: string[] = [];
-  if (s.orientation !== "vertical") attrs.push(`orientation="${s.orientation}"`);
+  if (s.orientation !== "vertical")
+    attrs.push(`orientation="${s.orientation}"`);
   if (s.position !== "start") attrs.push(`position="${s.position}"`);
   if (s.size !== "md") attrs.push(`size="${s.size}"`);
   if (s.selected) attrs.push("selected");
@@ -74,7 +81,11 @@ const CardPlayground: FC = () => {
   // ④ Curated control set.
   const controls: PropControl[] = [
     { name: "size", type: "select", options: ["sm", "md", "lg"] },
-    { name: "orientation", type: "select", options: ["vertical", "horizontal"] },
+    {
+      name: "orientation",
+      type: "select",
+      options: ["vertical", "horizontal"],
+    },
     {
       name: "position",
       type: "select",
@@ -113,7 +124,11 @@ const CardPlayground: FC = () => {
         interactive={state.interactive}
       >
         {state.image && (
-          <Card.Image src={SAMPLE_IMAGE} alt="" width={state.orientation === "horizontal" ? 160 : undefined} />
+          <Card.Image
+            src={SAMPLE_IMAGE}
+            alt=""
+            width={state.orientation === "horizontal" ? 160 : undefined}
+          />
         )}
         <Card.Title>{SAMPLE_TITLE}</Card.Title>
         <Card.Content>{SAMPLE_CONTENT}</Card.Content>

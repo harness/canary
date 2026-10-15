@@ -1,5 +1,11 @@
 import { type FC, type ReactNode, useMemo, useState } from "react";
-import { Button, CheckboxTree, CopyButton, IconV2, TooltipProvider } from "@harnessio/ui/components";
+import {
+  Button,
+  CheckboxTree,
+  CopyButton,
+  IconV2,
+  TooltipProvider,
+} from "@harnessio/ui/components";
 import ControlField from "./ControlField";
 import type { PropControl } from "./types";
 
@@ -128,7 +134,8 @@ const INITIAL_STATE: State = {
   disabled: false,
 };
 
-const expandedLiteral = (ids: string[]) => `[${ids.map((id) => `'${id}'`).join(", ")}]`;
+const expandedLiteral = (ids: string[]) =>
+  `[${ids.map((id) => `'${id}'`).join(", ")}]`;
 
 // ③ Mirror exactly what the preview renders. The preset supplies the structure; the
 //    toggles add Root flags only when they're on.
@@ -177,9 +184,21 @@ const CheckboxTreePlayground: FC = () => {
       options: PRESETS.map((p) => p.value),
       description: "Sample tree to explore",
     },
-    { name: "showSelectAll", type: "boolean", description: "Render a Select All row" },
-    { name: "showCount", type: "boolean", description: "Show each group's leaf count" },
-    { name: "disabled", type: "boolean", description: "Disable the whole tree" },
+    {
+      name: "showSelectAll",
+      type: "boolean",
+      description: "Render a Select All row",
+    },
+    {
+      name: "showCount",
+      type: "boolean",
+      description: "Show each group's leaf count",
+    },
+    {
+      name: "disabled",
+      type: "boolean",
+      description: "Disable the whole tree",
+    },
   ];
 
   const inputControls = controls.filter((c) => c.type !== "boolean");

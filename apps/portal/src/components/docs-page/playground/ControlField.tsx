@@ -1,5 +1,5 @@
 import type { FC } from "react";
-import { Input, Select, Switch, TextInput } from "@harnessio/ui/components";
+import { Input, NumberInput, Select, Switch, TextInput } from "@harnessio/ui/components";
 import type { PropControl } from "./types";
 
 export interface ControlFieldProps {
@@ -22,11 +22,10 @@ const ControlField: FC<ControlFieldProps> = ({ prop, value, onChange }) => {
 
     case "number":
       return (
-        <Input
+        <NumberInput
           label={prop.name}
           caption={prop.description}
           optional={!prop.required}
-          type="number"
           value={typeof value === "number" ? value : ""}
           onChange={(e) => onChange(Number(e.target.value))}
         />

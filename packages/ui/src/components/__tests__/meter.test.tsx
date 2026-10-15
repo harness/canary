@@ -1,7 +1,22 @@
-import { render } from '@testing-library/react'
-import { describe, expect, test } from 'vitest'
+import { useEffect } from 'react'
+
+import { act, fireEvent, render, screen } from '@testing-library/react'
+import { afterEach, beforeEach, describe, expect, test, vi } from 'vitest'
 
 import { Meter, MeterState } from '../meter'
+
+const mountCounts: Record<string, { mounts: number; unmounts: number }> = {}
+
+const MountTracker = ({ id }: { id: string }) => {
+  useEffect(() => {
+    mountCounts[id] = mountCounts[id] ?? { mounts: 0, unmounts: 0 }
+    mountCounts[id].mounts += 1
+    return () => {
+      mountCounts[id].unmounts += 1
+    }
+  }, [id])
+  return <a href={`/${id}`}>{id}</a>
+}
 
 describe('Meter', () => {
   describe('Rendering', () => {
@@ -398,6 +413,100 @@ describe('Meter', () => {
       expect(meter).toHaveClass('cn-meter')
       // Should only have cn-meter class, no custom classes
       expect(meter?.classList.length).toBe(1)
+    })
+  })
+
+  describe('UUI-4161 hover closeDelay', () => {
+    const getTooltipBars = (container: HTMLElement) => container.querySelectorAll('.cn-meter-tooltip-bar')
+
+    const advance = (ms: number) =>
+      act(() => {
+        vi.advanceTimersByTime(ms)
+      })
+
+    beforeEach(() => {
+      vi.useFakeTimers()
+      Object.keys(mountCounts).forEach(key => delete mountCounts[key])
+    })
+
+    afterEach(() => {
+      vi.useRealTimers()
+    })
+
+    test('stays open while the cursor moves from the bar into the popover', () => {
+      const data = [{ id: 'run-1', state: MeterState.Success, tooltip: { content: <MountTracker id="run-1" /> } }]
+      const { container } = render(<Meter data={data} />)
+      const [bar] = getTooltipBars(container)
+
+      fireEvent.mouseEnter(bar)
+      advance(150)
+      const popover = screen.getByRole('link', { name: 'run-1' }).closest('.cn-popover-content')
+      expect(popover).toBeTruthy()
+
+      fireEvent.mouseLeave(bar)
+      advance(200)
+      fireEvent.mouseEnter(popover!)
+      advance(2000)
+
+      expect(screen.getByRole('link', { name: 'run-1' })).toBeInTheDocument()
+      expect(mountCounts['run-1']).toEqual({ mounts: 1, unmounts: 0 })
+    })
+
+    test('closes 1 second after the cursor leaves the bar', () => {
+      const data = [{ id: 'run-1', state: MeterState.Success, tooltip: { content: <MountTracker id="run-1" /> } }]
+      const { container } = render(<Meter data={data} />)
+      const [bar] = getTooltipBars(container)
+
+      fireEvent.mouseEnter(bar)
+      advance(150)
+      fireEvent.mouseLeave(bar)
+      advance(999)
+      expect(screen.getByRole('link', { name: 'run-1' })).toBeInTheDocument()
+
+      advance(1)
+      expect(screen.queryByRole('link', { name: 'run-1' })).not.toBeInTheDocument()
+      expect(mountCounts['run-1']).toEqual({ mounts: 1, unmounts: 1 })
+    })
+
+    test('shows only one popover when moving between bars', () => {
+      const data = [
+        { id: 'run-1', state: MeterState.Success, tooltip: { content: <MountTracker id="run-1" /> } },
+        { id: 'run-2', state: MeterState.Error, tooltip: { content: <MountTracker id="run-2" /> } }
+      ]
+      const { container } = render(<Meter data={data} />)
+      const [firstBar, secondBar] = getTooltipBars(container)
+
+      fireEvent.mouseEnter(firstBar)
+      advance(150)
+      fireEvent.mouseLeave(firstBar)
+      fireEvent.mouseEnter(secondBar)
+      advance(150)
+
+      expect(screen.getByRole('link', { name: 'run-2' })).toBeInTheDocument()
+      expect(screen.queryByRole('link', { name: 'run-1' })).not.toBeInTheDocument()
+      expect(mountCounts['run-1'].unmounts).toBe(1)
+      expect(mountCounts['run-2']).toEqual({ mounts: 1, unmounts: 0 })
+    })
+
+    test('keeps the second popover open after the first bar close timer fires', () => {
+      const data = [
+        { id: 'run-1', state: MeterState.Success, tooltip: { content: <MountTracker id="run-1" /> } },
+        { id: 'run-2', state: MeterState.Error, tooltip: { content: <MountTracker id="run-2" /> } }
+      ]
+      const { container } = render(<Meter data={data} />)
+      const [firstBar, secondBar] = getTooltipBars(container)
+
+      fireEvent.mouseEnter(firstBar)
+      advance(150)
+      fireEvent.mouseLeave(firstBar)
+      fireEvent.mouseEnter(secondBar)
+      advance(150)
+      expect(screen.getByRole('link', { name: 'run-2' })).toBeInTheDocument()
+
+      advance(1000)
+
+      expect(screen.getByRole('link', { name: 'run-2' })).toBeInTheDocument()
+      expect(screen.queryByRole('link', { name: 'run-1' })).not.toBeInTheDocument()
     })
   })
 })

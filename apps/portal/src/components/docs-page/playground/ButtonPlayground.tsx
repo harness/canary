@@ -1,5 +1,10 @@
 import { type FC, useMemo, useState } from "react";
-import { Button, CopyButton, IconV2, TooltipProvider } from "@harnessio/ui/components";
+import {
+  Button,
+  CopyButton,
+  IconV2,
+  TooltipProvider,
+} from "@harnessio/ui/components";
 import ControlField from "./ControlField";
 import type { PropControl } from "./types";
 
@@ -8,7 +13,14 @@ import type { PropControl } from "./types";
 // generic primitive controls. Icon-only usage lives on its own Icon Button page.
 
 // ① Curated leading-icon names (verified against IconV2's set); "none" omits it.
-const ICON_NAMES = ["none", "plus", "check", "download", "trash", "nav-arrow-right"];
+const ICON_NAMES = [
+  "none",
+  "plus",
+  "check",
+  "download",
+  "trash",
+  "nav-arrow-right",
+];
 
 // Variants that actually render a theme. ai / link / transparent ignore it.
 const THEMED_VARIANTS = ["primary", "secondary", "outline", "ghost"];
@@ -16,7 +28,14 @@ const THEMED_VARIANTS = ["primary", "secondary", "outline", "ghost"];
 // ② State — one field per control.
 interface State {
   label: string;
-  variant: "primary" | "secondary" | "outline" | "ai" | "ghost" | "link" | "transparent";
+  variant:
+    | "primary"
+    | "secondary"
+    | "outline"
+    | "ai"
+    | "ghost"
+    | "link"
+    | "transparent";
   theme: "default" | "success" | "danger" | "warning";
   size: "md" | "sm" | "xs";
   icon: string;
@@ -39,7 +58,8 @@ const INITIAL_STATE: State = {
 function generateCode(s: State): string {
   const attrs: string[] = [];
   if (s.variant !== "primary") attrs.push(`variant="${s.variant}"`);
-  if (THEMED_VARIANTS.includes(s.variant) && s.theme !== "default") attrs.push(`theme="${s.theme}"`);
+  if (THEMED_VARIANTS.includes(s.variant) && s.theme !== "default")
+    attrs.push(`theme="${s.theme}"`);
   if (s.size !== "md") attrs.push(`size="${s.size}"`);
   if (s.loading) attrs.push("loading");
   if (s.disabled) attrs.push("disabled");
@@ -66,7 +86,15 @@ const ButtonPlayground: FC = () => {
     {
       name: "variant",
       type: "select",
-      options: ["primary", "secondary", "outline", "ai", "ghost", "link", "transparent"],
+      options: [
+        "primary",
+        "secondary",
+        "outline",
+        "ai",
+        "ghost",
+        "link",
+        "transparent",
+      ],
     },
     {
       name: "theme",
@@ -75,7 +103,12 @@ const ButtonPlayground: FC = () => {
       description: "Ignored by ai, link, and transparent",
     },
     { name: "size", type: "select", options: ["md", "sm", "xs"] },
-    { name: "icon", type: "select", options: ICON_NAMES, description: "Leading icon ('none' omits it)" },
+    {
+      name: "icon",
+      type: "select",
+      options: ICON_NAMES,
+      description: "Leading icon ('none' omits it)",
+    },
     { name: "loading", type: "boolean", description: "Show a loading spinner" },
     { name: "disabled", type: "boolean", description: "Disable the button" },
   ];
@@ -93,7 +126,9 @@ const ButtonPlayground: FC = () => {
   );
 
   // ⑤ Render the real Button from state, mirroring generateCode exactly.
-  const theme = THEMED_VARIANTS.includes(state.variant) ? state.theme : undefined;
+  const theme = THEMED_VARIANTS.includes(state.variant)
+    ? state.theme
+    : undefined;
   const preview = (
     <Button
       variant={state.variant}
@@ -102,7 +137,7 @@ const ButtonPlayground: FC = () => {
       loading={state.loading}
       disabled={state.disabled}
     >
-      {state.icon !== "none" && <IconV2 name={state.icon} />}
+      {state.icon !== "none" && <IconV2 name={state.icon as never} />}
       {state.label}
     </Button>
   );

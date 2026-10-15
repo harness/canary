@@ -1,5 +1,11 @@
 import { type FC, useMemo, useState } from "react";
-import { Button, CopyButton, IconV2, TimeInput, TooltipProvider } from "@harnessio/ui/components";
+import {
+  Button,
+  CopyButton,
+  IconV2,
+  TimeInput,
+  TooltipProvider,
+} from "@harnessio/ui/components";
 import ControlField from "./ControlField";
 import type { PropControl } from "./types";
 
@@ -8,7 +14,13 @@ import type { PropControl } from "./types";
 // "none" option maps to `icon={undefined}`, which hides it. `seconds` maps to
 // `step={1}`, the native way to enable a seconds segment. `error`/`warning` drive
 // the theme, so setting either will visually override the `theme` select.
-const ICON_OPTIONS = ["clock", "clock-solid", "timer-solid", "time-zone", "none"];
+const ICON_OPTIONS = [
+  "clock",
+  "clock-solid",
+  "timer-solid",
+  "time-zone",
+  "none",
+];
 
 interface State {
   label: string;
@@ -51,7 +63,8 @@ function generateCode(s: State): string {
   else if (s.icon !== "clock") attrs.push(`icon="${s.icon}"`);
   if (s.theme !== "default") attrs.push(`theme="${s.theme}"`);
   if (s.size !== "md") attrs.push(`size="${s.size}"`);
-  if (s.orientation !== "vertical") attrs.push(`orientation="${s.orientation}"`);
+  if (s.orientation !== "vertical")
+    attrs.push(`orientation="${s.orientation}"`);
   if (s.seconds) attrs.push("step={1}");
   if (s.optional) attrs.push("optional");
   if (s.disabled) attrs.push("disabled");
@@ -70,9 +83,21 @@ const TimeInputPlayground: FC = () => {
 
   const controls: PropControl[] = [
     { name: "label", type: "text", description: "Label text above the field" },
-    { name: "caption", type: "text", description: "Helper text below the field" },
-    { name: "error", type: "text", description: "Error message (forces the danger theme)" },
-    { name: "warning", type: "text", description: "Warning message (forces the warning theme)" },
+    {
+      name: "caption",
+      type: "text",
+      description: "Helper text below the field",
+    },
+    {
+      name: "error",
+      type: "text",
+      description: "Error message (forces the danger theme)",
+    },
+    {
+      name: "warning",
+      type: "text",
+      description: "Warning message (forces the warning theme)",
+    },
     {
       name: "icon",
       type: "select",
@@ -85,17 +110,34 @@ const TimeInputPlayground: FC = () => {
       options: ["default", "success", "warning", "danger"],
       description: "Visual state (error/warning override this)",
     },
-    { name: "size", type: "select", options: ["md", "sm"], description: "Field height" },
+    {
+      name: "size",
+      type: "select",
+      options: ["md", "sm"],
+      description: "Field height",
+    },
     {
       name: "orientation",
       type: "select",
       options: ["vertical", "horizontal"],
       description: "Label position relative to the field",
     },
-    { name: "seconds", type: "boolean", description: "Show a seconds segment (sets step={1})" },
-    { name: "optional", type: "boolean", description: "Remove the required * marker" },
+    {
+      name: "seconds",
+      type: "boolean",
+      description: "Show a seconds segment (sets step={1})",
+    },
+    {
+      name: "optional",
+      type: "boolean",
+      description: "Remove the required * marker",
+    },
     { name: "disabled", type: "boolean", description: "Disable the field" },
-    { name: "readOnly", type: "boolean", description: "Make the field read-only" },
+    {
+      name: "readOnly",
+      type: "boolean",
+      description: "Make the field read-only",
+    },
   ];
 
   const inputControls = controls.filter((c) => c.type !== "boolean");

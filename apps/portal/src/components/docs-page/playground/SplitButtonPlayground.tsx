@@ -1,5 +1,11 @@
 import { type FC, useMemo, useState } from "react";
-import { Button, CopyButton, IconV2, SplitButton, TooltipProvider } from "@harnessio/ui/components";
+import {
+  Button,
+  CopyButton,
+  IconV2,
+  SplitButton,
+  TooltipProvider,
+} from "@harnessio/ui/components";
 import ControlField from "./ControlField";
 import type { PropControl } from "./types";
 
@@ -51,7 +57,8 @@ const INITIAL_STATE: State = {
 function generateCode(s: State, selected: string): string {
   const attrs: string[] = [];
   if (s.variant !== "primary") attrs.push(`  variant="${s.variant}"`);
-  if (THEMED_VARIANTS.includes(s.variant) && s.theme !== "default") attrs.push(`  theme="${s.theme}"`);
+  if (THEMED_VARIANTS.includes(s.variant) && s.theme !== "default")
+    attrs.push(`  theme="${s.theme}"`);
   if (s.size !== "md") attrs.push(`  size="${s.size}"`);
   if (s.radio) attrs.push(`  selectedValue="${selected}"`);
   if (s.loading) attrs.push("  loading");
@@ -85,14 +92,38 @@ const SplitButtonPlayground: FC = () => {
 
   // ④ Curated control set.
   const controls: PropControl[] = [
-    { name: "variant", type: "select", options: ["primary", "outline", "secondary"] },
-    { name: "theme", type: "select", options: ["default", "success", "danger", "warning"] },
+    {
+      name: "variant",
+      type: "select",
+      options: ["primary", "outline", "secondary"],
+    },
+    {
+      name: "theme",
+      type: "select",
+      options: ["default", "success", "danger", "warning"],
+    },
     { name: "size", type: "select", options: ["md", "sm", "xs"] },
-    { name: "radio", type: "boolean", description: "Radio mode (track the selected option)" },
+    {
+      name: "radio",
+      type: "boolean",
+      description: "Radio mode (track the selected option)",
+    },
     { name: "loading", type: "boolean", description: "Show a loading spinner" },
-    { name: "disabled", type: "boolean", description: "Disable the whole control" },
-    { name: "disableButton", type: "boolean", description: "Disable only the main button" },
-    { name: "disableDropdown", type: "boolean", description: "Disable only the dropdown" },
+    {
+      name: "disabled",
+      type: "boolean",
+      description: "Disable the whole control",
+    },
+    {
+      name: "disableButton",
+      type: "boolean",
+      description: "Disable only the main button",
+    },
+    {
+      name: "disableDropdown",
+      type: "boolean",
+      description: "Disable only the dropdown",
+    },
   ];
 
   const inputControls = controls.filter((c) => c.type !== "boolean");
@@ -108,7 +139,9 @@ const SplitButtonPlayground: FC = () => {
   );
 
   // ⑤ Render the real SplitButton from state, mirroring generateCode exactly.
-  const theme = THEMED_VARIANTS.includes(state.variant) ? state.theme : undefined;
+  const theme = THEMED_VARIANTS.includes(state.variant)
+    ? state.theme
+    : undefined;
   const preview = (
     <SplitButton
       variant={state.variant}

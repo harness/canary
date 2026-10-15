@@ -1,5 +1,11 @@
 import { type FC, useMemo, useState } from "react";
-import { Button, CopyButton, IconV2, StatusBadge, TooltipProvider } from "@harnessio/ui/components";
+import {
+  Button,
+  CopyButton,
+  IconV2,
+  StatusBadge,
+  TooltipProvider,
+} from "@harnessio/ui/components";
 import ControlField from "./ControlField";
 import type { PropControl } from "./types";
 
@@ -11,7 +17,14 @@ const ICON_OPTIONS = ["none", "info-circle", "check", "xmark"];
 
 interface State {
   variant: "primary" | "secondary" | "outline" | "ghost" | "status";
-  theme: "muted" | "success" | "warning" | "danger" | "info" | "merged" | "risk";
+  theme:
+    | "muted"
+    | "success"
+    | "warning"
+    | "danger"
+    | "info"
+    | "merged"
+    | "risk";
   size: "md" | "sm";
   icon: string;
   pulse: boolean;
@@ -60,18 +73,39 @@ const StatusBadgePlayground: FC = () => {
     {
       name: "theme",
       type: "select",
-      options: ["muted", "success", "warning", "danger", "info", "merged", "risk"],
+      options: [
+        "muted",
+        "success",
+        "warning",
+        "danger",
+        "info",
+        "merged",
+        "risk",
+      ],
       description: "Color theme",
     },
-    { name: "size", type: "select", options: ["md", "sm"], description: "Badge scale" },
+    {
+      name: "size",
+      type: "select",
+      options: ["md", "sm"],
+      description: "Badge scale",
+    },
     {
       name: "icon",
       type: "select",
       options: ICON_OPTIONS,
       description: "Leading icon (ignored on the status variant)",
     },
-    { name: "content", type: "text", description: "Text shown inside the badge" },
-    { name: "pulse", type: "boolean", description: "Pulsing indicator (status variant only)" },
+    {
+      name: "content",
+      type: "text",
+      description: "Text shown inside the badge",
+    },
+    {
+      name: "pulse",
+      type: "boolean",
+      description: "Pulsing indicator (status variant only)",
+    },
   ];
 
   const inputControls = controls.filter((c) => c.type !== "boolean");
@@ -90,7 +124,12 @@ const StatusBadgePlayground: FC = () => {
   // happy: the status variant takes `pulse`, every other variant takes `icon`.
   const preview =
     state.variant === "status" ? (
-      <StatusBadge variant="status" theme={state.theme} size={state.size} pulse={state.pulse}>
+      <StatusBadge
+        variant="status"
+        theme={state.theme}
+        size={state.size}
+        pulse={state.pulse}
+      >
         {state.content}
       </StatusBadge>
     ) : (

@@ -821,7 +821,7 @@ describe('Breadcrumb', () => {
       const echo = screen.getByText('Echo')
       // Ellipsis sits to the left of the first surviving step in document order.
       expect(list?.contains(ellipsis)).toBe(true)
-      expect(ellipsis?.compareDocumentPosition(echo) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy()
+      expect(ellipsis!.compareDocumentPosition(echo) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy()
     })
 
     test('should collapse trails whose steps are wrapped in fragments', () => {

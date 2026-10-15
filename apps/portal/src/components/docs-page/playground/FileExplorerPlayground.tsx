@@ -19,8 +19,19 @@ import type { PropControl } from "./types";
 
 // ① The sample trees, shared by BOTH the preview and the generated snippet. `tip`/`href`
 //    are only applied when the tooltips/links toggles are on.
-type FileNode = { type: "file"; id: string; label: string; tip: string; href: string };
-type FolderNode = { type: "folder"; id: string; label: string; children: TreeNode[] };
+type FileNode = {
+  type: "file";
+  id: string;
+  label: string;
+  tip: string;
+  href: string;
+};
+type FolderNode = {
+  type: "folder";
+  id: string;
+  label: string;
+  children: TreeNode[];
+};
 type TreeNode = FileNode | FolderNode;
 
 const BASIC_TREE: TreeNode[] = [
@@ -29,9 +40,27 @@ const BASIC_TREE: TreeNode[] = [
     id: "public",
     label: "public",
     children: [
-      { type: "file", id: "index-html", label: "index.html", tip: "Page markup", href: "#index-html" },
-      { type: "file", id: "styles-css", label: "styles.css", tip: "Global styles", href: "#styles-css" },
-      { type: "file", id: "script-js", label: "script.js", tip: "Entry script", href: "#script-js" },
+      {
+        type: "file",
+        id: "index-html",
+        label: "index.html",
+        tip: "Page markup",
+        href: "#index-html",
+      },
+      {
+        type: "file",
+        id: "styles-css",
+        label: "styles.css",
+        tip: "Global styles",
+        href: "#styles-css",
+      },
+      {
+        type: "file",
+        id: "script-js",
+        label: "script.js",
+        tip: "Entry script",
+        href: "#script-js",
+      },
     ],
   },
 ];
@@ -47,9 +76,27 @@ const NESTED_TREE: TreeNode[] = [
         id: "components",
         label: "components",
         children: [
-          { type: "file", id: "button-tsx", label: "Button.tsx", tip: "Reusable button component", href: "#button-tsx" },
-          { type: "file", id: "input-tsx", label: "Input.tsx", tip: "Form input component", href: "#input-tsx" },
-          { type: "file", id: "modal-tsx", label: "Modal.tsx", tip: "Modal dialog component", href: "#modal-tsx" },
+          {
+            type: "file",
+            id: "button-tsx",
+            label: "Button.tsx",
+            tip: "Reusable button component",
+            href: "#button-tsx",
+          },
+          {
+            type: "file",
+            id: "input-tsx",
+            label: "Input.tsx",
+            tip: "Form input component",
+            href: "#input-tsx",
+          },
+          {
+            type: "file",
+            id: "modal-tsx",
+            label: "Modal.tsx",
+            tip: "Modal dialog component",
+            href: "#modal-tsx",
+          },
         ],
       },
       {
@@ -57,11 +104,29 @@ const NESTED_TREE: TreeNode[] = [
         id: "utils",
         label: "utils",
         children: [
-          { type: "file", id: "helpers-ts", label: "helpers.ts", tip: "Helper functions", href: "#helpers-ts" },
-          { type: "file", id: "constants-ts", label: "constants.ts", tip: "Shared constants", href: "#constants-ts" },
+          {
+            type: "file",
+            id: "helpers-ts",
+            label: "helpers.ts",
+            tip: "Helper functions",
+            href: "#helpers-ts",
+          },
+          {
+            type: "file",
+            id: "constants-ts",
+            label: "constants.ts",
+            tip: "Shared constants",
+            href: "#constants-ts",
+          },
         ],
       },
-      { type: "file", id: "index-ts", label: "index.ts", tip: "Entry point", href: "#index-ts" },
+      {
+        type: "file",
+        id: "index-ts",
+        label: "index.ts",
+        tip: "Entry point",
+        href: "#index-ts",
+      },
     ],
   },
 ];
@@ -116,7 +181,13 @@ const FILE_ACTIONS = [
 // A non-micro `size` is needed so the Button keeps its text label (the 2xs/3xs
 // micro sizes render icon-only and strip text children).
 const FILE_ACTIONS_WITH_BUTTON = [
-  { variant: "outline" as const, size: "xs" as const, iconOnly: false, title: "Review", onClick: () => {} },
+  {
+    variant: "outline" as const,
+    size: "xs" as const,
+    iconOnly: false,
+    title: "Review",
+    onClick: () => {},
+  },
   { iconName: "trash" as const, title: "Delete", onClick: () => {} },
 ];
 
@@ -148,7 +219,12 @@ const INITIAL_STATE: State = {
 //    props only when they differ from the component defaults.
 const pad = (n: number) => "  ".repeat(n);
 
-function codeForNode(node: TreeNode, level: number, depth: number, s: State): string {
+function codeForNode(
+  node: TreeNode,
+  level: number,
+  depth: number,
+  s: State,
+): string {
   if (node.type === "file") {
     const attrs = [
       `level={${level}}`,
@@ -164,7 +240,7 @@ function codeForNode(node: TreeNode, level: number, depth: number, s: State): st
       attrs.push(
         node.id === getStructure(s.structure).buttonActionId
           ? "actionButtons={fileActionsWithButton}"
-          : "actionButtons={fileActions}"
+          : "actionButtons={fileActions}",
       );
     return [
       `${pad(depth)}<FileExplorer.FileItem`,
@@ -177,7 +253,8 @@ function codeForNode(node: TreeNode, level: number, depth: number, s: State): st
 
   const attrs = [`value="${node.id}"`, `level={${level}}`];
   if (s.links) attrs.push(`link="#${node.id}"`);
-  if (s.folderIcon !== DEFAULT_FOLDER_ICON) attrs.push(`icon="${s.folderIcon}"`);
+  if (s.folderIcon !== DEFAULT_FOLDER_ICON)
+    attrs.push(`icon="${s.folderIcon}"`);
   if (s.hideIcon) attrs.push("hideIcon");
   if (s.activeFolder && node.id === getStructure(s.structure).activeFolderId)
     attrs.push("isActive");
@@ -188,7 +265,7 @@ function codeForNode(node: TreeNode, level: number, depth: number, s: State): st
     `${pad(depth)}<FileExplorer.FolderItem`,
     attrs.map((a) => `${pad(depth + 1)}${a}`).join("\n"),
     `${pad(depth + 1)}content={`,
-    `${pad(depth + 2)}<FileExplorer.Root value={expanded} onValueChange={setExpanded}>`,
+    `${pad(depth + 2)}<FileExplorer.Root value={expanded} onValueChange={setExpanded as never}>`,
     children,
     `${pad(depth + 2)}</FileExplorer.Root>`,
     `${pad(depth + 1)}}`,
@@ -217,7 +294,7 @@ const fileActionsWithButton = [
   const body = getStructure(s.structure)
     .tree.map((n) => codeForNode(n, 0, 1, s))
     .join("\n");
-  return `${actionsConst}<FileExplorer.Root value={expanded} onValueChange={setExpanded}>
+  return `${actionsConst}<FileExplorer.Root value={expanded} onValueChange={setExpanded as never}>
 ${body}
 </FileExplorer.Root>`;
 }
@@ -225,8 +302,12 @@ ${body}
 const FileExplorerPlayground: FC = () => {
   const [state, setState] = useState<State>(INITIAL_STATE);
   const initialStructure = getStructure(INITIAL_STATE.structure);
-  const [expanded, setExpanded] = useState<string[]>(initialStructure.defaultExpanded);
-  const [activeFile, setActiveFile] = useState<string>(initialStructure.initialActive);
+  const [expanded, setExpanded] = useState<string[]>(
+    initialStructure.defaultExpanded,
+  );
+  const [activeFile, setActiveFile] = useState<string>(
+    initialStructure.initialActive,
+  );
 
   const set = <K extends keyof State>(key: K, value: State[K]) =>
     setState((prev) => ({ ...prev, [key]: value }));
@@ -267,7 +348,11 @@ const FileExplorerPlayground: FC = () => {
       options: ["empty-page", "code-brackets", "submit-document"],
       description: "Icon shown on file rows",
     },
-    { name: "tooltips", type: "boolean", description: "Show a tooltip on each file" },
+    {
+      name: "tooltips",
+      type: "boolean",
+      description: "Show a tooltip on each file",
+    },
     {
       name: "links",
       type: "boolean",
@@ -322,13 +407,15 @@ const FileExplorerPlayground: FC = () => {
           hideIcon={state.hideIcon}
           link={state.links ? node.href : undefined}
           tooltip={state.tooltips ? node.tip : undefined}
-          actionButtons={
-            state.actionButtons
+          // FileItem forwards unknown props to the underlying InteractiveItem, which
+          // renders actionButtons — but FileItemProps omits the type, so cast it in.
+          {...({
+            actionButtons: state.actionButtons
               ? node.id === structure.buttonActionId
                 ? FILE_ACTIONS_WITH_BUTTON
                 : FILE_ACTIONS
-              : undefined
-          }
+              : undefined,
+          } as Record<string, unknown>)}
         >
           {node.label}
         </FileExplorer.FileItem>
@@ -342,14 +429,17 @@ const FileExplorerPlayground: FC = () => {
           link={state.links ? `#${node.id}` : undefined}
           isActive={state.activeFolder && node.id === structure.activeFolderId}
           content={
-            <FileExplorer.Root value={expanded} onValueChange={setExpanded}>
+            <FileExplorer.Root
+              value={expanded}
+              onValueChange={setExpanded as never}
+            >
               {renderNodes(node.children, level + 1)}
             </FileExplorer.Root>
           }
         >
           {node.label}
         </FileExplorer.FolderItem>
-      )
+      ),
     );
 
   const code = useMemo(() => generateCode(state), [state]);
@@ -371,7 +461,10 @@ const FileExplorerPlayground: FC = () => {
           </Button>
 
           <div className="bg-cn-1 w-[480px] max-w-full rounded-cn-2 border p-cn-xs">
-            <FileExplorer.Root value={expanded} onValueChange={setExpanded}>
+            <FileExplorer.Root
+              value={expanded}
+              onValueChange={setExpanded as never}
+            >
               {renderNodes(structure.tree, 0)}
             </FileExplorer.Root>
           </div>

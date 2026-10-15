@@ -51,13 +51,17 @@ const DROPDOWN_CODE = `      dropdownProps: {
 function generateCode(s: State): string {
   const count = Number(s.count);
   const attrs: string[] = [];
-  if (s.orientation !== "horizontal") attrs.push(`  orientation="${s.orientation}"`);
+  if (s.orientation !== "horizontal")
+    attrs.push(`  orientation="${s.orientation}"`);
   if (s.size !== "md") attrs.push(`  size="${s.size}"`);
 
   const buttons = ICONS.slice(0, count).map((icon, i) => {
     const isLast = i === count - 1;
     const label = LABELS[i];
-    const inner = ["      iconOnly: true,", `      children: <IconV2 name="${icon}" />,`];
+    const inner = [
+      "      iconOnly: true,",
+      `      children: <IconV2 name="${icon}" />,`,
+    ];
     if (isLast && s.lastDropdown) {
       inner.push(DROPDOWN_CODE);
     } else if (s.tooltip) {
@@ -86,9 +90,18 @@ const IconButtonGroupPlayground: FC = () => {
 
   // ④ Curated control set.
   const controls: PropControl[] = [
-    { name: "orientation", type: "select", options: ["horizontal", "vertical"] },
+    {
+      name: "orientation",
+      type: "select",
+      options: ["horizontal", "vertical"],
+    },
     { name: "size", type: "select", options: ["md", "sm", "xs"] },
-    { name: "count", type: "select", options: ["2", "3", "4"], description: "Number of buttons" },
+    {
+      name: "count",
+      type: "select",
+      options: ["2", "3", "4"],
+      description: "Number of buttons",
+    },
     {
       name: "tooltip",
       type: "boolean",
@@ -120,7 +133,7 @@ const IconButtonGroupPlayground: FC = () => {
     const label = LABELS[i];
     const base = {
       iconOnly: true as const,
-      children: <IconV2 name={icon} />,
+      children: <IconV2 name={icon as never} />,
     };
     if (isLast && state.lastDropdown) {
       return {
@@ -143,7 +156,11 @@ const IconButtonGroupPlayground: FC = () => {
   });
 
   const preview = (
-    <ButtonGroup orientation={state.orientation} size={state.size} buttonsProps={buttonsProps} />
+    <ButtonGroup
+      orientation={state.orientation}
+      size={state.size}
+      buttonsProps={buttonsProps}
+    />
   );
 
   const code = useMemo(() => generateCode(state), [state]);

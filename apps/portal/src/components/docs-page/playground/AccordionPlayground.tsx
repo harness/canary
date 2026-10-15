@@ -104,29 +104,29 @@ function generateCode(s: State): string {
   );
 
   const triggerExtras = [
-    s.prefix !== "none"
-      ? `\n        prefix={${PREFIX_JSX[s.prefix]}}`
-      : "",
+    s.prefix !== "none" ? `\n        prefix={${PREFIX_JSX[s.prefix]}}` : "",
     s.showSuffix ? `\n        suffix="${SAMPLE_SUFFIX}"` : "",
   ].join("");
   const triggerOpen = triggerExtras
     ? `<Accordion.Trigger${triggerExtras}\n      >`
     : `<Accordion.Trigger>`;
 
-  const items = buildItems(s).map((it) => {
-    // An outlined icon button (CopyButton defaults to variant="outline") sits
-    // AFTER the label inside the trigger children — the supported combination
-    // shown in the "left indicator" static example.
-    const children = s.trailingAction
-      ? `\n        ${it.label}\n        <CopyButton size="xs" className="ml-cn-sm" name="${it.body}" />\n      `
-      : it.label;
-    return `    <Accordion.Item value="${it.value}">
+  const items = buildItems(s)
+    .map((it) => {
+      // An outlined icon button (CopyButton defaults to variant="outline") sits
+      // AFTER the label inside the trigger children — the supported combination
+      // shown in the "left indicator" static example.
+      const children = s.trailingAction
+        ? `\n        ${it.label}\n        <CopyButton size="xs" className="ml-cn-sm" name="${it.body}" />\n      `
+        : it.label;
+      return `    <Accordion.Item value="${it.value}">
       ${triggerOpen}${children}</Accordion.Trigger>
       <Accordion.Content>
         <p>${it.body}</p>
       </Accordion.Content>
     </Accordion.Item>`;
-  }).join("\n");
+    })
+    .join("\n");
 
   return `<Accordion.Root ${rootAttrs.join(" ")}>\n${items}\n</Accordion.Root>`;
 }
@@ -221,34 +221,51 @@ const AccordionPlayground: FC = () => {
   const suffix = state.showSuffix ? SAMPLE_SUFFIX : undefined;
   const items = buildItems(state);
 
-  const preview = (
-    <Accordion.Root
-      key={state.type}
-      type={state.type}
-      size={state.size}
-      variant={state.variant}
-      indicatorPosition={state.indicatorPosition}
-      disabled={state.disabled || undefined}
-      {...(state.variant === "card" ? { cardSize: state.cardSize } : {})}
-      {...(state.type === "single"
-        ? { collapsible: state.collapsible, defaultValue: "item-1" }
-        : { defaultValue: ["item-1"] })}
-    >
-      {items.map((it) => (
-        <Accordion.Item key={it.value} value={it.value}>
-          <Accordion.Trigger prefix={prefix} suffix={suffix}>
-            {it.label}
-            {state.trailingAction && (
-              <CopyButton size="xs" className="ml-cn-sm" name={it.body} />
-            )}
-          </Accordion.Trigger>
-          <Accordion.Content>
-            <p>{it.body}</p>
-          </Accordion.Content>
-        </Accordion.Item>
-      ))}
-    </Accordion.Root>
-  );
+  // Root props are a discriminated union on `type`, so `type` must be a literal to
+  // narrow to one arm. Branch on it and share everything else (and the item rows).
+  const commonProps = {
+    size: state.size,
+    variant: state.variant,
+    indicatorPosition: state.indicatorPosition,
+    disabled: state.disabled || undefined,
+    ...(state.variant === "card" ? { cardSize: state.cardSize } : {}),
+  };
+
+  const rows = items.map((it) => (
+    <Accordion.Item key={it.value} value={it.value}>
+      <Accordion.Trigger prefix={prefix} suffix={suffix}>
+        {it.label}
+        {state.trailingAction && (
+          <CopyButton size="xs" className="ml-cn-sm" name={it.body} />
+        )}
+      </Accordion.Trigger>
+      <Accordion.Content>
+        <p>{it.body}</p>
+      </Accordion.Content>
+    </Accordion.Item>
+  ));
+
+  const preview =
+    state.type === "single" ? (
+      <Accordion.Root
+        key="single"
+        type="single"
+        collapsible={state.collapsible}
+        defaultValue="item-1"
+        {...commonProps}
+      >
+        {rows}
+      </Accordion.Root>
+    ) : (
+      <Accordion.Root
+        key="multiple"
+        type="multiple"
+        defaultValue={["item-1"]}
+        {...commonProps}
+      >
+        {rows}
+      </Accordion.Root>
+    );
 
   const code = useMemo(() => generateCode(state), [state]);
 

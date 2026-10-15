@@ -21,22 +21,6 @@ import PageTabsToc from "@/components/page-tabs-toc.astro";
 
 <DocsPage.CalendarInputPlayground client:only />
 
-<DocsPage.ComponentExample
-  client:only
-  code={`() => {
-    const [value, setValue] = React.useState("");
-    return (
-      <div className="w-64">
-        <CalendarInputView
-          value={value}
-          setValue={(date) => setValue(date.toISOString())}
-          placeholder="Select a date"
-        />
-      </div>
-    );
-  }`}
-/>
-
 ## Installation
 
 ```typescript jsx

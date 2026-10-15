@@ -370,6 +370,7 @@ export default defineConfig({
             "components/feedback/tag",
             "components/foundations/text",
             "components/form/textarea",
+            "components/form/date-range-v2",
             "components/overlays/time-ago-card",
             "components/feedback/toast",
             {

@@ -1,0 +1,613 @@
+---
+title: Date Range V2
+description: A picker for rolling windows, calendar periods, and fixed ranges
+beta: true
+---
+
+import { DocsPage } from "@/components/docs-page";
+
+`DateRangeV2` stores `{ from, to, preset, timezone }`. A recognized preset rebuilds `from` and `to` on refresh. `CUSTOM` keeps the stored bounds. Rolling, calendar, and fixed drafts stay independent, so switching tabs does not convert one into another.
+
+Each box is one `config` field. `presets` adds a Presets mode when the list is not empty. `timezone: false` hides the timezone row.
+
+<DocsPage.ComponentExample
+  client:only
+  contentClassName="place-items-start"
+  code={`() => {
+    const rollingUnits = ['minute', 'hour', 'day', 'week', 'month', 'year'];
+    const calendarUnits = ['day', 'week', 'month', 'quarter', 'year'];
+    const calendarExtents = ['full', 'to_date', 'from_now'];
+    const modes = ['rolling', 'calendar', 'custom'];
+    const weekdays = [
+      { value: 0, label: '0 Sun' },
+      { value: 1, label: '1 Mon' },
+      { value: 2, label: '2 Tue' },
+      { value: 3, label: '3 Wed' },
+      { value: 4, label: '4 Thu' },
+      { value: 5, label: '5 Fri' },
+      { value: 6, label: '6 Sat' },
+    ];
+    const timeZones = ['LOCALE', 'UTC', 'America/New_York', 'Europe/London', 'Asia/Kolkata'];
+    const presets = [
+      {
+        label: 'Previous 3 days',
+        value: 'PREVIOUS_3_DAYS',
+        group: 'recommended',
+        getRange: () => {
+          const to = new Date();
+          const from = new Date(to);
+          from.setDate(from.getDate() - 3);
+          return { from, to };
+        },
+      },
+      {
+        label: 'Previous 14 days',
+        value: 'PREVIOUS_14_DAYS',
+        group: 'relative',
+        getRange: () => {
+          const to = new Date();
+          const from = new Date(to);
+          from.setDate(from.getDate() - 14);
+          return { from, to };
+        },
+      },
+    ];
+
+    const [controls, setControls] = React.useState({
+      direction: 'any',
+      modes: modes,
+      clearable: true,
+      timezoneEnabled: true,
+      browserZone: 'dynamic',
+      timezoneOptions: 'all',
+      defaultValue: 'UTC',
+      weekStartsOn: 1,
+      rollingAllowAmount: true,
+      rollingUnits: rollingUnits,
+      rollingDefaultUnit: 'day',
+      rollingDefaultAmount: '7',
+      rollingMaxAmount: '',
+      calendarAllowAmount: true,
+      calendarUnits: calendarUnits,
+      calendarExtents: calendarExtents,
+      calendarDefaultUnit: 'month',
+      calendarDefaultAmount: '1',
+      calendarMaxAmount: '',
+      allowTime: true,
+      showTime: true,
+      showTimezone: true,
+      presetsEnabled: false,
+      tabDetails: ['description', 'example', 'note'],
+    });
+    const [value, setValue] = React.useState({
+      from: new Date('2026-09-05T15:30:00.000Z'),
+      to: new Date('2026-10-05T15:30:00.000Z'),
+      preset: 'LAST_1_MONTH',
+      timezone: 'UTC',
+    });
+
+    const patch = (partial) => setControls((current) => Object.assign({}, current, partial));
+    const toggleListed = (key, item, all, defaultKey) => {
+      setControls((current) => {
+        const has = current[key].indexOf(item) >= 0;
+        const next = all.filter((entry) => (entry === item ? !has : current[key].indexOf(entry) >= 0));
+        if (next.length === 0) return current;
+        const update = {};
+        update[key] = next;
+        if (defaultKey && has && current[defaultKey] === item) update[defaultKey] = next[0];
+        return Object.assign({}, current, update);
+      });
+    };
+    const amount = (raw) => {
+      if (raw === '') return undefined;
+      const parsed = Number(raw);
+      return Number.isInteger(parsed) && parsed >= 1 ? parsed : undefined;
+    };
+
+    const pickerConfig = {
+      direction: controls.direction,
+      modes: controls.modes,
+      clearable: controls.clearable,
+      timezone: controls.timezoneEnabled
+        ? {
+            browserZone: controls.browserZone,
+            defaultValue: controls.defaultValue,
+            options: controls.timezoneOptions,
+          }
+        : false,
+      calendarProps: { weekStartsOn: controls.weekStartsOn },
+      label: { showTime: controls.showTime, showTimezone: controls.showTimezone },
+      modeConfig: {
+        rolling: {
+          allowAmount: controls.rollingAllowAmount,
+          units: controls.rollingUnits,
+          defaultUnit: controls.rollingDefaultUnit,
+          defaultAmount: amount(controls.rollingDefaultAmount),
+          maxAmount: amount(controls.rollingMaxAmount),
+        },
+        calendar: {
+          allowAmount: controls.calendarAllowAmount,
+          units: controls.calendarUnits,
+          extents: controls.calendarExtents,
+          defaultUnit: controls.calendarDefaultUnit,
+          defaultAmount: amount(controls.calendarDefaultAmount),
+          maxAmount: amount(controls.calendarMaxAmount),
+        },
+        custom: { allowTime: controls.allowTime },
+      },
+      presets: controls.presetsEnabled ? presets : undefined,
+      tabDetails: controls.tabDetails,
+    };
+
+    const choices = (options, selected, onChange) => (
+      <Layout.Flex direction="row" gapX="2xs" wrap="wrap">
+        {options.map((option) => {
+          const optionValue = typeof option === 'object' ? option.value : option;
+          const optionLabel = typeof option === 'object' ? option.label : option;
+          return (
+            <Button
+              key={String(optionValue)}
+              size="sm"
+              variant={selected === optionValue ? 'primary' : 'outline'}
+              onClick={() => onChange(optionValue)}
+            >
+              {optionLabel}
+            </Button>
+          );
+        })}
+      </Layout.Flex>
+    );
+    const toggles = (options, selected, onToggle) => (
+      <Layout.Flex direction="row" gapX="2xs" wrap="wrap">
+        {options.map((option) => (
+          <Button
+            key={option}
+            size="sm"
+            variant={selected.indexOf(option) >= 0 ? 'primary' : 'outline'}
+            onClick={() => onToggle(option)}
+          >
+            {option}
+          </Button>
+        ))}
+      </Layout.Flex>
+    );
+    const section = (name, children) => (
+      <Layout.Flex direction="column" gapY="sm" className="w-full rounded-cn-3 border border-cn-3 p-cn-sm">
+        <span className="font-mono text-cn-size-2 text-cn-3">{name}</span>
+        {children}
+      </Layout.Flex>
+    );
+    const field = (name, children) => (
+      <Layout.Flex direction="column" gapY="2xs">
+        <span className="font-mono text-cn-size-1 text-cn-3">{name}</span>
+        {children}
+      </Layout.Flex>
+    );
+
+    return (
+      <Layout.Flex direction="column" gapY="md" align="start" className="w-full">
+        <DateRangeV2 value={value} onValueChange={setValue} config={pickerConfig} />
+        <Text variant="caption-code">value</Text>
+        <pre style={{ margin: 0 }}>{JSON.stringify(value, null, 2)}</pre>
+
+        <Layout.Flex direction="column" gapY="sm" className="w-full rounded-cn-4 border border-cn-3 p-cn-md">
+          <span className="font-mono text-cn-size-2 text-cn-2">config</span>
+          {section('direction', choices(['past', 'future', 'any'], controls.direction, (direction) => patch({ direction: direction })))}
+          {section('modes', toggles(modes, controls.modes, (mode) => toggleListed('modes', mode, modes)))}
+          {section(
+            'tabDetails',
+            toggles(['description', 'example', 'note'], controls.tabDetails, (detail) => {
+              setControls((current) => {
+                const has = current.tabDetails.indexOf(detail) >= 0;
+                const next = ['description', 'example', 'note'].filter((entry) =>
+                  entry === detail ? !has : current.tabDetails.indexOf(entry) >= 0
+                );
+                return Object.assign({}, current, { tabDetails: next });
+              });
+            })
+          )}
+          {section(
+            'clearable',
+            <Switch
+              id="date-range-v2-clearable"
+              aria-label="clearable"
+              checked={controls.clearable}
+              onCheckedChange={(clearable) => patch({ clearable: clearable })}
+            />
+          )}
+          {section(
+            'timezone',
+            <Layout.Flex direction="column" gapY="sm">
+              <Switch
+                id="date-range-v2-timezone"
+                aria-label="timezone"
+                checked={controls.timezoneEnabled}
+                onCheckedChange={(timezoneEnabled) => patch({ timezoneEnabled: timezoneEnabled })}
+              />
+              {field('browserZone', choices(['dynamic', 'explicit'], controls.browserZone, (browserZone) => patch({ browserZone: browserZone })))}
+              {field('options', choices(['all', 'locale-utc'], controls.timezoneOptions, (timezoneOptions) => patch({ timezoneOptions: timezoneOptions })))}
+              {field('defaultValue', choices(timeZones, controls.defaultValue, (defaultValue) => patch({ defaultValue: defaultValue })))}
+            </Layout.Flex>
+          )}
+          {section(
+            'calendarProps',
+            field('weekStartsOn', choices(weekdays, controls.weekStartsOn, (weekStartsOn) => patch({ weekStartsOn: weekStartsOn })))
+          )}
+          {section(
+            'modeConfig.rolling',
+            <Layout.Flex direction="column" gapY="sm">
+              {field(
+                'allowAmount',
+                <Switch
+                  id="date-range-v2-rolling-amount"
+                  aria-label="allowAmount"
+                  checked={controls.rollingAllowAmount}
+                  onCheckedChange={(rollingAllowAmount) => patch({ rollingAllowAmount: rollingAllowAmount })}
+                />
+              )}
+              {field('units', toggles(rollingUnits, controls.rollingUnits, (unit) => toggleListed('rollingUnits', unit, rollingUnits, 'rollingDefaultUnit')))}
+              {field('defaultUnit', choices(controls.rollingUnits, controls.rollingDefaultUnit, (rollingDefaultUnit) => patch({ rollingDefaultUnit: rollingDefaultUnit })))}
+              <Layout.Flex direction="row" gapX="sm" wrap="wrap">
+                <TextInput
+                  id="date-range-v2-rolling-default-amount"
+                  label="defaultAmount"
+                  optional
+                  size="sm"
+                  value={controls.rollingDefaultAmount}
+                  wrapperClassName="w-36"
+                  onChange={(event) => patch({ rollingDefaultAmount: event.target.value.replace(/[^0-9]/g, '') })}
+                />
+                <TextInput
+                  id="date-range-v2-rolling-max-amount"
+                  label="maxAmount"
+                  optional
+                  size="sm"
+                  placeholder="none"
+                  value={controls.rollingMaxAmount}
+                  wrapperClassName="w-36"
+                  onChange={(event) => patch({ rollingMaxAmount: event.target.value.replace(/[^0-9]/g, '') })}
+                />
+              </Layout.Flex>
+            </Layout.Flex>
+          )}
+          {section(
+            'modeConfig.calendar',
+            <Layout.Flex direction="column" gapY="sm">
+              {field(
+                'allowAmount',
+                <Switch
+                  id="date-range-v2-calendar-amount"
+                  aria-label="allowAmount"
+                  checked={controls.calendarAllowAmount}
+                  onCheckedChange={(calendarAllowAmount) => patch({ calendarAllowAmount: calendarAllowAmount })}
+                />
+              )}
+              {field('units', toggles(calendarUnits, controls.calendarUnits, (unit) => toggleListed('calendarUnits', unit, calendarUnits, 'calendarDefaultUnit')))}
+              {field('extents', toggles(calendarExtents, controls.calendarExtents, (extent) => toggleListed('calendarExtents', extent, calendarExtents)))}
+              {field('defaultUnit', choices(controls.calendarUnits, controls.calendarDefaultUnit, (calendarDefaultUnit) => patch({ calendarDefaultUnit: calendarDefaultUnit })))}
+              <Layout.Flex direction="row" gapX="sm" wrap="wrap">
+                <TextInput
+                  id="date-range-v2-calendar-default-amount"
+                  label="defaultAmount"
+                  optional
+                  size="sm"
+                  value={controls.calendarDefaultAmount}
+                  wrapperClassName="w-36"
+                  onChange={(event) => patch({ calendarDefaultAmount: event.target.value.replace(/[^0-9]/g, '') })}
+                />
+                <TextInput
+                  id="date-range-v2-calendar-max-amount"
+                  label="maxAmount"
+                  optional
+                  size="sm"
+                  placeholder="none"
+                  value={controls.calendarMaxAmount}
+                  wrapperClassName="w-36"
+                  onChange={(event) => patch({ calendarMaxAmount: event.target.value.replace(/[^0-9]/g, '') })}
+                />
+              </Layout.Flex>
+            </Layout.Flex>
+          )}
+          {section(
+            'label',
+            field(
+              'showTime',
+              <Switch
+                id="date-range-v2-show-time"
+                aria-label="showTime"
+                checked={controls.showTime}
+                onCheckedChange={(showTime) => patch({ showTime: showTime })}
+              />
+            ),
+            field(
+              'showTimezone',
+              <Switch
+                id="date-range-v2-show-timezone"
+                aria-label="showTimezone"
+                checked={controls.showTimezone}
+                onCheckedChange={(showTimezone) => patch({ showTimezone: showTimezone })}
+              />
+            )
+          )}
+          {section(
+            'modeConfig.custom',
+            field(
+              'allowTime',
+              <Switch
+                id="date-range-v2-allow-time"
+                aria-label="allowTime"
+                checked={controls.allowTime}
+                onCheckedChange={(allowTime) => patch({ allowTime: allowTime })}
+              />
+            )
+          )}
+          {section(
+            'presets',
+            <Layout.Flex direction="column" gapY="2xs">
+              <Switch
+                id="date-range-v2-presets"
+                aria-label="presets"
+                checked={controls.presetsEnabled}
+                onCheckedChange={(presetsEnabled) => patch({ presetsEnabled: presetsEnabled })}
+              />
+              <Text variant="caption-normal">Previous 3 days, Previous 14 days</Text>
+            </Layout.Flex>
+          )}
+        </Layout.Flex>
+
+        <Text variant="caption-code">config</Text>
+        <pre style={{ margin: 0 }}>{JSON.stringify(pickerConfig, (key, value) => typeof value === 'function' ? '() => ({ from, to })' : value, 2)}</pre>
+      </Layout.Flex>
+    );
+
+}`}
+/>
+
+## Presets
+
+Pass `config.presets` to add a Presets mode. Each preset is the date range picker shape: `label`, `value`, `getRange`, and `group` (`recommended`, `relative`, or `calendar`). The select is grouped by `group`. `getRange` receives `{ timezone }` for the zone selected in the picker, and again on reload from `PRESET_ID|TIMEZONE`. A preset that ignores the argument keeps its own dates. Apply stores `value`, that timezone, and the dates from `getRange`. An id in this list wins over a built-in id with the same name.
+
+<DocsPage.ComponentExample
+  client:only
+  contentClassName="place-items-start"
+  code={`() => {
+    const presets = [
+      {
+        label: 'Previous 3 days',
+        value: 'PREVIOUS_3_DAYS',
+        group: 'recommended',
+        getRange: () => {
+          const to = new Date();
+          const from = new Date(to);
+          from.setDate(from.getDate() - 3);
+          return { from, to };
+        },
+      },
+      {
+        label: 'Previous 14 days',
+        value: 'PREVIOUS_14_DAYS',
+        group: 'relative',
+        getRange: () => {
+          const to = new Date();
+          const from = new Date(to);
+          from.setDate(from.getDate() - 14);
+          return { from, to };
+        },
+      },
+    ];
+    const initial = presets[0].getRange();
+    const [value, setValue] = React.useState({
+      from: initial.from,
+      to: initial.to,
+      preset: presets[0].value,
+      timezone: 'UTC',
+    });
+
+    return (
+      <Layout.Flex direction="column" gapY="md" align="start">
+        <DateRangeV2
+          value={value}
+          onValueChange={setValue}
+          config={{
+            direction: 'past',
+            calendarProps: { weekStartsOn: 1 },
+            tabDetails: [],
+            presets,
+          }}
+        />
+        <pre style={{ margin: 0 }}>{JSON.stringify(value, null, 2)}</pre>
+      </Layout.Flex>
+    );
+
+}`}
+/>
+
+## Filter field
+
+`FilterGroup` is the out-of-the-box path. A sticky `FilterFieldTypes.DateRangeV2` option keeps Rolling, Calendar, and Fixed on the built-in query. Presets in `filterFieldConfig.presets` reload through `getRange()`. `calendarProps.weekStartsOn` is used when a calendar week is read back, and it defaults to Monday. Apply and clear update the `timeframe` query param through the filters router. The value below is `location.search`.
+
+<DocsPage.ComponentExample
+  client:only
+  contentClassName="place-items-start"
+  code={`() => {
+    const location = useLocation();
+    const [filters, setFilters] = React.useState({});
+
+    return (
+      <Layout.Flex direction="column" gapY="md" align="start" className="w-full">
+        <FilterGroup
+          hideSearch
+          hideAddFilter
+          handleInputChange={() => {}}
+          onFilterValueChange={setFilters}
+          filterOptions={[
+            {
+              type: FilterFieldTypes.DateRangeV2,
+              label: 'Timeframe',
+              value: 'timeframe',
+              sticky: true,
+              filterFieldConfig: {
+                direction: 'any',
+                calendarProps: { weekStartsOn: 1 },
+                timezone: { browserZone: 'dynamic' },
+                tabDetails: [],
+                presets: [
+                  {
+                    label: 'Previous 3 days',
+                    value: 'PREVIOUS_3_DAYS',
+                    group: 'recommended',
+                    getRange: () => {
+                      const to = new Date();
+                      const from = new Date(to);
+                      from.setDate(from.getDate() - 3);
+                      return { from, to };
+                    },
+                  },
+                  {
+                    label: 'Previous 14 days',
+                    value: 'PREVIOUS_14_DAYS',
+                    group: 'relative',
+                    getRange: () => {
+                      const to = new Date();
+                      const from = new Date(to);
+                      from.setDate(from.getDate() - 14);
+                      return { from, to };
+                    },
+                  },
+                ],
+              },
+            },
+          ]}
+        />
+        <Text variant="caption-code">location.search</Text>
+        <pre style={{ margin: 0 }}>{location.search || 'empty'}</pre>
+        <pre style={{ margin: 0 }}>{JSON.stringify(filters, null, 2)}</pre>
+      </Layout.Flex>
+    );
+
+}`}
+/>
+
+## Custom parser
+
+`parser` on the filter option replaces the built-in query for that field. It has to read and write every mode the picker can apply. The parser in this example only accepts `PREVIOUS_3_DAYS` and `PREVIOUS_14_DAYS`.
+
+<DocsPage.ComponentExample
+  client:only
+  contentClassName="place-items-start"
+  code={`() => {
+    const location = useLocation();
+    const [filters, setFilters] = React.useState({});
+    const presets = [
+      {
+        label: 'Previous 3 days',
+        value: 'PREVIOUS_3_DAYS',
+        group: 'recommended',
+        getRange: () => {
+          const to = new Date();
+          const from = new Date(to);
+          from.setDate(from.getDate() - 3);
+          return { from, to };
+        },
+      },
+      {
+        label: 'Previous 14 days',
+        value: 'PREVIOUS_14_DAYS',
+        group: 'relative',
+        getRange: () => {
+          const to = new Date();
+          const from = new Date(to);
+          from.setDate(from.getDate() - 14);
+          return { from, to };
+        },
+      },
+    ];
+    const matchPreset = (id) => presets.find((preset) => preset.value === id);
+    const parser = {
+      parse: (serialized) => {
+        if (!serialized) return undefined;
+        const [id, timezone = 'UTC'] = decodeURIComponent(serialized).split('|');
+        const preset = matchPreset(id);
+        if (!preset) return undefined;
+        const range = preset.getRange({ timezone });
+        const [from, to] = range.from <= range.to ? [range.from, range.to] : [range.to, range.from];
+        return { from, to, preset: preset.value, timezone };
+      },
+      serialize: (value) => (value && value.preset ? value.preset + '|' + (value.timezone || 'UTC') : ''),
+    };
+    const query = new URLSearchParams(location.search).get('timeframe');
+    const readBack = query ? parser.parse(query) : undefined;
+
+    return (
+      <Layout.Flex direction="column" gapY="md" align="start" className="w-full">
+        <AlertItem theme="warning" read className="w-full">
+          <AlertItem.Description>
+            If you pass a custom parser, you need to handle all the modes. Otherwise you may get the following broken experience.
+          </AlertItem.Description>
+        </AlertItem>
+        <FilterGroup
+          hideSearch
+          hideAddFilter
+          handleInputChange={() => {}}
+          onFilterValueChange={setFilters}
+          filterOptions={[
+            {
+              type: FilterFieldTypes.DateRangeV2,
+              label: 'Timeframe',
+              value: 'timeframe',
+              sticky: true,
+              parser: parser,
+              filterFieldConfig: {
+                direction: 'any',
+                calendarProps: { weekStartsOn: 1 },
+                timezone: { browserZone: 'dynamic' },
+                tabDetails: [],
+                presets: presets,
+              },
+            },
+          ]}
+        />
+        <Text variant="caption-code">location.search</Text>
+        <pre style={{ margin: 0 }}>{location.search || 'empty'}</pre>
+        <Text variant="caption-code">parser.parse(timeframe)</Text>
+        <pre style={{ margin: 0 }}>{readBack ? JSON.stringify(readBack, null, 2) : 'undefined'}</pre>
+      </Layout.Flex>
+    );
+
+}`}
+/>
+
+## API reference
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "value",
+      description:
+        "Controlled value. preset is the source of truth for rolling and calendar ranges. CUSTOM keeps from and to.",
+      required: false,
+      value: "DateRangeV2Value",
+    },
+    {
+      name: "onValueChange",
+      description:
+        "Called with the resolved value on apply, or undefined when the user clears.",
+      required: true,
+      value: "(value: DateRangeV2Value | undefined) => void",
+    },
+    {
+      name: "config",
+      description:
+        "modes, tabDetails, direction, timezone, clearable, label, modeConfig, calendarProps, and presets. label.showTime adds a clock time when either end is not the start or end of a day. label.showTimezone adds the offset. Both default to true. tabDetails chooses description, example, and note inside each mode's info tooltip. Omit it to show all three. An empty list leaves the title only. A non-empty presets list adds a Presets mode. Each preset matches the date range picker: label, value, getRange, and group. Timezone false hides the zone row. An object sets browserZone, defaultValue, and options. options locale-utc lists Browser Time and UTC only and hides search. The default zone is UTC. clearable shows the delete icon on the standalone picker. calendarProps.weekStartsOn sets the first weekday and defaults to Monday.",
+      required: false,
+      value: "DateRangeV2Config",
+    },
+    {
+      name: "disabled",
+      description: "Disables the trigger.",
+      required: false,
+      defaultValue: "false",
+      value: "boolean",
+    },
+  ]}
+/>

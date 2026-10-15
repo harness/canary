@@ -71,6 +71,14 @@ export default {
       }
     },
 
+    // DateRangeV2 is taller than the 360px menu cap. Follow the space Radix measured,
+    // leaving room for the filter header above the scroll area.
+    '&.cn-dropdown-menu-available-height': {
+      '.cn-dropdown-menu-content': {
+        maxHeight: 'calc(var(--radix-dropdown-menu-content-available-height) - 4rem)'
+      }
+    },
+
     '&-container': {
       padding: 'var(--cn-dropdown-container)',
       minWidth: '0',

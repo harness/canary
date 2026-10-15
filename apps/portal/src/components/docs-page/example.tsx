@@ -1,11 +1,14 @@
 import {
   type ComponentProps,
   type FC,
+  type ReactNode,
+  useCallback,
   useEffect,
   useMemo,
   useState,
 } from "react";
 import { LiveEditor, LivePreview, LiveProvider } from "react-live";
+import { RouterContextProvider as FiltersRouterContextProvider } from "@harnessio/filters";
 import {
   CopyButton,
   IconV2,
@@ -28,8 +31,49 @@ import {
   NavLink,
   Outlet,
   RouterProvider,
+  useLocation,
   useMatches,
+  useNavigate,
+  type NavigateFunction,
+  type NavigateOptions,
+  type To,
 } from "react-router-dom";
+
+const FiltersRouterBridge: FC<{ children: ReactNode }> = ({ children }) => {
+  const navigate = useNavigate();
+  const location = useLocation();
+  // A second required parameter is not assignable to NavigateFunction's
+  // `navigate(delta)` overload, which is called with one argument.
+  const bridgedNavigate = useCallback(
+    (
+      to: To | number,
+      options?: NavigateOptions,
+    ): ReturnType<NavigateFunction> => {
+      if (typeof to === "string") {
+        const nextUrl = new URL(to, window.location.origin);
+        const next = nextUrl.search
+          ? window.location.pathname + nextUrl.search
+          : window.location.pathname;
+        window.history.replaceState(window.history.state, "", next);
+      }
+      if (typeof to === "number") {
+        navigate(to);
+        return;
+      }
+      navigate(to, options);
+    },
+    [navigate],
+  );
+
+  return (
+    <FiltersRouterContextProvider
+      location={location}
+      navigate={bridgedNavigate}
+    >
+      {children}
+    </FiltersRouterContextProvider>
+  );
+};
 
 type LiveProviderProps = ComponentProps<typeof LiveProvider>;
 
@@ -98,16 +142,27 @@ const Example: FC<ExampleProps> = ({
     return () => observer.disconnect();
   }, []);
 
-  const router = createMemoryRouter([
-    {
-      path: "*",
-      element: (
-        <TranslationProvider>
-          <LivePreview />
-        </TranslationProvider>
+  const router = useMemo(
+    () =>
+      createMemoryRouter(
+        [
+          {
+            path: "*",
+            element: (
+              <FiltersRouterBridge>
+                <TranslationProvider>
+                  <LivePreview />
+                </TranslationProvider>
+              </FiltersRouterBridge>
+            ),
+          },
+        ],
+        {
+          initialEntries: [window.location.pathname + window.location.search],
+        },
       ),
-    },
-  ]);
+    [],
+  );
 
   return (
     <ThemeProvider

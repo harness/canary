@@ -5,11 +5,13 @@ import { Label } from '@components/form-primitives'
 import { MultiSelectOption } from '@components/multi-select'
 import { cn } from '@utils/cn'
 
+import type { DateRangeV2FilterValue } from '../date-range-v2/types'
 import FilterBoxWrapper, { type FilterFieldTriggerVariant } from './filter-box-wrapper'
 import Calendar from './filters-bar/actions/variants/calendar-field'
 import { MultiSelectFilter } from './filters-bar/actions/variants/checkbox'
 import Combobox, { ComboBoxOptions } from './filters-bar/actions/variants/combo-box'
 import DateRangeField from './filters-bar/actions/variants/date-range-field'
+import DateRangeV2Filter from './filters-bar/actions/variants/date-range-v2-filter'
 import MultiTagFilter from './filters-bar/actions/variants/multi-tag'
 import Text from './filters-bar/actions/variants/text-field'
 import {
@@ -89,6 +91,20 @@ const FilterFieldInternal = <T extends string, V extends FilterValueTypes, Custo
         />
       )
     }
+    case FilterFieldTypes.DateRangeV2: {
+      const dateRangeV2Filter = filter as FilterField<DateRangeV2FilterValue>
+      return (
+        <DateRangeV2Filter
+          filter={dateRangeV2Filter}
+          config={filterOption.filterFieldConfig}
+          onUpdateFilter={values => {
+            onUpdateFilter(values as V)
+            if (values) setIsOpen(false)
+          }}
+          onCancel={() => setIsOpen(false)}
+        />
+      )
+    }
     case FilterFieldTypes.Text: {
       const textFilter = filter as FilterField<string>
       return (
@@ -135,7 +151,7 @@ const FilterFieldInternal = <T extends string, V extends FilterValueTypes, Custo
       return (
         <Label
           optional
-          className="rounded-cn-3 bg-cn-gray-secondary border-cn-gray-outline cursor-pointer border px-cn-md py-cn-xs [&>.cn-label-text]:flex [&>.cn-label-text]:items-center [&>.cn-label-text]:gap-x-cn-2xs"
+          className="cursor-pointer rounded-cn-3 border border-cn-gray-outline bg-cn-gray-secondary px-cn-md py-cn-xs [&>.cn-label-text]:flex [&>.cn-label-text]:items-center [&>.cn-label-text]:gap-x-cn-2xs"
           htmlFor={checkboxId}
         >
           <Checkbox
@@ -202,6 +218,9 @@ const FiltersField = <T extends string, V extends FilterValueTypes, CustomValue 
       contentClassName={cn(
         filterOption.type === FilterFieldTypes.Calendar ? 'w-[250px]' : '',
         filterOption.type === FilterFieldTypes.DateRange ? 'w-auto min-w-[400px] max-w-none' : '',
+        filterOption.type === FilterFieldTypes.DateRangeV2
+          ? 'w-auto min-w-[400px] max-w-none cn-dropdown-menu-available-height'
+          : '',
         filterOption.type === FilterFieldTypes.MultiTag ? 'cn-dropdown-menu-overflow-visible' : '',
         dropdownContentClassName
       )}

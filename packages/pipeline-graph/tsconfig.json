@@ -15,5 +15,6 @@
     "outDir": "dist2",
     "types": ["node"]
   },
-  "include": ["./src/**/*"]
+  "include": ["./src/**/*"],
+  "exclude": ["node_modules", "dist", "src/**/*.figma.ts", "src/**/*.figma.tsx"]
 }

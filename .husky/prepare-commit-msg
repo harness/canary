@@ -1,0 +1,4 @@
+global_hooks=$(git config --global --get core.hooksPath 2>/dev/null || true)
+if [ -n "$global_hooks" ] && [ -x "$global_hooks/prepare-commit-msg" ]; then
+  sh "$global_hooks/prepare-commit-msg" "$@"
+fi

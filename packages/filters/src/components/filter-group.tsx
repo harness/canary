@@ -11,6 +11,8 @@ import {
 } from 'react'
 
 import {
+  createDateRangeV2FilterParser,
+  FilterFieldTypes,
   FilterOptionConfig,
   Layout,
   ListActions,
@@ -225,7 +227,16 @@ const FilterGroupInner = <
                   {filterOptions.map(filterOption => {
                     return (
                       <FilterHandler.Component<keyof T>
-                        parser={filterOption.parser as any}
+                        parser={
+                          (filterOption.type === FilterFieldTypes.DateRangeV2
+                            ? // A custom parser replaces the built-in query for every mode.
+                              (filterOption.parser ??
+                              createDateRangeV2FilterParser(
+                                filterOption.filterFieldConfig?.presets,
+                                filterOption.filterFieldConfig?.calendarProps?.weekStartsOn
+                              ))
+                            : filterOption.parser) as any
+                        }
                         filterKey={filterOption.value}
                         sticky={filterOption.sticky}
                         defaultValue={filterOption.defaultValue as T[keyof T]}

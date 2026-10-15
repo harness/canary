@@ -19,6 +19,7 @@
     "@astrojs/starlight-tailwind": "^3.0.1",
     "@astrojs/tailwind": "^6.0.2",
     "@harnessio/core-design-system": "workspace:*",
+    "@harnessio/filters": "workspace:*",
     "@harnessio/ui": "workspace:^",
     "@hookform/resolvers": "^5.4.0",
     "@radix-ui/react-navigation-menu": "^1.2.3",

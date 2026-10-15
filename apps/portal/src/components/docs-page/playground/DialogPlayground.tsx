@@ -63,7 +63,8 @@ function generateCode(s: State): string {
     : "<Dialog.Content>";
 
   const headerAttrs: string[] = [];
-  if (s.decoration === "icon") headerAttrs.push(`icon="${THEME_ICON[s.theme]}"`);
+  if (s.decoration === "icon")
+    headerAttrs.push(`icon="${THEME_ICON[s.theme]}"`);
   if (s.decoration === "logo") headerAttrs.push('logo="jira"');
   if (s.theme !== "default") headerAttrs.push(`theme="${s.theme}"`);
   const headerOpen = headerAttrs.length
@@ -150,7 +151,11 @@ const DialogPlayground: FC = () => {
       required: true,
       description: "Heading and the dialog's accessible name",
     },
-    { name: "description", type: "text", description: "Supporting text below the title" },
+    {
+      name: "description",
+      type: "text",
+      description: "Supporting text below the title",
+    },
     {
       name: "hideClose",
       type: "boolean",
@@ -185,7 +190,11 @@ const DialogPlayground: FC = () => {
       </Dialog.Trigger>
       <Dialog.Content size={state.size} hideClose={state.hideClose}>
         <Dialog.Header
-          icon={state.decoration === "icon" ? (THEME_ICON[state.theme] as never) : undefined}
+          icon={
+            state.decoration === "icon"
+              ? (THEME_ICON[state.theme] as never)
+              : undefined
+          }
           logo={state.decoration === "logo" ? "jira" : undefined}
           theme={state.theme}
         >

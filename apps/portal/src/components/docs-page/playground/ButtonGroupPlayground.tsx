@@ -46,7 +46,8 @@ const DROPDOWN_CODE = `      dropdownProps: {
 function generateCode(s: State): string {
   const count = Number(s.count);
   const attrs: string[] = [];
-  if (s.orientation !== "horizontal") attrs.push(`  orientation="${s.orientation}"`);
+  if (s.orientation !== "horizontal")
+    attrs.push(`  orientation="${s.orientation}"`);
   if (s.size !== "md") attrs.push(`  size="${s.size}"`);
 
   const buttons = LABELS.slice(0, count).map((label, i) => {
@@ -77,9 +78,18 @@ const ButtonGroupPlayground: FC = () => {
 
   // ④ Curated control set.
   const controls: PropControl[] = [
-    { name: "orientation", type: "select", options: ["horizontal", "vertical"] },
+    {
+      name: "orientation",
+      type: "select",
+      options: ["horizontal", "vertical"],
+    },
     { name: "size", type: "select", options: ["md", "sm", "xs"] },
-    { name: "count", type: "select", options: ["2", "3", "4"], description: "Number of buttons" },
+    {
+      name: "count",
+      type: "select",
+      options: ["2", "3", "4"],
+      description: "Number of buttons",
+    },
     {
       name: "lastDropdown",
       type: "boolean",
@@ -121,7 +131,11 @@ const ButtonGroupPlayground: FC = () => {
   });
 
   const preview = (
-    <ButtonGroup orientation={state.orientation} size={state.size} buttonsProps={buttonsProps} />
+    <ButtonGroup
+      orientation={state.orientation}
+      size={state.size}
+      buttonsProps={buttonsProps}
+    />
   );
 
   const code = useMemo(() => generateCode(state), [state]);

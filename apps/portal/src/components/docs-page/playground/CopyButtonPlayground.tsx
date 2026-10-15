@@ -1,5 +1,10 @@
 import { type FC, useMemo, useState } from "react";
-import { Button, CopyButton, IconV2, TooltipProvider } from "@harnessio/ui/components";
+import {
+  Button,
+  CopyButton,
+  IconV2,
+  TooltipProvider,
+} from "@harnessio/ui/components";
 import ControlField from "./ControlField";
 import type { PropControl } from "./types";
 
@@ -10,7 +15,13 @@ import type { PropControl } from "./types";
 // ② State — one field per control.
 interface State {
   name: string;
-  buttonVariant: "primary" | "secondary" | "outline" | "ai" | "ghost" | "transparent";
+  buttonVariant:
+    | "primary"
+    | "secondary"
+    | "outline"
+    | "ai"
+    | "ghost"
+    | "transparent";
   size: "md" | "sm" | "xs";
   color: "inherit" | "success" | "info" | "warning" | "danger";
 }
@@ -25,7 +36,8 @@ const INITIAL_STATE: State = {
 // ③ Mirror exactly what the preview renders.
 function generateCode(s: State): string {
   const attrs: string[] = [`  name="${s.name}"`];
-  if (s.buttonVariant !== "outline") attrs.push(`  buttonVariant="${s.buttonVariant}"`);
+  if (s.buttonVariant !== "outline")
+    attrs.push(`  buttonVariant="${s.buttonVariant}"`);
   if (s.size !== "sm") attrs.push(`  size="${s.size}"`);
   if (s.color !== "inherit") attrs.push(`  color="${s.color}"`);
 
@@ -42,11 +54,23 @@ const CopyButtonPlayground: FC = () => {
 
   // ④ Curated control set.
   const controls: PropControl[] = [
-    { name: "name", type: "text", required: true, description: "Text copied to the clipboard" },
+    {
+      name: "name",
+      type: "text",
+      required: true,
+      description: "Text copied to the clipboard",
+    },
     {
       name: "buttonVariant",
       type: "select",
-      options: ["primary", "secondary", "outline", "ai", "ghost", "transparent"],
+      options: [
+        "primary",
+        "secondary",
+        "outline",
+        "ai",
+        "ghost",
+        "transparent",
+      ],
     },
     { name: "size", type: "select", options: ["md", "sm", "xs"] },
     {

@@ -1,5 +1,11 @@
 import { type FC, useMemo, useState } from "react";
-import { Button, CopyButton, IconV2, NoData, TooltipProvider } from "@harnessio/ui/components";
+import {
+  Button,
+  CopyButton,
+  IconV2,
+  NoData,
+  TooltipProvider,
+} from "@harnessio/ui/components";
 import ControlField from "./ControlField";
 import type { PropControl } from "./types";
 
@@ -44,7 +50,8 @@ function generateCode(s: State): string {
   if (s.imageSize !== 112) lines.push(`  imageSize={${s.imageSize}}`);
   lines.push(`  title="${s.title}"`);
   lines.push(`  description={['${s.description}']}`);
-  if (s.primaryLabel) lines.push(`  primaryButton={{ label: '${s.primaryLabel}' }}`);
+  if (s.primaryLabel)
+    lines.push(`  primaryButton={{ label: '${s.primaryLabel}' }}`);
   if (s.secondaryLabel)
     lines.push(`  secondaryButton={{ label: '${s.secondaryLabel}' }}`);
   lines.push("/>");
@@ -61,14 +68,22 @@ const NoDataPlayground: FC = () => {
 
   const controls: PropControl[] = [
     { name: "title", type: "text", description: "Empty-state heading" },
-    { name: "description", type: "text", description: "Supporting line below the title" },
+    {
+      name: "description",
+      type: "text",
+      description: "Supporting line below the title",
+    },
     {
       name: "imageName",
       type: "select",
       options: IMAGE_OPTIONS,
       description: "Illustration shown above the title",
     },
-    { name: "imageSize", type: "number", description: "Illustration size in pixels" },
+    {
+      name: "imageSize",
+      type: "number",
+      description: "Illustration size in pixels",
+    },
     {
       name: "primaryLabel",
       type: "text",
@@ -79,7 +94,11 @@ const NoDataPlayground: FC = () => {
       type: "text",
       description: "Secondary (outline) action label (leave empty to omit)",
     },
-    { name: "withBorder", type: "boolean", description: "Wrap in a bordered, rounded container" },
+    {
+      name: "withBorder",
+      type: "boolean",
+      description: "Wrap in a bordered, rounded container",
+    },
   ];
 
   const inputControls = controls.filter((c) => c.type !== "boolean");
@@ -98,12 +117,18 @@ const NoDataPlayground: FC = () => {
     <div className="w-full max-w-md">
       <NoData
         withBorder={state.withBorder}
-        imageName={state.imageName === "none" ? undefined : (state.imageName as never)}
+        imageName={
+          state.imageName === "none" ? undefined : (state.imageName as never)
+        }
         imageSize={state.imageSize}
         title={state.title}
         description={[state.description]}
-        primaryButton={state.primaryLabel ? { label: state.primaryLabel } : undefined}
-        secondaryButton={state.secondaryLabel ? { label: state.secondaryLabel } : undefined}
+        primaryButton={
+          state.primaryLabel ? { label: state.primaryLabel } : undefined
+        }
+        secondaryButton={
+          state.secondaryLabel ? { label: state.secondaryLabel } : undefined
+        }
       />
     </div>
   );

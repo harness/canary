@@ -100,7 +100,8 @@ const AlertPlayground: FC = () => {
     {
       name: "expandable",
       type: "boolean",
-      description: "Collapses long content behind Show more (when it overflows)",
+      description:
+        "Collapses long content behind Show more (when it overflows)",
     },
   ];
 

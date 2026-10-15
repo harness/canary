@@ -42,8 +42,7 @@ function truncateLabel(children: ReactNode, enabled = true): { content: ReactNod
   }
 
   const content = `${children.slice(0, MAX_LABEL_LENGTH)}…`
-  const title =
-    children.length > MAX_TOOLTIP_LENGTH ? `${children.slice(0, MAX_TOOLTIP_LENGTH - 1)}…` : children
+  const title = children.length > MAX_TOOLTIP_LENGTH ? `${children.slice(0, MAX_TOOLTIP_LENGTH - 1)}…` : children
 
   return { content, title }
 }

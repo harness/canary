@@ -1,5 +1,11 @@
 import type { FC } from "react";
-import { Input, NumberInput, Select, Switch, TextInput } from "@harnessio/ui/components";
+import {
+  Input,
+  NumberInput,
+  Select,
+  Switch,
+  TextInput,
+} from "@harnessio/ui/components";
 import type { PropControl } from "./types";
 
 export interface ControlFieldProps {

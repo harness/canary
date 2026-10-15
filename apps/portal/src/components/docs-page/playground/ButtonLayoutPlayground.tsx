@@ -48,11 +48,12 @@ function generateCode(s: State): string {
     ].join("\n");
   }
 
+  // Keep the outline button directly beside the primary (outline → primary last).
   const open = attrs.length ? `<ButtonLayout ${attrs.join(" ")}>` : "<ButtonLayout>";
   return [
     open,
-    `  <Button variant="outline">Cancel</Button>`,
     `  <Button variant="secondary">Save draft</Button>`,
+    `  <Button variant="outline">Cancel</Button>`,
     `  <Button>Publish</Button>`,
     "</ButtonLayout>",
   ].join("\n");
@@ -110,8 +111,8 @@ const ButtonLayoutPlayground: FC = () => {
         </ButtonLayout.Root>
       ) : (
         <ButtonLayout orientation={state.orientation} horizontalAlign={state.horizontalAlign}>
-          <Button variant="outline">Cancel</Button>
           <Button variant="secondary">Save draft</Button>
+          <Button variant="outline">Cancel</Button>
           <Button>Publish</Button>
         </ButtonLayout>
       )}

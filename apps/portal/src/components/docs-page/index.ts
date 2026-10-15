@@ -8,8 +8,16 @@ import AlertItemPlayground from "./playground/AlertItemPlayground.tsx";
 import AlertPlayground from "./playground/AlertPlayground.tsx";
 import AvatarPlayground from "./playground/AvatarPlayground.tsx";
 import BreadcrumbPlayground from "./playground/BreadcrumbPlayground.tsx";
+import ButtonGroupPlayground from "./playground/ButtonGroupPlayground.tsx";
+import ButtonLayoutPlayground from "./playground/ButtonLayoutPlayground.tsx";
+import ButtonPlayground from "./playground/ButtonPlayground.tsx";
+import CopyButtonPlayground from "./playground/CopyButtonPlayground.tsx";
+import IconButtonGroupPlayground from "./playground/IconButtonGroupPlayground.tsx";
 import IconButtonPlayground from "./playground/IconButtonPlayground.tsx";
 import LogoPlayground from "./playground/LogoPlayground.tsx";
+import SplitButtonPlayground from "./playground/SplitButtonPlayground.tsx";
+import TogglePlayground from "./playground/TogglePlayground.tsx";
+import ToggleGroupPlayground from "./playground/ToggleGroupPlayground.tsx";
 import Playground from "./playground/Playground.tsx";
 import PropsTable from "./props-table.tsx";
 
@@ -26,6 +34,14 @@ export const DocsPage = {
   AlertPlayground,
   AvatarPlayground,
   BreadcrumbPlayground,
+  ButtonPlayground,
+  ButtonGroupPlayground,
+  ButtonLayoutPlayground,
+  IconButtonGroupPlayground,
+  SplitButtonPlayground,
+  TogglePlayground,
+  ToggleGroupPlayground,
+  CopyButtonPlayground,
   IconButtonPlayground,
   LogoPlayground,
 };

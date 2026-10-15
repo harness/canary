@@ -29,7 +29,7 @@ const INITIAL_STATE: State = {
   size: "md",
   orientation: "vertical",
   position: "start",
-  image: true,
+  image: false,
   selected: false,
   disabled: false,
   interactive: true,

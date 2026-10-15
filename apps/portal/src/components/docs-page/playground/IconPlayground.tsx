@@ -48,7 +48,7 @@ function generateCode(s: State): string {
   if (s.color !== "inherit") iconProps.push(`color: "${s.color}"`);
   if (s.skipSize) iconProps.push("skipSize: true");
 
-  if (s.tooltip.trim()) {
+  if (s.tooltip?.trim()) {
     return `<IconWithTooltip\n  content="${s.tooltip}"\n  iconProps={{ ${iconProps.join(", ")} }}\n/>`;
   }
 

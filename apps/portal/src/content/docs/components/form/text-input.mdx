@@ -18,124 +18,11 @@ import PageTabsToc from "@/components/page-tabs-toc.astro";
 
 The `TextInput` component handles single-line user input, with options for a label, caption, prefix/suffix affixes, validation states, and an info tooltip.
 
-<DocsPage.ComponentExample
-  client:only
-  code={`
-    <Layout.Vertical gap="xl" className="min-w-[400px]">
-      <TextInput label="Text input label" placeholder="Enter the value" />
-    </Layout.Vertical>
-`}
-/>
+## Playground
 
-## Variations
+<DocsPage.TextInputPlayground client:only />
 
-### Disabled
-
-<DocsPage.ComponentExample
-  client:only
-  code={`
-  <Layout.Vertical gap="xl" className="min-w-[400px]">
-    <TextInput disabled placeholder="Username" label="Disabled Input" />
-  </Layout.Vertical>`}
-/>
-
-### Read only
-
-<DocsPage.ComponentExample
-  client:only
-  code={`
-  <Layout.Vertical gap="xl" className="min-w-[400px]">
-    <TextInput label="Text input label" placeholder="Enter the value" value="Value" readOnly />
-  </Layout.Vertical>`}
-/>
-
-### Optional
-
-By default a labelled input shows a required `*` marker. Pass `optional` to remove it and mark the field as optional.
-
-<DocsPage.ComponentExample
-  client:only
-  code={`
-  <Layout.Vertical gap="xl" className="min-w-[400px]">
-    <TextInput label="Text input label" placeholder="Enter the value" defaultValue="Value" optional />
-  </Layout.Vertical>`}
-/>
-
-### Theme
-
-The `TextInput` component accepts a `theme` prop, which defines the visual state of the input: `success`, `warning`, or `danger`.
-
-When an error occurs, pass the message to the `error` prop — this automatically applies the `danger` theme. For warnings, pass the `warning` prop, which applies the `warning` theme.
-
-<DocsPage.ComponentExample
-  client:only
-  code={`
-  <Layout.Vertical gap="xl" className="min-w-[400px]">
-    <TextInput
-      label="Success Input"
-      id="someinput"
-      placeholder="Enter the value"
-      theme="success"
-      caption="Caption text"
-    />
-    <TextInput
-      label="Input with Error"
-      error="This field is required"
-      theme="danger"
-      caption="Caption text"
-    />
-    <TextInput
-      label="Input with Warning"
-      warning="Please double-check this field"
-      theme="warning"
-      caption="Caption text"
-    />
-  </Layout.Vertical>`}
-/>
-
-### Size
-
-The `TextInput` component accepts a `size` prop, which defines the overall size of the input field. Available options are `md` (medium, default) and `sm` (small).
-
-<DocsPage.ComponentExample
-  client:only
-  code={`
-  <Layout.Vertical gap="xl" className="min-w-[400px]">
-    <TextInput
-      label="Medium Input"
-      placeholder="Enter the value"
-    />
-    <TextInput
-      size="sm"
-      label="Small Input"
-      placeholder="Enter the value"
-    />
-  </Layout.Vertical>`}
-/>
-
-### Prefix & suffix
-
-The `TextInput` component supports `prefix` and `suffix` props, which allow adding content before or after the input field.
-
-<DocsPage.ComponentExample
-  client:only
-  code={`
-    <Layout.Vertical gap="xl" className="min-w-[400px]">
-      <TextInput prefix="https://" suffix=".com" />
-
-      <TextInput
-        suffix={
-          <Button variant="outline" iconOnly>
-            <IconV2 name="nav-arrow-right" size="xs" />
-          </Button>
-        }
-      />
-    </Layout.Vertical>
-
-`}
-/>
-
-### With tooltip
+## With tooltip
 
 `tooltipContent` sets the content of the label's info tooltip. `tooltipProps` passes additional props to the tooltip.
 
@@ -153,30 +40,6 @@ The `TextInput` component supports `prefix` and `suffix` props, which allow addi
       />
     </Layout.Vertical>
 `}
-/>
-
-### Orientation
-
-The `TextInput` component accepts an optional `orientation` prop, which defines the layout direction of the input and its label. Available options are `horizontal` and `vertical` (default).
-
-<DocsPage.ComponentExample
-  client:only
-  code={`
-  <Layout.Vertical gap="xl" className="min-w-[400px]">
-    <TextInput
-      label="Vertical orientation"
-      error="This field is required"
-      theme="danger"
-      caption="Caption text"
-    />
-    <TextInput
-      label="Horizontal orientation"
-      error="This field is required"
-      theme="danger"
-      caption="Caption text"
-      orientation="horizontal"
-    />
-  </Layout.Vertical>`}
 />
 
 ## Installation

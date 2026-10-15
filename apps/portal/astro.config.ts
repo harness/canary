@@ -153,6 +153,20 @@ export default defineConfig({
             "components/feedback/alert",
             "components/overlays/alert-dialog",
             "components/visual/avatar",
+            {
+              label: "Badge",
+              collapsed: true,
+              items: [
+                {
+                  slug: "components/feedback/counter-badge",
+                  label: "Counter Badge",
+                },
+                {
+                  slug: "components/feedback/status-badge",
+                  label: "Status Badge",
+                },
+              ],
+            },
             "components/navigation/breadcrumb",
             {
               label: "Button",
@@ -230,7 +244,6 @@ export default defineConfig({
                 },
               ],
             },
-            "components/feedback/counter-badge",
             {
               label: "Date Range Filter",
               collapsed: true,
@@ -363,7 +376,6 @@ export default defineConfig({
             "components/data-display/stats-panel",
             "components/navigation/stepper",
             "components/utilities/sticky-list-section",
-            "components/feedback/status-badge",
             "components/form/switch",
             "components/navigation/tabs",
             {

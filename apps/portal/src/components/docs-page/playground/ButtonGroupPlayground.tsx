@@ -10,18 +10,24 @@ import {
 import ControlField from "./ControlField";
 import type { PropControl } from "./types";
 
-// ButtonGroup is data-driven (buttonsProps is an array of button configs). The
-// only control here toggles whether the last button opens a dropdown instead of
-// firing a direct action.
+// ButtonGroup is data-driven (buttonsProps is an array of button configs), so the
+// controls shape that array: how many buttons, the shared orientation/size, and
+// whether the last button opens a dropdown instead of firing a direct action.
 
-const LABELS = ["First", "Second", "Third"];
+const LABELS = ["First", "Second", "Third", "Fourth"];
 
 // ② State — one field per control.
 interface State {
+  orientation: "horizontal" | "vertical";
+  size: "md" | "sm" | "xs";
+  count: "2" | "3" | "4";
   lastDropdown: boolean;
 }
 
 const INITIAL_STATE: State = {
+  orientation: "horizontal",
+  size: "md",
+  count: "3",
   lastDropdown: false,
 };
 
@@ -38,15 +44,27 @@ const DROPDOWN_CODE = `      dropdownProps: {
 
 // ③ Mirror exactly what the preview renders.
 function generateCode(s: State): string {
-  const buttons = LABELS.map((label, i) => {
-    const isLast = i === LABELS.length - 1;
+  const count = Number(s.count);
+  const attrs: string[] = [];
+  if (s.orientation !== "horizontal") attrs.push(`  orientation="${s.orientation}"`);
+  if (s.size !== "md") attrs.push(`  size="${s.size}"`);
+
+  const buttons = LABELS.slice(0, count).map((label, i) => {
+    const isLast = i === count - 1;
     if (isLast && s.lastDropdown) {
       return `    {\n      children: '${label}',\n${DROPDOWN_CODE}\n    },`;
     }
     return `    { children: '${label}', onClick: () => {} },`;
   });
 
-  return ["<ButtonGroup", "  buttonsProps={[", ...buttons, "  ]}", "/>"].join("\n");
+  return [
+    "<ButtonGroup",
+    ...attrs,
+    "  buttonsProps={[",
+    ...buttons,
+    "  ]}",
+    "/>",
+  ].join("\n");
 }
 
 const ButtonGroupPlayground: FC = () => {
@@ -59,12 +77,18 @@ const ButtonGroupPlayground: FC = () => {
 
   // ④ Curated control set.
   const controls: PropControl[] = [
+    { name: "orientation", type: "select", options: ["horizontal", "vertical"] },
+    { name: "size", type: "select", options: ["md", "sm", "xs"] },
+    { name: "count", type: "select", options: ["2", "3", "4"], description: "Number of buttons" },
     {
       name: "lastDropdown",
       type: "boolean",
       description: "Last button opens a dropdown menu",
     },
   ];
+
+  const inputControls = controls.filter((c) => c.type !== "boolean");
+  const booleanControls = controls.filter((c) => c.type === "boolean");
 
   const renderControl = (prop: PropControl) => (
     <ControlField
@@ -76,8 +100,9 @@ const ButtonGroupPlayground: FC = () => {
   );
 
   // ⑤ Render the real ButtonGroup from state, mirroring generateCode exactly.
-  const buttonsProps = LABELS.map((label, i) => {
-    const isLast = i === LABELS.length - 1;
+  const count = Number(state.count);
+  const buttonsProps = LABELS.slice(0, count).map((label, i) => {
+    const isLast = i === count - 1;
     if (isLast && state.lastDropdown) {
       return {
         children: label,
@@ -95,7 +120,9 @@ const ButtonGroupPlayground: FC = () => {
     return { children: label, onClick: () => {} };
   });
 
-  const preview = <ButtonGroup buttonsProps={buttonsProps} />;
+  const preview = (
+    <ButtonGroup orientation={state.orientation} size={state.size} buttonsProps={buttonsProps} />
+  );
 
   const code = useMemo(() => generateCode(state), [state]);
 
@@ -118,9 +145,12 @@ const ButtonGroupPlayground: FC = () => {
           {preview}
         </div>
 
-        {/* --- Control grid: bg-cn-1 surface, max 3 per row --- */}
+        {/* --- Control grids: bg-cn-1 surface, max 3 per row --- */}
         <div className="bg-cn-1 grid grid-cols-3 gap-cn-lg border-t p-cn-md">
-          {controls.map(renderControl)}
+          {inputControls.map(renderControl)}
+        </div>
+        <div className="bg-cn-1 grid grid-cols-3 gap-cn-lg border-t p-cn-md">
+          {booleanControls.map(renderControl)}
         </div>
 
         {/* --- Show code --- */}

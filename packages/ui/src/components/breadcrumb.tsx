@@ -32,10 +32,12 @@ const MAX_TOOLTIP_LENGTH = 80
  * - string labels longer than `MAX_LABEL_LENGTH` are cut to 30 chars + an ellipsis
  * - the full name is surfaced via a native `title` tooltip, capped at `MAX_TOOLTIP_LENGTH` chars
  *
- * Non-string children (custom nodes) are left untouched, and short labels get no `title`.
+ * Truncation is opt-in: callers must pass `enabled` (the sub-component's `truncate` prop).
+ * When disabled, or for non-string children (custom nodes) and short labels, the label is
+ * returned untouched with no `title`.
  */
-function truncateLabel(children: ReactNode): { content: ReactNode; title?: string } {
-  if (typeof children !== 'string' || children.length <= MAX_LABEL_LENGTH) {
+function truncateLabel(children: ReactNode, enabled = false): { content: ReactNode; title?: string } {
+  if (!enabled || typeof children !== 'string' || children.length <= MAX_LABEL_LENGTH) {
     return { content: children }
   }
 
@@ -97,6 +99,8 @@ function flattenBreadcrumbChildren(children: ReactNode): ReactElement[] {
  * Enforces the trail-length rule: once a breadcrumb has more than `MAX_VISIBLE_STEPS` steps, the leading
  * steps (starting at the root, on the left) collapse into a single Ellipsis dropdown, leaving the last
  * `STEPS_AFTER_COLLAPSE` steps visible. Shorter trails are returned exactly as authored.
+ *
+ * Collapsing is opt-in via `BreadcrumbList`'s `collapse` prop; without it the full trail is rendered.
  */
 function collapseLeadingSteps(children: ReactNode): ReactNode {
   const flat = flattenBreadcrumbChildren(children)
@@ -145,13 +149,21 @@ const BreadcrumbRoot = forwardRef<HTMLElement, BreadcrumbRootProps>(({ className
 })
 BreadcrumbRoot.displayName = 'BreadcrumbRoot'
 
-type BreadcrumbListProps = ComponentPropsWithoutRef<'ol'>
+type BreadcrumbListProps = ComponentPropsWithoutRef<'ol'> & {
+  /**
+   * Collapse the leading steps into an ellipsis dropdown once the trail exceeds `MAX_VISIBLE_STEPS`.
+   * Opt-in; when omitted the full trail is rendered as authored.
+   */
+  collapse?: boolean
+}
 
-const BreadcrumbList = forwardRef<HTMLOListElement, BreadcrumbListProps>(({ className, children, ...props }, ref) => (
-  <ol ref={ref} className={cn('cn-breadcrumb-list', className)} {...props}>
-    {collapseLeadingSteps(children)}
-  </ol>
-))
+const BreadcrumbList = forwardRef<HTMLOListElement, BreadcrumbListProps>(
+  ({ className, collapse = false, children, ...props }, ref) => (
+    <ol ref={ref} className={cn('cn-breadcrumb-list', className)} {...props}>
+      {collapse ? collapseLeadingSteps(children) : children}
+    </ol>
+  )
+)
 BreadcrumbList.displayName = 'BreadcrumbList'
 
 type BreadcrumbItemProps = ComponentPropsWithoutRef<'li'> & {
@@ -171,13 +183,15 @@ BreadcrumbItem.displayName = 'BreadcrumbItem'
 type BreadcrumbLinkProps = ComponentPropsWithoutRef<'a'> & {
   asChild?: boolean
   prefixIcon?: IconV2NamesType
+  /** Opt in to truncating long string labels past `MAX_LABEL_LENGTH` with an ellipsis + tooltip. */
+  truncate?: boolean
 }
 
 const BreadcrumbLink = forwardRef<HTMLAnchorElement, BreadcrumbLinkProps>(
-  ({ asChild, className, prefixIcon, children, title, ...props }, ref) => {
+  ({ asChild, className, prefixIcon, truncate, children, title, ...props }, ref) => {
     const Comp = asChild ? Slot : 'a'
 
-    const { content: label, title: truncatedTitle } = truncateLabel(children)
+    const { content: label, title: truncatedTitle } = truncateLabel(children, truncate)
 
     const content = prefixIcon ? (
       <>
@@ -212,11 +226,13 @@ BreadcrumbLink.displayName = 'BreadcrumbLink'
 type BreadcrumbHeaderLinkProps = LinkProps & {
   prefixIcon?: IconV2NamesType
   isLast?: boolean
+  /** Opt in to truncating long string labels past `MAX_LABEL_LENGTH` with an ellipsis + tooltip. */
+  truncate?: boolean
 }
 
 const BreadcrumbHeaderLink = forwardRef<HTMLAnchorElement, BreadcrumbHeaderLinkProps>(
-  ({ className, isLast, prefixIcon, children, title, ...props }, ref) => {
-    const { content: label, title: truncatedTitle } = truncateLabel(children)
+  ({ className, isLast, prefixIcon, truncate, children, title, ...props }, ref) => {
+    const { content: label, title: truncatedTitle } = truncateLabel(children, truncate)
 
     const content = prefixIcon ? (
       <>
@@ -255,11 +271,13 @@ BreadcrumbHeaderLink.displayName = 'BreadcrumbHeaderLink'
 
 type BreadcrumbPageProps = ComponentPropsWithoutRef<'span'> & {
   prefixIcon?: IconV2NamesType
+  /** Opt in to truncating long string labels past `MAX_LABEL_LENGTH` with an ellipsis + tooltip. */
+  truncate?: boolean
 }
 
 const BreadcrumbPage = forwardRef<HTMLSpanElement, BreadcrumbPageProps>(
-  ({ className, prefixIcon, children, title, ...props }, ref) => {
-    const { content: label, title: truncatedTitle } = truncateLabel(children)
+  ({ className, prefixIcon, truncate, children, title, ...props }, ref) => {
+    const { content: label, title: truncatedTitle } = truncateLabel(children, truncate)
 
     return (
       <span
@@ -361,14 +379,16 @@ type BreadcrumbRootInteractiveProps = ComponentPropsWithoutRef<'button'> & {
   isRootOnly?: boolean
   /** Avatar props to customize the avatar appearance (src, icon, name, etc.) */
   avatar?: Omit<AvatarProps, 'size' | 'rounded'>
+  /** Opt in to truncating long string labels past `MAX_LABEL_LENGTH` with an ellipsis + tooltip. */
+  truncate?: boolean
 }
 
 const BreadcrumbRootInteractive = forwardRef<HTMLButtonElement, BreadcrumbRootInteractiveProps>(
-  ({ className, size = 'sm', isRootOnly = false, avatar, children, title, ...props }, ref) => {
+  ({ className, size = 'sm', isRootOnly = false, avatar, truncate, children, title, ...props }, ref) => {
     const avatarSize: AvatarSize = size === 'sm' ? 'lg' : 'sm'
     // Default icon: 'account' only when root is the only visible item, otherwise 'organizations'
     const defaultIcon: IconV2NamesType = isRootOnly ? 'account' : 'organizations'
-    const { content: label, title: truncatedTitle } = truncateLabel(children)
+    const { content: label, title: truncatedTitle } = truncateLabel(children, truncate)
 
     return (
       <button

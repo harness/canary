@@ -20,7 +20,6 @@ interface State {
   theme: "default" | "success" | "danger" | "warning";
   size: "md" | "sm" | "xs";
   icon: string;
-  rounded: boolean;
   loading: boolean;
   disabled: boolean;
 }
@@ -31,7 +30,6 @@ const INITIAL_STATE: State = {
   theme: "default",
   size: "md",
   icon: "none",
-  rounded: false,
   loading: false,
   disabled: false,
 };
@@ -43,7 +41,6 @@ function generateCode(s: State): string {
   if (s.variant !== "primary") attrs.push(`variant="${s.variant}"`);
   if (THEMED_VARIANTS.includes(s.variant) && s.theme !== "default") attrs.push(`theme="${s.theme}"`);
   if (s.size !== "md") attrs.push(`size="${s.size}"`);
-  if (s.rounded) attrs.push("rounded");
   if (s.loading) attrs.push("loading");
   if (s.disabled) attrs.push("disabled");
 
@@ -79,7 +76,6 @@ const ButtonPlayground: FC = () => {
     },
     { name: "size", type: "select", options: ["md", "sm", "xs"] },
     { name: "icon", type: "select", options: ICON_NAMES, description: "Leading icon ('none' omits it)" },
-    { name: "rounded", type: "boolean", description: "Fully rounded corners" },
     { name: "loading", type: "boolean", description: "Show a loading spinner" },
     { name: "disabled", type: "boolean", description: "Disable the button" },
   ];
@@ -103,7 +99,6 @@ const ButtonPlayground: FC = () => {
       variant={state.variant}
       theme={theme}
       size={state.size}
-      rounded={state.rounded}
       loading={state.loading}
       disabled={state.disabled}
     >

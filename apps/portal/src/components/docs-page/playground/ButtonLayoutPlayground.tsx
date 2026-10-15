@@ -5,15 +5,19 @@ import type { PropControl } from "./types";
 
 // ButtonLayout is a presentational wrapper — it only positions the buttons you put
 // inside it. The buttons are fixed; the controls drive the layout props so you can
-// see how orientation and alignment move a primary + supporting action set.
+// see how orientation and alignment move a primary + supporting action set. The
+// `composition` control swaps between passing buttons directly to ButtonLayout and
+// the ButtonLayout.Primary / .Secondary slots that pin actions to opposite ends.
 
 // ② State — one field per control.
 interface State {
+  composition: "direct" | "slots";
   orientation: "horizontal" | "vertical";
   horizontalAlign: "start" | "end";
 }
 
 const INITIAL_STATE: State = {
+  composition: "direct",
   orientation: "horizontal",
   horizontalAlign: "end",
 };
@@ -26,8 +30,25 @@ function generateCode(s: State): string {
   if (s.orientation === "horizontal" && s.horizontalAlign !== "end") {
     attrs.push(`horizontalAlign="${s.horizontalAlign}"`);
   }
-  const open = attrs.length ? `<ButtonLayout ${attrs.join(" ")}>` : "<ButtonLayout>";
 
+  if (s.composition === "slots") {
+    const open = attrs.length
+      ? `<ButtonLayout.Root ${attrs.join(" ")}>`
+      : "<ButtonLayout.Root>";
+    return [
+      open,
+      "  <ButtonLayout.Primary>",
+      "    <Button>Publish</Button>",
+      "  </ButtonLayout.Primary>",
+      "  <ButtonLayout.Secondary>",
+      `    <Button variant="outline">Cancel</Button>`,
+      `    <Button variant="secondary">Save draft</Button>`,
+      "  </ButtonLayout.Secondary>",
+      "</ButtonLayout.Root>",
+    ].join("\n");
+  }
+
+  const open = attrs.length ? `<ButtonLayout ${attrs.join(" ")}>` : "<ButtonLayout>";
   return [
     open,
     `  <Button variant="outline">Cancel</Button>`,
@@ -47,6 +68,12 @@ const ButtonLayoutPlayground: FC = () => {
 
   // ④ Curated control set.
   const controls: PropControl[] = [
+    {
+      name: "composition",
+      type: "select",
+      options: ["direct", "slots"],
+      description: "slots uses Primary / Secondary groups",
+    },
     { name: "orientation", type: "select", options: ["horizontal", "vertical"] },
     {
       name: "horizontalAlign",
@@ -68,11 +95,26 @@ const ButtonLayoutPlayground: FC = () => {
   // ⑤ Render the real ButtonLayout from state. Full-width host so alignment shows.
   const preview = (
     <div className="w-full">
-      <ButtonLayout orientation={state.orientation} horizontalAlign={state.horizontalAlign}>
-        <Button variant="outline">Cancel</Button>
-        <Button variant="secondary">Save draft</Button>
-        <Button>Publish</Button>
-      </ButtonLayout>
+      {state.composition === "slots" ? (
+        <ButtonLayout.Root
+          orientation={state.orientation}
+          horizontalAlign={state.horizontalAlign}
+        >
+          <ButtonLayout.Primary>
+            <Button>Publish</Button>
+          </ButtonLayout.Primary>
+          <ButtonLayout.Secondary>
+            <Button variant="outline">Cancel</Button>
+            <Button variant="secondary">Save draft</Button>
+          </ButtonLayout.Secondary>
+        </ButtonLayout.Root>
+      ) : (
+        <ButtonLayout orientation={state.orientation} horizontalAlign={state.horizontalAlign}>
+          <Button variant="outline">Cancel</Button>
+          <Button variant="secondary">Save draft</Button>
+          <Button>Publish</Button>
+        </ButtonLayout>
+      )}
     </div>
   );
 

@@ -14,7 +14,10 @@ import ButtonPlayground from "./playground/ButtonPlayground.tsx";
 import CalendarInputPlayground from "./playground/CalendarInputPlayground.tsx";
 import CalendarPlayground from "./playground/CalendarPlayground.tsx";
 import CaptionPlayground from "./playground/CaptionPlayground.tsx";
+import CardPlayground from "./playground/CardPlayground.tsx";
+import CardSelectPlayground from "./playground/CardSelectPlayground.tsx";
 import CopyButtonPlayground from "./playground/CopyButtonPlayground.tsx";
+import DraggableCardPlayground from "./playground/DraggableCardPlayground.tsx";
 import IconButtonGroupPlayground from "./playground/IconButtonGroupPlayground.tsx";
 import IconButtonPlayground from "./playground/IconButtonPlayground.tsx";
 import LogoPlayground from "./playground/LogoPlayground.tsx";
@@ -43,6 +46,9 @@ export const DocsPage = {
   CalendarPlayground,
   CalendarInputPlayground,
   CaptionPlayground,
+  CardPlayground,
+  CardSelectPlayground,
+  DraggableCardPlayground,
   IconButtonGroupPlayground,
   SplitButtonPlayground,
   TogglePlayground,

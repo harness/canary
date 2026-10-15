@@ -10,9 +10,11 @@ import {
 import ControlField from "./ControlField";
 import type { PropControl } from "./types";
 
-// An icon-only ButtonGroup: every button is iconOnly, so each carries a tooltip for
-// accessibility. The controls shape the same buttonsProps array as the text group —
-// count, orientation, size — plus whether the last button opens a dropdown.
+// An icon-only ButtonGroup: every button is iconOnly. The controls shape the same
+// buttonsProps array as the text group — count, orientation, size — plus whether each
+// button carries a tooltip and whether the last button opens a dropdown instead.
+// A button takes either tooltipProps or dropdownProps, never both, so the dropdown
+// button never gets a tooltip regardless of the toggle.
 
 const ICONS = ["info-circle", "key-back", "more-vert", "edit-pencil"];
 const LABELS = ["Info", "Back", "More", "Edit"];
@@ -22,6 +24,7 @@ interface State {
   orientation: "horizontal" | "vertical";
   size: "md" | "sm" | "xs";
   count: "2" | "3" | "4";
+  tooltip: boolean;
   lastDropdown: boolean;
 }
 
@@ -29,6 +32,7 @@ const INITIAL_STATE: State = {
   orientation: "horizontal",
   size: "md",
   count: "3",
+  tooltip: true,
   lastDropdown: false,
 };
 
@@ -53,10 +57,13 @@ function generateCode(s: State): string {
   const buttons = ICONS.slice(0, count).map((icon, i) => {
     const isLast = i === count - 1;
     const label = LABELS[i];
+    const inner = ["      iconOnly: true,", `      children: <IconV2 name="${icon}" />,`];
     if (isLast && s.lastDropdown) {
-      return `    {\n      iconOnly: true,\n      children: <IconV2 name="${icon}" />,\n      tooltipProps: { content: '${label}' },\n${DROPDOWN_CODE}\n    },`;
+      inner.push(DROPDOWN_CODE);
+    } else if (s.tooltip) {
+      inner.push(`      tooltipProps: { content: '${label}' },`);
     }
-    return `    {\n      iconOnly: true,\n      children: <IconV2 name="${icon}" />,\n      tooltipProps: { content: '${label}' },\n    },`;
+    return ["    {", ...inner, "    },"].join("\n");
   });
 
   return [
@@ -82,6 +89,11 @@ const IconButtonGroupPlayground: FC = () => {
     { name: "orientation", type: "select", options: ["horizontal", "vertical"] },
     { name: "size", type: "select", options: ["md", "sm", "xs"] },
     { name: "count", type: "select", options: ["2", "3", "4"], description: "Number of buttons" },
+    {
+      name: "tooltip",
+      type: "boolean",
+      description: "Show a tooltip on each button (not the dropdown one)",
+    },
     {
       name: "lastDropdown",
       type: "boolean",
@@ -109,7 +121,6 @@ const IconButtonGroupPlayground: FC = () => {
     const base = {
       iconOnly: true as const,
       children: <IconV2 name={icon} />,
-      tooltipProps: { content: label },
     };
     if (isLast && state.lastDropdown) {
       return {
@@ -124,6 +135,9 @@ const IconButtonGroupPlayground: FC = () => {
           ),
         },
       };
+    }
+    if (state.tooltip) {
+      return { ...base, tooltipProps: { content: label } };
     }
     return base;
   });

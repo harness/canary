@@ -4,6 +4,7 @@ import {
   CopyButton,
   IconNameMapV2,
   IconV2,
+  IconWithTooltip,
   TextInput,
   TooltipProvider,
 } from "@harnessio/ui/components";
@@ -17,8 +18,8 @@ import type { PropControl } from "./types";
 
 // Every icon name, straight from the component's own map.
 const ALL_NAMES = Object.keys(IconNameMapV2).sort();
-// Cap how many glyphs render at once so the grid stays snappy; searching narrows it.
-const MAX_VISIBLE = 120;
+// Cap how many glyphs render at once so the grid stays compact; searching narrows it.
+const MAX_VISIBLE = 10;
 
 // ② State — one field per control.
 interface State {
@@ -26,6 +27,7 @@ interface State {
   size: "2xs" | "xs" | "sm" | "md" | "lg" | "xl";
   color: "inherit" | "neutral" | "danger" | "warning" | "success" | "info" | "risk" | "merged";
   skipSize: boolean;
+  tooltip: string;
 }
 
 const INITIAL_STATE: State = {
@@ -33,11 +35,23 @@ const INITIAL_STATE: State = {
   size: "lg",
   color: "inherit",
   skipSize: false,
+  tooltip: "",
 };
 
 // ③ Mirror exactly what the preview renders — emit props only when they differ
 //    from the component defaults (size 'sm', color 'inherit', skipSize false).
+//    With a tooltip set, the icon is wrapped in `IconWithTooltip`, so the icon
+//    props move into its `iconProps`.
 function generateCode(s: State): string {
+  const iconProps = [`name: "${s.name}"`];
+  if (s.size !== "sm") iconProps.push(`size: "${s.size}"`);
+  if (s.color !== "inherit") iconProps.push(`color: "${s.color}"`);
+  if (s.skipSize) iconProps.push("skipSize: true");
+
+  if (s.tooltip.trim()) {
+    return `<IconWithTooltip\n  content="${s.tooltip}"\n  iconProps={{ ${iconProps.join(", ")} }}\n/>`;
+  }
+
   const attrs = [`name="${s.name}"`];
   if (s.size !== "sm") attrs.push(`size="${s.size}"`);
   if (s.color !== "inherit") attrs.push(`color="${s.color}"`);
@@ -70,6 +84,11 @@ const IconPlayground: FC = () => {
       type: "select",
       options: ["inherit", "neutral", "danger", "warning", "success", "info", "risk", "merged"],
       description: "Semantic icon color ('inherit' matches surrounding text)",
+    },
+    {
+      name: "tooltip",
+      type: "text",
+      description: "Wrap in IconWithTooltip, showing this text on hover (empty = plain icon)",
     },
     {
       name: "skipSize",
@@ -116,12 +135,24 @@ const IconPlayground: FC = () => {
           </Button>
 
           <div className="flex min-h-16 items-center justify-center">
-            <IconV2
-              name={state.name as never}
-              size={state.size}
-              color={state.color}
-              skipSize={state.skipSize}
-            />
+            {state.tooltip.trim() ? (
+              <IconWithTooltip
+                content={state.tooltip}
+                iconProps={{
+                  name: state.name as never,
+                  size: state.size,
+                  color: state.color,
+                  skipSize: state.skipSize,
+                }}
+              />
+            ) : (
+              <IconV2
+                name={state.name as never}
+                size={state.size}
+                color={state.color}
+                skipSize={state.skipSize}
+              />
+            )}
           </div>
           <span className="font-body-code text-cn-size-1 text-cn-3">name="{state.name}"</span>
         </div>

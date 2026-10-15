@@ -29,7 +29,6 @@ interface State {
   size: "md" | "sm" | "xs" | "2xs" | "3xs";
   tooltip: string;
   ignoreIconOnlyTooltip: boolean;
-  rounded: boolean;
   loading: boolean;
   disabled: boolean;
 }
@@ -40,7 +39,6 @@ const INITIAL_STATE: State = {
   size: "md",
   tooltip: "Add",
   ignoreIconOnlyTooltip: false,
-  rounded: false,
   loading: false,
   disabled: false,
 };
@@ -52,7 +50,6 @@ function generateCode(s: State): string {
   const attrs: string[] = ["iconOnly"];
   if (s.variant !== "primary") attrs.push(`variant="${s.variant}"`);
   if (s.size !== "md") attrs.push(`size="${s.size}"`);
-  if (s.rounded) attrs.push("rounded");
   if (s.loading) attrs.push("loading");
   if (s.disabled) attrs.push("disabled");
   if (s.ignoreIconOnlyTooltip) {

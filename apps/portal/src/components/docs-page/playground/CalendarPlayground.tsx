@@ -1,4 +1,4 @@
-import { type FC, useEffect, useMemo, useState } from "react";
+import { type FC, useMemo, useState } from "react";
 import { Button, Calendar, CopyButton, IconV2, TooltipProvider } from "@harnessio/ui/components";
 import ControlField from "./ControlField";
 import type { PropControl } from "./types";
@@ -85,13 +85,14 @@ const CalendarPlayground: FC = () => {
   const [state, setState] = useState<State>(INITIAL_STATE);
   const [selected, setSelected] = useState<unknown>(() => initialSelection(INITIAL_STATE.mode));
 
-  const set = <K extends keyof State>(key: K, value: State[K]) =>
+  const set = <K extends keyof State>(key: K, value: State[K]) => {
     setState((prev) => ({ ...prev, [key]: value }));
-
-  // Switching mode changes the selection shape, so reset it whenever mode changes.
-  useEffect(() => {
-    setSelected(initialSelection(state.mode));
-  }, [state.mode]);
+    // Mode changes the selection's shape (Date vs Date[] vs range). Reset it in the
+    // same update as the mode so react-day-picker never renders with a selection that
+    // mismatches the mode — its multiple mode calls `.some()` on the selection and a
+    // leftover single Date would throw.
+    if (key === "mode") setSelected(initialSelection(value as State["mode"]));
+  };
 
   const reset = () => {
     setState(INITIAL_STATE);
@@ -136,10 +137,27 @@ const CalendarPlayground: FC = () => {
     return { fromDate, toDate };
   }, [state.bounded]);
 
+  // Guard: always hand react-day-picker a selection whose shape matches the current
+  // mode, so a mismatched value can never reach it (even on the first render after a
+  // mode switch). Its multiple mode calls `.some()` on the selection, so a single Date
+  // there would throw.
+  const safeSelected = useMemo(() => {
+    if (state.mode === "multiple") return Array.isArray(selected) ? selected : [];
+    if (state.mode === "range") {
+      return selected &&
+        typeof selected === "object" &&
+        !Array.isArray(selected) &&
+        !(selected instanceof Date)
+        ? selected
+        : undefined;
+    }
+    return selected instanceof Date ? selected : undefined;
+  }, [state.mode, selected]);
+
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const calendarProps: any = {
     mode: state.mode,
-    selected,
+    selected: safeSelected,
     onSelect: setSelected,
     weekStartsOn: Number(state.weekStartsOn),
     showOutsideDays: state.showOutsideDays,

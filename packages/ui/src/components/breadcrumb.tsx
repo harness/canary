@@ -32,11 +32,11 @@ const MAX_TOOLTIP_LENGTH = 80
  * - string labels longer than `MAX_LABEL_LENGTH` are cut to 30 chars + an ellipsis
  * - the full name is surfaced via a native `title` tooltip, capped at `MAX_TOOLTIP_LENGTH` chars
  *
- * Truncation is opt-in: callers must pass `enabled` (the sub-component's `truncate` prop).
+ * Truncation is on by default and opt-out via the sub-component's `truncate` prop (`enabled`).
  * When disabled, or for non-string children (custom nodes) and short labels, the label is
  * returned untouched with no `title`.
  */
-function truncateLabel(children: ReactNode, enabled = false): { content: ReactNode; title?: string } {
+function truncateLabel(children: ReactNode, enabled = true): { content: ReactNode; title?: string } {
   if (!enabled || typeof children !== 'string' || children.length <= MAX_LABEL_LENGTH) {
     return { content: children }
   }
@@ -100,7 +100,8 @@ function flattenBreadcrumbChildren(children: ReactNode): ReactElement[] {
  * steps (starting at the root, on the left) collapse into a single Ellipsis dropdown, leaving the last
  * `STEPS_AFTER_COLLAPSE` steps visible. Shorter trails are returned exactly as authored.
  *
- * Collapsing is opt-in via `BreadcrumbList`'s `collapse` prop; without it the full trail is rendered.
+ * Collapsing is on by default and opt-out via `BreadcrumbList`'s `collapse` prop; set it to `false`
+ * to render the full trail as authored.
  */
 function collapseLeadingSteps(children: ReactNode): ReactNode {
   const flat = flattenBreadcrumbChildren(children)
@@ -152,13 +153,13 @@ BreadcrumbRoot.displayName = 'BreadcrumbRoot'
 type BreadcrumbListProps = ComponentPropsWithoutRef<'ol'> & {
   /**
    * Collapse the leading steps into an ellipsis dropdown once the trail exceeds `MAX_VISIBLE_STEPS`.
-   * Opt-in; when omitted the full trail is rendered as authored.
+   * On by default; set to `false` to render the full trail as authored.
    */
   collapse?: boolean
 }
 
 const BreadcrumbList = forwardRef<HTMLOListElement, BreadcrumbListProps>(
-  ({ className, collapse = false, children, ...props }, ref) => (
+  ({ className, collapse = true, children, ...props }, ref) => (
     <ol ref={ref} className={cn('cn-breadcrumb-list', className)} {...props}>
       {collapse ? collapseLeadingSteps(children) : children}
     </ol>
@@ -183,12 +184,12 @@ BreadcrumbItem.displayName = 'BreadcrumbItem'
 type BreadcrumbLinkProps = ComponentPropsWithoutRef<'a'> & {
   asChild?: boolean
   prefixIcon?: IconV2NamesType
-  /** Opt in to truncating long string labels past `MAX_LABEL_LENGTH` with an ellipsis + tooltip. */
+  /** Truncate long string labels past `MAX_LABEL_LENGTH` with an ellipsis + tooltip. On by default; set `false` to disable. */
   truncate?: boolean
 }
 
 const BreadcrumbLink = forwardRef<HTMLAnchorElement, BreadcrumbLinkProps>(
-  ({ asChild, className, prefixIcon, truncate, children, title, ...props }, ref) => {
+  ({ asChild, className, prefixIcon, truncate = true, children, title, ...props }, ref) => {
     const Comp = asChild ? Slot : 'a'
 
     const { content: label, title: truncatedTitle } = truncateLabel(children, truncate)
@@ -226,12 +227,12 @@ BreadcrumbLink.displayName = 'BreadcrumbLink'
 type BreadcrumbHeaderLinkProps = LinkProps & {
   prefixIcon?: IconV2NamesType
   isLast?: boolean
-  /** Opt in to truncating long string labels past `MAX_LABEL_LENGTH` with an ellipsis + tooltip. */
+  /** Truncate long string labels past `MAX_LABEL_LENGTH` with an ellipsis + tooltip. On by default; set `false` to disable. */
   truncate?: boolean
 }
 
 const BreadcrumbHeaderLink = forwardRef<HTMLAnchorElement, BreadcrumbHeaderLinkProps>(
-  ({ className, isLast, prefixIcon, truncate, children, title, ...props }, ref) => {
+  ({ className, isLast, prefixIcon, truncate = true, children, title, ...props }, ref) => {
     const { content: label, title: truncatedTitle } = truncateLabel(children, truncate)
 
     const content = prefixIcon ? (
@@ -271,12 +272,12 @@ BreadcrumbHeaderLink.displayName = 'BreadcrumbHeaderLink'
 
 type BreadcrumbPageProps = ComponentPropsWithoutRef<'span'> & {
   prefixIcon?: IconV2NamesType
-  /** Opt in to truncating long string labels past `MAX_LABEL_LENGTH` with an ellipsis + tooltip. */
+  /** Truncate long string labels past `MAX_LABEL_LENGTH` with an ellipsis + tooltip. On by default; set `false` to disable. */
   truncate?: boolean
 }
 
 const BreadcrumbPage = forwardRef<HTMLSpanElement, BreadcrumbPageProps>(
-  ({ className, prefixIcon, truncate, children, title, ...props }, ref) => {
+  ({ className, prefixIcon, truncate = true, children, title, ...props }, ref) => {
     const { content: label, title: truncatedTitle } = truncateLabel(children, truncate)
 
     return (
@@ -379,12 +380,12 @@ type BreadcrumbRootInteractiveProps = ComponentPropsWithoutRef<'button'> & {
   isRootOnly?: boolean
   /** Avatar props to customize the avatar appearance (src, icon, name, etc.) */
   avatar?: Omit<AvatarProps, 'size' | 'rounded'>
-  /** Opt in to truncating long string labels past `MAX_LABEL_LENGTH` with an ellipsis + tooltip. */
+  /** Truncate long string labels past `MAX_LABEL_LENGTH` with an ellipsis + tooltip. On by default; set `false` to disable. */
   truncate?: boolean
 }
 
 const BreadcrumbRootInteractive = forwardRef<HTMLButtonElement, BreadcrumbRootInteractiveProps>(
-  ({ className, size = 'sm', isRootOnly = false, avatar, truncate, children, title, ...props }, ref) => {
+  ({ className, size = 'sm', isRootOnly = false, avatar, truncate = true, children, title, ...props }, ref) => {
     const avatarSize: AvatarSize = size === 'sm' ? 'lg' : 'sm'
     // Default icon: 'account' only when root is the only visible item, otherwise 'organizations'
     const defaultIcon: IconV2NamesType = isRootOnly ? 'account' : 'organizations'

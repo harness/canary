@@ -14,8 +14,8 @@ import type { PropControl } from "./types";
 // accessibility. The controls shape the same buttonsProps array as the text group —
 // count, orientation, size — plus whether the last button opens a dropdown.
 
-const ICONS = ["bold", "italic", "underline", "code"];
-const LABELS = ["Bold", "Italic", "Underline", "Code"];
+const ICONS = ["info-circle", "key-back", "more-vert", "edit-pencil"];
+const LABELS = ["Info", "Back", "More", "Edit"];
 
 // ② State — one field per control.
 interface State {
@@ -36,9 +36,9 @@ const INITIAL_STATE: State = {
 const DROPDOWN_CODE = `      dropdownProps: {
         content: (
           <>
-            <DropdownMenu.Item title="Align left" />
-            <DropdownMenu.Item title="Align center" />
-            <DropdownMenu.Item title="Align right" />
+            <DropdownMenu.Item title="Rename" />
+            <DropdownMenu.Item title="Duplicate" />
+            <DropdownMenu.Item title="Delete" />
           </>
         ),
       },`;
@@ -117,9 +117,9 @@ const IconButtonGroupPlayground: FC = () => {
         dropdownProps: {
           content: (
             <>
-              <DropdownMenu.Item title="Align left" />
-              <DropdownMenu.Item title="Align center" />
-              <DropdownMenu.Item title="Align right" />
+              <DropdownMenu.Item title="Rename" />
+              <DropdownMenu.Item title="Duplicate" />
+              <DropdownMenu.Item title="Delete" />
             </>
           ),
         },

@@ -21,25 +21,6 @@ The `Caption` component renders supplementary text below a form input — a shor
 
 <DocsPage.CaptionPlayground client:only />
 
-## Variations
-
-`Caption` passes `className` straight through, so you can recolor it to signal state — for example, a danger color for an error hint.
-
-<DocsPage.ComponentExample
-  client:only
-  hideCode
-  code={`<div className="space-y-cn-sm w-full">
-  <div className="flex items-center gap-cn-md border-b border-cn-borders-3 pb-cn-sm">
-    <span className="text-cn-size-2 text-cn-3 w-24 shrink-0 font-mono">default</span>
-    <Caption>Use lowercase letters and hyphens only.</Caption>
-  </div>
-  <div className="flex items-center gap-cn-md">
-    <span className="text-cn-size-2 text-cn-3 w-24 shrink-0 font-mono">error</span>
-    <Caption className="text-cn-danger">This name is already taken.</Caption>
-  </div>
-</div>`}
-/>
-
 ## Installation
 
 ```typescript jsx

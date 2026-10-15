@@ -88,7 +88,6 @@ const IconButtonPlayground: FC = () => {
       type: "boolean",
       description: "Opt out of the required tooltip",
     },
-    { name: "rounded", type: "boolean", description: "Fully rounded button" },
     { name: "loading", type: "boolean", description: "Show a loading spinner" },
     { name: "disabled", type: "boolean", description: "Disable the button" },
   ];
@@ -116,7 +115,6 @@ const IconButtonPlayground: FC = () => {
       iconOnly
       variant={state.variant}
       size={state.size}
-      rounded={state.rounded}
       loading={state.loading}
       disabled={state.disabled}
       {...tooltipBehavior}

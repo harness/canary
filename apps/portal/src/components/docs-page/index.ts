@@ -31,6 +31,7 @@ import IllustrationPlayground from "./playground/IllustrationPlayground.tsx";
 import LogoPlayground from "./playground/LogoPlayground.tsx";
 import NumberInputPlayground from "./playground/NumberInputPlayground.tsx";
 import SplitButtonPlayground from "./playground/SplitButtonPlayground.tsx";
+import StatusBadgePlayground from "./playground/StatusBadgePlayground.tsx";
 import TextInputPlayground from "./playground/TextInputPlayground.tsx";
 import TimeInputPlayground from "./playground/TimeInputPlayground.tsx";
 import TogglePlayground from "./playground/TogglePlayground.tsx";
@@ -78,4 +79,5 @@ export const DocsPage = {
   NumberInputPlayground,
   TextInputPlayground,
   TimeInputPlayground,
+  StatusBadgePlayground,
 };

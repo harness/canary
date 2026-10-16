@@ -20,28 +20,7 @@ The `Popover` component provides a way to create floating overlays that display 
 
 It can be composed with subcomponents — `Popover.Root`, `Popover.Trigger`, `Popover.Content`, and `Popover.Anchor` — for a structured, customizable interface. `Popover.Content` supports built-in `title`, `description`, and `linkProps` for common patterns, while also allowing custom content through children.
 
-<DocsPage.ComponentExample
-  client:only
-  code={`<Popover.Root>
-    <Popover.Trigger asChild>
-        <Button variant="outline">
-            Open Popover
-        </Button>
-    </Popover.Trigger>
-
-    <Popover.Content
-        title="Settings"
-        description="Manage your account settings and preferences"
-    >
-        <div className="grid gap-cn-sm mt-cn-sm">
-            <Button variant="outline" size="sm">Profile</Button>
-            <Button variant="outline" size="sm">Billing</Button>
-            <Button variant="outline" size="sm">Notifications</Button>
-        </div>
-    </Popover.Content>
-
-</Popover.Root>`}
-/>
+<DocsPage.PopoverPlayground client:only />
 
 ## Variations
 

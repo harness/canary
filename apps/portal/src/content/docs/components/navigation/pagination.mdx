@@ -22,23 +22,7 @@ There are two modes:
 - **Determinate** — pass `totalItems` and `pageSize` so the component knows how many pages exist.
 - **Indeterminate** — pass `indeterminate` with `hasNext` / `hasPrevious` when the total isn't known ahead of time; only the Next / Previous controls render.
 
-<DocsPage.ComponentExample
-  client:only
-  code={`() => {
-    const [currentPage, setCurrentPage] = React.useState(1)
-
-    return (
-        <div className="w-[550px]">
-            <Pagination
-                totalItems={100}
-                pageSize={10}
-                currentPage={currentPage}
-                goToPage={setCurrentPage}
-            />
-        </div>
-    )
-
-}`} />
+<DocsPage.PaginationPlayground client:only />
 
 ## Variations
 

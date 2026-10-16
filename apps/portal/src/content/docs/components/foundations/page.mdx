@@ -19,48 +19,9 @@ The `Page` component provides the header + content structure that sits inside th
 
 `Page.Header` composes a back link, an icon or logo, the page title, a description, and header-right actions into a single standardized header.
 
-<DocsPage.PageHeaderPlayground client:only />
-
-## Variations
-
-### Header with tabs (Page.HeaderV2)
-
 `Page.HeaderV2` is the newer header variant that supports a title row plus a tab strip for section navigation. The tabs are router-driven — each `value` is a route the tab links to, and the active tab is derived from the current URL.
 
-<DocsPage.ComponentExample
-  client:only
-  code={`
-    <div className="w-full">
-      <Page.HeaderV2
-        title="Repository"
-        iconName="git-branch"
-        description="Browse files, commits, and branches."
-        breadcrumbs={
-          <Breadcrumb.Root>
-            <Breadcrumb.List>
-              <Breadcrumb.Item>
-                <Breadcrumb.Link href="#">Lorem ipsum page</Breadcrumb.Link>
-              </Breadcrumb.Item>
-              <Breadcrumb.Separator />
-              <Breadcrumb.Item>
-                <Breadcrumb.Link href="#">Lorem ipsum page</Breadcrumb.Link>
-              </Breadcrumb.Item>
-              <Breadcrumb.Separator />
-              <Breadcrumb.Page>Lorem ipsum page</Breadcrumb.Page>
-            </Breadcrumb.List>
-          </Breadcrumb.Root>
-        }
-        tabs={[
-          { label: 'Summary', value: '/', exact: true },
-          { label: 'Files', value: '/files', icon: 'empty-page' },
-          { label: 'Commits', value: '/commits', icon: 'git-commit', counter: 12 },
-          { label: 'Branches', value: '/branches', icon: 'git-branch' },
-        ]}
-        actions={<Button>Clone</Button>}
-      />
-    </div>
-`}
-/>
+<DocsPage.PageHeaderPlayground client:only />
 
 ## Installation
 

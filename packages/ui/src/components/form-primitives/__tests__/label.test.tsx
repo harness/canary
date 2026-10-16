@@ -44,6 +44,37 @@ describe('Label', () => {
     expect(element?.querySelector('.cn-label-required')).toHaveTextContent('*')
   })
 
+  describe('DOM stability across re-renders', () => {
+    // A remounted <label> removes nodes from the DOM; inside a Radix FocusScope (drawer/dialog) that
+    // makes the focus trap grab focus mid-blur, so the next field needs a second click to focus.
+    it('keeps the same <label> element when re-rendered (no tooltip/suffix)', () => {
+      const { rerender } = render(<Label>Name</Label>)
+      const before = screen.getByText('Name').closest('[data-mock="label"]')
+
+      rerender(<Label>Name</Label>)
+
+      expect(screen.getByText('Name').closest('[data-mock="label"]')).toBe(before)
+    })
+
+    it('keeps the same <label> element when re-rendered with tooltip', () => {
+      const { rerender } = render(<Label tooltipContent="Help text">Name</Label>)
+      const before = screen.getByText('Name').closest('[data-mock="label"]')
+
+      rerender(<Label tooltipContent="Help text">Name</Label>)
+
+      expect(screen.getByText('Name').closest('[data-mock="label"]')).toBe(before)
+    })
+
+    it('keeps the same <label> element when re-rendered with suffix', () => {
+      const { rerender } = render(<Label suffix={<span>suffix</span>}>Name</Label>)
+      const before = screen.getByText('Name').closest('[data-mock="label"]')
+
+      rerender(<Label suffix={<span>suffix</span>}>Name</Label>)
+
+      expect(screen.getByText('Name').closest('[data-mock="label"]')).toBe(before)
+    })
+  })
+
   describe('tooltip and suffix', () => {
     it('wraps label in container when only tooltip is provided', () => {
       render(

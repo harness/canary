@@ -19,10 +19,10 @@ const Label = forwardRef<ElementRef<typeof LabelPrimitive.Root>, LabelProps>(
 
     const showRequiredIndicator = optional !== true
 
-    const LabelComponent = ({ className }: { className?: string }) => (
+    const renderLabel = (labelClassName?: string) => (
       <LabelPrimitive.Root
         ref={ref}
-        className={cn('cn-label', { 'cn-label-disabled': disabled }, className)}
+        className={cn('cn-label', { 'cn-label-disabled': disabled }, labelClassName)}
         {...props}
       >
         <span className="cn-label-text">
@@ -40,7 +40,7 @@ const Label = forwardRef<ElementRef<typeof LabelPrimitive.Root>, LabelProps>(
       return (
         <Layout.Horizontal align="end" justify="between" gap="xs" className={cn('cn-label-wrapper', className)}>
           <span className="cn-label-container">
-            <LabelComponent />
+            {renderLabel()}
 
             {tooltipContent && (
               <IconWithTooltip
@@ -60,7 +60,7 @@ const Label = forwardRef<ElementRef<typeof LabelPrimitive.Root>, LabelProps>(
     if (tooltipContent) {
       return (
         <span className={cn('cn-label-container', className)}>
-          <LabelComponent />
+          {renderLabel()}
 
           <IconWithTooltip
             {...tooltipProps}
@@ -72,7 +72,7 @@ const Label = forwardRef<ElementRef<typeof LabelPrimitive.Root>, LabelProps>(
       )
     }
 
-    return <LabelComponent className={className} />
+    return renderLabel(className)
   }
 )
 Label.displayName = LabelPrimitive.Root.displayName

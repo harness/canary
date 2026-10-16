@@ -114,4 +114,30 @@ describe('Accordion', () => {
     // This allows clicks on the indicator to pass through to the trigger beneath in the browser
     expect(indicator).toHaveClass('pointer-events-none')
   })
+
+  // A remounted indicator removes nodes from the DOM; inside a Radix FocusScope (drawer/dialog) that
+  // makes the focus trap grab focus mid-blur, so the next field needs a second click to focus.
+  test.each(['left', 'right'] as const)(
+    'it should keep the same indicator element when re-rendered (indicatorPosition=%s)',
+    position => {
+      const { container, rerender } = renderComponent({ indicatorPosition: position } as any)
+      const before = container.querySelector('.cn-accordion-trigger-indicator')
+      expect(before).toBeInTheDocument()
+
+      rerender(
+        <Accordion.Root type="single" indicatorPosition={position}>
+          <Accordion.Item value="item-1">
+            <Accordion.Trigger data-testid="trigger-1">Trigger 1</Accordion.Trigger>
+            <Accordion.Content>Content 1</Accordion.Content>
+          </Accordion.Item>
+          <Accordion.Item value="item-2">
+            <Accordion.Trigger data-testid="trigger-2">Trigger 2</Accordion.Trigger>
+            <Accordion.Content>Content 2</Accordion.Content>
+          </Accordion.Item>
+        </Accordion.Root>
+      )
+
+      expect(container.querySelector('.cn-accordion-trigger-indicator')).toBe(before)
+    }
+  )
 })

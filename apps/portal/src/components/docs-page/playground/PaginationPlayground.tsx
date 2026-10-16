@@ -1,4 +1,10 @@
-import { type FC, useMemo, useState } from "react";
+import {
+  type ComponentPropsWithoutRef,
+  type FC,
+  forwardRef,
+  useMemo,
+  useState,
+} from "react";
 import {
   Button,
   CopyButton,
@@ -6,6 +12,7 @@ import {
   Pagination,
   TooltipProvider,
 } from "@harnessio/ui/components";
+import { RouterContextProvider, type LinkProps } from "@harnessio/ui/context";
 import ControlField from "./ControlField";
 import type { PropControl } from "./types";
 
@@ -15,16 +22,21 @@ import type { PropControl } from "./types";
 //   • Determinate   — `totalItems` + `pageSize` let it compute "Page X of Y".
 //   • Indeterminate — `hasNext` / `hasPrevious` for cursor-style data where the
 //     total is unknown; only the Prev / Next controls render.
+// On top of that, each mode has two navigation styles: callbacks (`goToPage`, or
+// `onPrevious` / `onNext`) that render <button>s, or link getters (`getPageLink`,
+// or `getPrevPageLink` / `getNextPageLink`) that render anchors styled as buttons.
 // The playground keeps `currentPage` in state and feeds it back through the nav
 // callbacks, so clicking Prev / Next actually pages. Turning on the page-size
 // select wires up `onPageSizeChange` (which the determinate math reacts to).
 
 type Mode = "determinate" | "indeterminate";
+type NavStyle = "callback" | "link";
 
 // ② State — a superset; controls show/hide per mode. `currentPage` isn't a control,
 //    it's the live page the nav buttons move through.
 interface State {
   mode: Mode;
+  navStyle: NavStyle;
   totalItems: number;
   pageSize: number;
   showPageSize: boolean;
@@ -33,6 +45,7 @@ interface State {
 
 const INITIAL_STATE: State = {
   mode: "determinate",
+  navStyle: "callback",
   totalItems: 100,
   pageSize: 10,
   showPageSize: false,
@@ -42,14 +55,16 @@ const INITIAL_STATE: State = {
 const PAGE_SIZE_OPTIONS = ["10", "25", "50"];
 
 // ③ Mirror exactly what the preview renders — one generator per mode. The code uses
-//    the realistic `currentPage` / `setCurrentPage` / `setPageSize` state handlers
-//    you'd wire up in a real app.
+//    the realistic `currentPage` / `setCurrentPage` / `setPageSize` state handlers,
+//    and the realistic link getters (`?page=N`), you'd wire up in a real app.
 function generateDeterminateCode(s: State): string {
   const attrs = [
     `  totalItems={${s.totalItems}}`,
     `  pageSize={${s.pageSize}}`,
     `  currentPage={currentPage}`,
-    `  goToPage={setCurrentPage}`,
+    s.navStyle === "link"
+      ? "  getPageLink={(page) => `?page=${page}`}"
+      : `  goToPage={setCurrentPage}`,
   ];
   if (s.showPageSize) attrs.push(`  onPageSizeChange={setPageSize}`);
   return ["<Pagination", ...attrs, "/>"].join("\n");
@@ -61,8 +76,15 @@ function generateIndeterminateCode(s: State): string {
     `  currentPage={currentPage}`,
     `  hasPrevious={currentPage > 1}`,
     `  hasNext`,
-    `  onPrevious={() => setCurrentPage(currentPage - 1)}`,
-    `  onNext={() => setCurrentPage(currentPage + 1)}`,
+    ...(s.navStyle === "link"
+      ? [
+          "  getPrevPageLink={() => `?page=${currentPage - 1}`}",
+          "  getNextPageLink={() => `?page=${currentPage + 1}`}",
+        ]
+      : [
+          `  onPrevious={() => setCurrentPage(currentPage - 1)}`,
+          `  onNext={() => setCurrentPage(currentPage + 1)}`,
+        ]),
   ];
   if (s.showPageSize) {
     attrs.push(`  pageSize={${s.pageSize}}`);
@@ -90,6 +112,47 @@ const PaginationPlayground: FC = () => {
   const reset = () => setState(INITIAL_STATE);
 
   const isIndeterminate = state.mode === "indeterminate";
+  const isLink = state.navStyle === "link";
+
+  // In link mode the component asks the router context's `Link` to render a real
+  // anchor from the getter's href — which would navigate the preview away from the
+  // docs page. We swap in a contained Link: it renders href="#", prevents the
+  // default navigation, and pages in-place by decoding the target the getters
+  // encode as `#page-N`. Stable identity (useMemo, []) so it doesn't remount.
+  const PlaygroundLink = useMemo(
+    () =>
+      forwardRef<HTMLAnchorElement, LinkProps>(function PlaygroundLink(
+        { to, children, onClick, ...rest },
+        ref,
+      ) {
+        const target = typeof to === "string" ? to : (to.pathname ?? "");
+        const match = /#page-(-?\d+)/.exec(target);
+        return (
+          <a
+            ref={ref}
+            href="#"
+            onClick={(e) => {
+              e.preventDefault();
+              if (match) {
+                const page = Number(match[1]);
+                setState((prev) => ({
+                  ...prev,
+                  currentPage:
+                    prev.mode === "indeterminate"
+                      ? Math.max(1, page)
+                      : clampPage(page, prev.totalItems, prev.pageSize),
+                }));
+              }
+              onClick?.(e);
+            }}
+            {...(rest as ComponentPropsWithoutRef<"a">)}
+          >
+            {children}
+          </a>
+        );
+      }),
+    [],
+  );
 
   // Changing the page size can leave the current page past the (new) last page,
   // so clamp it in determinate mode. Shared by the control and the in-preview select.
@@ -107,6 +170,8 @@ const PaginationPlayground: FC = () => {
     if (name === "mode") {
       // Reset to page 1 so the new mode starts from a clean state.
       setState((prev) => ({ ...prev, mode: v as Mode, currentPage: 1 }));
+    } else if (name === "navStyle") {
+      set("navStyle", v as NavStyle);
     } else if (name === "pageSize") {
       handlePageSizeChange(Number(v));
     } else if (name === "totalItems") {
@@ -129,6 +194,12 @@ const PaginationPlayground: FC = () => {
       type: "select",
       options: ["determinate", "indeterminate"],
       description: "Known total, or unknown (cursor-style)",
+    },
+    {
+      name: "navStyle",
+      type: "select",
+      options: ["callback", "link"],
+      description: "Buttons (callbacks) or anchors (link getters)",
     },
     ...(!isIndeterminate
       ? ([
@@ -175,10 +246,25 @@ const PaginationPlayground: FC = () => {
     />
   );
 
-  // ⑤ Render the real Pagination from state, mirroring generateCode exactly.
-  const preview = (
-    <div className="w-[550px] max-w-full">
-      {isIndeterminate ? (
+  // ⑤ Render the real Pagination from state, mirroring generateCode exactly. The four
+  //    branches (mode × nav style) keep the discriminated-union props type-safe. Link
+  //    getters encode the target as `#page-N` so the contained Link can page in-place.
+  const onPageSizeChange = state.showPageSize ? handlePageSizeChange : undefined;
+
+  const renderPagination = () => {
+    if (isIndeterminate) {
+      return isLink ? (
+        <Pagination
+          indeterminate
+          currentPage={state.currentPage}
+          hasPrevious={state.currentPage > 1}
+          hasNext
+          getPrevPageLink={() => `#page-${state.currentPage - 1}`}
+          getNextPageLink={() => `#page-${state.currentPage + 1}`}
+          pageSize={state.pageSize}
+          onPageSizeChange={onPageSizeChange}
+        />
+      ) : (
         <Pagination
           indeterminate
           currentPage={state.currentPage}
@@ -189,17 +275,35 @@ const PaginationPlayground: FC = () => {
           }
           onNext={() => set("currentPage", state.currentPage + 1)}
           pageSize={state.pageSize}
-          onPageSizeChange={state.showPageSize ? handlePageSizeChange : undefined}
+          onPageSizeChange={onPageSizeChange}
         />
-      ) : (
-        <Pagination
-          totalItems={state.totalItems}
-          pageSize={state.pageSize}
-          currentPage={state.currentPage}
-          goToPage={(p) => set("currentPage", p)}
-          onPageSizeChange={state.showPageSize ? handlePageSizeChange : undefined}
-        />
-      )}
+      );
+    }
+
+    return isLink ? (
+      <Pagination
+        totalItems={state.totalItems}
+        pageSize={state.pageSize}
+        currentPage={state.currentPage}
+        getPageLink={(page) => `#page-${page}`}
+        onPageSizeChange={onPageSizeChange}
+      />
+    ) : (
+      <Pagination
+        totalItems={state.totalItems}
+        pageSize={state.pageSize}
+        currentPage={state.currentPage}
+        goToPage={(p) => set("currentPage", p)}
+        onPageSizeChange={onPageSizeChange}
+      />
+    );
+  };
+
+  const preview = (
+    <div className="w-[550px] max-w-full">
+      <RouterContextProvider Link={PlaygroundLink}>
+        {renderPagination()}
+      </RouterContextProvider>
     </div>
   );
 

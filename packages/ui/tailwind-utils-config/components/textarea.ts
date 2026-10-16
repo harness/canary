@@ -37,7 +37,7 @@ export default {
     borderRadius: 'var(--cn-input-radius)',
     padding: 'var(--cn-input-md-py) var(--cn-input-md-pr) var(--cn-input-md-py) var(--cn-input-md-pl)',
     minHeight: 'var(--cn-input-text-area-min-height)',
-    border: 'var(--cn-input-border) solid var(--cn-border-2)',
+    border: 'var(--cn-input-border) solid var(--cn-border-3)',
     backgroundColor: 'var(--cn-comp-input-bg)',
     '@apply font-body-normal': '',
     color: 'var(--cn-text-1)',

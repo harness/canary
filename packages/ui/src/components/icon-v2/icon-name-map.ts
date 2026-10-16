@@ -139,6 +139,7 @@ import CollapseSidebar from './icons/collapse-sidebar.svg'
 import Collapse from './icons/collapse.svg'
 import CollapsedItems from './icons/collapsed-items.svg'
 import Community from './icons/community.svg'
+import Complexity from './icons/complexity.svg'
 import ConnectorsSolid from './icons/connectors-solid.svg'
 import Connectors from './icons/connectors.svg'
 import ContainersSolid from './icons/containers-solid.svg'
@@ -266,6 +267,7 @@ import HeartSolid from './icons/heart-solid.svg'
 import Heart from './icons/heart.svg'
 import HelpCircleSolid from './icons/help-circle-solid.svg'
 import HelpCircle from './icons/help-circle.svg'
+import Hygiene from './icons/hygiene.svg'
 import Import from './icons/import.svg'
 import IncidentsSolid from './icons/incidents-solid.svg'
 import Incidents from './icons/incidents.svg'
@@ -393,6 +395,7 @@ import RefreshCircle from './icons/refresh-circle.svg'
 import RefreshDouble from './icons/refresh-double.svg'
 import Refresh from './icons/refresh.svg'
 import Regex from './icons/regex.svg'
+import Reliability from './icons/reliability.svg'
 import ReloadWindow from './icons/reload-window.svg'
 import ReminderHandGesture from './icons/reminder-hand-gesture.svg'
 import ReplyToMessage from './icons/reply-to-message.svg'
@@ -676,6 +679,7 @@ export const IconNameMapV2 = {
   collapse: Collapse,
   'collapsed-items': CollapsedItems,
   community: Community,
+  complexity: Complexity,
   'connectors-solid': ConnectorsSolid,
   connectors: Connectors,
   'containers-solid': ContainersSolid,
@@ -803,6 +807,7 @@ export const IconNameMapV2 = {
   heart: Heart,
   'help-circle-solid': HelpCircleSolid,
   'help-circle': HelpCircle,
+  hygiene: Hygiene,
   import: Import,
   'incidents-solid': IncidentsSolid,
   incidents: Incidents,
@@ -930,6 +935,7 @@ export const IconNameMapV2 = {
   'refresh-double': RefreshDouble,
   refresh: Refresh,
   regex: Regex,
+  reliability: Reliability,
   'reload-window': ReloadWindow,
   'reminder-hand-gesture': ReminderHandGesture,
   'reply-to-message': ReplyToMessage,

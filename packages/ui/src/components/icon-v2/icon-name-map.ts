@@ -494,6 +494,7 @@ import Tasks from './icons/tasks.svg'
 import Templates from './icons/templates.svg'
 import TerminalTag from './icons/terminal-tag.svg'
 import Terminal from './icons/terminal.svg'
+import TestIcon from './icons/test-icon.svg'
 import TextSize from './icons/text-size.svg'
 import TextSquare from './icons/text-square.svg'
 import Theme from './icons/theme.svg'
@@ -1034,6 +1035,7 @@ export const IconNameMapV2 = {
   templates: Templates,
   'terminal-tag': TerminalTag,
   terminal: Terminal,
+  'test-icon': TestIcon,
   'text-size': TextSize,
   'text-square': TextSquare,
   theme: Theme,

@@ -48,7 +48,7 @@ function Meter({ data = [], className }: IMeterProps) {
               <Popover
                 triggerType="hover"
                 hoverDelay={150}
-                closeDelay={0}
+                closeDelay={150}
                 content={tooltip.content}
                 side="top"
                 align="center"

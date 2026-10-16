@@ -1,7 +1,9 @@
 import { type FC, type ReactNode, useMemo, useState } from "react";
 import {
+  Breadcrumb,
   Button,
   CopyButton,
+  type HeaderV2TabItem,
   IconV2,
   Page,
   TooltipProvider,
@@ -9,13 +11,18 @@ import {
 import ControlField from "./ControlField";
 import type { PropControl } from "./types";
 
-// Page.Header is the standard page header: a back link, a leading icon OR logo,
-// the title, a description, and header-right actions. Several of its interesting
-// props are ReactNode (actions, headerActions) or object shapes (backLink,
-// favoriteProps) that the generic schema-driven Playground can't express, so this
-// is a bespoke playground. The header reads its scrollable/max-width context from
-// Page.Root, but both have sensible defaults, so it renders standalone here — the
-// same way the doc's static example does.
+// The Page header has two forms, and this one playground covers both via a
+// `component` toggle (the way LogoPlayground folds LogoV2 + LogoSymbol into one):
+//   • Page.Header   — the standard header: back link, icon OR logo, title,
+//     description, header-right actions, favorite, loading skeleton.
+//   • Page.HeaderV2 — the tabbed variant: breadcrumbs, a hero title, a router-driven
+//     tab strip (underlined below, or ghost inline in the title row), and actions.
+// Several interesting props are ReactNode (actions, breadcrumbs) or object/array
+// shapes (backLink, favoriteProps, tabs) the generic Playground can't express, so
+// this is bespoke. Both read their scrollable/max-width context from Page.Root, but
+// both have sensible defaults, so they render standalone here — and the tab strip
+// falls back to the router context's default anchor renderer, so no RouterProvider
+// is needed.
 
 // ① Sample slot content shared by BOTH the preview and the generated snippet so
 //    the two never drift.
@@ -28,6 +35,28 @@ const SAMPLE_ACTIONS: ReactNode = (
 const SAMPLE_HEADER_ACTIONS: ReactNode = (
   <Button variant="outline">Share</Button>
 );
+const SAMPLE_V2_ACTIONS: ReactNode = <Button>Clone</Button>;
+
+const SAMPLE_TABS: HeaderV2TabItem[] = [
+  { label: "Summary", value: "/", exact: true },
+  { label: "Files", value: "/files", icon: "empty-page" },
+  { label: "Commits", value: "/commits", icon: "git-commit", counter: 12 },
+  { label: "Branches", value: "/branches", icon: "git-branch" },
+];
+
+const SAMPLE_BREADCRUMBS: ReactNode = (
+  <Breadcrumb.Root>
+    <Breadcrumb.List>
+      <Breadcrumb.Item>
+        <Breadcrumb.Link href="#">Project</Breadcrumb.Link>
+      </Breadcrumb.Item>
+      <Breadcrumb.Separator />
+      <Breadcrumb.Item>
+        <Breadcrumb.Page>Repository</Breadcrumb.Page>
+      </Breadcrumb.Item>
+    </Breadcrumb.List>
+  </Breadcrumb.Root>
+);
 
 const SAMPLE_ACTIONS_CODE = `  actions={
     <>
@@ -36,6 +65,26 @@ const SAMPLE_ACTIONS_CODE = `  actions={
     </>
   }`;
 const SAMPLE_HEADER_ACTIONS_CODE = `  headerActions={<Button variant="outline">Share</Button>}`;
+const SAMPLE_V2_ACTIONS_CODE = `  actions={<Button>Clone</Button>}`;
+const SAMPLE_TABS_CODE = `  tabs={[
+    { label: 'Summary', value: '/', exact: true },
+    { label: 'Files', value: '/files', icon: 'empty-page' },
+    { label: 'Commits', value: '/commits', icon: 'git-commit', counter: 12 },
+    { label: 'Branches', value: '/branches', icon: 'git-branch' },
+  ]}`;
+const SAMPLE_BREADCRUMBS_CODE = `  breadcrumbs={
+    <Breadcrumb.Root>
+      <Breadcrumb.List>
+        <Breadcrumb.Item>
+          <Breadcrumb.Link href="#">Project</Breadcrumb.Link>
+        </Breadcrumb.Item>
+        <Breadcrumb.Separator />
+        <Breadcrumb.Item>
+          <Breadcrumb.Page>Repository</Breadcrumb.Page>
+        </Breadcrumb.Item>
+      </Breadcrumb.List>
+    </Breadcrumb.Root>
+  }`;
 
 // Curated leading glyphs — the header takes either an icon or a logo before the title.
 const ICON_NAMES = [
@@ -54,23 +103,34 @@ const LOGO_NAMES = [
   "kubernetes",
   "aws",
 ];
+const ICON_SIZES = ["2xs", "xs", "sm", "md", "lg", "xl"];
 
-// ② State — one field per control.
+type Component = "Page.Header" | "Page.HeaderV2";
+
+// ② State — a superset; controls show/hide per component.
 interface State {
+  component: Component;
   title: string;
   description: string;
   leading: "none" | "icon" | "logo";
   iconName: string;
   iconSize: "2xs" | "xs" | "sm" | "md" | "lg" | "xl";
   logoName: string;
+  // Page.Header only
   backLink: boolean;
-  actions: boolean;
   headerActions: boolean;
   favorite: boolean;
   isLoading: boolean;
+  // shared
+  actions: boolean;
+  // Page.HeaderV2 only
+  tabs: boolean;
+  tabsVariant: "underlined" | "ghost";
+  breadcrumbs: boolean;
 }
 
 const INITIAL_STATE: State = {
+  component: "Page.HeaderV2",
   title: "Pipelines",
   description: "Define, run, and monitor your CI/CD pipelines.",
   leading: "icon",
@@ -78,16 +138,19 @@ const INITIAL_STATE: State = {
   iconSize: "lg",
   logoName: "harness",
   backLink: true,
-  actions: true,
   headerActions: false,
   favorite: false,
   isLoading: false,
+  actions: true,
+  tabs: true,
+  tabsVariant: "underlined",
+  breadcrumbs: true,
 };
 
-// ③ Mirror exactly what the preview renders. The leading glyph is an icon OR a
-//    logo (never both), and iconSize only applies to the icon — same branches the
-//    preview takes.
-function generateCode(s: State): string {
+// ③ Mirror exactly what the preview renders — one generator per component. Each
+//    emits only the props actually set, and branches on the same conditions the
+//    preview does (icon vs logo, tabs variant, etc.).
+function generateHeaderCode(s: State): string {
   const attrs: string[] = [`  title="${s.title}"`];
 
   if (s.leading === "icon") {
@@ -115,6 +178,26 @@ function generateCode(s: State): string {
   return ["<Page.Header", ...attrs, "/>"].join("\n");
 }
 
+function generateHeaderV2Code(s: State): string {
+  const attrs: string[] = [`  title="${s.title}"`];
+
+  if (s.leading === "icon") attrs.push(`  iconName="${s.iconName}"`);
+  if (s.description) attrs.push(`  description="${s.description}"`);
+  if (s.breadcrumbs) attrs.push(SAMPLE_BREADCRUMBS_CODE);
+  if (s.tabs) attrs.push(SAMPLE_TABS_CODE);
+  if (s.tabsVariant !== "underlined") {
+    attrs.push(`  tabsVariant="${s.tabsVariant}"`);
+  }
+  if (s.actions) attrs.push(SAMPLE_V2_ACTIONS_CODE);
+
+  return ["<Page.HeaderV2", ...attrs, "/>"].join("\n");
+}
+
+const generateCode = (s: State): string =>
+  s.component === "Page.HeaderV2"
+    ? generateHeaderV2Code(s)
+    : generateHeaderCode(s);
+
 const PageHeaderPlayground: FC = () => {
   const [state, setState] = useState<State>(INITIAL_STATE);
   // Favorite owns its own pressed state so the star toggles live in the preview.
@@ -128,19 +211,26 @@ const PageHeaderPlayground: FC = () => {
     setFavorite(false);
   };
 
-  // ④ Curated control set.
+  const isV2 = state.component === "Page.HeaderV2";
+
+  // ④ Curated control set — the tail differs per component.
   const controls: PropControl[] = [
-    { name: "title", type: "text", required: true },
     {
-      name: "description",
-      type: "text",
-      description: "Empty hides the prop",
+      name: "component",
+      type: "select",
+      options: ["Page.Header", "Page.HeaderV2"],
+      description: "Standard header, or the tabbed variant",
     },
+    { name: "title", type: "text", required: true },
+    { name: "description", type: "text", description: "Empty hides the prop" },
     {
       name: "leading",
       type: "select",
-      options: ["none", "icon", "logo"],
-      description: "Glyph before the title — an icon or a logo",
+      // HeaderV2 has no logo slot.
+      options: isV2 ? ["none", "icon"] : ["none", "icon", "logo"],
+      description: isV2
+        ? "Icon before the title"
+        : "Glyph before the title — an icon or a logo",
     },
     {
       name: "iconName",
@@ -148,43 +238,69 @@ const PageHeaderPlayground: FC = () => {
       options: ICON_NAMES,
       description: "Used when leading is 'icon'",
     },
-    {
-      name: "iconSize",
-      type: "select",
-      options: ["2xs", "xs", "sm", "md", "lg", "xl"],
-      description: "Used when leading is 'icon'",
-    },
-    {
-      name: "logoName",
-      type: "select",
-      options: LOGO_NAMES,
-      description: "Used when leading is 'logo'",
-    },
-    {
-      name: "backLink",
-      type: "boolean",
-      description: "Back navigation link above the title",
-    },
+    ...(isV2
+      ? ([
+          {
+            name: "tabsVariant",
+            type: "select",
+            options: ["underlined", "ghost"],
+            description: "Tabs below the title, or inline in the title row",
+          },
+        ] as PropControl[])
+      : ([
+          {
+            name: "iconSize",
+            type: "select",
+            options: ICON_SIZES,
+            description: "Used when leading is 'icon'",
+          },
+          {
+            name: "logoName",
+            type: "select",
+            options: LOGO_NAMES,
+            description: "Used when leading is 'logo'",
+          },
+        ] as PropControl[])),
     {
       name: "actions",
       type: "boolean",
       description: "Header-right action buttons",
     },
-    {
-      name: "headerActions",
-      type: "boolean",
-      description: "Actions in the top row, beside the back link",
-    },
-    {
-      name: "favorite",
-      type: "boolean",
-      description: "Favorite (pin) toggle next to the title",
-    },
-    {
-      name: "isLoading",
-      type: "boolean",
-      description: "Skeleton placeholders for the glyph and title",
-    },
+    ...(isV2
+      ? ([
+          {
+            name: "tabs",
+            type: "boolean",
+            description: "Section-navigation tab strip",
+          },
+          {
+            name: "breadcrumbs",
+            type: "boolean",
+            description: "Breadcrumb trail above the title",
+          },
+        ] as PropControl[])
+      : ([
+          {
+            name: "backLink",
+            type: "boolean",
+            description: "Back navigation link above the title",
+          },
+          {
+            name: "headerActions",
+            type: "boolean",
+            description: "Actions in the top row, beside the back link",
+          },
+          {
+            name: "favorite",
+            type: "boolean",
+            description: "Favorite (pin) toggle next to the title",
+          },
+          {
+            name: "isLoading",
+            type: "boolean",
+            description: "Skeleton placeholders for the glyph and title",
+          },
+        ] as PropControl[])),
   ];
 
   const inputControls = controls.filter((c) => c.type !== "boolean");
@@ -195,12 +311,39 @@ const PageHeaderPlayground: FC = () => {
       key={prop.name}
       prop={prop}
       value={state[prop.name as keyof State]}
-      onChange={(v) => set(prop.name as keyof State, v as never)}
+      onChange={(v) =>
+        prop.name === "component"
+          ? // Switching to HeaderV2 while "logo" is selected would leave `leading`
+            // outside that component's options, so normalize it to "icon".
+            setState((prev) => ({
+              ...prev,
+              component: v as Component,
+              leading:
+                v === "Page.HeaderV2" && prev.leading === "logo"
+                  ? "icon"
+                  : prev.leading,
+            }))
+          : set(prop.name as keyof State, v as never)
+      }
     />
   );
 
-  // ⑤ Render the real Page.Header from state, mirroring generateCode exactly.
-  const preview = (
+  // ⑤ Render the real component from state, mirroring generateCode exactly.
+  const preview = isV2 ? (
+    <div className="w-full">
+      <Page.HeaderV2
+        title={state.title}
+        description={state.description || undefined}
+        iconName={
+          state.leading === "icon" ? (state.iconName as never) : undefined
+        }
+        breadcrumbs={state.breadcrumbs ? SAMPLE_BREADCRUMBS : undefined}
+        tabs={state.tabs ? SAMPLE_TABS : undefined}
+        tabsVariant={state.tabsVariant}
+        actions={state.actions ? SAMPLE_V2_ACTIONS : undefined}
+      />
+    </div>
+  ) : (
     <div className="w-full">
       <Page.Header
         title={state.title}

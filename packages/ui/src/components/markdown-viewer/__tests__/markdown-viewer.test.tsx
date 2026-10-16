@@ -272,6 +272,7 @@ describe('MarkdownViewer', () => {
       const wrapperDiv = container.querySelector('div[style]') as HTMLElement
       expect(wrapperDiv).toBeTruthy()
       expect(wrapperDiv.style.maxHeight).toBe('500px')
+      expect(wrapperDiv.style.overflowY).toBe('auto')
     })
 
     it('applies numeric maxHeight', () => {
@@ -281,6 +282,7 @@ describe('MarkdownViewer', () => {
       const wrapperDiv = container.querySelector('div[style]') as HTMLElement
       expect(wrapperDiv).toBeTruthy()
       expect(wrapperDiv.style.maxHeight).toBe('300px')
+      expect(wrapperDiv.style.overflowY).toBe('auto')
     })
   })
 

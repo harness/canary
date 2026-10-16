@@ -33,6 +33,7 @@ import LinkPlayground from "./playground/LinkPlayground.tsx";
 import LogoPlayground from "./playground/LogoPlayground.tsx";
 import NoDataPlayground from "./playground/NoDataPlayground.tsx";
 import NumberInputPlayground from "./playground/NumberInputPlayground.tsx";
+import PageHeaderPlayground from "./playground/PageHeaderPlayground.tsx";
 import SplitButtonPlayground from "./playground/SplitButtonPlayground.tsx";
 import StatusBadgePlayground from "./playground/StatusBadgePlayground.tsx";
 import TextInputPlayground from "./playground/TextInputPlayground.tsx";
@@ -83,6 +84,7 @@ export const DocsPage = {
   LogoPlayground,
   NoDataPlayground,
   NumberInputPlayground,
+  PageHeaderPlayground,
   TextInputPlayground,
   TimeInputPlayground,
   StatusBadgePlayground,

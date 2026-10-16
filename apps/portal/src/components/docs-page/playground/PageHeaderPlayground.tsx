@@ -1,4 +1,12 @@
-import { type FC, type ReactNode, useMemo, useState } from "react";
+import {
+  type ComponentPropsWithoutRef,
+  type FC,
+  forwardRef,
+  type ReactNode,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
 import {
   Breadcrumb,
   Button,
@@ -8,6 +16,7 @@ import {
   Page,
   TooltipProvider,
 } from "@harnessio/ui/components";
+import { RouterContextProvider, type NavLinkProps } from "@harnessio/ui/context";
 import ControlField from "./ControlField";
 import type { PropControl } from "./types";
 
@@ -104,6 +113,13 @@ const LOGO_NAMES = [
   "aws",
 ];
 const ICON_SIZES = ["2xs", "xs", "sm", "md", "lg", "xl"];
+
+// Passing an Outlet flips the router context out of its v5 code path, so
+// Page.HeaderV2's tabs resolve their active state from the NavLink's `isActive`
+// (the v6 behaviour the Variation example uses).
+const OutletPassthrough = ({ children }: { children?: ReactNode }) => (
+  <>{children}</>
+);
 
 type Component = "Page.Header" | "Page.HeaderV2";
 
@@ -202,6 +218,13 @@ const PageHeaderPlayground: FC = () => {
   const [state, setState] = useState<State>(INITIAL_STATE);
   // Favorite owns its own pressed state so the star toggles live in the preview.
   const [favorite, setFavorite] = useState(false);
+  // The HeaderV2 tabs are router links. There's no real router in the doc site,
+  // so we give them a self-contained active state: clicking a tab selects it
+  // without navigating, and the links render empty (href="#") — matching how the
+  // Variation example's memory router keeps its clicks on the page.
+  const [activeTab, setActiveTab] = useState(SAMPLE_TABS[0].value);
+  const activeTabRef = useRef(activeTab);
+  activeTabRef.current = activeTab;
 
   const set = <K extends keyof State>(key: K, value: State[K]) =>
     setState((prev) => ({ ...prev, [key]: value }));
@@ -209,7 +232,47 @@ const PageHeaderPlayground: FC = () => {
   const reset = () => {
     setState(INITIAL_STATE);
     setFavorite(false);
+    setActiveTab(SAMPLE_TABS[0].value);
   };
+
+  // A NavLink that selects-without-navigating, so the tab strip is interactive
+  // in the preview but never leaves the doc page. Stable identity (empty deps);
+  // it reads the latest active tab from a ref so it doesn't need to re-mount.
+  const PlaygroundNavLink = useMemo(
+    () =>
+      forwardRef<HTMLAnchorElement, NavLinkProps>(function PlaygroundNavLink(
+        { to, children, className, style, onClick, end: _end, ...rest },
+        ref,
+      ) {
+        const target = typeof to === "string" ? to : (to.pathname ?? "/");
+        const isActive = target === activeTabRef.current;
+        const resolvedClassName =
+          typeof className === "function"
+            ? className({ isActive, isPending: false, isTransitioning: false })
+            : className;
+        const resolvedStyle =
+          typeof style === "function"
+            ? style({ isActive, isPending: false, isTransitioning: false })
+            : style;
+        return (
+          <a
+            ref={ref}
+            href="#"
+            className={resolvedClassName}
+            style={resolvedStyle}
+            onClick={(e) => {
+              e.preventDefault();
+              setActiveTab(target);
+              onClick?.(e);
+            }}
+            {...(rest as ComponentPropsWithoutRef<"a">)}
+          >
+            {children}
+          </a>
+        );
+      }),
+    [],
+  );
 
   const isV2 = state.component === "Page.HeaderV2";
 
@@ -330,19 +393,24 @@ const PageHeaderPlayground: FC = () => {
 
   // ⑤ Render the real component from state, mirroring generateCode exactly.
   const preview = isV2 ? (
-    <div className="w-full">
-      <Page.HeaderV2
-        title={state.title}
-        description={state.description || undefined}
-        iconName={
-          state.leading === "icon" ? (state.iconName as never) : undefined
-        }
-        breadcrumbs={state.breadcrumbs ? SAMPLE_BREADCRUMBS : undefined}
-        tabs={state.tabs ? SAMPLE_TABS : undefined}
-        tabsVariant={state.tabsVariant}
-        actions={state.actions ? SAMPLE_V2_ACTIONS : undefined}
-      />
-    </div>
+    <RouterContextProvider
+      NavLink={PlaygroundNavLink}
+      Outlet={OutletPassthrough}
+    >
+      <div className="w-full">
+        <Page.HeaderV2
+          title={state.title}
+          description={state.description || undefined}
+          iconName={
+            state.leading === "icon" ? (state.iconName as never) : undefined
+          }
+          breadcrumbs={state.breadcrumbs ? SAMPLE_BREADCRUMBS : undefined}
+          tabs={state.tabs ? SAMPLE_TABS : undefined}
+          tabsVariant={state.tabsVariant}
+          actions={state.actions ? SAMPLE_V2_ACTIONS : undefined}
+        />
+      </div>
+    </RouterContextProvider>
   ) : (
     <div className="w-full">
       <Page.Header

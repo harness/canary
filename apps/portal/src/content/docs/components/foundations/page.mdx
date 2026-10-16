@@ -19,25 +19,7 @@ The `Page` component provides the header + content structure that sits inside th
 
 `Page.Header` composes a back link, an icon or logo, the page title, a description, and header-right actions into a single standardized header.
 
-<DocsPage.ComponentExample
-  client:only
-  code={`
-    <div className="w-full">
-      <Page.Header
-        title="Pipelines"
-        iconName="empty-page"
-        description="Define, run, and monitor your CI/CD pipelines."
-        backLink={{ linkText: 'Back to project', linkProps: { to: '#' } }}
-        actions={
-          <>
-            <Button variant="outline">Settings</Button>
-            <Button>New pipeline</Button>
-          </>
-        }
-      />
-    </div>
-`}
-/>
+<DocsPage.PageHeaderPlayground client:only />
 
 ## Variations
 

@@ -62,6 +62,7 @@ export const ExecutionStatusBadge: React.FC<IExecutionStatusBadgeProps> = props 
         </div>
       )
     case PipelineExecutionStatus.SUCCESS:
+    case PipelineExecutionStatus.IGNORE_FAILED:
       return minimal ? (
         <div className="flex items-center gap-cn-3xs">
           <div className="bg-cn-success-primary size-2 rounded-cn-full" />

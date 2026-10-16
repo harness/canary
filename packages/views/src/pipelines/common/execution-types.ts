@@ -4,6 +4,7 @@ export enum PipelineExecutionStatus {
   PENDING = 'pending',
   RUNNING = 'running',
   SUCCESS = 'success',
+  IGNORE_FAILED = 'ignorefailed',
   FAILURE = 'failure',
   ERROR = 'error',
   SKIPPED = 'skipped',
@@ -18,6 +19,7 @@ export type CiStatus =
   | 'declined'
   | 'error'
   | 'failure'
+  | 'ignorefailed'
   | 'killed'
   | 'pending'
   | 'running'

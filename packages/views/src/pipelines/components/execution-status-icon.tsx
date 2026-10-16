@@ -17,6 +17,7 @@ export const ExecutionStatusIcon: React.FC<IExecutionStatusIconProps> = props =>
     case PipelineExecutionStatus.ERROR:
       return <IconV2 name="xmark-circle-solid" color="danger" />
     case PipelineExecutionStatus.SUCCESS:
+    case PipelineExecutionStatus.IGNORE_FAILED:
       return <IconV2 name="check-circle-solid" color="success" />
     case PipelineExecutionStatus.RUNNING:
       return <IconV2 name="loader" color="warning" className="animate-spin" />

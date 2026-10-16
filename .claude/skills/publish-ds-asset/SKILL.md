@@ -422,6 +422,11 @@ Sanity-check the content too: an icon must contain `currentColor` and no `width=
 root `<svg>`; a logo must contain its brand hex; a symbol must contain `currentColor` and no
 background rect.
 
+`add-asset.mjs` also warns if a processed SVG exceeds **5 KB**. No icon currently ships above 2.6 KB,
+so a flagged icon is a genuine outlier — a too-complex glyph that should be simplified, or a
+candidate for an optimised PNG (there is no PNG pipeline yet, so raise it with a human). A few
+intricate brand marks legitimately run larger, so for logos this is advisory, not a blocker.
+
 ## Step 6 — Commit
 
 Stage by explicit path. Never `git add .`, so `.env` cannot slip in.

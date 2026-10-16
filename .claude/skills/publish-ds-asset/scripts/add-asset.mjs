@@ -46,6 +46,16 @@ import {
 
 const args = parseArgs(process.argv.slice(2))
 
+/**
+ * Past ~5 KB an SVG is usually detailed enough that an optimised PNG
+ * (TinyPNG / ImageOptim) would be smaller and faster to parse. This is advisory
+ * only: no icon currently ships over 2.6 KB, so a flagged icon is a real outlier
+ * worth a second look, whereas a handful of complex brand marks legitimately run
+ * larger. The PNG path is not wired into the name maps, so this cannot auto-fix —
+ * it just makes sure a heavy asset gets a human glance instead of sailing through.
+ */
+const SVG_SIZE_WARN_BYTES = 5 * 1024
+
 function fail(msg) {
   console.error(`\n❌ ${msg}\n`)
   process.exit(1)
@@ -184,6 +194,15 @@ async function writeSvg(kind, filename, content) {
     undo: () => (prior === null ? fs.unlink(target) : fs.writeFile(target, prior, 'utf8'))
   })
   console.log(`  ✅ ${target}  (${content.length} bytes${prior !== null ? ', OVERWRITTEN' : ''})`)
+  if (content.length > SVG_SIZE_WARN_BYTES) {
+    console.warn(
+      `  ⚠️  ${target} is ${(content.length / 1024).toFixed(1)} KB (> 5 KB). Large SVGs are ` +
+        `slow to parse and bloat the bundle.\n` +
+        `      For a very complex mark, an optimised PNG (TinyPNG / ImageOptim) is usually ` +
+        `smaller — but the maps have no PNG path yet, so flag this for a human rather than ` +
+        `shipping a heavy SVG unexamined.`
+    )
+  }
   return target
 }
 

@@ -130,6 +130,10 @@ export default {
     '@apply font-body-normal': '',
     display: 'flex',
     alignItems: 'center',
+    // Center the content so the width reserved for the bold (hover/active) label
+    // sits evenly on both sides. The label then grows symmetrically from its
+    // center when it bolds, instead of expanding rightward from the left edge.
+    justifyContent: 'center',
     color: 'var(--cn-text-3)',
     userSelect: 'none',
     whiteSpace: 'nowrap',
@@ -137,6 +141,12 @@ export default {
     transitionProperty: 'color, background-color, border-color',
     transitionDuration: '150ms',
     transitionTimingFunction: 'ease-in-out',
+
+    // Vertical (sidebar-style) tabs stretch full width; keep their labels
+    // left-aligned rather than centered.
+    '.cn-tabs-list-vertical &': {
+      justifyContent: 'flex-start'
+    },
 
     '&.cn-tabs-trigger-measure-strong': {
       '@apply font-body-strong': ''

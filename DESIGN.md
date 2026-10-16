@@ -287,10 +287,10 @@ colors:
 # TYPOGRAPHY
 # =============================================================================
 # Inter for UI, JetBrains Mono for code. Variable-font weight axis maps the
-# common 100–900 scale to its own `Thin/ExtraLight/310/360/440/550/Bold/...`
+# common 100–900 scale to its own `Thin/ExtraLight/400/530/Bold/...`
 # values; in CSS the standard numeric weights resolve to those.
-# 11 semantic roles below; the underlying 17-step `cn-size-*` scale and the
-# six lineHeight multipliers (none 1.14 → loose 1.75) are documented in
+# 11 semantic roles below; the underlying 14-step `cn-size-*` scale and the
+# flat 4px line-height grid (8–40px) are documented in
 # design-tokens/core/typography.json.
 # =============================================================================
 typography:
@@ -537,19 +537,19 @@ The color system has two layers and components only ever consume the second one.
 
 ## Typography
 
-**Families.** `Inter` for UI (`fontFamily.default`), `JetBrains Mono` for code. Both are variable fonts — Inter's weight axis maps the standard 100–900 ladder onto a denser numeric scale (`310`/`360`/`440`/`550` instead of Light/Regular/Medium/SemiBold) for finer control.
+**Families.** `Inter` for UI (`fontFamily.default`), `JetBrains Mono` for code. Both are variable fonts — Inter's weight axis maps the standard 100–900 ladder onto a tuned numeric scale (`400`/`530` for Regular/SemiBold) for optical balance.
 
-**Size scale.** Seventeen steps (`fontSize.0`…`fontSize.16`), 0.55rem (8.8px) → 8rem (128px). The scale is consumed via the eleven semantic roles enumerated in the frontmatter — code should reach for `body-normal`, `heading-section`, `caption-strong`, etc., not raw size tokens.
+**Size scale.** Fourteen steps (`fontSize.0`…`fontSize.15`), 0.55rem (8.8px) → 6rem (96px). The scale is consumed via the eleven semantic roles enumerated in the frontmatter — code should reach for `body-normal`, `heading-section`, `caption-strong`, etc., not raw size tokens.
 
-**Line heights.** Six multipliers — `none` (1.14), `tight` (1.25), `snug` (1.428), `normal` (1.5), `relaxed` (1.625), `loose` (1.75) — composed against each font size. Use `none`/`tight` for display, `snug`/`normal` for body.
+**Line heights.** A flat 4px grid — `lineHeight.{8,12,16,20,24,28,32,36,40}` (8px–40px) — bound directly to each role rather than computed as a size ratio. (A single `multiplier.none` (1.14) and the `lineHeight.chart.*` tokens are retained only for legacy charts, pending the chart migration.)
 
-**Tracking.** Six steps from `tighter` (-0.05em) for display down through `normal` (0em) up to `widest` (0.1em) for all-caps labels.
+**Tracking.** Three steps — `tight` (-0.02em) for headings, `normal` (0em) for body, `wide` (0.025em) for improved readability.
 
 **Defaults.**
-- Body copy: `body-normal` (14px / 440 weight / 1.428 line-height).
-- UI labels: `body-strong` (14px / 550).
-- Section headings: `heading-base` (16px / 550) or `heading-subsection` (24px / 550).
-- Code/identifiers: `body-code` (13px / JetBrains Mono).
+- Body copy: `body-normal` (14px / 400 weight / 20px line-height).
+- UI labels: `body-strong` (14px / 530).
+- Section headings: `heading-base` (16px / 530) or `heading-subsection` (18px / 530).
+- Code/identifiers: `body-code` (12px / JetBrains Mono).
 - Eyebrow / metadata: `label-caps` (11.5px / uppercase / 0.1em tracked).
 
 Two weights per surface is the practical ceiling — mixing more than that reads as noise.

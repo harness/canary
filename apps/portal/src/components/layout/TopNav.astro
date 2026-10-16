@@ -30,8 +30,9 @@ const active = getActiveCategory(Astro.url.pathname);
             { "cn-tabs-trigger-active": category.id === active?.id },
           ]}
           aria-current={category.id === active?.id ? "page" : undefined}
+          data-label={category.label}
         >
-          {category.label}
+          <span class="cn-topnav-tab-label">{category.label}</span>
         </a>
       ))
     }

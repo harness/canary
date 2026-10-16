@@ -168,14 +168,14 @@ const Progress = forwardRef<HTMLProgressElement, ProgressProps>(
           <label className="cn-progress-header" htmlFor={id}>
             <div className="cn-progress-header-left">
               {label && (
-                <Text variant="body-strong" color="foreground-1" truncate>
+                <Text variant="body-normal" color="foreground-1" truncate>
                   {label}
                 </Text>
               )}
             </div>
             <div className="cn-progress-header-right">
               {!hidePercentage && variant === 'default' && (
-                <Text variant="body-strong" color="foreground-1">
+                <Text variant="body-normal" color="foreground-1">
                   {percentageValue}%
                 </Text>
               )}
@@ -190,7 +190,7 @@ const Progress = forwardRef<HTMLProgressElement, ProgressProps>(
           <div className="cn-progress-footer">
             <div className="cn-progress-description-wrap">
               {description && (
-                <Text className="cn-progress-description" variant="body-strong" color="foreground-3" truncate>
+                <Text className="cn-progress-description" variant="body-normal" color="foreground-3" truncate>
                   {description}
                 </Text>
               )}

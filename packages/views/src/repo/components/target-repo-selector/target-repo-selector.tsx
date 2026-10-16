@@ -2,12 +2,25 @@ import { FC, useCallback, useState } from 'react'
 import { FieldErrors, UseFormSetValue, UseFormWatch } from 'react-hook-form'
 
 import {
+  PatternsButtonType,
+  RepoBranchSettingsFormFields,
+  RepoPushRulesSettingsFormFields,
+  RepoRepositoryOutput,
+  ScopeType,
+  TargetReposButtonType
+} from '@views'
+import { RepoTagSettingsFormFields } from '@views/repo/repo-tag-rules/types'
+import { RepoQueryObject } from '@views/repo/utils'
+
+import {
   Button,
   ButtonLayout,
   Checkbox,
   ControlGroup,
+  determineScope,
   Drawer,
   FormInput,
+  getScopedPath,
   IconV2,
   Label,
   Layout,
@@ -19,18 +32,7 @@ import {
   Table,
   Text
 } from '@harnessio/ui/components'
-import { determineScope, getScopedPath } from '@harnessio/ui/components'
 import { useTranslation } from '@harnessio/ui/context'
-import {
-  PatternsButtonType,
-  RepoBranchSettingsFormFields,
-  RepoPushRulesSettingsFormFields,
-  RepoRepositoryOutput,
-  ScopeType,
-  TargetReposButtonType
-} from '@views'
-import { RepoTagSettingsFormFields } from '@views/repo/repo-tag-rules/types'
-import { RepoQueryObject } from '@views/repo/utils'
 
 // Base interface with fields that TargetRepoSelector uses
 export interface TargetRepoSelectorFormFields {
@@ -172,7 +174,7 @@ const TargetRepoSelectorBase: FC<TargetRepoSelectorBaseProps> = ({
       <ControlGroup>
         <Label htmlFor="target-repos">{t('views:repos.targetRepositories', 'Target Repositories')}</Label>
         <Drawer.Root open={isDrawerOpen} onOpenChange={setIsDrawerOpen}>
-          <Text variant="caption-light" className="pt-cn-sm">
+          <Text variant="caption-normal" className="pt-cn-sm">
             {t('views:repos.repositories', 'Repositories')}
           </Text>
           <Drawer.Trigger>
@@ -253,7 +255,7 @@ const TargetRepoSelectorBase: FC<TargetRepoSelectorBaseProps> = ({
           </Drawer.Content>
         </Drawer.Root>
 
-        <Text variant="caption-light">
+        <Text variant="caption-normal">
           {t('views:repos.noReposSelectedAppliesAll', 'If no repositories are selected, the rule applies to all')}
         </Text>
 
@@ -273,7 +275,7 @@ const TargetRepoSelectorBase: FC<TargetRepoSelectorBaseProps> = ({
           </Layout.Flex>
         )}
 
-        <Text variant="caption-light" className="pt-cn-sm">
+        <Text variant="caption-normal" className="pt-cn-sm">
           {t('views:repos.patterns', 'Patterns')}
         </Text>
         <Layout.Grid columns="1fr auto" align="start" gap="sm">

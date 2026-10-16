@@ -1,2 +1,5 @@
 build
 node_modules
+
+# Hand-maintained token mirror with deliberate column alignment — not Prettier-managed
+DESIGN.md

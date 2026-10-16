@@ -21,23 +21,26 @@
       "normal": {
         "300": {
           "$type": "fontWeights",
-          "$value": "310"
+          "$value": "310",
+          "$description": "DEPRECATED: light weight (optical 310). Retained for backwards-compatibility only — the design system now normalizes to 400 (regular) and 600 (semibold). Do not use in new work."
         },
         "400": {
           "$type": "fontWeights",
-          "$value": "360"
+          "$value": "400"
         },
         "500": {
           "$type": "fontWeights",
-          "$value": "440"
+          "$value": "440",
+          "$description": "DEPRECATED: medium weight (optical 440). Retained for backwards-compatibility only — normalize to 400 (regular) or 600 (semibold) instead."
         },
         "600": {
           "$type": "fontWeights",
-          "$value": "550"
+          "$value": "530"
         },
         "700": {
           "$type": "fontWeights",
-          "$value": "Bold"
+          "$value": "Bold",
+          "$description": "DEPRECATED: bold weight. Retained for backwards-compatibility only — normalize to 600 (semibold) instead."
         }
       }
     },
@@ -45,7 +48,8 @@
       "normal": {
         "300": {
           "$type": "fontWeights",
-          "$value": "Light"
+          "$value": "Light",
+          "$description": "DEPRECATED: mono light weight. Retained for backwards-compatibility only — use 400 (regular) instead."
         },
         "400": {
           "$type": "fontWeights",
@@ -53,7 +57,8 @@
         },
         "500": {
           "$type": "fontWeights",
-          "$value": "Medium"
+          "$value": "Medium",
+          "$description": "DEPRECATED: mono medium weight. Retained for backwards-compatibility only — use 400 (regular) or 700 (bold) instead."
         },
         "700": {
           "$type": "fontWeights",

@@ -297,10 +297,13 @@ export function deriveFlatStepperModel(
             visualCompletedFor
           })
 
+    const isResolved = entry.status === 'completed' || entry.status === 'skipped'
     return {
       stepId: entry.stepId,
       title: stepConfig?.title ?? entry.stepId,
-      description: stepConfig?.description,
+      // Completed/skipped accordion header shows the card's one-line summary when set.
+      // Active, error, and upcoming keep the idle FlowConfig description.
+      description: isResolved && entry.summary ? entry.summary : stepConfig?.description,
       state,
       visualCompleted: visualCompletedFor(entry.stepId)
     }

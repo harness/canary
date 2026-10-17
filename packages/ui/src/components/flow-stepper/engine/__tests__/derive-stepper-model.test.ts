@@ -449,4 +449,33 @@ describe('deriveFlatStepperModel', () => {
       { stepId: 'pick', title: 'Pick', description: undefined, state: 'active', visualCompleted: false }
     ])
   })
+
+  test('completed and skipped entries use summary as the header description when set', () => {
+    const describedFlow: FlowConfig = {
+      steps: {
+        a: { title: 'A', description: 'Pick a provider', component: () => null, next: 'b' },
+        b: { title: 'B', description: 'Pick a repo', component: () => null }
+      },
+      initialStep: 'a'
+    }
+    const history: CardEntry[] = [
+      { stepId: 'a', status: 'completed', stateSnapshot: {}, summary: 'GitHub' },
+      { stepId: 'b', status: 'skipped', stateSnapshot: {}, summary: 'Harness Sample' }
+    ]
+    const result = deriveFlatStepperModel(describedFlow, history, 'b')
+    expect(result[0].description).toBe('GitHub')
+    expect(result[1].description).toBe('Harness Sample')
+  })
+
+  test('active entry keeps the idle description even if a leftover summary is present', () => {
+    const describedFlow: FlowConfig = {
+      steps: {
+        a: { title: 'A', description: 'Pick a provider', component: () => null }
+      },
+      initialStep: 'a'
+    }
+    const history: CardEntry[] = [{ stepId: 'a', status: 'active', stateSnapshot: {}, summary: 'GitHub' }]
+    const result = deriveFlatStepperModel(describedFlow, history, 'a')
+    expect(result[0].description).toBe('Pick a provider')
+  })
 })

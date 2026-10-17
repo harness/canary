@@ -19,6 +19,7 @@ interface EngineContextValue {
   drawerState: DrawerState | null
   pendingReactivation: string | null
   complete: (stepId: string, statePatch?: Record<string, unknown>, nextStepId?: string) => void
+  setSummary: (stepId: string, summary: string) => void
   error: (stepId: string, nextStepId?: string) => void
   skip: (stepId: string, nextStepId?: string) => void
   openDrawer: (id: string, props?: Record<string, unknown>) => Promise<DrawerResult>
@@ -87,6 +88,13 @@ export function useFlowCard<TState = Record<string, unknown>>(): FlowCardContext
     [engine.complete]
   )
 
+  const setSummary = useCallback(
+    (summary: string) => {
+      engine.setSummary(stepIdRef.current, summary)
+    },
+    [engine.setSummary]
+  )
+
   const error = useCallback(
     (nextStepId?: string) => {
       engine.error(stepIdRef.current, nextStepId)
@@ -106,11 +114,12 @@ export function useFlowCard<TState = Record<string, unknown>>(): FlowCardContext
       state: engine.state as TState,
       status,
       complete,
+      setSummary,
       error,
       skip,
       openDrawer: engine.openDrawer
     }),
-    [engine.state, status, complete, error, skip, engine.openDrawer]
+    [engine.state, status, complete, setSummary, error, skip, engine.openDrawer]
   )
 }
 
@@ -383,6 +392,10 @@ export function FlowEngineProvider({
     [flow.steps, resolveNextStep]
   )
 
+  const setSummary = useCallback((stepId: string, summary: string) => {
+    setCardHistory(prev => prev.map(entry => (entry.stepId === stepId ? { ...entry, summary } : entry)))
+  }, [])
+
   const openDrawer = useCallback((id: string, props?: Record<string, unknown>): Promise<DrawerResult> => {
     return new Promise<DrawerResult>(resolve => {
       setDrawerState({ id, props, resolve })
@@ -428,7 +441,9 @@ export function FlowEngineProvider({
               ...entry,
               status: 'active' as const,
               // Bump so card stacks remount this card's local state (collapse still uses forceMount).
-              mountGeneration: (entry.mountGeneration ?? 0) + 1
+              mountGeneration: (entry.mountGeneration ?? 0) + 1,
+              // Idle header prompt while this step is active again. Cards set a fresh summary on complete.
+              summary: undefined
             }
           : entry
       )
@@ -467,6 +482,7 @@ export function FlowEngineProvider({
       drawerState,
       pendingReactivation,
       complete,
+      setSummary,
       error,
       skip,
       openDrawer,
@@ -487,6 +503,7 @@ export function FlowEngineProvider({
       drawerState,
       pendingReactivation,
       complete,
+      setSummary,
       error,
       skip,
       openDrawer,

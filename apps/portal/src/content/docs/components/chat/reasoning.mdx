@@ -21,39 +21,6 @@ The `Reasoning` component displays AI reasoning or thinking content in a collaps
 
 ## Variations
 
-### Streaming state
-
-When `isStreaming` is true, the trigger displays an animated shimmer effect. The component tracks the duration automatically.
-
-<DocsPage.ComponentExample
-  client:only
-  code={`<Reasoning.Root isStreaming={true} defaultOpen={true}>
-  <Reasoning.Trigger />
-  <Reasoning.Content>
-    Processing your request and analyzing the data...
-  </Reasoning.Content>
-</Reasoning.Root>`}
-/>
-
-### With duration
-
-After streaming completes, the component displays how long the thinking took.
-
-<DocsPage.ComponentExample
-  client:only
-  code={`<Reasoning.Root duration={5} defaultOpen={false}>
-  <Reasoning.Trigger />
-  <Reasoning.Content>
-    After careful analysis, here's my reasoning:
-
-    - The input appears to be valid
-    - Processing was successful
-    - Results are ready
-
-  </Reasoning.Content>
-</Reasoning.Root>`}
-/>
-
 ### Custom thinking message
 
 Customize the thinking message using the `getThinkingMessage` prop on the trigger.

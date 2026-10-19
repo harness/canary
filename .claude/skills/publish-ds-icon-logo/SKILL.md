@@ -1,5 +1,5 @@
 ---
-name: publish-ds-asset
+name: publish-ds-icon-logo
 description: Publish an EXISTING, already-built icon, logo, symbol or brand mark from the HDS Figma file into canary end-to-end — verify the Figma component, export the SVG, update the name map(s), branch, commit, then draft the Jira ticket and PR for approval. Use whenever someone wants to publish, export, ship, or "get into code" an icon or logo that is already built/approved in Figma for canary / @harnessio/ui / IconV2 / LogoV2 / LogoSymbol — including "I've finished an icon in Figma, what now?", "publish the <brand> logo", "this icon needs to go to dev", or questions about icons-to-dev / brands-to-dev, pnpm update:icons / update:logos, icon-name-map.ts or logo-name-map.ts. If the asset does NOT exist yet and must be drawn, sourced, or created in Figma first, that is create-ds-asset, not this.
 ---
 
@@ -189,10 +189,10 @@ Write that JSON to a file, then:
 
 ```bash
 # lint just the asset you are shipping
-node .claude/skills/publish-ds-asset/scripts/lint-page.mjs --in /tmp/page.json --only <name>
+node .claude/skills/publish-ds-icon-logo/scripts/lint-page.mjs --in /tmp/page.json --only <name>
 
 # or lint the whole page (also detects name collisions, which --only cannot)
-node .claude/skills/publish-ds-asset/scripts/lint-page.mjs --in /tmp/page.json --quiet
+node .claude/skills/publish-ds-icon-logo/scripts/lint-page.mjs --in /tmp/page.json --quiet
 ```
 
 Errors block shipping. Warnings are judgement calls — read them and decide.
@@ -251,10 +251,10 @@ standalone — no Figma needed, so it costs nothing to run first:
 
 ```bash
 cd packages/ui
-node ../../.claude/skills/publish-ds-asset/scripts/parity-check.mjs --maps
+node ../../.claude/skills/publish-ds-icon-logo/scripts/parity-check.mjs --maps
 
 # then list committed assets to pick an SVG fixture
-node ../../.claude/skills/publish-ds-asset/scripts/parity-check.mjs --committed --type icon
+node ../../.claude/skills/publish-ds-icon-logo/scripts/parity-check.mjs --committed --type icon
 ```
 
 Both export pages are permanent catalogues, so **any shipped asset works as a fixture** — no need to
@@ -263,7 +263,7 @@ cross-reference what is still on the page.
 Export the fixture (same settings as the real export, below), then:
 
 ```bash
-node ../../.claude/skills/publish-ds-asset/scripts/parity-check.mjs \
+node ../../.claude/skills/publish-ds-icon-logo/scripts/parity-check.mjs \
   --type icon --name <fixture> --raw /tmp/fixture.svg
 # logos additionally need --hex '<brand hex from the component description>'
 ```
@@ -328,11 +328,11 @@ pretty-print it — then:
 
 ```bash
 cd packages/ui
-node ../../.claude/skills/publish-ds-asset/scripts/add-asset.mjs \
+node ../../.claude/skills/publish-ds-icon-logo/scripts/add-asset.mjs \
   --type icon --name <name> --raw /tmp/<name>.svg --figma-dump /tmp/page.json
 
 # logos (writes both logo and symbol SVGs and updates both maps):
-node ../../.claude/skills/publish-ds-asset/scripts/add-asset.mjs \
+node ../../.claude/skills/publish-ds-icon-logo/scripts/add-asset.mjs \
   --type logo --name <name> --hex '#1F6FEB' --raw /tmp/<name>.svg
 ```
 
@@ -387,7 +387,7 @@ everything:
 
 ```bash
 cd packages/ui
-node ../../.claude/skills/publish-ds-asset/scripts/check-regressions.mjs --expect <name>
+node ../../.claude/skills/publish-ds-icon-logo/scripts/check-regressions.mjs --expect <name>
 ```
 
 `--expect <name>` declares the one asset you intend to add, so any *other* new entry is reported as
@@ -399,7 +399,7 @@ wrapper — it runs the typecheck and, **only if it fails**, proves whether the 
 
 ```bash
 cd packages/ui
-node ../../.claude/skills/publish-ds-asset/scripts/check-typecheck.mjs --type icon   # or logo
+node ../../.claude/skills/publish-ds-icon-logo/scripts/check-typecheck.mjs --type icon   # or logo
 cd <worktree root> && git status --short && git diff --stat
 ```
 
@@ -459,7 +459,7 @@ the `git diff --stat`, Figma source and — for a branch export — the merge ga
 opens anything; that stays behind the approval below and goes through the Harness MCP.
 
 ```bash
-node .claude/skills/publish-ds-asset/scripts/prepare-submission.mjs \
+node .claude/skills/publish-ds-icon-logo/scripts/prepare-submission.mjs \
   --type feat --ticket <KEY|PENDING> --desc "Add <name> <icon|logo>" \
   --asset-type <icon|logo> --name <name> \
   --figma-file-key <key> --figma-file-name "<file>" --figma-link "<component url>" \

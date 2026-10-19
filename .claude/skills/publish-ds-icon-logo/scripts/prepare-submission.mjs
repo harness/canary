@@ -22,7 +22,7 @@
  * Dependency-free (imports only names.mjs), so it runs from anywhere in the repo.
  *
  * Usage:
- *   node .claude/skills/publish-ds-asset/scripts/prepare-submission.mjs \
+ *   node .claude/skills/publish-ds-icon-logo/scripts/prepare-submission.mjs \
  *     --type feat --ticket UUI-4033 --desc "Add ai-evals icon" \
  *     --asset-type icon --name ai-evals \
  *     --figma-file-key NYeN8I4D3anR9it8ds0lyr --figma-file-name "HDS | Icons" \

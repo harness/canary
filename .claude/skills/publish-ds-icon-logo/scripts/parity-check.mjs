@@ -15,13 +15,13 @@
  *
  * Usage:
  *   # list assets already committed, to pick a fixture that's still on the Figma page
- *   node .claude/skills/publish-ds-asset/scripts/parity-check.mjs --committed --type icon
+ *   node .claude/skills/publish-ds-icon-logo/scripts/parity-check.mjs --committed --type icon
  *
  *   # the actual check
- *   node .claude/skills/publish-ds-asset/scripts/parity-check.mjs \
+ *   node .claude/skills/publish-ds-icon-logo/scripts/parity-check.mjs \
  *     --type icon --name check-circle --raw /tmp/raw.svg
  *
- *   node .claude/skills/publish-ds-asset/scripts/parity-check.mjs \
+ *   node .claude/skills/publish-ds-icon-logo/scripts/parity-check.mjs \
  *     --type logo --name github --hex '#070709' --raw /tmp/raw.svg
  *
  * Exit code 0 = parity holds. Exit code 1 = mismatch or misuse.

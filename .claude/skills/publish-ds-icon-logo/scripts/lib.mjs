@@ -1,5 +1,5 @@
 /**
- * Shared asset-processing logic for the publish-ds-asset skill.
+ * Shared asset-processing logic for the publish-ds-icon-logo skill.
  *
  * ──────────────────────────────────────────────────────────────────────────────
  * WHY THIS FILE EXISTS / WHEN TO CHANGE IT

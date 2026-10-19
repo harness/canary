@@ -20,8 +20,8 @@
  * finally, and it refuses to pop a stash that is not the one it pushed.
  *
  * Usage (from packages/ui):
- *   node ../../.claude/skills/publish-ds-asset/scripts/check-typecheck.mjs
- *   node ../../.claude/skills/publish-ds-asset/scripts/check-typecheck.mjs --type icon
+ *   node ../../.claude/skills/publish-ds-icon-logo/scripts/check-typecheck.mjs
+ *   node ../../.claude/skills/publish-ds-icon-logo/scripts/check-typecheck.mjs --type icon
  *
  *   --type icon|logo  only isolate that family's component dir (default: both)
  *
@@ -37,7 +37,7 @@ import path from 'path'
 import { PATHS, assertRunFromPackagesUi, parseArgs } from './lib.mjs'
 
 const args = parseArgs(process.argv.slice(2))
-const STASH_MSG = 'publish-ds-asset:check-typecheck'
+const STASH_MSG = 'publish-ds-icon-logo:check-typecheck'
 
 /** The component directory a family lives in, e.g. src/components/icon-v2. */
 function componentDirs() {

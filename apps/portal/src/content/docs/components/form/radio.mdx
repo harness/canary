@@ -21,13 +21,9 @@ The `Radio` component lets people choose a single option from a set. It's a comp
 
 ## Variations
 
-### Optional
+### Disable items selectively
 
-The radio group can be marked as optional via the `optional` prop on `Radio.Root`.
-
-If the `Radio.Root` has a label, the optional indicator will appear next to the label.
-
-If there's no label, the optional indicator will be shown next to each individual radio item.
+The whole group can be disabled with `disabled` on `Radio.Root` (try it in the playground above). To disable only certain options, pass `disabled` to the individual `Radio.Item`s instead.
 
 <DocsPage.ComponentExample
   client:only
@@ -37,51 +33,6 @@ If there's no label, the optional indicator will be shown next to each individua
       return (
         <Layout.Vertical gap="xl" className="min-w-[400px]">
             <Radio.Root
-              value={group1Value}
-              onValueChange={setGroup1Value}
-              label="Optional usage with group label"
-              optional
-            >
-              <Radio.Item value="option1" label="Option 1" caption="Caption text" />
-          </Radio.Root>
-          <Separator />
-          <Radio.Root
-              value={group1Value}
-              onValueChange={setGroup1Value}
-              optional
-            >
-              <Radio.Item value="option1" label="Option 1" caption="Caption text" />
-          </Radio.Root>
-        </Layout.Vertical>
-      );
-
-}`}
-/>
-
-### Disabled
-
-The radio group can be marked as disabled via the `disabled` prop on `Radio.Root`, which disables all radio items within the group.
-
-Alternatively, the `disabled` prop can be passed to individual `Radio.Item` to disable them selectively.
-
-<DocsPage.ComponentExample
-  client:only
-  code={`() => {
-    const [group1Value, setGroup1Value] = React.useState('option1');
-
-      return (
-        <Layout.Vertical gap="xl" className="min-w-[400px]">
-            <Radio.Root
-              value={group1Value}
-              onValueChange={setGroup1Value}
-              label="Disable all radio items"
-              disabled
-            >
-              <Radio.Item value="option1" label="Option 1" caption="Caption text" />
-              <Radio.Item value="option2" label="Option 2" caption="Caption text" />
-          </Radio.Root>
-          <Separator />
-          <Radio.Root
               value={group1Value}
               onValueChange={setGroup1Value}
               label="Disable items selectively"
@@ -91,101 +42,6 @@ Alternatively, the `disabled` prop can be passed to individual `Radio.Item` to d
           </Radio.Root>
         </Layout.Vertical>
       );
-
-}`}
-/>
-
-### Error state
-
-The radio group can be marked as error via the `error` prop on `Radio.Root`.
-
-<DocsPage.ComponentExample
-  client:only
-  code={`() => {
-    const [group1Value, setGroup1Value] = React.useState('');
-
-      return (
-        <Layout.Vertical gap="xl" className="min-w-[400px]">
-            <Radio.Root
-              value={group1Value}
-              onValueChange={setGroup1Value}
-              label="Error radio"
-              error
-            >
-              <Radio.Item value="option1" label="Option 1" caption="Caption text" />
-              <Radio.Item value="option2" label="Option 2" caption="Caption text" />
-          </Radio.Root>
-        </Layout.Vertical>
-      );
-
-}`}
-/>
-
-### With tooltip
-
-`tooltipContent` is used to display the content of the tooltip. `tooltipProps` is used to pass additional props to the tooltip.
-
-<DocsPage.ComponentExample
-  client:only
-  code={`() => {
-    const [group1Value, setGroup1Value] = React.useState('option1');
-
-        return (
-          <Layout.Vertical gap="xl" className="min-w-[400px]">
-            <Radio.Root
-                value={group1Value}
-                onValueChange={setGroup1Value}
-                label="With Tooltip"
-                tooltipContent="This is a tooltip"
-                tooltipProps={{
-                  disabled: false,
-                }}
-              >
-              <Radio.Item value="option1" label="Option 1" caption="Caption text" />
-              <Radio.Item value="option2" label="Option 2" caption="Caption text" />
-            </Radio.Root>
-          </Layout.Vertical>
-        );
-      }`}
-
-/>
-
-### Orientation
-
-The `Radio.Root` component accepts an optional `orientation` prop, which defines the layout direction of the radio and its group label.
-Available options are `horizontal` and `vertical` (default).
-
-<DocsPage.ComponentExample
-  client:only
-  code={`() => {
-    const [group1Value, setGroup1Value] = React.useState('option1');
-
-        return (
-          <Layout.Vertical gap="xl" className="min-w-[400px]">
-            <Radio.Root
-                value={group1Value}
-                onValueChange={setGroup1Value}
-                label="Vertical"
-                caption="Caption text"
-              >
-              <Radio.Item value="option1" label="Option 1" caption="This is option 1" />
-              <Radio.Item value="option2" label="Option 2" caption="This is option 2" />
-              <Radio.Item value="option3" label="Option 3" caption="This is option 3" />
-            </Radio.Root>
-            <Separator />
-            <Radio.Root
-                value={group1Value}
-                onValueChange={setGroup1Value}
-                label="Horizontal"
-                caption="Caption text"
-                orientation="horizontal"
-              >
-              <Radio.Item value="option1" label="Option 1" caption="This is option 1" />
-              <Radio.Item value="option2" label="Option 2" caption="This is option 2" />
-              <Radio.Item value="option3" label="Option 3" caption="This is option 3" />
-            </Radio.Root>
-          </Layout.Vertical>
-        );
 
 }`}
 />

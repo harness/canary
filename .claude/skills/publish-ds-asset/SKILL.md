@@ -294,8 +294,10 @@ return { svg, byteLength: bytes.length }
 
 ### Verify the stroke survived the export
 
-**Do this for every outline icon.** It is the authoritative check that a stroke was not silently
-baked into a filled outline, and it beats inspecting Figma properties:
+**`add-asset.mjs` now enforces this automatically** when you pass `--figma-dump` (below) — it is the
+authoritative check that a stroke was not silently baked into a filled outline, and it beats
+inspecting Figma properties. Pass the same page JSON you linted in Step 2 and the script applies the
+rule and hard-stops on a violation; the logic it runs is:
 
 ```
 IF the Figma component has any child with strokes
@@ -327,15 +329,21 @@ pretty-print it — then:
 ```bash
 cd packages/ui
 node ../../.claude/skills/publish-ds-asset/scripts/add-asset.mjs \
-  --type icon --name <name> --raw /tmp/<name>.svg
+  --type icon --name <name> --raw /tmp/<name>.svg --figma-dump /tmp/page.json
 
 # logos (writes both logo and symbol SVGs and updates both maps):
 node ../../.claude/skills/publish-ds-asset/scripts/add-asset.mjs \
   --type logo --name <name> --hex '#1F6FEB' --raw /tmp/<name>.svg
 ```
 
+`--figma-dump` is the page JSON you linted in Step 2; passing it runs the stroke-survival check
+above automatically. Without it the script still works but skips that check with a warning, since an
+outlined stroke cannot be detected without the Figma side.
+
 The script writes the processed SVG(s), inserts the import and map entry at the exact position a
-future full regen would place them, and prints the precise paths to stage.
+future full regen would place them, and prints the precise paths to stage. It also hard-stops if the
+processed output is missing `currentColor` or carries a width/height on its root `<svg>` (which would
+defeat the size classes).
 
 ## Step 4B — Export via the PAT script
 
@@ -418,9 +426,12 @@ Each map should be a net +2 lines. A net +3/−1 is also correct when the asset 
 previously-final entry gains a trailing comma. Anything beyond that needs explaining before you
 commit.
 
-Sanity-check the content too: an icon must contain `currentColor` and no `width=`/`height=` on the
-root `<svg>`; a logo must contain its brand hex; a symbol must contain `currentColor` and no
-background rect.
+Content sanity is now mostly enforced by `add-asset.mjs`, which hard-stops if an icon or symbol is
+missing `currentColor`, a logo is missing its brand hex, or any processed output carries a
+`width=`/`height=` on its root `<svg>`. The one check it **cannot** do reliably is a symbol's
+**background rect**: SVGO rewrites the rect into a full-frame `<path>` and themifies it to
+`currentColor`, so there is no dependable string signal — eyeball the symbol to confirm it is the
+mark alone on a transparent field, with no solid block behind the glyph.
 
 `add-asset.mjs` also warns if a processed SVG exceeds **5 KB**. No icon currently ships above 2.6 KB,
 so a flagged icon is a genuine outlier — a too-complex glyph that should be simplified, or a

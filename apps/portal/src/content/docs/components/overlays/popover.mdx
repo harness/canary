@@ -24,27 +24,6 @@ It can be composed with subcomponents — `Popover.Root`, `Popover.Trigger`, `Po
 
 ## Variations
 
-### Basic popover
-
-The simplest form of a popover with just title and description.
-
-<DocsPage.ComponentExample
-  client:only
-  code={`<Popover.Root>
-    <Popover.Trigger asChild>
-        <Button variant="ghost" iconOnly>
-            <IconV2 name="info-circle" />
-        </Button>
-    </Popover.Trigger>
-
-    <Popover.Content
-        title="Help"
-        description="This feature helps you manage your workflow more efficiently."
-    />
-
-</Popover.Root>`}
-/>
-
 ### Popover with custom content
 
 You can include any custom content inside the popover by using children.
@@ -97,87 +76,6 @@ Set `triggerType` to `hover` on the shorthand `Popover` to open on hover instead
 >
     <Button variant="outline">Hover over me</Button>
 </Popover>`}
-/>
-
-### Popover with link
-
-The popover supports an integrated link using the `linkProps` prop.
-
-<DocsPage.ComponentExample
-  client:only
-  code={`<Popover.Root>
-    <Popover.Trigger asChild>
-        <Button variant="outline">
-            <IconV2 name="help-circle" />
-            Help
-        </Button>
-    </Popover.Trigger>
-
-    <Popover.Content
-        title="Need More Help?"
-        description="Check out our comprehensive documentation for detailed guides and tutorials."
-        linkProps={{
-            text: "View Documentation",
-            href: "/docs",
-            suffixIcon: true
-        }}
-    />
-
-</Popover.Root>`}
-/>
-
-### Positioning
-
-The popover can be positioned relative to its trigger using the `side` and `align` props.
-
-<DocsPage.ComponentExample
-  client:only
-  code={`<div className="flex gap-cn-md items-center justify-center p-cn-2xl">
-    <Popover.Root>
-        <Popover.Trigger asChild>
-            <Button variant="outline" size="sm">Top</Button>
-        </Popover.Trigger>
-        <Popover.Content 
-            side="top"
-            title="Top Position"
-            description="This popover appears above the trigger"
-        />
-    </Popover.Root>
-
-    <Popover.Root>
-        <Popover.Trigger asChild>
-            <Button variant="outline" size="sm">Right</Button>
-        </Popover.Trigger>
-        <Popover.Content
-            side="right"
-            title="Right Position"
-            description="This popover appears to the right of the trigger"
-        />
-    </Popover.Root>
-
-    <Popover.Root>
-        <Popover.Trigger asChild>
-            <Button variant="outline" size="sm">Bottom</Button>
-        </Popover.Trigger>
-        <Popover.Content
-            side="bottom"
-            title="Bottom Position"
-            description="This popover appears below the trigger"
-        />
-    </Popover.Root>
-
-    <Popover.Root>
-        <Popover.Trigger asChild>
-            <Button variant="outline" size="sm">Left</Button>
-        </Popover.Trigger>
-        <Popover.Content
-            side="left"
-            title="Left Position"
-            description="This popover appears to the left of the trigger"
-        />
-    </Popover.Root>
-
-</div>`}
 />
 
 ### Controlled popover

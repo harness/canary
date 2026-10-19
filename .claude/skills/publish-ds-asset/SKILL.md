@@ -394,26 +394,26 @@ node ../../.claude/skills/publish-ds-asset/scripts/check-regressions.mjs --expec
 an error rather than slipping through. Add `--ref origin/main` to check a whole branch instead of
 uncommitted work.
 
+Then typecheck. Instead of running `pnpm typecheck` by hand and eyeballing the result, use the
+wrapper — it runs the typecheck and, **only if it fails**, proves whether the failure is yours:
+
 ```bash
-cd packages/ui && pnpm typecheck          # see the caveat below before trusting a failure
+cd packages/ui
+node ../../.claude/skills/publish-ds-asset/scripts/check-typecheck.mjs --type icon   # or logo
 cd <worktree root> && git status --short && git diff --stat
 ```
 
+In a fresh worktree `tsc -b` almost certainly fails on unbuilt sibling packages, which has nothing to
+do with your asset. `check-typecheck.mjs` stashes just your asset paths, re-runs against pristine
+`main`, and diffs the actual `error TS…` signatures: it exits 0 if every failure is pre-existing
+(report those; do not fix them inside an asset PR), and exits 1 listing only the errors your change
+actually introduced. It restores your change from the stash on the way out, and refuses to pop a
+stash that is not the one it pushed.
+
 **Never pipe a command whose exit code matters.** `pnpm typecheck | tail` reports `tail`'s exit
-status, so a failing typecheck looks like a pass. Redirect to a file and read `$?` instead:
+status, so a failing typecheck looks like a pass. The wrapper reads the exit code for you; if you do
+run `pnpm typecheck` directly, redirect to a file and read `$?` instead:
 `pnpm typecheck > /tmp/tc.log 2>&1; echo $?`.
-
-**If typecheck fails, prove it is yours before chasing it.** In a fresh worktree it will almost
-certainly fail on unbuilt sibling packages. Stash your change and re-run against pristine `main`:
-
-```bash
-git stash push -u packages/ui/src/components/icon-v2/    # or logo-v2
-cd packages/ui && pnpm typecheck > /tmp/tc-main.log 2>&1; echo $?
-git stash pop
-```
-
-Identical error counts before and after means the failure is pre-existing and not yours. Report it;
-do not try to fix it inside an asset PR.
 
 Expected, and nothing else:
 
@@ -601,5 +601,6 @@ After merge:
 | `scripts/parity-check.mjs` | Prove the replica still matches upstream output |
 | `scripts/lint-page.mjs` | **Guard A** — catch malformed Figma components before exporting |
 | `scripts/check-regressions.mjs` | **Guard B** — catch clobbered or vanished assets after exporting |
+| `scripts/check-typecheck.mjs` | Run typecheck and prove any failure is pre-existing, not yours |
 | `references/figma-spec.md` | Figma component spec and naming rules to verify before export |
 | `references/troubleshooting.md` | CI, Jira, export and merge-conflict failure modes |

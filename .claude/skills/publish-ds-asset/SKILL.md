@@ -452,7 +452,23 @@ go to the checkpoint, get the ticket created, then commit.
 
 ## ⛔ CHECKPOINT — get approval before anything leaves the machine
 
-Present to the user, and wait:
+**Draft the ticket and PR with `prepare-submission.mjs` rather than by hand** — it validates the
+title against the accepted types and project rules (the ones `messageCheck` enforces), lays out the
+Jira pre-flight including the two-step summary and `FF Added = No`, and assembles the PR body from
+the `git diff --stat`, Figma source and — for a branch export — the merge gate. It never creates or
+opens anything; that stays behind the approval below and goes through the Harness MCP.
+
+```bash
+node .claude/skills/publish-ds-asset/scripts/prepare-submission.mjs \
+  --type feat --ticket <KEY|PENDING> --desc "Add <name> <icon|logo>" \
+  --asset-type <icon|logo> --name <name> \
+  --figma-file-key <key> --figma-file-name "<file>" --figma-link "<component url>" \
+  --approver "<name>" --jira-link "<url>" --assignee <real account id>
+# logos add --hex '#RRGGBB'; branch exports add --figma-branch "<branch>"
+```
+
+Exit 1 means the draft would be rejected downstream — fix it before presenting. Then present to the
+user, and wait:
 
 1. `git diff --stat` plus the full map diff.
 2. The rendered asset, if you can get it cheaply (a `figma_capture_screenshot` of the component, or
@@ -602,5 +618,6 @@ After merge:
 | `scripts/lint-page.mjs` | **Guard A** — catch malformed Figma components before exporting |
 | `scripts/check-regressions.mjs` | **Guard B** — catch clobbered or vanished assets after exporting |
 | `scripts/check-typecheck.mjs` | Run typecheck and prove any failure is pre-existing, not yours |
+| `scripts/prepare-submission.mjs` | Draft + validate the Jira ticket and PR title/body (never submits) |
 | `references/figma-spec.md` | Figma component spec and naming rules to verify before export |
 | `references/troubleshooting.md` | CI, Jira, export and merge-conflict failure modes |

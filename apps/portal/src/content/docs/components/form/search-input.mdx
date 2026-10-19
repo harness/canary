@@ -17,30 +17,7 @@ import PageTabsToc from "@/components/page-tabs-toc.astro";
 
 `SearchInput` is a text input tuned for search: a leading search icon, a built-in 300ms debounce so callbacks don't fire on every keystroke, and optional match-navigation controls.
 
-The example below tracks the current value with React state.
-
-<DocsPage.ComponentExample client:only code={`() => {
-  // Using useState hook to track search value
-  const [searchValue, setSearchValue] = React.useState("");
-
-return (
-
-<div className="flex flex-col gap-cn-xl min-w-[400px]">
-  <div className="mb-cn-xs w-full font-bold mt-cn-xl">Search with State:</div>
-  <SearchInput
-    placeholder="Type to search..."
-    onChange={(value) => setSearchValue(value)}
-  />
-  <div className="rounded-cn-3 border p-cn-sm">
-    <div className="text-cn-size-2 font-medium underline underline-offset-2">
-      Current Search Value:
-    </div>
-    <p className="mt-cn-3xs font-body-code text-cn-size-2">
-      {searchValue || "(empty)"}
-    </p>
-  </div>
-</div>
-) }`} />
+<DocsPage.SearchInputPlayground client:only />
 
 ## Variations
 

@@ -41,6 +41,7 @@ import PromptInputPlayground from "./playground/PromptInputPlayground.tsx";
 import RadioPlayground from "./playground/RadioPlayground.tsx";
 import ReasoningPlayground from "./playground/ReasoningPlayground.tsx";
 import ScrollAreaPlayground from "./playground/ScrollAreaPlayground.tsx";
+import SearchInputPlayground from "./playground/SearchInputPlayground.tsx";
 import SplitButtonPlayground from "./playground/SplitButtonPlayground.tsx";
 import StatusBadgePlayground from "./playground/StatusBadgePlayground.tsx";
 import TextInputPlayground from "./playground/TextInputPlayground.tsx";
@@ -99,6 +100,7 @@ export const DocsPage = {
   RadioPlayground,
   ReasoningPlayground,
   ScrollAreaPlayground,
+  SearchInputPlayground,
   TextInputPlayground,
   TimeInputPlayground,
   StatusBadgePlayground,

@@ -31,6 +31,9 @@ const INITIAL_VALUE: MultiSelectOption[] = [{ key: "React", id: "react" }];
 interface State {
   label: string;
   placeholder: string;
+  caption: string;
+  error: string;
+  warning: string;
   tooltipContent: string;
   theme: "default" | "danger" | "warning";
   orientation: "vertical" | "horizontal";
@@ -42,6 +45,9 @@ interface State {
 const INITIAL_STATE: State = {
   label: "Frameworks",
   placeholder: "Select frameworks you like…",
+  caption: "Choose the frameworks you work with.",
+  error: "",
+  warning: "",
   tooltipContent: "Pick the frameworks your team works with.",
   theme: "default",
   orientation: "vertical",
@@ -66,6 +72,9 @@ function generateCode(s: State): string {
   lines.push("  value={value}");
   lines.push("  onChange={setValue}");
   lines.push(`  placeholder="${s.placeholder}"`);
+  if (s.caption) lines.push(`  caption="${s.caption}"`);
+  if (s.error) lines.push(`  error="${s.error}"`);
+  if (s.warning) lines.push(`  warning="${s.warning}"`);
   if (s.theme !== "default") lines.push(`  theme="${s.theme}"`);
   if (s.orientation !== "vertical")
     lines.push(`  orientation="${s.orientation}"`);
@@ -94,6 +103,21 @@ const MultiSelectPlayground: FC = () => {
   const controls: PropControl[] = [
     { name: "label", type: "text", description: "Label above the field" },
     { name: "placeholder", type: "text", description: "Empty-state text" },
+    {
+      name: "caption",
+      type: "text",
+      description: "Helper text below the field",
+    },
+    {
+      name: "error",
+      type: "text",
+      description: "Error message (forces the danger theme)",
+    },
+    {
+      name: "warning",
+      type: "text",
+      description: "Warning message (forces the warning theme)",
+    },
     {
       name: "tooltipContent",
       type: "text",
@@ -149,6 +173,9 @@ const MultiSelectPlayground: FC = () => {
         value={value}
         onChange={setValue}
         placeholder={state.placeholder}
+        caption={state.caption || undefined}
+        error={state.error || undefined}
+        warning={state.warning || undefined}
         theme={state.theme}
         orientation={state.orientation}
         disallowCreation={state.disallowCreation}

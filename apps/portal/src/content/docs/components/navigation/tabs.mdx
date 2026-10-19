@@ -20,26 +20,7 @@ The `Tabs` component organizes content into multiple panels, each associated wit
 
 It is composed from `Tabs.Root`, `Tabs.NavRoot`, `Tabs.List`, `Tabs.Trigger`, and `Tabs.Content`, so you assemble exactly the structure you need.
 
-<DocsPage.ComponentExample
-  client:only
-  code={`<Tabs.Root className="grid gap-cn-sm" defaultValue="tab1">
-    <Tabs.List variant="outlined">
-        <Tabs.Trigger value="tab1">Tab 1</Tabs.Trigger>
-        <Tabs.Trigger value="tab2">Tab 2</Tabs.Trigger>
-        <Tabs.Trigger value="tab3">Tab 3</Tabs.Trigger>
-    </Tabs.List>
-    
-    <Tabs.Content value="tab1">
-        <Text>Content for Tab 1</Text>
-    </Tabs.Content>
-    <Tabs.Content value="tab2">
-        <Text>Content for Tab 2</Text>
-    </Tabs.Content>
-    <Tabs.Content value="tab3">
-        <Text>Content for Tab 3</Text>
-    </Tabs.Content>
-</Tabs.Root>`}
-/>
+<DocsPage.TabsPlayground client:only />
 
 ## Variations
 

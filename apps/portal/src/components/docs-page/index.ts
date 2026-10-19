@@ -47,6 +47,7 @@ import SelectPlayground from "./playground/SelectPlayground.tsx";
 import ShimmerPlayground from "./playground/ShimmerPlayground.tsx";
 import SliderPlayground from "./playground/SliderPlayground.tsx";
 import SplitButtonPlayground from "./playground/SplitButtonPlayground.tsx";
+import StackedListPlayground from "./playground/StackedListPlayground.tsx";
 import StatusBadgePlayground from "./playground/StatusBadgePlayground.tsx";
 import TextInputPlayground from "./playground/TextInputPlayground.tsx";
 import TimeInputPlayground from "./playground/TimeInputPlayground.tsx";
@@ -111,5 +112,6 @@ export const DocsPage = {
   SliderPlayground,
   TextInputPlayground,
   TimeInputPlayground,
+  StackedListPlayground,
   StatusBadgePlayground,
 };

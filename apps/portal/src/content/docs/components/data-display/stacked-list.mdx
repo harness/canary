@@ -23,30 +23,6 @@ It is composed of several subcomponents such as `StackedList.Root`, `StackedList
 
 ## Variations
 
-### Item paddings
-
-The `StackedList.Item` can receive different paddings through the `paddingX` and `paddingY` props to match your design solution.
-
-They support the following values: `4xs`, `3xs`, `2xs`, `xs`, `sm`, `md`, `lg`, `xl`, `2xl`, `3xl`, `4xl`, `0`.
-
-<DocsPage.ComponentExample
-  client:only
-  contentClassName={"!block ![place-items:normal]"}
-  code={`
-    <StackedList.Root>
-      <StackedList.Item
-        paddingX="3xl"
-        paddingY="2xl"
-        thumbnail={<IconV2 name="connectors" size="xs" />}
-        actions={<Button>Action</Button>}
-        to="/"
-      >
-        <StackedList.Field title="Item 1" description="Description 1" />
-      </StackedList.Item>
-    </StackedList.Root>
-`}
-/>
-
 ### Linked item
 
 The `StackedList.Item` accepts the `linkProps` and `to` props, which allow you to turn the entire item into a `link`.
@@ -74,41 +50,6 @@ If either of these props is provided, the whole item becomes clickable and navig
 `}
 />
 
-### Disable hover
-
-The `StackedList.Item` accepts the `disableHover` prop, which allows you to turn off the hover effect.
-
-<DocsPage.ComponentExample
-  client:only
-  contentClassName={"!block ![place-items:normal]"}
-  code={`
-    <StackedList.Root>
-      <StackedList.Item
-        disableHover
-        paddingY="xs"
-      >
-        <StackedList.Field title="Item 1" />
-      </StackedList.Item>
-    </StackedList.Root>
-`}
-/>
-
-### Title color
-
-The `StackedList.Field` can receive a `titleColor` prop, which allows you to override the default `title` color.
-
-<DocsPage.ComponentExample
-  client:only
-  contentClassName={"!block ![place-items:normal]"}
-  code={`
-    <StackedList.Root>
-      <StackedList.Item disableHover>
-        <StackedList.Field title="Item 1" titleColor="success" />
-      </StackedList.Item>
-    </StackedList.Root>
-`}
-/>
-
 ### Truncating
 
 By default, both `title` and `description` have truncation enabled.
@@ -131,40 +72,6 @@ To disable it, pass the `disableTruncate` prop to `StackedList.Field`.
             description="As digital products continue to evolve, user interface design plays an increasingly critical role in delivering seamless and accessible experiences. From responsive layouts and micro-interactions to accessibility standards and performance optimizations, modern UI design focuses not only on aesthetics but also on functionality and inclusivity. This approach ensures that applications can adapt to diverse user needs while maintaining consistency across different platforms and devices."
             disableTruncate
         />
-      </StackedList.Item>
-    </StackedList.Root>
-`}
-/>
-
-### Field position
-
-The `StackedList.Field` component accepts the `right` prop, which positions the field on the right side of the `Item`.
-
-<DocsPage.ComponentExample
-  client:only
-  contentClassName={"!block ![place-items:normal]"}
-  code={`
-    <StackedList.Root>
-      <StackedList.Item disableHover>
-        <StackedList.Field title="Item 1" />
-        <StackedList.Field title="Additional text" right />
-      </StackedList.Item>
-    </StackedList.Root>
-`}
-/>
-
-### With pagination
-
-The `StackedList.Root` component can accept pagination props to enable pagination functionality within the list.
-
-<DocsPage.ComponentExample
-  client:only
-  contentClassName={"!block ![place-items:normal]"}
-  code={`
-    <StackedList.Root paginationProps={{ pageSize: 10, totalItems: 50, currentPage: 1, goToPage: (page) => console.log(page), pageSizeOptions: [5, 10, 20], onPageSizeChange: (size) => console.log(size) }}>
-      <StackedList.Item disableHover>
-        <StackedList.Field title="Item 1" />
-        <StackedList.Field title="Additional text" right />
       </StackedList.Item>
     </StackedList.Root>
 `}

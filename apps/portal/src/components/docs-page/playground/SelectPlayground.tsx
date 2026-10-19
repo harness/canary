@@ -28,10 +28,17 @@ const OPTIONS = [
 interface State {
   label: string;
   placeholder: string;
+  caption: string;
+  error: string;
+  warning: string;
+  tooltipContent: string;
   size: "md" | "sm";
   theme: "default" | "danger" | "warning";
+  orientation: "vertical" | "horizontal";
+  contentWidth: "auto" | "triggerWidth";
   clearable: boolean;
   allowSearch: boolean;
+  isLoading: boolean;
   disabled: boolean;
   optional: boolean;
 }
@@ -39,10 +46,17 @@ interface State {
 const INITIAL_STATE: State = {
   label: "Fruit",
   placeholder: "Select a fruit",
+  caption: "Choose your favorite fruit.",
+  error: "",
+  warning: "",
+  tooltipContent: "Pick one fruit from the list.",
   size: "md",
   theme: "default",
+  orientation: "vertical",
+  contentWidth: "triggerWidth",
   clearable: true,
   allowSearch: false,
+  isLoading: false,
   disabled: false,
   optional: false,
 };
@@ -52,6 +66,8 @@ const INITIAL_STATE: State = {
 function generateCode(s: State): string {
   const lines = ["<Select"];
   if (s.label) lines.push(`  label="${s.label}"`);
+  if (s.tooltipContent)
+    lines.push(`  tooltipContent="${s.tooltipContent}"`);
   lines.push("  options={[");
   lines.push('    { label: "Apple", value: "apple" },');
   lines.push('    { label: "Banana", value: "banana" },');
@@ -61,10 +77,18 @@ function generateCode(s: State): string {
   lines.push("  value={value}");
   lines.push("  onChange={setValue}");
   lines.push(`  placeholder="${s.placeholder}"`);
+  if (s.caption) lines.push(`  caption="${s.caption}"`);
+  if (s.error) lines.push(`  error="${s.error}"`);
+  if (s.warning) lines.push(`  warning="${s.warning}"`);
   if (s.size !== "md") lines.push(`  size="${s.size}"`);
   if (s.theme !== "default") lines.push(`  theme="${s.theme}"`);
+  if (s.orientation !== "vertical")
+    lines.push(`  orientation="${s.orientation}"`);
+  if (s.contentWidth !== "auto")
+    lines.push(`  contentWidth="${s.contentWidth}"`);
   if (s.clearable) lines.push("  clearable");
   if (s.allowSearch) lines.push("  allowSearch");
+  if (s.isLoading) lines.push("  isLoading");
   if (s.disabled) lines.push("  disabled");
   if (s.optional) lines.push("  optional");
   lines.push("/>");
@@ -90,6 +114,26 @@ const SelectPlayground: FC = () => {
     { name: "label", type: "text", description: "Label above the trigger" },
     { name: "placeholder", type: "text", description: "Empty-state text" },
     {
+      name: "caption",
+      type: "text",
+      description: "Helper text below the field",
+    },
+    {
+      name: "error",
+      type: "text",
+      description: "Error message (forces the danger theme)",
+    },
+    {
+      name: "warning",
+      type: "text",
+      description: "Warning message (forces the warning theme)",
+    },
+    {
+      name: "tooltipContent",
+      type: "text",
+      description: "Info tooltip shown next to the label",
+    },
+    {
       name: "size",
       type: "select",
       options: ["md", "sm"],
@@ -102,6 +146,18 @@ const SelectPlayground: FC = () => {
       description: "Validation styling",
     },
     {
+      name: "orientation",
+      type: "select",
+      options: ["vertical", "horizontal"],
+      description: "Label position",
+    },
+    {
+      name: "contentWidth",
+      type: "select",
+      options: ["auto", "triggerWidth"],
+      description: "Dropdown width",
+    },
+    {
       name: "clearable",
       type: "boolean",
       description: "Show a clear button once a value is set",
@@ -110,6 +166,11 @@ const SelectPlayground: FC = () => {
       name: "allowSearch",
       type: "boolean",
       description: "Add an in-dropdown search box",
+    },
+    {
+      name: "isLoading",
+      type: "boolean",
+      description: "Show a loading indicator in the dropdown",
     },
     { name: "disabled", type: "boolean", description: "Disable the select" },
     {
@@ -139,17 +200,23 @@ const SelectPlayground: FC = () => {
     <div className="flex w-full max-w-[420px] flex-col gap-cn-md">
       <Select
         label={state.label || undefined}
+        tooltipContent={state.tooltipContent || undefined}
         options={OPTIONS}
         value={value}
         onChange={setValue}
         placeholder={state.placeholder}
+        caption={state.caption || undefined}
+        error={state.error || undefined}
+        warning={state.warning || undefined}
         size={state.size}
         theme={state.theme}
+        orientation={state.orientation}
+        contentWidth={state.contentWidth}
         clearable={state.clearable}
         allowSearch={state.allowSearch}
+        isLoading={state.isLoading}
         disabled={state.disabled}
         optional={state.optional}
-        contentWidth="triggerWidth"
       />
       <div className="rounded-cn-3 border p-cn-sm">
         <div className="text-cn-size-2 text-cn-2 font-medium">

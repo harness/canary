@@ -28,4 +28,30 @@ describe('ContainerHeader', () => {
     const { container } = render(<ContainerHeader title="Title" className="custom-class" />)
     expect(container.firstChild).toHaveClass('custom-class')
   })
+
+  test('renderTitle wraps the title element', () => {
+    render(
+      <ContainerHeader title="Wrapped Title" renderTitle={node => <div data-testid="title-wrapper">{node}</div>} />
+    )
+    expect(screen.getByTestId('title-wrapper')).toHaveTextContent('Wrapped Title')
+  })
+
+  test('renderDescription wraps the description element', () => {
+    render(
+      <ContainerHeader
+        title="Title"
+        description="Wrapped Description"
+        renderDescription={node => <div data-testid="description-wrapper">{node}</div>}
+      />
+    )
+    expect(screen.getByTestId('description-wrapper')).toHaveTextContent('Wrapped Description')
+  })
+
+  test('omitting renderTitle and renderDescription leaves output unchanged', () => {
+    const { container } = render(<ContainerHeader title="Plain Title" description="Plain Description" />)
+    expect(screen.getByText('Plain Title')).toBeInTheDocument()
+    expect(screen.getByText('Plain Description')).toBeInTheDocument()
+    expect(container.querySelector('[data-testid="title-wrapper"]')).not.toBeInTheDocument()
+    expect(container.querySelector('[data-testid="description-wrapper"]')).not.toBeInTheDocument()
+  })
 })

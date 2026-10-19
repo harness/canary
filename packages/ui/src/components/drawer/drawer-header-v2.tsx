@@ -1,5 +1,6 @@
 import { forwardRef, type FC, type ReactNode } from 'react'
 
+import { useTranslation } from '@/context'
 import { cn } from '@/utils'
 import { Drawer as DrawerPrimitive } from 'vaul'
 
@@ -50,6 +51,8 @@ export const DrawerHeaderV2 = forwardRef<HTMLDivElement, DrawerHeaderV2Props>(
     { title, tagline, description, icon, actions, tabs, hideClose = false, isLoading = false, children, className },
     ref
   ) => {
+    const { t } = useTranslation()
+
     const IconOrLogoComp =
       (!!icon && typeof icon === 'object' && (
         <LogoV2 className="cn-drawer-header-v2-icon" name={icon.logo} size="md" />
@@ -59,6 +62,11 @@ export const DrawerHeaderV2 = forwardRef<HTMLDivElement, DrawerHeaderV2Props>(
 
     return (
       <div ref={ref} className={cn('cn-drawer-header-v2', tabs?.length && 'border-b-0', className)}>
+        {!description && (
+          <DrawerPrimitive.Description className="sr-only">
+            {t('component:dialog.noDescription', 'No description available')}
+          </DrawerPrimitive.Description>
+        )}
         <div className="cn-drawer-header-v2-title-row">
           {IconOrLogoComp}
           <ContainerHeader
@@ -68,6 +76,8 @@ export const DrawerHeaderV2 = forwardRef<HTMLDivElement, DrawerHeaderV2Props>(
             descriptionClassName="cn-drawer-header-v2-description"
             actions={!isLoading ? actions : undefined}
             className="min-w-0 flex-1"
+            renderTitle={node => <DrawerPrimitive.Title asChild>{node}</DrawerPrimitive.Title>}
+            renderDescription={node => <DrawerPrimitive.Description asChild>{node}</DrawerPrimitive.Description>}
           />
           {!hideClose && (
             <DrawerPrimitive.Close asChild>

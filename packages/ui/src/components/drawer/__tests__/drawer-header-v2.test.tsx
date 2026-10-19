@@ -41,18 +41,36 @@ vi.mock('vaul', () => {
   )
   DrawerOverlay.displayName = 'DrawerOverlay'
 
-  const DrawerTitleComponent = React.forwardRef<any, any>(({ children, ...props }, ref) => (
-    <h2 ref={ref} data-testid="drawer-title" {...props}>
-      {children}
-    </h2>
-  ))
+  const DrawerTitleComponent = React.forwardRef<any, any>(({ children, asChild, ...props }, ref) => {
+    if (asChild && React.isValidElement(children)) {
+      return React.cloneElement(children as React.ReactElement, {
+        ...props,
+        ref,
+        'data-testid': 'drawer-title'
+      })
+    }
+    return (
+      <h2 ref={ref} data-testid="drawer-title" {...props}>
+        {children}
+      </h2>
+    )
+  })
   DrawerTitleComponent.displayName = 'DrawerTitle'
 
-  const DrawerDescriptionComponent = React.forwardRef<any, any>(({ children, ...props }, ref) => (
-    <p ref={ref} data-testid="drawer-description" {...props}>
-      {children}
-    </p>
-  ))
+  const DrawerDescriptionComponent = React.forwardRef<any, any>(({ children, asChild, ...props }, ref) => {
+    if (asChild && React.isValidElement(children)) {
+      return React.cloneElement(children as React.ReactElement, {
+        ...props,
+        ref,
+        'data-testid': 'drawer-description'
+      })
+    }
+    return (
+      <p ref={ref} data-testid="drawer-description" {...props}>
+        {children}
+      </p>
+    )
+  })
   DrawerDescriptionComponent.displayName = 'DrawerDescription'
 
   return {
@@ -88,9 +106,38 @@ describe('DrawerHeaderV2', () => {
     expect(screen.getByText('Build #142')).toBeInTheDocument()
   })
 
+  test('renders title through Drawer.Title (asChild)', () => {
+    render(<HeaderV2 title="Build #142" />)
+    const title = screen.getByTestId('drawer-title')
+    expect(title).toBeInTheDocument()
+    expect(title).toHaveTextContent('Build #142')
+  })
+
   test('renders description when provided', () => {
     render(<HeaderV2 title="Build #142" description="main branch" />)
     expect(screen.getByText('main branch')).toBeInTheDocument()
+  })
+
+  test('renders description through Drawer.Description (asChild)', () => {
+    render(<HeaderV2 title="Build #142" description="main branch" />)
+    const description = screen.getByTestId('drawer-description')
+    expect(description).toBeInTheDocument()
+    expect(description).toHaveTextContent('main branch')
+    expect(description).not.toHaveClass('sr-only')
+  })
+
+  test('renders sr-only fallback description when description is omitted', () => {
+    render(<HeaderV2 title="Build #142" />)
+    const description = screen.getByTestId('drawer-description')
+    expect(description).toBeInTheDocument()
+    expect(description).toHaveClass('sr-only')
+    expect(description).toHaveTextContent('No description available')
+  })
+
+  test('does not render sr-only fallback when description is provided', () => {
+    const { container } = render(<HeaderV2 title="Build #142" description="main branch" />)
+    expect(container.querySelector('.sr-only')).not.toBeInTheDocument()
+    expect(screen.getAllByTestId('drawer-description')).toHaveLength(1)
   })
 
   test('renders tagline above the title when provided', () => {

@@ -14,7 +14,7 @@
  *
  * Usage:
  *   1. Dump the page with figma_execute (snippet in SKILL.md) to a JSON file.
- *   2. node .claude/skills/publish-ds-asset/scripts/lint-page.mjs --in /tmp/page.json
+ *   2. node .claude/skills/publish-ds-icon-logo/scripts/lint-page.mjs --in /tmp/page.json
  *
  *   --only <name>   lint just one component (e.g. the one you are about to ship)
  *   --quiet         suppress per-component OK lines

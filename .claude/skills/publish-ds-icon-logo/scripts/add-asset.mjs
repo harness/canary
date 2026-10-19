@@ -15,10 +15,10 @@
  * pipeline is still faithful.
  *
  * Usage (from packages/ui):
- *   node ../../.claude/skills/publish-ds-asset/scripts/add-asset.mjs \
+ *   node ../../.claude/skills/publish-ds-icon-logo/scripts/add-asset.mjs \
  *     --type icon --name agent-dlc --raw /tmp/agent-dlc.svg
  *
- *   node ../../.claude/skills/publish-ds-asset/scripts/add-asset.mjs \
+ *   node ../../.claude/skills/publish-ds-icon-logo/scripts/add-asset.mjs \
  *     --type logo --name acme-cloud --hex '#1F6FEB' --raw /tmp/acme-cloud.svg
  *
  * Pass --figma-dump <page.json> — the same JSON you linted in Step 2 — to enable

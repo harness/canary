@@ -10,8 +10,8 @@
  * Essential on the PAT route, which regenerates all 534 icons / 181 logos.
  *
  * Usage (from packages/ui):
- *   node ../../.claude/skills/publish-ds-asset/scripts/check-regressions.mjs
- *   node ../../.claude/skills/publish-ds-asset/scripts/check-regressions.mjs --ref origin/main
+ *   node ../../.claude/skills/publish-ds-icon-logo/scripts/check-regressions.mjs
+ *   node ../../.claude/skills/publish-ds-icon-logo/scripts/check-regressions.mjs --ref origin/main
  *
  *   --ref <git-ref>  baseline to compare against (default HEAD)
  *   --expect <name>  the one asset you intend to add; anything else new is an error

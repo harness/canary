@@ -17,20 +17,7 @@ import PageTabsToc from "@/components/page-tabs-toc.astro";
 
 The `PromptInput` component is a compound component for AI chat interfaces. It includes a textarea with auto-resize, keyboard shortcuts, and an optional toolbar for actions.
 
-<DocsPage.ComponentExample
-  client:only
-  code={`
-  <div className="flex flex-col gap-cn-md w-[370px]">
-  <PromptInput.Root onSubmit={(e) => { e.preventDefault(); console.log('submitted'); }}>
-  <PromptInput.Textarea placeholder="Ask me anything..." />
-  <PromptInput.Toolbar>
-    <PromptInput.Tools>
-    </PromptInput.Tools>
-    <PromptInput.Submit />
-  </PromptInput.Toolbar>
-</PromptInput.Root>
-</div>`}
-/>
+<DocsPage.PromptInputPlayground client:only />
 
 ## Variations
 

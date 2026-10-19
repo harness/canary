@@ -17,28 +17,7 @@ import PageTabsToc from "@/components/page-tabs-toc.astro";
 
 The `Radio` component lets people choose a single option from a set. It's a compound component: `Radio.Root` provides the group context and manages selection, and each `Radio.Item` is a selectable option. `Radio.Item` must always be used inside a `Radio.Root`.
 
-<DocsPage.ComponentExample
-  client:only
-  code={`() => {
-    const [group1Value, setGroup1Value] = React.useState('option1');
-
-    return (
-      <Layout.Vertical gap="xl" className="min-w-[400px]">
-        <Radio.Root
-            value={group1Value}
-            onValueChange={setGroup1Value}
-            label="Standard usage"
-            caption="Caption text"
-          >
-          <Radio.Item value="option1" label="Option 1" caption="This is option 1" />
-          <Radio.Item value="option2" label="Option 2" caption="This is option 2" />
-          <Radio.Item value="option3" label="Option 3" caption="This is option 3" />
-        </Radio.Root>
-      </Layout.Vertical>
-    );
-
-}`}
-/>
+<DocsPage.RadioPlayground client:only />
 
 ## Variations
 

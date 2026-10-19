@@ -19,42 +19,7 @@ The `StackedList` component provides a way to display entities in a vertically s
 
 It is composed of several subcomponents such as `StackedList.Root`, `StackedList.Header`, `StackedList.Item`, and `StackedList.Field` to offer a structured and customizable interface.
 
-<DocsPage.ComponentExample
-  client:only
-  contentClassName={"!block ![place-items:normal]"}
-  code={`
-    <StackedList.Root>
-      <StackedList.Header>
-        <StackedList.Field title="Title" />
-      </StackedList.Header>
-      <StackedList.Item
-        thumbnail={<IconV2 name="connectors" size="xs" />}
-        actions={<Button>Action</Button>}
-        onClick={() => console.log('clicked')}
-      >
-        <StackedList.Field title="Clickable item" description="Description 1" />
-      </StackedList.Item>
-
-      <StackedList.Item
-        thumbnail={<IconV2 name="star" size="xs" />}
-        actions={<Button>Action</Button>}
-        to="/"
-      >
-        <StackedList.Field title="Item with link" description="Description 2" />
-        <StackedList.Field title="additional text" right />
-      </StackedList.Item>
-
-      <StackedList.Item
-        thumbnail={<IconV2 name="check" size="xs" />}
-        actions={<Button>Action</Button>}
-        disableHover
-      >
-        <StackedList.Field title="Non-clickable item" description="Description 3" />
-      </StackedList.Item>
-    </StackedList.Root>
-
-`}
-/>
+<DocsPage.StackedListPlayground client:only />
 
 ## Variations
 

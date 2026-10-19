@@ -73,7 +73,9 @@ function generateCode(s: State): string {
     return `<Shimmer>${s.children}</Shimmer>`;
   }
 
-  return ["<Shimmer", ...props, `>`, `  ${s.children}`, "</Shimmer>"].join("\n");
+  return ["<Shimmer", ...props, `>`, `  ${s.children}`, "</Shimmer>"].join(
+    "\n",
+  );
 }
 
 const ShimmerPlayground: FC = () => {

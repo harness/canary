@@ -23,7 +23,11 @@ interface SampleItem {
   caption: string;
 }
 const SAMPLE_ITEMS: ReadonlyArray<SampleItem> = [
-  { value: "everyone", label: "Everyone", caption: "Anyone with the link can view" },
+  {
+    value: "everyone",
+    label: "Everyone",
+    caption: "Anyone with the link can view",
+  },
   { value: "team", label: "Only my team", caption: "People in your workspace" },
   { value: "me", label: "Only me", caption: "Just you can see this" },
 ];
@@ -59,7 +63,8 @@ function generateCode(s: State): string {
   if (s.label) attrs.push(`label="${s.label}"`);
   if (s.caption) attrs.push(`caption="${s.caption}"`);
   if (s.tooltipContent) attrs.push(`tooltipContent="${s.tooltipContent}"`);
-  if (s.orientation !== "vertical") attrs.push(`orientation="${s.orientation}"`);
+  if (s.orientation !== "vertical")
+    attrs.push(`orientation="${s.orientation}"`);
   if (s.optional) attrs.push("optional");
   if (s.disabled) attrs.push("disabled");
   if (s.error) attrs.push("error");
@@ -103,9 +108,14 @@ const RadioPlayground: FC = () => {
     {
       name: "optional",
       type: "boolean",
-      description: "Show an 'optional' tag (on the label, or each item if no label)",
+      description:
+        "Show an 'optional' tag (on the label, or each item if no label)",
     },
-    { name: "disabled", type: "boolean", description: "Disable the whole group" },
+    {
+      name: "disabled",
+      type: "boolean",
+      description: "Disable the whole group",
+    },
     { name: "error", type: "boolean", description: "Apply error styling" },
   ];
 

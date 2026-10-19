@@ -66,8 +66,7 @@ const INITIAL_STATE: State = {
 function generateCode(s: State): string {
   const lines = ["<Select"];
   if (s.label) lines.push(`  label="${s.label}"`);
-  if (s.tooltipContent)
-    lines.push(`  tooltipContent="${s.tooltipContent}"`);
+  if (s.tooltipContent) lines.push(`  tooltipContent="${s.tooltipContent}"`);
   lines.push("  options={[");
   lines.push('    { label: "Apple", value: "apple" },');
   lines.push('    { label: "Banana", value: "banana" },');

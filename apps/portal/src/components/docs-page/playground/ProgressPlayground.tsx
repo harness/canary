@@ -18,7 +18,12 @@ import type { PropControl } from "./types";
 // whose "none" option falls back to `state`.
 
 // ① Literal unions mirrored from the component (not exported from the package).
-type ProgressState = "default" | "processing" | "completed" | "paused" | "failed";
+type ProgressState =
+  | "default"
+  | "processing"
+  | "completed"
+  | "paused"
+  | "failed";
 type ProgressColor =
   | "gray"
   | "blue"
@@ -84,7 +89,8 @@ const INITIAL_STATE: State = {
 
 // percent (0–100) → the component's clamped 0–1 value, trimmed so the snippet
 // reads 0.75 rather than 0.7500000001.
-const toValue = (percent: number) => Math.round(Math.min(Math.max(0, percent), 100)) / 100;
+const toValue = (percent: number) =>
+  Math.round(Math.min(Math.max(0, percent), 100)) / 100;
 
 // ③ Turn the current state into the JSX string shown in "Show code". Only emit
 //    props that differ from defaults, and mirror the preview exactly — including

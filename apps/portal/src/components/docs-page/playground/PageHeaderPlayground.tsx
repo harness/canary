@@ -16,7 +16,10 @@ import {
   Page,
   TooltipProvider,
 } from "@harnessio/ui/components";
-import { RouterContextProvider, type NavLinkProps } from "@harnessio/ui/context";
+import {
+  RouterContextProvider,
+  type NavLinkProps,
+} from "@harnessio/ui/context";
 import ControlField from "./ControlField";
 import type { PropControl } from "./types";
 

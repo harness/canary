@@ -76,7 +76,9 @@ function generateCode(s: State): string {
   const submit: string[] = [];
   if (s.streaming) submit.push('status="streaming"');
   if (s.disabled) submit.push("disabled");
-  lines.push(`    <PromptInput.Submit${submit.length ? " " + submit.join(" ") : ""} />`);
+  lines.push(
+    `    <PromptInput.Submit${submit.length ? " " + submit.join(" ") : ""} />`,
+  );
 
   lines.push("  </PromptInput.Toolbar>");
   lines.push("</PromptInput.Root>");
@@ -117,7 +119,7 @@ const PromptInputPlayground: FC = () => {
     {
       name: "streaming",
       type: "boolean",
-      description: "Submit shows a stop icon (status=\"streaming\")",
+      description: 'Submit shows a stop icon (status="streaming")',
     },
     {
       name: "showTags",

@@ -41,7 +41,9 @@ const INITIAL_STATE: State = {
 // ③ Turn the current state into the JSX string shown in "Show code". Only emit
 //    props that differ from defaults, and mirror the preview exactly.
 function generateCode(s: State): string {
-  const attrs: string[] = [`className="h-[${s.height}px] w-[320px] rounded border"`];
+  const attrs: string[] = [
+    `className="h-[${s.height}px] w-[320px] rounded border"`,
+  ];
   if (s.direction === "rtl") attrs.push(`direction="rtl"`);
   if (s.trackEdges) {
     attrs.push("onScrollTop={(entry) => setAtTop(entry.isIntersecting)}");
@@ -100,7 +102,8 @@ const ScrollAreaPlayground: FC = () => {
     {
       name: "trackEdges",
       type: "boolean",
-      description: "Wire onScrollTop/onScrollBottom and show a live position tag",
+      description:
+        "Wire onScrollTop/onScrollBottom and show a live position tag",
     },
   ];
 
@@ -142,7 +145,9 @@ const ScrollAreaPlayground: FC = () => {
         style={{ width: 320, height: state.height }}
         direction={state.direction}
         onScrollTop={
-          state.trackEdges ? (entry) => setAtTop(entry.isIntersecting) : undefined
+          state.trackEdges
+            ? (entry) => setAtTop(entry.isIntersecting)
+            : undefined
         }
         onScrollBottom={
           state.trackEdges

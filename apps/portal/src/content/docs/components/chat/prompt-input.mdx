@@ -19,48 +19,6 @@ The `PromptInput` component is a compound component for AI chat interfaces. It i
 
 <DocsPage.PromptInputPlayground client:only />
 
-## Variations
-
-### With toolbar and button
-
-Put tool buttons inside `PromptInput.Tools`. Each `PromptInput.Button` is an icon-only toggle for a toolbar action (attach, mention, and so on).
-
-<DocsPage.ComponentExample
-  client:only
-  code={`
-  <div className="flex flex-col gap-cn-md w-[370px]">
-  <PromptInput.Root onSubmit={(e) => { e.preventDefault(); console.log('submitted'); }}>
-  <PromptInput.Textarea placeholder="Ask me anything..." />
-  <PromptInput.Toolbar>
-    <PromptInput.Tools>
-      <PromptInput.Button prefixIcon="plus" prefixIconProps={{ size: 'sm' }} tooltipProps={{ title: 'Add' }} />
-    </PromptInput.Tools>
-    <PromptInput.Submit />
-  </PromptInput.Toolbar>
-</PromptInput.Root>
-</div>`}
-/>
-
-### Streaming state
-
-Pass `status="streaming"` to `PromptInput.Submit` while a response is generating. The submit icon becomes a stop icon so the same control cancels the stream.
-
-<DocsPage.ComponentExample
-  client:only
-  code={`
-  <div className="flex flex-col gap-cn-md w-[370px]">
-  <PromptInput.Root onSubmit={(e) => { e.preventDefault(); console.log('stop streaming'); }}>
-  <PromptInput.Textarea placeholder="Ask me anything..." value="Tell me about React hooks" />
-  <PromptInput.Toolbar>
-    <PromptInput.Tools>
-      <PromptInput.Button prefixIcon="plus" prefixIconProps={{ size: 'sm' }} tooltipProps={{ title: 'Add' }} />
-    </PromptInput.Tools>
-    <PromptInput.Submit status="streaming" />
-  </PromptInput.Toolbar>
-</PromptInput.Root>
-</div>`}
-/>
-
 ## Installation
 
 ```typescript jsx

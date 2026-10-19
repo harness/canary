@@ -17,20 +17,7 @@ import PageTabsToc from "@/components/page-tabs-toc.astro";
 
 The `Reasoning` component displays AI reasoning or thinking content in a collapsible format. It automatically tracks streaming duration and can auto-collapse when streaming completes. It's a compound component with `Reasoning.Root`, `Reasoning.Trigger`, and `Reasoning.Content`.
 
-<DocsPage.ComponentExample
-  client:only
-  code={`<Reasoning.Root defaultOpen={true}>
-  <Reasoning.Trigger />
-  <Reasoning.Content>
-    Let me think about this step by step...
-
-    1. First, I need to understand the problem
-    2. Then, I'll analyze the options
-    3. Finally, I'll provide a solution
-
-  </Reasoning.Content>
-</Reasoning.Root>`}
-/>
+<DocsPage.ReasoningPlayground client:only />
 
 ## Variations
 

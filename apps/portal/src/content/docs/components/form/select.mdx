@@ -21,35 +21,6 @@ The `Select` component provides a dropdown for choosing a single value from a li
 
 ## Variations
 
-### Clearable selection
-
-Set `clearable` to show a clear button when a value is selected. Clearing the field resets the value to `undefined`, calls `onChange(undefined)`, and invokes `onClear` when provided.
-
-<DocsPage.ComponentExample
-  client:only
-  code={`() => {
-    const [value, setValue] = React.useState('banana');
-
-    return (
-      <Select
-        label="Clearable fruit selector"
-        options={[
-          { label: 'Apple', value: 'apple' },
-          { label: 'Banana', value: 'banana' },
-          { label: 'Orange', value: 'orange' },
-          { label: 'Strawberry', value: 'strawberry' },
-        ]}
-        value={value}
-        onChange={setValue}
-        onClear={() => console.log('Selection cleared')}
-        clearable
-        placeholder="Select a fruit"
-      />
-    );
-
-}`}
-/>
-
 ### Suffix
 
 The `Select` component can be customized with a suffix element that appears on the right side of the input.
@@ -82,66 +53,6 @@ The `Select` component can be customized with a suffix element that appears on t
         />
       </div>
     );
-
-}`}
-/>
-
-### Form integration
-
-The `Select` component integrates seamlessly with form elements like labels, captions, and validation messages.
-
-<DocsPage.ComponentExample
-  client:only
-  code={`() => {
-    const [country, setCountry] = React.useState()
-    const [priority, setPriority] = React.useState()
-    const [environment, setEnvironment] = React.useState('dev')
-
-    return (
-      <div className="grid gap-cn-md">
-        <Select
-          label="Choose your country"
-          options={[
-            { label: 'United States', value: 'us' },
-            { label: 'United Kingdom', value: 'uk' },
-            { label: 'Canada', value: 'ca' },
-            { label: 'Australia', value: 'au' },
-          ]}
-          value={country}
-          onChange={setCountry}
-          caption="Select your country of residence"
-          optional
-          contentWidth='triggerWidth'
-        />
-
-        <Select
-          label="Priority Level"
-          options={[
-            { label: 'Low', value: 'low' },
-            { label: 'Medium', value: 'medium' },
-            { label: 'High', value: 'high' },
-            { label: 'Critical', value: 'critical' },
-          ]}
-          value={priority}
-          onChange={setPriority}
-          error="Please select a priority level"
-          contentWidth='triggerWidth'
-        />
-
-        <Select
-          label="Environment"
-          options={[
-            { label: 'Development', value: 'dev' },
-            { label: 'Staging', value: 'staging' },
-            { label: 'Production', value: 'prod' },
-          ]}
-          value={environment}
-          onChange={setEnvironment}
-          warning="Changing this will affect all deployments"
-          contentWidth='triggerWidth'
-        />
-      </div>
-    )
 
 }`}
 />
@@ -383,39 +294,6 @@ The `onOpen` callback is triggered when the dropdown menu opens. This is useful 
 }`}
 />
 
-### Loading states
-
-The Select component provides clear loading indicators for different scenarios.
-
-<DocsPage.ComponentExample
-  client:only
-  code={`() => {
-    return (
-      <div className="grid gap-cn-md">
-        <Select
-          label="Initial loading"
-          options={[]}
-          isLoading={true}
-          placeholder="Loading options..."
-        />
-
-        <Select
-          label="Loading more items"
-          options={[
-            { label: 'Item 1', value: '1' },
-            { label: 'Item 2', value: '2' },
-            { label: 'Item 3', value: '3' },
-          ]}
-          isLoading={true}
-          placeholder="Select an item"
-          caption="Scroll to see loading indicator"
-        />
-      </div>
-    )
-
-}`}
-/>
-
 ### Complex option labels
 
 Options can have ReactNode labels for rich content display.
@@ -596,132 +474,6 @@ Customize how individual options are rendered using the `optionRenderer` prop. T
           footer={<Text>Footer content here</Text>}
         />
       </div>
-    );
-
-}`}
-/>
-
-### Sizes
-
-The `Select` component supports two sizes: `md` (default) and `sm`. The default size is suitable for most use cases, while the `sm` size is useful for compact layouts.
-
-<DocsPage.ComponentExample
-  client:only
-  code={`() => {
-    const [value, setValue] = React.useState('banana');
-
-    return (
-      <div className="grid gap-cn-md">
-        <div>
-          <Text>Size sm:</Text>
-          <Select
-            options={[
-              { label: 'Apple', value: 'apple' },
-              { label: 'Banana', value: 'banana' },
-              { label: 'Orange', value: 'orange' },
-              { label: 'Strawberry', value: 'strawberry' },
-            ]}
-            value={value}
-            onChange={setValue}
-            placeholder="Select a fruit"
-            size="sm"
-          />
-        </div>
-
-        <div>
-          <Text>Size md:</Text>
-          <Select
-            options={[
-              { label: 'Apple', value: 'apple' },
-              { label: 'Banana', value: 'banana' },
-              { label: 'Orange', value: 'orange' },
-              { label: 'Strawberry', value: 'strawberry' },
-            ]}
-            value={value}
-            onChange={setValue}
-            placeholder="Select a fruit"
-            size="md"
-          />
-        </div>
-      </div>
-    );
-
-}`}
-/>
-
-### With tooltip
-
-`tooltipContent` is used to display the content of the tooltip. `tooltipProps` is used to pass additional props to the tooltip.
-
-<DocsPage.ComponentExample
-  client:only
-  code={`() => {
-    const [value, setValue] = React.useState('banana');
-
-    return (
-      <Layout.Vertical gap="xl" className="min-w-[400px]">
-        <Select
-          label="Tooltip Input"
-          placeholder="Enter the value"
-          tooltipContent="This is a tooltip"
-          tooltipProps={{
-            disabled: false,
-          }}
-          options={[
-            { label: 'Apple', value: 'apple' },
-            { label: 'Banana', value: 'banana' },
-            { label: 'Orange', value: 'orange' },
-            { label: 'Strawberry', value: 'strawberry' },
-          ]}
-        />
-      </Layout.Vertical>
-    );
-
-}`}
-/>
-
-### Orientation
-
-The `Select` component accepts an optional `orientation` prop, which defines the layout direction of the input and its label.
-Available options are `horizontal` and `vertical` (default).
-
-<DocsPage.ComponentExample
-  client:only
-  code={`() => {
-    const [value, setValue] = React.useState('banana');
-
-    return (
-      <Layout.Vertical gap="xl" className="min-w-[400px]">
-        <Select
-          label="Vertical"
-            options={[
-              { label: 'Apple', value: 'apple' },
-              { label: 'Banana', value: 'banana' },
-              { label: 'Orange', value: 'orange' },
-              { label: 'Strawberry', value: 'strawberry' },
-            ]}
-            value={value}
-            onChange={setValue}
-            placeholder="Select a fruit"
-            size="sm"
-            caption="Caption text"
-          />
-          <Select
-            label="Horizontal"
-            options={[
-              { label: 'Apple', value: 'apple' },
-              { label: 'Banana', value: 'banana' },
-              { label: 'Orange', value: 'orange' },
-              { label: 'Strawberry', value: 'strawberry' },
-            ]}
-            value={value}
-            onChange={setValue}
-            placeholder="Select a fruit"
-            size="sm"
-            caption="Caption text"
-            orientation="horizontal"
-          />
-      </Layout.Vertical>
     );
 
 }`}

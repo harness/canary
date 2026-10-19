@@ -19,62 +19,6 @@ The `Shimmer` component animates a sweep of light across text, most often to sig
 
 <DocsPage.ShimmerPlayground client:only />
 
-## Variations
-
-### With different duration
-
-Control the animation speed with the `duration` prop (in seconds).
-
-<DocsPage.ComponentExample
-  client:only
-  code={`<div className="flex flex-col gap-cn-md">
-  <Shimmer duration={1}>Fast shimmer (1s)</Shimmer>
-  <Shimmer duration={2}>Default shimmer (2s)</Shimmer>
-  <Shimmer duration={4}>Slow shimmer (4s)</Shimmer>
-</div>`}
-/>
-
-### With different spread
-
-The `spread` prop controls the width of the shimmer highlight (multiplied by the text length). Higher values create a wider band of light.
-
-<DocsPage.ComponentExample
-  client:only
-  code={`<div className="flex flex-col gap-cn-md">
-  <Shimmer spread={1}>Narrow spread</Shimmer>
-  <Shimmer spread={2}>Default spread</Shimmer>
-  <Shimmer spread={4}>Wide spread</Shimmer>
-</div>`}
-/>
-
-### With different colors
-
-Use the `color` prop to change the shimmer text color. It uses the same color tokens as the `Text` component.
-
-<DocsPage.ComponentExample
-  client:only
-  code={`<div className="flex flex-col gap-cn-md">
-  <Shimmer color="foreground-1">Foreground 1</Shimmer>
-  <Shimmer color="foreground-2">Foreground 2 (default)</Shimmer>
-  <Shimmer color="foreground-3">Foreground 3</Shimmer>
-  <Shimmer color="brand">Brand color</Shimmer>
-  <Shimmer color="success">Success color</Shimmer>
-</div>`}
-/>
-
-### Custom element type
-
-Use the `as` prop to render the shimmer as a different HTML element.
-
-<DocsPage.ComponentExample
-  client:only
-  code={`<div className="flex flex-col gap-cn-md">
-  <Shimmer as="span">Span element</Shimmer>
-  <Shimmer as="h3" className="text-xl font-semibold">Heading element</Shimmer>
-  <Shimmer as="div">Div element</Shimmer>
-</div>`}
-/>
-
 ## Installation
 
 ```typescript jsx

@@ -25,6 +25,7 @@ const TABS = [
     value: "overview",
     label: "Overview",
     icon: "info-circle",
+    logo: "github",
     counter: null as number | null,
     content: "Summary of the pipeline, recent runs, and health at a glance.",
   },
@@ -32,6 +33,7 @@ const TABS = [
     value: "activity",
     label: "Activity",
     icon: "git-branch",
+    logo: "gitlab",
     counter: 3,
     content: "A chronological feed of commits, deployments, and events.",
   },
@@ -39,6 +41,7 @@ const TABS = [
     value: "settings",
     label: "Settings",
     icon: "settings",
+    logo: "bitbucket",
     counter: null as number | null,
     content: "Configuration for triggers, variables, and access control.",
   },
@@ -46,13 +49,16 @@ const TABS = [
 
 const VARIANT_OPTIONS = ["underlined", "overlined", "ghost", "outlined"];
 const ORIENTATION_OPTIONS = ["horizontal", "vertical"];
+// Leading glyph is a single choice because `icon` and `logo` are mutually
+// exclusive on a Trigger — a tri-state select enforces that for free.
+const LEADING_OPTIONS = ["none", "icon", "logo"];
 
 // ① The state shape — one field per control.
 interface State {
   active: string;
   variant: string;
   orientation: string;
-  icon: boolean;
+  leading: string;
   counter: boolean;
   badge: boolean;
   disabledLast: boolean;
@@ -62,7 +68,7 @@ const INITIAL_STATE: State = {
   active: "overview",
   variant: "underlined",
   orientation: "horizontal",
-  icon: true,
+  leading: "icon",
   counter: true,
   badge: false,
   disabledLast: false,
@@ -83,7 +89,8 @@ function generateCode(s: State): string {
   lines.push("    {tabs.map((tab) => (");
 
   const triggerProps: string[] = ["        value={tab.value}"];
-  if (s.icon) triggerProps.push("        icon={tab.icon}");
+  if (s.leading === "icon") triggerProps.push("        icon={tab.icon}");
+  else if (s.leading === "logo") triggerProps.push("        logo={tab.logo}");
   if (s.counter) triggerProps.push("        counter={tab.counter}");
   if (s.badge) triggerProps.push('        badge="New"');
   if (s.disabledLast)
@@ -129,9 +136,10 @@ const TabsPlayground: FC = () => {
       description: "Root: layout direction",
     },
     {
-      name: "icon",
-      type: "boolean",
-      description: "Trigger: leading icon",
+      name: "leading",
+      type: "select",
+      options: LEADING_OPTIONS,
+      description: "Trigger: leading icon or logo",
     },
     {
       name: "counter",
@@ -177,7 +185,8 @@ const TabsPlayground: FC = () => {
             <Tabs.Trigger
               key={tab.value}
               value={tab.value}
-              icon={state.icon ? (tab.icon as never) : undefined}
+              icon={state.leading === "icon" ? (tab.icon as never) : undefined}
+              logo={state.leading === "logo" ? (tab.logo as never) : undefined}
               counter={state.counter ? tab.counter : undefined}
               badge={state.badge ? "New" : undefined}
               disabled={state.disabledLast && tab.value === "settings"}

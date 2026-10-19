@@ -17,27 +17,7 @@ import PageTabsToc from "@/components/page-tabs-toc.astro";
 
 The `Select` component provides a dropdown for choosing a single value from a list of options. It supports both controlled and uncontrolled modes, clearable selections, async loading, search filtering, grouped options, and the usual form-field affordances (label, caption, error/warning).
 
-<DocsPage.ComponentExample
-  client:only
-  code={`() => {
-    const [value, setValue] = React.useState('banana');
-
-    return (
-      <Select
-        options={[
-          { label: 'Apple', value: 'apple' },
-          { label: 'Banana', value: 'banana' },
-          { label: 'Orange', value: 'orange' },
-          { label: 'Strawberry', value: 'strawberry' },
-        ]}
-        value={value}
-        onChange={setValue}
-        placeholder="Select a fruit"
-      />
-    );
-
-}`}
-/>
+<DocsPage.SelectPlayground client:only />
 
 ## Variations
 

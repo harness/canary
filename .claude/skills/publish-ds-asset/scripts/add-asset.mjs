@@ -21,6 +21,10 @@
  *   node ../../.claude/skills/publish-ds-asset/scripts/add-asset.mjs \
  *     --type logo --name acme-cloud --hex '#1F6FEB' --raw /tmp/acme-cloud.svg
  *
+ * Pass --figma-dump <page.json> — the same JSON you linted in Step 2 — to enable
+ * the stroke-survival check for outline icons. It cannot be judged without the
+ * Figma side, so it is skipped (with a warning) when the dump is not supplied.
+ *
  * Add --force to overwrite an existing asset of the same name (renaming or
  * replacing a shipped asset is a breaking change for consumers — see the
  * playbooks before doing this).
@@ -121,6 +125,86 @@ function validateHex(hex) {
     fail(
       `--hex "${hex}" is not a 6-digit hex colour. It must be the brand hex, copied ` +
         `verbatim from the Figma component's Description field (e.g. '#070709').`
+    )
+  }
+}
+
+// ─── Processed-output assertions ─────────────────────────────────────────────
+//
+// These replace the "sanity-check the content" eyeballing the playbook used to
+// ask for in Step 5. They run against the SVG this script has just produced in
+// memory, so they are pure functions over an artifact that already exists — no
+// Figma, no git, nothing to interpret. Anything a human would have to remember
+// to check by hand belongs here instead.
+
+/** The opening `<svg …>` tag, or '' if there somehow isn't one. */
+function rootSvgTag(svg) {
+  const m = svg.match(/<svg\b[^>]*>/i)
+  return m ? m[0] : ''
+}
+
+/**
+ * A width/height on the ROOT <svg> pins the asset to one pixel size and defeats
+ * the cn-icon-* / LogoV2 size classes, so it must be absent. SVGO's removeAttrs
+ * step strips both, so a surviving one means the shared pipeline has regressed —
+ * worth a hard stop rather than shipping something that cannot resize. (Child
+ * elements keep their dimensions: a logo's background <rect> legitimately has
+ * width/height — this only inspects the root tag.)
+ */
+function assertNoRootDimensions(svg, label) {
+  const root = rootSvgTag(svg)
+  if (/\b(?:width|height)\s*=/.test(root)) {
+    fail(
+      `Processed ${label} has a width/height on its root <svg>:\n    ${root}\n` +
+        `  A fixed dimension overrides the size classes, so the asset cannot scale. The ` +
+        `removeAttrs step should have stripped it — the shared pipeline in lib.mjs has regressed. ` +
+        `Run parity-check.mjs.`
+    )
+  }
+}
+
+/**
+ * Stroke-survival check (playbook Step 4). An outline icon whose Figma component
+ * has stroked children but whose exported SVG carries no `stroke=` was outlined
+ * into a filled path: it renders at 16px but ignores the stroke-width the
+ * cn-icon-* size classes set, so it will not thin out at md/lg/xl like its
+ * siblings. This needs the Figma side to judge, so it only runs when the Step 2
+ * lint dump is passed via --figma-dump; otherwise it says so rather than
+ * reporting a pass it never made.
+ */
+async function assertStrokeSurvived(rawSvg, name) {
+  const dumpPath = args['figma-dump']
+  if (!dumpPath) {
+    console.warn(
+      `  ⚠️  Stroke-survival check SKIPPED. Pass --figma-dump <page.json> (the dump you linted in ` +
+        `Step 2) to enable it — an outlined stroke cannot be detected without the Figma side.`
+    )
+    return
+  }
+  const dumpRaw = await readIfExists(path.resolve(String(dumpPath)))
+  if (dumpRaw === null) fail(`--figma-dump not found: ${dumpPath}`)
+  let dump
+  try {
+    dump = JSON.parse(dumpRaw)
+  } catch {
+    fail(`--figma-dump is not valid JSON: ${dumpPath}`)
+  }
+  const comp = (dump.components || []).find(c => c.name === name || c.name === `.${name}`)
+  if (!comp) {
+    console.warn(
+      `  ⚠️  Stroke-survival check SKIPPED — no component named "${name}" in ${dumpPath}. ` +
+        `Re-dump the page it lives on if you want this checked.`
+    )
+    return
+  }
+  const stroked = (comp.children || []).filter(k => k.strokeHex || k.strokeType)
+  if (stroked.length && !/\bstroke\s*=/.test(rawSvg)) {
+    fail(
+      `Stroke was outlined into a fill. Figma component "${name}" has stroked child(ren) ` +
+        `(${stroked.map(k => k.name).join(', ')}) but the exported SVG has no stroke= attribute.\n` +
+        `  An outlined stroke renders at 16px but ignores the stroke-width from the cn-icon-* size ` +
+        `classes, so it will not thin out at md/lg/xl like its siblings.\n` +
+        `  Fix: set the vector's cap and join uniformly to ROUND in Figma, then re-export.`
     )
   }
 }
@@ -239,6 +323,8 @@ async function main() {
             `and masks must be removed. See references/figma-spec.md.`
         )
       }
+      assertNoRootDimensions(processed, 'icon')
+      await assertStrokeSurvived(raw, name)
       written.push(await writeSvg('icon', filename, processed))
       written.push(await updateMap('icon', filename))
     } else {
@@ -260,6 +346,8 @@ async function main() {
       if (!symbolSvg.includes('currentColor')) {
         fail(`Processed symbol contains no "currentColor" — the mark has no fill/stroke to convert.`)
       }
+      assertNoRootDimensions(logoSvg, 'logo')
+      assertNoRootDimensions(symbolSvg, 'symbol')
 
       written.push(await writeSvg('logo', filename, logoSvg))
       written.push(await writeSvg('symbol', filename, symbolSvg))

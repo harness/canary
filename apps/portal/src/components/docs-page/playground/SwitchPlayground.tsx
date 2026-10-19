@@ -63,8 +63,16 @@ const SwitchPlayground: FC = () => {
 
   // ③ The curated control set.
   const controls: PropControl[] = [
-    { name: "label", type: "text", description: "Text label beside the toggle" },
-    { name: "caption", type: "text", description: "Secondary text below the label" },
+    {
+      name: "label",
+      type: "text",
+      description: "Text label beside the toggle",
+    },
+    {
+      name: "caption",
+      type: "text",
+      description: "Secondary text below the label",
+    },
     {
       name: "captionTooltip",
       type: "text",

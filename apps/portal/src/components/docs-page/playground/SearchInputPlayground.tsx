@@ -104,7 +104,11 @@ const SearchInputPlayground: FC = () => {
       description: "Show prev/next/clear once there's text (adds a counter)",
     },
     { name: "disabled", type: "boolean", description: "Disable the input" },
-    { name: "readOnly", type: "boolean", description: "Make the input read-only" },
+    {
+      name: "readOnly",
+      type: "boolean",
+      description: "Make the input read-only",
+    },
   ];
 
   // Split so boolean toggles hard-break onto their own row instead of flowing
@@ -153,10 +157,7 @@ const SearchInputPlayground: FC = () => {
     </div>
   );
 
-  const code = useMemo(
-    () => generateCode(state, counter),
-    [state, counter],
-  );
+  const code = useMemo(() => generateCode(state, counter), [state, counter]);
 
   return (
     <TooltipProvider>

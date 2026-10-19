@@ -98,7 +98,11 @@ const generateCode = (s: State): string =>
     ? generateIndeterminateCode(s)
     : generateDeterminateCode(s);
 
-const clampPage = (page: number, totalItems: number, pageSize: number): number => {
+const clampPage = (
+  page: number,
+  totalItems: number,
+  pageSize: number,
+): number => {
   const totalPages = Math.max(1, Math.ceil(totalItems / pageSize));
   return Math.min(Math.max(1, page), totalPages);
 };
@@ -249,7 +253,9 @@ const PaginationPlayground: FC = () => {
   // ⑤ Render the real Pagination from state, mirroring generateCode exactly. The four
   //    branches (mode × nav style) keep the discriminated-union props type-safe. Link
   //    getters encode the target as `#page-N` so the contained Link can page in-place.
-  const onPageSizeChange = state.showPageSize ? handlePageSizeChange : undefined;
+  const onPageSizeChange = state.showPageSize
+    ? handlePageSizeChange
+    : undefined;
 
   const renderPagination = () => {
     if (isIndeterminate) {

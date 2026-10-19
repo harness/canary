@@ -31,6 +31,7 @@ const INITIAL_VALUE: MultiSelectOption[] = [{ key: "React", id: "react" }];
 interface State {
   label: string;
   placeholder: string;
+  tooltipContent: string;
   theme: "default" | "danger" | "warning";
   orientation: "vertical" | "horizontal";
   disallowCreation: boolean;
@@ -41,6 +42,7 @@ interface State {
 const INITIAL_STATE: State = {
   label: "Frameworks",
   placeholder: "Select frameworks you like…",
+  tooltipContent: "Pick the frameworks your team works with.",
   theme: "default",
   orientation: "vertical",
   disallowCreation: false,
@@ -53,6 +55,8 @@ const INITIAL_STATE: State = {
 function generateCode(s: State): string {
   const lines = ["<MultiSelect"];
   if (s.label) lines.push(`  label="${s.label}"`);
+  if (s.tooltipContent)
+    lines.push(`  tooltipContent="${s.tooltipContent}"`);
   lines.push("  options={[");
   lines.push('    { key: "nextjs", id: "nextjs" },');
   lines.push('    { key: "Vite", id: "vite" },');
@@ -90,6 +94,11 @@ const MultiSelectPlayground: FC = () => {
   const controls: PropControl[] = [
     { name: "label", type: "text", description: "Label above the field" },
     { name: "placeholder", type: "text", description: "Empty-state text" },
+    {
+      name: "tooltipContent",
+      type: "text",
+      description: "Info tooltip shown next to the label",
+    },
     {
       name: "theme",
       type: "select",
@@ -135,6 +144,7 @@ const MultiSelectPlayground: FC = () => {
     <div className="flex w-full max-w-[440px] flex-col gap-cn-md">
       <MultiSelect
         label={state.label || undefined}
+        tooltipContent={state.tooltipContent || undefined}
         options={OPTIONS}
         value={value}
         onChange={setValue}

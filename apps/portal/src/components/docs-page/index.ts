@@ -36,6 +36,7 @@ import NumberInputPlayground from "./playground/NumberInputPlayground.tsx";
 import PageHeaderPlayground from "./playground/PageHeaderPlayground.tsx";
 import PaginationPlayground from "./playground/PaginationPlayground.tsx";
 import PopoverPlayground from "./playground/PopoverPlayground.tsx";
+import ProgressPlayground from "./playground/ProgressPlayground.tsx";
 import SplitButtonPlayground from "./playground/SplitButtonPlayground.tsx";
 import StatusBadgePlayground from "./playground/StatusBadgePlayground.tsx";
 import TextInputPlayground from "./playground/TextInputPlayground.tsx";
@@ -89,6 +90,7 @@ export const DocsPage = {
   PageHeaderPlayground,
   PaginationPlayground,
   PopoverPlayground,
+  ProgressPlayground,
   TextInputPlayground,
   TimeInputPlayground,
   StatusBadgePlayground,

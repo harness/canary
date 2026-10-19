@@ -45,6 +45,7 @@ import ScrollAreaPlayground from "./playground/ScrollAreaPlayground.tsx";
 import SearchInputPlayground from "./playground/SearchInputPlayground.tsx";
 import SelectPlayground from "./playground/SelectPlayground.tsx";
 import ShimmerPlayground from "./playground/ShimmerPlayground.tsx";
+import SliderPlayground from "./playground/SliderPlayground.tsx";
 import SplitButtonPlayground from "./playground/SplitButtonPlayground.tsx";
 import StatusBadgePlayground from "./playground/StatusBadgePlayground.tsx";
 import TextInputPlayground from "./playground/TextInputPlayground.tsx";
@@ -107,6 +108,7 @@ export const DocsPage = {
   SearchInputPlayground,
   SelectPlayground,
   ShimmerPlayground,
+  SliderPlayground,
   TextInputPlayground,
   TimeInputPlayground,
   StatusBadgePlayground,

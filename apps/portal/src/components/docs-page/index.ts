@@ -38,6 +38,7 @@ import PaginationPlayground from "./playground/PaginationPlayground.tsx";
 import PopoverPlayground from "./playground/PopoverPlayground.tsx";
 import ProgressPlayground from "./playground/ProgressPlayground.tsx";
 import PromptInputPlayground from "./playground/PromptInputPlayground.tsx";
+import RadioPlayground from "./playground/RadioPlayground.tsx";
 import SplitButtonPlayground from "./playground/SplitButtonPlayground.tsx";
 import StatusBadgePlayground from "./playground/StatusBadgePlayground.tsx";
 import TextInputPlayground from "./playground/TextInputPlayground.tsx";
@@ -93,6 +94,7 @@ export const DocsPage = {
   PopoverPlayground,
   ProgressPlayground,
   PromptInputPlayground,
+  RadioPlayground,
   TextInputPlayground,
   TimeInputPlayground,
   StatusBadgePlayground,

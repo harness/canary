@@ -61,8 +61,7 @@ const INITIAL_STATE: State = {
 function generateCode(s: State): string {
   const lines = ["<MultiSelect"];
   if (s.label) lines.push(`  label="${s.label}"`);
-  if (s.tooltipContent)
-    lines.push(`  tooltipContent="${s.tooltipContent}"`);
+  if (s.tooltipContent) lines.push(`  tooltipContent="${s.tooltipContent}"`);
   lines.push("  options={[");
   lines.push('    { key: "nextjs", id: "nextjs" },');
   lines.push('    { key: "Vite", id: "vite" },');

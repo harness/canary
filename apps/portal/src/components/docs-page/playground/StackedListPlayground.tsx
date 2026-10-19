@@ -262,7 +262,10 @@ const StackedListPlayground: FC = () => {
   //    the generated code shows the idiomatic `to="/"`.
   const clickProps =
     state.clickable === "link"
-      ? { to: "/", linkProps: { onClick: (e: React.MouseEvent) => e.preventDefault() } }
+      ? {
+          to: "/",
+          linkProps: { onClick: (e: React.MouseEvent) => e.preventDefault() },
+        }
       : state.clickable === "button"
         ? { onClick: () => {} }
         : {};
@@ -288,9 +291,7 @@ const StackedListPlayground: FC = () => {
         {state.header && (
           <StackedList.Header>
             <StackedList.Field title="Name" />
-            {state.rightField && (
-              <StackedList.Field title="Status" right />
-            )}
+            {state.rightField && <StackedList.Field title="Status" right />}
           </StackedList.Header>
         )}
         {ITEMS.map((item) => (
@@ -317,9 +318,7 @@ const StackedListPlayground: FC = () => {
               titleColor={state.titleColor as never}
               disableTruncate={state.disableTruncate}
             />
-            {state.rightField && (
-              <StackedList.Field title={item.meta} right />
-            )}
+            {state.rightField && <StackedList.Field title={item.meta} right />}
           </StackedList.Item>
         ))}
       </StackedList.Root>

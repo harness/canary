@@ -31,6 +31,7 @@ import IllustrationPlayground from "./playground/IllustrationPlayground.tsx";
 import LabelPlayground from "./playground/LabelPlayground.tsx";
 import LinkPlayground from "./playground/LinkPlayground.tsx";
 import LogoPlayground from "./playground/LogoPlayground.tsx";
+import MultiSelectPlayground from "./playground/MultiSelectPlayground.tsx";
 import NoDataPlayground from "./playground/NoDataPlayground.tsx";
 import NumberInputPlayground from "./playground/NumberInputPlayground.tsx";
 import PageHeaderPlayground from "./playground/PageHeaderPlayground.tsx";
@@ -42,6 +43,7 @@ import RadioPlayground from "./playground/RadioPlayground.tsx";
 import ReasoningPlayground from "./playground/ReasoningPlayground.tsx";
 import ScrollAreaPlayground from "./playground/ScrollAreaPlayground.tsx";
 import SearchInputPlayground from "./playground/SearchInputPlayground.tsx";
+import SelectPlayground from "./playground/SelectPlayground.tsx";
 import SplitButtonPlayground from "./playground/SplitButtonPlayground.tsx";
 import StatusBadgePlayground from "./playground/StatusBadgePlayground.tsx";
 import TextInputPlayground from "./playground/TextInputPlayground.tsx";
@@ -90,6 +92,7 @@ export const DocsPage = {
   LabelPlayground,
   LinkPlayground,
   LogoPlayground,
+  MultiSelectPlayground,
   NoDataPlayground,
   NumberInputPlayground,
   PageHeaderPlayground,
@@ -101,6 +104,7 @@ export const DocsPage = {
   ReasoningPlayground,
   ScrollAreaPlayground,
   SearchInputPlayground,
+  SelectPlayground,
   TextInputPlayground,
   TimeInputPlayground,
   StatusBadgePlayground,

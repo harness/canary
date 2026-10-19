@@ -17,25 +17,7 @@ import PageTabsToc from "@/components/page-tabs-toc.astro";
 
 The `MultiSelect` component lets users select multiple options from a dropdown list. Selected options appear as removable tags, and users can optionally create new options by typing. It's suited to scenarios where more than one value is needed — tags, frameworks, labels, and similar.
 
-<DocsPage.ComponentExample
-  client:only
-  code={`
-  <Layout.Vertical gap="xl" className="min-w-[400px]">
-      <MultiSelect
-        label="Label"
-        caption="Caption text"
-        defaultValue={[{ key: 'React', id: 'react' }, { key: 'category', value: 'frontend', id: 'frontend' }]}
-        options={[
-          { key: 'nextjs', id: 'nextjs' },
-          { key: 'Vite', id: 'vite' },
-          { key: 'Nuxt', id: 'nuxt' },
-          { key: 'Vue', id: 'vue' },
-        ]}
-        placeholder="Select frameworks you like..."
-      />
-    </Layout.Vertical>
-  `}
-/>
+<DocsPage.MultiSelectPlayground client:only />
 
 ## Variations
 

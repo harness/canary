@@ -21,43 +21,6 @@ The `ScrollArea` component offers a flexible, customizable container with scroll
 
 ## Variations
 
-### Directions
-
-The `ScrollArea` component supports the `direction` prop to set the text direction. It accepts `ltr` (left-to-right) and `rtl` (right-to-left).
-
-<DocsPage.ComponentExample
-  client:only
-  code={`
-<div className="grid gap-cn-md">
-  <div>
-    <Text variant="heading-base" className="mb-cn-3xs">ltr:</Text>
-    <ScrollArea className="w-[300px] h-[200px] border">
-      <div className="p-cn-md space-y-cn-md w-[700px]">
-        <p>Content that exceeds the viewport height and width.</p>
-        <p>More content...</p>
-        <p>Even more content...</p>
-      </div>
-    </ScrollArea>
-  </div>
-
-<div>
-  <Text variant="heading-base" className="mb-cn-3xs">
-    rtl:
-  </Text>
-  <ScrollArea
-    direction="rtl"
-    className="w-[300px] h-[200px] border"
-  >
-    <div dir="rtl" className="p-cn-md space-y-cn-md w-[700px]">
-      <p>Content that exceeds the viewport height and width.</p>
-      <p>More content...</p>
-      <p>Even more content...</p>
-    </div>
-  </ScrollArea>
-</div>
-</div>`}
-/>
-
 ### Scroll events
 
 The `ScrollArea` component provides several event handlers to respond to scroll actions:

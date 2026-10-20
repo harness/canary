@@ -44,7 +44,7 @@ gaps:
 
 # Execution Status Pattern Guide
 
-Draft. How to show the state of a pipeline execution: a run, a stage or a step. The front matter above is the only source for each rule's id, title, status, tier and check. EXS-001 to EXS-004 moved here from `status-badge.guide.md`, where they were SBD-005, SBD-014, SBD-008 and SBD-015 (EXS-007). Those SBD IDs are retired. Nothing new is decided here; the open questions are under Known gaps. The anatomy, the states and the examples live in `execution-status.manifest.json`.
+Draft. How to show the state of a pipeline execution: a run, a stage or a step. EXS-001 to EXS-004 moved here from `status-badge.guide.md`, where they were SBD-005, SBD-014, SBD-008 and SBD-015 (EXS-007). Those SBD IDs are retired. Nothing new is decided here; the open questions are under Known gaps. The anatomy, the states and the examples live in `execution-status.manifest.json`.
 
 ## Architecture: Do's and Do Not's
 

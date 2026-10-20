@@ -6,6 +6,10 @@ Status: `draft`. Sources: [manifest](../../src/patterns/execution-status/executi
 
 Show the state of a pipeline execution (a run, a stage or a step) as one badge that announces its changes. Holds the StatusBadge rules that are about composition, not about the component. They replace the retired SBD-005, SBD-008, SBD-014 and SBD-015.
 
+## About this guide
+
+Draft. How to show the state of a pipeline execution: a run, a stage or a step. EXS-001 to EXS-004 moved here from `status-badge.guide.md`, where they were SBD-005, SBD-014, SBD-008 and SBD-015 (EXS-007). Those SBD IDs are retired. Nothing new is decided here; the open questions are under Known gaps. The anatomy, the states and the examples live in `execution-status.manifest.json`.
+
 ## Use when
 
 - The value is an ExecutionState from src/types/execution.ts.

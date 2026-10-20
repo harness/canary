@@ -87,7 +87,7 @@ gaps:
 
 # Status Badge Guide
 
-Rules for choosing between StatusBadge and Tag, and for StatusBadge's own API constraints. The front matter above is the only source for each rule's id, title, status, tier and check. Rules are `proposed` (likely stable) or `open` (needs verification or resolution). Treat them as context, not settled policy, until Design ratifies them. The component API (props, variants, defaults, tokens) lives in `status-badge.manifest.json`.
+Rules for choosing between StatusBadge and Tag, and for StatusBadge's own API constraints. Rules are `proposed` (likely stable) or `open` (needs verification or resolution). Treat them as context, not settled policy, until Design ratifies them. The component API (props, variants, defaults, tokens) lives in `status-badge.manifest.json`.
 
 Four rules moved to the execution-status pattern (`src/patterns/execution-status/`): SBD-005 is now EXS-001, SBD-008 is EXS-003, SBD-014 is EXS-002 and SBD-015 is EXS-004. Those IDs are retired. Read that pattern when a badge shows the state of a pipeline execution or a state that can change while visible.
 

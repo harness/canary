@@ -136,6 +136,24 @@ const sectionBody = (lines: string[], heading: GuideHeading): string => {
   return body.join('\n').trim()
 }
 
+/**
+ * The guide's intro: text between the H1 and the first level-2 heading, with
+ * HTML comments removed. Comments hold notes for guide authors.
+ */
+const intro = (lines: string[]): string => {
+  const body: string[] = []
+  for (let index = lines.indexOf('---', 1) + 1; index < lines.length; index++) {
+    const text = lines[index]
+    if (text.startsWith('## ')) break
+    if (!text.startsWith('# ')) body.push(text)
+  }
+  return body
+    .join('\n')
+    .replace(/<!--[\s\S]*?-->/g, '')
+    .replace(/\n{3,}/g, '\n\n')
+    .trim()
+}
+
 /** Level-2 guide sections that are not rules or known gaps, such as Do's and Do Not's. */
 const proseSections = (lines: string[]): { title: string; body: string }[] => {
   const start = lines.indexOf('---', 1) + 1
@@ -244,6 +262,7 @@ export const renderReference = (source: ReferenceSource): string => {
     '',
     manifest.purpose.summary,
     '',
+    ...(intro(lines) ? ['## About this guide', '', intro(lines), ''] : []),
     '## Use when',
     '',
     ...manifest.purpose.useWhen.map(item => `- ${item}`),
@@ -374,6 +393,7 @@ export const renderPattern = (source: PatternSource): string => {
     '',
     manifest.purpose.summary,
     '',
+    ...(intro(lines) ? ['## About this guide', '', intro(lines), ''] : []),
     '## Use when',
     '',
     ...manifest.purpose.useWhen.map(item => `- ${item}`),

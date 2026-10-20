@@ -1,5 +1,6 @@
 {
   "breakpoint": {
+    "$description": "Design-time canvas reference widths, not CSS breakpoints. Emitted unitless and intentionally unconsumed by code; responsive utilities use Tailwind's default screens (sm/md/lg/xl/2xl), which do NOT correspond to these values.",
     "viewport": {
       "$type": "number",
       "$value": "1440"

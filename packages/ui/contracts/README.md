@@ -36,7 +36,7 @@ pnpm ds:check MyComponent
 
 - Start from the manifest. `purpose` says when to use the component, `props` says what you can pass, `constraints` and `illegalCombinations` say what you cannot combine, and `examples` shows both.
 - Rule IDs in the manifest (`constraints[].rule`, `examples.incorrect[].violates`, `knownGaps[].rule`) resolve to headings in the guide.
-- A rule's `status` tells you how much to trust it: `adopted` is ratified, `proposed` is a draft, `open` is a question.
+- A rule's `status` tells you how much to trust it: `ratified` is decided by Design, `proposed` is a draft, `open` is a question, `retired` no longer applies.
 - A rule's `check` tells you what enforces it. `review` means nothing automatic does.
 - `knownGaps` lists where Figma, code and docs disagree. Do not copy behavior described there without checking the source it cites.
 

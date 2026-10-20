@@ -43,6 +43,6 @@ Use this when adding a manifest and guide for a component. Items marked **(valid
 
 ## Ratification
 
-- [ ] Design signs off on each rule; change its status from `proposed` to `adopted`.
+- [ ] Design signs off on each rule; change its status from `proposed` to `ratified`.
 - [ ] Move the manifest `status` from `draft` or `beta` to `stable`.
 - [ ] Update `governance.note` and `governance.tokenStatus`.

@@ -75,7 +75,7 @@ Not identified yet (EXS-008). A Figma counterpart is expected.
 
 ## Rules
 
-Status `adopted` is ratified, `proposed` is a draft, `open` is a question. Check `review` means nothing automatic enforces the rule.
+Status `ratified` is decided by Design, `proposed` is a draft, `open` is a question, `retired` no longer applies. Check `review` means nothing automatic enforces the rule.
 
 | ID | Rule | Tier | Status |
 | -- | ---- | ---- | ------ |

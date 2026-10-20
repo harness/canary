@@ -89,7 +89,7 @@
       {
         "name": "className",
         "type": "string",
-        "trigger": "a11y-only",
+        "trigger": "appearance-override",
         "notes": "Additional CSS classes (Tailwind); should not override token-based styling"
       }
     ]

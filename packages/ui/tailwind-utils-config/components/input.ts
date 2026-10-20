@@ -136,7 +136,7 @@ export default {
     },
     '&-search': {
       '&:where(.cn-input-input)': {
-        '@apply pl-0': '',
+        '@apply pl-0 min-w-24': '',
 
         '&::-webkit-search-cancel-button': {
           '@apply appearance-none hidden': ''

@@ -59,7 +59,10 @@
     "update:icons": "node scripts/icons.js",
     "update:logos": "node scripts/logos.js",
     "ds:scaffold": "node scripts/ds/scaffold-component.ts",
-    "ds:validate": "node scripts/ds/validate-contracts.ts"
+    "ds:validate": "node scripts/ds/validate-contracts.ts",
+    "ds:generate": "node scripts/ds/generate-references.ts",
+    "ds:test": "node scripts/ds/check.ts test",
+    "ds:check": "node scripts/ds/check.ts all"
   },
   "types": "./dist/index.d.ts",
   "style": "./dist/styles.css",

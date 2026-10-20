@@ -1,0 +1,117 @@
+{
+  "$schema": "../../../contracts/pattern-manifest.schema.json",
+  "id": "canary.pattern.execution-status",
+  "kind": "pattern",
+  "status": "draft",
+  "purpose": {
+    "summary": "Show the state of a pipeline execution (a run, a stage or a step) as one badge that announces its changes. Draws together StatusBadge rules that are about composition, not about the component: SBD-005, SBD-008, SBD-014 and SBD-015.",
+    "useWhen": [
+      "The value is an ExecutionState from src/types/execution.ts.",
+      "The state can change while the user is looking at it."
+    ],
+    "doNotUseWhen": [
+      "The executions are rows in a hierarchical list (steps within a stage, stages within a pipeline). Tree View renders their status (EXS-004).",
+      "The value is a stable attribute, not a state. Use Tag (SBD-001)."
+    ]
+  },
+  "components": [
+    {
+      "export": "StatusBadge",
+      "manifest": "../../components/status-badge/status-badge.manifest.json",
+      "role": "Renders the state."
+    },
+    {
+      "export": "Tree",
+      "manifest": null,
+      "path": "packages/ui/src/components/treeview.tsx",
+      "role": "Renders execution state for Folder and File rows in hierarchical lists. No contract yet."
+    }
+  ],
+  "anatomy": [
+    {
+      "slot": "liveRegion",
+      "fill": "div[aria-live=polite]",
+      "required": "when the state can change while visible",
+      "rules": ["EXS-003", "SBD-008"],
+      "notes": "StatusBadge has no live region of its own."
+    },
+    {
+      "slot": "badge",
+      "fill": "StatusBadge",
+      "required": true,
+      "props": { "theme": ["success", "warning", "muted", "danger"] },
+      "rules": ["EXS-001", "EXS-002", "SBD-006", "SBD-007"],
+      "notes": "One state per badge. variant, icon and pulse follow StatusBadge's own constraints (SBD-007)."
+    }
+  ],
+  "states": {
+    "source": "packages/ui/src/types/execution.ts ExecutionState",
+    "values": [
+      "pending",
+      "running",
+      "success",
+      "failure",
+      "error",
+      "skipped",
+      "killed",
+      "blocked",
+      "waiting_on_dependencies",
+      "unknown",
+      "failure_ignored",
+      "ignorefailed"
+    ],
+    "map": null,
+    "notes": "[TK] Which theme, variant, icon and label each state gets is not decided (EXS-005). Tree View's current icon colors are a starting point, not a decision."
+  },
+  "constraints": [
+    {
+      "when": "The executions are rows in a hierarchical list",
+      "use": "Tree, Folder and File with their status prop",
+      "instead": "StatusBadge composed by hand",
+      "rule": "EXS-004",
+      "enforcedBy": "review"
+    }
+  ],
+  "figma": {
+    "fileKey": null,
+    "nodeId": null,
+    "notes": "[TK] No Figma counterpart identified (EXS-008)."
+  },
+  "examples": {
+    "correct": [
+      {
+        "code": "<div aria-live=\"polite\">\n  {isRunningSuccessfully ? (\n    <StatusBadge variant=\"status\" theme=\"success\" pulse>Running</StatusBadge>\n  ) : (\n    <StatusBadge variant=\"outline\" theme=\"muted\">Not running</StatusBadge>\n  )}\n</div>",
+        "source": "Loop test, Claude Code, 2026-10-20"
+      }
+    ],
+    "incorrect": [
+      {
+        "code": "<div aria-live=\"polite\">\n  <StatusBadge variant=\"outline\" theme=\"success\" size=\"sm\" icon=\"check-circle\" className=\"motion-safe:animate-pulse\">\n    Running successfully\n  </StatusBadge>\n</div>",
+        "violates": ["SBD-007"],
+        "source": "Loop test, Codex, 2026-10-20"
+      },
+      {
+        "code": "<StatusBadge variant=\"outline\" theme=\"danger\">Error, Pending</StatusBadge>",
+        "violates": ["EXS-001", "SBD-005"],
+        "source": "The 'Error, Pending' case in status-badge.guide.md SBD-005"
+      }
+    ]
+  },
+  "governance": {
+    "guide": "./execution-status.guide.md",
+    "note": "Draft for Katie. No ds:* script reads src/patterns yet, so nothing here is validated or generated. Every rule restates a StatusBadge rule; whether those rules move here is EXS-007."
+  },
+  "knownGaps": [
+    { "summary": "No mapping from ExecutionState to StatusBadge props.", "rule": "EXS-005" },
+    {
+      "summary": "Tree View's status icons differ from the icon table in SBD-017, and it renders error, killed and blocked as neutral.",
+      "rule": "EXS-006",
+      "source": "packages/ui/src/components/treeview.tsx getStatusIcon"
+    },
+    {
+      "summary": "Rules duplicated between this guide and status-badge.guide.md until a decision is made.",
+      "rule": "EXS-007"
+    },
+    { "summary": "No Figma counterpart identified.", "rule": "EXS-008" }
+  ]
+}

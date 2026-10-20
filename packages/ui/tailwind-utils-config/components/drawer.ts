@@ -291,7 +291,7 @@ export default {
       backgroundColor: 'transparent',
       color: 'var(--cn-text-3)',
       fontSize: '0.75rem',
-      fontWeight: '500',
+      fontWeight: 'var(--cn-font-weight-default-normal-600)',
       lineHeight: '1',
       marginTop: '0.0625rem',
       '@apply inline-flex items-center justify-center': ''

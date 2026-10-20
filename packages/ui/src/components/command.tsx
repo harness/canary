@@ -21,7 +21,7 @@ const CommandDialog = ({ children, ...props }: DialogProps) => {
   return (
     <Dialog.Root {...props}>
       <Dialog.Content className="overflow-hidden p-0">
-        <CommandRoot className="[&_[cmdk-group-heading]]:text-cn-3 [&_[cmdk-group-heading]]:px-cn-xs [&_[cmdk-group]]:px-cn-xs [&_[cmdk-item]]:px-cn-xs [&_[cmdk-item]]:py-cn-sm [&_[cmdk-group-heading]]:font-medium [&_[cmdk-group]:not([hidden])_~[cmdk-group]]:pt-0 [&_[cmdk-input-wrapper]_svg]:size-5 [&_[cmdk-input]]:h-12 [&_[cmdk-item]_svg]:size-5">
+        <CommandRoot className="[&_[cmdk-group-heading]]:px-cn-xs [&_[cmdk-group-heading]]:font-normal [&_[cmdk-group-heading]]:text-cn-3 [&_[cmdk-group]:not([hidden])_~[cmdk-group]]:pt-0 [&_[cmdk-group]]:px-cn-xs [&_[cmdk-input-wrapper]_svg]:size-5 [&_[cmdk-input]]:h-12 [&_[cmdk-item]]:px-cn-xs [&_[cmdk-item]]:py-cn-sm [&_[cmdk-item]_svg]:size-5">
           {children}
         </CommandRoot>
       </Dialog.Content>
@@ -34,7 +34,7 @@ const CommandInput = React.forwardRef<
   React.ComponentPropsWithoutRef<typeof CommandPrimitive.Input>
 >(({ className, ...props }, ref) => (
   // eslint-disable-next-line react/no-unknown-property
-  <div className="px-cn-sm flex items-center border-b" cmdk-input-wrapper="">
+  <div className="flex items-center border-b px-cn-sm" cmdk-input-wrapper="">
     <IconV2 name="search" className="mr-cn-xs shrink-0 opacity-50" />
     <CommandPrimitive.Input
       ref={ref}
@@ -68,7 +68,7 @@ const CommandEmpty = React.forwardRef<
   React.ElementRef<typeof CommandPrimitive.Empty>,
   React.ComponentPropsWithoutRef<typeof CommandPrimitive.Empty>
 >((props, ref) => (
-  <CommandPrimitive.Empty ref={ref} className="text-cn-3 px-cn-xs py-cn-md text-cn-size-2 text-center" {...props} />
+  <CommandPrimitive.Empty ref={ref} className="px-cn-xs py-cn-md text-center text-cn-size-2 text-cn-3" {...props} />
 ))
 
 CommandEmpty.displayName = CommandPrimitive.Empty.displayName
@@ -80,7 +80,7 @@ const CommandGroup = React.forwardRef<
   <CommandPrimitive.Group
     ref={ref}
     className={cn(
-      'text-cn-1 [&_[cmdk-group-heading]]:text-cn-3 overflow-hidden p-cn-3xs [&_[cmdk-group-heading]]:px-cn-xs [&_[cmdk-group-heading]]:py-cn-2xs [&_[cmdk-group-heading]]:text-cn-size-2 [&_[cmdk-group-heading]]:font-medium',
+      'text-cn-1 [&_[cmdk-group-heading]]:text-cn-3 overflow-hidden p-cn-3xs [&_[cmdk-group-heading]]:px-cn-xs [&_[cmdk-group-heading]]:py-cn-2xs [&_[cmdk-group-heading]]:text-cn-size-2 [&_[cmdk-group-heading]]:font-normal',
       className
     )}
     {...props}

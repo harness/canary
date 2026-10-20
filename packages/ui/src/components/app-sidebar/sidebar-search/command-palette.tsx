@@ -26,7 +26,7 @@ const CommandPaletteDialog = ({ children, open, onOpenChange }: PropsWithChildre
   <Dialog.Root open={open} onOpenChange={onOpenChange}>
     <Dialog.Content hideClose>
       <Dialog.Body>
-        <Root className="[&_[cmdk-group-heading]]:px-cn-xs [&_[cmdk-group-heading]]:text-cn-3 [&_[cmdk-group]]:px-cn-xs [&_[cmdk-item]]:py-cn-2xs [&_[cmdk-group-heading]]:font-medium [&_[cmdk-group]:not([hidden])_~[cmdk-group]]:pt-0 [&_[cmdk-input-wrapper]_svg]:size-5 [&_[cmdk-input]]:h-12 [&_[cmdk-item]]:px-cn-sm [&_[cmdk-item]_svg]:h-auto [&_[cmdk-item]_svg]:w-5">
+        <Root className="[&_[cmdk-group-heading]]:px-cn-xs [&_[cmdk-group-heading]]:font-normal [&_[cmdk-group-heading]]:text-cn-3 [&_[cmdk-group]:not([hidden])_~[cmdk-group]]:pt-0 [&_[cmdk-group]]:px-cn-xs [&_[cmdk-input-wrapper]_svg]:size-5 [&_[cmdk-input]]:h-12 [&_[cmdk-item]]:px-cn-sm [&_[cmdk-item]]:py-cn-2xs [&_[cmdk-item]_svg]:h-auto [&_[cmdk-item]_svg]:w-5">
           {children}
         </Root>
       </Dialog.Body>
@@ -39,7 +39,7 @@ const Dropdown = ({ children, open, onOpenChange }: PropsWithChildren<DialogProp
   <Dialog.Root open={open} onOpenChange={onOpenChange}>
     <Dialog.Content>
       <Dialog.Body>
-        <Root className="[&_[cmdk-group-heading]]:px-cn-xs [&_[cmdk-group-heading]]:text-cn-3 [&_[cmdk-group]]:px-cn-xs [&_[cmdk-item]]:py-cn-2xs [&_[cmdk-group-heading]]:font-medium [&_[cmdk-group]:not([hidden])_~[cmdk-group]]:pt-0 [&_[cmdk-input-wrapper]_svg]:size-5 [&_[cmdk-input]]:h-12 [&_[cmdk-item]]:px-cn-sm [&_[cmdk-item]_svg]:h-auto [&_[cmdk-item]_svg]:w-5">
+        <Root className="[&_[cmdk-group-heading]]:px-cn-xs [&_[cmdk-group-heading]]:font-normal [&_[cmdk-group-heading]]:text-cn-3 [&_[cmdk-group]:not([hidden])_~[cmdk-group]]:pt-0 [&_[cmdk-group]]:px-cn-xs [&_[cmdk-input-wrapper]_svg]:size-5 [&_[cmdk-input]]:h-12 [&_[cmdk-item]]:px-cn-sm [&_[cmdk-item]]:py-cn-2xs [&_[cmdk-item]_svg]:h-auto [&_[cmdk-item]_svg]:w-5">
           {children}
         </Root>
       </Dialog.Body>
@@ -52,7 +52,7 @@ const Input = React.forwardRef<
   React.ElementRef<typeof CommandPrimitive.Input>,
   React.ComponentPropsWithoutRef<typeof CommandPrimitive.Input>
 >(({ className, ...props }, ref) => (
-  <div className="px-cn-md flex items-center border-b">
+  <div className="flex items-center border-b px-cn-md">
     <CommandPrimitive.Input
       ref={ref}
       className={cn(

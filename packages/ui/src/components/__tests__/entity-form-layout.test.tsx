@@ -107,7 +107,7 @@ describe('EntityFormLayout', () => {
       expect(title).toHaveClass('text-cn-size-3')
       expect(title).toHaveClass('leading-none')
       expect(title).toHaveClass('text-cn-1')
-      expect(title).toHaveClass('font-medium')
+      expect(title).toHaveClass('font-semibold')
     })
 
     test('should apply custom className', () => {
@@ -124,7 +124,7 @@ describe('EntityFormLayout', () => {
 
       expect(title).toHaveClass('custom-1')
       expect(title).toHaveClass('custom-2')
-      expect(title).toHaveClass('font-medium')
+      expect(title).toHaveClass('font-semibold')
     })
 
     test('should render complex children', () => {

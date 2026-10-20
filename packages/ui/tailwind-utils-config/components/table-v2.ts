@@ -122,7 +122,7 @@ export default {
 
     // Footer
     '&-footer': {
-      '@apply border-t font-medium [&>tr]:last:border-b-0': ''
+      '@apply border-t font-semibold [&>tr]:last:border-b-0': ''
     },
 
     // Row
@@ -178,7 +178,7 @@ export default {
     '&-head': {
       '--cn-table-pinned-base': 'var(--cn-bg-2)',
       backgroundColor: 'var(--cn-table-pinned-base)',
-      '@apply text-cn-3 text-left align-middle font-medium overflow-hidden transition-colors': '',
+      '@apply text-cn-3 text-left align-middle font-semibold overflow-hidden transition-colors': '',
       '@apply [&:has([role=checkbox])]:py-0 [&:has([role=checkbox])]:!pr-0 [&>[role=checkbox]]:translate-y-[2px]': '',
       '@apply [&:has([role=button])]:py-0 [&:has([role=button])]:!pr-0': '',
 

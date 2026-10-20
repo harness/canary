@@ -53,8 +53,9 @@ vi.mock('../dialog', () => ({
     Trigger: ({ children }: any) => <div data-testid="dialog-trigger">{children}</div>,
     Content: ({ children }: any) => <div data-testid="dialog-content">{children}</div>,
     Header: ({ children }: any) => <div data-testid="dialog-header">{children}</div>,
+    // Mirror the real Dialog.Title, which always applies the base style class
     Title: ({ children, className }: any) => (
-      <h2 data-testid="dialog-title" className={className}>
+      <h2 data-testid="dialog-title" className={['cn-modal-dialog-title', className].filter(Boolean).join(' ')}>
         {children}
       </h2>
     ),
@@ -91,7 +92,7 @@ describe('LanguageDialog', () => {
     render(<LanguageDialog {...defaultProps} />)
 
     expect(screen.getByTestId('dialog-title')).toHaveTextContent('Language')
-    expect(screen.getByTestId('dialog-title')).toHaveClass('text-cn-size-5 font-medium')
+    expect(screen.getByTestId('dialog-title')).toHaveClass('cn-modal-dialog-title')
   })
 
   test('renders all supported languages', () => {

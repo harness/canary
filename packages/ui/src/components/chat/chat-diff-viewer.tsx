@@ -65,9 +65,9 @@ export const ChatDiffViewer = ({ data, mode = 4, lang = 'go', fileName }: ChatDi
   }, [data, lang, setDiffInstanceCb])
 
   return (
-    <div className="rounded-cn-3 border-cn-2 bg-cn-1 mt-cn-sm mr-[28px] flex flex-col border">
+    <div className="mr-[28px] mt-cn-sm flex flex-col rounded-cn-3 border border-cn-2 bg-cn-1">
       {fileName && (
-        <span className="border-cn-2 bg-cn-2 p-cn-md text-cn-size-2 text-cn-1 rounded-inherit border-b font-medium">
+        <span className="rounded-inherit border-b border-cn-2 bg-cn-2 p-cn-md text-cn-size-2 font-semibold text-cn-1">
           {fileName}
         </span>
       )}
@@ -76,7 +76,7 @@ export const ChatDiffViewer = ({ data, mode = 4, lang = 'go', fileName }: ChatDi
         // @ts-ignore
         <DiffView
           style={{ '--diff-plain-lineNumber--': 'var(--cn-bg-1)' } as CSSProperties}
-          className="text-cn-1 w-full"
+          className="w-full text-cn-1"
           diffFile={diffFileInstance}
           diffViewFontSize={12.6}
           diffViewHighlight={true}

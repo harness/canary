@@ -18,7 +18,7 @@ function Calendar({ className, classNames, showOutsideDays = true, ...props }: C
         months: 'flex flex-col sm:flex-row space-y-cn-md sm:space-x-cn-md sm:space-y-0',
         month: 'space-y-cn-md',
         caption: 'flex justify-center pt-cn-3xs relative items-center',
-        caption_label: 'text-cn-size-2 font-medium select-none',
+        caption_label: 'text-cn-size-2 font-semibold select-none',
         nav: 'space-x-cn-3xs flex items-center',
         nav_button: cn(
           buttonVariants({ variant: 'outline' }),
@@ -42,7 +42,7 @@ function Calendar({ className, classNames, showOutsideDays = true, ...props }: C
         day_range_end: 'day-range-end bg-cn-brand-primary !text-cn-brand-primary hover:!bg-cn-brand-primary-hover',
         day_selected:
           'bg-cn-brand-primary text-cn-brand-primary hover:!bg-cn-brand-primary-hover hover:text-cn-brand-primary focus:bg-cn-brand focus:text-cn-brand-primary',
-        day_today: 'font-bold',
+        day_today: 'font-semibold',
         day_outside:
           'day-outside text-cn-3 opacity-50  aria-selected:bg-cn-3/50 aria-selected:text-cn-3 aria-selected:opacity-30',
         day_disabled: 'text-cn-3 opacity-50',

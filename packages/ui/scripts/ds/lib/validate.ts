@@ -758,7 +758,7 @@ const checkRegistry = (
 }
 
 const placeholderFindings = (source: string, file: string, label: string): Finding[] => {
-  const count = source.split('[TK]').length - 1
+  const count = source.match(/\[TK(?::[^\]]*)?\]/g)?.length ?? 0
   if (count === 0) return []
   return [finding('placeholder', label, file, '', `${count} unresolved [TK] placeholder(s).`)]
 }

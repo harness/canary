@@ -284,6 +284,7 @@ describe('validate-contracts: ExecutionStatus pattern', () => {
     ['component path missing', m => (m.components[1].path = 'packages/ui/src/nope.tsx'), 'pattern-component:Tree'],
     ['states.map key not in values', m => (m.states.map = { paused: {} }), 'states-map:paused'],
     ['unresolved [TK] placeholder', m => (m.purpose.summary = '[TK]'), 'placeholder:manifest'],
+    ['annotated [TK: note] placeholder', m => (m.purpose.summary = '[TK: ask Design]'), 'placeholder:manifest'],
     [
       'correct example outside the anatomy narrowing',
       m => (m.examples.correct[0].code = '<StatusBadge variant="outline" theme="info">Queued</StatusBadge>'),

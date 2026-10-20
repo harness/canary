@@ -4,9 +4,10 @@ Use this when adding a manifest and guide for a component. Items marked **(valid
 
 ## 1. Scaffold
 
+- [ ] Add a row for the component's rule-ID prefix to `contracts/rule-ids.md`. Never reuse a prefix or an ID, including retired ones.
 - [ ] Run `pnpm ds:scaffold <ComponentName> --prefix <PREFIX>` from `packages/ui`.
 - [ ] Both files sit next to the component source in `src/components/<kebab>/`.
-- [ ] The prefix is 2 to 5 uppercase letters and no other guide uses it. **(scaffolder)**
+- [ ] The prefix is 2 to 5 uppercase letters and `rule-ids.md` registers it to this component. **(scaffolder, validator)**
 
 ## 2. Manifest
 
@@ -28,13 +29,15 @@ Use this when adding a manifest and guide for a component. Items marked **(valid
 - [ ] Front matter holds id, title, status, tier and check for each rule. The body never restates them. **(validator)**
 - [ ] Each rule has a `## PREFIX-NNN — Title` heading with the exact front matter title. Each gap has a `### PREFIX-NNN — Title` heading under `## Known gaps`. **(validator)**
 - [ ] `check` names a real target: `types:<Export>`, `schema:/json/pointer`, `test:<file>#<name>`, `lint:<rule>`, `docs:<path>`, or `review`. **(validator)**
+- [ ] Every tier 1 rule that can be checked automatically names a `test:` or `types:` target, and the test exists with that exact name. Rules only a person can judge say `review`. **(validator for target existence)**
 - [ ] Rule statuses stay `proposed` or `open` until Design ratifies them.
 - [ ] Each rule says why, in one to three sentences.
 - [ ] If a sibling component exists, the guide says when to choose each.
 
 ## 4. Before you commit
 
-- [ ] `pnpm ds:validate` exits 0.
+- [ ] `pnpm ds:generate` has been run and its output in `agents/components/` is committed.
+- [ ] `pnpm ds:check <ComponentName>` exits 0. It runs the validator, the reference staleness check and the component's rule tests.
 - [ ] `pnpm typecheck`, `pnpm lint` and `pnpm test` pass.
 - [ ] No `[TK]` remains in either file.
 

@@ -13,7 +13,7 @@ The manifest points to its guide through `governance.guide`, and the guide point
 pnpm ds:scaffold MyComponent --prefix MYC
 ```
 
-This writes `src/components/my-component/my-component.manifest.json` and `my-component.guide.md` from the templates in this folder. Every unknown value is `[TK]`. The scaffolder refuses to overwrite existing files unless you pass `--force`, and refuses a prefix another guide already uses.
+Register the prefix first: add a row to `rule-ids.md`. Then the scaffolder writes `src/components/my-component/my-component.manifest.json` and `my-component.guide.md` from the templates in this folder. Every unknown value is `[TK]`. The scaffolder refuses to overwrite existing files unless you pass `--force`, and refuses a prefix that `rule-ids.md` does not register to that component.
 
 Fill the files using `COMPONENT_CHECKLIST.md`, then run:
 
@@ -22,6 +22,13 @@ pnpm ds:validate
 ```
 
 A freshly scaffolded contract fails validation until every `[TK]` is replaced. That is intended.
+
+When it passes, regenerate the agent references and run every check for the component:
+
+```bash
+pnpm ds:generate
+pnpm ds:check MyComponent
+```
 
 ## Read a contract
 
@@ -37,7 +44,8 @@ A freshly scaffolded contract fails validation until every `[TK]` is replaced. T
 
 - Both files against their schemas.
 - Guide structure: headings match front matter titles, no metadata in the body, rule IDs referenced anywhere exist.
-- `check` targets resolve.
+- Rule-ID prefixes are registered in `rule-ids.md` to the manifest's `code.export`, and no retired ID is in use.
+- `check` targets resolve. A `test:` target must name a real `it` or `test` call in that file.
 - Props match the TypeScript props type: names, kinds, enum values, required/optional, and `enforcedBy: types` constraints.
 - Token refs exist in the token source.
 - Bindings cover shared props and agree with `variantPropertyMap`.
@@ -45,6 +53,22 @@ A freshly scaffolded contract fails validation until every `[TK]` is replaced. T
 - Waivers in `knownGaps[].waives` still match a finding.
 
 It does not check Figma itself, runtime default values, or the meaning of rule prose.
+
+## Scripts
+
+Run from `packages/ui`. CI runs the same scripts (`.github/workflows/pr-checks.yml`, jobs `Contracts_*`).
+
+| Script | What it does |
+| ------ | ------------ |
+| `pnpm ds:validate [manifest ...]` | Validates contracts. |
+| `pnpm ds:generate` | Writes `agents/components/<kebab>.md` per contract and `agents/components/INDEX.md`. |
+| `pnpm ds:generate --check` | Exits 1 if any generated file is stale, missing or orphaned. |
+| `pnpm ds:test [Component]` | Runs the tests that guide `check: test:` entries name. |
+| `pnpm ds:check [Component]` | Runs all three above for one component, or for every contract. |
+
+The `ds:*` scripts run TypeScript directly and need Node 22.18 or later.
+
+Never edit files in `agents/components/` by hand. Edit the manifest or guide, then regenerate.
 
 ## Templates
 

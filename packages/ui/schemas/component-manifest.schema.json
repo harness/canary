@@ -1,0 +1,309 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://your-org.com/schemas/component-manifest-v1.json",
+  "title": "Component Manifest",
+  "description": "Machine-checkable manifest describing a design system component for both human and agent consumers — one authoritative, declarative description, checked by tooling rather than agreed to by two parties. Covers a three-way prop split (shared/designOnly/codeOnly), structured bindings, and structured state triggers.",
+  "type": "object",
+  "required": ["id", "status", "code", "figma", "purpose", "props", "tokens", "governance"],
+  "additionalProperties": false,
+  "properties": {
+
+    "$schema": { "type": "string" },
+
+    "id": {
+      "type": "string",
+      "pattern": "^canary\\.[a-z][a-z0-9-]*$",
+      "description": "e.g. 'canary.button'."
+    },
+
+    "status": {
+      "type": "string",
+      "enum": ["draft", "beta", "stable", "deprecated"]
+    },
+
+    "code": {
+      "type": "object",
+      "required": ["package", "export", "import", "path"],
+      "additionalProperties": false,
+      "properties": {
+        "package": { "type": "string" },
+        "export": { "type": "string", "pattern": "^[A-Z][A-Za-z0-9]*$" },
+        "import": { "type": "string" },
+        "path": { "type": "string" }
+      }
+    },
+
+    "figma": {
+      "type": "object",
+      "required": ["library", "fileKey", "name", "exampleNodeId", "publishStatus"],
+      "additionalProperties": false,
+      "properties": {
+        "library": { "type": "string" },
+        "fileKey": { "type": "string" },
+        "name": { "type": "string" },
+        "exampleNodeId": { "type": "string", "pattern": "^\\d+:\\d+$" },
+        "codeConnect": { "type": "string" },
+        "componentKey": {
+          "type": "string",
+          "description": "Stable publish key used to detect drift between the library source and any instance."
+        },
+        "componentSetKey": { "type": ["string", "null"] },
+        "variantPropertyMap": {
+          "type": "object",
+          "additionalProperties": { "type": "string" },
+          "description": "Maps shared[].name values to Figma's variant property names."
+        },
+        "variableCollectionIds": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "publishStatus": {
+          "type": "string",
+          "enum": ["published", "unpublished", "out_of_date"]
+        },
+        "lastSynced": { "type": "string", "format": "date-time" },
+        "thumbnailUrl": { "type": "string", "format": "uri" },
+        "enforceSync": { "type": "boolean", "default": true }
+      }
+    },
+
+    "purpose": {
+      "type": "object",
+      "required": ["summary", "useWhen", "doNotUseWhen"],
+      "additionalProperties": false,
+      "properties": {
+        "summary": { "type": "string" },
+        "useWhen": { "type": "array", "items": { "type": "string" }, "minItems": 1 },
+        "doNotUseWhen": { "type": "array", "items": { "type": "string" }, "minItems": 1 }
+      }
+    },
+
+    "props": {
+      "type": "object",
+      "description": "Three-way split so an agent never assumes a prop exists on both sides of the design/code boundary unless it's actually listed under 'shared'.",
+      "required": ["shared", "designOnly", "codeOnly"],
+      "additionalProperties": false,
+      "properties": {
+
+        "shared": {
+          "type": "array",
+          "description": "Props that exist as both a Figma variant/property and a code prop.",
+          "items": {
+            "type": "object",
+            "required": ["name", "type", "default"],
+            "additionalProperties": false,
+            "properties": {
+              "name": { "type": "string" },
+              "type": {
+                "type": "string",
+                "enum": ["string", "number", "boolean", "enum", "function", "node", "array"]
+              },
+              "values": {
+                "type": "array",
+                "items": { "type": "string" },
+                "minItems": 1,
+                "uniqueItems": true
+              },
+              "default": {},
+              "codeNote": { "type": "string" },
+              "figmaNote": { "type": "string" }
+            },
+            "allOf": [
+              { "if": { "properties": { "type": { "const": "enum" } } }, "then": { "required": ["values"] } }
+            ]
+          }
+        },
+
+        "designOnly": {
+          "type": "array",
+          "description": "Figma layer/property controls with no corresponding React prop — they change the design file but compile to nothing, or to something implicit.",
+          "items": {
+            "type": "object",
+            "required": ["name", "type", "figmaProperty", "transform"],
+            "additionalProperties": false,
+            "properties": {
+              "name": { "type": "string" },
+              "type": {
+                "type": "string",
+                "enum": ["string", "number", "boolean", "enum"]
+              },
+              "figmaProperty": {
+                "type": "string",
+                "description": "Figma property/node ID this control binds to."
+              },
+              "transform": {
+                "type": "string",
+                "enum": ["ignored", "style-only", "compose-derived", "layout-only"],
+                "description": "ignored: ships in Figma only, never reaches code. style-only: affects CSS but not a prop. compose-derived: code infers this from other props rather than taking it directly. layout-only: affects Figma auto-layout only."
+              },
+              "notes": { "type": "string" }
+            }
+          }
+        },
+
+        "codeOnly": {
+          "type": "array",
+          "description": "Code props with no Figma-side representation (behavior, not appearance).",
+          "items": {
+            "type": "object",
+            "required": ["name", "type", "trigger"],
+            "additionalProperties": false,
+            "properties": {
+              "name": { "type": "string" },
+              "type": {
+                "type": "string",
+                "enum": ["string", "number", "boolean", "enum", "function", "node", "array"]
+              },
+              "trigger": {
+                "type": "string",
+                "enum": ["event-handler", "runtime-state", "data-binding", "a11y-only"],
+                "description": "Why this prop can't exist in a static design file."
+              },
+              "notes": { "type": "string" }
+            }
+          }
+        }
+      }
+    },
+
+    "composition": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["slot", "accepts", "cardinality", "required"],
+        "additionalProperties": false,
+        "properties": {
+          "slot": { "type": "string" },
+          "accepts": { "type": "array", "items": { "type": "string" }, "minItems": 1 },
+          "cardinality": { "type": "string", "enum": ["one", "zero-or-one", "many"] },
+          "required": { "type": "boolean" },
+          "notes": { "type": "string" }
+        }
+      }
+    },
+
+    "states": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["name", "triggeredBy"],
+        "additionalProperties": false,
+        "properties": {
+          "name": { "type": "string" },
+          "triggeredBy": {
+            "type": "object",
+            "required": ["source", "ref"],
+            "additionalProperties": false,
+            "properties": {
+              "source": {
+                "type": "string",
+                "enum": ["prop", "interaction", "async"],
+                "description": "prop: driven by a listed prop. interaction: driven by user input (hover/focus/press). async: driven by a pending operation (e.g. loading)."
+              },
+              "ref": {
+                "type": "string",
+                "description": "The prop name if source is 'prop', or the interaction/event name otherwise, e.g. 'onPointerEnter'."
+              }
+            }
+          },
+          "description": { "type": "string" }
+        }
+      }
+    },
+
+    "accessibility": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "role": { "type": "string" },
+        "keyboardSupport": { "type": "array", "items": { "type": "string" } },
+        "notes": { "type": "string" }
+      }
+    },
+
+    "bindings": {
+      "type": "array",
+      "description": "Structured figma-property -> code-prop translation rules, replacing free-text mapping strings.",
+      "items": {
+        "type": "object",
+        "required": ["figmaProperty", "codeProp", "transform"],
+        "additionalProperties": false,
+        "properties": {
+          "figmaProperty": { "type": "string" },
+          "codeProp": { "type": "string" },
+          "transform": {
+            "type": "string",
+            "enum": ["direct", "invert", "enum-map", "derived", "none"],
+            "description": "direct: values pass through unchanged. invert: boolean is flipped. enum-map: values are remapped per enumMap. derived: code value is computed from this plus other inputs. none: no live binding (reference only)."
+          },
+          "enumMap": {
+            "type": "object",
+            "additionalProperties": { "type": "string" },
+            "description": "Required when transform is 'enum-map': Figma value -> code value."
+          },
+          "transformNote": { "type": "string" }
+        },
+        "allOf": [
+          { "if": { "properties": { "transform": { "const": "enum-map" } } }, "then": { "required": ["enumMap"] } }
+        ]
+      }
+    },
+
+    "tokens": {
+      "type": "object",
+      "required": ["rootClass", "rule", "refs"],
+      "additionalProperties": false,
+      "properties": {
+        "rootClass": { "type": "string", "pattern": "^cn-[a-z][a-z0-9-]*$" },
+        "rule": {
+          "type": "string",
+          "const": "semantic-only",
+          "description": "Locked to a single enforceable policy: no raw hex/px values in product UI, ever."
+        },
+        "refs": {
+          "type": "object",
+          "description": "Every value MUST be a token reference, never a literal.",
+          "minProperties": 1,
+          "additionalProperties": {
+            "type": "string",
+            "pattern": "^[a-zA-Z][a-zA-Z0-9-]*(\\.[a-zA-Z0-9][a-zA-Z0-9-]*)+$"
+          }
+        }
+      }
+    },
+
+    "examples": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "correct": { "type": "array", "items": { "type": "string" } },
+        "incorrect": { "type": "array", "items": { "type": "string" } }
+      }
+    },
+
+    "governance": {
+      "type": "object",
+      "required": ["rulesDocs"],
+      "additionalProperties": false,
+      "properties": {
+        "rulesDocs": {
+          "type": "array",
+          "items": { "type": "string" },
+          "minItems": 1,
+          "description": "Array of relative paths to shared system rules and component-specific pattern markdown files. Order matters: system rules first (accessibility, color-system, interaction-states, visual-primitives), then component-specific pattern rules. Architecture decisions (do's/do-nots), decision framework (SBD-001...), and known gaps live in these docs, not in the manifest."
+        },
+        "rulesDoc": {
+          "type": "string",
+          "description": "[DEPRECATED] Use rulesDocs array instead. Kept for backwards compatibility during migration."
+        },
+        "note": { "type": "string" },
+        "tokenStatus": { "type": "string", "description": "Brief status of token ref verification (e.g., 'color refs verified; sizing unverified')." }
+      }
+    },
+
+    "knownGaps": { "type": "array", "items": { "type": "string" }, "description": "Critical gaps with cross-references to rule IDs in the pattern doc (e.g., 'SBD-008: no aria-live region')." },
+
+    "deprecated": { "type": "boolean", "default": false },
+    "supersededBy": { "type": ["string", "null"], "default": null }
+  }
+}

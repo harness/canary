@@ -88,7 +88,7 @@ describe('validate-contracts: StatusBadge', () => {
         m => (m.tokens.refs['radius'] = 'badge.radius-xl'),
         'token-missing:badge.radius-xl'
       ],
-      ['stale waiver', m => (m.knownGaps[5].waives = 'prop-required:icon'), 'waiver-stale:prop-required:icon'],
+      ['stale waiver', m => (m.knownGaps[4].waives = 'prop-required:icon'), 'waiver-stale:prop-required:icon'],
       [
         'correct example breaks a constraint',
         m => m.examples.correct.push('<StatusBadge variant="status" icon="check">Done</StatusBadge>'),
@@ -128,8 +128,8 @@ describe('validate-contracts: StatusBadge', () => {
     const cases: [string, string, string][] = [
       [
         'heading title disagrees with front matter',
-        replaceOnce(GUIDE_SOURCE, '## SBD-005 — One StatusBadge per object', '## SBD-005 — One badge per object'),
-        'heading-title:SBD-005'
+        replaceOnce(GUIDE_SOURCE, '## SBD-001 — StatusBadge represents state', '## SBD-001 — StatusBadge is state'),
+        'heading-title:SBD-001'
       ],
       [
         'metadata restated in body',
@@ -174,10 +174,10 @@ describe('validate-contracts: StatusBadge', () => {
         'test check target missing',
         replaceOnce(
           GUIDE_SOURCE,
-          'tier: 2\n    check: review\n  - id: SBD-006',
-          'tier: 2\n    check: test:packages/ui/nope.test.ts#renders\n  - id: SBD-006'
+          'tier: 2\n    check: review\n  - id: SBD-018',
+          'tier: 2\n    check: test:packages/ui/nope.test.ts#renders\n  - id: SBD-018'
         ),
-        'check-target:SBD-005:test:packages/ui/nope.test.ts#renders'
+        'check-target:SBD-017:test:packages/ui/nope.test.ts#renders'
       ],
       [
         'test check names a test that does not exist',
@@ -186,7 +186,7 @@ describe('validate-contracts: StatusBadge', () => {
       ],
       [
         'depends_on unknown rule',
-        replaceOnce(GUIDE_SOURCE, 'depends_on: [SBD-014, SBD-015]', 'depends_on: [SBD-014, SBD-097]'),
+        replaceOnce(GUIDE_SOURCE, 'depends_on: [SBD-017]', 'depends_on: [SBD-097]'),
         'rule-unknown:SBD-097'
       ],
       [
@@ -288,6 +288,11 @@ describe('validate-contracts: ExecutionStatus pattern', () => {
 
   it.each(cases)('%s', (_name, mutate, expected) => {
     expect(errorKeys(runPattern(mutate))).toContain(expected)
+  })
+
+  it('names the replacement for a retired StatusBadge rule', () => {
+    const retired = runPattern(m => (m.anatomy[0].rules = ['SBD-008'])).find(f => f.key === 'rule-retired:SBD-008')
+    expect(retired?.message).toContain('Use EXS-003.')
   })
 
   it('names the replacement when a ref is retired', () => {

@@ -69,11 +69,6 @@
       "applies-to": ["all"]
     },
     {
-      "path": "docs/system/layout.md",
-      "title": "Layout",
-      "applies-to": ["all"]
-    },
-    {
       "path": "docs/system/shadows.md",
       "title": "Shadows & Elevation",
       "applies-to": ["all"]

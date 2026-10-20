@@ -62,7 +62,7 @@ Not decided (EXS-005): which theme, variant, icon and label each state gets. Tre
 
 ### Do Not's
 
-- Don't put two states in one badge ("Error, Pending"). (EXS-001)
+- Don't put two states in one badge ("Error, Pending"), or show two badges for one execution. (EXS-001)
 - Don't use `info`, `merged` or `risk` for an execution. (EXS-002)
 - Don't give one badge both an icon and a pulse, including a pulse recreated with `className`. (SBD-007)
 - Don't hand-compose StatusBadge plus an icon inside a Tree View row. (EXS-004)
@@ -88,7 +88,7 @@ Status `adopted` is ratified, `proposed` is a draft, `open` is a question. Check
 
 Checked by: `review`.
 
-Formerly SBD-005. A badge never holds two states, such as "Error, Pending". When more than one applies, show the most urgent. Whether an execution may show two separate badges is open (EXS-009).
+Formerly SBD-005. A badge never holds two states, such as "Error, Pending". When more than one applies, show the most urgent. An execution shows one badge, not two separate ones (EXS-009).
 
 ### EXS-002 — Execution status uses only success, warning, muted or danger
 
@@ -151,7 +151,6 @@ Open questions. Nothing here is decided. Check the cited source before copying t
 - No mapping from ExecutionState to StatusBadge props. (EXS-005)
 - Tree View's status icons differ from the icon table in SBD-017, and it renders error, killed and blocked as neutral. (EXS-006; source: packages/ui/src/components/treeview.tsx getStatusIcon)
 - A Figma counterpart is expected but not identified. (EXS-008)
-- Not decided whether an execution may show two badges. (EXS-009)
 
 ### EXS-005 — Open: no mapping from ExecutionState to theme, variant, icon and label
 
@@ -169,6 +168,6 @@ Decided by Jared Hawkins, 2026-10-20. The four rules move to this guide. SBD-005
 
 Patterns are expected to have Figma counterparts. Not known yet: which file and node hold the execution status pattern, or when it will exist.
 
-### EXS-009 — Open: whether an execution may show two badges
+### EXS-009 — Resolved: an execution shows one badge
 
-The retired SBD-005 allowed "separate badges with clear spacing rules" when an item has more than one state, while `status-badge.manifest.json` listed two separate badges, "Error" and "Pending", as an incorrect example of it. The two disagreed, no spacing rules exist, and neither carried over to EXS-001. Until this is decided, show one badge (EXS-001).
+Decided by Jared Hawkins, 2026-10-20. When more than one state applies to an execution, show one badge with the most urgent state (EXS-001). Don't render a second badge. The retired SBD-005 allowed "separate badges with clear spacing rules", but no spacing rules existed and `status-badge.manifest.json` listed two separate badges as incorrect. StatusBadge's `purpose.doNotUseWhen` now says the same. Which state is most urgent depends on EXS-005.

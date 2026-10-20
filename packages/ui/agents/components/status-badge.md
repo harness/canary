@@ -26,10 +26,10 @@ Four rules moved to the execution-status pattern (`src/patterns/execution-status
 ## Do not use when
 
 - Value is a stable attribute describing what a thing is — use Tag instead.
-- Multiple statuses apply to the same object — use separate badges or Tag.
+- Multiple statuses apply to the same object — show one badge with the most urgent status (EXS-001).
 - Badge needs to be interactive — use Tag's interactive props.
 - Need open/uncontrolled color palette — use Tag's 15-color palette.
-- Need to combine two statuses (e.g. 'Error, Pending') — pick one or render separately.
+- Need to combine two statuses (e.g. 'Error, Pending') — pick the most urgent. Don't render a second badge (EXS-001).
 
 ## Used in patterns
 
@@ -75,7 +75,7 @@ Figma-only properties, with no code prop: `state`.
 - Don't pass `icon` when `variant='status'` — the indicator dot already occupies that slot.
 - Don't pass `pulse` on variants other than `'status'` — pulse only works with the status variant.
 - [TK: draft for Katie] Don't recreate pulse with `className` (for example `animate-pulse` or `motion-safe:animate-pulse`) on any variant. A badge gets an icon or a pulse, never both; if it needs to pulse, use `variant='status'` with `pulse` and drop the icon. Incorrect: `<StatusBadge variant="outline" theme="success" icon="check-circle" className="motion-safe:animate-pulse">Running</StatusBadge>`. (SBD-007)
-- Don't put two statuses in one badge ("Error, Pending") — pick the most urgent. Whether separate badges are allowed is open (EXS-009). (EXS-001)
+- Don't put two statuses in one badge ("Error, Pending"), and don't show a second badge for the same object. Pick the most urgent. (EXS-001)
 - Don't rely on color or icon alone to convey meaning — text is mandatory.
 - Don't add `role`, `tabIndex`, `onClick`, or `aria-readonly` at the call site — they're explicitly stripped from props. StatusBadge is non-interactive by design.
 - Don't use `info`, `merged`, or `risk` themes for generic Pass/Fail/Pending indicators — restrict to `success`, `warning`, `danger`, `muted`. Reserve `info`/`merged`/`risk` for named, non-execution exceptions (e.g., "Merged" PR badge). (SBD-018, EXS-002)

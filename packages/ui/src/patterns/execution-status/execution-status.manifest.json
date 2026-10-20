@@ -108,7 +108,6 @@
       "rule": "EXS-006",
       "source": "packages/ui/src/components/treeview.tsx getStatusIcon"
     },
-    { "summary": "A Figma counterpart is expected but not identified.", "rule": "EXS-008" },
-    { "summary": "Not decided whether an execution may show two badges.", "rule": "EXS-009" }
+    { "summary": "A Figma counterpart is expected but not identified.", "rule": "EXS-008" }
   ]
 }

@@ -10,9 +10,11 @@
  */
 import * as fs from 'fs'
 import * as path from 'path'
+import { fileURLToPath } from 'url'
 
 import Ajv from 'ajv'
 
+const __dirname = path.dirname(fileURLToPath(import.meta.url))
 const SCHEMA_PATH = path.resolve(__dirname, '../schemas/component-manifest.schema.json')
 const MANIFESTS_DIR = path.resolve(__dirname, '../generated/manifests')
 

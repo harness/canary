@@ -37,9 +37,9 @@ pnpm clean            # Remove all dist/ and node_modules/
 
 Before writing or reviewing UI code that uses `@harnessio/ui`:
 
-- Read [`packages/ui/agents/components/INDEX.md`](packages/ui/agents/components/INDEX.md). It lists every component with a contract.
+- Read [`packages/ui/agents/components/INDEX.md`](packages/ui/agents/components/INDEX.md). It lists every component and pattern with a contract.
 - Use only the components, props and tokens the index and its references list.
-- After editing a component, its manifest or its guide, run `pnpm -F @harnessio/ui ds:check <Component>`.
+- After editing a component, its manifest or its guide, run `pnpm -F @harnessio/ui ds:check <Component>`. For a pattern in `packages/ui/src/patterns/`, pass the pattern name.
 
 Details: [`packages/ui/AGENTS.md`](packages/ui/AGENTS.md).
 

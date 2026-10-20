@@ -7,6 +7,8 @@ Each component that agents may use gets two files next to its source:
 
 The manifest points to its guide through `governance.guide`, and the guide points back through `manifest`. StatusBadge (`src/components/status-badge/`) is the reference example.
 
+A pattern gets the same pair in `src/patterns/<kebab>/`. Its manifest uses `pattern-manifest.schema.json` and names the components it composes; its guide uses `component-guide.schema.json`. ExecutionStatus (`src/patterns/execution-status/`) is the example. `pnpm ds:scaffold` writes component contracts only.
+
 ## Add a contract
 
 ```bash
@@ -40,7 +42,7 @@ pnpm ds:check MyComponent
 
 ## What the validator checks
 
-`pnpm ds:validate` (source: `scripts/ds/validate-contracts.ts`) checks every `*.manifest.json` under `src/components`:
+`pnpm ds:validate` (source: `scripts/ds/validate-contracts.ts`) checks every `*.manifest.json` under `src/components` and `src/patterns`:
 
 - Both files against their schemas.
 - Guide structure: headings match front matter titles, no metadata in the body, rule IDs referenced anywhere exist.
@@ -51,6 +53,7 @@ pnpm ds:check MyComponent
 - Bindings cover shared props and agree with `variantPropertyMap`.
 - Examples obey the props and constraints.
 - Waivers in `knownGaps[].waives` still match a finding.
+- For a pattern: each listed component has a manifest whose export matches, or a source path that exists. Anatomy prop values are a subset of the component's. `states.map` keys are listed in `states.values`. Every rule ref is in the pattern guide or one of its component guides, and a retired ref names its replacement.
 
 It does not check Figma itself, runtime default values, or the meaning of rule prose.
 
@@ -61,14 +64,14 @@ Run from `packages/ui`. CI runs the same scripts (`.github/workflows/pr-checks.y
 | Script | What it does |
 | ------ | ------------ |
 | `pnpm ds:validate [manifest ...]` | Validates contracts. |
-| `pnpm ds:generate` | Writes `agents/components/<kebab>.md` per contract and `agents/components/INDEX.md`. |
+| `pnpm ds:generate` | Writes `agents/components/<kebab>.md` per component, `agents/patterns/<kebab>.md` per pattern, and `agents/components/INDEX.md`. |
 | `pnpm ds:generate --check` | Exits 1 if any generated file is stale, missing or orphaned. |
 | `pnpm ds:test [Component]` | Runs the tests that guide `check: test:` entries name. |
 | `pnpm ds:check [Component]` | Runs all three above for one component, or for every contract. |
 
 The `ds:*` scripts run TypeScript directly and need Node 22.18 or later.
 
-Never edit files in `agents/components/` by hand. Edit the manifest or guide, then regenerate.
+Never edit files in `agents/components/` or `agents/patterns/` by hand. Edit the manifest or guide, then regenerate.
 
 ## Templates
 

@@ -6,6 +6,8 @@ Read this before writing, generating or reviewing code that uses a `@harnessio/u
 
 Open [`components/INDEX.md`](components/INDEX.md). Each row links to a generated reference that combines the component's manifest and guide. Do not search the repo for manifests.
 
+If the component's reference has a **Used in patterns** section and your screen matches one of them, read that pattern too. The index also lists patterns. A pattern's rules apply on top of the component's.
+
 If the component is not in the index, it has no contract. Say that plainly in your answer, then work from its source and docs page. Do not present guesses as contract facts.
 
 ## 2. Check you picked the right component
@@ -32,7 +34,7 @@ When two sources disagree, the higher one wins.
 
 ## 5. Check your work
 
-From `packages/ui`, run `pnpm ds:check <Component>` after editing a component, manifest or guide, and `pnpm typecheck` after editing any TypeScript. For a review of your own diff, run [`REVIEW-UI.md`](REVIEW-UI.md).
+From `packages/ui`, run `pnpm ds:check <Component>` after editing a component, manifest or guide (pass the pattern name for a pattern), and `pnpm typecheck` after editing any TypeScript. For a review of your own diff, run [`REVIEW-UI.md`](REVIEW-UI.md).
 
 ## Review buckets
 

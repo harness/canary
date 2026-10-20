@@ -8,7 +8,8 @@ Some components have a contract: a manifest (`<kebab>.manifest.json`) and a guid
 
 1. Read [`agents/components/INDEX.md`](agents/components/INDEX.md) to find the component.
 2. Read that component's reference in `agents/components/`.
-3. Follow [`agents/USING-COMPONENTS.md`](agents/USING-COMPONENTS.md) to write code against it.
+3. If the reference lists the component under **Used in patterns**, and your screen matches the pattern, read that pattern's reference in `agents/patterns/` too. A pattern holds the rules for composing components on a screen.
+4. Follow [`agents/USING-COMPONENTS.md`](agents/USING-COMPONENTS.md) to write code against it.
 
 If a component is not in the index, it has no contract yet. Say so, then read its source and its docs page in `apps/portal/src/content/docs/components/`. Do not assume props or tokens.
 
@@ -22,7 +23,7 @@ Run from `packages/ui`:
 
 | Command | When |
 | ------- | ---- |
-| `pnpm ds:check <Component>` | After editing a component, its manifest or its guide. Runs the validator, the reference staleness check and the component's rule tests. |
+| `pnpm ds:check <Component>` | After editing a component, its manifest or its guide. Runs the validator, the reference staleness check and the component's rule tests. A pattern name, such as `ExecutionStatus`, works too. |
 | `pnpm ds:generate` | After editing a manifest or guide. Commit the output. |
 | `pnpm typecheck` | Also needed: some rules are enforced by `@ts-expect-error` lines that only the type checker reads. |
 
@@ -30,6 +31,6 @@ The pre-commit hook runs `ds:check` on staged contract files, and CI runs the sa
 
 ## Editing contracts
 
-- Never edit `agents/components/`. It is generated.
+- Never edit `agents/components/` or `agents/patterns/`. They are generated.
 - Never invent a token, prop, Figma property or rule. Write `[TK]` and ask.
 - Adding a contract: see [`contracts/README.md`](contracts/README.md) and [`contracts/COMPONENT_CHECKLIST.md`](contracts/COMPONENT_CHECKLIST.md).

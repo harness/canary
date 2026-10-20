@@ -194,6 +194,7 @@
     "*.{js,jsx,ts,tsx}": [
       "eslint --fix",
       "prettier --write"
-    ]
+    ],
+    "{src/components,contracts,scripts/ds,agents}/**": "node scripts/ds/check-staged.ts"
   }
 }

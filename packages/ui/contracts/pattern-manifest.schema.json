@@ -4,7 +4,7 @@
   "title": "Pattern Manifest (draft)",
   "description": "Draft, not yet read by any ds:* script. Machine-checkable contract for a pattern: which components compose it, the slots they fill, and the constraints that span more than one component. Prose rules live in the paired guide (governance.guide), which uses component-guide.schema.json.",
   "type": "object",
-  "required": ["id", "kind", "status", "purpose", "components", "anatomy", "governance"],
+  "required": ["id", "kind", "status", "purpose", "components", "anatomy", "figma", "governance"],
   "additionalProperties": false,
   "$defs": {
     "ruleId": {
@@ -110,6 +110,7 @@
     },
     "figma": {
       "type": "object",
+      "description": "Every pattern is expected to have a Figma counterpart. fileKey and nodeId stay null, with a [TK] note, until it is identified.",
       "additionalProperties": false,
       "properties": {
         "fileKey": { "type": ["string", "null"] },

@@ -33,9 +33,21 @@ pnpm test             # Run tests across all packages
 pnpm clean            # Remove all dist/ and node_modules/
 ```
 
+## UI Components
+
+Before writing or reviewing UI code that uses `@harnessio/ui`:
+
+- Read [`packages/ui/agents/components/INDEX.md`](packages/ui/agents/components/INDEX.md). It lists every component with a contract.
+- Use only the components, props and tokens the index and its references list.
+- After editing a component, its manifest or its guide, run `pnpm -F @harnessio/ui ds:check <Component>`.
+
+Details: [`packages/ui/AGENTS.md`](packages/ui/AGENTS.md).
+
 ## Package-Level Docs
 
 Packages with detailed agent guides:
+
+- [`packages/ui/AGENTS.md`](packages/ui/AGENTS.md) — Component contracts: index, usage guide, review prompt, checks
 
 - [`packages/ai-chat-core/AGENTS.md`](packages/ai-chat-core/AGENTS.md) — AI chat runtime: stream protocol, plugins, capabilities, React hooks
 - [`packages/filters/AGENTS.md`](packages/filters/AGENTS.md) — URL-driven filter state: parsers, router integration, saved filters

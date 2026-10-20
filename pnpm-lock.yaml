@@ -1040,6 +1040,9 @@ importers:
       '@vitest/ui':
         specifier: ^3.0.6
         version: 3.0.7(vitest@3.0.7)
+      ajv:
+        specifier: ^8.17.1
+        version: 8.17.1
       autoprefixer:
         specifier: ^10.4.20
         version: 10.4.20(postcss@8.5.8)

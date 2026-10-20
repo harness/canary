@@ -7,6 +7,7 @@ import { kebabOf, kindOf, patternName } from './contracts.ts'
 import { effectiveValue, matchesValue, parseUsages, type JsxUsage } from './examples.ts'
 import { finding, type Finding } from './findings.ts'
 import { parseGuide, type ParsedGuide } from './guide.ts'
+import { lintExample } from './lint-examples.ts'
 import { readPropsType, type PropsTypeInfo, type TypeProp } from './props-type.ts'
 import { parseRegistry, retiredEntry, type Registry } from './registry.ts'
 import { buildTokenIndex } from './tokens.ts'
@@ -768,7 +769,7 @@ interface PatternManifest {
   anatomy: { slot: string; fill: string; props?: Record<string, unknown>; rules?: string[] }[]
   states?: { values: string[]; map?: Record<string, unknown> | null }
   constraints?: { rule: string }[]
-  examples?: { incorrect?: { violates: string[] }[] }
+  examples?: { correct?: { code: string }[]; incorrect?: { code: string; violates: string[] }[] }
   governance: { guide: string }
   knownGaps?: { rule?: string }[]
 }
@@ -776,10 +777,18 @@ interface PatternManifest {
 interface LoadedComponent {
   manifest: Manifest
   ruleIds: Set<string>
+  lintRules: Set<string>
 }
 
 const ruleIdsOf = (frontMatter: GuideFrontMatter): Set<string> =>
   new Set([...frontMatter.rules.map(rule => rule.id), ...(frontMatter.gaps ?? []).map(gap => gap.id)])
+
+const lintRulesOf = (frontMatter: GuideFrontMatter): Set<string> =>
+  new Set(
+    frontMatter.rules
+      .filter(rule => (Array.isArray(rule.check) ? rule.check : [rule.check]).some(c => c.startsWith('lint:')))
+      .map(rule => rule.id)
+  )
 
 const checkPatternComponents = (
   manifest: PatternManifest,
@@ -814,7 +823,8 @@ const checkPatternComponents = (
       return fail('pattern-component', `The guide for ${component.export} does not parse.`, `${pointer}/manifest`)
     loaded.set(component.export, {
       manifest: componentManifest,
-      ruleIds: ruleIdsOf(guide.frontMatter as GuideFrontMatter)
+      ruleIds: ruleIdsOf(guide.frontMatter as GuideFrontMatter),
+      lintRules: lintRulesOf(guide.frontMatter as GuideFrontMatter)
     })
   })
 
@@ -893,6 +903,81 @@ const checkAnatomyProps = (
   return out
 }
 
+const narrowingViolations = (usage: JsxUsage, slots: PatternManifest['anatomy']): string[] => {
+  const narrowed = slots.filter(slot => slot.props)
+  if (narrowed.length === 0 || narrowed.length < slots.length) return []
+  const misses = narrowed.map(slot =>
+    Object.entries(slot.props ?? {}).flatMap(([name, value]) => {
+      const attr = usage.attrs.get(name)
+      if (attr?.kind !== 'literal') return []
+      const allowed = (Array.isArray(value) ? value : [value]).map(String)
+      return allowed.includes(attr.value)
+        ? []
+        : [`${name}="${attr.value}" is outside slot ${slot.slot}'s ${allowed.join(', ')}`]
+    })
+  )
+  return misses.some(list => list.length === 0) ? [] : misses.flat()
+}
+
+/**
+ * Checks pattern examples against the contracts of the components they use:
+ * each component's required props, enum values, constraints and the contract
+ * className lint rules, plus the props the pattern's anatomy narrows to.
+ */
+const checkPatternExamples = (
+  manifest: PatternManifest,
+  loaded: Map<string, LoadedComponent>,
+  ctx: { repoRoot: string; manifestFile: string; lintRules: Set<string> }
+): Finding[] => {
+  const out: Finding[] = []
+  const violationsOf = (code: string): { rule?: string; message: string }[] => [
+    ...[...loaded].flatMap(([name, component]) =>
+      parseUsages(code, name).flatMap(usage => [
+        ...usageViolations(usage, component.manifest),
+        ...narrowingViolations(
+          usage,
+          manifest.anatomy.filter(slot => slot.fill === name)
+        ).map(message => ({ message }))
+      ])
+    ),
+    ...lintExample(code, ctx.repoRoot)
+  ]
+  const checkable = new Set([
+    ...ctx.lintRules,
+    ...[...loaded.values()].flatMap(component => [
+      ...component.lintRules,
+      ...(component.manifest.constraints ?? []).map(constraint => constraint.rule)
+    ])
+  ])
+  const names = manifest.components.map(component => component.export)
+
+  ;(manifest.examples?.correct ?? []).forEach((example, index) => {
+    const pointer = `/examples/correct/${index}/code`
+    if (names.every(name => parseUsages(example.code, name).length === 0))
+      out.push(
+        finding('example-correct', String(index), ctx.manifestFile, pointer, `Uses none of ${names.join(', ')}.`)
+      )
+    for (const violation of violationsOf(example.code))
+      out.push(finding('example-correct', String(index), ctx.manifestFile, pointer, violation.message))
+  })
+  ;(manifest.examples?.incorrect ?? []).forEach((example, index) => {
+    const tripped = new Set(violationsOf(example.code).map(violation => violation.rule))
+    for (const rule of example.violates.filter(id => checkable.has(id))) {
+      if (tripped.has(rule)) continue
+      out.push(
+        finding(
+          'example-incorrect',
+          `${index}:${rule}`,
+          ctx.manifestFile,
+          `/examples/incorrect/${index}`,
+          `Example claims to violate ${rule}, but neither the ${rule} constraints nor its lint rule reject it.`
+        )
+      )
+    }
+  })
+  return out
+}
+
 const checkStates = (manifest: PatternManifest, manifestFile: string): Finding[] => {
   const { states } = manifest
   if (!states?.map) return []
@@ -945,7 +1030,12 @@ const validatePattern = (input: ContractInput, guide: ParsedGuide): Finding[] =>
     ...components.findings,
     ...checkPatternRefs(manifest, ruleIds, manifestFile, registry),
     ...checkAnatomyProps(manifest, components.loaded, manifestFile),
-    ...checkStates(manifest, manifestFile)
+    ...checkStates(manifest, manifestFile),
+    ...checkPatternExamples(manifest, components.loaded, {
+      repoRoot,
+      manifestFile,
+      lintRules: lintRulesOf(frontMatter)
+    })
   )
   return out
 }

@@ -283,7 +283,31 @@ describe('validate-contracts: ExecutionStatus pattern', () => {
     ['component export mismatch', m => (m.components[0].export = 'Tag'), 'pattern-component:Tag'],
     ['component path missing', m => (m.components[1].path = 'packages/ui/src/nope.tsx'), 'pattern-component:Tree'],
     ['states.map key not in values', m => (m.states.map = { paused: {} }), 'states-map:paused'],
-    ['unresolved [TK] placeholder', m => (m.purpose.summary = '[TK]'), 'placeholder:manifest']
+    ['unresolved [TK] placeholder', m => (m.purpose.summary = '[TK]'), 'placeholder:manifest'],
+    [
+      'correct example outside the anatomy narrowing',
+      m => (m.examples.correct[0].code = '<StatusBadge variant="outline" theme="info">Queued</StatusBadge>'),
+      'example-correct:0'
+    ],
+    [
+      'correct example breaking a component constraint',
+      m =>
+        (m.examples.correct[0].code = '<StatusBadge variant="status" theme="success" icon="check">Done</StatusBadge>'),
+      'example-correct:0'
+    ],
+    [
+      'correct example breaking a component lint rule',
+      m =>
+        (m.examples.correct[0].code =
+          '<StatusBadge variant="outline" theme="success" className="animate-pulse">Running</StatusBadge>'),
+      'example-correct:0'
+    ],
+    ['correct example using no pattern component', m => (m.examples.correct[0].code = '<div />'), 'example-correct:0'],
+    [
+      'incorrect example that no check rejects',
+      m => (m.examples.incorrect[0].code = '<StatusBadge variant="outline" theme="success">Running</StatusBadge>'),
+      'example-incorrect:0:SBD-007'
+    ]
   ]
 
   it.each(cases)('%s', (_name, mutate, expected) => {

@@ -28,6 +28,32 @@ function getClassNameRules() {
   return deprecatedCnRules
 }
 
+/**
+ * Component contract rules: className patterns a component's contract forbids.
+ * Source: packages/ui/src/components/<folder>/<folder>.guide.md
+ */
+function getContractClassNameRules() {
+  const forbidden = [
+    {
+      component: 'StatusBadge',
+      pattern: 'animate-',
+      message:
+        "SBD-007: don't add animate-* classes to StatusBadge. Use variant='status' with pulse; it cannot also take an icon."
+    }
+  ]
+
+  return forbidden.flatMap(({ component, pattern, message }) => [
+    {
+      selector: `JSXOpeningElement[name.name='${component}'] > JSXAttribute[name.name='className'] Literal[value=/${pattern}/]`,
+      message
+    },
+    {
+      selector: `JSXOpeningElement[name.name='${component}'] > JSXAttribute[name.name='className'] TemplateElement[value.raw=/${pattern}/]`,
+      message
+    }
+  ])
+}
+
 module.exports = {
-  classNameRules: getClassNameRules()
+  classNameRules: [...getClassNameRules(), ...getContractClassNameRules()]
 }

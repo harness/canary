@@ -1,0 +1,462 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://harness.io/schemas/canary/component-manifest-v2.json",
+  "title": "Component Manifest",
+  "description": "Machine-checkable contract for a Canary component, read by people and agents. Extends the v1 draft by Katie: three-way prop split (shared/designOnly/codeOnly), structured bindings, structured constraints, illegal combinations and waivable known gaps. Prose rules live in the paired guide (governance.guide).",
+  "type": "object",
+  "required": ["id", "status", "code", "figma", "purpose", "props", "tokens", "governance"],
+  "additionalProperties": false,
+  "$defs": {
+    "propType": {
+      "type": "string",
+      "enum": ["string", "number", "boolean", "enum", "function", "node", "array"]
+    },
+    "ruleId": {
+      "type": "string",
+      "pattern": "^[A-Z]{2,5}-\\d{3}$",
+      "description": "Rule ID defined in the paired guide front matter, e.g. 'SBD-007'."
+    },
+    "propValue": {
+      "description": "A prop value or a list of accepted values.",
+      "oneOf": [
+        { "type": ["string", "number", "boolean"] },
+        { "type": "array", "items": { "type": ["string", "number", "boolean"] }, "minItems": 1 }
+      ]
+    },
+    "enumMap": {
+      "type": "object",
+      "additionalProperties": { "type": "string" },
+      "minProperties": 1,
+      "description": "Figma value -> code value."
+    }
+  },
+  "properties": {
+    "$schema": { "type": "string" },
+
+    "id": {
+      "type": "string",
+      "pattern": "^canary\\.[a-z][a-z0-9-]*$",
+      "description": "e.g. 'canary.button'."
+    },
+
+    "status": {
+      "type": "string",
+      "enum": ["draft", "beta", "stable", "deprecated"]
+    },
+
+    "code": {
+      "type": "object",
+      "required": ["package", "export", "import", "path"],
+      "additionalProperties": false,
+      "properties": {
+        "package": { "type": "string" },
+        "export": { "type": "string", "pattern": "^[A-Z][A-Za-z0-9]*$" },
+        "import": { "type": "string" },
+        "path": { "type": "string", "description": "Repo-relative path to the component source." },
+        "propsType": {
+          "type": "string",
+          "pattern": "^[A-Z][A-Za-z0-9]*$",
+          "description": "Exported props type checked against props.shared and props.codeOnly. Defaults to '<export>Props'."
+        }
+      }
+    },
+
+    "figma": {
+      "type": "object",
+      "required": ["library", "fileKey", "name", "exampleNodeId", "publishStatus"],
+      "additionalProperties": false,
+      "properties": {
+        "library": { "type": "string" },
+        "fileKey": { "type": "string" },
+        "name": { "type": "string" },
+        "exampleNodeId": { "type": "string", "pattern": "^\\d+:\\d+$" },
+        "codeConnect": { "type": "string", "description": "Repo-relative path to the Code Connect file." },
+        "componentKey": {
+          "type": "string",
+          "description": "Stable publish key used to detect drift between the library source and any instance."
+        },
+        "componentSetKey": { "type": ["string", "null"] },
+        "variantPropertyMap": {
+          "type": "object",
+          "additionalProperties": { "type": "string" },
+          "description": "Maps code prop names to Figma component property keys, exactly as Figma reports them (including '#id' suffixes)."
+        },
+        "variableCollectionIds": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "publishStatus": {
+          "type": "string",
+          "enum": ["published", "unpublished", "out_of_date"]
+        },
+        "lastSynced": { "type": "string", "format": "date-time" },
+        "lastVerified": {
+          "type": "string",
+          "pattern": "^\\d{4}-\\d{2}-\\d{2}$",
+          "description": "Date the Figma side of this manifest was last read from the Figma API."
+        },
+        "thumbnailUrl": { "type": "string", "format": "uri" },
+        "enforceSync": { "type": "boolean", "default": true }
+      }
+    },
+
+    "purpose": {
+      "type": "object",
+      "required": ["summary", "useWhen", "doNotUseWhen"],
+      "additionalProperties": false,
+      "properties": {
+        "summary": { "type": "string" },
+        "useWhen": { "type": "array", "items": { "type": "string" }, "minItems": 1 },
+        "doNotUseWhen": { "type": "array", "items": { "type": "string" }, "minItems": 1 }
+      }
+    },
+
+    "props": {
+      "type": "object",
+      "description": "Three-way split so an agent never assumes a prop exists on both sides of the design/code boundary unless it is listed under 'shared'.",
+      "required": ["shared", "designOnly", "codeOnly"],
+      "additionalProperties": false,
+      "properties": {
+        "shared": {
+          "type": "array",
+          "description": "Props that exist as both a Figma property and a code prop.",
+          "items": {
+            "type": "object",
+            "required": ["name", "type"],
+            "additionalProperties": false,
+            "properties": {
+              "name": { "type": "string" },
+              "type": { "$ref": "#/$defs/propType" },
+              "values": {
+                "type": "array",
+                "items": { "type": "string" },
+                "minItems": 1,
+                "uniqueItems": true
+              },
+              "required": {
+                "type": "boolean",
+                "description": "Contract intent. When true, 'default' may be omitted."
+              },
+              "default": {},
+              "figmaProperty": {
+                "type": "string",
+                "description": "Figma component property key, exactly as Figma reports it."
+              },
+              "figmaEnumMap": { "$ref": "#/$defs/enumMap" },
+              "constraint": {
+                "type": "string",
+                "description": "Human-readable summary. The machine-checkable form lives in top-level 'constraints'."
+              },
+              "codeNote": { "type": "string" },
+              "figmaNote": { "type": "string" }
+            },
+            "allOf": [
+              { "if": { "properties": { "type": { "const": "enum" } } }, "then": { "required": ["values"] } },
+              {
+                "if": { "not": { "properties": { "required": { "const": true } }, "required": ["required"] } },
+                "then": { "required": ["default"] }
+              }
+            ]
+          }
+        },
+
+        "designOnly": {
+          "type": "array",
+          "description": "Figma properties with no corresponding React prop.",
+          "items": {
+            "type": "object",
+            "required": ["name", "type", "figmaProperty", "transform"],
+            "additionalProperties": false,
+            "properties": {
+              "name": { "type": "string" },
+              "type": { "type": "string", "enum": ["string", "number", "boolean", "enum"] },
+              "values": {
+                "type": "array",
+                "items": { "type": "string" },
+                "minItems": 1,
+                "uniqueItems": true
+              },
+              "figmaProperty": {
+                "type": "string",
+                "description": "Figma component property key this control binds to."
+              },
+              "transform": {
+                "type": "string",
+                "enum": ["ignored", "style-only", "compose-derived", "layout-only"],
+                "description": "ignored: ships in Figma only, never reaches code. style-only: affects CSS but not a prop. compose-derived: code infers this from other props. layout-only: affects Figma auto-layout only."
+              },
+              "notes": { "type": "string" }
+            },
+            "allOf": [{ "if": { "properties": { "type": { "const": "enum" } } }, "then": { "required": ["values"] } }]
+          }
+        },
+
+        "codeOnly": {
+          "type": "array",
+          "description": "Code props with no Figma-side representation.",
+          "items": {
+            "type": "object",
+            "required": ["name", "type"],
+            "additionalProperties": false,
+            "properties": {
+              "name": { "type": "string" },
+              "type": { "$ref": "#/$defs/propType" },
+              "values": {
+                "type": "array",
+                "items": { "type": "string" },
+                "minItems": 1,
+                "uniqueItems": true
+              },
+              "required": { "type": "boolean" },
+              "trigger": {
+                "type": "string",
+                "enum": ["event-handler", "runtime-state", "data-binding", "a11y-only"],
+                "description": "Why this prop cannot exist in a static design file. Omit when none of these apply."
+              },
+              "constraint": {
+                "type": "string",
+                "description": "Human-readable summary. The machine-checkable form lives in top-level 'constraints'."
+              },
+              "notes": { "type": "string" }
+            },
+            "allOf": [{ "if": { "properties": { "type": { "const": "enum" } } }, "then": { "required": ["values"] } }]
+          }
+        }
+      }
+    },
+
+    "constraints": {
+      "type": "array",
+      "description": "Conditional prop rules. When every prop in 'when' matches, each prop in 'forbid' must be absent and each prop in 'require' must be present.",
+      "items": {
+        "type": "object",
+        "required": ["when", "rule"],
+        "additionalProperties": false,
+        "properties": {
+          "when": {
+            "type": "object",
+            "minProperties": 1,
+            "additionalProperties": { "$ref": "#/$defs/propValue" },
+            "description": "Prop name -> value (or list of values) that activates the constraint."
+          },
+          "forbid": { "type": "array", "items": { "type": "string" }, "minItems": 1, "uniqueItems": true },
+          "require": { "type": "array", "items": { "type": "string" }, "minItems": 1, "uniqueItems": true },
+          "rule": { "$ref": "#/$defs/ruleId" },
+          "enforcedBy": {
+            "type": "string",
+            "enum": ["types", "runtime", "none"],
+            "description": "Where the constraint is enforced in code today."
+          },
+          "notes": { "type": "string" }
+        },
+        "anyOf": [{ "required": ["forbid"] }, { "required": ["require"] }]
+      }
+    },
+
+    "illegalCombinations": {
+      "type": "array",
+      "description": "Value combinations that do not exist on one or both sides. An agent must never produce them.",
+      "items": {
+        "type": "object",
+        "required": ["combination", "side", "reason"],
+        "additionalProperties": false,
+        "properties": {
+          "combination": {
+            "type": "object",
+            "minProperties": 2,
+            "additionalProperties": { "$ref": "#/$defs/propValue" },
+            "description": "Prop or Figma property name -> value (or list of values)."
+          },
+          "side": { "type": "string", "enum": ["figma", "code", "both"] },
+          "reason": { "type": "string" },
+          "rule": { "$ref": "#/$defs/ruleId" }
+        }
+      }
+    },
+
+    "composition": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["slot", "accepts", "cardinality", "required"],
+        "additionalProperties": false,
+        "properties": {
+          "slot": { "type": "string" },
+          "accepts": { "type": "array", "items": { "type": "string" }, "minItems": 1 },
+          "cardinality": { "type": "string", "enum": ["one", "zero-or-one", "many"] },
+          "required": { "type": "boolean" },
+          "notes": { "type": "string" }
+        }
+      }
+    },
+
+    "states": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["name", "triggeredBy"],
+        "additionalProperties": false,
+        "properties": {
+          "name": { "type": "string" },
+          "triggeredBy": {
+            "type": "object",
+            "required": ["source", "ref"],
+            "additionalProperties": false,
+            "properties": {
+              "source": {
+                "type": "string",
+                "enum": ["prop", "interaction", "async"],
+                "description": "prop: driven by a listed prop. interaction: driven by user input (hover/focus/press). async: driven by a pending operation."
+              },
+              "ref": {
+                "type": "string",
+                "description": "The prop name if source is 'prop', otherwise the interaction or event name."
+              }
+            }
+          },
+          "description": { "type": "string" }
+        }
+      }
+    },
+
+    "accessibility": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "role": { "type": "string" },
+        "keyboardSupport": {
+          "description": "false for non-interactive components, otherwise the supported keys.",
+          "oneOf": [{ "const": false }, { "type": "array", "items": { "type": "string" } }]
+        },
+        "notes": { "type": "string" }
+      }
+    },
+
+    "bindings": {
+      "type": "array",
+      "description": "Structured Figma property -> code prop translation rules.",
+      "items": {
+        "type": "object",
+        "required": ["figmaProperty", "codeProp", "transform"],
+        "additionalProperties": false,
+        "properties": {
+          "figmaProperty": {
+            "type": "string",
+            "description": "Figma component property key, exactly as Figma reports it."
+          },
+          "codeProp": { "type": "string" },
+          "transform": {
+            "type": "string",
+            "enum": ["direct", "invert", "enum-map", "derived", "none"],
+            "description": "direct: values pass through. invert: boolean is flipped. enum-map: values are remapped (enumMap here, or figmaEnumMap on the shared prop). derived: code value is computed from this plus other inputs. none: reference only."
+          },
+          "enumMap": { "$ref": "#/$defs/enumMap" },
+          "transformNote": { "type": "string" }
+        }
+      }
+    },
+
+    "tokens": {
+      "type": "object",
+      "required": ["rootClass", "rule", "refs"],
+      "additionalProperties": false,
+      "properties": {
+        "rootClass": { "type": "string", "pattern": "^cn-[a-z][a-z0-9-]*$" },
+        "rule": {
+          "type": "string",
+          "const": "semantic-only",
+          "description": "No raw hex or px values in product UI."
+        },
+        "source": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "Repo-relative directories or files that define the referenced tokens."
+        },
+        "refs": {
+          "type": "object",
+          "description": "Every value is a token path that must exist in the token source.",
+          "minProperties": 1,
+          "additionalProperties": {
+            "type": "string",
+            "pattern": "^[a-zA-Z][a-zA-Z0-9-]*(\\.[a-zA-Z0-9][a-zA-Z0-9-]*)+$"
+          }
+        }
+      }
+    },
+
+    "examples": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "correct": { "type": "array", "items": { "type": "string" } },
+        "incorrect": {
+          "type": "array",
+          "items": {
+            "oneOf": [
+              { "type": "string" },
+              {
+                "type": "object",
+                "required": ["code", "violates"],
+                "additionalProperties": false,
+                "properties": {
+                  "code": { "type": "string" },
+                  "violates": { "type": "array", "items": { "$ref": "#/$defs/ruleId" }, "minItems": 1 }
+                }
+              }
+            ]
+          }
+        }
+      }
+    },
+
+    "governance": {
+      "type": "object",
+      "required": ["guide"],
+      "additionalProperties": false,
+      "properties": {
+        "guide": {
+          "type": "string",
+          "description": "Path, relative to this manifest, to the paired guide (<component>.guide.md). The guide front matter is the only source for rule id, title, status, tier and check."
+        },
+        "note": { "type": "string" },
+        "tokenStatus": { "type": "string" }
+      }
+    },
+
+    "knownGaps": {
+      "type": "array",
+      "description": "Known mismatches and open issues. An object entry with 'waives' turns a specific validator failure into a reported waiver; a waiver that matches no failure is itself an error.",
+      "items": {
+        "oneOf": [
+          { "type": "string" },
+          {
+            "type": "object",
+            "required": ["summary"],
+            "additionalProperties": false,
+            "properties": {
+              "summary": { "type": "string" },
+              "rule": { "$ref": "#/$defs/ruleId" },
+              "waives": {
+                "type": "string",
+                "pattern": "^[a-z-]+:.+$",
+                "description": "Validator finding key, e.g. 'prop-required:children'."
+              },
+              "sides": {
+                "type": "array",
+                "items": { "type": "string", "enum": ["code", "figma", "docs", "manifest", "guide", "code-connect"] },
+                "minItems": 1
+              },
+              "source": {
+                "type": "string",
+                "description": "Where the evidence came from (file:line, Figma node, etc.)."
+              }
+            }
+          }
+        ]
+      }
+    },
+
+    "deprecated": { "type": "boolean", "default": false },
+    "supersededBy": { "type": ["string", "null"], "default": null }
+  }
+}

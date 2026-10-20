@@ -1,0 +1,63 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://harness.io/schemas/canary/component-guide-frontmatter-v1.json",
+  "title": "Component Guide Front Matter",
+  "description": "YAML front matter of a <component>.guide.md file. This is the only source for each rule's id, title, status, tier and check. Headings in the body repeat the id and title and nothing else.",
+  "type": "object",
+  "required": ["domain", "prefix", "version", "manifest", "rules"],
+  "additionalProperties": false,
+  "$defs": {
+    "check": {
+      "type": "string",
+      "pattern": "^(review|schema:/.*|types:[A-Za-z][A-Za-z0-9]*|test:[^#\\s]+#.+|lint:[@a-z0-9/-]+|docs:\\S+)$",
+      "description": "How the rule is verified. review: human or agent review only. schema:<json-pointer>: a manifest field the validator enforces. types:<ExportedType>: enforced by the component's exported TypeScript type. test:<path>#<test name>: a test case. lint:<rule>: an ESLint rule. docs:<path>: documentation only."
+    }
+  },
+  "properties": {
+    "domain": { "type": "string", "pattern": "^[a-z][a-z0-9-]*$" },
+    "prefix": { "type": "string", "pattern": "^[A-Z]{2,5}$" },
+    "version": { "type": "string", "pattern": "^\\d+\\.\\d+\\.\\d+$" },
+    "manifest": { "type": "string", "description": "Path, relative to this guide, to the paired manifest." },
+    "rules": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["id", "title", "status", "tier", "check"],
+        "additionalProperties": false,
+        "properties": {
+          "id": { "type": "string", "pattern": "^[A-Z]{2,5}-\\d{3}$" },
+          "title": { "type": "string", "minLength": 1 },
+          "status": { "type": "string", "enum": ["proposed", "open", "ratified", "retired"] },
+          "tier": { "type": "integer", "enum": [1, 2, 3] },
+          "check": {
+            "oneOf": [
+              { "$ref": "#/$defs/check" },
+              { "type": "array", "items": { "$ref": "#/$defs/check" }, "minItems": 1, "uniqueItems": true }
+            ]
+          },
+          "depends_on": {
+            "type": "array",
+            "items": { "type": "string", "pattern": "^[A-Z]{2,5}-\\d{3}$" },
+            "minItems": 1,
+            "uniqueItems": true
+          }
+        }
+      }
+    },
+    "gaps": {
+      "type": "array",
+      "description": "Open questions that keep a rule ID but are not rules yet. Listed under the 'Known gaps' section of the body.",
+      "items": {
+        "type": "object",
+        "required": ["id", "title", "status"],
+        "additionalProperties": false,
+        "properties": {
+          "id": { "type": "string", "pattern": "^[A-Z]{2,5}-\\d{3}$" },
+          "title": { "type": "string", "minLength": 1 },
+          "status": { "type": "string", "enum": ["open", "resolved"] }
+        }
+      }
+    }
+  }
+}

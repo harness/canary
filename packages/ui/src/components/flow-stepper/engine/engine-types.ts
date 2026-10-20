@@ -81,6 +81,10 @@ export interface CardEntry {
   // Incremented on confirmReactivation so card stacks can remount local state.
   // Optional so derive-stepper-model fixtures stay untouched; missing is treated as 0.
   mountGeneration?: number
+  // One-line accordion header subtitle while this entry is completed or skipped.
+  // Idle FlowConfig description is used while the step is active. Host cards call
+  // setSummary() with the real selection (not the idle prompt). Go-back clears it.
+  summary?: string
 }
 
 /**
@@ -134,6 +138,9 @@ export interface FlowCardContext<TState = Record<string, unknown>> {
   state: TState
   status: CardStatus
   complete: (statePatch?: Partial<TState>, nextStepId?: string) => void
+  // Swap the nested accordion header subtitle for this card. Shown only after
+  // complete()/skip() (and while skipped). No-op on an unknown stepId.
+  setSummary: (summary: string) => void
   // Mark this step errored. With no argument the error is recoverable (stays the active position).
   // With a nextStepId, the step is locked red in history and the flow advances (error-and-
   // continue); pass a step whose `terminal: true` (or which has no further next) to end in error.

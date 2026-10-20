@@ -1155,4 +1155,48 @@ describe('Flow Engine', () => {
       expect(screen.getByTestId('pending-reactivation')).toHaveTextContent('null')
     })
   })
+
+  describe('setSummary', () => {
+    test('stores summary on the current card and complete keeps it', async () => {
+      function SummaryThenCompleteCard() {
+        const { setSummary, complete } = useFlowCard()
+        return (
+          <button
+            onClick={() => {
+              setSummary('GitHub')
+              complete(undefined, 'card-b')
+            }}
+          >
+            Save
+          </button>
+        )
+      }
+
+      function HistoryProbe() {
+        const { cardHistory } = useEngineContext()
+        const entry = cardHistory.find(e => e.stepId === 'card-a')
+        return <span data-testid="summary-a">{entry?.summary ?? ''}</span>
+      }
+
+      const summaryFlow: FlowConfig = {
+        steps: {
+          'card-a': { title: 'A', component: SummaryThenCompleteCard, next: 'card-b' },
+          'card-b': { title: 'B', component: TestCardB }
+        },
+        initialStep: 'card-a'
+      }
+
+      render(
+        <FlowEngineProvider flow={summaryFlow}>
+          <TestHarness>
+            <CardStack />
+            <HistoryProbe />
+          </TestHarness>
+        </FlowEngineProvider>
+      )
+
+      await userEvent.click(screen.getByRole('button', { name: 'Save' }))
+      expect(screen.getByTestId('summary-a')).toHaveTextContent('GitHub')
+    })
+  })
 })

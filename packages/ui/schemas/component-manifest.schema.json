@@ -143,7 +143,7 @@
 
         "codeOnly": {
           "type": "array",
-          "description": "Code props with no Figma-side representation (behavior, not appearance).",
+          "description": "Code props with no Figma-side representation — either because a static design file cannot express them, or because the Figma library does not expose them yet.",
           "items": {
             "type": "object",
             "required": ["name", "type", "trigger"],
@@ -156,8 +156,15 @@
               },
               "trigger": {
                 "type": "string",
-                "enum": ["event-handler", "runtime-state", "data-binding", "a11y-only"],
-                "description": "Why this prop can't exist in a static design file."
+                "enum": [
+                  "event-handler",
+                  "runtime-state",
+                  "data-binding",
+                  "a11y-only",
+                  "content",
+                  "appearance-override"
+                ],
+                "description": "Why this prop has no Figma counterpart. The first four are inherent — a static design file can never express them, so don't expect a Figma equivalent to appear. The last two are gaps in the Figma library rather than impossibilities: the prop could be represented in Figma and isn't yet. event-handler: callback/interaction. runtime-state: value changes while running. data-binding: value supplied from data at runtime. a11y-only: exists solely for assistive technology. content: text or child content Figma could hold but doesn't expose as a control. appearance-override: visual escape hatch (icon name, className) not surfaced as a Figma property."
               },
               "notes": { "type": "string" }
             }

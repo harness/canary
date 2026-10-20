@@ -23,7 +23,9 @@ rules:
     title: StatusBadge is an indicator, not a button
     status: proposed
     tier: 1
-    check: types:StatusBadgeProps
+    check:
+      - types:StatusBadgeProps
+      - 'test:packages/ui/src/components/status-badge/__tests__/status-badge.rules.test.tsx#SBD-004 renders a non-interactive indicator'
   - id: SBD-005
     title: One StatusBadge per object — no stacking multiple statuses
     status: proposed
@@ -33,7 +35,9 @@ rules:
     title: Text label is mandatory; color and icon never carry meaning alone
     status: proposed
     tier: 1
-    check: review
+    check:
+      - 'test:packages/ui/src/components/status-badge/__tests__/status-badge.rules.test.tsx#SBD-006 exposes only the text label to assistive tech'
+      - review
   - id: SBD-007
     title: icon and pulse are mutually exclusive by variant
     status: proposed
@@ -41,6 +45,7 @@ rules:
     check:
       - types:StatusBadgeProps
       - schema:/constraints
+      - 'test:packages/ui/src/components/status-badge/__tests__/status-badge.rules.test.tsx#SBD-007 gives the status variant the indicator and pulse, and other variants the icon'
   - id: SBD-008
     title: 'Known gap: no built-in aria-live — consumers must wrap live-changing statuses themselves'
     status: open
@@ -60,6 +65,7 @@ rules:
     check:
       - types:StatusBadgeProps
       - schema:/props/shared/1/values
+      - 'test:packages/ui/src/components/status-badge/__tests__/status-badge.rules.test.tsx#SBD-010 maps every manifest theme to its semantic class and accepts no others'
   - id: SBD-014
     title: Pipeline execution status badges use only 4 of the 7 themes — success, warning, muted, danger
     status: proposed

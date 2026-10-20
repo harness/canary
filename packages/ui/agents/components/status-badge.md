@@ -48,6 +48,27 @@ Figma-only properties, with no code prop: `state`.
 
 - `variant` is `ghost` or `status` and `state` is `hover` (figma): Figma node 1293:5995 has 112 of 140 possible variants. The 28 missing are every ghost and status variant with state=hover.
 
+## Do's and Do Not's
+
+### Do's
+
+- Use StatusBadge for _transient, system-driven state_ that changes automatically (pending → active → closed).
+- Pass `children` text always — text is mandatory and conveys all semantic meaning.
+- Wrap with `aria-live="polite"` when status can change while visible (connectivity, job progress, etc.).
+- Default to `outline` variant absent a specific reason to pick `primary`, `secondary`, `ghost`, or `status`.
+- Use the fixed icon table (check-circle/xmark-circle/timer/pause/prohibition/warning-circle) for Pass/Fail/Pending meanings across any domain.
+- Render one StatusBadge per object — pick the most urgent status if multiple apply.
+
+### Do Not's
+
+- Don't use for stable _attributes_ describing what a thing is (account tier, scope, marketing labels) — use Tag instead.
+- Don't pass `icon` when `variant='status'` — the indicator dot already occupies that slot.
+- Don't pass `pulse` on variants other than `'status'` — pulse only works with the status variant.
+- Don't stack multiple StatusBadges to represent simultaneous statuses — pick the most urgent or render separate badges.
+- Don't rely on color or icon alone to convey meaning — text is mandatory.
+- Don't add `role`, `tabIndex`, `onClick`, or `aria-readonly` at the call site — they're explicitly stripped from props. StatusBadge is non-interactive by design.
+- Don't use `info`, `merged`, or `risk` themes for generic Pass/Fail/Pending indicators — restrict to `success`, `warning`, `danger`, `muted`. Reserve `info`/`merged`/`risk` for named, non-execution exceptions (e.g., "Merged" PR badge).
+
 ## Accessibility
 
 Keyboard support: none.

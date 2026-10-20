@@ -99,6 +99,22 @@ const sectionBody = (lines: string[], heading: GuideHeading): string => {
   return body.join('\n').trim()
 }
 
+/** Level-2 guide sections that are not rules or known gaps, such as Do's and Do Not's. */
+const proseSections = (lines: string[]): { title: string; body: string }[] => {
+  const start = lines.indexOf('---', 1) + 1
+  const sections: { title: string; body: string }[] = []
+  let inFence = false
+  for (let index = start; index < lines.length; index++) {
+    const text = lines[index]
+    if (text.startsWith('```')) inFence = !inFence
+    const title = /^## (.+)$/.exec(text)?.[1]
+    if (inFence || !title || /^[A-Z]{2,5}-\d{3} /.test(title) || title.trim() === 'Known gaps') continue
+    const heading: GuideHeading = { level: 2, id: '', title, line: index + 1, inKnownGaps: false }
+    sections.push({ title: title.replace(/^Architecture: /, ''), body: sectionBody(lines, heading) })
+  }
+  return sections
+}
+
 const propRows = (props: RefProp[]): string[] =>
   props.map(prop => {
     const type = prop.type === 'enum' && prop.values ? prop.values.map(code).join(' \\| ') : code(prop.type)
@@ -178,6 +194,8 @@ export const renderReference = (source: ReferenceSource): string => {
       push(`- ${formatWhen(c.combination)} (${c.side}): ${c.reason}${c.rule ? ` (${c.rule})` : ''}`)
     push('')
   }
+
+  for (const section of proseSections(lines)) push(`## ${section.title}`, '', section.body, '')
 
   if (manifest.accessibility) {
     const keys = manifest.accessibility.keyboardSupport

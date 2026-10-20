@@ -4,6 +4,61 @@ The main Harness UI component library. Contains React components built on Radix 
 
 ---
 
+## External Tool Consumption (Claude, Cursor, Figma Make)
+
+### Skills Registry & OpenAPI
+
+Design system components are published as **portable skills** accessible to any AI tool on the Harness network:
+
+- **Registry:** `schemas/registry.json` — Inventory of all component skills with metadata
+- **OpenAPI schemas:** `schemas/{component}.openapi.json` — Standard OpenAPI 3.0 specs for each component
+- **System rules:** `docs/system/` — Portable design governance (ships with `@harnessio/ui`)
+- **Package:** Published to `https://harness0.harness.io/pkg/l7B_kbSEQD2wjrM7PShm5w/npm-registry/npm/` as `@harnessio/ui`
+
+### For Claude
+
+```bash
+# 1. Claude agent can import directly (with registry credentials)
+import { registry } from '@harnessio/ui/schemas/registry.json'
+import { StatusBadge } from '@harnessio/ui/components'
+
+# 2. Or fetch OpenAPI spec
+import statusBadgeSpec from '@harnessio/ui/schemas/status-badge.openapi.json'
+```
+
+Registry credentials: Set `NPM_TOKEN` env var or configure `.npmrc` for `@harness` scope.
+
+### For Cursor
+
+```bash
+# Cursor runs on your machine (already behind VPN)
+# 1. Cursor's TypeScript LSP can read installed @harnessio/ui types + manifests
+# 2. Manifests auto-load from node_modules/@harnessio/ui/schemas/
+
+# In your code:
+import { StatusBadge } from '@harnessio/ui/components'  // Full type hints from manifests
+```
+
+No extra setup needed — works via npm registry.
+
+### For Figma Make (Optional)
+
+```bash
+# If you expose an HTTP API for Figma automation:
+POST /components/status-badge
+{
+  "label": "Active",
+  "theme": "success"
+}
+
+# API docs: schemas/status-badge.openapi.json
+# Endpoint spec fetched from registry.json
+```
+
+Not required for basic skill usage; use only if Figma Make needs automation.
+
+---
+
 ## Quick Start for AI Agents
 
 ### Finding a component

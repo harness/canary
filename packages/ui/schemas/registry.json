@@ -1,0 +1,82 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "metadata": {
+    "name": "@harnessio/design-system-skills",
+    "description": "Harness Design System skills registry — portable component contracts for AI tools and agents",
+    "version": "1.0.0",
+    "registry-format": "openapi-3.0.0",
+    "last-updated": "2024-01-01T00:00:00Z",
+    "maintainer": "design-systems@harness.io"
+  },
+  "skills": [
+    {
+      "id": "canary.status-badge",
+      "name": "StatusBadge Component",
+      "status": "stable",
+      "description": "Status indicator badge with muted, success, warning, and error themes",
+      "openapi": "schemas/status-badge.openapi.json",
+      "manifest": "schemas/status-badge.manifest.json",
+      "version": "1.4.1",
+      "package": "@harnessio/ui",
+      "export": "StatusBadge",
+      "import": "@harnessio/ui/components",
+      "documentation": "https://harness.io/docs/design-system/status-badge",
+      "consumption": {
+        "claude": {
+          "method": "npm-import",
+          "example": "import { StatusBadge } from '@harnessio/ui/components'"
+        },
+        "cursor": {
+          "method": "npm-import",
+          "example": "import { StatusBadge } from '@harnessio/ui/components'"
+        },
+        "figma-make": {
+          "method": "http-openapi",
+          "endpoint": "/components/status-badge"
+        }
+      }
+    }
+  ],
+  "systemRules": [
+    {
+      "path": "docs/system/accessibility.md",
+      "title": "Accessibility",
+      "applies-to": ["all"]
+    },
+    {
+      "path": "docs/system/color-system.md",
+      "title": "Color System",
+      "applies-to": ["all"]
+    },
+    {
+      "path": "docs/system/interaction-states.md",
+      "title": "Interaction States",
+      "applies-to": ["all"]
+    },
+    {
+      "path": "docs/system/visual-primitives.md",
+      "title": "Visual Primitives",
+      "applies-to": ["all"]
+    }
+  ],
+  "consumption-guide": {
+    "claude": {
+      "method": "npm-registry",
+      "registry": "https://harness0.harness.io/pkg/l7B_kbSEQD2wjrM7PShm5w/npm-registry/npm/",
+      "scope": "@harness",
+      "setup": "Add credentials to .npmrc or pass as environment variable",
+      "usage": "import { Button } from '@harnessio/design-system-skills/button'"
+    },
+    "cursor": {
+      "method": "npm-registry",
+      "registry": "https://harness0.harness.io/pkg/l7B_kbSEQD2wjrM7PShm5w/npm-registry/npm/",
+      "scope": "@harness",
+      "setup": "Auto-detected from .npmrc (already on VPN)",
+      "usage": "import { Button } from '@harnessio/design-system-skills/button'"
+    },
+    "figma-make": {
+      "method": "http-api-openapi",
+      "note": "Optional: expose via HTTP server for automation; not required for basic usage"
+    }
+  }
+}

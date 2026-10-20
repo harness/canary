@@ -118,7 +118,7 @@
       {
         "name": "className",
         "type": "string",
-        "notes": "Style override escape hatch via cn()."
+        "notes": "Merged onto the badge root with cn(). It does not replace variant, theme, size or pulse: lint rejects animate-* classes (SBD-007), and the shape and the two sizes are fixed (SBD-009)."
       }
     ]
   },

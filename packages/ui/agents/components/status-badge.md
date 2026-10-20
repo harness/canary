@@ -45,7 +45,7 @@ Four rules moved to the execution-status pattern (`src/patterns/execution-status
 | `icon` | `string` | no | `null` | never on variant='status'; optional on others Typed as keyof typeof IconNameMapV2 (an icon name), not a free string. |
 | `children` | `node` | yes |  |  |
 | `pulse` | `boolean` | no |  | only when variant='status' Renders animate-pulse on the indicator dot. No Figma property. |
-| `className` | `string` | no |  | Style override escape hatch via cn(). |
+| `className` | `string` | no |  | Merged onto the badge root with cn(). It does not replace variant, theme, size or pulse: lint rejects animate-* classes (SBD-007), and the shape and the two sizes are fixed (SBD-009). |
 
 Figma-only properties, with no code prop: `state`.
 
@@ -74,7 +74,7 @@ Figma-only properties, with no code prop: `state`.
 - Don't use for stable _attributes_ describing what a thing is (account tier, scope, marketing labels) — use Tag instead.
 - Don't pass `icon` when `variant='status'` — the indicator dot already occupies that slot.
 - Don't pass `pulse` on variants other than `'status'` — pulse only works with the status variant.
-- [TK: draft for Katie] Don't recreate pulse with `className` (for example `animate-pulse` or `motion-safe:animate-pulse`) on any variant. A badge gets an icon or a pulse, never both; if it needs to pulse, use `variant='status'` with `pulse` and drop the icon. Incorrect: `<StatusBadge variant="outline" theme="success" icon="check-circle" className="motion-safe:animate-pulse">Running</StatusBadge>`. (SBD-007)
+- Don't recreate pulse with `className` (for example `animate-pulse` or `motion-safe:animate-pulse`) on any variant. A badge gets an icon or a pulse, never both. If it needs to pulse, use `variant='status'` with `pulse` and drop the icon. Lint rejects any `animate-*` class on StatusBadge. Incorrect: `<StatusBadge variant="outline" theme="success" icon="check-circle" className="motion-safe:animate-pulse">Running</StatusBadge>`. (SBD-007)
 - Don't put two statuses in one badge ("Error, Pending"), and don't show a second badge for the same object. Pick the most urgent. (EXS-001)
 - Don't rely on color or icon alone to convey meaning — text is mandatory.
 - Don't add `role`, `tabIndex`, `onClick`, or `aria-readonly` at the call site — they're explicitly stripped from props. StatusBadge is non-interactive by design.

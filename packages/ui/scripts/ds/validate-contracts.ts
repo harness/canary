@@ -1,27 +1,21 @@
 /**
- * Validates every component manifest and its paired guide.
+ * Validates every component and pattern manifest and its paired guide.
  *
  *   node scripts/ds/validate-contracts.ts [path/to/x.manifest.json ...]
  *
- * With no arguments it checks every *.manifest.json under src/components.
+ * With no arguments it checks every *.manifest.json under src/components and src/patterns.
  * Exits 1 when any unwaived finding remains.
  */
 
-import { readdirSync, readFileSync } from 'node:fs'
-import { dirname, join, relative, resolve } from 'node:path'
+import { readFileSync } from 'node:fs'
+import { dirname, relative, resolve } from 'node:path'
 
+import { findContracts } from './lib/contracts.ts'
 import { formatFinding, type Finding } from './lib/findings.ts'
 import { validateContract } from './lib/validate.ts'
 
 const PACKAGE_ROOT = resolve(import.meta.dirname, '../..')
 const REPO_ROOT = resolve(PACKAGE_ROOT, '../..')
-
-const findManifests = (dir: string): string[] =>
-  readdirSync(dir, { withFileTypes: true }).flatMap(entry => {
-    const path = join(dir, entry.name)
-    if (entry.isDirectory()) return findManifests(path)
-    return entry.name.endsWith('.manifest.json') ? [path] : []
-  })
 
 const validateFile = (manifestPath: string): Finding[] => {
   const manifest: unknown = JSON.parse(readFileSync(manifestPath, 'utf8'))
@@ -41,8 +35,7 @@ const validateFile = (manifestPath: string): Finding[] => {
 
 const main = (): number => {
   const args = process.argv.slice(2)
-  const manifests =
-    args.length > 0 ? args.map(arg => resolve(arg)) : findManifests(join(PACKAGE_ROOT, 'src/components'))
+  const manifests = args.length > 0 ? args.map(arg => resolve(arg)) : findContracts(PACKAGE_ROOT)
   let errors = 0
 
   for (const manifestPath of manifests) {

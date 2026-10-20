@@ -1,56 +1,80 @@
 /**
- * Writes an agent reference per component contract, plus a component index.
+ * Writes an agent reference per component and pattern contract, plus an index of both.
  *
- *   node scripts/ds/generate-references.ts          write agents/components/
+ *   node scripts/ds/generate-references.ts          write agents/components/ and agents/patterns/
  *   node scripts/ds/generate-references.ts --check  exit 1 if any file is stale, missing or orphaned
  */
 
 import { existsSync, mkdirSync, readdirSync, readFileSync, unlinkSync, writeFileSync } from 'node:fs'
-import { basename, dirname, join, relative, resolve } from 'node:path'
+import { dirname, join, relative, resolve } from 'node:path'
 
-import { renderIndex, renderReference, type IndexEntry } from './lib/reference.ts'
+import { findContracts, kebabOf, patternName } from './lib/contracts.ts'
+import { renderIndex, renderPattern, renderReference, type IndexEntry } from './lib/reference.ts'
 
 const PACKAGE_ROOT = resolve(import.meta.dirname, '../..')
-const COMPONENTS_DIR = join(PACKAGE_ROOT, 'src/components')
 export const OUTPUT_DIR = join(PACKAGE_ROOT, 'agents/components')
+export const PATTERN_OUTPUT_DIR = join(PACKAGE_ROOT, 'agents/patterns')
 const INDEX_PATH = join(OUTPUT_DIR, 'INDEX.md')
 
-const findManifests = (dir: string): string[] =>
-  readdirSync(dir, { withFileTypes: true }).flatMap(entry => {
-    const path = join(dir, entry.name)
-    if (entry.isDirectory()) return findManifests(path)
-    return entry.name.endsWith('.manifest.json') ? [path] : []
-  })
+interface Contract {
+  manifestPath: string
+  manifest: {
+    id?: string
+    code?: { export: string }
+    purpose: { summary: string }
+    governance: { guide: string }
+    components?: { export: string; manifest?: string | null }[]
+  }
+  guidePath: string
+  guideSource: string
+}
+
+const load = (manifestPath: string): Contract => {
+  const manifest = JSON.parse(readFileSync(manifestPath, 'utf8')) as Contract['manifest']
+  const guidePath = resolve(dirname(manifestPath), manifest.governance.guide)
+  return { manifestPath, manifest, guidePath, guideSource: readFileSync(guidePath, 'utf8') }
+}
 
 const expectedFiles = (): Map<string, string> => {
   const files = new Map<string, string>()
-  const entries: IndexEntry[] = []
+  const components = findContracts(PACKAGE_ROOT, ['component']).map(load)
+  const patterns = findContracts(PACKAGE_ROOT, ['pattern']).map(load)
+  const componentRefs = new Map(
+    components.map(c => [c.manifest.code?.export ?? '', join(OUTPUT_DIR, `${kebabOf(c.manifestPath)}.md`)])
+  )
+  const patternRefs = patterns.map(p => ({
+    contract: p,
+    name: patternName(p.manifest.id ?? ''),
+    referencePath: join(PATTERN_OUTPUT_DIR, `${kebabOf(p.manifestPath)}.md`)
+  }))
 
-  for (const manifestPath of findManifests(COMPONENTS_DIR).sort()) {
-    const manifest = JSON.parse(readFileSync(manifestPath, 'utf8')) as {
-      code: { export: string }
-      purpose: { summary: string }
-      governance: { guide: string }
-    }
-    const guidePath = resolve(dirname(manifestPath), manifest.governance.guide)
-    const outputPath = join(OUTPUT_DIR, `${basename(manifestPath, '.manifest.json')}.md`)
-    files.set(
-      outputPath,
-      renderReference({ manifest, manifestPath, guideSource: readFileSync(guidePath, 'utf8'), guidePath, outputPath })
-    )
-    entries.push({ component: manifest.code.export, summary: manifest.purpose.summary, referencePath: outputPath })
-  }
+  const entries: IndexEntry[] = components.map(contract => {
+    const component = contract.manifest.code?.export ?? ''
+    const outputPath = componentRefs.get(component) ?? ''
+    const usedIn = patternRefs
+      .filter(p => (p.contract.manifest.components ?? []).some(c => c.export === component && c.manifest))
+      .map(p => ({ name: p.name, referencePath: p.referencePath }))
+    files.set(outputPath, renderReference({ ...contract, outputPath, usedIn }))
+    return { component, summary: contract.manifest.purpose.summary, referencePath: outputPath }
+  })
 
-  files.set(INDEX_PATH, renderIndex(entries, INDEX_PATH))
+  const patternEntries: IndexEntry[] = patternRefs.map(({ contract, name, referencePath }) => {
+    files.set(referencePath, renderPattern({ ...contract, outputPath: referencePath, name, componentRefs }))
+    return { component: name, summary: contract.manifest.purpose.summary, referencePath }
+  })
+
+  files.set(INDEX_PATH, renderIndex(entries, INDEX_PATH, patternEntries))
   return files
 }
 
 const existingFiles = (): string[] =>
-  existsSync(OUTPUT_DIR)
-    ? readdirSync(OUTPUT_DIR)
-        .filter(name => name.endsWith('.md'))
-        .map(name => join(OUTPUT_DIR, name))
-    : []
+  [OUTPUT_DIR, PATTERN_OUTPUT_DIR].flatMap(dir =>
+    existsSync(dir)
+      ? readdirSync(dir)
+          .filter(name => name.endsWith('.md'))
+          .map(name => join(dir, name))
+      : []
+  )
 
 const main = (): number => {
   const check = process.argv.includes('--check')
@@ -70,11 +94,11 @@ const main = (): number => {
     return 1
   }
 
-  mkdirSync(OUTPUT_DIR, { recursive: true })
+  for (const path of expected.keys()) mkdirSync(dirname(path), { recursive: true })
   for (const [path, content] of expected) writeFileSync(path, content)
   for (const path of orphans) unlinkSync(path)
   console.log(
-    `Wrote ${expected.size} file(s) to ${show(OUTPUT_DIR)}${orphans.length ? `, removed ${orphans.length}` : ''}.`
+    `Wrote ${expected.size} file(s) to ${show(OUTPUT_DIR)} and ${show(PATTERN_OUTPUT_DIR)}${orphans.length ? `, removed ${orphans.length}` : ''}.`
   )
   return 0
 }

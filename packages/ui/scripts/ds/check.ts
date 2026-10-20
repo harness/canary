@@ -1,36 +1,29 @@
 /**
- * Runs the contract checks for one component, or for all of them.
+ * Runs the contract checks for one component or pattern, or for all of them.
  *
  *   node scripts/ds/check.ts test [Component]  run the tests that guide `check: test:` entries name
  *   node scripts/ds/check.ts all [Component]   validator, reference staleness, then those tests
  *
- * Component may be PascalCase (StatusBadge) or kebab-case (status-badge).
+ * Component may be PascalCase (StatusBadge) or kebab-case (status-badge). A pattern name works the same way.
  */
 
 import { spawnSync } from 'node:child_process'
-import { existsSync, readdirSync, readFileSync } from 'node:fs'
+import { existsSync, readFileSync } from 'node:fs'
 import { dirname, join, relative, resolve } from 'node:path'
 
+import { CONTRACT_DIRS, findContracts, toKebab } from './lib/contracts.ts'
 import { parseGuide } from './lib/guide.ts'
 
 const PACKAGE_ROOT = resolve(import.meta.dirname, '../..')
 const REPO_ROOT = resolve(PACKAGE_ROOT, '../..')
-const COMPONENTS_DIR = join(PACKAGE_ROOT, 'src/components')
-
-const toKebab = (name: string): string => name.replace(/([a-z0-9])([A-Z])/g, '$1-$2').toLowerCase()
-
-const findManifests = (dir: string): string[] =>
-  readdirSync(dir, { withFileTypes: true }).flatMap(entry => {
-    const path = join(dir, entry.name)
-    if (entry.isDirectory()) return findManifests(path)
-    return entry.name.endsWith('.manifest.json') ? [path] : []
-  })
 
 const manifestsFor = (component: string | undefined): string[] | string => {
-  if (!component) return findManifests(COMPONENTS_DIR).sort()
+  if (!component) return findContracts(PACKAGE_ROOT)
   const kebab = toKebab(component)
-  const path = join(COMPONENTS_DIR, kebab, `${kebab}.manifest.json`)
-  return existsSync(path) ? [path] : `No contract for ${component}: ${relative(PACKAGE_ROOT, path)} does not exist.`
+  const paths = Object.values(CONTRACT_DIRS).map(dir => join(PACKAGE_ROOT, dir, kebab, `${kebab}.manifest.json`))
+  const found = paths.filter(path => existsSync(path))
+  if (found.length > 0) return found
+  return `No contract for ${component}: neither ${paths.map(path => relative(PACKAGE_ROOT, path)).join(' nor ')} exists.`
 }
 
 interface TestTarget {

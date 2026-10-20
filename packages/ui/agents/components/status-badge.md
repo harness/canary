@@ -25,6 +25,10 @@ Visual indicator for a transient, system-driven state. Uses a closed, evaluative
 - Need open/uncontrolled color palette — use Tag's 15-color palette.
 - Need to combine two statuses (e.g. 'Error, Pending') — pick one or render separately.
 
+## Used in patterns
+
+- [ExecutionStatus](../patterns/execution-status.md): read it before composing StatusBadge with other components.
+
 ## Props
 
 | Prop | Type | Required | Default | Notes |

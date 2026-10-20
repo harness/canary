@@ -3,11 +3,12 @@ import { dirname, join, relative, resolve } from 'node:path'
 
 import Ajv2020, { type ErrorObject, type ValidateFunction } from 'ajv/dist/2020.js'
 
+import { kebabOf, kindOf, patternName } from './contracts.ts'
 import { effectiveValue, matchesValue, parseUsages, type JsxUsage } from './examples.ts'
 import { finding, type Finding } from './findings.ts'
 import { parseGuide, type ParsedGuide } from './guide.ts'
 import { readPropsType, type PropsTypeInfo, type TypeProp } from './props-type.ts'
-import { parseRegistry, type Registry } from './registry.ts'
+import { parseRegistry, retiredEntry, type Registry } from './registry.ts'
 import { buildTokenIndex } from './tokens.ts'
 
 type PropValue = string | number | boolean | (string | number | boolean)[]
@@ -68,9 +69,9 @@ const SCHEMA_DIR = resolve(import.meta.dirname, '../../../contracts')
 const PACKAGE_TSCONFIG = resolve(import.meta.dirname, '../../../tsconfig.json')
 export const REGISTRY_PATH = join(SCHEMA_DIR, 'rule-ids.md')
 
-let validators: { manifest: ValidateFunction; guide: ValidateFunction } | undefined
+let validators: { manifest: ValidateFunction; guide: ValidateFunction; pattern: ValidateFunction } | undefined
 
-const getValidators = (): { manifest: ValidateFunction; guide: ValidateFunction } => {
+const getValidators = (): { manifest: ValidateFunction; guide: ValidateFunction; pattern: ValidateFunction } => {
   if (validators) return validators
   const ajv = new Ajv2020({
     allErrors: true,
@@ -82,7 +83,8 @@ const getValidators = (): { manifest: ValidateFunction; guide: ValidateFunction 
   const load = (name: string): object => JSON.parse(readFileSync(join(SCHEMA_DIR, name), 'utf8'))
   validators = {
     manifest: ajv.compile(load('component-manifest.schema.json')),
-    guide: ajv.compile(load('component-guide.schema.json'))
+    guide: ajv.compile(load('component-guide.schema.json')),
+    pattern: ajv.compile(load('pattern-manifest.schema.json'))
   }
   return validators
 }
@@ -235,8 +237,8 @@ const testNames = (source: string): Set<string> =>
 
 const checkTargets = (
   frontMatter: GuideFrontMatter,
-  manifest: Manifest,
-  ctx: { repoRoot: string; guideFile: string; propsInfo: PropsTypeInfo }
+  manifest: unknown,
+  ctx: { repoRoot: string; guideFile: string; propsInfo: PropsTypeInfo; codePath?: string }
 ): Finding[] => {
   const out: Finding[] = []
   frontMatter.rules.forEach((rule, index) => {
@@ -251,7 +253,8 @@ const checkTargets = (
 
       if (kind === 'review') return
       if (kind === 'types') {
-        if (!ctx.propsInfo.moduleExports.includes(target)) fail(`${target} is not exported from ${manifest.code.path}.`)
+        if (!ctx.codePath) fail('A pattern has no props type. Use a test: or review check.')
+        else if (!ctx.propsInfo.moduleExports.includes(target)) fail(`${target} is not exported from ${ctx.codePath}.`)
         return
       }
       if (kind === 'schema') {
@@ -277,7 +280,19 @@ const checkTargets = (
   return out
 }
 
-const checkRuleRefs = (manifest: Manifest, ruleIds: Set<string>, manifestFile: string): Finding[] => {
+const unknownRule = (id: string, file: string, pointer: string, registry: Registry, where: string): Finding => {
+  const entry = retiredEntry(registry, id)
+  if (!entry) return finding('rule-unknown', id, file, pointer, `${id} is not defined in ${where}.`)
+  const next = entry.replacedBy.get(id)
+  return finding('rule-retired', id, file, pointer, `${id} is retired.${next ? ` Use ${next}.` : ''}`)
+}
+
+const checkRuleRefs = (
+  manifest: Manifest,
+  ruleIds: Set<string>,
+  manifestFile: string,
+  registry: Registry
+): Finding[] => {
   const refs: { id: string; pointer: string }[] = [
     ...(manifest.constraints ?? []).map((c, i) => ({ id: c.rule, pointer: `/constraints/${i}/rule` })),
     ...(manifest.illegalCombinations ?? []).flatMap((c, i) =>
@@ -294,7 +309,7 @@ const checkRuleRefs = (manifest: Manifest, ruleIds: Set<string>, manifestFile: s
   ]
   return refs
     .filter(ref => !ruleIds.has(ref.id))
-    .map(ref => finding('rule-unknown', ref.id, manifestFile, ref.pointer, `${ref.id} is not defined in the guide.`))
+    .map(ref => unknownRule(ref.id, manifestFile, ref.pointer, registry, 'the guide'))
 }
 
 const sameSet = (a: string[], b: string[]): boolean =>
@@ -681,12 +696,11 @@ const applyWaivers = (findings: Finding[], manifest: Manifest, manifestFile: str
 const checkRegistry = (
   registry: Registry,
   frontMatter: GuideFrontMatter,
-  manifest: Manifest,
+  component: string,
   ctx: { guideFile: string; registryFile: string }
 ): Finding[] => {
   const out: Finding[] = []
   const { guideFile, registryFile } = ctx
-  const component = manifest.code.export
 
   for (const dup of registry.duplicates)
     out.push(finding('registry-duplicate', dup.prefix, registryFile, `L${dup.line}`, `${dup.prefix} is listed twice.`))
@@ -748,11 +762,202 @@ const placeholderFindings = (source: string, file: string, label: string): Findi
   return [finding('placeholder', label, file, '', `${count} unresolved [TK] placeholder(s).`)]
 }
 
+interface PatternManifest {
+  id: string
+  components: { export: string; manifest?: string | null; path?: string; role: string }[]
+  anatomy: { slot: string; fill: string; props?: Record<string, unknown>; rules?: string[] }[]
+  states?: { values: string[]; map?: Record<string, unknown> | null }
+  constraints?: { rule: string }[]
+  examples?: { incorrect?: { violates: string[] }[] }
+  governance: { guide: string }
+  knownGaps?: { rule?: string }[]
+}
+
+interface LoadedComponent {
+  manifest: Manifest
+  ruleIds: Set<string>
+}
+
+const ruleIdsOf = (frontMatter: GuideFrontMatter): Set<string> =>
+  new Set([...frontMatter.rules.map(rule => rule.id), ...(frontMatter.gaps ?? []).map(gap => gap.id)])
+
+const checkPatternComponents = (
+  manifest: PatternManifest,
+  ctx: { repoRoot: string; manifestPath: string; manifestFile: string }
+): { findings: Finding[]; loaded: Map<string, LoadedComponent> } => {
+  const findings: Finding[] = []
+  const loaded = new Map<string, LoadedComponent>()
+
+  manifest.components.forEach((component, index) => {
+    const pointer = `/components/${index}`
+    const fail = (code: string, message: string, at = pointer): void => {
+      findings.push(finding(code, component.export, ctx.manifestFile, at, message))
+    }
+    if (!component.manifest) {
+      if (component.path && !existsSync(join(ctx.repoRoot, component.path)))
+        fail('pattern-component', `${component.path} does not exist.`, `${pointer}/path`)
+      return
+    }
+    const path = resolve(dirname(ctx.manifestPath), component.manifest)
+    if (!existsSync(path))
+      return fail('pattern-component', `${component.manifest} does not exist.`, `${pointer}/manifest`)
+    const componentManifest = JSON.parse(readFileSync(path, 'utf8')) as Manifest
+    if (componentManifest.code.export !== component.export)
+      return fail(
+        'pattern-component',
+        `${component.manifest} exports ${componentManifest.code.export}, not ${component.export}.`,
+        `${pointer}/export`
+      )
+    const guidePath = resolve(dirname(path), componentManifest.governance.guide)
+    const guide = existsSync(guidePath) ? parseGuide(readFileSync(guidePath, 'utf8')) : undefined
+    if (!guide || guide.frontMatterError)
+      return fail('pattern-component', `The guide for ${component.export} does not parse.`, `${pointer}/manifest`)
+    loaded.set(component.export, {
+      manifest: componentManifest,
+      ruleIds: ruleIdsOf(guide.frontMatter as GuideFrontMatter)
+    })
+  })
+
+  return { findings, loaded }
+}
+
+const checkPatternRefs = (
+  manifest: PatternManifest,
+  ruleIds: Set<string>,
+  manifestFile: string,
+  registry: Registry
+): Finding[] => {
+  const refs: { id: string; pointer: string }[] = [
+    ...manifest.anatomy.flatMap((slot, i) =>
+      (slot.rules ?? []).map((id, j) => ({ id, pointer: `/anatomy/${i}/rules/${j}` }))
+    ),
+    ...(manifest.constraints ?? []).map((c, i) => ({ id: c.rule, pointer: `/constraints/${i}/rule` })),
+    ...(manifest.examples?.incorrect ?? []).flatMap((example, i) =>
+      example.violates.map((id, j) => ({ id, pointer: `/examples/incorrect/${i}/violates/${j}` }))
+    ),
+    ...(manifest.knownGaps ?? []).flatMap((gap, i) =>
+      gap.rule ? [{ id: gap.rule, pointer: `/knownGaps/${i}/rule` }] : []
+    )
+  ]
+  return refs
+    .filter(ref => !ruleIds.has(ref.id) || retiredEntry(registry, ref.id))
+    .map(ref => unknownRule(ref.id, manifestFile, ref.pointer, registry, 'the pattern guide or its component guides'))
+}
+
+const checkAnatomyProps = (
+  manifest: PatternManifest,
+  loaded: Map<string, LoadedComponent>,
+  manifestFile: string
+): Finding[] => {
+  const out: Finding[] = []
+  manifest.anatomy.forEach((slot, index) => {
+    if (!slot.props) return
+    const component = loaded.get(slot.fill)
+    const pointer = `/anatomy/${index}/props`
+    if (!component) {
+      out.push(
+        finding(
+          'anatomy-props',
+          slot.slot,
+          manifestFile,
+          pointer,
+          `${slot.fill} has no contract in components[], so its props cannot be checked.`
+        )
+      )
+      return
+    }
+    const props = [...component.manifest.props.shared, ...component.manifest.props.codeOnly]
+    for (const [name, value] of Object.entries(slot.props)) {
+      const prop = props.find(p => p.name === name)
+      const at = `${pointer}/${name}`
+      if (!prop) {
+        out.push(
+          finding('anatomy-props', `${slot.slot}.${name}`, manifestFile, at, `${name} is not a prop of ${slot.fill}.`)
+        )
+        continue
+      }
+      if (!prop.values) continue
+      const extra = (Array.isArray(value) ? value : [value]).filter(v => !prop.values?.includes(String(v)))
+      if (extra.length > 0)
+        out.push(
+          finding(
+            'anatomy-props',
+            `${slot.slot}.${name}`,
+            manifestFile,
+            at,
+            `[${extra.join(', ')}] not in ${slot.fill}'s ${name} values [${prop.values.join(', ')}].`
+          )
+        )
+    }
+  })
+  return out
+}
+
+const checkStates = (manifest: PatternManifest, manifestFile: string): Finding[] => {
+  const { states } = manifest
+  if (!states?.map) return []
+  const values = new Set(states.values)
+  return Object.keys(states.map)
+    .filter(key => !values.has(key))
+    .map(key => finding('states-map', key, manifestFile, `/states/map/${key}`, `${key} is not one of states.values.`))
+}
+
+const validatePattern = (input: ContractInput, guide: ParsedGuide): Finding[] => {
+  const { repoRoot } = input
+  const manifestFile = relative(repoRoot, input.manifestPath)
+  const guideFile = relative(repoRoot, input.guidePath)
+  const manifest = input.manifest as PatternManifest
+  const frontMatter = guide.frontMatter as GuideFrontMatter
+  const out: Finding[] = []
+
+  if (resolve(dirname(input.manifestPath), manifest.governance.guide) !== input.guidePath)
+    out.push(
+      finding(
+        'governance-guide',
+        manifest.governance.guide,
+        manifestFile,
+        '/governance/guide',
+        'Does not resolve to the guide.'
+      )
+    )
+
+  const kebab = kebabOf(input.manifestPath)
+  if (manifest.id.split('.').pop() !== kebab)
+    out.push(
+      finding('pattern-id', manifest.id, manifestFile, '/id', `id must end in .${kebab}, the manifest's file name.`)
+    )
+
+  const registry = parseRegistry(input.registrySource ?? readFileSync(REGISTRY_PATH, 'utf8'))
+  const components = checkPatternComponents(manifest, { repoRoot, manifestPath: input.manifestPath, manifestFile })
+  const ruleIds = new Set([
+    ...ruleIdsOf(frontMatter),
+    ...[...components.loaded.values()].flatMap(component => [...component.ruleIds])
+  ])
+  const emptyProps: PropsTypeInfo = { members: [], moduleExports: [] }
+
+  out.push(
+    ...checkGuide(guide, frontMatter, { guideFile, manifestPath: input.manifestPath, guidePath: input.guidePath }),
+    ...checkRegistry(registry, frontMatter, patternName(manifest.id), {
+      guideFile,
+      registryFile: relative(repoRoot, REGISTRY_PATH)
+    }),
+    ...checkTargets(frontMatter, manifest, { repoRoot, guideFile, propsInfo: emptyProps }),
+    ...components.findings,
+    ...checkPatternRefs(manifest, ruleIds, manifestFile, registry),
+    ...checkAnatomyProps(manifest, components.loaded, manifestFile),
+    ...checkStates(manifest, manifestFile)
+  )
+  return out
+}
+
 export const validateContract = (input: ContractInput): Finding[] => {
   const { repoRoot } = input
   const manifestFile = relative(repoRoot, input.manifestPath)
   const guideFile = relative(repoRoot, input.guidePath)
-  const { manifest: validateManifest, guide: validateGuide } = getValidators()
+  const validators = getValidators()
+  const pattern = kindOf(input.manifest) === 'pattern'
+  const validateManifest = pattern ? validators.pattern : validators.manifest
+  const validateGuide = validators.guide
 
   const out: Finding[] = [
     ...placeholderFindings(JSON.stringify(input.manifest), manifestFile, 'manifest'),
@@ -765,6 +970,7 @@ export const validateContract = (input: ContractInput): Finding[] => {
   else if (!validateGuide(guide.frontMatter)) out.push(...schemaFindings(validateGuide.errors, guideFile, 'guide'))
 
   if (out.length > 0) return out
+  if (pattern) return validatePattern(input, guide)
 
   const manifest = input.manifest as Manifest
   const frontMatter = guide.frontMatter as GuideFrontMatter
@@ -780,23 +986,23 @@ export const validateContract = (input: ContractInput): Finding[] => {
       )
     )
 
-  const ruleIds = new Set([...frontMatter.rules.map(rule => rule.id), ...(frontMatter.gaps ?? []).map(gap => gap.id)])
+  const ruleIds = ruleIdsOf(frontMatter)
   const componentPath = join(repoRoot, manifest.code.path)
   const typeName = manifest.code.propsType ?? `${manifest.code.export}Props`
   const propsInfo: PropsTypeInfo = existsSync(componentPath)
     ? readPropsType(componentPath, typeName, PACKAGE_TSCONFIG)
     : { members: [], moduleExports: [], error: `Component source ${manifest.code.path} does not exist.` }
 
+  const registry = parseRegistry(input.registrySource ?? readFileSync(REGISTRY_PATH, 'utf8'))
+
   out.push(
     ...checkGuide(guide, frontMatter, { guideFile, manifestPath: input.manifestPath, guidePath: input.guidePath }),
-    ...checkRegistry(
-      parseRegistry(input.registrySource ?? readFileSync(REGISTRY_PATH, 'utf8')),
-      frontMatter,
-      manifest,
-      { guideFile, registryFile: relative(repoRoot, REGISTRY_PATH) }
-    ),
-    ...checkTargets(frontMatter, manifest, { repoRoot, guideFile, propsInfo }),
-    ...checkRuleRefs(manifest, ruleIds, manifestFile),
+    ...checkRegistry(registry, frontMatter, manifest.code.export, {
+      guideFile,
+      registryFile: relative(repoRoot, REGISTRY_PATH)
+    }),
+    ...checkTargets(frontMatter, manifest, { repoRoot, guideFile, propsInfo, codePath: manifest.code.path }),
+    ...checkRuleRefs(manifest, ruleIds, manifestFile, registry),
     ...checkProps(manifest, propsInfo, manifestFile),
     ...checkTokens(manifest, repoRoot, manifestFile),
     ...checkBindings(manifest, manifestFile),

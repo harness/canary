@@ -42,6 +42,12 @@ const replaceOnce = (source: string, from: string, to: string): string => {
   return source.replace(from, to)
 }
 
+const replaceRow = (source: string, prefix: string, row: string): string => {
+  const pattern = new RegExp(`^\\| ${prefix} .*$`, 'm')
+  if (!pattern.test(source)) throw new Error(`Registry row not found: ${prefix}`)
+  return source.replace(pattern, row)
+}
+
 describe('validate-contracts: StatusBadge', () => {
   it('passes the committed manifest and guide with only the declared waiver', () => {
     const findings = run()
@@ -209,17 +215,17 @@ describe('validate-contracts: StatusBadge', () => {
     const cases: [string, string, string][] = [
       [
         'prefix not registered',
-        replaceOnce(REGISTRY_SOURCE, '| SBD    | StatusBadge |', '| XYZ    | StatusBadge |'),
+        replaceRow(REGISTRY_SOURCE, 'SBD', '| XYZ    | StatusBadge |         |'),
         'prefix-unregistered:SBD'
       ],
       [
         'prefix registered to another component',
-        replaceOnce(REGISTRY_SOURCE, '| SBD    | StatusBadge |', '| SBD    | Tag         |'),
+        replaceRow(REGISTRY_SOURCE, 'SBD', '| SBD    | Tag         |         |'),
         'prefix-owner:SBD'
       ],
       [
         'rule ID is retired',
-        replaceOnce(REGISTRY_SOURCE, '| StatusBadge |         |', '| StatusBadge | SBD-016 |'),
+        replaceRow(REGISTRY_SOURCE, 'SBD', '| SBD    | StatusBadge | SBD-016 |'),
         'rule-retired:SBD-016'
       ],
       ['prefix listed twice', `${REGISTRY_SOURCE}| SBD    | Tag         |         |\n`, 'registry-duplicate:SBD']
@@ -228,5 +234,81 @@ describe('validate-contracts: StatusBadge', () => {
     it.each(cases)('%s', (_name, registrySource, expected) => {
       expect(errorKeys(run(undefined, GUIDE_SOURCE, registrySource))).toContain(expected)
     })
+  })
+})
+
+const PATTERN_DIR = resolve(REPO_ROOT, 'packages/ui/src/patterns/execution-status')
+const PATTERN_MANIFEST_PATH = resolve(PATTERN_DIR, 'execution-status.manifest.json')
+const PATTERN_GUIDE_PATH = resolve(PATTERN_DIR, 'execution-status.guide.md')
+const PATTERN_MANIFEST_SOURCE = readFileSync(PATTERN_MANIFEST_PATH, 'utf8')
+const PATTERN_GUIDE_SOURCE = readFileSync(PATTERN_GUIDE_PATH, 'utf8')
+
+const runPattern = (
+  mutateManifest: (m: Json) => void = () => {},
+  guideSource: string = PATTERN_GUIDE_SOURCE,
+  registrySource: string = REGISTRY_SOURCE
+): Finding[] => {
+  const manifest = JSON.parse(PATTERN_MANIFEST_SOURCE)
+  mutateManifest(manifest)
+  return validateContract({
+    repoRoot: REPO_ROOT,
+    manifestPath: PATTERN_MANIFEST_PATH,
+    manifest,
+    guidePath: PATTERN_GUIDE_PATH,
+    guideSource,
+    registrySource
+  })
+}
+
+describe('validate-contracts: ExecutionStatus pattern', () => {
+  it('passes the committed pattern manifest and guide', () => {
+    expect(errorKeys(runPattern())).toEqual([])
+  })
+
+  const cases: [string, (m: Json) => void, string][] = [
+    ['schema: kind missing', m => delete m.kind, 'schema:manifest/'],
+    [
+      'id does not match the file name',
+      m => (m.id = 'canary.pattern.run-status'),
+      'pattern-id:canary.pattern.run-status'
+    ],
+    ['rule ref in no guide', m => (m.anatomy[0].rules = ['EXS-099']), 'rule-unknown:EXS-099'],
+    ['component rule ref in no guide', m => (m.examples.incorrect[0].violates = ['SBD-099']), 'rule-unknown:SBD-099'],
+    [
+      'anatomy prop value the component lacks',
+      m => m.anatomy[1].props.theme.push('purple'),
+      'anatomy-props:badge.theme'
+    ],
+    ['anatomy prop the component lacks', m => (m.anatomy[1].props.tone = 'loud'), 'anatomy-props:badge.tone'],
+    ['component export mismatch', m => (m.components[0].export = 'Tag'), 'pattern-component:Tag'],
+    ['component path missing', m => (m.components[1].path = 'packages/ui/src/nope.tsx'), 'pattern-component:Tree'],
+    ['states.map key not in values', m => (m.states.map = { paused: {} }), 'states-map:paused'],
+    ['unresolved [TK] placeholder', m => (m.purpose.summary = '[TK]'), 'placeholder:manifest']
+  ]
+
+  it.each(cases)('%s', (_name, mutate, expected) => {
+    expect(errorKeys(runPattern(mutate))).toContain(expected)
+  })
+
+  it('names the replacement when a ref is retired', () => {
+    const registry = replaceRow(REGISTRY_SOURCE, 'SBD', '| SBD    | StatusBadge | SBD-006 (EXS-001) |')
+    const retired = runPattern(m => (m.anatomy[1].rules = ['SBD-006']), PATTERN_GUIDE_SOURCE, registry).find(
+      f => f.key === 'rule-retired:SBD-006'
+    )
+    expect(retired?.message).toContain('Use EXS-001.')
+  })
+
+  it('rejects a types check, since a pattern has no props type', () => {
+    const guide = replaceOnce(
+      PATTERN_GUIDE_SOURCE,
+      'tier: 2\n    check: review\n  - id: EXS-002',
+      'tier: 2\n    check: types:Nope\n  - id: EXS-002'
+    )
+    expect(errorKeys(runPattern(undefined, guide))).toContain('check-target:EXS-001:types:Nope')
+  })
+
+  it('fails when the prefix is registered to another owner', () => {
+    const registry = replaceRow(REGISTRY_SOURCE, 'EXS', '| EXS    | RunStatus |         |')
+    expect(errorKeys(runPattern(undefined, PATTERN_GUIDE_SOURCE, registry))).toContain('prefix-owner:EXS')
   })
 })

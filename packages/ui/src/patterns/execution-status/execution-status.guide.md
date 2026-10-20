@@ -9,25 +9,21 @@ rules:
     status: proposed
     tier: 2
     check: review
-    depends_on: [SBD-005]
   - id: EXS-002
     title: Execution status uses only success, warning, muted or danger
     status: proposed
     tier: 2
     check: review
-    depends_on: [SBD-014]
   - id: EXS-003
     title: A status that can change while visible sits inside an aria-live="polite" region
     status: proposed
     tier: 1
     check: review
-    depends_on: [SBD-008]
   - id: EXS-004
     title: In hierarchical execution lists, Tree View renders the status — don't compose StatusBadge by hand
     status: proposed
     tier: 3
     check: review
-    depends_on: [SBD-015]
 gaps:
   - id: EXS-005
     title: 'Open: no mapping from ExecutionState to theme, variant, icon and label'
@@ -41,13 +37,14 @@ gaps:
   - id: EXS-008
     title: 'Open: a Figma counterpart is expected but not identified'
     status: open
+  - id: EXS-009
+    title: 'Open: whether an execution may show two badges'
+    status: open
 ---
 
 # Execution Status Pattern Guide
 
-Draft. How to show the state of a pipeline execution: a run, a stage or a step. The front matter above is the only source for each rule's id, title, status, tier and check. Every rule here restates a rule from `status-badge.guide.md` at the level of the screen, and `depends_on` names it. Those four SBD rules move here (EXS-007); until the move lands they exist in both guides. Nothing new is decided here; the open questions are under Known gaps. The anatomy, the states and the examples live in `execution-status.manifest.json`.
-
-No `ds:*` script reads `src/patterns/` yet. This guide is not validated, and no reference is generated from it.
+Draft. How to show the state of a pipeline execution: a run, a stage or a step. The front matter above is the only source for each rule's id, title, status, tier and check. Every rule here restates a rule from `status-badge.guide.md` at the level of the screen, and its body names that rule. Those four SBD rules move here (EXS-007); until the move lands they exist in both guides. Nothing new is decided here; the open questions are under Known gaps. The anatomy, the states and the examples live in `execution-status.manifest.json`.
 
 ## Architecture: Do's and Do Not's
 
@@ -68,7 +65,7 @@ No `ds:*` script reads `src/patterns/` yet. This guide is not validated, and no 
 
 ## EXS-001 — One state per badge — when several apply, show the most urgent
 
-Restates SBD-005 for executions. A badge never holds two states. When more than one applies, show the most urgent. SBD-005 also allows "separate badges with clear spacing rules", but no spacing rules exist yet. [TK: whether an execution may show two badges]
+Restates SBD-005 for executions. A badge never holds two states. When more than one applies, show the most urgent. SBD-005 also allows "separate badges with clear spacing rules", but no spacing rules exist yet. Whether an execution may show two badges is EXS-009.
 
 ## EXS-002 — Execution status uses only success, warning, muted or danger
 
@@ -88,7 +85,7 @@ Open questions that keep their rule IDs but are not rules yet.
 
 ### EXS-005 — Open: no mapping from ExecutionState to theme, variant, icon and label
 
-`ExecutionState` in `src/types/execution.ts` has 12 values: pending, running, success, failure, error, skipped, killed, blocked, waiting_on_dependencies, unknown, failure_ignored, ignorefailed. No guide says which theme, variant, icon or label each gets. SBD-014 notes that the icon-to-substate pairing is unratified. [TK: mapping, from Design]
+`ExecutionState` in `src/types/execution.ts` has 12 values: pending, running, success, failure, error, skipped, killed, blocked, waiting_on_dependencies, unknown, failure_ignored, ignorefailed. No guide says which theme, variant, icon or label each gets. SBD-014 notes that the icon-to-substate pairing is unratified. Design owns the decision.
 
 ### EXS-006 — Open: Tree View's status icons and colors disagree with SBD-017's icon table
 
@@ -100,4 +97,8 @@ Decided by Jared Hawkins, 2026-10-20. The four rules move to this guide. SBD-005
 
 ### EXS-008 — Open: a Figma counterpart is expected but not identified
 
-Patterns are expected to have Figma counterparts. [TK: the file and node for execution status, or when it will exist]
+Patterns are expected to have Figma counterparts. Not known yet: which file and node hold the execution status pattern, or when it will exist.
+
+### EXS-009 — Open: whether an execution may show two badges
+
+SBD-005 allows "separate badges with clear spacing rules" when an item has more than one state. `status-badge.manifest.json` lists two separate badges, "Error" and "Pending", as an incorrect example of SBD-005. The two disagree, and no spacing rules exist. Until this is decided, show one badge (EXS-001).

@@ -54,6 +54,43 @@ export interface ReferenceSource {
   guidePath: string
   /** Absolute path the reference will be written to; links are made relative to it. */
   outputPath: string
+  /** Patterns that compose this component, with the path of each pattern's reference. */
+  usedIn?: { name: string; referencePath: string }[]
+}
+
+interface PatternComponent {
+  export: string
+  manifest?: string | null
+  path?: string
+  role: string
+}
+
+interface RefPattern {
+  status: string
+  purpose: { summary: string; useWhen: string[]; doNotUseWhen: string[] }
+  components: PatternComponent[]
+  anatomy: {
+    slot: string
+    fill: string
+    required: boolean | string
+    props?: Record<string, unknown>
+    rules?: string[]
+    notes?: string
+  }[]
+  states?: { source: string; values: string[]; map?: Record<string, unknown> | null; notes?: string }
+  constraints?: { when: string; use: string; instead?: string; rule: string; enforcedBy?: string; notes?: string }[]
+  figma: { fileKey?: string | null; nodeId?: string | null; notes?: string }
+  examples?: {
+    correct?: { code: string; source?: string }[]
+    incorrect?: { code: string; violates: string[]; source?: string }[]
+  }
+  knownGaps?: { summary: string; rule?: string; source?: string }[]
+}
+
+export interface PatternSource extends ReferenceSource {
+  name: string
+  /** Component export -> absolute path of its generated reference. */
+  componentRefs: Map<string, string>
 }
 
 export interface IndexEntry {
@@ -126,6 +163,61 @@ const propRows = (props: RefProp[]): string[] =>
 
 const linkTo = (from: string, to: string): string => relative(dirname(from), to)
 
+type Push = (...chunk: string[]) => void
+
+const renderRules = (
+  push: Push,
+  frontMatter: RefFrontMatter,
+  lines: string[],
+  headingFor: Map<string, GuideHeading>
+): void => {
+  push(
+    '## Rules',
+    '',
+    'Status `adopted` is ratified, `proposed` is a draft, `open` is a question. Check `review` means nothing automatic enforces the rule.',
+    '',
+    '| ID | Rule | Tier | Status |',
+    '| -- | ---- | ---- | ------ |',
+    ...frontMatter.rules.map(rule => `| ${rule.id} | ${cell(rule.title)} | ${rule.tier ?? ''} | ${rule.status} |`),
+    ''
+  )
+  for (const rule of frontMatter.rules) {
+    const heading = headingFor.get(rule.id)
+    push(`### ${rule.id} — ${rule.title}`, '')
+    push(`Checked by: ${checks(rule.check).map(code).join(', ') || code('review')}.`, '')
+    if (heading) push(sectionBody(lines, heading), '')
+  }
+}
+
+const renderGaps = (
+  push: Push,
+  gaps: { summary: string; rule?: string; source?: string }[],
+  frontMatter: RefFrontMatter,
+  lines: string[],
+  headingFor: Map<string, GuideHeading>,
+  intro: string
+): void => {
+  const guideGaps = frontMatter.gaps ?? []
+  if (gaps.length === 0 && guideGaps.length === 0) return
+  push('## Known gaps', '', intro, '')
+  for (const entry of gaps) {
+    const meta = [entry.rule, entry.source ? `source: ${entry.source}` : ''].filter(Boolean).join('; ')
+    push(`- ${entry.summary}${meta ? ` (${meta})` : ''}`)
+  }
+  push('')
+  for (const gap of guideGaps) {
+    const heading = headingFor.get(gap.id)
+    push(`### ${gap.id} — ${gap.title}`, '')
+    if (heading) push(sectionBody(lines, heading), '')
+  }
+}
+
+const finish = (out: string[]): string =>
+  `${out
+    .join('\n')
+    .replace(/\n{3,}/g, '\n\n')
+    .trimEnd()}\n`
+
 export const renderReference = (source: ReferenceSource): string => {
   const manifest = source.manifest as RefManifest
   const guide = parseGuide(source.guideSource)
@@ -159,7 +251,21 @@ export const renderReference = (source: ReferenceSource): string => {
     '## Do not use when',
     '',
     ...manifest.purpose.doNotUseWhen.map(item => `- ${item}`),
-    '',
+    ''
+  )
+
+  if (source.usedIn?.length)
+    push(
+      '## Used in patterns',
+      '',
+      ...source.usedIn.map(
+        pattern =>
+          `- [${pattern.name}](${linkTo(source.outputPath, pattern.referencePath)}): read it before composing ${manifest.code.export} with other components.`
+      ),
+      ''
+    )
+
+  push(
     '## Props',
     '',
     '| Prop | Type | Required | Default | Notes |',
@@ -213,22 +319,7 @@ export const renderReference = (source: ReferenceSource): string => {
   if (manifest.tokens.rule) push(`Token rule: ${code(manifest.tokens.rule)}.`)
   push('', ...Object.entries(manifest.tokens.refs).map(([role, token]) => `- ${role}: ${code(token)}`), '')
 
-  push(
-    '## Rules',
-    '',
-    'Status `adopted` is ratified, `proposed` is a draft, `open` is a question. Check `review` means nothing automatic enforces the rule.',
-    '',
-    '| ID | Rule | Tier | Status |',
-    '| -- | ---- | ---- | ------ |',
-    ...frontMatter.rules.map(rule => `| ${rule.id} | ${cell(rule.title)} | ${rule.tier ?? ''} | ${rule.status} |`),
-    ''
-  )
-  for (const rule of frontMatter.rules) {
-    const heading = headingFor.get(rule.id)
-    push(`### ${rule.id} — ${rule.title}`, '')
-    push(`Checked by: ${checks(rule.check).map(code).join(', ') || code('review')}.`, '')
-    if (heading) push(sectionBody(lines, heading), '')
-  }
+  renderRules(push, frontMatter, lines, headingFor)
 
   const examples = manifest.examples ?? {}
   if ((examples.correct ?? []).length > 0) push('## Correct', '', '```tsx', ...(examples.correct ?? []), '```', '')
@@ -241,45 +332,171 @@ export const renderReference = (source: ReferenceSource): string => {
     }
   }
 
-  const gaps = manifest.knownGaps ?? []
-  const guideGaps = frontMatter.gaps ?? []
-  if (gaps.length > 0 || guideGaps.length > 0) {
-    push(
-      '## Known gaps',
-      '',
-      'Figma, code and docs disagree here. Check the cited source before copying this behavior.',
-      ''
+  renderGaps(
+    push,
+    (manifest.knownGaps ?? []).map(gap => (typeof gap === 'string' ? { summary: gap } : gap)),
+    frontMatter,
+    lines,
+    headingFor,
+    'Figma, code and docs disagree here. Check the cited source before copying this behavior.'
+  )
+
+  return finish(out)
+}
+
+const formatProps = (props: Record<string, unknown>): string =>
+  Object.entries(props)
+    .map(
+      ([name, value]) =>
+        `${code(name)}: ${(Array.isArray(value) ? value : [value]).map(v => code(String(v))).join(', ')}`
     )
-    for (const gap of gaps) {
-      const entry = typeof gap === 'string' ? { summary: gap } : gap
-      const meta = [entry.rule, 'source' in entry && entry.source ? `source: ${entry.source}` : '']
-        .filter(Boolean)
-        .join('; ')
-      push(`- ${entry.summary}${meta ? ` (${meta})` : ''}`)
-    }
+    .join('; ')
+
+export const renderPattern = (source: PatternSource): string => {
+  const manifest = source.manifest as RefPattern
+  const guide = parseGuide(source.guideSource)
+  const frontMatter = guide.frontMatter as RefFrontMatter
+  const lines = source.guideSource.split('\n')
+  const headingFor = new Map(guide.headings.map(heading => [heading.id, heading]))
+  const manifestLink = linkTo(source.outputPath, source.manifestPath)
+  const guideLink = linkTo(source.outputPath, source.guidePath)
+  const out: string[] = []
+  const push: Push = (...chunk) => {
+    out.push(...chunk)
+  }
+
+  push(
+    HEADER([manifestLink.split('/').pop() ?? '', guideLink.split('/').pop() ?? '']),
+    '',
+    `# ${source.name} pattern`,
+    '',
+    `Status: ${code(manifest.status)}. Sources: [manifest](${manifestLink}), [guide](${guideLink}).`,
+    '',
+    manifest.purpose.summary,
+    '',
+    '## Use when',
+    '',
+    ...manifest.purpose.useWhen.map(item => `- ${item}`),
+    '',
+    '## Do not use when',
+    '',
+    ...manifest.purpose.doNotUseWhen.map(item => `- ${item}`),
+    '',
+    '## Components',
+    '',
+    '| Component | Role | Reference |',
+    '| --------- | ---- | --------- |',
+    ...manifest.components.map(component => {
+      const ref = source.componentRefs.get(component.export)
+      const link = ref
+        ? `[${linkTo(source.outputPath, ref)}](${linkTo(source.outputPath, ref)})`
+        : `No contract. Source: ${code(component.path ?? '')}`
+      return `| ${component.export} | ${cell(component.role)} | ${link} |`
+    }),
+    '',
+    '## Anatomy',
+    '',
+    'Slots in render order, outermost first.',
+    '',
+    '| Slot | Fill | Required | Props | Rules | Notes |',
+    '| ---- | ---- | -------- | ----- | ----- | ----- |',
+    ...manifest.anatomy.map(
+      slot =>
+        `| ${code(slot.slot)} | ${code(slot.fill)} | ${cell(String(slot.required))} | ${cell(slot.props ? formatProps(slot.props) : '')} | ${(slot.rules ?? []).join(', ')} | ${cell(slot.notes ?? '')} |`
+    ),
+    ''
+  )
+
+  if (manifest.states) {
+    const { states } = manifest
+    push('## States', '', `Source: ${code(states.source)}.`, '', `Values: ${states.values.map(code).join(', ')}.`, '')
+    if (states.map)
+      push(
+        ...Object.entries(states.map).map(([state, props]) => `- ${code(state)}: ${code(JSON.stringify(props))}`),
+        ''
+      )
+    else push('No mapping from state to props yet.', '')
+    if (states.notes) push(states.notes, '')
+  }
+
+  const constraints = manifest.constraints ?? []
+  if (constraints.length > 0) {
+    push('## Constraints', '')
+    for (const c of constraints)
+      push(
+        `- When ${c.when.charAt(0).toLowerCase()}${c.when.slice(1)}: use ${c.use}${c.instead ? `, not ${c.instead}` : ''}. (${c.rule}, enforced by ${c.enforcedBy ?? 'none'})${c.notes ? ` ${c.notes}` : ''}`
+      )
     push('')
-    for (const gap of guideGaps) {
-      const heading = headingFor.get(gap.id)
-      push(`### ${gap.id} — ${gap.title}`, '')
-      if (heading) push(sectionBody(lines, heading), '')
+  }
+
+  for (const section of proseSections(lines)) push(`## ${section.title}`, '', section.body, '')
+
+  const { figma } = manifest
+  push(
+    '## Figma',
+    '',
+    figma.fileKey
+      ? `File ${code(figma.fileKey)}${figma.nodeId ? `, node ${code(figma.nodeId)}` : ''}.`
+      : 'No Figma counterpart linked.',
+    ''
+  )
+  if (figma.notes) push(figma.notes, '')
+
+  renderRules(push, frontMatter, lines, headingFor)
+
+  const examples = manifest.examples ?? {}
+  if ((examples.correct ?? []).length > 0) {
+    push('## Correct', '')
+    for (const example of examples.correct ?? []) {
+      push('```tsx', example.code, '```', '')
+      if (example.source) push(`Source: ${example.source}.`, '')
+    }
+  }
+  if ((examples.incorrect ?? []).length > 0) {
+    push('## Incorrect', '')
+    for (const example of examples.incorrect ?? []) {
+      push('```tsx', example.code, '```', '', `Violates ${example.violates.join(', ')}.`, '')
+      if (example.source) push(`Source: ${example.source}.`, '')
     }
   }
 
-  return `${out
-    .join('\n')
-    .replace(/\n{3,}/g, '\n\n')
-    .trimEnd()}\n`
+  renderGaps(
+    push,
+    manifest.knownGaps ?? [],
+    frontMatter,
+    lines,
+    headingFor,
+    'Open questions. Nothing here is decided. Check the cited source before copying this behavior.'
+  )
+
+  return finish(out)
 }
 
-export const renderIndex = (entries: IndexEntry[], indexPath: string): string => {
-  const rows = [...entries]
+const indexRows = (entries: IndexEntry[], indexPath: string): string[] =>
+  [...entries]
     .sort((a, b) => a.component.localeCompare(b.component))
     .map(
       entry =>
         `| ${entry.component} | ${cell(firstSentence(entry.summary))} | [${linkTo(indexPath, entry.referencePath)}](${linkTo(indexPath, entry.referencePath)}) |`
     )
+
+export const renderIndex = (entries: IndexEntry[], indexPath: string, patterns: IndexEntry[] = []): string => {
+  const rows = indexRows(entries, indexPath)
+  const patternRows =
+    patterns.length === 0
+      ? []
+      : [
+          '## Patterns',
+          '',
+          'Patterns compose several components into one screen element. Read the pattern before composing its components yourself.',
+          '',
+          '| Pattern | Use for | Reference |',
+          '| ------- | ------- | --------- |',
+          ...indexRows(patterns, indexPath),
+          ''
+        ]
   return [
-    HEADER(['every *.manifest.json and *.guide.md under packages/ui/src/components']),
+    HEADER(['every *.manifest.json and *.guide.md under packages/ui/src/components and packages/ui/src/patterns']),
     '',
     '# Component index',
     '',
@@ -288,6 +505,7 @@ export const renderIndex = (entries: IndexEntry[], indexPath: string): string =>
     '| Component | Use for | Reference |',
     '| --------- | ------- | --------- |',
     ...rows,
-    ''
+    '',
+    ...patternRows
   ].join('\n')
 }

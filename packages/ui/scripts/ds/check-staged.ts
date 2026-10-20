@@ -3,7 +3,7 @@
  *
  *   node scripts/ds/check-staged.ts <file ...>
  *
- * Runs `check.ts all <Component>` for each component with a contract whose folder has a staged file.
+ * Runs `check.ts all <Name>` for each component or pattern with a contract whose folder has a staged file.
  * A staged change to contracts/, scripts/ds/ or agents/ runs the checks for every contract.
  */
 
@@ -11,15 +11,19 @@ import { spawnSync } from 'node:child_process'
 import { existsSync } from 'node:fs'
 import { join, relative, resolve, sep } from 'node:path'
 
+import { CONTRACT_DIRS } from './lib/contracts.ts'
+
 const PACKAGE_ROOT = resolve(import.meta.dirname, '../..')
-const COMPONENTS_DIR = join(PACKAGE_ROOT, 'src/components')
 const SHARED_DIRS = ['contracts', join('scripts', 'ds'), 'agents'].map(dir => join(PACKAGE_ROOT, dir) + sep)
 
 const componentFor = (file: string): string | undefined => {
-  const rel = relative(COMPONENTS_DIR, file)
-  if (rel.startsWith('..')) return undefined
-  const folder = rel.split(sep)[0]
-  return existsSync(join(COMPONENTS_DIR, folder, `${folder}.manifest.json`)) ? folder : undefined
+  for (const dir of Object.values(CONTRACT_DIRS).map(d => join(PACKAGE_ROOT, d))) {
+    const rel = relative(dir, file)
+    if (rel.startsWith('..')) continue
+    const folder = rel.split(sep)[0]
+    return existsSync(join(dir, folder, `${folder}.manifest.json`)) ? folder : undefined
+  }
+  return undefined
 }
 
 const check = (component?: string): number =>

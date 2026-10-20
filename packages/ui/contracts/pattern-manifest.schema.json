@@ -2,7 +2,7 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://harness.io/schemas/canary/pattern-manifest-v0.json",
   "title": "Pattern Manifest (draft)",
-  "description": "Draft, not yet read by any ds:* script. Machine-checkable contract for a pattern: which components compose it, the slots they fill, and the constraints that span more than one component. Prose rules live in the paired guide (governance.guide), which uses component-guide.schema.json.",
+  "description": "Draft. Machine-checkable contract for a pattern: which components compose it, the slots they fill, and the constraints that span more than one component. Prose rules live in the paired guide (governance.guide), which uses component-guide.schema.json.",
   "type": "object",
   "required": ["id", "kind", "status", "purpose", "components", "anatomy", "figma", "governance"],
   "additionalProperties": false,
@@ -110,7 +110,7 @@
     },
     "figma": {
       "type": "object",
-      "description": "Every pattern is expected to have a Figma counterpart. fileKey and nodeId stay null, with a [TK] note, until it is identified.",
+      "description": "Every pattern is expected to have a Figma counterpart. fileKey and nodeId stay null, with a note naming the open gap, until it is identified.",
       "additionalProperties": false,
       "properties": {
         "fileKey": { "type": ["string", "null"] },

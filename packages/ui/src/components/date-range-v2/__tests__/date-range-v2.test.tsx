@@ -2,6 +2,7 @@ import { render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { vi } from 'vitest'
 
+import { TooltipProvider } from '../../tooltip'
 import { DateRangeV2, DateRangeV2Content, timezoneOptions } from '../date-range-v2'
 import { getBrowserTimeZone } from '../timezone-utils'
 import type { DateRangeV2Value } from '../types'
@@ -259,6 +260,73 @@ describe('DateRangeV2Content', () => {
     expect(onApply).toHaveBeenCalledWith({ from, to, preset: 'BILLING_CYCLE', timezone: 'Asia/Kolkata' })
   })
 
+  test('shows modes in the order given by config', () => {
+    renderContent({ config: { modes: ['custom', 'rolling'] } })
+
+    expect(screen.getAllByRole('tab').map(tab => tab.textContent)).toEqual([
+      expect.stringContaining('Fixed'),
+      expect.stringContaining('Rolling')
+    ])
+  })
+
+  test('shows an empty preset select when modes lists presets and no presets are passed', async () => {
+    renderContent({ config: { modes: ['presets', 'rolling'] } })
+
+    expect(screen.getAllByRole('tab').map(tab => tab.textContent)).toEqual([
+      expect.stringContaining('Presets'),
+      expect.stringContaining('Rolling')
+    ])
+
+    await userEvent.click(screen.getByRole('tab', { name: /Presets/ }))
+
+    expect(screen.getByRole('button', { name: 'Select an option' })).toBeInTheDocument()
+    expect(screen.getByRole('button', { name: 'Apply' })).toBeDisabled()
+  })
+
+  test('hides presets when modes leaves them out', () => {
+    renderContent({
+      config: {
+        modes: ['rolling', 'calendar'],
+        presets: [
+          {
+            label: 'Last 7 days',
+            value: 'LAST_7_DAYS',
+            group: 'recommended',
+            getRange: () => ({ from: lastWeek.from, to: lastWeek.to })
+          }
+        ]
+      }
+    })
+
+    expect(screen.queryByRole('tab', { name: /Presets/ })).not.toBeInTheDocument()
+    expect(screen.getAllByRole('tab').map(tab => tab.textContent)).toEqual([
+      expect.stringContaining('Rolling'),
+      expect.stringContaining('Calendar periods')
+    ])
+  })
+
+  test('keeps a listed Presets mode in its configured position', () => {
+    renderContent({
+      config: {
+        modes: ['custom', 'presets', 'rolling'],
+        presets: [
+          {
+            label: 'Last 7 days',
+            value: 'LAST_7_DAYS',
+            group: 'recommended',
+            getRange: () => ({ from: lastWeek.from, to: lastWeek.to })
+          }
+        ]
+      }
+    })
+
+    expect(screen.getAllByRole('tab').map(tab => tab.textContent)).toEqual([
+      expect.stringContaining('Fixed'),
+      expect.stringContaining('Presets'),
+      expect.stringContaining('Rolling')
+    ])
+  })
+
   test('hides modes that are turned off', () => {
     renderContent({ config: { modes: ['rolling'] } })
 
@@ -360,27 +428,92 @@ describe('DateRangeV2', () => {
     expect(onValueChange).toHaveBeenLastCalledWith(expect.objectContaining({ timezone: 'LOCALE' }))
   })
 
-  test('uses rolling defaultAmount for an empty value', () => {
+  test('uses rolling defaultValue for an empty value', () => {
     renderContent({
       value: undefined,
-      config: { modeConfig: { rolling: { defaultAmount: 12 } } }
+      config: {
+        modeConfig: { rolling: { defaultValue: { direction: 'past', amount: 12, unit: 'day' } } }
+      }
     })
 
     expect(screen.getByRole('textbox', { name: 'Rolling amount' })).toHaveValue('12')
     expect(screen.getByText('Last 12 days')).toBeInTheDocument()
   })
 
-  test('uses calendar defaultAmount when leaving the current period', async () => {
-    renderContent({
-      value: undefined,
-      config: { modeConfig: { calendar: { defaultAmount: 4 } } }
-    })
+  test('uses amount 1 when leaving This and no calendar default is set', async () => {
+    renderContent({ value: undefined })
 
     await userEvent.click(screen.getByRole('tab', { name: /Calendar periods/ }))
     await userEvent.click(screen.getByRole('radio', { name: 'Previous' }))
 
-    expect(screen.getByRole('textbox', { name: 'Calendar amount' })).toHaveValue('4')
-    expect(screen.getByText('Previous 4 months')).toBeInTheDocument()
+    expect(screen.getByRole('textbox', { name: 'Calendar amount' })).toHaveValue('1')
+    expect(screen.getByText('Previous month')).toBeInTheDocument()
+  })
+
+  test('opens on the configured rolling direction and calendar defaultValue', async () => {
+    renderContent({
+      value: undefined,
+      config: {
+        modeConfig: {
+          rolling: { defaultValue: { direction: 'future', amount: 3, unit: 'week' } },
+          calendar: {
+            defaultValue: { position: 'previous', amount: 7, unit: 'day' }
+          }
+        }
+      }
+    })
+
+    expect(screen.getByText('Next 3 weeks')).toBeInTheDocument()
+
+    await userEvent.click(screen.getByRole('tab', { name: /Calendar periods/ }))
+
+    expect(screen.getByRole('textbox', { name: 'Calendar amount' })).toHaveValue('7')
+    expect(screen.getByText('Previous 7 days')).toBeInTheDocument()
+  })
+
+  test('uses a custom defaultValue for an empty fixed draft', async () => {
+    const onApply = vi.fn()
+    render(
+      <TooltipProvider>
+        <DateRangeV2Content
+          value={undefined}
+          onApply={onApply}
+          onCancel={vi.fn()}
+          config={{
+            modeConfig: {
+              custom: {
+                defaultValue: {
+                  from: { date: '2026-01-01', time: '09:30' },
+                  to: { date: '2026-01-07', time: '17:00' }
+                }
+              }
+            }
+          }}
+        />
+      </TooltipProvider>
+    )
+
+    await userEvent.click(screen.getByRole('tab', { name: /Fixed/ }))
+
+    expect(screen.getByRole('textbox', { name: 'Start date' })).toHaveValue('Jan 1, 2026')
+    expect(screen.getByRole('textbox', { name: 'Start time' })).toHaveValue('9:30 AM')
+    expect(screen.getByRole('textbox', { name: 'End date' })).toHaveValue('Jan 7, 2026')
+    expect(screen.getByRole('textbox', { name: 'End time' })).toHaveValue('5:00 PM')
+  })
+
+  test('uses a This calendar defaultValue', async () => {
+    renderContent({
+      value: undefined,
+      config: {
+        modeConfig: {
+          calendar: { defaultValue: { position: 'current', unit: 'month', extent: 'to_date' } }
+        }
+      }
+    })
+
+    await userEvent.click(screen.getByRole('tab', { name: /Calendar periods/ }))
+
+    expect(screen.getByText('This month, so far')).toBeInTheDocument()
   })
 
   test('hides the rolling amount and fixed times when those controls are off', async () => {
@@ -417,7 +550,11 @@ describe('DateRangeV2', () => {
       <DateRangeV2
         value={lastWeek}
         onValueChange={onValueChange}
-        config={{ modeConfig: { rolling: { defaultAmount: 7 } } }}
+        config={{
+          modeConfig: {
+            rolling: { defaultValue: { direction: 'past', amount: 7, unit: 'day' } }
+          }
+        }}
       />
     )
 
@@ -425,7 +562,11 @@ describe('DateRangeV2', () => {
       <DateRangeV2
         value={lastWeek}
         onValueChange={onValueChange}
-        config={{ modeConfig: { rolling: { defaultAmount: 12 } } }}
+        config={{
+          modeConfig: {
+            rolling: { defaultValue: { direction: 'past', amount: 12, unit: 'day' } }
+          }
+        }}
       />
     )
     expect(onValueChange).toHaveBeenLastCalledWith(expect.objectContaining({ preset: 'LAST_12_DAYS' }))
@@ -434,7 +575,11 @@ describe('DateRangeV2', () => {
       <DateRangeV2
         value={lastWeek}
         onValueChange={onValueChange}
-        config={{ modeConfig: { rolling: { defaultUnit: 'week', maxAmount: 3 } } }}
+        config={{
+          modeConfig: {
+            rolling: { defaultValue: { direction: 'past', amount: 3, unit: 'week' } }
+          }
+        }}
       />
     )
     expect(onValueChange).toHaveBeenLastCalledWith(expect.objectContaining({ preset: 'LAST_3_WEEKS' }))
@@ -447,7 +592,11 @@ describe('DateRangeV2', () => {
       <DateRangeV2
         value={calendarValue}
         onValueChange={onValueChange}
-        config={{ modeConfig: { calendar: { defaultAmount: 4, defaultUnit: 'quarter' } } }}
+        config={{
+          modeConfig: {
+            calendar: { defaultValue: { position: 'previous', amount: 4, unit: 'quarter' } }
+          }
+        }}
       />
     )
     expect(onValueChange).toHaveBeenLastCalledWith(expect.objectContaining({ preset: 'LAST_4_CALENDAR_QUARTERS' }))
@@ -479,7 +628,11 @@ describe('DateRangeV2', () => {
       <DateRangeV2
         value={fixed}
         onValueChange={onValueChange}
-        config={{ modeConfig: { rolling: { defaultAmount: 12 } } }}
+        config={{
+          modeConfig: {
+            rolling: { defaultValue: { direction: 'past', amount: 12, unit: 'day' } }
+          }
+        }}
       />
     )
 

@@ -1,13 +1,18 @@
 import type {
   CalendarExtent,
+  CalendarModeConfig,
+  CalendarRange,
   CalendarUnit,
+  CustomModeConfig,
   DateRangeV2Config,
   DateRangeV2Direction,
   DateRangeV2LabelConfig,
   DateRangeV2Mode,
   DateRangeV2Preset,
-  DateRangeV2Section,
   DateRangeV2TabDetail,
+  FixedRange,
+  RollingModeConfig,
+  RollingRange,
   RollingUnit,
   TimeZoneId,
   TimeZoneOptionList,
@@ -24,17 +29,20 @@ const DEFAULT_TIME_ZONE: TimeZoneId = 'UTC'
 export interface ResolvedRollingMode {
   allowAmount: boolean
   units: RollingUnit[]
-  defaultAmount: number
-  defaultUnit: RollingUnit
+  defaultValue: RollingRange
   maxAmount?: number
+}
+
+export interface ResolvedCustomMode {
+  allowTime: boolean
+  defaultValue?: FixedRange
 }
 
 export interface ResolvedCalendarMode {
   allowAmount: boolean
   units: CalendarUnit[]
   extents: CalendarExtent[]
-  defaultAmount: number
-  defaultUnit: CalendarUnit
+  defaultValue: CalendarRange
   maxAmount?: number
 }
 
@@ -52,9 +60,7 @@ export interface ResolvedDateRangeV2Config {
   }
   rolling: ResolvedRollingMode
   calendar: ResolvedCalendarMode
-  custom: {
-    allowTime: boolean
-  }
+  custom: ResolvedCustomMode
   label: Required<DateRangeV2LabelConfig>
   presets: DateRangeV2Preset[]
   calendarProps: DateRangeV2Config['calendarProps']
@@ -72,11 +78,6 @@ export const clampAmount = (amount: number, maxAmount?: number): number => {
   const next = Number.isInteger(amount) && amount >= 1 ? amount : 1
   return maxAmount !== undefined ? Math.min(next, maxAmount) : next
 }
-
-export const sectionForMode = (mode: DateRangeV2Mode): DateRangeV2Section => (mode === 'custom' ? 'fixed' : mode)
-
-export const modeForSection = (section: DateRangeV2Section): DateRangeV2Mode =>
-  section === 'fixed' ? 'custom' : section
 
 const PRESET_GROUPS = new Set<DateRangeV2Preset['group']>(['recommended', 'relative', 'calendar'])
 
@@ -98,9 +99,64 @@ const resolveModes = (
   modes: readonly DateRangeV2Mode[] | undefined,
   presets: DateRangeV2Preset[]
 ): DateRangeV2Mode[] => {
-  const withoutPresets = listed(modes, DEFAULT_MODES).filter(mode => mode !== 'presets')
-  if (presets.length === 0) return withoutPresets.length > 0 ? withoutPresets : DEFAULT_MODES
-  return ['presets', ...withoutPresets]
+  if (modes && modes.length > 0) return [...modes]
+  return presets.length > 0 ? ['presets', ...DEFAULT_MODES] : [...DEFAULT_MODES]
+}
+
+const CIVIL_DATE = /^\d{4}-\d{2}-\d{2}$/
+const CIVIL_TIME = /^([01]\d|2[0-3]):[0-5]\d$/
+
+const resolveRollingDefault = (
+  requested: RollingModeConfig['defaultValue'],
+  units: RollingUnit[],
+  maxAmount?: number
+): RollingRange => {
+  const fallbackUnit = units.includes('day') ? 'day' : units[0]
+  return {
+    kind: 'rolling',
+    direction: requested?.direction === 'future' ? 'future' : 'past',
+    unit: requested && units.includes(requested.unit) ? requested.unit : fallbackUnit,
+    amount: positiveAmount(requested?.amount, requested ? 1 : 7, maxAmount)
+  }
+}
+
+const resolveFixedDefault = (requested: CustomModeConfig['defaultValue']): FixedRange | undefined => {
+  if (!requested) return undefined
+  const { from, to } = requested
+  if (
+    !CIVIL_DATE.test(from.date) ||
+    !CIVIL_DATE.test(to.date) ||
+    !CIVIL_TIME.test(from.time) ||
+    !CIVIL_TIME.test(to.time)
+  ) {
+    return undefined
+  }
+  return { kind: 'fixed', from, to }
+}
+
+const resolveCalendarDefault = (
+  requested: CalendarModeConfig['defaultValue'],
+  units: CalendarUnit[],
+  extents: CalendarExtent[],
+  maxAmount?: number
+): CalendarRange => {
+  const unit =
+    requested && units.includes(requested.unit) ? requested.unit : units.includes('month') ? 'month' : units[0]
+  if (!requested || requested.position === 'current') {
+    const extent =
+      requested?.position === 'current' && extents.includes(requested.extent)
+        ? requested.extent
+        : extents.includes('full')
+          ? 'full'
+          : extents[0]
+    return { kind: 'calendar', position: 'current', unit, extent }
+  }
+  return {
+    kind: 'calendar',
+    position: requested.position,
+    unit,
+    amount: positiveAmount(requested.amount, 1, maxAmount)
+  }
 }
 
 export const resolveDateRangeV2Config = (config?: DateRangeV2Config): ResolvedDateRangeV2Config => {
@@ -110,8 +166,13 @@ export const resolveDateRangeV2Config = (config?: DateRangeV2Config): ResolvedDa
   const calendarUnits = listed(config?.modeConfig?.calendar?.units, DEFAULT_CALENDAR_UNITS)
   const rollingMax = config?.modeConfig?.rolling?.maxAmount
   const calendarMax = config?.modeConfig?.calendar?.maxAmount
-  const rollingDefaultUnit = config?.modeConfig?.rolling?.defaultUnit ?? 'day'
-  const calendarDefaultUnit = config?.modeConfig?.calendar?.defaultUnit ?? 'month'
+  const calendarExtents = listed(config?.modeConfig?.calendar?.extents, DEFAULT_EXTENTS)
+  const calendarDefaultValue = resolveCalendarDefault(
+    config?.modeConfig?.calendar?.defaultValue,
+    calendarUnits,
+    calendarExtents,
+    calendarMax
+  )
 
   return {
     modes: resolveModes(config?.modes, presets),
@@ -130,22 +191,19 @@ export const resolveDateRangeV2Config = (config?: DateRangeV2Config): ResolvedDa
     rolling: {
       allowAmount: config?.modeConfig?.rolling?.allowAmount ?? true,
       units: rollingUnits,
-      defaultAmount: positiveAmount(config?.modeConfig?.rolling?.defaultAmount, 7, rollingMax),
-      defaultUnit:
-        rollingDefaultUnit && rollingUnits.includes(rollingDefaultUnit) ? rollingDefaultUnit : rollingUnits[0],
+      defaultValue: resolveRollingDefault(config?.modeConfig?.rolling?.defaultValue, rollingUnits, rollingMax),
       maxAmount: rollingMax
     },
     calendar: {
       allowAmount: config?.modeConfig?.calendar?.allowAmount ?? true,
       units: calendarUnits,
-      extents: listed(config?.modeConfig?.calendar?.extents, DEFAULT_EXTENTS),
-      defaultAmount: positiveAmount(config?.modeConfig?.calendar?.defaultAmount, 1, calendarMax),
-      defaultUnit:
-        calendarDefaultUnit && calendarUnits.includes(calendarDefaultUnit) ? calendarDefaultUnit : calendarUnits[0],
+      extents: calendarExtents,
+      defaultValue: calendarDefaultValue,
       maxAmount: calendarMax
     },
     custom: {
-      allowTime: config?.modeConfig?.custom?.allowTime ?? true
+      allowTime: config?.modeConfig?.custom?.allowTime ?? true,
+      defaultValue: resolveFixedDefault(config?.modeConfig?.custom?.defaultValue)
     },
     label: {
       showTime: config?.label?.showTime ?? true,

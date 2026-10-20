@@ -1,0 +1,77 @@
+{
+  "$schema": "../../../contracts/pattern-manifest.schema.json",
+  "id": "canary.pattern.{pattern-kebab}",
+  "kind": "pattern",
+  "status": "draft",
+
+  "purpose": {
+    "summary": "[TK] One sentence: what the pattern shows and which components it composes.",
+    "useWhen": ["[TK] A situation, stated as what the data or the user is doing."],
+    "doNotUseWhen": ["[TK] A situation, and the pattern or component to use instead."]
+  },
+
+  "components": [
+    {
+      "export": "[TK] The component's code export, as in its manifest's code.export",
+      "manifest": "[TK] ../../components/<kebab>/<kebab>.manifest.json, or null with a path when it has no contract",
+      "role": "[TK] What this component does in the pattern"
+    }
+  ],
+
+  "anatomy": [
+    {
+      "slot": "[TK] camelCase slot name",
+      "fill": "[TK] A component export from components, or a plain element such as div[aria-live=polite]",
+      "required": true,
+      "props": { "[TK] prop name": ["[TK] values this pattern allows, all from the component's own values"] },
+      "rules": ["{PREFIX}-001"],
+      "notes": "[TK] Optional. Anything the slot needs that the rules do not say."
+    }
+  ],
+
+  "states": {
+    "source": "[TK] Optional, remove if the pattern has no states. The file and type the states come from",
+    "values": ["[TK] Each value, spelled exactly as in the source"],
+    "map": null,
+    "notes": "[TK] map stays null until Design decides what each state looks like. Say which rule or gap covers it."
+  },
+
+  "constraints": [
+    {
+      "when": "[TK] The situation",
+      "use": "[TK] What to use",
+      "instead": "[TK] Optional. What not to use",
+      "rule": "{PREFIX}-002",
+      "enforcedBy": "review"
+    }
+  ],
+
+  "figma": {
+    "fileKey": null,
+    "nodeId": null,
+    "notes": "Not identified yet ({PREFIX}-003). A Figma counterpart is expected."
+  },
+
+  "examples": {
+    "correct": [
+      {
+        "code": "[TK] JSX that follows every rule, using the components above",
+        "source": "[TK] Where it came from: a screen, a PR or a loop test, with a date"
+      }
+    ],
+    "incorrect": [
+      {
+        "code": "[TK] JSX that breaks a rule, ideally a real mistake",
+        "violates": ["{PREFIX}-001"],
+        "source": "[TK] Where it came from"
+      }
+    ]
+  },
+
+  "governance": {
+    "guide": "./{pattern-kebab}.guide.md",
+    "note": "Draft."
+  },
+
+  "knownGaps": [{ "summary": "A Figma counterpart is expected but not identified.", "rule": "{PREFIX}-003" }]
+}

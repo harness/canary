@@ -33,4 +33,4 @@ The pre-commit hook runs `ds:check` on staged contract files, and CI runs the sa
 
 - Never edit `agents/components/` or `agents/patterns/`. They are generated.
 - Never invent a token, prop, Figma property or rule. Write `[TK]` and ask.
-- Adding a contract: see [`contracts/README.md`](contracts/README.md) and [`contracts/COMPONENT_CHECKLIST.md`](contracts/COMPONENT_CHECKLIST.md).
+- Adding a contract: see [`contracts/README.md`](contracts/README.md) and [`contracts/COMPONENT_CHECKLIST.md`](contracts/COMPONENT_CHECKLIST.md). For a pattern, use [`contracts/PATTERN_CHECKLIST.md`](contracts/PATTERN_CHECKLIST.md).

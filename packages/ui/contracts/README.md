@@ -7,7 +7,7 @@ Each component that agents may use gets two files next to its source:
 
 The manifest points to its guide through `governance.guide`, and the guide points back through `manifest`. StatusBadge (`src/components/status-badge/`) is the reference example.
 
-A pattern gets the same pair in `src/patterns/<kebab>/`. Its manifest uses `pattern-manifest.schema.json` and names the components it composes; its guide uses `component-guide.schema.json`. ExecutionStatus (`src/patterns/execution-status/`) is the example. `pnpm ds:scaffold` writes component contracts only.
+A pattern gets the same pair in `src/patterns/<kebab>/`. Its manifest uses `pattern-manifest.schema.json` and names the components it composes; its guide uses `component-guide.schema.json`. ExecutionStatus (`src/patterns/execution-status/`) is the example. `pnpm ds:scaffold --pattern` writes one, and `PATTERN_CHECKLIST.md` says how to fill it.
 
 ## Add a contract
 
@@ -24,6 +24,12 @@ pnpm ds:validate
 ```
 
 A freshly scaffolded contract fails validation until every `[TK]` is replaced. That is intended.
+
+For a pattern, register its PascalCase name and pass `--pattern`. The files go to `src/patterns/<kebab>/`. Fill them using `PATTERN_CHECKLIST.md`.
+
+```bash
+pnpm ds:scaffold MyPattern --prefix MYP --pattern
+```
 
 When it passes, regenerate the agent references and run every check for the component:
 
@@ -53,7 +59,7 @@ pnpm ds:check MyComponent
 - Bindings cover shared props and agree with `variantPropertyMap`.
 - Examples obey the props and constraints.
 - Waivers in `knownGaps[].waives` still match a finding.
-- For a pattern: each listed component has a manifest whose export matches, or a source path that exists. Anatomy prop values are a subset of the component's. `states.map` keys are listed in `states.values`. Every rule ref is in the pattern guide or one of its component guides, and a retired ref names its replacement.
+- For a pattern: each listed component has a manifest whose export matches, or a source path that exists. Anatomy prop values are a subset of the component's. `states.map` keys are listed in `states.values`. Every rule ref is in the pattern guide or one of its component guides, and a retired ref names its replacement. Examples are checked against the components' props, constraints and lint rules and the pattern's slot narrowing; an incorrect example must break each rule it cites that can be checked automatically.
 
 It does not check Figma itself, runtime default values, or the meaning of rule prose.
 
@@ -75,4 +81,4 @@ Never edit files in `agents/components/` or `agents/patterns/` by hand. Edit the
 
 ## Templates
 
-`TEMPLATE.manifest.json` and `TEMPLATE.guide.md` use `{ComponentName}`, `{component-kebab}` and `{PREFIX}` placeholders that the scaffolder fills. The template's `$schema` path is relative to `src/components/<kebab>/`, not to this folder.
+`TEMPLATE.manifest.json` and `TEMPLATE.guide.md` use `{ComponentName}`, `{component-kebab}` and `{PREFIX}` placeholders that the scaffolder fills. `TEMPLATE.pattern.manifest.json` and `TEMPLATE.pattern.guide.md` use `{PatternName}`, `{pattern-kebab}` and `{PREFIX}`. Each template's `$schema` path is relative to where the scaffolder writes it, not to this folder. HTML comments in a guide hold notes for authors and never reach the agent reference.

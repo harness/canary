@@ -22,7 +22,13 @@ gaps:
 
 # {ComponentName} Guide
 
-Rules for when and how to use `{ComponentName}`. The front matter above is the only source for each rule's id, title, status, tier and check. Headings below repeat the id and title exactly and carry prose only. The component API (props, variants, defaults, tokens) lives in `{component-kebab}.manifest.json`.
+<!--
+Notes for authors. Comments like this one never reach the agent reference.
+
+The front matter above is the only source for each rule's id, title, status, tier and check. Headings below repeat the id and title exactly and carry prose only.
+-->
+
+Rules for when and how to use `{ComponentName}`. The component API (props, variants, defaults, tokens) lives in `{component-kebab}.manifest.json`.
 
 ## Architecture: Do's and Do Not's
 

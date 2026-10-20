@@ -7,10 +7,11 @@
  * Unknown values are left as [TK] for a person to fill in.
  */
 
-import { existsSync, mkdirSync, readdirSync, readFileSync, writeFileSync } from 'node:fs'
+import { existsSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs'
 import { join, relative, resolve } from 'node:path'
 
-import { parseGuide } from './lib/guide.ts'
+import { parseRegistry } from './lib/registry.ts'
+import { REGISTRY_PATH } from './lib/validate.ts'
 
 const PACKAGE_ROOT = resolve(import.meta.dirname, '../..')
 const CONTRACTS_DIR = join(PACKAGE_ROOT, 'contracts')
@@ -39,19 +40,13 @@ const parseArgs = (argv: string[]): Args | string => {
 
 const toKebab = (name: string): string => name.replace(/([a-z0-9])([A-Z])/g, '$1-$2').toLowerCase()
 
-const findGuides = (dir: string): string[] =>
-  readdirSync(dir, { withFileTypes: true }).flatMap(entry => {
-    const path = join(dir, entry.name)
-    if (entry.isDirectory()) return findGuides(path)
-    return entry.name.endsWith('.guide.md') ? [path] : []
-  })
-
-const prefixOwner = (prefix: string, kebab: string): string | undefined =>
-  findGuides(COMPONENTS_DIR).find(path => {
-    if (path.endsWith(`${kebab}.guide.md`)) return false
-    const { frontMatter } = parseGuide(readFileSync(path, 'utf8'))
-    return (frontMatter as { prefix?: unknown } | undefined)?.prefix === prefix
-  })
+const registryProblem = (prefix: string, name: string): string | undefined => {
+  const registryFile = relative(PACKAGE_ROOT, REGISTRY_PATH)
+  const entry = parseRegistry(readFileSync(REGISTRY_PATH, 'utf8')).entries.get(prefix)
+  if (!entry) return `Prefix ${prefix} is not in ${registryFile}. Add a row for ${name} first.`
+  if (entry.component !== name) return `Prefix ${prefix} is registered to ${entry.component} in ${registryFile}.`
+  return undefined
+}
 
 const fill = (template: string, args: Args, kebab: string): string =>
   template
@@ -66,12 +61,13 @@ const main = (): number => {
     return 1
   }
 
-  const kebab = toKebab(args.name)
-  const owner = prefixOwner(args.prefix, kebab)
-  if (owner) {
-    console.error(`Prefix ${args.prefix} is already used by ${relative(PACKAGE_ROOT, owner)}`)
+  const problem = registryProblem(args.prefix, args.name)
+  if (problem) {
+    console.error(problem)
     return 1
   }
+
+  const kebab = toKebab(args.name)
 
   const dir = join(COMPONENTS_DIR, kebab)
   const outputs = [

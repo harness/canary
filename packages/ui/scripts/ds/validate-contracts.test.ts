@@ -16,7 +16,13 @@ const GUIDE_SOURCE = readFileSync(GUIDE_PATH, 'utf8')
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 type Json = any
 
-const run = (mutateManifest: (m: Json) => void = () => {}, guideSource: string = GUIDE_SOURCE): Finding[] => {
+const REGISTRY_SOURCE = readFileSync(resolve(REPO_ROOT, 'packages/ui/contracts/rule-ids.md'), 'utf8')
+
+const run = (
+  mutateManifest: (m: Json) => void = () => {},
+  guideSource: string = GUIDE_SOURCE,
+  registrySource: string = REGISTRY_SOURCE
+): Finding[] => {
   const manifest = JSON.parse(MANIFEST_SOURCE)
   mutateManifest(manifest)
   return validateContract({
@@ -24,7 +30,8 @@ const run = (mutateManifest: (m: Json) => void = () => {}, guideSource: string =
     manifestPath: MANIFEST_PATH,
     manifest,
     guidePath: GUIDE_PATH,
-    guideSource
+    guideSource,
+    registrySource
   })
 }
 
@@ -149,7 +156,7 @@ describe('validate-contracts: StatusBadge', () => {
       ],
       [
         'types check target not exported',
-        replaceOnce(GUIDE_SOURCE, 'check: types:StatusBadgeProps', 'check: types:StatusBadgeNope'),
+        replaceOnce(GUIDE_SOURCE, '- types:StatusBadgeProps', '- types:StatusBadgeNope'),
         'check-target:SBD-004:types:StatusBadgeNope'
       ],
       [
@@ -167,6 +174,11 @@ describe('validate-contracts: StatusBadge', () => {
         'check-target:SBD-005:test:packages/ui/nope.test.ts#renders'
       ],
       [
+        'test check names a test that does not exist',
+        replaceOnce(GUIDE_SOURCE, '#SBD-004 renders a non-interactive indicator', '#SBD-004 renders a button'),
+        'check-target:SBD-004:test:'
+      ],
+      [
         'depends_on unknown rule',
         replaceOnce(GUIDE_SOURCE, 'depends_on: [SBD-014, SBD-015]', 'depends_on: [SBD-014, SBD-097]'),
         'rule-unknown:SBD-097'
@@ -182,11 +194,7 @@ describe('validate-contracts: StatusBadge', () => {
       ],
       [
         'front matter schema: bad check syntax',
-        replaceOnce(
-          GUIDE_SOURCE,
-          'check: types:StatusBadgeProps\n  - id: SBD-005',
-          'check: typescript\n  - id: SBD-005'
-        ),
+        replaceOnce(GUIDE_SOURCE, '- types:StatusBadgeProps', '- typescript'),
         'schema:guide/rules/3/check'
       ]
     ]
@@ -194,6 +202,31 @@ describe('validate-contracts: StatusBadge', () => {
     it.each(cases)('%s', (_name, guideSource, expected) => {
       const keys = errorKeys(run(undefined, guideSource))
       expect(keys.some(key => key.startsWith(expected))).toBe(true)
+    })
+  })
+
+  describe('broken prefix registry', () => {
+    const cases: [string, string, string][] = [
+      [
+        'prefix not registered',
+        replaceOnce(REGISTRY_SOURCE, '| SBD    | StatusBadge |', '| XYZ    | StatusBadge |'),
+        'prefix-unregistered:SBD'
+      ],
+      [
+        'prefix registered to another component',
+        replaceOnce(REGISTRY_SOURCE, '| SBD    | StatusBadge |', '| SBD    | Tag         |'),
+        'prefix-owner:SBD'
+      ],
+      [
+        'rule ID is retired',
+        replaceOnce(REGISTRY_SOURCE, '| StatusBadge |         |', '| StatusBadge | SBD-016 |'),
+        'rule-retired:SBD-016'
+      ],
+      ['prefix listed twice', `${REGISTRY_SOURCE}| SBD    | Tag         |         |\n`, 'registry-duplicate:SBD']
+    ]
+
+    it.each(cases)('%s', (_name, registrySource, expected) => {
+      expect(errorKeys(run(undefined, GUIDE_SOURCE, registrySource))).toContain(expected)
     })
   })
 })

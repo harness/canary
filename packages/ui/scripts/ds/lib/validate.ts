@@ -7,6 +7,7 @@ import { effectiveValue, matchesValue, parseUsages, type JsxUsage } from './exam
 import { finding, type Finding } from './findings.ts'
 import { parseGuide, type ParsedGuide } from './guide.ts'
 import { readPropsType, type PropsTypeInfo, type TypeProp } from './props-type.ts'
+import { parseRegistry, type Registry } from './registry.ts'
 import { buildTokenIndex } from './tokens.ts'
 
 type PropValue = string | number | boolean | (string | number | boolean)[]
@@ -60,10 +61,12 @@ export interface ContractInput {
   manifest: unknown
   guidePath: string
   guideSource: string
+  registrySource?: string
 }
 
 const SCHEMA_DIR = resolve(import.meta.dirname, '../../../contracts')
 const PACKAGE_TSCONFIG = resolve(import.meta.dirname, '../../../tsconfig.json')
+export const REGISTRY_PATH = join(SCHEMA_DIR, 'rule-ids.md')
 
 let validators: { manifest: ValidateFunction; guide: ValidateFunction } | undefined
 
@@ -119,10 +122,6 @@ const checkGuide = (
     if (ids.has(rule.id))
       out.push(finding('rule-duplicate', rule.id, guideFile, `/rules/${index}/id`, `${rule.id} is defined twice.`))
     ids.set(rule.id, rule.title)
-    if (!rule.id.startsWith(`${frontMatter.prefix}-`))
-      out.push(
-        finding('rule-prefix', rule.id, guideFile, `/rules/${index}/id`, `Expected prefix ${frontMatter.prefix}.`)
-      )
   })
   ;(frontMatter.gaps ?? []).forEach((gap, index) => {
     if (ids.has(gap.id))
@@ -231,6 +230,9 @@ const checkGuide = (
   return out
 }
 
+const testNames = (source: string): Set<string> =>
+  new Set([...source.matchAll(/\b(?:it|test)(?:\.\w+)?\(\s*(['"`])(.+?)\1/g)].map(match => match[2]))
+
 const checkTargets = (
   frontMatter: GuideFrontMatter,
   manifest: Manifest,
@@ -260,7 +262,7 @@ const checkTargets = (
         const [path, name] = [target.slice(0, target.indexOf('#')), target.slice(target.indexOf('#') + 1)]
         const absolute = join(ctx.repoRoot, path)
         if (!existsSync(absolute)) return fail(`Test file ${path} does not exist.`)
-        if (!readFileSync(absolute, 'utf8').includes(name)) fail(`Test '${name}' not found in ${path}.`)
+        if (!testNames(readFileSync(absolute, 'utf8')).has(name)) fail(`Test '${name}' not found in ${path}.`)
         return
       }
       if (kind === 'lint') {
@@ -676,6 +678,70 @@ const applyWaivers = (findings: Finding[], manifest: Manifest, manifestFile: str
  * Validates one manifest and its paired guide. Pure apart from reading the
  * component source, token source and check targets from disk.
  */
+const checkRegistry = (
+  registry: Registry,
+  frontMatter: GuideFrontMatter,
+  manifest: Manifest,
+  ctx: { guideFile: string; registryFile: string }
+): Finding[] => {
+  const out: Finding[] = []
+  const { guideFile, registryFile } = ctx
+  const component = manifest.code.export
+
+  for (const dup of registry.duplicates)
+    out.push(finding('registry-duplicate', dup.prefix, registryFile, `L${dup.line}`, `${dup.prefix} is listed twice.`))
+
+  const others = [...registry.entries.values()].filter(
+    e => e.component === component && e.prefix !== frontMatter.prefix
+  )
+  for (const other of others)
+    out.push(
+      finding(
+        'registry-component',
+        `${component}:${other.prefix}`,
+        registryFile,
+        `L${other.line}`,
+        `${component} is also registered under ${other.prefix}.`
+      )
+    )
+
+  const entry = registry.entries.get(frontMatter.prefix)
+  if (!entry) {
+    out.push(
+      finding(
+        'prefix-unregistered',
+        frontMatter.prefix,
+        guideFile,
+        '/prefix',
+        `${frontMatter.prefix} is not in ${registryFile}.`
+      )
+    )
+    return out
+  }
+  if (entry.component !== component)
+    out.push(
+      finding(
+        'prefix-owner',
+        frontMatter.prefix,
+        guideFile,
+        '/prefix',
+        `${frontMatter.prefix} is registered to ${entry.component}, not ${component}.`
+      )
+    )
+
+  const ids = [
+    ...frontMatter.rules.map((rule, index) => ({ id: rule.id, path: `/rules/${index}/id` })),
+    ...(frontMatter.gaps ?? []).map((gap, index) => ({ id: gap.id, path: `/gaps/${index}/id` }))
+  ]
+  for (const { id, path } of ids) {
+    if (entry.retired.includes(id))
+      out.push(finding('rule-retired', id, guideFile, path, `${id} is retired in ${registryFile}.`))
+    if (!id.startsWith(`${frontMatter.prefix}-`))
+      out.push(finding('rule-prefix', id, guideFile, path, `Expected prefix ${frontMatter.prefix}.`))
+  }
+  return out
+}
+
 const placeholderFindings = (source: string, file: string, label: string): Finding[] => {
   const count = source.split('[TK]').length - 1
   if (count === 0) return []
@@ -723,6 +789,12 @@ export const validateContract = (input: ContractInput): Finding[] => {
 
   out.push(
     ...checkGuide(guide, frontMatter, { guideFile, manifestPath: input.manifestPath, guidePath: input.guidePath }),
+    ...checkRegistry(
+      parseRegistry(input.registrySource ?? readFileSync(REGISTRY_PATH, 'utf8')),
+      frontMatter,
+      manifest,
+      { guideFile, registryFile: relative(repoRoot, REGISTRY_PATH) }
+    ),
     ...checkTargets(frontMatter, manifest, { repoRoot, guideFile, propsInfo }),
     ...checkRuleRefs(manifest, ruleIds, manifestFile),
     ...checkProps(manifest, propsInfo, manifestFile),

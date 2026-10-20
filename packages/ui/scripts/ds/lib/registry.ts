@@ -2,7 +2,7 @@ export interface RegistryEntry {
   prefix: string
   component: string
   retired: string[]
-  /** Retired ID -> the ID that replaced it, written as 'SBD-005 (EXS-001)' in the Retired column. */
+  /** Retired ID -> the ID that replaced it, written as 'SBD-005 (SBP-001)' in the Retired column. */
   replacedBy: Map<string, string>
   line: number
 }

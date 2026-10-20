@@ -10,7 +10,7 @@
     "ruleId": {
       "type": "string",
       "pattern": "^[A-Z]{2,5}-\\d{3}$",
-      "description": "Rule ID from this pattern's guide or from a component guide, e.g. 'EXS-001' or 'SBD-006'."
+      "description": "Rule ID from this pattern's guide or from a component guide, e.g. 'SBP-001' or 'SBD-006'."
     },
     "ruleIds": {
       "type": "array",

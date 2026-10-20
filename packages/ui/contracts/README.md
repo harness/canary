@@ -7,7 +7,7 @@ Each component that agents may use gets two files next to its source:
 
 The manifest points to its guide through `governance.guide`, and the guide points back through `manifest`. StatusBadge (`src/components/status-badge/`) is the reference example.
 
-A pattern gets the same pair in `src/patterns/<kebab>/`. Its manifest uses `pattern-manifest.schema.json` and names the components it composes; its guide uses `component-guide.schema.json`. ExecutionStatus (`src/patterns/execution-status/`) is the example. `pnpm ds:scaffold --pattern` writes one, and `PATTERN_CHECKLIST.md` says how to fill it.
+A pattern gets the same pair in `src/patterns/<kebab>/`. Its manifest uses `pattern-manifest.schema.json` and names the components it composes; its guide uses `component-guide.schema.json`. StatusBadgePattern (`src/patterns/status-badge-pattern/`) is the example. `pnpm ds:scaffold --pattern` writes one, and `PATTERN_CHECKLIST.md` says how to fill it.
 
 ## Add a contract
 

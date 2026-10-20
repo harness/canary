@@ -14,4 +14,4 @@ Patterns compose several components into one screen element. Read the pattern be
 
 | Pattern | Use for | Reference |
 | ------- | ------- | --------- |
-| ExecutionStatus | Show the state of a pipeline execution (a run, a stage or a step) as one badge that announces its changes. | [../patterns/execution-status.md](../patterns/execution-status.md) |
+| StatusBadgePattern | Show the state of a pipeline execution (a run, a stage or a step) as one badge that announces its changes. | [../patterns/status-badge-pattern.md](../patterns/status-badge-pattern.md) |

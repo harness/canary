@@ -32,7 +32,7 @@ export const toPascal = (kebab: string): string =>
     .map(part => part.charAt(0).toUpperCase() + part.slice(1))
     .join('')
 
-/** A pattern's name: the PascalCase form of the last segment of its id, e.g. canary.pattern.execution-status -> ExecutionStatus. */
+/** A pattern's name: the PascalCase form of the last segment of its id, e.g. canary.pattern.status-badge-pattern -> StatusBadgePattern. */
 export const patternName = (id: string): string => toPascal(id.split('.').pop() ?? id)
 
 export const kebabOf = (manifestPath: string): string => basename(manifestPath, '.manifest.json')

@@ -23,7 +23,7 @@ Run from `packages/ui`:
 
 | Command | When |
 | ------- | ---- |
-| `pnpm ds:check <Component>` | After editing a component, its manifest or its guide. Runs the validator, the reference staleness check and the component's rule tests. A pattern name, such as `ExecutionStatus`, works too. |
+| `pnpm ds:check <Component>` | After editing a component, its manifest or its guide. Runs the validator, the reference staleness check and the component's rule tests. A pattern name, such as `StatusBadgePattern`, works too. |
 | `pnpm ds:generate` | After editing a manifest or guide. Commit the output. |
 | `pnpm typecheck` | Also needed: some rules are enforced by `@ts-expect-error` lines that only the type checker reads. |
 

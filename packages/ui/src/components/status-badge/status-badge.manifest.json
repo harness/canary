@@ -40,10 +40,10 @@
     ],
     "doNotUseWhen": [
       "Value is a stable attribute describing what a thing is — use Tag instead.",
-      "Multiple statuses apply to the same object — show one badge with the most urgent status (EXS-001).",
+      "Multiple statuses apply to the same object — show one badge with the most urgent status (SBP-001).",
       "Badge needs to be interactive — use Tag's interactive props.",
       "Need open/uncontrolled color palette — use Tag's 15-color palette.",
-      "Need to combine two statuses (e.g. 'Error, Pending') — pick the most urgent. Don't render a second badge (EXS-001)."
+      "Need to combine two statuses (e.g. 'Error, Pending') — pick the most urgent. Don't render a second badge (SBP-001)."
     ]
   },
 
@@ -168,7 +168,7 @@
 
   "accessibility": {
     "keyboardSupport": false,
-    "notes": "Non-interactive by design: role, aria-readonly, tabIndex, onClick and color are omitted from props. All semantic meaning lives in children text. No built-in aria-live; callers must wrap with aria-live=polite for live-changing status. See EXS-003 in the execution-status pattern."
+    "notes": "Non-interactive by design: role, aria-readonly, tabIndex, onClick and color are omitted from props. All semantic meaning lives in children text. No built-in aria-live; callers must wrap with aria-live=polite for live-changing status. See SBP-003 in the status badge pattern."
   },
 
   "bindings": [
@@ -242,7 +242,7 @@
 
   "governance": {
     "guide": "./status-badge.guide.md",
-    "note": "Pattern decisions (StatusBadge vs Tag), accessibility gaps, pipeline-icon conventions: see SBD-001 through SBD-018 in the guide, less the four retired in favor of the execution-status pattern. Most rules are 'proposed' or 'open'. Treat them as context until ratified.",
+    "note": "Pattern decisions (StatusBadge vs Tag), accessibility gaps, pipeline-icon conventions: see SBD-001 through SBD-018 in the guide, less the four retired in favor of the status badge pattern. Most rules are 'proposed' or 'open'. Treat them as context until ratified.",
     "tokenStatus": "All refs exist in packages/core-design-system/design-tokens (validator check, 2026-10-20). Refs cover the primary variant colors only. See knownGaps."
   },
 

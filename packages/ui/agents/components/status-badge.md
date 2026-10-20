@@ -14,7 +14,7 @@ Visual indicator for a transient, system-driven state. Uses a closed, evaluative
 
 Rules for choosing between StatusBadge and Tag, and for StatusBadge's own API constraints. Rules are `proposed` (likely stable) or `open` (needs verification or resolution). Treat them as context, not settled policy, until Design ratifies them. The component API (props, variants, defaults, tokens) lives in `status-badge.manifest.json`.
 
-Four rules moved to the execution-status pattern (`src/patterns/execution-status/`): SBD-005 is now EXS-001, SBD-008 is EXS-003, SBD-014 is EXS-002 and SBD-015 is EXS-004. Those IDs are retired. Read that pattern when a badge shows the state of a pipeline execution or a state that can change while visible.
+Four rules moved to the status badge pattern (`src/patterns/status-badge-pattern/`): SBD-005 is now SBP-001, SBD-008 is SBP-003, SBD-014 is SBP-002 and SBD-015 is SBP-004. Those IDs are retired. Read that pattern when a badge shows the state of a pipeline execution or a state that can change while visible.
 
 ## Use when
 
@@ -26,14 +26,14 @@ Four rules moved to the execution-status pattern (`src/patterns/execution-status
 ## Do not use when
 
 - Value is a stable attribute describing what a thing is — use Tag instead.
-- Multiple statuses apply to the same object — show one badge with the most urgent status (EXS-001).
+- Multiple statuses apply to the same object — show one badge with the most urgent status (SBP-001).
 - Badge needs to be interactive — use Tag's interactive props.
 - Need open/uncontrolled color palette — use Tag's 15-color palette.
-- Need to combine two statuses (e.g. 'Error, Pending') — pick the most urgent. Don't render a second badge (EXS-001).
+- Need to combine two statuses (e.g. 'Error, Pending') — pick the most urgent. Don't render a second badge (SBP-001).
 
 ## Used in patterns
 
-- [ExecutionStatus](../patterns/execution-status.md): read it before composing StatusBadge with other components.
+- [StatusBadgePattern](../patterns/status-badge-pattern.md): read it before composing StatusBadge with other components.
 
 ## Props
 
@@ -64,10 +64,10 @@ Figma-only properties, with no code prop: `state`.
 
 - Use StatusBadge for _transient, system-driven state_ that changes automatically (pending → active → closed).
 - Pass `children` text always — text is mandatory and conveys all semantic meaning.
-- Wrap with `aria-live="polite"` when status can change while visible (connectivity, job progress, etc.). (EXS-003)
+- Wrap with `aria-live="polite"` when status can change while visible (connectivity, job progress, etc.). (SBP-003)
 - Default to `outline` variant absent a specific reason to pick `primary`, `secondary`, `ghost`, or `status`.
 - Use the fixed icon table (check-circle/xmark-circle/timer/pause/prohibition/warning-circle) for Pass/Fail/Pending meanings across any domain.
-- Render one StatusBadge per object — pick the most urgent status if multiple apply. (EXS-001)
+- Render one StatusBadge per object — pick the most urgent status if multiple apply. (SBP-001)
 
 ### Do Not's
 
@@ -75,16 +75,16 @@ Figma-only properties, with no code prop: `state`.
 - Don't pass `icon` when `variant='status'` — the indicator dot already occupies that slot.
 - Don't pass `pulse` on variants other than `'status'` — pulse only works with the status variant.
 - Don't recreate pulse with `className` (for example `animate-pulse` or `motion-safe:animate-pulse`) on any variant. A badge gets an icon or a pulse, never both. If it needs to pulse, use `variant='status'` with `pulse` and drop the icon. Lint rejects any `animate-*` class on StatusBadge. Incorrect: `<StatusBadge variant="outline" theme="success" icon="check-circle" className="motion-safe:animate-pulse">Running</StatusBadge>`. (SBD-007)
-- Don't put two statuses in one badge ("Error, Pending"), and don't show a second badge for the same object. Pick the most urgent. (EXS-001)
+- Don't put two statuses in one badge ("Error, Pending"), and don't show a second badge for the same object. Pick the most urgent. (SBP-001)
 - Don't rely on color or icon alone to convey meaning — text is mandatory.
 - Don't add `role`, `tabIndex`, `onClick`, or `aria-readonly` at the call site — they're explicitly stripped from props. StatusBadge is non-interactive by design.
-- Don't use `info`, `merged`, or `risk` themes for generic Pass/Fail/Pending indicators — restrict to `success`, `warning`, `danger`, `muted`. Reserve `info`/`merged`/`risk` for named, non-execution exceptions (e.g., "Merged" PR badge). (SBD-018, EXS-002)
+- Don't use `info`, `merged`, or `risk` themes for generic Pass/Fail/Pending indicators — restrict to `success`, `warning`, `danger`, `muted`. Reserve `info`/`merged`/`risk` for named, non-execution exceptions (e.g., "Merged" PR badge). (SBD-018, SBP-002)
 
 ## Accessibility
 
 Keyboard support: none.
 
-Non-interactive by design: role, aria-readonly, tabIndex, onClick and color are omitted from props. All semantic meaning lives in children text. No built-in aria-live; callers must wrap with aria-live=polite for live-changing status. See EXS-003 in the execution-status pattern.
+Non-interactive by design: role, aria-readonly, tabIndex, onClick and color are omitted from props. All semantic meaning lives in children text. No built-in aria-live; callers must wrap with aria-live=polite for live-changing status. See SBP-003 in the status badge pattern.
 
 ## Tokens
 
@@ -158,7 +158,7 @@ Some values don't resolve cleanly from SBD-002 and have been called out explicit
 - **Account type/tier** (Free/Pro/Enterprise) — a ranked category. Treat as `Tag`, though it can borrow badge-like visual weight; consider a distinct "plan chip" variant if this recurs.
 - **Scope** (Public/Private/Internal) — not evaluative, but affects what a user can do. Best as `Tag` with an icon (lock/globe), not color-coded like a status.
 - **Marketing labels** ("Beta", "New") — informational `Tag`s; no lifecycle within the object's own state machine.
-- **Connectivity** (online/offline/reconnecting) — IS a `StatusBadge`: system-driven, evaluative, mutually exclusive, real lifecycle transitions. Usually needs an `aria-live` wrapper (EXS-003 in the execution-status pattern) since it can change while the user is looking at the screen.
+- **Connectivity** (online/offline/reconnecting) — IS a `StatusBadge`: system-driven, evaluative, mutually exclusive, real lifecycle transitions. Usually needs an `aria-live` wrapper (SBP-003 in the status badge pattern) since it can change while the user is looking at the screen.
 
 ### SBD-004 — StatusBadge is an indicator, not a button
 

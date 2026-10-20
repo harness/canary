@@ -1,6 +1,6 @@
 # Pattern Contract Checklist
 
-Use this when writing a pattern: the rules for composing components on one kind of screen. A pattern is two files in `src/patterns/<kebab>/`. The manifest holds the structure (which components, which slots, which props each slot allows, examples). The guide holds the rules and why they exist. ExecutionStatus (`src/patterns/execution-status/`) is the worked example throughout.
+Use this when writing a pattern: the rules for composing components on one kind of screen. A pattern is two files in `src/patterns/<kebab>/`. The manifest holds the structure (which components, which slots, which props each slot allows, examples). The guide holds the rules and why they exist. StatusBadgePattern (`src/patterns/status-badge-pattern/`) is the worked example throughout.
 
 Items marked **(validator)** are checked by `pnpm ds:validate`; the rest need a person. The templates (`TEMPLATE.pattern.manifest.json` and `TEMPLATE.pattern.guide.md`) carry the same guidance in place, as `[TK]` hints and HTML comments. Comments never reach the agent reference, so you can keep them or delete them.
 
@@ -8,11 +8,11 @@ Items marked **(validator)** are checked by `pnpm ds:validate`; the rest need a 
 
 - [ ] The rule is about how components combine on a screen, not about one component's props. "Wrap the badge in a live region" is a pattern rule. "StatusBadge needs a text label" is a component rule.
 - [ ] The rule would apply to more than one screen. A one-off layout is not a pattern.
-- [ ] If a component guide already holds a composition rule, move it here instead of copying it. Retire the old ID with its replacement in `rule-ids.md`, such as `SBD-005 (EXS-001)`.
+- [ ] If a component guide already holds a composition rule, move it here instead of copying it. Retire the old ID with its replacement in `rule-ids.md`, such as `SBD-005 (SBP-001)`.
 
 ## 1. Scaffold
 
-- [ ] Pick a prefix of 2 to 5 capital letters and add a row to `contracts/rule-ids.md`. The Component column holds the pattern's name in PascalCase, such as `ExecutionStatus`. Never reuse a prefix or an ID.
+- [ ] Pick a prefix of 2 to 5 capital letters and add a row to `contracts/rule-ids.md`. The Component column holds the pattern's name in PascalCase, such as `StatusBadgePattern`. Never reuse a prefix or an ID.
 - [ ] Run `pnpm ds:scaffold <PatternName> --prefix <PREFIX> --pattern` from `packages/ui`. It writes both files from the templates. **(scaffolder)**
 - [ ] The prefix is registered to this pattern name. **(scaffolder, validator)**
 
@@ -20,8 +20,8 @@ Items marked **(validator)** are checked by `pnpm ds:validate`; the rest need a 
 
 **purpose**
 
-- [ ] `summary` is one sentence naming what the screen shows and which components it uses. ExecutionStatus: "Show the state of a pipeline execution (a run, a stage or a step) as one badge that announces its changes."
-- [ ] Each `useWhen` describes the data or the situation, not the component. ExecutionStatus: "The value is an ExecutionState from src/types/execution.ts."
+- [ ] `summary` is one sentence naming what the screen shows and which components it uses. StatusBadgePattern: "Show the state of a pipeline execution (a run, a stage or a step) as one badge that announces its changes."
+- [ ] Each `useWhen` describes the data or the situation, not the component. StatusBadgePattern: "The value is an ExecutionState from src/types/execution.ts."
 - [ ] Each `doNotUseWhen` names what to use instead and cites the rule: "The value is a stable attribute, not a state. Use Tag (SBD-001)."
 
 **components**
@@ -35,7 +35,7 @@ Items marked **(validator)** are checked by `pnpm ds:validate`; the rest need a 
 - [ ] One slot per part of the composition. `slot` is a camelCase name such as `badge` or `liveRegion`. **(validator)**
 - [ ] `fill` is a component export from `components`, or a plain element such as `div[aria-live=polite]`.
 - [ ] `required` is `true`, `false`, or a short condition: "when the state can change while visible".
-- [ ] `props` lists only the values this pattern allows for a prop, when it narrows the component. ExecutionStatus allows four of StatusBadge's themes. Every value must exist on the component. **(validator)**
+- [ ] `props` lists only the values this pattern allows for a prop, when it narrows the component. StatusBadgePattern allows four of StatusBadge's themes. Every value must exist on the component. **(validator)**
 - [ ] `rules` lists every rule that governs the slot, from this guide or a component guide. **(validator: each ID exists)**
 
 **states** (remove if the pattern has none)
@@ -93,7 +93,7 @@ Items marked **(validator)** are checked by `pnpm ds:validate`; the rest need a 
 
 - [ ] Each gap gets a `### PREFIX-NNN — Title` heading under `## Known gaps`. **(validator)**
 - [ ] An open gap's title starts "Open:". It names what is unresolved, the evidence on each side and who decides.
-- [ ] When a gap is decided, set its status to `resolved`, retitle it "Resolved: ...", and start the body with "Decided by <name>, <YYYY-MM-DD>." followed by the decision. Then update the rules and the manifest to match. EXS-009 is an example.
+- [ ] When a gap is decided, set its status to `resolved`, retitle it "Resolved: ...", and start the body with "Decided by <name>, <YYYY-MM-DD>." followed by the decision. Then update the rules and the manifest to match. SBP-009 is an example.
 
 ## 4. Before you commit
 

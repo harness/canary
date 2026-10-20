@@ -1,0 +1,319 @@
+{
+  "$schema": "../../../contracts/component-manifest.schema.json",
+  "id": "canary.status-badge",
+  "status": "beta",
+
+  "code": {
+    "package": "@harnessio/ui",
+    "export": "StatusBadge",
+    "import": "import { StatusBadge } from '@harnessio/ui/components'",
+    "path": "packages/ui/src/components/status-badge/status-badge.tsx",
+    "propsType": "StatusBadgeProps"
+  },
+
+  "figma": {
+    "library": "HDS | Components 3.0",
+    "fileKey": "AIgjIyUzcuZzuVnuoOyhQE",
+    "name": "StatusBadge",
+    "exampleNodeId": "1293:5995",
+    "codeConnect": "packages/ui/src/components/status-badge/status-badge.figma.ts",
+    "componentSetKey": null,
+    "variantPropertyMap": {
+      "variant": "variant",
+      "size": "size",
+      "theme": "theme",
+      "icon": "viewIcon#1293:13",
+      "children": "textString#1299:25"
+    },
+    "publishStatus": "published",
+    "lastVerified": "2026-10-20",
+    "enforceSync": true
+  },
+
+  "purpose": {
+    "summary": "Visual indicator for a transient, system-driven state. Uses a closed, evaluative semantic palette (muted/success/warning/danger/info/merged/risk), never an open categorical one. See status-badge.guide.md SBD-001/002 for when to choose StatusBadge vs Tag.",
+    "useWhen": [
+      "Value is a state that changes automatically (pending → active → closed).",
+      "Color implies judgment (good/bad/neutral/waiting).",
+      "Exactly one status per object (mutually exclusive).",
+      "Status can change while visible; caller wraps with aria-live=polite."
+    ],
+    "doNotUseWhen": [
+      "Value is a stable attribute describing what a thing is — use Tag instead.",
+      "Multiple statuses apply to the same object — use separate badges or Tag.",
+      "Badge needs to be interactive — use Tag's interactive props.",
+      "Need open/uncontrolled color palette — use Tag's 15-color palette.",
+      "Need to combine two statuses (e.g. 'Error, Pending') — pick one or render separately."
+    ]
+  },
+
+  "props": {
+    "shared": [
+      {
+        "name": "variant",
+        "type": "enum",
+        "values": ["primary", "secondary", "outline", "ghost", "status"],
+        "required": true,
+        "figmaProperty": "variant",
+        "codeNote": "Required by StatusBadgeProps. cva defaultVariants still sets 'primary' when an untyped caller omits it.",
+        "figmaNote": "Figma default is 'primary'."
+      },
+      {
+        "name": "theme",
+        "type": "enum",
+        "values": ["muted", "success", "warning", "danger", "info", "merged", "risk"],
+        "default": "muted",
+        "figmaProperty": "theme",
+        "figmaEnumMap": {
+          "⚫ muted": "muted",
+          "🟢 success": "success",
+          "🔴 danger": "danger",
+          "🟡 warning": "warning",
+          "🔵 info": "info",
+          "🟣 merged": "merged",
+          "🟠 risk": "risk"
+        }
+      },
+      {
+        "name": "size",
+        "type": "enum",
+        "values": ["sm", "md"],
+        "default": "md",
+        "figmaProperty": "size"
+      },
+      {
+        "name": "icon",
+        "type": "string",
+        "default": null,
+        "figmaProperty": "viewIcon#1293:13",
+        "constraint": "never on variant='status'; optional on others",
+        "codeNote": "Typed as keyof typeof IconNameMapV2 (an icon name), not a free string."
+      },
+      {
+        "name": "children",
+        "type": "node",
+        "required": true,
+        "figmaProperty": "textString#1299:25"
+      }
+    ],
+
+    "designOnly": [
+      {
+        "name": "state",
+        "type": "enum",
+        "values": ["default", "hover"],
+        "figmaProperty": "state",
+        "transform": "ignored",
+        "notes": "Figma has hover variants for primary, secondary and outline only. Code has no :hover styles for .cn-badge (tailwind-utils-config/components/badge.ts). See knownGaps."
+      }
+    ],
+
+    "codeOnly": [
+      {
+        "name": "pulse",
+        "type": "boolean",
+        "constraint": "only when variant='status'",
+        "notes": "Renders animate-pulse on the indicator dot. No Figma property."
+      },
+      {
+        "name": "className",
+        "type": "string",
+        "notes": "Style override escape hatch via cn()."
+      }
+    ]
+  },
+
+  "constraints": [
+    {
+      "when": { "variant": "status" },
+      "forbid": ["icon"],
+      "rule": "SBD-007",
+      "enforcedBy": "types",
+      "notes": "StatusBadgeStatusVariantProps types icon as never."
+    },
+    {
+      "when": { "variant": ["primary", "secondary", "outline", "ghost"] },
+      "forbid": ["pulse"],
+      "rule": "SBD-007",
+      "enforcedBy": "types",
+      "notes": "StatusBadgeOtherThemeProps types pulse as never."
+    }
+  ],
+
+  "illegalCombinations": [
+    {
+      "combination": { "variant": ["ghost", "status"], "state": "hover" },
+      "side": "figma",
+      "reason": "Figma node 1293:5995 has 112 of 140 possible variants. The 28 missing are every ghost and status variant with state=hover."
+    }
+  ],
+
+  "states": [
+    {
+      "name": "hover",
+      "triggeredBy": { "source": "interaction", "ref": ":hover" },
+      "description": "Figma only. Figma defines hover variants for primary, secondary and outline. Code applies no hover styles. See knownGaps."
+    },
+    {
+      "name": "pulsing",
+      "triggeredBy": { "source": "prop", "ref": "pulse" },
+      "description": "Indicator dot gets animate-pulse class. Only with variant='status'."
+    },
+    {
+      "name": "indicator-visible",
+      "triggeredBy": { "source": "prop", "ref": "variant" },
+      "description": "Circular indicator dot renders (aria-hidden) when variant='status'."
+    }
+  ],
+
+  "accessibility": {
+    "keyboardSupport": false,
+    "notes": "Non-interactive by design: role, aria-readonly, tabIndex, onClick and color are omitted from props. All semantic meaning lives in children text. No built-in aria-live; callers must wrap with aria-live=polite for live-changing status. See SBD-008 in status-badge.guide.md."
+  },
+
+  "bindings": [
+    { "figmaProperty": "variant", "codeProp": "variant", "transform": "direct" },
+    { "figmaProperty": "size", "codeProp": "size", "transform": "direct" },
+    { "figmaProperty": "theme", "codeProp": "theme", "transform": "enum-map" },
+    { "figmaProperty": "textString#1299:25", "codeProp": "children", "transform": "direct" },
+    {
+      "figmaProperty": "viewIcon#1293:13",
+      "codeProp": "icon",
+      "transform": "derived",
+      "transformNote": "Boolean toggle. Together with '↳ icon#1299:52' it collapses to the single icon prop. Only for variant !== 'status'."
+    },
+    {
+      "figmaProperty": "↳ icon#1299:52",
+      "codeProp": "icon",
+      "transform": "derived",
+      "transformNote": "Instance swap holding the icon. Read only when viewIcon#1293:13 is true."
+    }
+  ],
+
+  "tokens": {
+    "rootClass": "cn-badge",
+    "rule": "semantic-only",
+    "source": ["packages/core-design-system/design-tokens"],
+    "refs": {
+      "size.sm": "badge.size.sm",
+      "size.md": "badge.size.md",
+      "md.gap": "badge.md.gap",
+      "md.px": "badge.md.px",
+      "md.py": "badge.md.py",
+      "sm.gap": "badge.sm.gap",
+      "sm.px": "badge.sm.px",
+      "sm.py": "badge.sm.py",
+      "radius": "badge.radius",
+      "border-width": "badge.border",
+      "status.gap": "badge-status.gap",
+      "indicator.size.sm": "badge-indicator.size.sm",
+      "theme.muted.bg": "set.gray.primary.bg",
+      "theme.muted.text": "set.gray.primary.text",
+      "theme.muted.border": "set.gray.outline.border",
+      "theme.success.bg": "set.success.primary.bg",
+      "theme.success.text": "set.success.primary.text",
+      "theme.danger.bg": "set.danger.primary.bg",
+      "theme.danger.text": "set.danger.primary.text",
+      "theme.warning.bg": "set.warning.primary.bg",
+      "theme.warning.text": "set.warning.primary.text",
+      "theme.info.bg": "set.blue.primary.bg",
+      "theme.info.text": "set.blue.primary.text",
+      "theme.merged.bg": "set.purple.primary.bg",
+      "theme.merged.text": "set.purple.primary.text",
+      "theme.risk.bg": "set.orange.primary.bg",
+      "theme.risk.text": "set.orange.primary.text"
+    }
+  },
+
+  "examples": {
+    "correct": [
+      "<StatusBadge variant=\"status\" theme=\"success\" pulse>Live</StatusBadge>",
+      "<StatusBadge variant=\"outline\" theme=\"danger\" size=\"sm\">Failed</StatusBadge>",
+      "<div aria-live=\"polite\"><StatusBadge variant=\"status\" theme=\"info\">Reconnecting</StatusBadge></div>"
+    ],
+    "incorrect": [
+      { "code": "<StatusBadge variant=\"status\" icon=\"check\">Done</StatusBadge>", "violates": ["SBD-007"] },
+      {
+        "code": "<StatusBadge variant=\"outline\" theme=\"muted\">Pro</StatusBadge>",
+        "violates": ["SBD-001", "SBD-003"]
+      },
+      {
+        "code": "<StatusBadge variant=\"outline\" theme=\"danger\">Error</StatusBadge><StatusBadge variant=\"outline\" theme=\"warning\">Pending</StatusBadge>",
+        "violates": ["SBD-005"]
+      }
+    ]
+  },
+
+  "governance": {
+    "guide": "./status-badge.guide.md",
+    "note": "Pattern decisions (StatusBadge vs Tag), accessibility gaps, pipeline-icon conventions: see SBD-001 through SBD-018 in the guide. Most rules are 'proposed' or 'open'. Treat them as context until ratified.",
+    "tokenStatus": "All refs exist in packages/core-design-system/design-tokens (validator check, 2026-10-20). Refs cover the primary variant colors only. See knownGaps."
+  },
+
+  "knownGaps": [
+    {
+      "summary": "No aria-live region; live-changing statuses must be wrapped by the caller.",
+      "rule": "SBD-008",
+      "sides": ["code"]
+    },
+    {
+      "summary": "Docs list variant as optional with default 'primary'; StatusBadgeProps requires it.",
+      "rule": "SBD-011",
+      "sides": ["docs", "code"],
+      "source": "apps/portal/src/content/docs/components/feedback/status-badge.mdx (PropsTable) vs status-badge.tsx StatusBadgeProps"
+    },
+    {
+      "summary": "Icon renders in a fixed DOM order with no RTL logic.",
+      "rule": "SBD-012",
+      "sides": ["code"]
+    },
+    {
+      "summary": "pulse applies animate-pulse with no prefers-reduced-motion guard.",
+      "rule": "SBD-013",
+      "sides": ["code"],
+      "source": "status-badge.tsx indicator span; 'reduced-motion' appears only in stepper code"
+    },
+    {
+      "summary": "pulse has no Figma property; it is a code-only animation.",
+      "sides": ["figma"]
+    },
+    {
+      "summary": "Contract requires children (SBD-006) but StatusBadgeProps inherits an optional children from React.HTMLAttributes, so an icon-only or empty badge type-checks.",
+      "rule": "SBD-006",
+      "waives": "prop-required:children",
+      "sides": ["code", "manifest"],
+      "source": "status-badge.tsx BadgeBaseProps"
+    },
+    {
+      "summary": "Code Connect reads 'text#1299:25' and 'icon#1293:13'. Figma reports the keys as 'textString#1299:25' and 'viewIcon#1293:13'. The manifest uses the Figma keys; status-badge.figma.ts is unchanged.",
+      "sides": ["code-connect", "figma"],
+      "source": "Figma componentPropertyDefinitions on 1293:5995 (2026-10-20) vs status-badge.figma.ts"
+    },
+    {
+      "summary": "Figma defines state=hover for primary, secondary and outline. Code has no hover styles for .cn-badge, and the component is non-interactive (SBD-004).",
+      "rule": "SBD-004",
+      "sides": ["figma", "code"],
+      "source": "Figma 1293:5995 variants vs packages/ui/tailwind-utils-config/components/badge.ts"
+    },
+    {
+      "summary": "Figma md variants bind badge/sm/gap, badge/sm/px and badge/sm/py (gap 2px, px 6px, py 2px). Code md uses badge.md.* (gap 4px, px 8px, py 4px).",
+      "sides": ["figma", "code"],
+      "source": "Figma boundVariables on 1293:5995 variants (2026-10-20) vs badge.ts .cn-badge and badge.json"
+    },
+    {
+      "summary": "Figma status variant has 0 padding. Code applies the .cn-badge md/sm padding to the status variant (only ghost resets padding).",
+      "sides": ["figma", "code"],
+      "source": "Figma 1293:5995 status variants vs badge.ts '&:where(.cn-badge-ghost)'"
+    },
+    {
+      "summary": "tokens.refs list primary-variant colors only. Code also reads set.<theme>.secondary.*, set.<theme>.outline.bg/border and text.1 (status text).",
+      "sides": ["manifest"],
+      "source": "badge.ts createBadgeVariantStyles"
+    },
+    {
+      "summary": "The outline variant has no text token in the token source; code uses set.<theme>.secondary.text for outline and ghost text.",
+      "sides": ["code"],
+      "source": "badge.ts lines 28-46; mode/light/default.json set.*.outline has bg, bg-hover, bg-selected, border"
+    }
+  ]
+}

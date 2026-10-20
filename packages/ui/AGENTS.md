@@ -17,7 +17,7 @@ The main Harness UI component library. Contains React components built on Radix 
    - Links to system rules and component-specific pattern guidance
    - Use this to understand the component's API and design constraints
 
-3. **System rules:** `apps/portal/src/content/docs/design-system/`
+3. **System rules:** `docs/system/` (published with @harnessio/ui package)
    - `accessibility.md` — WCAG rules, accessible names, decorative vs interactive
    - `color-system.md` — Semantic tokens, color sets, theme-switching
    - `interaction-states.md` — Disabled, focus, hover/selected states

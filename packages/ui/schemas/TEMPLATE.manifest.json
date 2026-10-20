@@ -56,9 +56,10 @@
 
   "governance": {
     "rulesDocs": [
-      "apps/portal/src/content/docs/design-system/accessibility.md",
-      "apps/portal/src/content/docs/design-system/color-system.md",
-      "apps/portal/src/content/docs/design-system/interaction-states.md",
+      "../docs/system/accessibility.md",
+      "../docs/system/color-system.md",
+      "../docs/system/interaction-states.md",
+      "../docs/system/visual-primitives.md",
       "./{component}.md"
     ],
     "note": "Component-specific pattern rules and decision framework.",

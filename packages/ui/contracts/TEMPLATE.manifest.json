@@ -1,0 +1,126 @@
+{
+  "$schema": "../../../contracts/component-manifest.schema.json",
+  "id": "canary.{component-kebab}",
+  "status": "draft",
+
+  "code": {
+    "package": "@harnessio/ui",
+    "export": "{ComponentName}",
+    "import": "import { {ComponentName} } from '@harnessio/ui/components'",
+    "path": "packages/ui/src/components/{component-kebab}/{component-kebab}.tsx",
+    "propsType": "{ComponentName}Props"
+  },
+
+  "figma": {
+    "library": "HDS | Components 3.0",
+    "fileKey": "[TK] fileKey from the Figma URL",
+    "name": "{ComponentName}",
+    "exampleNodeId": "[TK] 123:456",
+    "codeConnect": "packages/ui/src/components/{component-kebab}/{component-kebab}.figma.ts",
+    "componentSetKey": null,
+    "variantPropertyMap": {
+      "[TK] code prop": "[TK] Figma property key exactly as Figma reports it, including any #id suffix"
+    },
+    "publishStatus": "unpublished",
+    "lastVerified": "[TK] YYYY-MM-DD",
+    "enforceSync": true
+  },
+
+  "purpose": {
+    "summary": "[TK] One sentence: what this component is for and when to reach for it.",
+    "useWhen": ["[TK]"],
+    "doNotUseWhen": ["[TK] Name the component to use instead."]
+  },
+
+  "props": {
+    "shared": [
+      {
+        "name": "[TK] prop name",
+        "type": "enum",
+        "values": ["[TK]"],
+        "default": "[TK] omit default only when required is true",
+        "figmaProperty": "[TK] Figma property key"
+      }
+    ],
+    "designOnly": [
+      {
+        "name": "[TK] Figma-only control, e.g. state",
+        "type": "enum",
+        "values": ["[TK]"],
+        "figmaProperty": "[TK]",
+        "transform": "ignored",
+        "notes": "[TK] Why this has no code prop."
+      }
+    ],
+    "codeOnly": [
+      {
+        "name": "[TK] code-only prop, e.g. onClick",
+        "type": "function",
+        "trigger": "event-handler",
+        "notes": "[TK] Why this has no Figma property."
+      }
+    ]
+  },
+
+  "constraints": [
+    {
+      "when": { "[TK] prop": "[TK] value" },
+      "forbid": ["[TK] prop"],
+      "rule": "{PREFIX}-001",
+      "enforcedBy": "types",
+      "notes": "[TK] Where the type enforces this. Use 'none' if nothing does."
+    }
+  ],
+
+  "illegalCombinations": [],
+
+  "states": [
+    {
+      "name": "[TK]",
+      "triggeredBy": { "source": "prop", "ref": "[TK] prop name" },
+      "description": "[TK] What changes visually."
+    }
+  ],
+
+  "accessibility": {
+    "keyboardSupport": false,
+    "notes": "[TK] Role, required wrappers, consumer responsibilities. Use a key list for keyboardSupport if interactive."
+  },
+
+  "bindings": [
+    {
+      "figmaProperty": "[TK] Figma property key",
+      "codeProp": "[TK] code prop",
+      "transform": "direct"
+    }
+  ],
+
+  "tokens": {
+    "rootClass": "cn-{component-kebab}",
+    "rule": "semantic-only",
+    "source": ["packages/core-design-system/design-tokens"],
+    "refs": {
+      "[TK] role": "[TK] token.path"
+    }
+  },
+
+  "examples": {
+    "correct": ["<{ComponentName} [TK]>[TK]</{ComponentName}>"],
+    "incorrect": [{ "code": "<{ComponentName} [TK] />", "violates": ["{PREFIX}-001"] }]
+  },
+
+  "governance": {
+    "guide": "./{component-kebab}.guide.md",
+    "note": "[TK] Rule status summary, e.g. 'All rules proposed until Design ratifies them.'",
+    "tokenStatus": "[TK] Which token refs the validator has confirmed, and which areas tokens.refs does not cover."
+  },
+
+  "knownGaps": [
+    {
+      "summary": "[TK] One mismatch or open issue per entry.",
+      "rule": "{PREFIX}-001",
+      "sides": ["code"],
+      "source": "[TK] file:line or Figma node"
+    }
+  ]
+}

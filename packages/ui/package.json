@@ -58,6 +58,7 @@
     "extract": "i18next --config './i18n.config.ts'",
     "update:icons": "node scripts/icons.js",
     "update:logos": "node scripts/logos.js",
+    "ds:scaffold": "node scripts/ds/scaffold-component.ts",
     "ds:validate": "node scripts/ds/validate-contracts.ts"
   },
   "types": "./dist/index.d.ts",

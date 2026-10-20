@@ -75,7 +75,7 @@
   "figma": {
     "fileKey": null,
     "nodeId": null,
-    "notes": "[TK] No Figma counterpart identified (EXS-008)."
+    "notes": "[TK] A Figma counterpart is expected but not identified yet (EXS-008)."
   },
   "examples": {
     "correct": [
@@ -99,7 +99,7 @@
   },
   "governance": {
     "guide": "./execution-status.guide.md",
-    "note": "Draft for Katie. No ds:* script reads src/patterns yet, so nothing here is validated or generated. Every rule restates a StatusBadge rule; whether those rules move here is EXS-007."
+    "note": "Draft. No ds:* script reads src/patterns yet, so nothing here is validated or generated. Every rule restates a StatusBadge rule. Those rules move here once the scripts read src/patterns (EXS-007)."
   },
   "knownGaps": [
     { "summary": "No mapping from ExecutionState to StatusBadge props.", "rule": "EXS-005" },
@@ -109,9 +109,9 @@
       "source": "packages/ui/src/components/treeview.tsx getStatusIcon"
     },
     {
-      "summary": "Rules duplicated between this guide and status-badge.guide.md until a decision is made.",
+      "summary": "Rules duplicated between this guide and status-badge.guide.md until the SBD rules are retired. The move is decided.",
       "rule": "EXS-007"
     },
-    { "summary": "No Figma counterpart identified.", "rule": "EXS-008" }
+    { "summary": "A Figma counterpart is expected but not identified.", "rule": "EXS-008" }
   ]
 }

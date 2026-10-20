@@ -36,16 +36,16 @@ gaps:
     title: "Open: Tree View's status icons and colors disagree with SBD-017's icon table"
     status: open
   - id: EXS-007
-    title: 'Open: whether SBD-005, 008, 014 and 015 move here or stay in the StatusBadge guide'
-    status: open
+    title: 'Resolved: SBD-005, 008, 014 and 015 move here'
+    status: resolved
   - id: EXS-008
-    title: 'Open: no Figma counterpart identified'
+    title: 'Open: a Figma counterpart is expected but not identified'
     status: open
 ---
 
 # Execution Status Pattern Guide
 
-Draft for Katie. How to show the state of a pipeline execution: a run, a stage or a step. The front matter above is the only source for each rule's id, title, status, tier and check. Every rule here restates a rule from `status-badge.guide.md` at the level of the screen, and `depends_on` names it. Nothing new is decided here; the open questions are under Known gaps. The anatomy, the states and the examples live in `execution-status.manifest.json`.
+Draft. How to show the state of a pipeline execution: a run, a stage or a step. The front matter above is the only source for each rule's id, title, status, tier and check. Every rule here restates a rule from `status-badge.guide.md` at the level of the screen, and `depends_on` names it. Those four SBD rules move here (EXS-007); until the move lands they exist in both guides. Nothing new is decided here; the open questions are under Known gaps. The anatomy, the states and the examples live in `execution-status.manifest.json`.
 
 No `ds:*` script reads `src/patterns/` yet. This guide is not validated, and no reference is generated from it.
 
@@ -94,10 +94,10 @@ Open questions that keep their rule IDs but are not rules yet.
 
 Tree View's `getStatusIcon` renders running as `loader` (spinning, warning), success as `check-circle-solid` (success), failure as `xmark-circle-solid` (danger), and everything else as `circle` (neutral). That includes error, killed and blocked. SBD-017's table uses `check-circle`, `xmark-circle`, `timer`, `pause`, `prohibition` and `warning-circle`. Which side changes is a decision for Design and engineering.
 
-### EXS-007 — Open: whether SBD-005, 008, 014 and 015 move here or stay in the StatusBadge guide
+### EXS-007 — Resolved: SBD-005, 008, 014 and 015 move here
 
-If they move, those SBD IDs are retired with a pointer to the EXS rule, and IDs are never reused. If they stay, this guide only cites them and its own rules are removed. Until then the rules exist in both places. [TK: Katie]
+Decided by Jared Hawkins, 2026-10-20. The four rules move to this guide. SBD-005, SBD-008, SBD-014 and SBD-015 are then retired in `rule-ids.md` with a pointer to the EXS rule, and their IDs are never reused. The move waits until `ds:*` scripts read `src/patterns/`: retiring them sooner would remove the rules from the StatusBadge reference, which is the only file agents read. Until then the rules exist in both places.
 
-### EXS-008 — Open: no Figma counterpart identified
+### EXS-008 — Open: a Figma counterpart is expected but not identified
 
-[TK] Whether the Figma library has an execution-status frame, component or page this pattern maps to.
+Patterns are expected to have Figma counterparts. [TK: the file and node for execution status, or when it will exist]

@@ -1,0 +1,171 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://harness.io/schemas/canary/pattern-manifest-v0.json",
+  "title": "Pattern Manifest (draft)",
+  "description": "Draft, not yet read by any ds:* script. Machine-checkable contract for a pattern: which components compose it, the slots they fill, and the constraints that span more than one component. Prose rules live in the paired guide (governance.guide), which uses component-guide.schema.json.",
+  "type": "object",
+  "required": ["id", "kind", "status", "purpose", "components", "anatomy", "governance"],
+  "additionalProperties": false,
+  "$defs": {
+    "ruleId": {
+      "type": "string",
+      "pattern": "^[A-Z]{2,5}-\\d{3}$",
+      "description": "Rule ID from this pattern's guide or from a component guide, e.g. 'EXS-001' or 'SBD-005'."
+    },
+    "ruleIds": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/ruleId" },
+      "minItems": 1,
+      "uniqueItems": true
+    }
+  },
+  "properties": {
+    "$schema": { "type": "string" },
+    "id": { "type": "string", "pattern": "^canary\\.pattern\\.[a-z][a-z0-9-]*$" },
+    "kind": { "const": "pattern" },
+    "status": { "type": "string", "enum": ["draft", "beta", "stable", "deprecated"] },
+    "purpose": {
+      "type": "object",
+      "required": ["summary", "useWhen", "doNotUseWhen"],
+      "additionalProperties": false,
+      "properties": {
+        "summary": { "type": "string", "minLength": 1 },
+        "useWhen": { "type": "array", "items": { "type": "string" }, "minItems": 1 },
+        "doNotUseWhen": { "type": "array", "items": { "type": "string" } }
+      }
+    },
+    "components": {
+      "type": "array",
+      "minItems": 1,
+      "description": "Components the pattern composes. Each must have a manifest, or say why not.",
+      "items": {
+        "type": "object",
+        "required": ["export", "role"],
+        "additionalProperties": false,
+        "properties": {
+          "export": { "type": "string", "description": "Code export, as in that component's code.export." },
+          "manifest": {
+            "type": ["string", "null"],
+            "description": "Path, relative to this manifest. null when the component has no contract yet."
+          },
+          "path": { "type": "string" },
+          "role": { "type": "string" }
+        }
+      }
+    },
+    "anatomy": {
+      "type": "array",
+      "minItems": 1,
+      "description": "Slots in render order, outermost first.",
+      "items": {
+        "type": "object",
+        "required": ["slot", "fill", "required"],
+        "additionalProperties": false,
+        "properties": {
+          "slot": { "type": "string", "pattern": "^[a-z][a-zA-Z0-9]*$" },
+          "fill": {
+            "type": "string",
+            "description": "A component export, or a plain element such as 'div[aria-live=polite]'."
+          },
+          "required": {
+            "type": ["boolean", "string"],
+            "description": "true, false, or the condition under which it is required."
+          },
+          "props": {
+            "type": "object",
+            "description": "Prop values the pattern narrows to. Values must be a subset of the component manifest's."
+          },
+          "rules": { "$ref": "#/$defs/ruleIds" },
+          "notes": { "type": "string" }
+        }
+      }
+    },
+    "states": {
+      "type": "object",
+      "description": "The domain states the pattern renders, and how each maps to component props.",
+      "required": ["source", "values"],
+      "additionalProperties": false,
+      "properties": {
+        "source": { "type": "string" },
+        "values": { "type": "array", "items": { "type": "string" }, "minItems": 1 },
+        "map": { "type": ["object", "null"], "description": "State -> component props. null until decided." },
+        "notes": { "type": "string" }
+      }
+    },
+    "constraints": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["when", "use", "rule"],
+        "additionalProperties": false,
+        "properties": {
+          "when": { "type": "string" },
+          "use": { "type": "string" },
+          "instead": { "type": "string" },
+          "rule": { "$ref": "#/$defs/ruleId" },
+          "enforcedBy": { "type": "string", "enum": ["types", "lint", "test", "review"] },
+          "notes": { "type": "string" }
+        }
+      }
+    },
+    "figma": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "fileKey": { "type": ["string", "null"] },
+        "nodeId": { "type": ["string", "null"] },
+        "notes": { "type": "string" }
+      }
+    },
+    "examples": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "correct": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["code"],
+            "additionalProperties": false,
+            "properties": { "code": { "type": "string" }, "source": { "type": "string" } }
+          }
+        },
+        "incorrect": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["code", "violates"],
+            "additionalProperties": false,
+            "properties": {
+              "code": { "type": "string" },
+              "violates": { "$ref": "#/$defs/ruleIds" },
+              "source": { "type": "string" }
+            }
+          }
+        }
+      }
+    },
+    "governance": {
+      "type": "object",
+      "required": ["guide"],
+      "additionalProperties": false,
+      "properties": {
+        "guide": { "type": "string" },
+        "note": { "type": "string" }
+      }
+    },
+    "knownGaps": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["summary"],
+        "additionalProperties": false,
+        "properties": {
+          "summary": { "type": "string" },
+          "rule": { "$ref": "#/$defs/ruleId" },
+          "source": { "type": "string" }
+        }
+      }
+    }
+  }
+}

@@ -734,7 +734,7 @@ Unit tests with React Testing Library. No visual regression tests — low mainte
 ### What NOT to test
 
 - Visual CSS transitions (timing, easing) — not reliably testable in jsdom
-- Exact pixel layout — belongs in Storybook visual review
+- Exact pixel layout — belongs in visual review
 - AlertDialog internals — tested by that component's own suite
 
 ## Out of Scope

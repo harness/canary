@@ -33,8 +33,6 @@ build
 
 .contentlayer
 tsconfig.tsbuildinfo
-*storybook.log
-storybook-static/
 
 yaml-editor-test/
 

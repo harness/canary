@@ -63,11 +63,10 @@ Global spacing rules. Everything derives from a **4px base unit**.
 
 - **Spacer uses margin, not height:** The `Spacer` component renders margin-top rather than a sized box, and takes raw numeric scale values rather than t-shirt sizes — it's inconsistent with the rest of this doc. Prefer `gap-cn-*` on the parent; treat `Spacer` as legacy.
 - **Arbitrary values for sizing:** Components do still use arbitrary brackets for fixed widths/heights and absolute positioning (e.g. `w-[600px]`, `top-[61px]`). This rule governs padding/margin/gap, where adoption is consistent; sizing is not yet fully tokenized.
-- **No responsive spacing:** There is no desktop-vs-mobile spacing variation in the token set — see Layout for the breakpoint gap.
+- **No responsive spacing:** There is no desktop-vs-mobile spacing variation in the token set. Tokens are authored for a desktop breakpoint set only.
 
 ---
 
 ## Cross-references
 
-- **Layout** — Containers, breakpoints, grid, layout primitives
 - **Typography** — Line-height shares the same 4px grid

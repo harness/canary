@@ -123,6 +123,13 @@ const firstSentence = (text: string): string => {
 }
 
 /** Prose under a rule heading, up to the next heading of the same or higher level. */
+/** Removes HTML comments, which hold notes for guide authors, and collapses the blank lines they leave. */
+const stripComments = (text: string): string =>
+  text
+    .replace(/<!--[\s\S]*?-->/g, '')
+    .replace(/\n{3,}/g, '\n\n')
+    .trim()
+
 const sectionBody = (lines: string[], heading: GuideHeading): string => {
   const body: string[] = []
   let inFence = false
@@ -133,7 +140,7 @@ const sectionBody = (lines: string[], heading: GuideHeading): string => {
     if (!inFence && level !== undefined && level <= heading.level) break
     body.push(text)
   }
-  return body.join('\n').trim()
+  return stripComments(body.join('\n'))
 }
 
 /**
@@ -147,11 +154,7 @@ const intro = (lines: string[]): string => {
     if (text.startsWith('## ')) break
     if (!text.startsWith('# ')) body.push(text)
   }
-  return body
-    .join('\n')
-    .replace(/<!--[\s\S]*?-->/g, '')
-    .replace(/\n{3,}/g, '\n\n')
-    .trim()
+  return stripComments(body.join('\n'))
 }
 
 /** Level-2 guide sections that are not rules or known gaps, such as Do's and Do Not's. */

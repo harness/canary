@@ -39,3 +39,16 @@ describe('reference: guide intro', () => {
     expect(render(guide)).not.toContain('## About this guide')
   })
 })
+
+describe('reference: section bodies', () => {
+  it('drops HTML comments from rule and Do sections', () => {
+    const guide = GUIDE_SOURCE.replace(
+      '## SBD-001 — StatusBadge represents state, Tag represents attribute\n',
+      '## SBD-001 — StatusBadge represents state, Tag represents attribute\n\n<!-- Rule note. -->\n'
+    ).replace("### Do's\n", "### Do's\n\n<!-- Do note. -->\n")
+    const out = render(guide)
+    expect(out).not.toContain('Rule note.')
+    expect(out).not.toContain('Do note.')
+    expect(out).toContain('`StatusBadge` is for something that _changes_')
+  })
+})

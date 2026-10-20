@@ -47,24 +47,21 @@
         "type": "enum",
         "values": ["primary", "secondary", "outline", "ghost", "status"],
         "default": "primary",
-        "figmaProperty": "variant",
-        "description": "Component style variant; 'status' enables pulse animation and indicator dot"
+        "codeNote": "Component style variant; 'status' enables pulse animation and indicator dot"
       },
       {
         "name": "theme",
         "type": "enum",
         "values": ["muted", "success", "warning", "danger", "info", "merged", "risk"],
         "default": "muted",
-        "figmaProperty": "theme",
-        "description": "Semantic color theme indicating the status type"
+        "codeNote": "Semantic color theme indicating the status type"
       },
       {
         "name": "size",
         "type": "enum",
         "values": ["sm", "md"],
         "default": "md",
-        "figmaProperty": "size",
-        "description": "Badge size"
+        "codeNote": "Badge size"
       }
     ],
     "designOnly": [
@@ -150,11 +147,10 @@
       "docs/system/visual-primitives.md",
       "docs/system/typography.md",
       "docs/system/spacing.md",
-      "docs/system/layout.md",
       "docs/system/shadows.md",
       "docs/system/component-architecture.md",
       "docs/system/design-to-code-flow.md",
-      "docs/components/status-badge.md"
+      "schemas/status-badge.md"
     ],
     "tokenStatus": "All color and animation tokens verified; size tokens pending audit"
   },

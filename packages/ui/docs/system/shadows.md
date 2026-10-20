@@ -69,4 +69,3 @@ There is also `inner-canvas`, an inset shadow for recessed canvas areas, not par
 - **Color System** — Theme resolution, alpha modifiers
 - **Interaction States** — Focus ring, hover and selected treatment
 - **Accessibility** — Forced-colors and high-contrast behaviour
-- **Layout** — Which elements are floating/overlay layers

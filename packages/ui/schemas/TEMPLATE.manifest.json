@@ -1,0 +1,216 @@
+{
+  "$schema": "./component-manifest.schema.json",
+  "$comment": "TEMPLATE: Copy and adapt this for each component. Sections marked [GENERATED] can be auto-extracted; sections marked [AUTHORED] require human review and approval.",
+
+  "id": "canary.{component-kebab}",
+  "status": "draft",
+
+  "code": {
+    "package": "@harnessio/ui",
+    "export": "{ComponentName}",
+    "import": "import { {ComponentName} } from '@harnessio/ui/components'",
+    "path": "packages/ui/src/components/{component-folder}/{component}.tsx"
+  },
+
+  "figma": {
+    "library": "HDS | Components 3.0",
+    "fileKey": "AIgjIyUzcuZzuVnuoOyhQE",
+    "name": "{ComponentName}",
+    "exampleNodeId": "{node}:{frame}",
+    "codeConnect": "packages/ui/src/components/{component-folder}/{component}.figma.ts",
+    "componentSetKey": null,
+    "variantPropertyMap": {
+      "$comment": "[GENERATED] Extract from button.figma.ts instance.getEnum() calls"
+    },
+    "publishStatus": "published",
+    "enforceSync": true
+  },
+
+  "purpose": {
+    "summary": "[AUTHORED] One sentence: what this component does and when to use it.",
+    "useWhen": [
+      "[AUTHORED] Bullet 1: condition where this is the right choice",
+      "[AUTHORED] Bullet 2: another use case",
+      "[AUTHORED] Bullet 3: etc."
+    ],
+    "doNotUseWhen": [
+      "[AUTHORED] Bullet 1: anti-pattern or common mistake",
+      "[AUTHORED] Bullet 2: related component that should be used instead",
+      "[AUTHORED] Bullet 3: etc."
+    ]
+  },
+
+  "props": {
+    "shared": [
+      {
+        "name": "variant",
+        "type": "enum",
+        "values": ["primary", "secondary"],
+        "$comment": "[GENERATED] Extract from TypeScript type; map to Figma variant property"
+      },
+      {
+        "name": "size",
+        "type": "enum",
+        "values": ["sm", "md", "lg"],
+        "default": "md",
+        "$comment": "[GENERATED] Extract from TypeScript type"
+      },
+      {
+        "name": "disabled",
+        "type": "boolean",
+        "default": false,
+        "$comment": "[GENERATED] Extract from TypeScript type"
+      }
+    ],
+    "designOnly": [
+      {
+        "name": "state",
+        "type": "enum",
+        "values": ["default", "hover", "active"],
+        "figmaProperty": "state",
+        "transform": "style-only",
+        "notes": "[AUTHORED] CSS pseudo-classes in code; Figma shows each state visually"
+      }
+    ],
+    "codeOnly": [
+      {
+        "name": "onClick",
+        "type": "function",
+        "trigger": "event-handler",
+        "notes": "[AUTHORED] Callback for user interactions; no Figma representation"
+      },
+      {
+        "name": "aria-label",
+        "type": "string",
+        "trigger": "a11y-only",
+        "notes": "[AUTHORED] Accessible name; required for icon-only buttons"
+      }
+    ]
+  },
+
+  "composition": [
+    {
+      "slot": "children",
+      "accepts": ["string", "ReactNode"],
+      "cardinality": "one",
+      "required": true,
+      "notes": "[AUTHORED] Descriptive text or content inside the component"
+    },
+    {
+      "slot": "icon",
+      "accepts": ["IconV2"],
+      "cardinality": "zero-or-one",
+      "required": false,
+      "notes": "[AUTHORED] Optional icon; compose as a child element"
+    }
+  ],
+
+  "states": [
+    {
+      "name": "hover",
+      "triggeredBy": {
+        "source": "interaction",
+        "ref": "onPointerEnter"
+      },
+      "description": "[AUTHORED] Visual feedback when user hovers over the component"
+    },
+    {
+      "name": "disabled",
+      "triggeredBy": {
+        "source": "prop",
+        "ref": "disabled"
+      },
+      "description": "[AUTHORED] Reduced opacity and no pointer events when disabled=true"
+    },
+    {
+      "name": "loading",
+      "triggeredBy": {
+        "source": "prop",
+        "ref": "loading"
+      },
+      "description": "[AUTHORED] Spinner icon displayed when loading=true"
+    }
+  ],
+
+  "accessibility": {
+    "role": "[AUTHORED] e.g., 'button', 'checkbox', 'tab' — or omit if standard HTML semantics",
+    "keyboardSupport": [
+      "[AUTHORED] Space/Enter: activate action",
+      "[AUTHORED] Tab: focus navigation"
+    ],
+    "notes": "[AUTHORED] Any accessibility constraints, required wrappers (e.g., aria-live for status changes), or delegated responsibilities (e.g., 'caller must provide aria-label')"
+  },
+
+  "bindings": [
+    {
+      "figmaProperty": "variant",
+      "codeProp": "variant",
+      "transform": "direct",
+      "$comment": "[GENERATED from Code Connect] Figma property → React prop mapping"
+    },
+    {
+      "figmaProperty": "theme",
+      "codeProp": "theme",
+      "transform": "enum-map",
+      "enumMap": {
+        "⚫ muted": "muted",
+        "🟢 success": "success"
+      },
+      "$comment": "[GENERATED from Code Connect] Remap Figma variant names to code prop values"
+    },
+    {
+      "figmaProperty": "state",
+      "codeProp": "none",
+      "transform": "none",
+      "transformNote": "[AUTHORED] CSS pseudo-class in code; Figma shows state visually but doesn't map to a prop"
+    }
+  ],
+
+  "tokens": {
+    "rootClass": "cn-{component}",
+    "rule": "semantic-only",
+    "refs": {
+      "$comment": "[GENERATED] Extract from design tokens / style-dictionary",
+      "size.sm": "{component}.size.sm",
+      "size.md": "{component}.size.md",
+      "gap": "{component}.gap",
+      "radius": "{component}.radius",
+      "text.color": "text.cn-1",
+      "bg.color": "bg.cn-0",
+      "border.color": "border.cn-1"
+    }
+  },
+
+  "examples": {
+    "correct": [
+      "[AUTHORED] <{ComponentName}>Primary Action</{ComponentName}>",
+      "[AUTHORED] <{ComponentName} variant='secondary' disabled>Disabled</{ComponentName}>",
+      "[AUTHORED] <{ComponentName} onClick={handleClick}><IconV2 name='trash' /> Delete</{ComponentName}>"
+    ],
+    "incorrect": [
+      "[AUTHORED] <{ComponentName}>   </> (empty children)",
+      "[AUTHORED] <{ComponentName} style={{color: 'red'}}>Custom Color</{ComponentName}> (hardcoded style)",
+      "[AUTHORED] <{ComponentName} variant='primary' variant='secondary'> (conflicting props)"
+    ]
+  },
+
+  "governance": {
+    "rulesDocs": [
+      "apps/portal/src/content/docs/design-system/accessibility.md",
+      "apps/portal/src/content/docs/design-system/color-system.md",
+      "apps/portal/src/content/docs/design-system/interaction-states.md",
+      "apps/portal/src/content/docs/design-system/visual-primitives.md",
+      "./{component}.md"
+    ],
+    "note": "[AUTHORED] Link to component-specific pattern rules (do's/do-nots, decision framework, known gaps). Reference system rules first; component rules override when specific.",
+    "tokenStatus": "[AUTHORED] Status of token reference verification (e.g., 'all refs verified 2026-10-20' or 'text/bg verified; spacing unverified')"
+  },
+
+  "knownGaps": [
+    "[AUTHORED] Brief description with cross-reference to rule ID in pattern doc, e.g. 'SBD-008: no aria-live region'",
+    "[AUTHORED] Link to open issue: 'UUI-1234: padding inconsistent between sizes'"
+  ],
+
+  "deprecated": false,
+  "supersededBy": null
+}

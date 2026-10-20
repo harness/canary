@@ -57,7 +57,11 @@
     "typecheck": "tsc -b",
     "extract": "i18next --config './i18n.config.ts'",
     "update:icons": "node scripts/icons.js",
-    "update:logos": "node scripts/logos.js"
+    "update:logos": "node scripts/logos.js",
+    "ds-check": "tsx scripts/ds-check.ts",
+    "ds-check:schema": "tsx scripts/ds-check.ts --schema",
+    "ds-check:refs": "tsx scripts/ds-check.ts --refs",
+    "ds-check:code": "tsx scripts/ds-check.ts --code"
   },
   "types": "./dist/index.d.ts",
   "style": "./dist/styles.css",
@@ -154,6 +158,7 @@
     "react-router-dom": ">=5"
   },
   "devDependencies": {
+    "ajv": "^8.12.0",
     "@testing-library/jest-dom": "^6.6.3",
     "@testing-library/react": "^12.1.5",
     "@testing-library/user-event": "^13.5.0",

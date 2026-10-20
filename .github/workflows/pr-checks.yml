@@ -77,3 +77,45 @@ jobs:
       - run: pnpm install
       - run: pnpm build
       - run: pnpm -r -F ./apps/gitness build:webpack
+
+  # Component contract checks. The ds:* scripts run TypeScript directly, which needs Node 22.18 or later.
+  Contracts_Validate:
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - run: pnpm deps
+      - run: pnpm build
+      - run: pnpm -F @harnessio/ui ds:validate
+
+  Contracts_References:
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - run: pnpm deps
+      - run: pnpm -F @harnessio/ui ds:generate --check
+
+  Contracts_Rule_Tests:
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - run: pnpm deps
+      - run: pnpm build
+      - run: pnpm -F @harnessio/ui ds:test

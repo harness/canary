@@ -46,6 +46,7 @@ rules:
       - types:StatusBadgeProps
       - schema:/constraints
       - 'test:packages/ui/src/components/status-badge/__tests__/status-badge.rules.test.tsx#SBD-007 gives the status variant the indicator and pulse, and other variants the icon'
+      - lint:no-restricted-syntax
   - id: SBD-008
     title: 'Known gap: no built-in aria-live — consumers must wrap live-changing statuses themselves'
     status: open
@@ -125,6 +126,7 @@ Rules for choosing between StatusBadge and Tag, and for StatusBadge's own API co
 - Don't use for stable _attributes_ describing what a thing is (account tier, scope, marketing labels) — use Tag instead.
 - Don't pass `icon` when `variant='status'` — the indicator dot already occupies that slot.
 - Don't pass `pulse` on variants other than `'status'` — pulse only works with the status variant.
+- [TK: draft for Katie] Don't recreate pulse with `className` (for example `animate-pulse` or `motion-safe:animate-pulse`) on any variant. A badge gets an icon or a pulse, never both; if it needs to pulse, use `variant='status'` with `pulse` and drop the icon. Incorrect: `<StatusBadge variant="outline" theme="success" icon="check-circle" className="motion-safe:animate-pulse">Running</StatusBadge>`. (SBD-007)
 - Don't stack multiple StatusBadges to represent simultaneous statuses — pick the most urgent or render separate badges.
 - Don't rely on color or icon alone to convey meaning — text is mandatory.
 - Don't add `role`, `tabIndex`, `onClick`, or `aria-readonly` at the call site — they're explicitly stripped from props. StatusBadge is non-interactive by design.

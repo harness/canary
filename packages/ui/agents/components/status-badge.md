@@ -64,6 +64,7 @@ Figma-only properties, with no code prop: `state`.
 - Don't use for stable _attributes_ describing what a thing is (account tier, scope, marketing labels) — use Tag instead.
 - Don't pass `icon` when `variant='status'` — the indicator dot already occupies that slot.
 - Don't pass `pulse` on variants other than `'status'` — pulse only works with the status variant.
+- [TK: draft for Katie] Don't recreate pulse with `className` (for example `animate-pulse` or `motion-safe:animate-pulse`) on any variant. A badge gets an icon or a pulse, never both; if it needs to pulse, use `variant='status'` with `pulse` and drop the icon. Incorrect: `<StatusBadge variant="outline" theme="success" icon="check-circle" className="motion-safe:animate-pulse">Running</StatusBadge>`. (SBD-007)
 - Don't stack multiple StatusBadges to represent simultaneous statuses — pick the most urgent or render separate badges.
 - Don't rely on color or icon alone to convey meaning — text is mandatory.
 - Don't add `role`, `tabIndex`, `onClick`, or `aria-readonly` at the call site — they're explicitly stripped from props. StatusBadge is non-interactive by design.
@@ -177,7 +178,7 @@ The type does not enforce this yet: `StatusBadgeProps` inherits an optional `chi
 
 ### SBD-007 — icon and pulse are mutually exclusive by variant
 
-Checked by: `types:StatusBadgeProps`, `schema:/constraints`, `test:packages/ui/src/components/status-badge/__tests__/status-badge.rules.test.tsx#SBD-007 gives the status variant the indicator and pulse, and other variants the icon`.
+Checked by: `types:StatusBadgeProps`, `schema:/constraints`, `test:packages/ui/src/components/status-badge/__tests__/status-badge.rules.test.tsx#SBD-007 gives the status variant the indicator and pulse, and other variants the icon`, `lint:no-restricted-syntax`.
 
 `StatusBadgeProps` is a discriminated union: when `variant="status"`, `icon` is typed `never` (the status variant already owns the indicator-dot slot) and `pulse?: boolean` is available. For every other variant, `pulse` is typed `never` and `icon` is available. An agent should never try to pass both on the same instance — the type system already blocks it, but a design-side agent generating usage examples needs to know why. The manifest's `constraints` list encodes the same rule for tools that do not run the type checker.
 

@@ -54,3 +54,5 @@ blob-report/
 playwright-report/
 playwright-results/
 playwright/.cache/
+# Assist CLI error log
+.assist/

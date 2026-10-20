@@ -39,3 +39,23 @@ Packages with detailed agent guides:
 
 - [`packages/ai-chat-core/AGENTS.md`](packages/ai-chat-core/AGENTS.md) — AI chat runtime: stream protocol, plugins, capabilities, React hooks
 - [`packages/filters/AGENTS.md`](packages/filters/AGENTS.md) — URL-driven filter state: parsers, router integration, saved filters
+
+## Assist CLI (`pnpm assist`)
+
+Contributors who are not technical use `pnpm assist` instead of raw commands. Prefer these task ids over raw commands: run `pnpm assist -- <id>` (or just `assist <id>` once the global command is installed; if `assist` is not found, use `pnpm assist`) (the interactive prompts still appear; relay them to the user).
+
+| Id | What it does |
+|----|--------------|
+| `fetch-latest` | Stash (with consent), switch to `main`, pull, install, build |
+| `start:new-feature` | Switch to latest `main`, create a branch from a Jira id or a name |
+| `save-and-push` | Confirm files, commit (`type: [JIRA]: description`), push, ask, then open the PR compare link |
+| `start:portal` | Build packages, run the portal |
+| `start:design-system` | Build packages, run the design-system preview |
+| `update:icons` / `update:logos` | Run the UI package icon / logo update |
+| `build:ui` | Build `@harnessio/ui` |
+| `publish:yalc` | Build `@harnessio/ui` and `yalc publish` |
+| `format` / `lint` / `typecheck` / `test` | Run the quality checks |
+| `check-all` | `format`, `lint`, `typecheck`, `test` in order |
+| `install` / `uninstall` | Add / remove the global `assist` command (macOS/Linux) |
+
+If a needed action is not in this list, use the raw command instead. When a task fails, details are in `.assist/last-error.log`. The task list lives in `scripts/assist/registry.ts`; see `docs/assist-cli-design.md` for the design.

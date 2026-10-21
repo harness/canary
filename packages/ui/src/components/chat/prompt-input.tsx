@@ -51,6 +51,10 @@ export const PromptInputTextarea = ({
   ...props
 }: PromptInputTextareaProps) => {
   const handleKeyDown: KeyboardEventHandler<HTMLTextAreaElement> = e => {
+    // IME confirmation Enter (CJK) must not submit. keyCode 229 covers Safari.
+    if (e.nativeEvent.isComposing || e.keyCode === 229) {
+      return
+    }
     if (e.key === 'Enter') {
       if (e.shiftKey) {
         // Allow newline

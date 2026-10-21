@@ -1,7 +1,7 @@
 import { type CSSProperties } from 'react'
 
 import * as TooltipPrimitive from '@radix-ui/react-tooltip'
-import { render, screen } from '@testing-library/react'
+import { fireEvent, render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { vi } from 'vitest'
 
@@ -200,6 +200,24 @@ describe('PromptInput', () => {
       const textarea = screen.getByRole('textbox')
       textarea.focus()
       await userEvent.keyboard('{Shift>}{Enter}{/Shift}')
+
+      expect(onSubmit).not.toHaveBeenCalled()
+    })
+
+    test('does not submit on Enter while an IME is composing', () => {
+      const onSubmit = vi.fn((e: React.FormEvent<HTMLFormElement>) => e.preventDefault())
+      renderComposer({ onSubmit })
+
+      fireEvent.keyDown(screen.getByRole('textbox'), { key: 'Enter', isComposing: true })
+
+      expect(onSubmit).not.toHaveBeenCalled()
+    })
+
+    test('does not submit on IME process key (keyCode 229)', () => {
+      const onSubmit = vi.fn((e: React.FormEvent<HTMLFormElement>) => e.preventDefault())
+      renderComposer({ onSubmit })
+
+      fireEvent.keyDown(screen.getByRole('textbox'), { key: 'Enter', keyCode: 229 })
 
       expect(onSubmit).not.toHaveBeenCalled()
     })

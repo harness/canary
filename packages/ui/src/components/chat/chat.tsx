@@ -4,12 +4,12 @@ import { Button, IconV2, Illustration, Input, Text } from '@/components'
 import { cn } from '@utils/cn'
 
 const Root: FC<PropsWithChildren<HTMLAttributes<HTMLElement>>> = ({ children }) => {
-  return <div className="bg-cn-1 flex size-full max-w-[460px] flex-col">{children}</div>
+  return <div className="flex size-full max-w-[460px] flex-col bg-cn-1">{children}</div>
 }
 
 const Header: FC<{ onClose: () => void }> = ({ onClose }) => {
   return (
-    <div className="bg-cn-1 px-cn-xl py-cn-md sticky top-0 flex items-center justify-between">
+    <div className="sticky top-0 flex items-center justify-between bg-cn-1 px-cn-xl py-cn-md">
       <Text variant="heading-hero">Harness AI</Text>
       <Button size="sm" iconOnly variant="ghost" onClick={onClose} ignoreIconOnlyTooltip>
         <IconV2 name="xmark" />
@@ -22,14 +22,14 @@ const Header: FC<{ onClose: () => void }> = ({ onClose }) => {
 const Body: FC<PropsWithChildren<HTMLAttributes<HTMLElement>>> = ({ children }) => {
   return (
     // TODO: replace gap-y-[28px] with proper values from the design system once available
-    <div className="scrollbar-hidden px-cn-xl py-cn-xs flex flex-1 flex-col gap-y-[28px] overflow-y-auto overflow-x-hidden">
+    <div className="scrollbar-hidden flex flex-1 flex-col gap-y-[28px] overflow-y-auto overflow-x-hidden px-cn-xl py-cn-xs">
       {children}
     </div>
   )
 }
 
 const Footer: FC<PropsWithChildren<HTMLAttributes<HTMLElement>>> = ({ children }) => {
-  return <div className="bg-cn-1 px-cn-xl py-cn-sm sticky bottom-0 z-10">{children}</div>
+  return <div className="sticky bottom-0 z-10 bg-cn-1 px-cn-xl py-cn-sm">{children}</div>
 }
 
 interface MessageProps extends PropsWithChildren<HTMLAttributes<HTMLElement>> {
@@ -63,7 +63,7 @@ const Message: FC<MessageProps> = ({ self, avatar, actions, children }) => {
         >
           {children}
         </div>
-        {actions && <div className="mt-cn-3xs gap-cn-3xs flex items-center">{actions}</div>}
+        {actions && <div className="mt-cn-3xs flex items-center gap-cn-3xs">{actions}</div>}
       </div>
     </div>
   )
@@ -88,9 +88,9 @@ interface TypingProps {
 
 const Typing: FC<TypingProps> = ({ avatar }) => {
   return (
-    <div className="mt-cn-sm gap-x-cn-sm flex items-center">
+    <div className="mt-cn-sm flex items-center gap-x-cn-sm">
       {avatar || <Illustration size={16} name="chat-avatar" themeDependent />}
-      <span className="bg-cn-3 size-2.5 rounded-cn-full" aria-hidden />
+      <span className="size-2.5 rounded-cn-full bg-cn-3" aria-hidden />
     </div>
   )
 }
@@ -124,7 +124,7 @@ const emptyStateButtons = [
 
 const EmptyState: FC = () => {
   return (
-    <div className="gap-cn-lg mt-auto flex flex-col">
+    <div className="mt-auto flex flex-col gap-cn-lg">
       <div>
         <Text variant="heading-subsection" color="foreground-2">
           Hello Steven,
@@ -136,7 +136,7 @@ const EmptyState: FC = () => {
       </div>
       <div>
         <Text as="span">Here are some suggestions to enhance your CI/CD pipeline:</Text>
-        <ul className="mt-cn-sm gap-y-cn-2xs flex flex-col">
+        <ul className="mt-cn-sm flex flex-col gap-y-cn-2xs">
           {emptyStateButtons.map(({ text }, index) => (
             <li key={index}>
               <Button className="w-full justify-start" variant="secondary">
@@ -176,12 +176,15 @@ const InputField: FC<InputFieldProps> = ({
       <Input
         ref={inputRef}
         // TODO: Review and remove arbitrary values
-        className="rounded-cn-4 pl-cn-sm focus-visible:rounded-cn-4 focus-visible:pb-cn-2xl h-11 flex-1 pr-[60px] focus:ring-0 focus-visible:h-16"
+        className="h-11 flex-1 rounded-cn-4 pl-cn-sm pr-[60px] focus:ring-0 focus-visible:h-16 focus-visible:rounded-cn-4 focus-visible:pb-cn-2xl"
         wrapperClassName="flex-row"
         value={value}
         onChange={onChange}
         onKeyDown={event => {
           onKeyDown(event)
+          if (event.nativeEvent.isComposing || event.keyCode === 229) {
+            return
+          }
           if (event.code === 'Enter') {
             onSend()
           }
@@ -190,7 +193,7 @@ const InputField: FC<InputFieldProps> = ({
         aria-label="Chat input"
       />
       <Button
-        className="bottom-cn-xs right-cn-xs absolute z-10 size-7"
+        className="absolute bottom-cn-xs right-cn-xs z-10 size-7"
         rounded
         onClick={onSend}
         disabled={disabled}

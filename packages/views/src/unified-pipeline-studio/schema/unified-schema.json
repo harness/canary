@@ -486,6 +486,9 @@
         },
         "parallel": {
           "type": "boolean"
+        },
+        "sequential": {
+          "type": "boolean"
         }
       },
       "type": "object"
@@ -1455,6 +1458,9 @@
           "type": "array"
         },
         "parallel": {
+          "type": "boolean"
+        },
+        "sequential": {
           "type": "boolean"
         }
       },

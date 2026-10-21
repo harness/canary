@@ -8,6 +8,8 @@ import dts from 'vite-plugin-dts'
 import svgr from 'vite-plugin-svgr'
 import tsConfigPaths from 'vite-tsconfig-paths'
 
+import { preserveCssUnicodeEscapes } from './scripts/preserve-css-unicode-escapes'
+
 const external = [
   'react',
   'react-dom',
@@ -82,6 +84,30 @@ function extractCssFontsPlugin(fontDir: string): Plugin {
   }
 }
 
+function preserveCssUnicodeEscapesPlugin(): Plugin {
+  return {
+    name: 'preserve-css-unicode-escapes',
+    apply: 'build',
+    writeBundle: {
+      sequential: true,
+      order: 'post',
+      handler(options) {
+        const outDir = options.dir || 'dist'
+        const cssFiles = readdirSync(outDir).filter(f => f.endsWith('.css'))
+
+        for (const cssFile of cssFiles) {
+          const cssPath = join(outDir, cssFile)
+          const css = readFileSync(cssPath, 'utf-8')
+          const next = preserveCssUnicodeEscapes(css)
+          if (next !== css) {
+            writeFileSync(cssPath, next)
+          }
+        }
+      }
+    }
+  }
+}
+
 /**
  * Copies individual theme CSS files from core-design-system into dist/themes/
  * with content-hash filenames for long-lived caching. Generates a
@@ -139,6 +165,7 @@ export default defineConfig({
     tsConfigPaths(),
     dts({ rollupTypes: true }),
     extractCssFontsPlugin(resolve(__dirname, 'src/fonts')),
+    preserveCssUnicodeEscapesPlugin(),
     buildThemesPlugin()
   ],
   resolve: {

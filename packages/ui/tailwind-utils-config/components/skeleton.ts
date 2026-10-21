@@ -86,9 +86,10 @@ export default {
       },
       '&-child': {
         '&::before': {
-          // Zero-width space to give the inline-block a line box. Written as a CSS escape
-          // (not the literal character) so the generated stylesheet stays ASCII-only and
-          // cannot render as mojibake when the CSS is decoded as anything but UTF-8.
+          // Zero-width space to give the inline-block a line box. Source uses a CSS
+          // escape (not the literal character). esbuild CSS minify still writes U+200B;
+          // preserveCssUnicodeEscapesPlugin rewrites it back so dist/styles.css stays
+          // ASCII-only (UUI-3134: `â€‹` before skeleton bars when CSS is not UTF-8).
           content: '"\\200B"'
         },
 

@@ -56,11 +56,11 @@
 
   "governance": {
     "rulesDocs": [
-      "../docs/system/accessibility.md",
-      "../docs/system/color-system.md",
-      "../docs/system/interaction-states.md",
-      "../docs/system/visual-primitives.md",
-      "./{component}.md"
+      "docs/system/accessibility.md",
+      "docs/system/color-system.md",
+      "docs/system/interaction-states.md",
+      "docs/system/visual-primitives.md",
+      "schemas/{component}.md"
     ],
     "note": "Component-specific pattern rules and decision framework.",
     "tokenStatus": "Status of token ref verification."

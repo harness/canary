@@ -1,13 +1,27 @@
 #!/bin/bash
-# UUI-2100 local testing suite — see UUI-2100-Local-Testing.md for the full guide.
 #
-# Covers tests 1-3, 5-9 from that guide. The drift (10), registry (12), and
-# new-component (11) tests are interactive/mutating and are not included here.
+# Manual verification of the @harnessio/ui design-system contracts.
 #
-# Run from the canary repo root: ./test-uui-2100.sh
+# The same ds-check gates run automatically on every commit (see the `pre-commit`
+# script in packages/ui/package.json) — this is the by-hand equivalent, for when
+# you want to confirm the state of things yourself or the commit hook is not
+# running. It is a convenience wrapper: it adds no checks of its own.
+#
+# Runs: all five ds-check gates, spec regeneration, the ds-check unit tests,
+# typecheck, lint, build, and unknown-flag rejection.
+#
+# Not covered (these mutate files — run them by hand): inducing spec drift,
+# scaffolding a new component manifest, and the registry file-existence sweep.
+#
+# Usage — works from any directory:
+#   ./packages/ui/scripts/verify-design-system.sh
+#
+# Exits 0 if everything passes, 1 if any step fails. Originally written for
+# UUI-2100.
 set -euo pipefail
 
-cd "$(dirname "$0")/packages/ui"
+# Resolve relative to this script, not the caller's cwd.
+cd "$(dirname "$0")/.."
 
 failures=0
 
@@ -51,8 +65,8 @@ expect_fail_matching() {
   fi
 }
 
-echo "🧪 UUI-2100 Local Testing Suite"
-echo "================================"
+echo "🧪 Design System Verification (@harnessio/ui)"
+echo "============================================="
 
 echo -e "\n1️⃣  Running all validation checks..."
 expect_ok "all validation checks" pnpm ds-check --schema --refs --code --source --generated

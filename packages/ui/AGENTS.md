@@ -113,10 +113,10 @@ File: packages/ui/generated/manifests/button.manifest.json
   
   "governance": {
     "rulesDocs": [
-      "apps/portal/src/content/docs/design-system/accessibility.md",
-      "apps/portal/src/content/docs/design-system/color-system.md",
-      "apps/portal/src/content/docs/design-system/interaction-states.md",
-      "./button.md"
+      "docs/system/accessibility.md",
+      "docs/system/color-system.md",
+      "docs/system/interaction-states.md",
+      "schemas/button.md"
     ]
   }
 }
@@ -307,7 +307,9 @@ Checks:
 
 ## References
 
-- **System Rules:** `apps/portal/src/content/docs/design-system/`
+- **System Rules:** `packages/ui/docs/system/` — the authoritative copy. Some of these
+  are also published to `apps/portal/src/content/docs/design-system/` for the docs
+  site; treat the portal copies as output, not as a reference to cite or edit.
 - **Patterns & Growth:** `apps/portal/src/content/docs/growth-patterns/`
 - **Token Architecture:** See `DESIGN.md` (root)
 - **Manifest Consumer Guide:** See `schemas/TEMPLATE.manifest.json` for example structure

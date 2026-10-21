@@ -91,61 +91,36 @@ cp packages/ui/schemas/TEMPLATE.manifest.json packages/ui/schemas/{component-keb
 **Validate:**
 
 ```bash
-cd packages/ui && pnpm ds-check:schema
+cd packages/ui && pnpm ds-check --schema
 ```
 
 ---
 
-## Step 3: Create the OpenAPI Spec
+## Step 3: Generate the OpenAPI Spec
 
-Copy the template:
-
-```bash
-cp packages/ui/schemas/TEMPLATE.openapi.json packages/ui/schemas/{component-kebab}.openapi.json
-```
-
-**Required customizations:**
-
-1. **`info.title`** → `{ComponentName} Component Skill`
-2. **`info.x-skill-id`** → `canary.{component-kebab}` (matches manifest)
-3. **`paths`** → One path: `/components/{component-kebab}`
-4. **`requestBody.schema.properties`** → Map from manifest's `shared` and `codeOnly` props
-5. **`requestBody.schema.required`** → List any required props
-6. **`x-internal-manifest`** → `schemas/{component-kebab}.manifest.json`
-
-**Example from StatusBadge:**
-
-```json
-{
-  "info": {
-    "title": "StatusBadge Component Skill",
-    "x-skill-id": "canary.status-badge",
-    "x-skill-status": "stable"
-  },
-  "paths": {
-    "/components/status-badge": {
-      "post": {
-        "requestBody": {
-          "schema": {
-            "properties": {
-              "label": { "type": "string" },
-              "variant": { "type": "string", "enum": ["primary", ...] },
-              "theme": { "type": "string", "enum": ["muted", ...] }
-            },
-            "required": ["label"]
-          }
-        }
-      }
-    }
-  }
-}
-```
-
-**Validate JSON:**
+The OpenAPI spec is **generated from the manifest** — never hand-edit it.
 
 ```bash
-node -e "console.log(JSON.parse(require('fs').readFileSync('./schemas/{component-kebab}.openapi.json', 'utf-8')).info.title)"
+cd packages/ui
+pnpm ds-check --write                            # Generates {component-kebab}.openapi.json
 ```
+
+**Verify:**
+
+```bash
+pnpm ds-check --generated                        # Fails if the spec is stale
+```
+
+The generator automatically:
+- Maps all `shared` and `codeOnly` props from the manifest
+- Derives enum values and defaults
+- Sets `required` fields
+- Embeds governance rules (`x-governance`)
+- Formats JSON via Prettier (idempotent)
+
+**If the spec file doesn't exist yet:** `pnpm ds-check --write` creates it. **If it exists but is out of sync:** `pnpm ds-check --generated` detects and fails; run `--write` to fix.
+
+**⚠️ Do not hand-edit the OpenAPI spec.** Any manual changes will be overwritten on the next regeneration.
 
 ---
 
@@ -247,16 +222,23 @@ Run the validation suite:
 ```bash
 cd packages/ui
 
-# Check manifest schema
-pnpm ds-check:schema
+# Check manifest schema validity
+pnpm ds-check --schema
 
-# Check rule docs exist
-pnpm ds-check:refs
+# Check governance.rulesDocs paths exist
+pnpm ds-check --refs
 
-# Check code export is valid
-pnpm ds-check:code
+# Check code.export is valid TypeScript name
+pnpm ds-check --code
 
-# Full validation
+# Check manifest enums match component CVA variants
+pnpm ds-check --source
+
+# Check OpenAPI spec is in sync (and regenerate if needed)
+pnpm ds-check --generated
+pnpm ds-check --write
+
+# Full validation (all of the above)
 pnpm ds-check
 ```
 
@@ -266,6 +248,7 @@ pnpm ds-check
 ✅ {component-kebab}.manifest.json validates
 ✅ governance.rulesDocs paths exist
 ✅ code.export is valid TypeScript name
+✅ {component-kebab}.openapi.json is up-to-date
 ```
 
 ---
@@ -330,8 +313,8 @@ Co-Authored-By: [Your Name] <[email]>"
 | Missing prop description | Every prop needs a `description` field |
 | Design-only prop without `transform` | Specify: `ignored`, `style-only`, `compose-derived`, or `layout-only` |
 | Code-only prop without `trigger` | Specify: `event-handler`, `runtime-state`, `data-binding`, or `a11y-only` |
-| Broken governance.rulesDocs path | Use relative paths starting with `../docs/system/` or `./{component}.md` |
-| OpenAPI endpoint path wrong | Must match `/components/{component-kebab}` (kebab-case) |
+| Broken governance.rulesDocs path | Use `docs/system/...` for system rules and `schemas/{component}.md` for component-specific rules |
+| Hand-editing the OpenAPI spec | Never; regenerate with `pnpm ds-check --write` instead |
 
 ---
 

@@ -202,13 +202,16 @@ Each component uses a root CSS class (e.g., `cn-button`) and semantic token refe
 ### Check all manifests
 
 ```bash
-pnpm ds-check                    # Schema + refs + code validation
+pnpm ds-check                    # Schema + refs + code + source + generated validation
 pnpm ds-check --schema           # Schema structure only
 pnpm ds-check --refs             # Check rulesDocs paths exist
 pnpm ds-check --code             # Validate code.export, code.path
+pnpm ds-check --source           # Compare manifest enums to component CVA variants
+pnpm ds-check --generated        # Verify OpenAPI specs are in sync (fails if stale)
+pnpm ds-check --write            # Regenerate OpenAPI specs from manifest
 ```
 
-Runs automatically on `pnpm pre-commit`.
+**Not run automatically.** Must be invoked manually or wired into CI/pre-commit hooks (see **Wiring into CI** below).
 
 ---
 

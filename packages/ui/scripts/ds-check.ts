@@ -176,6 +176,27 @@ function validateRegistry(): { valid: boolean; errors?: string[] } {
     }
   }
 
+  // Skill entries point at a manifest + OpenAPI doc; a dangling path here fails
+  // silently at consumption time, so treat it like any other broken reference.
+  const skills = registry.skills
+  if (skills !== undefined && !Array.isArray(skills)) {
+    errors.push('registry.json skills is not an array')
+  } else if (Array.isArray(skills)) {
+    for (const skill of skills as Array<Record<string, unknown>>) {
+      const id = typeof skill?.id === 'string' ? skill.id : JSON.stringify(skill)
+      for (const field of ['manifest', 'openapi'] as const) {
+        const value = skill?.[field]
+        if (typeof value !== 'string') {
+          errors.push(`skills entry "${id}" is missing a string "${field}"`)
+          continue
+        }
+        if (!fs.existsSync(resolveDocPath(value))) {
+          errors.push(`skills entry "${id}" references non-existent ${field}: ${value}`)
+        }
+      }
+    }
+  }
+
   // Every doc in docs/system/ must be registered, or it ships unadvertised
   const systemDir = path.resolve(PACKAGE_ROOT, 'docs/system')
   if (fs.existsSync(systemDir)) {

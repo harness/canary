@@ -70,7 +70,8 @@ export const qualityTasks: Task[] = [
     id: 'check-all',
     label: 'Check everything',
     category: 'Quality',
-    description: 'Fix formatting, then check code style, types, design system contracts and tests. Stops at the first problem.',
+    description:
+      'Fix formatting, then check code style, types, design system contracts and tests. Stops at the first problem.',
     run: () => runSteps([...formatSteps(), lintStep, typecheckStep, dsCheckStep, testStep])
   }
 ]

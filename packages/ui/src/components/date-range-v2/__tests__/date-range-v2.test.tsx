@@ -10,7 +10,7 @@ import type { DateRangeV2Value } from '../types'
 const lastWeek: DateRangeV2Value = {
   from: new Date('2026-09-28T15:30:00.000Z'),
   to: new Date('2026-10-05T15:30:00.000Z'),
-  preset: 'LAST_7_DAYS',
+  range: { kind: 'relative', direction: 'last', amount: 7, unit: 'day' },
   timezone: 'UTC'
 }
 
@@ -72,7 +72,12 @@ describe('DateRangeV2Content', () => {
     expect(screen.getByText('Last 7 days')).toBeInTheDocument()
 
     await userEvent.click(screen.getByRole('button', { name: 'Apply' }))
-    expect(onApply).toHaveBeenCalledWith(expect.objectContaining({ preset: 'LAST_7_DAYS', timezone: 'UTC' }))
+    expect(onApply).toHaveBeenCalledWith(
+      expect.objectContaining({
+        range: { kind: 'relative', direction: 'last', amount: 7, unit: 'day' },
+        timezone: 'UTC'
+      })
+    )
   })
 
   test('applies the active tab draft', async () => {
@@ -83,7 +88,10 @@ describe('DateRangeV2Content', () => {
     await userEvent.click(screen.getByRole('button', { name: 'Apply' }))
 
     expect(onApply).toHaveBeenCalledWith(
-      expect.objectContaining({ preset: 'PREVIOUS_1_CALENDAR_MONTH', timezone: 'UTC' })
+      expect.objectContaining({
+        range: { kind: 'calendar', position: 'previous', amount: 1, unit: 'month' },
+        timezone: 'UTC'
+      })
     )
   })
 
@@ -154,7 +162,7 @@ describe('DateRangeV2Content', () => {
     const from = new Date('2026-10-01T00:00:00.000Z')
     const to = new Date('2026-10-07T23:59:00.000Z')
     const { onApply } = renderContent({
-      value: { from, to, preset: 'LAST_7_DAYS', timezone: 'UTC' },
+      value: { from, to, range: { kind: 'preset', preset: 'LAST_7_DAYS' }, timezone: 'UTC' },
       config: {
         modes: [
           {
@@ -194,14 +202,16 @@ describe('DateRangeV2Content', () => {
     expect(screen.getByRole('button', { name: 'Last 7 days', exact: true })).toBeInTheDocument()
 
     await userEvent.click(screen.getByRole('button', { name: 'Apply' }))
-    expect(onApply).toHaveBeenCalledWith(expect.objectContaining({ preset: 'LAST_7_DAYS', timezone: 'UTC', from, to }))
+    expect(onApply).toHaveBeenCalledWith(
+      expect.objectContaining({ range: { kind: 'preset', preset: 'LAST_7_DAYS' }, timezone: 'UTC', from, to })
+    )
   })
 
   test('labels a selected preset by its name', () => {
     const from = new Date('2026-10-11T20:34:00.000Z')
     const to = new Date('2026-10-14T20:34:00.000Z')
     renderContent({
-      value: { from, to, preset: 'PREVIOUS_3_DAYS', timezone: 'UTC' },
+      value: { from, to, range: { kind: 'preset', preset: 'PREVIOUS_3_DAYS' }, timezone: 'UTC' },
       config: {
         modes: [
           {
@@ -230,7 +240,7 @@ describe('DateRangeV2Content', () => {
     const now = new Date()
     const from = new Date(now.getTime() - 3 * 24 * 60 * 60 * 1000)
     const { onApply } = renderContent({
-      value: { from, to: now, preset: 'PREVIOUS_3_DAYS', timezone: 'UTC' },
+      value: { from, to: now, range: { kind: 'preset', preset: 'PREVIOUS_3_DAYS' }, timezone: 'UTC' },
       config: {
         direction: 'past',
         modes: [
@@ -253,7 +263,9 @@ describe('DateRangeV2Content', () => {
     })
 
     await userEvent.click(screen.getByRole('button', { name: 'Apply' }))
-    expect(onApply).toHaveBeenCalledWith(expect.objectContaining({ preset: 'PREVIOUS_3_DAYS', from, to: now }))
+    expect(onApply).toHaveBeenCalledWith(
+      expect.objectContaining({ range: { kind: 'preset', preset: 'PREVIOUS_3_DAYS' }, from, to: now })
+    )
   })
 
   test('passes the selected timezone into getRange', async () => {
@@ -261,7 +273,7 @@ describe('DateRangeV2Content', () => {
     const to = new Date('2026-10-07T23:59:00.000Z')
     const seen: string[] = []
     const { onApply } = renderContent({
-      value: { from, to, preset: 'BILLING_CYCLE', timezone: 'Asia/Kolkata' },
+      value: { from, to, range: { kind: 'preset', preset: 'BILLING_CYCLE' }, timezone: 'Asia/Kolkata' },
       config: {
         modes: [
           {
@@ -291,7 +303,12 @@ describe('DateRangeV2Content', () => {
     await userEvent.click(screen.getByRole('button', { name: 'Apply' }))
     expect(seen.length).toBeGreaterThan(beforeApply)
     expect(seen.every(timezone => timezone === 'Asia/Kolkata')).toBe(true)
-    expect(onApply).toHaveBeenCalledWith({ from, to, preset: 'BILLING_CYCLE', timezone: 'Asia/Kolkata' })
+    expect(onApply).toHaveBeenCalledWith({
+      from,
+      to,
+      range: { kind: 'preset', preset: 'BILLING_CYCLE' },
+      timezone: 'Asia/Kolkata'
+    })
   })
 
   test('shows modes in the order given by config', () => {
@@ -339,7 +356,7 @@ describe('DateRangeV2Content', () => {
                 label: 'Last 7 days',
                 value: 'LAST_7_DAYS',
                 group: 'recommended',
-                getRange: () => ({ from: lastWeek.from, to: lastWeek.to })
+                getRange: () => ({ from: lastWeek.from!, to: lastWeek.to! })
               }
             ]
           },
@@ -398,13 +415,25 @@ describe('DateRangeV2Content', () => {
 })
 
 describe('DateRangeV2', () => {
-  test('migrates a legacy default preset when the picker is rendered', () => {
+  test('fills epochs when the open picker has a range without bounds', () => {
     const onValueChange = vi.fn()
-    render(<DateRangeV2 value={{ ...lastWeek, preset: 'LAST_MONTH' }} onValueChange={onValueChange} />)
+    render(
+      <DateRangeV2
+        open
+        value={{ range: { kind: 'relative', direction: 'last', amount: 7, unit: 'day' }, timezone: 'UTC' }}
+        onValueChange={onValueChange}
+      />
+    )
 
     expect(onValueChange).toHaveBeenCalledWith(
-      expect.objectContaining({ preset: 'PREVIOUS_1_CALENDAR_MONTH', timezone: 'UTC' })
+      expect.objectContaining({
+        range: { kind: 'relative', direction: 'last', amount: 7, unit: 'day' },
+        timezone: 'UTC'
+      })
     )
+    const next = onValueChange.mock.calls[0][0]
+    expect(next.from).toBeInstanceOf(Date)
+    expect(next.to).toBeInstanceOf(Date)
   })
 
   test('keeps the stored bounds until the user applies', async () => {
@@ -437,7 +466,12 @@ describe('DateRangeV2', () => {
     await userEvent.click(screen.getByRole('button', { name: /^Date range:/ }))
     await userEvent.click(screen.getByRole('button', { name: 'Apply' }))
 
-    expect(onValueChange).toHaveBeenCalledWith(expect.objectContaining({ preset: 'LAST_7_DAYS', timezone: 'UTC' }))
+    expect(onValueChange).toHaveBeenCalledWith(
+      expect.objectContaining({
+        range: { kind: 'relative', direction: 'last', amount: 7, unit: 'day' },
+        timezone: 'UTC'
+      })
+    )
   })
 
   test('rewrites browser time when browserZone changes', () => {
@@ -621,7 +655,9 @@ describe('DateRangeV2', () => {
         }}
       />
     )
-    expect(onValueChange).toHaveBeenLastCalledWith(expect.objectContaining({ preset: 'LAST_12_DAYS' }))
+    expect(onValueChange).toHaveBeenLastCalledWith(
+      expect.objectContaining({ range: { kind: 'relative', direction: 'last', amount: 12, unit: 'day' } })
+    )
 
     rerender(
       <DateRangeV2
@@ -632,12 +668,19 @@ describe('DateRangeV2', () => {
         }}
       />
     )
-    expect(onValueChange).toHaveBeenLastCalledWith(expect.objectContaining({ preset: 'LAST_3_WEEKS' }))
+    expect(onValueChange).toHaveBeenLastCalledWith(
+      expect.objectContaining({ range: { kind: 'relative', direction: 'last', amount: 3, unit: 'week' } })
+    )
 
     rerender(<DateRangeV2 value={lastWeek} onValueChange={onValueChange} config={{ direction: 'future' }} />)
-    expect(onValueChange).toHaveBeenLastCalledWith(expect.objectContaining({ preset: 'NEXT_7_DAYS' }))
+    expect(onValueChange).toHaveBeenLastCalledWith(
+      expect.objectContaining({ range: { kind: 'relative', direction: 'next', amount: 7, unit: 'day' } })
+    )
 
-    const calendarValue: DateRangeV2Value = { ...lastWeek, preset: 'PREVIOUS_1_CALENDAR_MONTH' }
+    const calendarValue: DateRangeV2Value = {
+      ...lastWeek,
+      range: { kind: 'calendar', position: 'previous', amount: 1, unit: 'month' }
+    }
     rerender(
       <DateRangeV2
         value={calendarValue}
@@ -647,7 +690,11 @@ describe('DateRangeV2', () => {
         }}
       />
     )
-    expect(onValueChange).toHaveBeenLastCalledWith(expect.objectContaining({ preset: 'PREVIOUS_4_CALENDAR_QUARTERS' }))
+    expect(onValueChange).toHaveBeenLastCalledWith(
+      expect.objectContaining({
+        range: { kind: 'calendar', position: 'previous', amount: 4, unit: 'quarter' }
+      })
+    )
   })
 
   test('applies timezone defaultValue when the value still uses the previous default', () => {
@@ -669,7 +716,14 @@ describe('DateRangeV2', () => {
 
   test('leaves a fixed range unchanged when relative defaults change', () => {
     const onValueChange = vi.fn()
-    const fixed: DateRangeV2Value = { ...lastWeek, preset: 'FIXED' }
+    const fixed: DateRangeV2Value = {
+      ...lastWeek,
+      range: {
+        kind: 'fixed',
+        from: { date: '2026-09-28', time: '15:30' },
+        to: { date: '2026-10-05', time: '15:30' }
+      }
+    }
     const { rerender } = render(<DateRangeV2 value={fixed} onValueChange={onValueChange} />)
 
     rerender(

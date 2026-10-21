@@ -189,11 +189,8 @@ const dateRangeV2Presets = (config?: DateRangeV2Config) => {
 
 const dateRangeV2Parser: DefaultParserFactory = option => {
   if (option.type !== FilterFieldTypes.DateRangeV2) return createDateRangeV2FilterParser()
-  // Preset ids reload through getRange({ timezone }). weekStartsOn is used for calendar weeks.
-  return createDateRangeV2FilterParser(
-    dateRangeV2Presets(option.filterFieldConfig),
-    option.filterFieldConfig?.calendarProps?.weekStartsOn
-  )
+  // Preset ids reload through getRange({ timezone }).
+  return createDateRangeV2FilterParser(dateRangeV2Presets(option.filterFieldConfig))
 }
 
 /**

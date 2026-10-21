@@ -1,16 +1,13 @@
-import { resolveDateRangeV2At, resolveTimeZone } from './resolve-date-range-v2'
+import { resolveTimeZone } from './resolve-date-range-v2'
 import { utcToCivilDate, utcToCivilTime } from './timezone-utils'
 import type {
   CalendarExtent,
   CalendarRange,
   CalendarUnit,
   DateRangeV2Range,
-  DateRangeV2State,
-  DateRangeV2Value,
   FixedRange,
   RelativeUnit,
-  TimeZoneId,
-  Weekday
+  TimeZoneId
 } from './types'
 
 const RELATIVE_UNITS = ['minute', 'hour', 'day', 'week', 'month', 'year'] as const
@@ -113,46 +110,12 @@ const calendarRange = (direction: string, amount: number, unitTokenValue: string
   }
 }
 
-const fixedRangeFromBounds = (from: Date, to: Date, timezone?: TimeZoneId): FixedRange => {
+/** Civil fixed range for instants already stored as epochs. */
+export const fixedRangeFromBounds = (from: Date, to: Date, timezone?: TimeZoneId): FixedRange => {
   const zone = resolveTimeZone(timezone)
   return {
     kind: 'fixed',
     from: { date: utcToCivilDate(from, zone), time: utcToCivilTime(from, zone) },
     to: { date: utcToCivilDate(to, zone), time: utcToCivilTime(to, zone) }
   }
-}
-
-export const dateRangeV2StateFromValue = (value: DateRangeV2Value): DateRangeV2State => {
-  const preset = value.preset ? migrateDefaultPreset(value.preset) : undefined
-  const range = preset && preset !== 'FIXED' ? parseDateRangeV2Preset(preset) : undefined
-  return {
-    version: 1,
-    range: range ?? fixedRangeFromBounds(new Date(value.from), new Date(value.to), value.timezone)
-  }
-}
-
-export const toDateRangeV2Value = (
-  value: DateRangeV2State,
-  timezone: TimeZoneId = 'UTC',
-  now: Date = new Date(),
-  weekStartsOn: Weekday = 1
-): DateRangeV2Value => {
-  const [start, end] = resolveDateRangeV2At(value, now, timezone, weekStartsOn)
-  return {
-    from: new Date(start),
-    to: new Date(end),
-    preset: formatDateRangeV2Preset(value.range),
-    timezone
-  }
-}
-
-export const refreshDateRangeV2Value = (
-  value: DateRangeV2Value,
-  now: Date = new Date(),
-  weekStartsOn: Weekday = 1
-): DateRangeV2Value => {
-  if (!value.preset || value.preset.toUpperCase() === 'FIXED') {
-    return { ...value, preset: 'FIXED', timezone: value.timezone ?? 'UTC' }
-  }
-  return toDateRangeV2Value(dateRangeV2StateFromValue(value), value.timezone ?? 'UTC', now, weekStartsOn)
 }

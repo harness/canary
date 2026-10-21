@@ -20,7 +20,10 @@ import {
   toZonedWallTime,
   zonedCivilToUtc
 } from './timezone-utils'
-import type { CalendarUnit, DateRangeV2State, RelativeUnit, TimeZoneId, Weekday } from './types'
+import type { CalendarUnit, DateRangeV2Range, RelativeUnit, TimeZoneId } from './types'
+
+/** Calendar weeks start on Monday. */
+const WEEK_STARTS_ON = 1
 
 const relativeAdders: Record<RelativeUnit, (date: Date, amount: number) => Date> = {
   minute: addMinutes,
@@ -46,13 +49,13 @@ const addZoned = (instant: Date, amount: number, unit: RelativeUnit | CalendarUn
     : fromZonedWallTime(adder(toZonedWallTime(instant, timeZone), amount), timeZone)
 }
 
-const startOfZonedUnit = (instant: Date, unit: CalendarUnit, timeZone: string, weekStartsOn: Weekday): Date => {
+const startOfZonedUnit = (instant: Date, unit: CalendarUnit, timeZone: string): Date => {
   const wallTime = toZonedWallTime(instant, timeZone)
   const start =
     unit === 'day'
       ? new Date(wallTime.getFullYear(), wallTime.getMonth(), wallTime.getDate())
       : unit === 'week'
-        ? startOfWeek(wallTime, { weekStartsOn })
+        ? startOfWeek(wallTime, { weekStartsOn: WEEK_STARTS_ON })
         : unit === 'month'
           ? startOfMonth(wallTime)
           : unit === 'quarter'
@@ -69,37 +72,17 @@ export const resolveTimeZone = (timezone?: TimeZoneId): string => {
 
 const inclusiveEnd = (exclusiveEnd: Date): number => exclusiveEnd.getTime() - 1
 
-function assertWeekStartsOn(weekStartsOn: number): asserts weekStartsOn is Weekday {
-  if (!Number.isInteger(weekStartsOn) || weekStartsOn < 0 || weekStartsOn > 6) {
-    throw new RangeError('weekStartsOn must be between 0 and 6')
-  }
+export interface ResolvedDateRangeV2 {
+  from: Date
+  to: Date
+  range: DateRangeV2Range
+  timezone: TimeZoneId
 }
 
-/**
- * Resolves a saved range to inclusive epoch milliseconds `[startTime, endTime]`.
- * Relative windows include the anchor instant. Calendar and fixed ends include the
- * last millisecond of the ending minute or period.
- */
-export const resolveDateRangeV2 = (
-  value: DateRangeV2State,
-  timezone?: TimeZoneId,
-  weekStartsOn: Weekday = 1
-): [startTime: number, endTime: number] => {
-  const now = new Date()
-  return resolveDateRangeV2At(value, now, timezone, weekStartsOn)
-}
-
-export const resolveDateRangeV2At = (
-  value: DateRangeV2State,
-  now: Date,
-  timezone?: TimeZoneId,
-  weekStartsOn: Weekday = 1
-): [startTime: number, endTime: number] => {
-  assertWeekStartsOn(weekStartsOn)
+const resolveEpochs = (range: DateRangeV2Range, timezone: TimeZoneId | undefined, now: Date): [number, number] => {
   if (Number.isNaN(now.getTime())) throw new RangeError('now must be a valid Date')
 
   const zone = resolveTimeZone(timezone)
-  const range = value.range
   let start: number
   let end: number
 
@@ -115,7 +98,7 @@ export const resolveDateRangeV2At = (
     if (!Number.isInteger(amount) || amount < 1) {
       throw new RangeError('Calendar amount must be a positive integer')
     }
-    const currentStart = startOfZonedUnit(now, range.unit, zone, weekStartsOn)
+    const currentStart = startOfZonedUnit(now, range.unit, zone)
     const periodStart =
       range.position === 'previous'
         ? addZoned(currentStart, -amount, range.unit, zone)
@@ -157,3 +140,26 @@ export const resolveDateRangeV2At = (
   if (start > end) throw new RangeError('Date range end must not be before its start')
   return [start, end]
 }
+
+/**
+ * Resolves a relative, calendar, or fixed range to inclusive epochs.
+ * `range` is returned unchanged. An omitted timezone is returned as UTC.
+ * A configured preset is not accepted: its bounds come from `getRange`.
+ */
+export const resolveDateRangeV2At = (
+  value: { range: DateRangeV2Range; timezone?: TimeZoneId },
+  now: Date
+): ResolvedDateRangeV2 => {
+  const [start, end] = resolveEpochs(value.range, value.timezone, now)
+  return {
+    from: new Date(start),
+    to: new Date(end),
+    range: value.range,
+    timezone: value.timezone ?? 'UTC'
+  }
+}
+
+export const resolveDateRangeV2 = (
+  value: { range: DateRangeV2Range; timezone?: TimeZoneId },
+  now: Date = new Date()
+): ResolvedDateRangeV2 => resolveDateRangeV2At(value, now)

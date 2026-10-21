@@ -16,8 +16,7 @@ import type {
   RelativeRange,
   RelativeUnit,
   TimeZoneId,
-  TimeZoneOptionList,
-  Weekday
+  TimeZoneOptionList
 } from './types'
 
 const DEFAULT_MODES: readonly DateRangeV2ModeEntry[] = [{ mode: 'relative' }, { mode: 'calendar' }, { mode: 'fixed' }]
@@ -67,7 +66,6 @@ export interface ResolvedDateRangeV2Config {
   modes: ResolvedDateRangeV2Mode[]
   tabDetails: DateRangeV2TabDetail[]
   direction: DateRangeV2Direction
-  weekStartsOn: Weekday
   clearable: boolean
   timezone: {
     enabled: boolean
@@ -230,7 +228,6 @@ export const resolveDateRangeV2Config = (config?: DateRangeV2Config): ResolvedDa
     modes: selected.tabs,
     tabDetails: resolveTabDetails(config?.tabDetails),
     direction: config?.direction ?? 'any',
-    weekStartsOn: config?.calendarProps?.weekStartsOn ?? 1,
     clearable: config?.clearable ?? false,
     timezone: timezone
       ? {

@@ -7,12 +7,10 @@ export {
   type DateRangeV2Label
 } from './format-date-range-v2-label'
 export {
+  fixedRangeFromBounds,
   formatDateRangeV2Preset,
   migrateDefaultPreset,
-  parseDateRangeV2Preset,
-  refreshDateRangeV2Value,
-  dateRangeV2StateFromValue,
-  toDateRangeV2Value
+  parseDateRangeV2Preset
 } from './date-range-v2-preset'
 export { createDateRangeV2FilterParser, dateRangeV2FilterParser } from './date-range-v2-filter-parser'
 export { DateRangeV2, DateRangeV2Content, isAllowedDateRangeV2, legalExtents } from './date-range-v2'

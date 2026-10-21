@@ -2,14 +2,7 @@ import { formatInTimeZone } from 'date-fns-tz'
 
 import { resolveDateRangeV2At, resolveTimeZone } from './resolve-date-range-v2'
 import { formatTimeZoneOffset } from './timezone-utils'
-import type {
-  CalendarUnit,
-  DateRangeV2LabelConfig,
-  DateRangeV2Preset,
-  DateRangeV2State,
-  TimeZoneId,
-  Weekday
-} from './types'
+import type { CalendarUnit, DateRangeV2LabelConfig, DateRangeV2Preset, DateRangeV2Range, TimeZoneId } from './types'
 
 const RELATIVE_UNIT_LABEL: Record<string, [string, string]> = {
   minute: ['minute', 'minutes'],
@@ -66,8 +59,7 @@ const formatBounds = (start: number, end: number, zone: string, showTime: boolea
   return `${startText} – ${endText}`
 }
 
-export const describeDateRangeV2 = (value: DateRangeV2State): Pick<DateRangeV2Label, 'title'> => {
-  const range = value.range
+export const describeDateRangeV2 = (range: DateRangeV2Range): Pick<DateRangeV2Label, 'title'> => {
   if (range.kind === 'relative') {
     const [singular, plural] = RELATIVE_UNIT_LABEL[range.unit]
     const unit = range.amount === 1 ? singular : plural
@@ -112,9 +104,8 @@ export const configuredPresetLabel = (
 }
 
 export const formatDateRangeV2Label = (
-  value: DateRangeV2State,
+  range: DateRangeV2Range,
   timezone?: TimeZoneId,
-  weekStartsOn?: Weekday,
   now: Date = new Date(),
   label: DateRangeV2LabelConfig = {},
   /** Stored from/to. When set, the label does not recompute the window from `now`. */
@@ -123,16 +114,22 @@ export const formatDateRangeV2Label = (
   title?: string
 ): DateRangeV2Label => {
   const zone = resolveTimeZone(timezone)
-  const described = title?.trim() ? { title: title.trim() } : describeDateRangeV2(value)
+  const described = title?.trim() ? { title: title.trim() } : describeDateRangeV2(range)
   let rangeText = described.title
   try {
-    const [start, end] = bounds ?? resolveDateRangeV2At(value, now, timezone, weekStartsOn)
+    let start = bounds?.[0]
+    let end = bounds?.[1]
+    if (start === undefined || end === undefined) {
+      const resolved = resolveDateRangeV2At({ range, timezone }, now)
+      start = resolved.from.getTime()
+      end = resolved.to.getTime()
+    }
     rangeText = formatBounds(start, end, zone, label.showTime ?? true)
   } catch {
     rangeText = described.title
   }
   const offset = formatTimeZoneOffset(zone)
   const showTimezone = label.showTimezone ?? true
-  const triggerText = title?.trim() || value.range.kind !== 'fixed' ? `${described.title} (${rangeText})` : rangeText
+  const triggerText = title?.trim() || range.kind !== 'fixed' ? `${described.title} (${rangeText})` : rangeText
   return { ...described, rangeText: showTimezone ? `${rangeText} · ${offset}` : rangeText, triggerText }
 }

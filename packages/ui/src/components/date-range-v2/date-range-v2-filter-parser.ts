@@ -1,11 +1,12 @@
-import { formatDateRangeV2Preset, parseDateRangeV2Preset, refreshDateRangeV2Value } from './date-range-v2-preset'
-import type { DateRangeV2FilterValue, DateRangeV2Preset, TimeZoneId, Weekday } from './types'
+import { fixedRangeFromBounds, formatDateRangeV2Preset, parseDateRangeV2Preset } from './date-range-v2-preset'
+import { resolveDateRangeV2 } from './resolve-date-range-v2'
+import type { DateRangeV2FilterValue, DateRangeV2Preset, DateRangeV2Range, TimeZoneId } from './types'
 
 const DEFAULT_TIME_ZONE: TimeZoneId = 'UTC'
 
 const isTimezone = (value: string): value is TimeZoneId => value.length > 0
 
-const timezoneSuffix = (timezone?: TimeZoneId): string => `|${timezone || DEFAULT_TIME_ZONE}`
+const timezoneOf = (timezone?: TimeZoneId): TimeZoneId => timezone || DEFAULT_TIME_ZONE
 
 const parseEpoch = (token: string): number | undefined => {
   if (!/^-?\d+$/.test(token)) return undefined
@@ -13,12 +14,13 @@ const parseEpoch = (token: string): number | undefined => {
   return Number.isSafeInteger(value) ? value : undefined
 }
 
+const resolvedEpochs = (range: DateRangeV2Range, timezone: TimeZoneId | undefined, now: Date) => {
+  const resolved = resolveDateRangeV2({ range, timezone }, now)
+  return { from: resolved.from, to: resolved.to, range: resolved.range, timezone: resolved.timezone }
+}
+
 export const dateRangeV2FilterParser = {
-  parse: (
-    serialized: string,
-    now: Date = new Date(),
-    weekStartsOn: Weekday = 1
-  ): DateRangeV2FilterValue | undefined => {
+  parse: (serialized: string, now: Date = new Date()): DateRangeV2FilterValue | undefined => {
     if (!serialized) return undefined
     let parts: string[]
     try {
@@ -34,37 +36,32 @@ export const dateRangeV2FilterParser = {
       const fromMs = second ? parseEpoch(second) : undefined
       const toMs = third ? parseEpoch(third) : undefined
       if (fromMs === undefined || toMs === undefined) return undefined
+      const timezone = parts.length === 3 ? DEFAULT_TIME_ZONE : fourth
       if (parts.length === 3) {
-        return refreshDateRangeV2Value(
-          { from: new Date(fromMs), to: new Date(toMs), preset: 'FIXED', timezone: DEFAULT_TIME_ZONE },
-          now,
-          weekStartsOn
-        )
+        const range = fixedRangeFromBounds(new Date(fromMs), new Date(toMs), DEFAULT_TIME_ZONE)
+        return resolvedEpochs(range, DEFAULT_TIME_ZONE, now)
       }
-      if (parts.length !== 4 || !fourth || !isTimezone(fourth)) return undefined
-      return refreshDateRangeV2Value(
-        { from: new Date(fromMs), to: new Date(toMs), preset: 'FIXED', timezone: fourth },
-        now,
-        weekStartsOn
-      )
+      if (parts.length !== 4 || !timezone || !isTimezone(timezone)) return undefined
+      const range = fixedRangeFromBounds(new Date(fromMs), new Date(toMs), timezone)
+      return resolvedEpochs(range, timezone, now)
     }
 
     if (parts.length > 2) return undefined
     const timezone = parts.length === 1 ? DEFAULT_TIME_ZONE : second
-    if (!timezone || !isTimezone(timezone) || !parseDateRangeV2Preset(preset)) return undefined
-    return refreshDateRangeV2Value({ from: now, to: now, preset, timezone }, now, weekStartsOn)
+    const range = parseDateRangeV2Preset(preset)
+    if (!timezone || !isTimezone(timezone) || !range) return undefined
+    return resolvedEpochs(range, timezone, now)
   },
   serialize: (value: DateRangeV2FilterValue): string => {
-    const preset = value.preset?.trim().toUpperCase() || 'FIXED'
-    const suffix = timezoneSuffix(value.timezone)
-    const range = preset === 'FIXED' ? undefined : parseDateRangeV2Preset(preset)
-    if (range) return `${formatDateRangeV2Preset(range)}${suffix}`
-    return `FIXED|${value.from.getTime()}|${value.to.getTime()}${suffix}`
+    const timezone = timezoneOf(value.timezone)
+    if (value.range.kind === 'preset') return `${value.range.preset}|${timezone}`
+    if (value.range.kind === 'fixed') {
+      const resolved = resolvedEpochs(value.range, timezone, new Date())
+      return `FIXED|${resolved.from.getTime()}|${resolved.to.getTime()}|${timezone}`
+    }
+    return `${formatDateRangeV2Preset(value.range)}|${timezone}`
   }
 }
-
-const isWeekday = (value: number | undefined): value is Weekday =>
-  value !== undefined && Number.isInteger(value) && value >= 0 && value <= 6
 
 const splitQuery = (serialized: string): string[] | undefined => {
   if (!serialized) return undefined
@@ -82,8 +79,7 @@ const presetKey = (value: string): string => value.trim().toUpperCase()
  * A preset id in `presets` reloads through that preset's `getRange({ timezone })`.
  * Every other value uses `dateRangeV2FilterParser`.
  */
-export const createDateRangeV2FilterParser = (presets?: readonly DateRangeV2Preset[], weekStartsOn?: number) => {
-  const weekday = isWeekday(weekStartsOn) ? weekStartsOn : 1
+export const createDateRangeV2FilterParser = (presets?: readonly DateRangeV2Preset[]) => {
   const configured = (presets ?? []).filter(preset => preset.value.trim() && typeof preset.getRange === 'function')
   const matchPreset = (token: string): DateRangeV2Preset | undefined => {
     const key = presetKey(token)
@@ -102,14 +98,16 @@ export const createDateRangeV2FilterParser = (presets?: readonly DateRangeV2Pres
           const timezone = timezoneToken || DEFAULT_TIME_ZONE
           const { from, to } = preset.getRange({ timezone })
           const [start, end] = from <= to ? [from, to] : [to, from]
-          return { from: start, to: end, preset: preset.value, timezone }
+          return { from: start, to: end, range: { kind: 'preset', preset: preset.value }, timezone }
         }
       }
-      return dateRangeV2FilterParser.parse(serialized, now, weekday)
+      return dateRangeV2FilterParser.parse(serialized, now)
     },
     serialize: (value: DateRangeV2FilterValue): string => {
-      const preset = value.preset ? matchPreset(value.preset) : undefined
-      if (preset) return `${preset.value}|${value.timezone || DEFAULT_TIME_ZONE}`
+      if (value.range.kind === 'preset') {
+        const preset = matchPreset(value.range.preset)
+        return `${preset?.value ?? value.range.preset}|${timezoneOf(value.timezone)}`
+      }
       return dateRangeV2FilterParser.serialize(value)
     }
   }

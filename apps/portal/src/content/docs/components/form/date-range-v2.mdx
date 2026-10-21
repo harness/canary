@@ -6,7 +6,7 @@ beta: true
 
 import { DocsPage } from "@/components/docs-page";
 
-`DateRangeV2` stores `{ from, to, preset, timezone }`. A recognized preset rebuilds `from` and `to` on refresh. `FIXED` keeps the stored bounds. Relative, calendar, and fixed drafts stay independent, so switching tabs does not convert one into another.
+`DateRangeV2` stores `{ range, timezone, from, to }`. `range` is a relative, calendar, fixed, or preset value. `from` and `to` are the epochs for that range. `resolveDateRangeV2` fills them for every range except a preset, which uses that preset's `getRange`. Apply refreshes the epochs. Weeks start on Monday. Relative, calendar, and fixed drafts stay independent, so switching tabs does not convert one into another.
 
 Each box is one `config` field. Omit `modes` for Relative, Calendar, and Fixed. Include `{ mode: 'presets', presets }` to add that tab. `presets` is required on that object. `{ mode: 'presets', presets: [] }` shows an empty preset select. `label` on a mode entry replaces the tab title. `timezone: false` hides the timezone row.
 
@@ -18,15 +18,6 @@ Each box is one `config` field. Omit `modes` for Relative, Calendar, and Fixed. 
     const calendarUnits = ['day', 'week', 'month', 'quarter', 'year'];
     const calendarExtents = ['full', 'so_far', 'from_now'];
     const modes = ['relative', 'calendar', 'fixed'];
-    const weekdays = [
-      { value: 0, label: '0 Sun' },
-      { value: 1, label: '1 Mon' },
-      { value: 2, label: '2 Tue' },
-      { value: 3, label: '3 Wed' },
-      { value: 4, label: '4 Thu' },
-      { value: 5, label: '5 Fri' },
-      { value: 6, label: '6 Sat' },
-    ];
     const timeZones = ['LOCALE', 'UTC', 'America/New_York', 'Europe/London', 'Asia/Kolkata'];
     const presets = [
       {
@@ -61,7 +52,6 @@ Each box is one `config` field. Omit `modes` for Relative, Calendar, and Fixed. 
       browserZone: 'dynamic',
       timezoneOptions: 'all',
       defaultValue: 'UTC',
-      weekStartsOn: 1,
       relativeAllowAmount: true,
       relativeUnits: relativeUnits,
       relativeDefaultDirection: 'last',
@@ -174,7 +164,6 @@ Each box is one `config` field. Omit `modes` for Relative, Calendar, and Fixed. 
             options: controls.timezoneOptions,
           }
         : false,
-      calendarProps: { weekStartsOn: controls.weekStartsOn },
       triggerLabel: { showTime: controls.showTime, showTimezone: controls.showTimezone },
       tabDetails: controls.tabDetails,
     };
@@ -268,10 +257,6 @@ Each box is one `config` field. Omit `modes` for Relative, Calendar, and Fixed. 
               {field('options', choices(['all', 'locale-utc'], controls.timezoneOptions, (timezoneOptions) => patch({ timezoneOptions: timezoneOptions })))}
               {field('defaultValue', choices(timeZones, controls.defaultValue, (defaultValue) => patch({ defaultValue: defaultValue })))}
             </Layout.Flex>
-          )}
-          {section(
-            'calendarProps',
-            field('weekStartsOn', choices(weekdays, controls.weekStartsOn, (weekStartsOn) => patch({ weekStartsOn: weekStartsOn })))
           )}
           {section(
             'relative',
@@ -524,7 +509,7 @@ Include `{ mode: 'presets', presets }` in `modes` to add that tab. Put it first 
     const [value, setValue] = React.useState({
       from: initial.from,
       to: initial.to,
-      preset: presets[0].value,
+      range: { kind: 'preset', preset: presets[0].value },
       timezone: 'UTC',
     });
 
@@ -535,7 +520,6 @@ Include `{ mode: 'presets', presets }` in `modes` to add that tab. Put it first 
           onValueChange={setValue}
           config={{
             direction: 'past',
-            calendarProps: { weekStartsOn: 1 },
             tabDetails: [],
             modes: [{ mode: 'presets', presets }, { mode: 'relative' }, { mode: 'calendar' }, { mode: 'fixed' }],
           }}
@@ -549,7 +533,7 @@ Include `{ mode: 'presets', presets }` in `modes` to add that tab. Put it first 
 
 ## Filter field
 
-`FilterGroup` is the out-of-the-box path. A sticky `FilterFieldTypes.DateRangeV2` option keeps Relative, Calendar, and Fixed on the built-in query. Presets on `{ mode: 'presets', presets }` in `filterFieldConfig.modes` reload through `getRange()`. `calendarProps.weekStartsOn` is used when a calendar week is read back, and it defaults to Monday. Apply and clear update the `timeframe` query param through the filters router. The value below is `location.search`.
+`FilterGroup` is the out-of-the-box path. A sticky `FilterFieldTypes.DateRangeV2` option keeps Relative, Calendar, and Fixed on the built-in query. The parser turns `range` into one preset param, such as `LAST_7_DAYS|UTC`, and rebuilds `range` plus `from` and `to` on refresh. Presets on `{ mode: 'presets', presets }` in `filterFieldConfig.modes` reload through `getRange()`. Calendar weeks start on Monday. Apply and clear update the `timeframe` query param through the filters router. The value below is `location.search`.
 
 <DocsPage.ComponentExample
   client:only
@@ -573,7 +557,6 @@ Include `{ mode: 'presets', presets }` in `modes` to add that tab. Put it first 
               sticky: true,
               filterFieldConfig: {
                 direction: 'any',
-                calendarProps: { weekStartsOn: 1 },
                 timezone: { browserZone: 'dynamic' },
                 tabDetails: [],
                 modes: [
@@ -692,7 +675,6 @@ Include `{ mode: 'presets', presets }` in `modes` to add that tab. Put it first 
               parser: parser,
               filterFieldConfig: {
                 direction: 'any',
-                calendarProps: { weekStartsOn: 1 },
                 timezone: { browserZone: 'dynamic' },
                 tabDetails: [],
                 modes: [{ mode: 'presets', presets: presets }, { mode: 'relative' }, { mode: 'calendar' }, { mode: 'fixed' }],
@@ -717,7 +699,7 @@ Include `{ mode: 'presets', presets }` in `modes` to add that tab. Put it first 
     {
       name: "value",
       description:
-        "Controlled value. preset is the source of truth for relative and calendar ranges. FIXED keeps from and to.",
+        "Controlled value. range is the source of truth. from and to are the epochs for that range and timezone. A preset range uses getRange.",
       required: false,
       value: "DateRangeV2Value",
     },
@@ -731,7 +713,7 @@ Include `{ mode: 'presets', presets }` in `modes` to add that tab. Put it first 
     {
       name: "config",
       description:
-        "modes, tabDetails, direction, timezone, clearable, triggerLabel, and calendarProps. triggerLabel.showTime adds a clock time when either end is not the start or end of a day. triggerLabel.showTimezone adds the offset. Both default to true. tabDetails chooses description, example, and note inside each mode's info tooltip. Omit it to show all three. An empty list leaves the title only. Omit modes for Relative, Calendar, and Fixed. Each entry is { mode } plus that mode's settings. label on a mode entry replaces the tab title. Include { mode: 'presets', presets } to add that tab. presets is required on that object. { mode: 'presets', presets: [] } shows an empty preset select. Each preset matches the date range picker: label, value, getRange, and group. A relative entry's defaultValue is direction, amount, and unit. Omit it for Last 7 days. A calendar entry's defaultValue is a calendar range. Previous and Next include amount. This includes extent. Omit it for This month, full period. A fixed entry's defaultValue is from and to. Omit it for today, 00:00 to 23:59, in the selected time zone. Timezone false hides the zone row. An object sets browserZone, defaultValue, and options. options locale-utc lists Browser Time and UTC only and hides search. The default zone is UTC. clearable shows the delete icon on the standalone picker. calendarProps.weekStartsOn sets the first weekday and defaults to Monday.",
+        "modes, tabDetails, direction, timezone, clearable, triggerLabel, and calendarProps. triggerLabel.showTime adds a clock time when either end is not the start or end of a day. triggerLabel.showTimezone adds the offset. Both default to true. tabDetails chooses description, example, and note inside each mode's info tooltip. Omit it to show all three. An empty list leaves the title only. Omit modes for Relative, Calendar, and Fixed. Each entry is { mode } plus that mode's settings. label on a mode entry replaces the tab title. Include { mode: 'presets', presets } to add that tab. presets is required on that object. { mode: 'presets', presets: [] } shows an empty preset select. Each preset matches the date range picker: label, value, getRange, and group. A relative entry's defaultValue is direction, amount, and unit. Omit it for Last 7 days. A calendar entry's defaultValue is a calendar range. Previous and Next include amount. This includes extent. Omit it for This month, full period. A fixed entry's defaultValue is from and to. Omit it for today, 00:00 to 23:59, in the selected time zone. Timezone false hides the zone row. An object sets browserZone, defaultValue, and options. options locale-utc lists Browser Time and UTC only and hides search. The default zone is UTC. clearable shows the delete icon on the standalone picker. calendarProps passes calendar options the picker does not own. Weeks start on Monday. resolveDateRangeV2(value, now) returns from, to, range, and timezone for a relative, calendar, or fixed range.",
       required: false,
       value: "DateRangeV2Config",
     },

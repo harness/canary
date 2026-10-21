@@ -153,22 +153,27 @@ describe('default filter parsers', () => {
       type: FilterFieldTypes.DateRangeV2,
       label: 'Timeframe',
       value: 'timeframe',
-      filterFieldConfig: { modes: [{ mode: 'presets', presets }], calendarProps: { weekStartsOn: 0 } }
+      filterFieldConfig: { modes: [{ mode: 'presets', presets }] }
     })
     const parser = getDefaultFilterParser(filter) as ReturnType<typeof createDateRangeV2FilterParser>
-    const builtIn = createDateRangeV2FilterParser(presets, 0)
+    const builtIn = createDateRangeV2FilterParser(presets)
 
-    expect(parser.serialize({ from: now, to: now, preset: 'billing_cycle', timezone: 'Asia/Kolkata' })).toBe(
-      'Billing_Cycle|Asia/Kolkata'
-    )
+    expect(
+      parser.serialize({
+        from: now,
+        to: now,
+        range: { kind: 'preset', preset: 'billing_cycle' },
+        timezone: 'Asia/Kolkata'
+      })
+    ).toBe('Billing_Cycle|Asia/Kolkata')
     expect(parser.parse('Billing_Cycle|Asia/Kolkata', now)).toEqual({
       from: billingFrom,
       to: billingTo,
-      preset: 'Billing_Cycle',
+      range: { kind: 'preset', preset: 'Billing_Cycle' },
       timezone: 'Asia/Kolkata'
     })
     expect(parser.parse('LAST_7_DAYS|UTC', now)).toEqual(builtIn.parse('LAST_7_DAYS|UTC', now))
-    expect(parser.parse('PREVIOUS_1_CALENDAR_WEEK|UTC', now)?.from.toISOString()).toBe('2026-09-27T00:00:00.000Z')
+    expect(parser.parse('PREVIOUS_1_CALENDAR_WEEK|UTC', now)?.from.toISOString()).toBe('2026-09-28T00:00:00.000Z')
     expect(parser.parse('FIXED|1788201000000|1788978600000|UTC', now)).toEqual(
       builtIn.parse('FIXED|1788201000000|1788978600000|UTC', now)
     )

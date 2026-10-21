@@ -1,7 +1,7 @@
 /**
  * DateRangeV2 panel and popover trigger.
  *
- * A value is a resolved interval (`from`/`to`) plus a preset id and timezone.
+ * A value stores `range` and a timezone. `from` and `to` are the epochs for that range.
  * Relative and calendar windows are recomputed from now only when the user applies.
  * Until then the stored bounds stay put. Each mode keeps its own draft, so switching
  * tabs does not discard an in-progress edit.
@@ -24,16 +24,10 @@ import { Separator } from '../separator'
 import { Text } from '../text'
 import { ToggleGroup } from '../toggle-group'
 import { TooltipProvider } from '../tooltip'
-import {
-  dateRangeV2StateFromValue,
-  migrateDefaultPreset,
-  refreshDateRangeV2Value,
-  toDateRangeV2Value
-} from './date-range-v2-preset'
 import { DateTimeEndpointField } from './date-time-endpoint-field'
 import { configuredPresetLabel, formatDateRangeV2Label } from './format-date-range-v2-label'
 import { PositiveAmountInput } from './positive-amount-input'
-import { resolveDateRangeV2At, resolveTimeZone } from './resolve-date-range-v2'
+import { resolveDateRangeV2, resolveDateRangeV2At, resolveTimeZone } from './resolve-date-range-v2'
 import { clampAmount, resolveDateRangeV2Config, type ResolvedDateRangeV2Config } from './resolve-picker-config'
 import { TimezoneOffsetBadge, TimezoneOptionLabel } from './timezone-offset-badge'
 import { getBrowserTimeZone, getSupportedTimeZones, utcToCivilDate, utcToCivilTime } from './timezone-utils'
@@ -44,16 +38,17 @@ import type {
   CivilDate,
   CivilTime,
   DateRangeAvailability,
+  DateRangeV2Config,
   DateRangeV2Mode,
   DateRangeV2Preset,
   DateRangeV2Props,
-  DateRangeV2State,
+  DateRangeV2Range,
   DateRangeV2Value,
   FixedRange,
+  PresetRange,
   RelativeRange,
   RelativeUnit,
-  TimeZoneId,
-  Weekday
+  TimeZoneId
 } from './types'
 
 /** Copy under each tab title. Tab order and titles follow config.modes. */
@@ -168,9 +163,9 @@ const applyConfigDefaults = (
   config: ResolvedDateRangeV2Config,
   previous: ConfigDefaults
 ): DateRangeV2Value | undefined => {
+  if (value.range.kind === 'preset') return undefined
   const current = configDefaults(config)
-  const state = dateRangeV2StateFromValue({ ...value, timezone: value.timezone ?? current.timezone })
-  let range = state.range
+  let range: DateRangeV2Range = value.range
 
   if (range.kind === 'relative') {
     const defaultChanged = previous.relativeDefault !== current.relativeDefault
@@ -208,10 +203,10 @@ const applyConfigDefaults = (
     timezone = current.timezone
   }
 
-  if (JSON.stringify(range) === JSON.stringify(state.range) && timezone === (value.timezone ?? previous.timezone)) {
+  if (JSON.stringify(range) === JSON.stringify(value.range) && timezone === (value.timezone ?? previous.timezone)) {
     return undefined
   }
-  return toDateRangeV2Value({ version: 1, range }, timezone, new Date(), config.weekStartsOn)
+  return resolveDateRangeV2({ range, timezone })
 }
 
 /**
@@ -283,11 +278,14 @@ const defaultFixed = (zone: string, config: ResolvedDateRangeV2Config): FixedRan
 
 /** One draft per mode. The inactive ones stay in state while another tab is open. */
 interface Drafts {
-  preset: string
+  preset: PresetRange
   relative: RelativeRange
   calendar: CalendarRange
   fixed: FixedRange
 }
+
+const sameRange = (left?: DateRangeV2Value['range'], right?: DateRangeV2Value['range']) =>
+  JSON.stringify(left) === JSON.stringify(right)
 
 const visibleExtents = (config: ResolvedDateRangeV2Config): CalendarExtent[] => {
   const allowed = legalExtents(config.direction).filter(extent => config.calendar.extents.includes(extent))
@@ -325,9 +323,6 @@ const defaultCalendar = (config: ResolvedDateRangeV2Config): CalendarRange => {
   }
 }
 
-const stateFromValue = (value: DateRangeV2Value | undefined, timezone: TimeZoneId): DateRangeV2State | undefined =>
-  value ? dateRangeV2StateFromValue({ ...value, timezone: value.timezone ?? timezone }) : undefined
-
 /** Pull a stored range back inside the current direction, units, and max amount. */
 const coerceRelative = (range: RelativeRange, config: ResolvedDateRangeV2Config): RelativeRange => {
   const directions = legalDirections(config.direction)
@@ -357,35 +352,27 @@ const coerceCalendar = (range: CalendarRange, config: ResolvedDateRangeV2Config)
   }
 }
 
-const draftsFor = (
-  value: DateRangeV2Value | undefined,
-  state: DateRangeV2State | undefined,
-  config: ResolvedDateRangeV2Config,
-  zone: string
-): Drafts => {
-  const range = state?.range
+const draftsFor = (value: DateRangeV2Value | undefined, config: ResolvedDateRangeV2Config, zone: string): Drafts => {
+  const range = value?.range
   return {
-    preset: config.presets.find(preset => preset.value === value?.preset)?.value ?? config.presets[0]?.value ?? '',
+    preset: { kind: 'preset', preset: range?.kind === 'preset' ? range.preset : (config.presets[0]?.value ?? '') },
     relative: range?.kind === 'relative' ? coerceRelative(range, config) : defaultRelative(config),
     calendar: range?.kind === 'calendar' ? coerceCalendar(range, config) : defaultCalendar(config),
     fixed: range?.kind === 'fixed' ? range : defaultFixed(zone, config)
   }
 }
 
-/** Named presets open the Presets tab. Anything else follows the parsed range, falling back to the first allowed mode. */
-const sectionFor = (
-  value: DateRangeV2Value | undefined,
-  state: DateRangeV2State | undefined,
-  config: ResolvedDateRangeV2Config
-): DateRangeV2Mode => {
-  if (value?.preset && config.presets.some(preset => preset.value === value.preset)) return 'presets'
+/** Named presets open the Presets tab. Anything else follows the stored range, falling back to the first allowed mode. */
+const sectionFor = (value: DateRangeV2Value | undefined, config: ResolvedDateRangeV2Config): DateRangeV2Mode => {
+  const range = value?.range
+  if (range?.kind === 'preset' && config.presets.some(preset => preset.value === range.preset)) {
+    return 'presets'
+  }
   const preferred: DateRangeV2Mode =
-    state?.range.kind === 'calendar' ? 'calendar' : state?.range.kind === 'fixed' ? 'fixed' : 'relative'
+    value?.range.kind === 'calendar' ? 'calendar' : value?.range.kind === 'fixed' ? 'fixed' : 'relative'
   const enabled = config.modes.map(tab => tab.mode)
   return enabled.includes(preferred) ? preferred : enabled[0]
 }
-
-const asState = (range: RelativeRange | CalendarRange | FixedRange): DateRangeV2State => ({ version: 1, range })
 
 /**
  * Preset bounds stay on the instants from getRange.
@@ -402,20 +389,40 @@ const allowsPresetBounds = (bounds: { from: Date; to: Date }, availability: Date
 
 /** True when the resolved interval stays on the allowed side of `now`. */
 export const isAllowedDateRangeV2 = (
-  value: DateRangeV2State,
+  range: DateRangeV2Range,
   availability: DateRangeAvailability,
   timezone?: TimeZoneId,
-  weekStartsOn?: Weekday,
   now: Date = new Date()
 ): boolean => {
   if (availability === 'any') return true
   try {
-    const [start, end] = resolveDateRangeV2At(value, now, timezone, weekStartsOn)
+    const resolved = resolveDateRangeV2At({ range, timezone }, now)
     const nowMs = now.getTime()
-    return availability === 'past' ? end <= nowMs : start >= nowMs
+    return availability === 'past' ? resolved.to.getTime() <= nowMs : resolved.from.getTime() >= nowMs
   } catch {
     return false
   }
+}
+
+const presetBoundsOf = (preset: DateRangeV2Preset, timezone: TimeZoneId): { from: Date; to: Date } => {
+  const { from, to } = preset.getRange({ timezone })
+  return from <= to ? { from, to } : { from: to, to: from }
+}
+
+/** Epochs for the active draft. Presets use `getRange`. The other modes use `resolveDateRangeV2`. */
+const valueFromDraft = (
+  range: DateRangeV2Value['range'],
+  timezone: TimeZoneId,
+  presets: readonly DateRangeV2Preset[],
+  now: Date = new Date()
+): DateRangeV2Value | undefined => {
+  if (range.kind === 'preset') {
+    const preset = presets.find(item => item.value === range.preset)
+    if (!preset) return undefined
+    const bounds = presetBoundsOf(preset, timezone)
+    return { from: bounds.from, to: bounds.to, range, timezone }
+  }
+  return resolveDateRangeV2({ range, timezone }, now)
 }
 
 const TIMEZONE_SELECT_ID = 'date-range-v2-timezone'
@@ -476,7 +483,6 @@ export const DateRangeV2Content = ({
   className
 }: DateRangeV2ContentProps) => {
   const pickerConfig = resolveDateRangeV2Config(config)
-  const weekStartsOn = pickerConfig.weekStartsOn
   const timezoneEnabled = pickerConfig.timezone.enabled
   const browserZone = pickerConfig.timezone.browserZone
   const timezoneOptionList = pickerConfig.timezone.options
@@ -490,12 +496,8 @@ export const DateRangeV2Content = ({
 
   const [draftTimezone, setDraftTimezone] = useState<TimeZoneId>(initialTimezone)
   const zone = resolveTimeZone(draftTimezone)
-  const [section, setSection] = useState<DateRangeV2Mode>(() =>
-    sectionFor(value, stateFromValue(value, initialTimezone), pickerConfig)
-  )
-  const [drafts, setDrafts] = useState<Drafts>(() =>
-    draftsFor(value, stateFromValue(value, initialTimezone), pickerConfig, zone)
-  )
+  const [section, setSection] = useState<DateRangeV2Mode>(() => sectionFor(value, pickerConfig))
+  const [drafts, setDrafts] = useState<Drafts>(() => draftsFor(value, pickerConfig, zone))
   /** First calendar click in Fixed mode. The second click completes the range. */
   const [pendingStart, setPendingStart] = useState<Date>()
   const [month, setMonth] = useState<Date>(() => new Date())
@@ -505,36 +507,48 @@ export const DateRangeV2Content = ({
     calendar: null,
     fixed: null
   })
-  // Replace drafts when the applied value or the config object changes. The filter memoizes config so a parent re-render does not wipe an open edit.
+  const draftSync = useRef<{ range: string; timezone?: TimeZoneId; config?: DateRangeV2Config } | null>(null)
+  const didFillBounds = useRef(false)
+  // Replace drafts when the stored range, timezone, or config changes. Epochs alone do not.
+  // The filter memoizes config so a parent re-render does not wipe an open edit.
   useEffect(() => {
-    const timezone = value?.timezone ?? pickerConfig.timezone.defaultValue
-    const state = stateFromValue(value, timezone)
-    setDraftTimezone(timezone)
-    setSection(sectionFor(value, state, pickerConfig))
-    setDrafts(draftsFor(value, state, pickerConfig, resolveTimeZone(timezone)))
+    const rangeKey = JSON.stringify(value?.range ?? null)
+    const timezone = value?.timezone
+    const previous = draftSync.current
+    if (previous && previous.range === rangeKey && previous.timezone === timezone && previous.config === config) {
+      return
+    }
+    draftSync.current = { range: rangeKey, timezone, config }
+    const nextTimezone = timezone ?? pickerConfig.timezone.defaultValue
+    setDraftTimezone(nextTimezone)
+    setSection(sectionFor(value, pickerConfig))
+    setDrafts(draftsFor(value, pickerConfig, resolveTimeZone(nextTimezone)))
     setPendingStart(undefined)
-  }, [value, config])
+  }, [value, config, pickerConfig])
+
+  // Fill epochs once when the parent stored a range without them.
+  useEffect(() => {
+    if (didFillBounds.current || !value || (value.from && value.to)) return
+    const timezone = value.timezone ?? pickerConfig.timezone.defaultValue
+    const next = valueFromDraft(value.range, timezone, pickerConfig.presets)
+    if (!next) return
+    didFillBounds.current = true
+    onApply(next)
+  }, [value, onApply, pickerConfig])
 
   // Presets preview through the consumer's getRange. Other tabs preview their own draft.
   const selectedPreset =
-    section === 'presets' ? pickerConfig.presets.find(preset => preset.value === drafts.preset) : undefined
+    section === 'presets' ? pickerConfig.presets.find(preset => preset.value === drafts.preset.preset) : undefined
   const presetBounds = selectedPreset?.getRange({ timezone: draftTimezone })
   const presetRange = presetBounds ? fixedRangeFromDates(presetBounds.from, presetBounds.to, draftTimezone) : undefined
-  const activeRange = presetRange ?? (section === 'presets' ? drafts.relative : drafts[section])
+  const activeRange: DateRangeV2Range =
+    presetRange ?? (section === 'calendar' ? drafts.calendar : section === 'fixed' ? drafts.fixed : drafts.relative)
   const appliedTimezone = value?.timezone ?? pickerConfig.timezone.defaultValue
-  const appliedRange = value ? stateFromValue(value, appliedTimezone)?.range : undefined
-  const draftRange = section === 'presets' ? undefined : drafts[section]
+  const draftRange = section === 'presets' ? drafts.preset : drafts[section]
   // Opening the picker must not move an applied window. Recompute from now only after the draft changes.
-  const showingApplied = Boolean(
-    value &&
-      appliedTimezone === draftTimezone &&
-      (section === 'presets'
-        ? selectedPreset != null &&
-          migrateDefaultPreset(selectedPreset.value) === migrateDefaultPreset(value.preset ?? '')
-        : appliedRange && JSON.stringify(draftRange) === JSON.stringify(appliedRange))
-  )
+  const showingApplied = Boolean(value && appliedTimezone === draftTimezone && sameRange(draftRange, value.range))
   const storedBounds: readonly [number, number] | undefined =
-    showingApplied && value ? [value.from.getTime(), value.to.getTime()] : undefined
+    showingApplied && value?.from && value.to ? [value.from.getTime(), value.to.getTime()] : undefined
   const activeRangeKey =
     activeRange.kind === 'relative'
       ? `${activeRange.direction}:${activeRange.amount}:${activeRange.unit}`
@@ -543,22 +557,20 @@ export const DateRangeV2Content = ({
           ? `${activeRange.position}:${activeRange.unit}:${activeRange.extent}`
           : `${activeRange.position}:${activeRange.unit}:${activeRange.amount}`
         : `${activeRange.from.date}T${activeRange.from.time}/${activeRange.to.date}T${activeRange.to.time}`
-  const activeState = asState(activeRange)
 
   const resolved = useMemo(() => {
     if (storedBounds) return storedBounds
     try {
-      return resolveDateRangeV2At(activeState, new Date(), draftTimezone, weekStartsOn)
+      const next = resolveDateRangeV2At({ range: activeRange, timezone: draftTimezone }, new Date())
+      return [next.from.getTime(), next.to.getTime()] as const
     } catch {
       return undefined
     }
-  }, [storedBounds, activeState, draftTimezone, weekStartsOn])
+  }, [storedBounds, activeRange, draftTimezone])
 
-  const labelState = (showingApplied && value ? stateFromValue(value, appliedTimezone) : undefined) ?? activeState
   const label = formatDateRangeV2Label(
-    labelState,
+    activeRange,
     draftTimezone,
-    weekStartsOn,
     new Date(),
     pickerConfig.triggerLabel,
     storedBounds,
@@ -567,7 +579,7 @@ export const DateRangeV2Content = ({
   const allowed =
     section === 'presets' && presetBounds
       ? allowsPresetBounds(presetBounds, pickerConfig.direction)
-      : isAllowedDateRangeV2(activeState, pickerConfig.direction, draftTimezone, weekStartsOn)
+      : isAllowedDateRangeV2(activeRange, pickerConfig.direction, draftTimezone)
   const canApply = Boolean(resolved) && allowed && !pendingStart && (section !== 'presets' || Boolean(selectedPreset))
 
   const selected: DateRange | undefined = pendingStart
@@ -678,7 +690,7 @@ export const DateRangeV2Content = ({
         from: { ...drafts.fixed.from, time: '00:00' },
         to: { ...drafts.fixed.to, time: '23:59' }
       }
-  const applyState = section === 'fixed' ? asState(fixedForApply) : activeState
+  const applyRange: DateRangeV2Range = section === 'fixed' ? fixedForApply : activeRange
 
   return (
     <div
@@ -716,14 +728,15 @@ export const DateRangeV2Content = ({
             size="sm"
             disabled={locked || !canApply}
             onClick={() => {
-              // Preset bounds come from the consumer's getRange, in the selected timezone.
-              if (section === 'presets' && selectedPreset) {
-                const { from, to } = selectedPreset.getRange({ timezone: draftTimezone })
-                const [start, end] = from <= to ? [from, to] : [to, from]
-                onApply({ from: start, to: end, preset: selectedPreset.value, timezone: draftTimezone })
-                return
-              }
-              onApply(toDateRangeV2Value(applyState, draftTimezone, new Date(), weekStartsOn))
+              const next =
+                section === 'presets' && selectedPreset
+                  ? valueFromDraft(
+                      { kind: 'preset', preset: selectedPreset.value },
+                      draftTimezone,
+                      pickerConfig.presets
+                    )
+                  : resolveDateRangeV2({ range: applyRange, timezone: draftTimezone })
+              if (next) onApply(next)
             }}
           >
             Apply
@@ -801,9 +814,9 @@ export const DateRangeV2Content = ({
               <Select
                 aria-label="Preset"
                 options={presetSelectOptions(pickerConfig.presets)}
-                value={drafts.preset}
+                value={drafts.preset.preset}
                 disabled={locked}
-                onChange={preset => setDrafts(current => ({ ...current, preset }))}
+                onChange={preset => setDrafts(current => ({ ...current, preset: { kind: 'preset', preset } }))}
                 size="sm"
                 wrapperClassName="w-64"
                 contentWidth="triggerWidth"
@@ -981,7 +994,7 @@ export const DateRangeV2Content = ({
               {...pickerConfig.calendarProps}
               numberOfMonths={pickerConfig.calendarProps?.numberOfMonths ?? 2}
               className={cn('!p-0', pickerConfig.calendarProps?.className)}
-              weekStartsOn={weekStartsOn}
+              weekStartsOn={1}
               mode="range"
               month={month}
               onMonthChange={setMonth}
@@ -1018,7 +1031,7 @@ export const DateRangeV2Content = ({
 
 DateRangeV2Content.displayName = 'DateRangeV2Content'
 
-/** Popover trigger. Reports a new value when config defaults, a legacy preset, or browserZone change. */
+/** Popover trigger. Reports a new value when config defaults or browserZone change. */
 export const DateRangeV2 = ({
   value,
   onValueChange,
@@ -1051,14 +1064,6 @@ export const DateRangeV2 = ({
     onValueChange(aligned)
   }, [config, pickerConfig, value, onValueChange])
 
-  // Old default preset ids, such as LAST_MONTH, are rewritten to the DateRangeV2 id.
-  useEffect(() => {
-    if (!value?.preset) return
-    const nextPreset = migrateDefaultPreset(value.preset)
-    if (nextPreset === value.preset.trim().toUpperCase()) return
-    onValueChange(refreshDateRangeV2Value({ ...value, preset: nextPreset }, new Date(), pickerConfig.weekStartsOn))
-  }, [pickerConfig.weekStartsOn, value, onValueChange])
-
   // Rewrite LOCALE ↔ the browser IANA id only after browserZone changes, not on mount.
   useEffect(() => {
     const previous = browserZoneRef.current
@@ -1067,31 +1072,47 @@ export const DateRangeV2 = ({
     if (previous === browserZone || !pickerConfig.timezone.enabled || !value?.timezone) return
     const nextTimezone = timezoneForBrowserZone(value.timezone, browserZone)
     if (nextTimezone === value.timezone) return
-    onValueChange(refreshDateRangeV2Value({ ...value, timezone: nextTimezone }, new Date(), pickerConfig.weekStartsOn))
-  }, [
-    pickerConfig.timezone.browserZone,
-    pickerConfig.timezone.enabled,
-    pickerConfig.weekStartsOn,
-    value,
-    onValueChange
-  ])
+    const next = valueFromDraft(value.range, nextTimezone, pickerConfig.presets)
+    if (next) onValueChange(next)
+  }, [pickerConfig, value, onValueChange])
   const open = openProp ?? uncontrolledOpen
   const setOpen = (next: boolean) => {
     onOpenChange?.(next)
     if (openProp === undefined) setUncontrolledOpen(next)
   }
-  const incoming = stateFromValue(value, timezone)
-  const triggerText = incoming
-    ? formatDateRangeV2Label(
-        incoming,
-        timezone,
-        pickerConfig.weekStartsOn,
-        new Date(),
-        pickerConfig.triggerLabel,
-        value ? [value.from.getTime(), value.to.getTime()] : undefined,
-        configuredPresetLabel(value?.preset, pickerConfig.presets)
-      ).triggerText
-    : placeholder
+  const storedBounds = value?.from && value.to ? ([value.from.getTime(), value.to.getTime()] as const) : undefined
+  const storedRange = value?.range
+  const presetTitle =
+    storedRange?.kind === 'preset'
+      ? (configuredPresetLabel(storedRange.preset, pickerConfig.presets) ?? storedRange.preset)
+      : undefined
+  const presetDisplayBounds = (() => {
+    if (storedRange?.kind !== 'preset') return undefined
+    if (storedBounds) return storedBounds
+    const preset = pickerConfig.presets.find(item => item.value === storedRange.preset)
+    if (!preset) return undefined
+    const bounds = presetBoundsOf(preset, timezone)
+    return [bounds.from.getTime(), bounds.to.getTime()] as const
+  })()
+  const triggerText =
+    storedRange?.kind === 'preset'
+      ? presetDisplayBounds
+        ? formatDateRangeV2Label(
+            {
+              kind: 'fixed',
+              from: { date: '1970-01-01', time: '00:00' },
+              to: { date: '1970-01-01', time: '23:59' }
+            },
+            timezone,
+            new Date(),
+            pickerConfig.triggerLabel,
+            presetDisplayBounds,
+            presetTitle
+          ).triggerText
+        : (presetTitle ?? placeholder)
+      : storedRange
+        ? formatDateRangeV2Label(storedRange, timezone, new Date(), pickerConfig.triggerLabel, storedBounds).triggerText
+        : placeholder
   return (
     <TooltipProvider>
       <Popover.Root open={open} onOpenChange={setOpen}>
@@ -1126,7 +1147,8 @@ export const DateRangeV2 = ({
             className={contentClassName}
             onApply={nextValue => {
               onValueChange(nextValue)
-              setOpen(false)
+              // A mount fill reports epochs for a range that did not have them. Leave the picker open.
+              if (value?.from && value.to) setOpen(false)
             }}
             onClear={() => {
               onValueChange(undefined)

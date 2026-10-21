@@ -75,6 +75,12 @@ export interface FixedRange {
   to: CivilDateTime
 }
 
+/** A configured preset. Bounds come from that preset's `getRange`, not from `resolveDateRangeV2`. */
+export interface PresetRange {
+  kind: 'preset'
+  preset: string
+}
+
 export type DateRangeV2Range = RelativeRange | CalendarRange | FixedRange
 
 /** `kind` stays on the stored range. A mode config already says which range it is. */
@@ -121,10 +127,10 @@ export interface FixedModeConfig {
   defaultValue?: WithoutKind<FixedRange>
 }
 
-/** Calendar props the picker does not own. Range selection stays under the picker's control. */
+/** Calendar props the picker does not own. Range selection and the Monday week start stay under the picker's control. */
 export type DateRangeV2CalendarProps = Omit<
   CalendarProps,
-  'mode' | 'selected' | 'onSelect' | 'onDayClick' | 'disabled' | 'month' | 'onMonthChange'
+  'mode' | 'selected' | 'onSelect' | 'onDayClick' | 'disabled' | 'month' | 'onMonthChange' | 'weekStartsOn'
 >
 
 export interface DateRangeV2LabelConfig {
@@ -175,7 +181,7 @@ export interface DateRangeV2Config {
   clearable?: boolean
   /** Trigger label options. Each flag defaults to true. */
   triggerLabel?: DateRangeV2LabelConfig
-  /** Calendar options the picker does not own. `weekStartsOn` defaults to Monday. */
+  /** Calendar options the picker does not own. Weeks start on Monday. */
   calendarProps?: DateRangeV2CalendarProps
 }
 
@@ -195,16 +201,14 @@ export interface DateRangeV2Props {
   'aria-labelledby'?: string
 }
 
-/** Persisted filter value. A recognized preset rebuilds `from` and `to` on refresh. */
+/**
+ * Applied value. `range` is the source of truth.
+ * `from` and `to` are the epochs for that range and timezone. Apply fills them, and a later Apply refreshes them.
+ */
 export interface DateRangeV2Value {
-  from: Date
-  to: Date
-  /**
-   * `LAST_7_DAYS` and `NEXT_2_WEEKS` are relative.
-   * `PREVIOUS_2_CALENDAR_MONTHS`, `THIS_MONTH`, `THIS_MONTH_SO_FAR`, and `THIS_MONTH_FROM_NOW` are calendar periods.
-   * `FIXED` keeps the stored bounds.
-   */
-  preset?: string
+  from?: Date
+  to?: Date
+  range: DateRangeV2Range | PresetRange
   timezone?: TimeZoneId
 }
 

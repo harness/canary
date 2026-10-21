@@ -17,7 +17,7 @@ describe('DateRangeV2Filter', () => {
           value: {
             from: new Date('2026-10-06T00:00:00.000Z'),
             to: new Date('2026-10-13T00:00:00.000Z'),
-            preset: 'LAST_7_DAYS',
+            range: { kind: 'relative' as const, direction: 'last' as const, amount: 7, unit: 'day' as const },
             timezone: 'UTC'
           }
         }}
@@ -38,7 +38,7 @@ describe('DateRangeV2Filter', () => {
       value: {
         from: new Date('2026-10-06T00:00:00.000Z'),
         to: new Date('2026-10-13T00:00:00.000Z'),
-        preset: 'LAST_7_DAYS',
+        range: { kind: 'relative' as const, direction: 'last' as const, amount: 7, unit: 'day' as const },
         timezone: 'UTC'
       }
     }
@@ -59,7 +59,7 @@ describe('DateRangeV2Filter', () => {
     const label = getDateRangeV2FilterLabel({
       from: new Date('2026-10-07T12:18:00.000Z'),
       to: new Date('2026-10-14T12:18:00.000Z'),
-      preset: 'LAST_7_DAYS',
+      range: { kind: 'relative' as const, direction: 'last' as const, amount: 7, unit: 'day' as const },
       timezone: 'UTC'
     })
 
@@ -69,7 +69,7 @@ describe('DateRangeV2Filter', () => {
         {
           from: new Date('2026-10-07T12:18:00.000Z'),
           to: new Date('2026-10-14T12:18:00.000Z'),
-          preset: 'LAST_7_DAYS',
+          range: { kind: 'relative' as const, direction: 'last' as const, amount: 7, unit: 'day' as const },
           timezone: 'UTC'
         },
         { triggerLabel: { showTimezone: false } }
@@ -82,7 +82,7 @@ describe('DateRangeV2Filter', () => {
       {
         from: new Date('2026-10-11T20:34:00.000Z'),
         to: new Date('2026-10-14T20:34:00.000Z'),
-        preset: 'PREVIOUS_3_DAYS',
+        range: { kind: 'preset', preset: 'PREVIOUS_3_DAYS' },
         timezone: 'UTC'
       },
       {

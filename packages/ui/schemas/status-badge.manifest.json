@@ -63,29 +63,28 @@
         "values": ["sm", "md"],
         "default": "md",
         "codeNote": "Badge size"
-      }
-    ],
-    "designOnly": [
+      },
       {
-        "name": "pulse",
-        "type": "boolean",
-        "figmaProperty": "pulse",
-        "transform": "style-only",
-        "notes": "Only works with variant='status'; controls animation on indicator dot, compiled to CSS animation"
+        "name": "children",
+        "type": "node",
+        "default": null,
+        "codeNote": "Badge label/text content",
+        "figmaNote": "Exposed in Figma as the TEXT property 'textString#1299:25'. Figma holds plain text only; the code prop accepts any ReactNode."
       }
     ],
+    "designOnly": [],
     "codeOnly": [
       {
         "name": "icon",
         "type": "string",
         "trigger": "appearance-override",
-        "notes": "Optional IconV2 name; Figma doesn't support icon picker, agents must provide explicit icon names"
+        "notes": "Optional IconV2 name (a key of IconNameMapV2). Figma does expose icon controls ('viewIcon#1293:13' plus the instance swap '↳ icon#1299:52'), but those select an icon *instance* while this prop takes an icon *name*, and the icon component set has no Code Connect mapping to recover a name from. Agents must supply the name explicitly."
       },
       {
-        "name": "children",
-        "type": "node",
-        "trigger": "content",
-        "notes": "Badge label/text content"
+        "name": "pulse",
+        "type": "boolean",
+        "trigger": "appearance-override",
+        "notes": "Animates the status indicator dot (CSS animate-pulse). Requires variant='status'; the discriminated union types it as never on every other variant. No Figma property corresponds to it, though the Figma component does draw the indicator dot."
       },
       {
         "name": "className",

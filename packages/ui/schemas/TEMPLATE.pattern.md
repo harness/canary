@@ -1,187 +1,140 @@
 # {ComponentName} Pattern Guide
 
-**Manifest ID:** `canary.{component-kebab}`  
-**Status:** [draft | beta | stable | deprecated]  
+**Manifest ID:** `canary.{component-kebab}`
+**Status:** [draft | beta | stable | deprecated]
 **Last Updated:** YYYY-MM-DD
+
+> **This file is hand-written judgment only.**
+>
+> Do **not** add prop tables, enum values, token lists, or defaults here. Those live in
+> `{component-kebab}.manifest.json` and are published to `{component-kebab}.openapi.json`,
+> which is **generated** — `pnpm ds-check` fails if it drifts. Copying any of it into this
+> file creates a second copy that nothing keeps in sync, which is the one failure this
+> system exists to prevent.
+>
+> Write what a manifest cannot express: *when* to reach for this component, when not to,
+> and why.
 
 ---
 
 ## Overview
 
-[AUTHORED] Brief explanation of what this component is and why it exists.
+[AUTHORED] What this component is, and the kind of thing it represents.
 
-**When to use:**
-- Use case 1
-- Use case 2
+**Use when:**
+- [AUTHORED] Situation where this is the right choice
 
-**When NOT to use:**
-- Anti-pattern 1 (use [AlternativeComponent] instead)
-- Anti-pattern 2
+**Do not use when:**
+- [AUTHORED] Situation where something else is right (use [AlternativeComponent] instead)
 
 ---
 
-## Props
+## Decision Framework: {ComponentName} vs [AlternativeComponent]
 
-### Shared Props (Design ↔ Code)
+[AUTHORED] The test a reader applies to choose between them.
 
-| Prop | Type | Default | Notes |
-|------|------|---------|-------|
-| `variant` | enum | `primary` | Figma variant maps to code prop |
-| `size` | enum | `md` | Size options |
+| Question | Answer | Component |
+|----------|--------|-----------|
+| [Distinguishing question] | Yes | {ComponentName} |
+| [Distinguishing question] | Yes | [AlternativeComponent] |
 
-**Design binding:** These props exist in both Figma and React. Code Connect maps Figma properties to these prop names.
+### Ambiguous cases
 
-### Design-Only Props (Figma only)
+[AUTHORED] Real cases that genuinely sit on the line, and the call made for each.
+These are the most valuable lines in the file — they are the judgments a reader
+cannot derive from the prop list.
 
-| Prop | Type | Transform | Notes |
-|------|------|-----------|-------|
-| `state` | enum | `style-only` | Figma controls `:hover`, `:focus` → CSS only |
-
-**Why:** These change appearance in the design file but compile to CSS, not React props.
-
-### Code-Only Props (React only)
-
-| Prop | Type | Trigger | Notes |
-|------|------|---------|-------|
-| `onClick` | function | `event-handler` | User interaction; not designable in Figma |
-
-**Why:** Runtime behavior that can't be represented in a static design file.
+- **[Case]** → [Component] ([one-line reason])
 
 ---
 
-## Tokens
+## Do's and Don'ts
 
-All color, spacing, and animation values MUST be semantic token references. No hardcoded hex, px, or RGB values.
+### ✅ Do
 
-```json
-"tokens": {
-  "rootClass": "cn-{component}",
-  "rule": "semantic-only",
-  "refs": {
-    "bg.primary": "{component}.bg.primary",
-    "text.color": "text.cn-1",
-    "padding.md": "spacing.md"
-  }
-}
-```
+- [AUTHORED] Guidance that is a *choice*, not a type constraint
 
-**Why:** Enables theme switching (light/dark) and design system changes to propagate automatically.
+### ❌ Don't
 
----
+- [AUTHORED] Mistake that compiles but is wrong
+- [AUTHORED] Combination the type system allows but the design system forbids
 
-## Accessibility
-
-**ARIA Role:** [status | button | region | etc.]
-
-**Keyboard Support:**
-- Tab: [enter if applicable]
-- Enter/Space: [if interactive]
-- Escape: [if applicable]
-
-**Usage Guidance:**
-- [Specific accessible name requirement]
-- [When to add aria-label / aria-labelledby]
-- [Decorative vs semantic content]
-
----
-
-## Known Gaps
-
-List any limitations or future improvements:
-
-- [ ] Gap/limitation 1 (linked to design issue / Jira ticket if exists)
-- [ ] Gap/limitation 2 (workaround: ...)
+> Prefer documenting mistakes the **compiler cannot catch**. If TypeScript already
+> rejects it, the reader does not need a doc to find out.
 
 ---
 
 ## Examples
 
-### ✅ Correct Usage
+[AUTHORED] Every example must compile — include all required props.
+Verify against the generated spec's `required` list before committing.
+
+### ✅ Correct
 
 ```tsx
-import { {ComponentName} } from '@harnessio/ui/components'
-
-// Example 1: Primary variant
-<{ComponentName} variant="primary">Save</{ ComponentName}>
-
-// Example 2: With icon
-<{ComponentName} variant="secondary" icon="check">Confirm</{ ComponentName}>
+// [What this demonstrates]
+<{ComponentName} />
 ```
 
-### ❌ Incorrect Usage
+### ❌ Incorrect
 
 ```tsx
-// ❌ Don't: Hardcoded color
-<{ComponentName} style={{ backgroundColor: '#0066cc' }}>Bad</{ ComponentName}>
-
-// ❌ Don't: Using alternative component
-<Button>Use {ComponentName} instead for this case</Button>
+// ❌ Don't: [why]
+<{ComponentName} />
 ```
 
 ---
 
-## Decision Framework
+## Accessibility
 
-### This component vs [AlternativeComponent]
+[AUTHORED] Consumer-facing obligations only — what someone *using* this component
+must do. The ARIA role and internal behaviour are in the manifest.
 
-| Aspect | {ComponentName} | Alternative |
-|--------|-----------------|-------------|
-| Use case A | ✅ | ❌ |
-| Use case B | ❌ | ✅ |
+- [What the consumer must provide, e.g. mandatory text content]
+- [When a wrapper is required, e.g. aria-live for values that change while visible]
 
 ---
 
-## Governance Status
+## Known Gaps
 
-- **System Rules Applied:** Accessibility, Color System, Interaction States, Visual Primitives
-- **Token Verification:** [All verified | Partial | Pending]
-- **Design Sync:** [Latest | Out of date]
-- **Code Connect:** [Active | Needs update]
+[AUTHORED] Limitations a reader would otherwise discover the hard way.
+Remove entries when they are fixed — a stale gap is worse than no gap.
+
+- [ ] [Gap] ([Jira id if one exists]; workaround: ...)
 
 ---
 
 ## How to Contribute
 
-### Adding a New Variant
+### Adding a variant, theme, or prop
 
-1. Add variant to Figma component set (if design-time)
-2. Update `props.shared[].values` in `{component-kebab}.manifest.json`
-3. Update `props.shared[].values` in `{component-kebab}.openapi.json`
-4. Add token refs to `tokens.refs` if new colors/sizing involved
-5. Update this guide with new use cases
-6. Test with `pnpm ds-check`
+1. Update `{component-kebab}.manifest.json` — it is the single source of truth
+2. Run `pnpm ds-check --write` to regenerate the OpenAPI spec
+3. Update the examples and guidance **in this file** if the change affects when to use it
+4. Run `pnpm ds-check` and commit both files together
 
-### Adding a New Prop
+**Never hand-edit `{component-kebab}.openapi.json`.** It is generated, and the next
+regeneration discards your change.
 
-1. **Shared prop** (Figma ↔ Code):
-   - Add to Figma component properties
-   - Add to `props.shared[]` in manifest
-   - Update Code Connect mapping
-   - Add token refs if style-related
+### Reporting issues
 
-2. **Code-only prop** (behavior):
-   - Add to component.tsx TypeScript type
-   - Add to `props.codeOnly[]` in manifest with `trigger` reason
-   - Document in this guide under Props section
-
-### Reporting Issues
-
-- Design drift: Check Figma publish status; file issue if out of sync
-- Token missing: Verify `tokens.refs` in manifest
-- Accessibility gap: Add to Known Gaps with workaround; flag for future sprint
+- Design drift → file in Jira (XD project)
+- Accessibility gap → add to Known Gaps with a workaround
+- Figma/code mismatch → check the Code Connect file first; it records what Figma
+  actually exposes
 
 ---
 
 ## References
 
-- **Component Source:** `packages/ui/src/components/{component-kebab}/{component}.tsx`
-- **Code Connect:** `packages/ui/src/components/{component-kebab}/{component}.figma.ts`
-- **Manifest:** `packages/ui/schemas/{component-kebab}.manifest.json`
-- **OpenAPI Spec:** `packages/ui/schemas/{component-kebab}.openapi.json`
-- **Figma File:** [Link to component in Harness Design System file]
+- **Source:** `packages/ui/src/components/{component-kebab}/{component-kebab}.tsx`
+- **Code Connect:** `packages/ui/src/components/{component-kebab}/{component-kebab}.figma.ts`
+- **Manifest (authored):** `{component-kebab}.manifest.json`
+- **OpenAPI spec (generated):** `{component-kebab}.openapi.json`
+- **System rules:** `docs/system/`
 
 ---
 
 ## Questions?
 
-See the main [AGENTS.md](../AGENTS.md) for discovery workflow, or ask @design-systems on Slack.
+See [AGENTS.md](../AGENTS.md) for the discovery workflow, or ask @design-systems on Slack.

@@ -4,7 +4,7 @@
 **Status:** [draft | beta | stable | deprecated]
 **Last Updated:** YYYY-MM-DD
 
-> **This file is hand-written judgment only.**
+> **This file is hand-written judgment only — written by designers.**
 >
 > Do **not** add prop tables, enum values, token lists, or defaults here. Those live in
 > `{component-kebab}.manifest.json` and are published to `{component-kebab}.openapi.json`,
@@ -14,24 +14,28 @@
 >
 > Write what a manifest cannot express: *when* to reach for this component, when not to,
 > and why.
+>
+> **For this draft:** Leave sections blank or annotate with `[TODO: team]` / `[NEEDS REVIEW]`
+> if you're unsure. The internal team will fill in technical details and verify against
+> the component's actual API.
 
 ---
 
 ## Overview
 
-[AUTHORED] What this component is, and the kind of thing it represents.
+**[DESIGNER — required]** What this component is, and the kind of thing it represents.
 
 **Use when:**
-- [AUTHORED] Situation where this is the right choice
+- **[DESIGNER — required]** Situation where this is the right choice
 
 **Do not use when:**
-- [AUTHORED] Situation where something else is right (use [AlternativeComponent] instead)
+- **[DESIGNER — required]** Situation where something else is right (use [AlternativeComponent] instead)
 
 ---
 
 ## Decision Framework: {ComponentName} vs [AlternativeComponent]
 
-[AUTHORED] The test a reader applies to choose between them.
+**[DESIGNER — required]** The test a reader applies to choose between them.
 
 | Question | Answer | Component |
 |----------|--------|-----------|
@@ -40,9 +44,8 @@
 
 ### Ambiguous cases
 
-[AUTHORED] Real cases that genuinely sit on the line, and the call made for each.
-These are the most valuable lines in the file — they are the judgments a reader
-cannot derive from the prop list.
+**[DESIGNER — most valuable]** Real cases that genuinely sit on the line, and the call made for each.
+These are the judgments a reader cannot derive from the prop list alone. If unsure, leave this for team review.
 
 - **[Case]** → [Component] ([one-line reason])
 
@@ -50,14 +53,17 @@ cannot derive from the prop list.
 
 ## Do's and Don'ts
 
+**[DESIGNER — optional]** Document the choices that matter in practice, not what the compiler catches.
+
 ### ✅ Do
 
-- [AUTHORED] Guidance that is a *choice*, not a type constraint
+- **[DESIGNER]** Guidance that is a *choice*, not a type constraint
+- [OPTIONAL] Leave blank if the component's constraints are self-explanatory
 
 ### ❌ Don't
 
-- [AUTHORED] Mistake that compiles but is wrong
-- [AUTHORED] Combination the type system allows but the design system forbids
+- **[DESIGNER]** Mistake that compiles but is wrong
+- **[DESIGNER]** Combination the type system allows but the design system forbids
 
 > Prefer documenting mistakes the **compiler cannot catch**. If TypeScript already
 > rejects it, the reader does not need a doc to find out.
@@ -66,62 +72,78 @@ cannot derive from the prop list.
 
 ## Examples
 
-[AUTHORED] Every example must compile — include all required props.
-Verify against the generated spec's `required` list before committing.
+**[DESIGNER or TEAM]** Include 2–3 real-world examples showing common usage.
+
+**Note:** Code examples must compile. If you're unsure about exact prop names, leave as `[TODO: team fill in props]` and the team will verify against the generated spec.
 
 ### ✅ Correct
 
 ```tsx
 // [What this demonstrates]
-<{ComponentName} />
+<{ComponentName} [TODO: team fill in props] />
 ```
 
 ### ❌ Incorrect
 
 ```tsx
 // ❌ Don't: [why]
-<{ComponentName} />
+<{ComponentName} [TODO: team fill in props] />
 ```
+
+**[OPTIONAL]** If examples are too implementation-specific, you can skip this section and leave for team to populate.
 
 ---
 
 ## Accessibility
 
-[AUTHORED] Consumer-facing obligations only — what someone *using* this component
-must do. The ARIA role and internal behaviour are in the manifest.
+**[DESIGNER + TEAM]** Consumer-facing obligations only — what someone *using* this component must do.
+The ARIA role and internal behaviour are in the manifest and auto-generated.
+
+**Designer provides:** What consumers must do to use it accessibly (e.g., provide alt text, wrap in aria-live).
+**Team verifies:** Against the actual implementation and manifest.
 
 - [What the consumer must provide, e.g. mandatory text content]
 - [When a wrapper is required, e.g. aria-live for values that change while visible]
+
+**[OPTIONAL]** Leave blank if this component is self-contained and has no consumer obligations.
 
 ---
 
 ## Known Gaps
 
-[AUTHORED] Limitations a reader would otherwise discover the hard way.
+**[DESIGNER — valuable]** Limitations a reader would otherwise discover the hard way.
 Remove entries when they are fixed — a stale gap is worse than no gap.
 
 - [ ] [Gap] ([Jira id if one exists]; workaround: ...)
+
+**[OPTIONAL]** Leave empty if there are no known limitations.
 
 ---
 
 ## How to Contribute
 
-### Adding a variant, theme, or prop
+### Writing or updating this pattern doc
 
-1. Update `{component-kebab}.manifest.json` — it is the single source of truth
-2. Run `pnpm ds-check --write` to regenerate the OpenAPI spec
-3. Update the examples and guidance **in this file** if the change affects when to use it
-4. Run `pnpm ds-check` and commit both files together
+1. **Before you start:** The component must exist in code. Ask @design-systems if it's ready.
+2. **Write your sections:** Follow the template; annotate `[TODO: team]` or `[NEEDS REVIEW]` for anything you're unsure of.
+3. **Examples:** Write what you know; leave prop details for the team to fill in.
+4. **Submit:** Open a PR with just the `.md` file. The team will:
+   - Create/verify the manifest (`{component-kebab}.manifest.json`)
+   - Auto-generate the OpenAPI spec
+   - Verify your examples compile
+   - Review your decision framework for correctness
 
-**Never hand-edit `{component-kebab}.openapi.json`.** It is generated, and the next
-regeneration discards your change.
+### Adding a variant, theme, or prop to an existing pattern
+
+1. Update this file with the new usage guidance
+2. **Do not edit** `{component-kebab}.manifest.json` or `.openapi.json` directly
+3. File a design change request in Jira (XD project); the team will update the manifest and regenerate
 
 ### Reporting issues
 
-- Design drift → file in Jira (XD project)
-- Accessibility gap → add to Known Gaps with a workaround
-- Figma/code mismatch → check the Code Connect file first; it records what Figma
-  actually exposes
+- Design gap / limitation → add to **Known Gaps** section with workaround
+- Figma/code mismatch → check the Code Connect file first (`{component-kebab}.figma.ts`); it records what Figma exposes
+- Manifest/spec drift → file in Jira (XD project)
 
 ---
 

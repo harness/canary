@@ -6,11 +6,13 @@
 
 > **This file is hand-written judgment only — written by designers.**
 >
+> **YOU OWN:** Pattern logic, decision-making, when/why to use it, composition assembly, known gaps.
+>
+> **TEAM OWNS:** Component manifests, prop definitions, Figma bindings, OpenAPI specs (auto-generated), technical verification.
+>
 > Do **not** add prop tables, enum values, token lists, or defaults here. Those live in
-> `{component-kebab}.manifest.json` and are published to `{component-kebab}.openapi.json`,
-> which is **generated** — `pnpm ds-check` fails if it drifts. Copying any of it into this
-> file creates a second copy that nothing keeps in sync, which is the one failure this
-> system exists to prevent.
+> `{component-kebab}.manifest.json` (one per component) and are published to `.openapi.json`,
+> which is **generated** — `pnpm ds-check` fails if it drifts.
 >
 > Write what a manifest cannot express: *when* to reach for this component, when not to,
 > and why.
@@ -18,6 +20,24 @@
 > **For this draft:** Leave sections blank or annotate with `[TODO: team]` / `[NEEDS REVIEW]`
 > if you're unsure. The internal team will fill in technical details and verify against
 > the component's actual API.
+
+---
+
+## Composition
+
+**[OPTIONAL — only if this is a composition]**
+
+List the sub-components that make up this pattern and their roles:
+
+| Component | Role | Required? |
+|-----------|------|-----------|
+| `{SubComponent1}` | [e.g., Root/wrapper] | Yes / No |
+| `{SubComponent2}` | [e.g., Label] | Yes / No |
+| `{SubComponent3}` | [e.g., Control] | Yes / No |
+
+**Assembly pattern:** [e.g., "SubComponent1 wraps the others"; "SubComponent2 must come before SubComponent3"]
+
+**Note:** Each sub-component has its own manifest and OpenAPI spec (handled by team). This section documents the *composition logic only* — when and how to use them together.
 
 ---
 

@@ -11,7 +11,7 @@ const SCRIPT_PATH = path.resolve(__dirname, '../ds-check.ts')
  * Run ds-check with given flags and return exit code + output
  */
 function runDsCheck(flags: string[] = []): Promise<{ exitCode: number; stdout: string; stderr: string }> {
-  return new Promise(resolve => {
+  return new Promise((resolve, reject) => {
     const proc = spawn('tsx', [SCRIPT_PATH, ...flags], { cwd: PACKAGE_ROOT })
     let stdout = ''
     let stderr = ''
@@ -23,6 +23,8 @@ function runDsCheck(flags: string[] = []): Promise<{ exitCode: number; stdout: s
     proc.stderr.on('data', data => {
       stderr += data.toString()
     })
+
+    proc.on('error', reject)
 
     proc.on('close', exitCode => {
       resolve({ exitCode: exitCode ?? 0, stdout, stderr })

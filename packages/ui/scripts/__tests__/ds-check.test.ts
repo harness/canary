@@ -32,6 +32,41 @@ function runDsCheck(flags: string[] = []): Promise<{ exitCode: number; stdout: s
   })
 }
 
+const STATUS_BADGE_MANIFEST = path.resolve(PACKAGE_ROOT, 'schemas/status-badge.manifest.json')
+
+/**
+ * Run `body` against a throwaway manifest derived from status-badge, so a test can
+ * inject a defect without mutating the real manifest.
+ *
+ * The probe inherits status-badge's `code.path` and `governance.rulesDocs`, so
+ * `--source` resolves a real component and `--refs` resolves real docs — only the
+ * injected defect should fail. Both the probe manifest and any spec generated for
+ * it are removed in a `finally`, so a failing assertion cannot leave the repo dirty.
+ */
+async function withProbeManifest(
+  name: string,
+  mutate: (manifest: Record<string, any>) => void,
+  body: (manifestPath: string) => Promise<void>
+): Promise<void> {
+  const manifestPath = path.resolve(PACKAGE_ROOT, `schemas/${name}.manifest.json`)
+  const specPath = path.resolve(PACKAGE_ROOT, `schemas/${name}.openapi.json`)
+
+  const manifest = JSON.parse(fs.readFileSync(STATUS_BADGE_MANIFEST, 'utf-8'))
+  manifest.id = `canary.${name}`
+  mutate(manifest)
+  fs.writeFileSync(manifestPath, `${JSON.stringify(manifest, null, 2)}\n`)
+
+  try {
+    await body(manifestPath)
+  } finally {
+    for (const file of [manifestPath, specPath]) {
+      if (fs.existsSync(file)) {
+        fs.unlinkSync(file)
+      }
+    }
+  }
+}
+
 describe('ds-check', () => {
   describe('parseArgs', () => {
     it('should run all checks with no flags', async () => {
@@ -94,17 +129,47 @@ describe('ds-check', () => {
     })
 
     it('should detect stale OpenAPI specs with --generated', async () => {
-      const result = await runDsCheck(['--generated'])
-      expect(result.exitCode).toBe(0)
-      // If spec is fresh, should pass; if stale, exit 1
-      expect(result.stdout).toContain('status-badge')
+      await withProbeManifest(
+        'drift-probe',
+        () => {},
+        async manifestPath => {
+          // Seed a spec that matches the probe manifest, and confirm it reads as fresh
+          expect((await runDsCheck(['--write'])).exitCode).toBe(0)
+          expect((await runDsCheck(['--generated'])).exitCode).toBe(0)
+
+          // Add a prop so the on-disk spec no longer matches the manifest
+          const manifest = JSON.parse(fs.readFileSync(manifestPath, 'utf-8'))
+          manifest.props.shared.push({ name: 'driftProbe', type: 'string', default: 'x' })
+          fs.writeFileSync(manifestPath, `${JSON.stringify(manifest, null, 2)}\n`)
+
+          const result = await runDsCheck(['--generated'])
+          expect(result.exitCode).toBe(1)
+          expect(result.stdout + result.stderr).toContain('generated spec is stale')
+        }
+      )
     })
 
     it('should detect enum mismatches with --source', async () => {
+      await withProbeManifest(
+        'enum-probe',
+        manifest => {
+          // Declare a variant the component's CVA definition does not have
+          const variant = manifest.props.shared.find((prop: { name: string }) => prop.name === 'variant')
+          variant.values.push('notARealVariant')
+        },
+        async () => {
+          const result = await runDsCheck(['--source'])
+          expect(result.exitCode).toBe(1)
+          expect(result.stdout + result.stderr).toContain('source prop validation failed')
+          expect(result.stdout + result.stderr).toContain('notARealVariant')
+        }
+      )
+    })
+
+    it('should pass --source when manifest enums match the CVA source', async () => {
       const result = await runDsCheck(['--source'])
-      // status-badge uses CVA, so --source should find it and compare
-      // If they match, exit 0; if mismatch, exit 1
-      expect(result.stdout || result.stderr).toBeTruthy()
+      expect(result.exitCode).toBe(0)
+      expect(result.stdout).toContain('✅ status-badge')
     })
 
     it('should validate registry paths with --refs', async () => {
@@ -128,9 +193,24 @@ describe('ds-check', () => {
 
   describe('error handling', () => {
     it('should handle broken rulesDocs paths', async () => {
+      await withProbeManifest(
+        'refs-probe',
+        manifest => {
+          manifest.governance.rulesDocs = ['docs/system/this-file-does-not-exist.md']
+        },
+        async () => {
+          const result = await runDsCheck(['--refs'])
+          expect(result.exitCode).toBe(1)
+          expect(result.stdout + result.stderr).toContain('non-existent file')
+          expect(result.stdout + result.stderr).toContain('this-file-does-not-exist.md')
+        }
+      )
+    })
+
+    it('should pass --refs when rulesDocs all resolve', async () => {
       const result = await runDsCheck(['--refs'])
-      // This validates that rulesDocs in manifests point to real files
-      expect(result.exitCode).toBe(0) // status-badge's rulesDocs should be valid
+      expect(result.exitCode).toBe(0)
+      expect(result.stdout).toContain('✅ status-badge')
     })
 
     it('should report errors in readable format', async () => {

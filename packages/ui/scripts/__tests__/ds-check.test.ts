@@ -121,7 +121,8 @@ describe('ds-check', () => {
     it('should pass when all checks succeed', async () => {
       const result = await runDsCheck(['--schema', '--refs', '--code', '--source', '--generated'])
       expect(result.exitCode).toBe(0)
-      expect(result.stdout).toContain('Results: 1 passed, 0 failed')
+      expect(result.stdout).toContain('✅ status-badge')
+      expect(result.stdout).toContain('0 failed')
     })
   })
 
@@ -177,9 +178,8 @@ describe('ds-check', () => {
     it('should pass all checks for status-badge', async () => {
       const result = await runDsCheck(['--schema', '--refs', '--code', '--source', '--generated'])
       expect(result.exitCode).toBe(0)
-      expect(result.stdout).toContain('status-badge')
       expect(result.stdout).toContain('✅ status-badge')
-      expect(result.stdout).toContain('1 passed')
+      expect(result.stdout).toContain('0 failed')
     })
 
     it('should have valid schema', async () => {

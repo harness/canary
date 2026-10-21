@@ -156,10 +156,11 @@ What a consumer of this component must do:
       bug in practice
 - [ ] **SBD-013:** `pulse` has no `prefers-reduced-motion` guard — confirm whether Tailwind
       handles this globally before adding one
-- [ ] **Figma/code mismatch:** the manifest classifies `icon` and `children` as code-only,
-      but `status-badge.figma.ts` maps both (`icon#1293:13`, `text#1299:25`), and classifies
-      `pulse` as design-only though it is a code prop Figma does not appear to expose.
-      All three need reclassifying
+- [ ] **Icon name is not recoverable from Figma:** Figma exposes icon controls
+      (`viewIcon#1293:13` and the instance swap `↳ icon#1299:52`), but they select an icon
+      *instance* while the code prop takes an icon *name*. The icon component set has no
+      Code Connect mapping, so no name can be derived and the generated snippet omits
+      `icon`. Resolves once the icon component is connected on the Figma side
 
 ---
 

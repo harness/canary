@@ -84,24 +84,24 @@
             "description": "Badge size",
             "x-provenance": "shared"
           },
-          "pulse": {
-            "type": "boolean",
-            "description": "Only works with variant='status'; controls animation on indicator dot, compiled to CSS animation",
-            "x-provenance": "designOnly",
-            "x-transform": "style-only"
-          },
-          "icon": {
-            "type": "string",
-            "description": "Optional IconV2 name; Figma doesn't support icon picker, agents must provide explicit icon names",
-            "x-provenance": "codeOnly",
-            "x-trigger": "appearance-override"
-          },
           "children": {
             "type": "string",
             "x-code-type": "node",
+            "default": null,
             "description": "Badge label/text content",
+            "x-provenance": "shared"
+          },
+          "icon": {
+            "type": "string",
+            "description": "Optional IconV2 name (a key of IconNameMapV2). Figma does expose icon controls ('viewIcon#1293:13' plus the instance swap '↳ icon#1299:52'), but those select an icon *instance* while this prop takes an icon *name*, and the icon component set has no Code Connect mapping to recover a name from. Agents must supply the name explicitly.",
             "x-provenance": "codeOnly",
-            "x-trigger": "content"
+            "x-trigger": "appearance-override"
+          },
+          "pulse": {
+            "type": "boolean",
+            "description": "Animates the status indicator dot (CSS animate-pulse). Requires variant='status'; the discriminated union types it as never on every other variant. No Figma property corresponds to it, though the Figma component does draw the indicator dot.",
+            "x-provenance": "codeOnly",
+            "x-trigger": "appearance-override"
           },
           "className": {
             "type": "string",

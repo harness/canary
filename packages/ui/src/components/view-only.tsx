@@ -167,9 +167,11 @@ export const ViewOnly = ({
 
   return (
     <Layout.Grid ref={contentRef} gap="md" className={cn('group', className)}>
-      <Text variant="heading-base" as="h4">
-        {title}
-      </Text>
+      {title ? (
+        <Text variant="heading-base" as="h4">
+          {title}
+        </Text>
+      ) : null}
 
       <Layout.Grid
         as="dl"

@@ -122,8 +122,12 @@ describe('ViewOnly', () => {
 
     test('should not render title when not provided', () => {
       renderComponent({ title: undefined })
-      const title = screen.queryByText('User Details')
-      expect(title).not.toBeInTheDocument()
+      expect(screen.queryByRole('heading')).not.toBeInTheDocument()
+    })
+
+    test('should not render title when empty string', () => {
+      renderComponent({ title: '' })
+      expect(screen.queryByRole('heading')).not.toBeInTheDocument()
     })
 
     test('should render data items', () => {

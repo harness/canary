@@ -52,6 +52,15 @@ function parseArgs(): CheckOptions {
   options.write = args.includes('--write')
 
   const selectors = args.filter(a => a !== '--verbose' && a !== '--write')
+  const validSelectors = ['--schema', '--refs', '--code', '--source', '--generated']
+
+  // Validate all selector flags are recognized
+  const unknownSelectors = selectors.filter(sel => !validSelectors.includes(sel))
+  if (unknownSelectors.length > 0) {
+    console.error(`❌ Unknown flag(s): ${unknownSelectors.join(', ')}`)
+    console.error(`Valid flags: ${validSelectors.join(', ')}`)
+    process.exit(1)
+  }
 
   // No selector flags (or --write alone) runs every check
   if (selectors.length === 0) {

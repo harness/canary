@@ -49,14 +49,21 @@ Follow the template sections in order. Here's what each is for:
 - Explain which are required vs. optional
 - Show assembly order/pattern
 
+**Optional columns:**
+- **Allowed variants** (optional): Which variant or prop options make sense for this slot (e.g., size: sm/md/lg, theme: light/dark). Leave blank if all options are valid.
+- **States** (optional): What visual states this slot can display (e.g., default, hover, disabled, loading). Helps designers understand the full lifecycle.
+
 **Example:**
 ```
-| Form.Root | Wrapper | Yes |
-| Form.Field | Repeatable control | Yes |
-| Form.Label | Label for field | No (but recommended for a11y) |
+| Component | Role | Required? | Allowed variants | States |
+| Form.Root | Wrapper | Yes | — | — |
+| Form.Field | Repeatable control | Yes | size: sm, md, lg | default, error, disabled |
+| Form.Label | Label for field | No (but recommended for a11y) | — | — |
 
 Assembly: Form.Root wraps multiple Form.Field instances; each Field can contain a Label, Control, and Error message.
 ```
+
+If you don't know the exact variants or states, use `[TODO: team]` and they'll fill in details from the manifest.
 
 #### Overview (required)
 - One sentence: what this is and what it represents

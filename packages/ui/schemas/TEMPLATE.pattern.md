@@ -29,15 +29,19 @@
 
 List the sub-components that make up this pattern and their roles:
 
-| Component | Role | Required? |
-|-----------|------|-----------|
-| `{SubComponent1}` | [e.g., Root/wrapper] | Yes / No |
-| `{SubComponent2}` | [e.g., Label] | Yes / No |
-| `{SubComponent3}` | [e.g., Control] | Yes / No |
+| Component | Role | Required? | Allowed variants | States |
+|-----------|------|-----------|------------------|--------|
+| `{SubComponent1}` | [e.g., Root/wrapper] | Yes / No | [OPTIONAL: e.g., "size: sm, md, lg"] | [OPTIONAL: e.g., "default, hover, disabled"] |
+| `{SubComponent2}` | [e.g., Label] | Yes / No | [OPTIONAL] | [OPTIONAL] |
+| `{SubComponent3}` | [e.g., Control] | Yes / No | [OPTIONAL] | [OPTIONAL] |
 
 **Assembly pattern:** [e.g., "SubComponent1 wraps the others"; "SubComponent2 must come before SubComponent3"]
 
 **Note:** Each sub-component has its own manifest and OpenAPI spec (handled by team). This section documents the *composition logic only* — when and how to use them together.
+
+**Optional columns:**
+- **Allowed variants:** Which variant or prop options make sense for this slot (e.g., size, theme, state). Leave blank if the component's full API is all valid. [DESIGNER writes; TEAM verifies against manifest]
+- **States:** What visual or behavioral states this slot can display (e.g., default, hover, disabled, loading). Helps designers understand the slot's role in the composition lifecycle.
 
 ---
 

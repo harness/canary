@@ -18,9 +18,9 @@ const state = (range: DateRangeV2Range): DateRangeV2State => ({ version: 1, rang
 const NOW = new Date('2026-10-05T15:30:00.000Z')
 
 describe.concurrent('resolveDateRangeV2At', () => {
-  it('anchors a rolling month at now and uses calendar months', ({ expect }) => {
+  it('anchors a relative month at now and uses calendar months', ({ expect }) => {
     const [start, end] = resolveDateRangeV2At(
-      state({ kind: 'rolling', direction: 'past', amount: 1, unit: 'month' }),
+      state({ kind: 'relative', direction: 'last', amount: 1, unit: 'month' }),
       NOW,
       'UTC'
     )
@@ -28,18 +28,18 @@ describe.concurrent('resolveDateRangeV2At', () => {
     expect(end).toBe(NOW.getTime())
   })
 
-  it('clamps a rolling month to the end of a short month', ({ expect }) => {
+  it('clamps a relative month to the end of a short month', ({ expect }) => {
     const [start] = resolveDateRangeV2At(
-      state({ kind: 'rolling', direction: 'past', amount: 1, unit: 'month' }),
+      state({ kind: 'relative', direction: 'last', amount: 1, unit: 'month' }),
       new Date('2026-03-31T12:00:00.000Z'),
       'UTC'
     )
     expect(new Date(start).toISOString()).toBe('2026-02-28T12:00:00.000Z')
   })
 
-  it('starts a future rolling window at now', ({ expect }) => {
+  it('starts a future relative window at now', ({ expect }) => {
     const [start, end] = resolveDateRangeV2At(
-      state({ kind: 'rolling', direction: 'future', amount: 2, unit: 'week' }),
+      state({ kind: 'relative', direction: 'next', amount: 2, unit: 'week' }),
       NOW,
       'UTC'
     )
@@ -59,12 +59,12 @@ describe.concurrent('resolveDateRangeV2At', () => {
 
   it('splits the current period at now for to date and from now', ({ expect }) => {
     const toDate = resolveDateRangeV2At(
-      state({ kind: 'calendar', position: 'current', unit: 'month', extent: 'to_date' }),
+      state({ kind: 'calendar', position: 'this', unit: 'month', extent: 'so_far' }),
       NOW,
       'UTC'
     )
     const fromNow = resolveDateRangeV2At(
-      state({ kind: 'calendar', position: 'current', unit: 'month', extent: 'from_now' }),
+      state({ kind: 'calendar', position: 'this', unit: 'month', extent: 'from_now' }),
       NOW,
       'UTC'
     )
@@ -139,14 +139,14 @@ describe.concurrent('resolveDateRangeV2At', () => {
 
 describe.concurrent('availability', () => {
   it('limits current-period extents by direction', ({ expect }) => {
-    expect(legalExtents('past')).toEqual(['to_date'])
+    expect(legalExtents('past')).toEqual(['so_far'])
     expect(legalExtents('future')).toEqual(['from_now'])
-    expect(legalExtents('any')).toEqual(['full', 'to_date', 'from_now'])
+    expect(legalExtents('any')).toEqual(['full', 'so_far', 'from_now'])
   })
 
   it('rejects ranges on the wrong side of now', ({ expect }) => {
-    const next = state({ kind: 'rolling', direction: 'future', amount: 1, unit: 'day' })
-    const last = state({ kind: 'rolling', direction: 'past', amount: 1, unit: 'day' })
+    const next = state({ kind: 'relative', direction: 'next', amount: 1, unit: 'day' })
+    const last = state({ kind: 'relative', direction: 'last', amount: 1, unit: 'day' })
     expect(isAllowedDateRangeV2(next, 'past', 'UTC', 1, NOW)).toBe(false)
     expect(isAllowedDateRangeV2(last, 'past', 'UTC', 1, NOW)).toBe(true)
     expect(isAllowedDateRangeV2(last, 'future', 'UTC', 1, NOW)).toBe(false)
@@ -157,11 +157,11 @@ describe.concurrent('availability', () => {
 
 describe.concurrent('labels', () => {
   it('describes each range kind', ({ expect }) => {
-    expect(describeDateRangeV2(state({ kind: 'rolling', direction: 'past', amount: 1, unit: 'month' }))).toEqual({
+    expect(describeDateRangeV2(state({ kind: 'relative', direction: 'last', amount: 1, unit: 'month' }))).toEqual({
       title: 'Last 1 month'
     })
     expect(
-      describeDateRangeV2(state({ kind: 'calendar', position: 'current', unit: 'month', extent: 'to_date' })).title
+      describeDateRangeV2(state({ kind: 'calendar', position: 'this', unit: 'month', extent: 'so_far' })).title
     ).toBe('This month, so far')
     expect(
       describeDateRangeV2(state({ kind: 'calendar', position: 'previous', amount: 1, unit: 'quarter' })).title
@@ -169,10 +169,10 @@ describe.concurrent('labels', () => {
     expect(
       describeDateRangeV2(state({ kind: 'calendar', position: 'previous', amount: 2, unit: 'quarter' })).title
     ).toBe('Previous 2 quarters')
-    expect(describeDateRangeV2(state({ kind: 'rolling', direction: 'past', amount: 1, unit: 'day' })).title).toBe(
+    expect(describeDateRangeV2(state({ kind: 'relative', direction: 'last', amount: 1, unit: 'day' })).title).toBe(
       'Last 1 day'
     )
-    expect(describeDateRangeV2(state({ kind: 'rolling', direction: 'future', amount: 1, unit: 'day' })).title).toBe(
+    expect(describeDateRangeV2(state({ kind: 'relative', direction: 'next', amount: 1, unit: 'day' })).title).toBe(
       'Next 1 day'
     )
     expect(describeDateRangeV2(state({ kind: 'calendar', position: 'previous', amount: 1, unit: 'day' })).title).toBe(
@@ -184,21 +184,21 @@ describe.concurrent('labels', () => {
     expect(describeDateRangeV2(state({ kind: 'calendar', position: 'previous', amount: 2, unit: 'day' })).title).toBe(
       'Previous 2 days'
     )
+    expect(describeDateRangeV2(state({ kind: 'calendar', position: 'this', unit: 'day', extent: 'full' })).title).toBe(
+      'Today'
+    )
     expect(
-      describeDateRangeV2(state({ kind: 'calendar', position: 'current', unit: 'day', extent: 'full' })).title
-    ).toBe('Today')
-    expect(
-      describeDateRangeV2(state({ kind: 'calendar', position: 'current', unit: 'day', extent: 'to_date' })).title
+      describeDateRangeV2(state({ kind: 'calendar', position: 'this', unit: 'day', extent: 'so_far' })).title
     ).toBe('Today, so far')
-    expect(formatDateRangeV2Preset({ kind: 'rolling', direction: 'past', amount: 1, unit: 'day' })).toBe('LAST_1_DAY')
-    expect(formatDateRangeV2Preset({ kind: 'calendar', position: 'current', unit: 'day', extent: 'full' })).toBe(
-      'THIS_DAY_FULL'
+    expect(formatDateRangeV2Preset({ kind: 'relative', direction: 'last', amount: 1, unit: 'day' })).toBe('LAST_1_DAY')
+    expect(formatDateRangeV2Preset({ kind: 'calendar', position: 'this', unit: 'day', extent: 'full' })).toBe(
+      'THIS_DAY'
     )
   })
 
   it('builds the trigger text from the description and resolved dates', ({ expect }) => {
     const label = formatDateRangeV2Label(
-      state({ kind: 'rolling', direction: 'past', amount: 1, unit: 'month' }),
+      state({ kind: 'relative', direction: 'last', amount: 1, unit: 'month' }),
       'UTC',
       1,
       NOW
@@ -225,12 +225,12 @@ describe.concurrent('labels', () => {
 
     expect(label.title).toBe('Previous 3 days')
     expect(label.triggerText).toBe('Previous 3 days (Oct 11, 2026, 20:34 – Oct 14, 2026, 20:34)')
-    expect(configuredPresetLabel('CUSTOM', presets)).toBeUndefined()
+    expect(configuredPresetLabel('FIXED', presets)).toBeUndefined()
   })
 
   it('keeps whole days date-only and shows a time on both ends when either end is mid-day', ({ expect }) => {
     const fullMonth = formatDateRangeV2Label(
-      state({ kind: 'calendar', position: 'current', unit: 'month', extent: 'full' }),
+      state({ kind: 'calendar', position: 'this', unit: 'month', extent: 'full' }),
       'UTC',
       1,
       NOW
@@ -238,7 +238,7 @@ describe.concurrent('labels', () => {
     expect(fullMonth.triggerText).toBe('This month (Oct 1 – Oct 31, 2026)')
 
     const soFar = formatDateRangeV2Label(
-      state({ kind: 'calendar', position: 'current', unit: 'month', extent: 'to_date' }),
+      state({ kind: 'calendar', position: 'this', unit: 'month', extent: 'so_far' }),
       'UTC',
       1,
       NOW
@@ -256,7 +256,7 @@ describe.concurrent('labels', () => {
     expect(sameDay.triggerText).toBe('Oct 5, 2026, 09:00 – 17:00')
 
     const datesOnly = formatDateRangeV2Label(
-      state({ kind: 'rolling', direction: 'past', amount: 1, unit: 'month' }),
+      state({ kind: 'relative', direction: 'last', amount: 1, unit: 'month' }),
       'UTC',
       1,
       NOW,
@@ -265,7 +265,7 @@ describe.concurrent('labels', () => {
     expect(datesOnly.triggerText).toBe('Last 1 month (Sep 5 – Oct 5, 2026)')
 
     const hiddenZone = formatDateRangeV2Label(
-      state({ kind: 'rolling', direction: 'past', amount: 1, unit: 'month' }),
+      state({ kind: 'relative', direction: 'last', amount: 1, unit: 'month' }),
       'UTC',
       1,
       NOW,
@@ -276,27 +276,27 @@ describe.concurrent('labels', () => {
 })
 
 describe.concurrent('date range v2 presets', () => {
-  it('names rolling windows with an amount and calendar windows with CALENDAR', ({ expect }) => {
-    expect(formatDateRangeV2Preset({ kind: 'rolling', direction: 'past', amount: 7, unit: 'day' })).toBe('LAST_7_DAYS')
-    expect(formatDateRangeV2Preset({ kind: 'rolling', direction: 'past', amount: 1, unit: 'month' })).toBe(
+  it('names relative windows with an amount and calendar windows with CALENDAR', ({ expect }) => {
+    expect(formatDateRangeV2Preset({ kind: 'relative', direction: 'last', amount: 7, unit: 'day' })).toBe('LAST_7_DAYS')
+    expect(formatDateRangeV2Preset({ kind: 'relative', direction: 'last', amount: 1, unit: 'month' })).toBe(
       'LAST_1_MONTH'
     )
-    expect(formatDateRangeV2Preset({ kind: 'rolling', direction: 'future', amount: 2, unit: 'week' })).toBe(
+    expect(formatDateRangeV2Preset({ kind: 'relative', direction: 'next', amount: 2, unit: 'week' })).toBe(
       'NEXT_2_WEEKS'
     )
     expect(formatDateRangeV2Preset({ kind: 'calendar', position: 'previous', amount: 2, unit: 'month' })).toBe(
-      'LAST_2_CALENDAR_MONTHS'
+      'PREVIOUS_2_CALENDAR_MONTHS'
     )
     expect(formatDateRangeV2Preset({ kind: 'calendar', position: 'previous', amount: 1, unit: 'quarter' })).toBe(
-      'LAST_1_CALENDAR_QUARTER'
+      'PREVIOUS_1_CALENDAR_QUARTER'
     )
-    expect(formatDateRangeV2Preset({ kind: 'calendar', position: 'current', unit: 'month', extent: 'to_date' })).toBe(
+    expect(formatDateRangeV2Preset({ kind: 'calendar', position: 'this', unit: 'month', extent: 'full' })).toBe(
       'THIS_MONTH'
     )
-    expect(formatDateRangeV2Preset({ kind: 'calendar', position: 'current', unit: 'month', extent: 'full' })).toBe(
-      'THIS_MONTH_FULL'
+    expect(formatDateRangeV2Preset({ kind: 'calendar', position: 'this', unit: 'month', extent: 'so_far' })).toBe(
+      'THIS_MONTH_SO_FAR'
     )
-    expect(formatDateRangeV2Preset({ kind: 'calendar', position: 'current', unit: 'month', extent: 'from_now' })).toBe(
+    expect(formatDateRangeV2Preset({ kind: 'calendar', position: 'this', unit: 'month', extent: 'from_now' })).toBe(
       'THIS_MONTH_FROM_NOW'
     )
     expect(
@@ -305,14 +305,13 @@ describe.concurrent('date range v2 presets', () => {
         from: { date: '2026-09-05', time: '09:30' },
         to: { date: '2026-10-05', time: '09:30' }
       })
-    ).toBe('CUSTOM')
+    ).toBe('FIXED')
   })
 
   it('maps previous default presets onto DateRangeV2 ids', ({ expect }) => {
-    expect(migrateDefaultPreset('CURRENT_MONTH')).toBe('THIS_MONTH')
-    expect(migrateDefaultPreset('LAST_MONTH')).toBe('LAST_1_CALENDAR_MONTH')
-    expect(migrateDefaultPreset('LAST_QUARTER')).toBe('LAST_1_CALENDAR_QUARTER')
-    expect(migrateDefaultPreset('LAST_YEAR')).toBe('LAST_1_CALENDAR_YEAR')
+    expect(migrateDefaultPreset('LAST_MONTH')).toBe('PREVIOUS_1_CALENDAR_MONTH')
+    expect(migrateDefaultPreset('LAST_QUARTER')).toBe('PREVIOUS_1_CALENDAR_QUARTER')
+    expect(migrateDefaultPreset('LAST_YEAR')).toBe('PREVIOUS_1_CALENDAR_YEAR')
     expect(migrateDefaultPreset('LAST_7_DAYS')).toBe('LAST_7_DAYS')
     expect(migrateDefaultPreset('LAST_30_DAYS')).toBe('LAST_30_DAYS')
     expect(migrateDefaultPreset('THIS_MONTH')).toBe('THIS_MONTH')
@@ -331,30 +330,30 @@ describe.concurrent('date range v2 presets', () => {
       unit: 'month'
     })
     expect(parseDateRangeV2Preset('LAST_3_MONTHS')).toEqual({
-      kind: 'rolling',
-      direction: 'past',
+      kind: 'relative',
+      direction: 'last',
       amount: 3,
       unit: 'month'
     })
-    expect(parseDateRangeV2Preset('CURRENT_MONTH')).toEqual({
+    expect(parseDateRangeV2Preset('THIS_MONTH')).toEqual({
       kind: 'calendar',
-      position: 'current',
-      unit: 'month',
-      extent: 'to_date'
-    })
-    expect(parseDateRangeV2Preset('THIS_MONTH_TO_DATE')).toEqual({
-      kind: 'calendar',
-      position: 'current',
-      unit: 'month',
-      extent: 'to_date'
-    })
-    expect(parseDateRangeV2Preset('THIS_MONTH_FULL')).toEqual({
-      kind: 'calendar',
-      position: 'current',
+      position: 'this',
       unit: 'month',
       extent: 'full'
     })
-    expect(parseDateRangeV2Preset('LAST_2_CALENDAR_QUARTERS')).toEqual({
+    expect(parseDateRangeV2Preset('THIS_MONTH_SO_FAR')).toEqual({
+      kind: 'calendar',
+      position: 'this',
+      unit: 'month',
+      extent: 'so_far'
+    })
+    expect(parseDateRangeV2Preset('THIS_MONTH_FULL')).toEqual({
+      kind: 'calendar',
+      position: 'this',
+      unit: 'month',
+      extent: 'full'
+    })
+    expect(parseDateRangeV2Preset('PREVIOUS_2_CALENDAR_QUARTERS')).toEqual({
       kind: 'calendar',
       position: 'previous',
       amount: 2,
@@ -372,7 +371,7 @@ describe.concurrent('date range v2 presets', () => {
       },
       NOW
     )
-    expect(refreshed.preset).toBe('LAST_1_CALENDAR_MONTH')
+    expect(refreshed.preset).toBe('PREVIOUS_1_CALENDAR_MONTH')
     expect(refreshed.from.toISOString()).toBe('2026-09-01T00:00:00.000Z')
     expect(refreshed.to.toISOString()).toBe('2026-09-30T23:59:59.999Z')
 
@@ -380,7 +379,7 @@ describe.concurrent('date range v2 presets', () => {
       {
         from: new Date('2026-09-05T09:30:00.000Z'),
         to: new Date('2026-10-05T09:30:00.000Z'),
-        preset: 'CUSTOM',
+        preset: 'FIXED',
         timezone: 'UTC'
       },
       NOW
@@ -392,12 +391,8 @@ describe.concurrent('date range v2 presets', () => {
 
 describe.concurrent('dateRangeV2FilterParser', () => {
   const values = [
-    toDateRangeV2Value(state({ kind: 'rolling', direction: 'past', amount: 1, unit: 'month' }), 'Asia/Kolkata', NOW),
-    toDateRangeV2Value(
-      state({ kind: 'calendar', position: 'current', unit: 'month', extent: 'from_now' }),
-      'LOCALE',
-      NOW
-    ),
+    toDateRangeV2Value(state({ kind: 'relative', direction: 'last', amount: 1, unit: 'month' }), 'Asia/Kolkata', NOW),
+    toDateRangeV2Value(state({ kind: 'calendar', position: 'this', unit: 'month', extent: 'from_now' }), 'LOCALE', NOW),
     toDateRangeV2Value(state({ kind: 'calendar', position: 'previous', amount: 1, unit: 'quarter' }), 'UTC', NOW),
     toDateRangeV2Value(
       state({
@@ -414,14 +409,14 @@ describe.concurrent('dateRangeV2FilterParser', () => {
     expect(values.map(value => value.preset)).toEqual([
       'LAST_1_MONTH',
       'THIS_MONTH_FROM_NOW',
-      'LAST_1_CALENDAR_QUARTER',
-      'CUSTOM'
+      'PREVIOUS_1_CALENDAR_QUARTER',
+      'FIXED'
     ])
     expect(values.map(dateRangeV2FilterParser.serialize)).toEqual([
       `LAST_1_MONTH|Asia/Kolkata`,
       'THIS_MONTH_FROM_NOW|LOCALE',
-      'LAST_1_CALENDAR_QUARTER|UTC',
-      `CUSTOM|${values[3].from.getTime()}|${values[3].to.getTime()}|UTC`
+      'PREVIOUS_1_CALENDAR_QUARTER|UTC',
+      `FIXED|${values[3].from.getTime()}|${values[3].to.getTime()}|UTC`
     ])
   })
 
@@ -433,7 +428,7 @@ describe.concurrent('dateRangeV2FilterParser', () => {
 
   it('decodes URL-encoded values', ({ expect }) => {
     const serialized = dateRangeV2FilterParser.serialize(
-      toDateRangeV2Value(state({ kind: 'rolling', direction: 'past', amount: 7, unit: 'day' }), 'Asia/Kolkata', NOW)
+      toDateRangeV2Value(state({ kind: 'relative', direction: 'last', amount: 7, unit: 'day' }), 'Asia/Kolkata', NOW)
     )
     expect(dateRangeV2FilterParser.parse(encodeURIComponent(serialized), NOW)?.timezone).toBe('Asia/Kolkata')
     expect(dateRangeV2FilterParser.parse(encodeURIComponent(serialized), NOW)?.preset).toBe('LAST_7_DAYS')
@@ -443,7 +438,10 @@ describe.concurrent('dateRangeV2FilterParser', () => {
     expect(dateRangeV2FilterParser.parse('')).toBeUndefined()
     expect(dateRangeV2FilterParser.parse('LAST_0_DAYS')).toBeUndefined()
     expect(dateRangeV2FilterParser.parse('NOPE')).toBeUndefined()
-    expect(dateRangeV2FilterParser.parse('CUSTOM|nope|1')).toBeUndefined()
+    expect(dateRangeV2FilterParser.parse('FIXED|nope|1')).toBeUndefined()
+    expect(dateRangeV2FilterParser.parse('CUSTOM|1788201000000|1788978600000|UTC')).toBeUndefined()
+    expect(dateRangeV2FilterParser.parse('THIS_MONTH_TO_DATE')).toBeUndefined()
+    expect(dateRangeV2FilterParser.parse('CURRENT_MONTH')).toBeUndefined()
     expect(dateRangeV2FilterParser.parse('THIS_MONTH|UTC|extra')).toBeUndefined()
     expect(dateRangeV2FilterParser.parse('[object Object]')).toBeUndefined()
   })
@@ -457,7 +455,7 @@ describe.concurrent('dateRangeV2FilterParser', () => {
     )
     const serialized = dateRangeV2FilterParser.serialize(value)
 
-    expect(serialized).toBe('LAST_1_CALENDAR_WEEK|UTC')
+    expect(serialized).toBe('PREVIOUS_1_CALENDAR_WEEK|UTC')
     expect(dateRangeV2FilterParser.parse(serialized, NOW, 0)).toEqual(value)
     expect(dateRangeV2FilterParser.parse(serialized, NOW)?.from.toISOString()).toBe('2026-09-28T00:00:00.000Z')
     expect(value.from.toISOString()).toBe('2026-09-27T00:00:00.000Z')
@@ -471,30 +469,30 @@ describe.concurrent('dateRangeV2FilterParser', () => {
 
     const from = 1788201000000
     const to = 1788978600000
-    expect(dateRangeV2FilterParser.parse(`CUSTOM|${from}|${to}`, NOW)).toMatchObject({
-      preset: 'CUSTOM',
+    expect(dateRangeV2FilterParser.parse(`FIXED|${from}|${to}`, NOW)).toMatchObject({
+      preset: 'FIXED',
       timezone: 'UTC',
       from: new Date(from),
       to: new Date(to)
     })
-    expect(dateRangeV2FilterParser.parse(`CUSTOM|${from}|${to}|LOCALE`, NOW)?.timezone).toBe('LOCALE')
-    expect(dateRangeV2FilterParser.parse(`CUSTOM|${from}|${to}|UTC`, NOW)?.timezone).toBe('UTC')
-    expect(dateRangeV2FilterParser.parse(`CUSTOM|${from}|${to}|Asia/Calcutta`, NOW)?.timezone).toBe('Asia/Calcutta')
+    expect(dateRangeV2FilterParser.parse(`FIXED|${from}|${to}|LOCALE`, NOW)?.timezone).toBe('LOCALE')
+    expect(dateRangeV2FilterParser.parse(`FIXED|${from}|${to}|UTC`, NOW)?.timezone).toBe('UTC')
+    expect(dateRangeV2FilterParser.parse(`FIXED|${from}|${to}|Asia/Calcutta`, NOW)?.timezone).toBe('Asia/Calcutta')
   })
 
   it('rewrites old preset ids to the current serializer', ({ expect }) => {
-    expect(dateRangeV2FilterParser.parse('CURRENT_MONTH', NOW)?.preset).toBe('THIS_MONTH')
-    expect(dateRangeV2FilterParser.parse('LAST_MONTH', NOW)?.preset).toBe('LAST_1_CALENDAR_MONTH')
-    expect(dateRangeV2FilterParser.parse('LAST_QUARTER|UTC', NOW)?.preset).toBe('LAST_1_CALENDAR_QUARTER')
-    expect(dateRangeV2FilterParser.parse('LAST_YEAR', NOW)?.preset).toBe('LAST_1_CALENDAR_YEAR')
+    expect(dateRangeV2FilterParser.parse('THIS_MONTH_FULL', NOW)?.preset).toBe('THIS_MONTH')
+    expect(dateRangeV2FilterParser.parse('LAST_MONTH', NOW)?.preset).toBe('PREVIOUS_1_CALENDAR_MONTH')
+    expect(dateRangeV2FilterParser.parse('LAST_QUARTER|UTC', NOW)?.preset).toBe('PREVIOUS_1_CALENDAR_QUARTER')
+    expect(dateRangeV2FilterParser.parse('LAST_YEAR', NOW)?.preset).toBe('PREVIOUS_1_CALENDAR_YEAR')
     expect(
       dateRangeV2FilterParser.serialize({
         from: NOW,
         to: NOW,
-        preset: 'CURRENT_MONTH',
+        preset: 'LAST_MONTH',
         timezone: 'LOCALE'
       })
-    ).toBe('THIS_MONTH|LOCALE')
+    ).toBe('PREVIOUS_1_CALENDAR_MONTH|LOCALE')
     expect(
       dateRangeV2FilterParser.serialize({
         from: NOW,
@@ -603,33 +601,32 @@ describe.concurrent('createDateRangeV2FilterParser', () => {
 
   it('leaves unconfigured built-in ids and fixed ranges on the built-in parser', ({ expect }) => {
     const bare = createDateRangeV2FilterParser()
-    const fixed = { from: new Date(fixedFrom), to: new Date(fixedTo), preset: 'CUSTOM', timezone: 'UTC' as const }
+    const fixed = { from: new Date(fixedFrom), to: new Date(fixedTo), preset: 'FIXED', timezone: 'UTC' as const }
 
     expect(bare.parse('LAST_7_DAYS|UTC', NOW)).toEqual(dateRangeV2FilterParser.parse('LAST_7_DAYS|UTC', NOW))
     expect(parser.parse('THIS_MONTH|UTC', NOW)?.preset).toBe('THIS_MONTH')
-    expect(parser.parse('CURRENT_MONTH|UTC', NOW)?.preset).toBe('THIS_MONTH')
-    expect(parser.parse(`CUSTOM|${fixedFrom}|${fixedTo}|UTC`, NOW)).toMatchObject(fixed)
-    expect(parser.serialize(fixed)).toBe(`CUSTOM|${fixedFrom}|${fixedTo}|UTC`)
-    expect(bare.serialize({ from: NOW, to: NOW, preset: 'CURRENT_MONTH', timezone: 'LOCALE' })).toBe(
-      'THIS_MONTH|LOCALE'
+    expect(parser.parse(`FIXED|${fixedFrom}|${fixedTo}|UTC`, NOW)).toMatchObject(fixed)
+    expect(parser.serialize(fixed)).toBe(`FIXED|${fixedFrom}|${fixedTo}|UTC`)
+    expect(bare.serialize({ from: NOW, to: NOW, preset: 'LAST_MONTH', timezone: 'LOCALE' })).toBe(
+      'PREVIOUS_1_CALENDAR_MONTH|LOCALE'
     )
   })
 
-  it('does not let a preset named CUSTOM replace a fixed range', ({ expect }) => {
-    const namedCustom = createDateRangeV2FilterParser([
+  it('does not let a preset named FIXED replace a fixed range', ({ expect }) => {
+    const namedFixed = createDateRangeV2FilterParser([
       {
-        label: 'Custom',
-        value: 'custom',
+        label: 'Fixed',
+        value: 'fixed',
         group: 'recommended',
         getRange: () => ({ from: localFrom, to: localTo })
       }
     ])
-    const fixed = { from: new Date(fixedFrom), to: new Date(fixedTo), preset: 'CUSTOM', timezone: 'UTC' as const }
+    const fixed = { from: new Date(fixedFrom), to: new Date(fixedTo), preset: 'FIXED', timezone: 'UTC' as const }
 
-    expect(namedCustom.serialize(fixed)).toBe(`CUSTOM|${fixedFrom}|${fixedTo}|UTC`)
-    expect(namedCustom.parse(`CUSTOM|${fixedFrom}|${fixedTo}|UTC`, NOW)).toMatchObject(fixed)
-    expect(namedCustom.parse('CUSTOM|UTC', NOW)).toBeUndefined()
-    expect(namedCustom.parse('custom', NOW)).toBeUndefined()
+    expect(namedFixed.serialize(fixed)).toBe(`FIXED|${fixedFrom}|${fixedTo}|UTC`)
+    expect(namedFixed.parse(`FIXED|${fixedFrom}|${fixedTo}|UTC`, NOW)).toMatchObject(fixed)
+    expect(namedFixed.parse('FIXED|UTC', NOW)).toBeUndefined()
+    expect(namedFixed.parse('fixed', NOW)).toBeUndefined()
   })
 
   it('rejects a custom preset query that is not PRESET or PRESET|TIMEZONE', ({ expect }) => {
@@ -645,9 +642,9 @@ describe.concurrent('createDateRangeV2FilterParser', () => {
     const monday = createDateRangeV2FilterParser()
     const invalid = createDateRangeV2FilterParser(undefined, 7)
 
-    expect(sunday.parse('LAST_1_CALENDAR_WEEK|UTC', NOW)?.from.toISOString()).toBe('2026-09-27T00:00:00.000Z')
-    expect(monday.parse('LAST_1_CALENDAR_WEEK|UTC', NOW)?.from.toISOString()).toBe('2026-09-28T00:00:00.000Z')
-    expect(invalid.parse('LAST_1_CALENDAR_WEEK|UTC', NOW)?.from.toISOString()).toBe('2026-09-28T00:00:00.000Z')
+    expect(sunday.parse('PREVIOUS_1_CALENDAR_WEEK|UTC', NOW)?.from.toISOString()).toBe('2026-09-27T00:00:00.000Z')
+    expect(monday.parse('PREVIOUS_1_CALENDAR_WEEK|UTC', NOW)?.from.toISOString()).toBe('2026-09-28T00:00:00.000Z')
+    expect(invalid.parse('PREVIOUS_1_CALENDAR_WEEK|UTC', NOW)?.from.toISOString()).toBe('2026-09-28T00:00:00.000Z')
     expect(parser.parse('Billing_Cycle|UTC', NOW)?.from).toEqual(billingFrom)
   })
 })

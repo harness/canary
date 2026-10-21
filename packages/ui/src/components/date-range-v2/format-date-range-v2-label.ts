@@ -11,7 +11,7 @@ import type {
   Weekday
 } from './types'
 
-const ROLLING_UNIT_LABEL: Record<string, [string, string]> = {
+const RELATIVE_UNIT_LABEL: Record<string, [string, string]> = {
   minute: ['minute', 'minutes'],
   hour: ['hour', 'hours'],
   day: ['day', 'days'],
@@ -30,7 +30,7 @@ const CALENDAR_UNIT_LABEL: Record<CalendarUnit, string> = {
 
 const POSITION_LABEL = {
   previous: 'Previous',
-  current: 'This',
+  this: 'This',
   next: 'Next'
 } as const
 
@@ -68,10 +68,10 @@ const formatBounds = (start: number, end: number, zone: string, showTime: boolea
 
 export const describeDateRangeV2 = (value: DateRangeV2State): Pick<DateRangeV2Label, 'title'> => {
   const range = value.range
-  if (range.kind === 'rolling') {
-    const [singular, plural] = ROLLING_UNIT_LABEL[range.unit]
+  if (range.kind === 'relative') {
+    const [singular, plural] = RELATIVE_UNIT_LABEL[range.unit]
     const unit = range.amount === 1 ? singular : plural
-    const direction = range.direction === 'past' ? 'Last' : 'Next'
+    const direction = range.direction === 'last' ? 'Last' : 'Next'
     return { title: `${direction} ${range.amount} ${unit}` }
   }
   if (range.kind === 'calendar') {
@@ -81,19 +81,19 @@ export const describeDateRangeV2 = (value: DateRangeV2State): Pick<DateRangeV2La
     if (range.position === 'next' && range.unit === 'day' && range.amount === 1) {
       return { title: 'Tomorrow' }
     }
-    if (range.position === 'current' && range.unit === 'day') {
-      const extent = range.extent === 'to_date' ? ', so far' : range.extent === 'from_now' ? ', from now' : ''
+    if (range.position === 'this' && range.unit === 'day') {
+      const extent = range.extent === 'so_far' ? ', so far' : range.extent === 'from_now' ? ', from now' : ''
       return { title: `Today${extent}` }
     }
     const unitLabel = CALENDAR_UNIT_LABEL[range.unit]
     const positionLabel = POSITION_LABEL[range.position]
-    if (range.position !== 'current' && range.amount !== 1) {
+    if (range.position !== 'this' && range.amount !== 1) {
       return { title: `${positionLabel} ${range.amount} ${unitLabel}s` }
     }
     const extent =
-      range.position === 'current' && range.extent === 'to_date'
+      range.position === 'this' && range.extent === 'so_far'
         ? ', so far'
-        : range.position === 'current' && range.extent === 'from_now'
+        : range.position === 'this' && range.extent === 'from_now'
           ? ', from now'
           : ''
     return { title: `${positionLabel} ${unitLabel}${extent}` }
@@ -101,13 +101,13 @@ export const describeDateRangeV2 = (value: DateRangeV2State): Pick<DateRangeV2La
   return { title: 'Fixed range' }
 }
 
-/** The configured preset name, when `presetId` is one of those presets. `CUSTOM` stays a fixed range. */
+/** The configured preset name, when `presetId` is one of those presets. `FIXED` stays a fixed range. */
 export const configuredPresetLabel = (
   presetId: string | undefined,
   presets: readonly Pick<DateRangeV2Preset, 'value' | 'label'>[] | undefined
 ): string | undefined => {
   const key = presetId?.trim().toUpperCase()
-  if (!key || key === 'CUSTOM' || !presets?.length) return undefined
+  if (!key || key === 'FIXED' || !presets?.length) return undefined
   return presets.find(preset => preset.value.trim().toUpperCase() === key)?.label
 }
 

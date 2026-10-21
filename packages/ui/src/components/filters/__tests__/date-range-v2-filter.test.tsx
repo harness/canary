@@ -72,7 +72,7 @@ describe('DateRangeV2Filter', () => {
           preset: 'LAST_7_DAYS',
           timezone: 'UTC'
         },
-        { label: { showTimezone: false } }
+        { triggerLabel: { showTimezone: false } }
       )
     ).not.toMatch(/UTC/)
   })
@@ -86,15 +86,20 @@ describe('DateRangeV2Filter', () => {
         timezone: 'UTC'
       },
       {
-        presets: [
+        modes: [
           {
-            label: 'Previous 3 days',
-            value: 'PREVIOUS_3_DAYS',
-            group: 'recommended',
-            getRange: () => ({
-              from: new Date('2026-10-11T20:34:00.000Z'),
-              to: new Date('2026-10-14T20:34:00.000Z')
-            })
+            mode: 'presets',
+            presets: [
+              {
+                label: 'Previous 3 days',
+                value: 'PREVIOUS_3_DAYS',
+                group: 'recommended',
+                getRange: () => ({
+                  from: new Date('2026-10-11T20:34:00.000Z'),
+                  to: new Date('2026-10-14T20:34:00.000Z')
+                })
+              }
+            ]
           }
         ]
       }

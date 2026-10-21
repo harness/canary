@@ -31,11 +31,13 @@ export const getDateRangeV2FilterLabel = (
       value.timezone,
       resolved.weekStartsOn,
       new Date(),
-      resolved.label,
+      resolved.triggerLabel,
       [value.from.getTime(), value.to.getTime()],
       configuredPresetLabel(value.preset, resolved.presets)
     )
-    const offset = resolved.label.showTimezone ? ` · ${formatTimeZoneOffset(resolveTimeZone(value.timezone))}` : ''
+    const offset = resolved.triggerLabel.showTimezone
+      ? ` · ${formatTimeZoneOffset(resolveTimeZone(value.timezone))}`
+      : ''
     return `${label.triggerText}${offset}`
   } catch {
     return ''

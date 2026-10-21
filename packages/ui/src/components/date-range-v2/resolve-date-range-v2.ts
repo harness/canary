@@ -20,9 +20,9 @@ import {
   toZonedWallTime,
   zonedCivilToUtc
 } from './timezone-utils'
-import type { CalendarUnit, DateRangeV2State, RollingUnit, TimeZoneId, Weekday } from './types'
+import type { CalendarUnit, DateRangeV2State, RelativeUnit, TimeZoneId, Weekday } from './types'
 
-const rollingAdders: Record<RollingUnit, (date: Date, amount: number) => Date> = {
+const relativeAdders: Record<RelativeUnit, (date: Date, amount: number) => Date> = {
   minute: addMinutes,
   hour: addHours,
   day: addDays,
@@ -39,8 +39,8 @@ const calendarAdders: Record<CalendarUnit, (date: Date, amount: number) => Date>
   year: addYears
 }
 
-const addZoned = (instant: Date, amount: number, unit: RollingUnit | CalendarUnit, timeZone: string): Date => {
-  const adder = unit in rollingAdders ? rollingAdders[unit as RollingUnit] : calendarAdders[unit as CalendarUnit]
+const addZoned = (instant: Date, amount: number, unit: RelativeUnit | CalendarUnit, timeZone: string): Date => {
+  const adder = unit in relativeAdders ? relativeAdders[unit as RelativeUnit] : calendarAdders[unit as CalendarUnit]
   return unit === 'minute' || unit === 'hour'
     ? adder(instant, amount)
     : fromZonedWallTime(adder(toZonedWallTime(instant, timeZone), amount), timeZone)
@@ -77,7 +77,7 @@ function assertWeekStartsOn(weekStartsOn: number): asserts weekStartsOn is Weekd
 
 /**
  * Resolves a saved range to inclusive epoch milliseconds `[startTime, endTime]`.
- * Rolling windows include the anchor instant. Calendar and fixed ends include the
+ * Relative windows include the anchor instant. Calendar and fixed ends include the
  * last millisecond of the ending minute or period.
  */
 export const resolveDateRangeV2 = (
@@ -103,15 +103,15 @@ export const resolveDateRangeV2At = (
   let start: number
   let end: number
 
-  if (range.kind === 'rolling') {
+  if (range.kind === 'relative') {
     if (!Number.isInteger(range.amount) || range.amount < 1) {
-      throw new RangeError('Rolling amount must be a positive integer')
+      throw new RangeError('Relative amount must be a positive integer')
     }
-    const shifted = addZoned(now, range.direction === 'past' ? -range.amount : range.amount, range.unit, zone)
-    start = range.direction === 'past' ? shifted.getTime() : now.getTime()
-    end = range.direction === 'past' ? now.getTime() : shifted.getTime()
+    const shifted = addZoned(now, range.direction === 'last' ? -range.amount : range.amount, range.unit, zone)
+    start = range.direction === 'last' ? shifted.getTime() : now.getTime()
+    end = range.direction === 'last' ? now.getTime() : shifted.getTime()
   } else if (range.kind === 'calendar') {
-    const amount = range.position === 'current' ? 1 : range.amount
+    const amount = range.position === 'this' ? 1 : range.amount
     if (!Number.isInteger(amount) || amount < 1) {
       throw new RangeError('Calendar amount must be a positive integer')
     }
@@ -128,9 +128,9 @@ export const resolveDateRangeV2At = (
         : range.position === 'next'
           ? addZoned(currentStart, amount + 1, range.unit, zone)
           : addZoned(currentStart, 1, range.unit, zone)
-    const extent = range.position === 'current' ? range.extent : 'full'
+    const extent = range.position === 'this' ? range.extent : 'full'
 
-    if (extent === 'to_date') {
+    if (extent === 'so_far') {
       start = periodStart.getTime()
       end = now.getTime()
     } else if (extent === 'from_now') {

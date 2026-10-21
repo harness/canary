@@ -2,7 +2,7 @@
  * DateRangeV2 panel and popover trigger.
  *
  * A value is a resolved interval (`from`/`to`) plus a preset id and timezone.
- * Rolling and calendar windows are recomputed from now only when the user applies.
+ * Relative and calendar windows are recomputed from now only when the user applies.
  * Until then the stored bounds stay put. Each mode keeps its own draft, so switching
  * tabs does not discard an in-progress edit.
  */
@@ -50,40 +50,36 @@ import type {
   DateRangeV2State,
   DateRangeV2Value,
   FixedRange,
-  RollingRange,
-  RollingUnit,
+  RelativeRange,
+  RelativeUnit,
   TimeZoneId,
   Weekday
 } from './types'
 
-/** Copy for each mode. Tab order follows config.modes. */
-const SECTIONS: Record<DateRangeV2Mode, { title: string; description: string; example: string; note?: string }> = {
+/** Copy under each tab title. Tab order and titles follow config.modes. */
+const SECTIONS: Record<DateRangeV2Mode, { description: string; example: string; note?: string }> = {
   presets: {
-    title: 'Presets',
     description: 'A named window, ready to apply.',
     example: 'e.g. Last 7 days · This month'
   },
-  rolling: {
-    title: 'Rolling',
+  relative: {
     description: 'A window counted back from now, or forward to a future date.',
     example: 'e.g. Last 7 days · Next 2 weeks',
     note: 'Updates to the current time when you apply.'
   },
   calendar: {
-    title: 'Calendar periods',
     description: 'A whole day, week, month, quarter or year, aligned to calendar boundaries.',
     example: 'e.g. This month · Previous quarter',
     note: 'Updates to the current period when you apply.'
   },
-  custom: {
-    title: 'Fixed',
+  fixed: {
     description: 'Exact start and end dates, with optional times.',
     example: 'e.g. Aug 1 – Aug 15',
     note: 'Does not change on refresh.'
   }
 }
 
-const ROLLING_UNITS: Array<{ value: RollingUnit; label: string }> = [
+const RELATIVE_UNITS: Array<{ value: RelativeUnit; label: string }> = [
   { value: 'minute', label: 'Minutes' },
   { value: 'hour', label: 'Hours' },
   { value: 'day', label: 'Days' },
@@ -128,39 +124,37 @@ const fixedRangeFromDates = (from: Date, to: Date, timezone: TimeZoneId): FixedR
 
 const EXTENT_LABELS: Record<CalendarExtent, string> = {
   full: 'Full period',
-  to_date: 'So far',
+  so_far: 'So far',
   from_now: 'From now'
 }
 
 const LOCALE: TimeZoneId = 'LOCALE'
 
-const rollingDefaultKey = (range: RollingRange): string => `${range.direction}:${range.amount}:${range.unit}`
+const relativeDefaultKey = (range: RelativeRange): string => `${range.direction}:${range.amount}:${range.unit}`
 
 const fixedDefaultKey = (range: FixedRange | undefined): string =>
   range ? `${range.from.date}T${range.from.time}/${range.to.date}T${range.to.time}` : ''
 
 const calendarDefaultKey = (range: CalendarRange): string =>
-  range.position === 'current'
-    ? `current:${range.unit}:${range.extent}`
-    : `${range.position}:${range.unit}:${range.amount}`
+  range.position === 'this' ? `this:${range.unit}:${range.extent}` : `${range.position}:${range.unit}:${range.amount}`
 
-const calendarDefaultAmount = (range: CalendarRange): number => (range.position === 'current' ? 1 : range.amount)
+const calendarDefaultAmount = (range: CalendarRange): number => (range.position === 'this' ? 1 : range.amount)
 
 /**
  * Snapshot of the config fields that can rewrite an already applied value.
  * Compared by value so a new config object with the same settings is a no-op.
- * A fixed range is left alone when only rolling or calendar defaults change.
+ * A fixed range is left alone when only relative or calendar defaults change.
  */
 const configDefaults = (config: ResolvedDateRangeV2Config) => ({
   direction: config.direction,
-  rollingDefault: rollingDefaultKey(config.rolling.defaultValue),
-  rollingMax: config.rolling.maxAmount,
-  rollingUnits: config.rolling.units.join(','),
+  relativeDefault: relativeDefaultKey(config.relative.defaultValue),
+  relativeMax: config.relative.maxAmount,
+  relativeUnits: config.relative.units.join(','),
   calendarDefault: calendarDefaultKey(config.calendar.defaultValue),
   calendarMax: config.calendar.maxAmount,
   calendarUnits: config.calendar.units.join(','),
   calendarExtents: config.calendar.extents.join(','),
-  customDefault: fixedDefaultKey(config.custom.defaultValue),
+  fixedDefault: fixedDefaultKey(config.fixed.defaultValue),
   timezone: config.timezone.defaultValue
 })
 
@@ -178,16 +172,16 @@ const applyConfigDefaults = (
   const state = dateRangeV2StateFromValue({ ...value, timezone: value.timezone ?? current.timezone })
   let range = state.range
 
-  if (range.kind === 'rolling') {
-    const defaultChanged = previous.rollingDefault !== current.rollingDefault
+  if (range.kind === 'relative') {
+    const defaultChanged = previous.relativeDefault !== current.relativeDefault
     const constraintsChanged =
       previous.direction !== current.direction ||
-      previous.rollingMax !== current.rollingMax ||
-      previous.rollingUnits !== current.rollingUnits
+      previous.relativeMax !== current.relativeMax ||
+      previous.relativeUnits !== current.relativeUnits
     if (defaultChanged) {
-      range = coerceRolling(config.rolling.defaultValue, config)
+      range = coerceRelative(config.relative.defaultValue, config)
     } else if (constraintsChanged) {
-      range = coerceRolling(range, config)
+      range = coerceRelative(range, config)
     }
   }
 
@@ -205,8 +199,8 @@ const applyConfigDefaults = (
     }
   }
 
-  if (range.kind === 'fixed' && previous.customDefault !== current.customDefault && config.custom.defaultValue) {
-    range = normalizeFixed(config.custom.defaultValue, config)
+  if (range.kind === 'fixed' && previous.fixedDefault !== current.fixedDefault && config.fixed.defaultValue) {
+    range = normalizeFixed(config.fixed.defaultValue, config)
   }
 
   let timezone = value.timezone ?? current.timezone
@@ -236,19 +230,19 @@ const allowsPast = (availability: DateRangeAvailability) => availability !== 'fu
 const allowsFuture = (availability: DateRangeAvailability) => availability !== 'past'
 
 export const legalExtents = (availability: DateRangeAvailability): CalendarExtent[] =>
-  availability === 'past' ? ['to_date'] : availability === 'future' ? ['from_now'] : ['full', 'to_date', 'from_now']
+  availability === 'past' ? ['so_far'] : availability === 'future' ? ['from_now'] : ['full', 'so_far', 'from_now']
 
-const CALENDAR_POSITIONS: CalendarRange['position'][] = ['previous', 'current', 'next']
-const ROLLING_DIRECTIONS: RollingRange['direction'][] = ['past', 'future']
+const CALENDAR_POSITIONS: CalendarRange['position'][] = ['previous', 'this', 'next']
+const RELATIVE_DIRECTIONS: RelativeRange['direction'][] = ['last', 'next']
 
 const legalPositions = (availability: DateRangeAvailability): CalendarRange['position'][] =>
   CALENDAR_POSITIONS.filter(position =>
     availability === 'past' ? position !== 'next' : availability === 'future' ? position !== 'previous' : true
   )
 
-const legalDirections = (availability: DateRangeAvailability): RollingRange['direction'][] =>
-  ROLLING_DIRECTIONS.filter(direction =>
-    availability === 'past' ? direction === 'past' : availability === 'future' ? direction === 'future' : true
+const legalDirections = (availability: DateRangeAvailability): RelativeRange['direction'][] =>
+  RELATIVE_DIRECTIONS.filter(direction =>
+    availability === 'past' ? direction === 'last' : availability === 'future' ? direction === 'next' : true
   )
 
 /** Calendar day clicks are local dates. Drafts store civil dates in the selected timezone. */
@@ -270,7 +264,7 @@ const normalizeFixed = (range: FixedRange, config: ResolvedDateRangeV2Config): F
     from = to
     to = swap
   }
-  if (!config.custom.allowTime) {
+  if (!config.fixed.allowTime) {
     from = { ...from, time: '00:00' }
     to = { ...to, time: '23:59' }
   }
@@ -278,7 +272,7 @@ const normalizeFixed = (range: FixedRange, config: ResolvedDateRangeV2Config): F
 }
 
 const defaultFixed = (zone: string, config: ResolvedDateRangeV2Config): FixedRange => {
-  if (config.custom.defaultValue) return normalizeFixed(config.custom.defaultValue, config)
+  if (config.fixed.defaultValue) return normalizeFixed(config.fixed.defaultValue, config)
   const today = utcToCivilDate(new Date(), zone)
   return {
     kind: 'fixed',
@@ -290,9 +284,9 @@ const defaultFixed = (zone: string, config: ResolvedDateRangeV2Config): FixedRan
 /** One draft per mode. The inactive ones stay in state while another tab is open. */
 interface Drafts {
   preset: string
-  rolling: RollingRange
+  relative: RelativeRange
   calendar: CalendarRange
-  custom: FixedRange
+  fixed: FixedRange
 }
 
 const visibleExtents = (config: ResolvedDateRangeV2Config): CalendarExtent[] => {
@@ -304,24 +298,23 @@ const preferredPosition = (config: ResolvedDateRangeV2Config): CalendarRange['po
   const positions = legalPositions(config.direction)
   const preferred = config.calendar.defaultValue.position
   if (positions.includes(preferred)) return preferred
-  return positions.includes('current') ? 'current' : positions[0]
+  return positions.includes('this') ? 'this' : positions[0]
 }
 
 const preferredExtent = (config: ResolvedDateRangeV2Config): CalendarExtent => {
   const extents = visibleExtents(config)
-  const preferred =
-    config.calendar.defaultValue.position === 'current' ? config.calendar.defaultValue.extent : extents[0]
+  const preferred = config.calendar.defaultValue.position === 'this' ? config.calendar.defaultValue.extent : extents[0]
   return extents.includes(preferred) ? preferred : extents[0]
 }
 
-const defaultRolling = (config: ResolvedDateRangeV2Config): RollingRange =>
-  coerceRolling(config.rolling.defaultValue, config)
+const defaultRelative = (config: ResolvedDateRangeV2Config): RelativeRange =>
+  coerceRelative(config.relative.defaultValue, config)
 
 const defaultCalendar = (config: ResolvedDateRangeV2Config): CalendarRange => {
   const value = config.calendar.defaultValue
   const position = preferredPosition(config)
   const unit = config.calendar.units.includes(value.unit) ? value.unit : config.calendar.units[0]
-  if (position === 'current') {
+  if (position === 'this') {
     return { kind: 'calendar', position, unit, extent: preferredExtent(config) }
   }
   return {
@@ -336,13 +329,13 @@ const stateFromValue = (value: DateRangeV2Value | undefined, timezone: TimeZoneI
   value ? dateRangeV2StateFromValue({ ...value, timezone: value.timezone ?? timezone }) : undefined
 
 /** Pull a stored range back inside the current direction, units, and max amount. */
-const coerceRolling = (range: RollingRange, config: ResolvedDateRangeV2Config): RollingRange => {
+const coerceRelative = (range: RelativeRange, config: ResolvedDateRangeV2Config): RelativeRange => {
   const directions = legalDirections(config.direction)
   return {
     ...range,
     direction: directions.includes(range.direction) ? range.direction : directions[0],
-    unit: config.rolling.units.includes(range.unit) ? range.unit : config.rolling.defaultValue.unit,
-    amount: clampAmount(range.amount, config.rolling.maxAmount)
+    unit: config.relative.units.includes(range.unit) ? range.unit : config.relative.defaultValue.unit,
+    amount: clampAmount(range.amount, config.relative.maxAmount)
   }
 }
 
@@ -350,12 +343,12 @@ const coerceCalendar = (range: CalendarRange, config: ResolvedDateRangeV2Config)
   const unit = config.calendar.units.includes(range.unit) ? range.unit : config.calendar.defaultValue.unit
   const positions = legalPositions(config.direction)
   const position = positions.includes(range.position) ? range.position : positions[0]
-  if (position === 'current') {
+  if (position === 'this') {
     const extents = visibleExtents(config)
-    const extent = range.position === 'current' && extents.includes(range.extent) ? range.extent : extents[0]
+    const extent = range.position === 'this' && extents.includes(range.extent) ? range.extent : extents[0]
     return { kind: 'calendar', position, unit, extent }
   }
-  const amount = range.position === 'current' ? calendarDefaultAmount(config.calendar.defaultValue) : range.amount
+  const amount = range.position === 'this' ? calendarDefaultAmount(config.calendar.defaultValue) : range.amount
   return {
     kind: 'calendar',
     position,
@@ -373,9 +366,9 @@ const draftsFor = (
   const range = state?.range
   return {
     preset: config.presets.find(preset => preset.value === value?.preset)?.value ?? config.presets[0]?.value ?? '',
-    rolling: range?.kind === 'rolling' ? coerceRolling(range, config) : defaultRolling(config),
+    relative: range?.kind === 'relative' ? coerceRelative(range, config) : defaultRelative(config),
     calendar: range?.kind === 'calendar' ? coerceCalendar(range, config) : defaultCalendar(config),
-    custom: range?.kind === 'fixed' ? range : defaultFixed(zone, config)
+    fixed: range?.kind === 'fixed' ? range : defaultFixed(zone, config)
   }
 }
 
@@ -387,11 +380,12 @@ const sectionFor = (
 ): DateRangeV2Mode => {
   if (value?.preset && config.presets.some(preset => preset.value === value.preset)) return 'presets'
   const preferred: DateRangeV2Mode =
-    state?.range.kind === 'calendar' ? 'calendar' : state?.range.kind === 'fixed' ? 'custom' : 'rolling'
-  return config.modes.includes(preferred) ? preferred : config.modes[0]
+    state?.range.kind === 'calendar' ? 'calendar' : state?.range.kind === 'fixed' ? 'fixed' : 'relative'
+  const enabled = config.modes.map(tab => tab.mode)
+  return enabled.includes(preferred) ? preferred : enabled[0]
 }
 
-const asState = (range: RollingRange | CalendarRange | FixedRange): DateRangeV2State => ({ version: 1, range })
+const asState = (range: RelativeRange | CalendarRange | FixedRange): DateRangeV2State => ({ version: 1, range })
 
 /**
  * Preset bounds stay on the instants from getRange.
@@ -492,7 +486,7 @@ export const DateRangeV2Content = ({
   )
   const initialTimezone = value?.timezone ?? pickerConfig.timezone.defaultValue
   const locked = Boolean(disabled || readOnly)
-  const customAllowed = pickerConfig.modes.includes('custom')
+  const fixedAllowed = pickerConfig.modes.some(tab => tab.mode === 'fixed')
 
   const [draftTimezone, setDraftTimezone] = useState<TimeZoneId>(initialTimezone)
   const zone = resolveTimeZone(draftTimezone)
@@ -507,9 +501,9 @@ export const DateRangeV2Content = ({
   const [month, setMonth] = useState<Date>(() => new Date())
   const tabRefs = useRef<Record<DateRangeV2Mode, HTMLButtonElement | null>>({
     presets: null,
-    rolling: null,
+    relative: null,
     calendar: null,
-    custom: null
+    fixed: null
   })
   // Replace drafts when the applied value or the config object changes. The filter memoizes config so a parent re-render does not wipe an open edit.
   useEffect(() => {
@@ -526,7 +520,7 @@ export const DateRangeV2Content = ({
     section === 'presets' ? pickerConfig.presets.find(preset => preset.value === drafts.preset) : undefined
   const presetBounds = selectedPreset?.getRange({ timezone: draftTimezone })
   const presetRange = presetBounds ? fixedRangeFromDates(presetBounds.from, presetBounds.to, draftTimezone) : undefined
-  const activeRange = presetRange ?? (section === 'presets' ? drafts.rolling : drafts[section])
+  const activeRange = presetRange ?? (section === 'presets' ? drafts.relative : drafts[section])
   const appliedTimezone = value?.timezone ?? pickerConfig.timezone.defaultValue
   const appliedRange = value ? stateFromValue(value, appliedTimezone)?.range : undefined
   const draftRange = section === 'presets' ? undefined : drafts[section]
@@ -542,10 +536,10 @@ export const DateRangeV2Content = ({
   const storedBounds: readonly [number, number] | undefined =
     showingApplied && value ? [value.from.getTime(), value.to.getTime()] : undefined
   const activeRangeKey =
-    activeRange.kind === 'rolling'
+    activeRange.kind === 'relative'
       ? `${activeRange.direction}:${activeRange.amount}:${activeRange.unit}`
       : activeRange.kind === 'calendar'
-        ? activeRange.position === 'current'
+        ? activeRange.position === 'this'
           ? `${activeRange.position}:${activeRange.unit}:${activeRange.extent}`
           : `${activeRange.position}:${activeRange.unit}:${activeRange.amount}`
         : `${activeRange.from.date}T${activeRange.from.time}/${activeRange.to.date}T${activeRange.to.time}`
@@ -566,7 +560,7 @@ export const DateRangeV2Content = ({
     draftTimezone,
     weekStartsOn,
     new Date(),
-    pickerConfig.label,
+    pickerConfig.triggerLabel,
     storedBounds,
     section === 'presets' ? selectedPreset?.label : undefined
   )
@@ -597,8 +591,8 @@ export const DateRangeV2Content = ({
       ? { before: today }
       : undefined
 
-  const setRolling = (patch: Partial<RollingRange>) =>
-    setDrafts(prev => ({ ...prev, rolling: coerceRolling({ ...prev.rolling, ...patch }, pickerConfig) }))
+  const setRelative = (patch: Partial<RelativeRange>) =>
+    setDrafts(prev => ({ ...prev, relative: coerceRelative({ ...prev.relative, ...patch }, pickerConfig) }))
 
   const setCalendar = (
     position: CalendarRange['position'],
@@ -608,17 +602,17 @@ export const DateRangeV2Content = ({
   ) => {
     setDrafts(prev => {
       const currentAmount =
-        prev.calendar.position === 'current'
+        prev.calendar.position === 'this'
           ? calendarDefaultAmount(pickerConfig.calendar.defaultValue)
           : prev.calendar.amount
       const next: CalendarRange =
-        position === 'current'
+        position === 'this'
           ? {
               kind: 'calendar',
               position,
               unit,
               extent:
-                extent ?? (prev.calendar.position === 'current' ? prev.calendar.extent : preferredExtent(pickerConfig))
+                extent ?? (prev.calendar.position === 'this' ? prev.calendar.extent : preferredExtent(pickerConfig))
             }
           : {
               kind: 'calendar',
@@ -630,10 +624,10 @@ export const DateRangeV2Content = ({
     })
   }
 
-  const setFixed = (custom: FixedRange) => setDrafts(prev => ({ ...prev, custom }))
+  const setFixed = (fixed: FixedRange) => setDrafts(prev => ({ ...prev, fixed }))
 
   const updateFixedDate = (endpoint: 'from' | 'to', date: CivilDate) => {
-    const next: FixedRange = { ...drafts.custom, [endpoint]: { ...drafts.custom[endpoint], date } }
+    const next: FixedRange = { ...drafts.fixed, [endpoint]: { ...drafts.fixed[endpoint], date } }
     if (next.from.date > next.to.date) {
       const opposite = endpoint === 'from' ? 'to' : 'from'
       next[opposite] = { ...next[opposite], date }
@@ -642,8 +636,8 @@ export const DateRangeV2Content = ({
   }
 
   const handleDayClick = (day: Date) => {
-    if (locked || !customAllowed) return
-    if (section !== 'custom') setSection('custom')
+    if (locked || !fixedAllowed) return
+    if (section !== 'fixed') setSection('fixed')
     if (!pendingStart) {
       setPendingStart(day)
       return
@@ -651,8 +645,8 @@ export const DateRangeV2Content = ({
     const [from, to] = day < pendingStart ? [day, pendingStart] : [pendingStart, day]
     setFixed({
       kind: 'fixed',
-      from: { date: localToCivilDate(from), time: drafts.custom.from.time },
-      to: { date: localToCivilDate(to), time: drafts.custom.to.time }
+      from: { date: localToCivilDate(from), time: drafts.fixed.from.time },
+      to: { date: localToCivilDate(to), time: drafts.fixed.to.time }
     })
     setPendingStart(undefined)
   }
@@ -660,31 +654,31 @@ export const DateRangeV2Content = ({
   const moveTabFocus = (event: KeyboardEvent<HTMLButtonElement>) => {
     if (event.key !== 'ArrowDown' && event.key !== 'ArrowUp') return
     event.preventDefault()
-    const index = pickerConfig.modes.indexOf(section)
+    const index = pickerConfig.modes.findIndex(tab => tab.mode === section)
     const next =
       pickerConfig.modes[
         (index + (event.key === 'ArrowDown' ? 1 : -1) + pickerConfig.modes.length) % pickerConfig.modes.length
       ]
-    setSection(next)
+    setSection(next.mode)
     setPendingStart(undefined)
-    tabRefs.current[next]?.focus()
+    tabRefs.current[next.mode]?.focus()
   }
 
   const calendarDraft = drafts.calendar
   const extents = visibleExtents(pickerConfig)
   const positions = legalPositions(pickerConfig.direction)
   const directions = legalDirections(pickerConfig.direction)
-  const currentExtent = calendarDraft.position === 'current' ? calendarDraft.extent : undefined
-  const rollingUnits = ROLLING_UNITS.filter(option => pickerConfig.rolling.units.includes(option.value))
+  const currentExtent = calendarDraft.position === 'this' ? calendarDraft.extent : undefined
+  const relativeUnits = RELATIVE_UNITS.filter(option => pickerConfig.relative.units.includes(option.value))
   const calendarUnits = CALENDAR_UNITS.filter(option => pickerConfig.calendar.units.includes(option.value))
-  const fixedForApply: FixedRange = pickerConfig.custom.allowTime
-    ? drafts.custom
+  const fixedForApply: FixedRange = pickerConfig.fixed.allowTime
+    ? drafts.fixed
     : {
-        ...drafts.custom,
-        from: { ...drafts.custom.from, time: '00:00' },
-        to: { ...drafts.custom.to, time: '23:59' }
+        ...drafts.fixed,
+        from: { ...drafts.fixed.from, time: '00:00' },
+        to: { ...drafts.fixed.to, time: '23:59' }
       }
-  const applyState = section === 'custom' ? asState(fixedForApply) : activeState
+  const applyState = section === 'fixed' ? asState(fixedForApply) : activeState
 
   return (
     <div
@@ -746,23 +740,23 @@ export const DateRangeV2Content = ({
             aria-label="Date range type"
             className="min-h-0 w-60 shrink-0 overflow-y-auto border-r border-cn-2"
           >
-            {pickerConfig.modes.map(mode => {
-              const copy = SECTIONS[mode]
-              const active = mode === section
+            {pickerConfig.modes.map(tab => {
+              const copy = SECTIONS[tab.mode]
+              const active = tab.mode === section
               return (
                 <button
-                  key={mode}
+                  key={tab.mode}
                   ref={node => {
-                    tabRefs.current[mode] = node
+                    tabRefs.current[tab.mode] = node
                   }}
                   type="button"
                   role="tab"
-                  id={`date-range-v2-tab-${mode}`}
+                  id={`date-range-v2-tab-${tab.mode}`}
                   aria-selected={active}
-                  aria-controls={`date-range-v2-panel-${mode}`}
+                  aria-controls={`date-range-v2-panel-${tab.mode}`}
                   tabIndex={active ? 0 : -1}
                   onClick={() => {
-                    setSection(mode)
+                    setSection(tab.mode)
                     setPendingStart(undefined)
                   }}
                   onKeyDown={moveTabFocus}
@@ -772,7 +766,7 @@ export const DateRangeV2Content = ({
                   )}
                 >
                   <Text variant="body-strong" color={active ? 'brand' : 'foreground-1'} className="block">
-                    {copy.title}
+                    {tab.label}
                   </Text>
                   {pickerConfig.tabDetails.includes('description') && (
                     <Text variant="caption-normal" color="foreground-2" className="block">
@@ -815,44 +809,44 @@ export const DateRangeV2Content = ({
                 contentWidth="triggerWidth"
               />
             )}
-            {section === 'rolling' && (
+            {section === 'relative' && (
               <Layout.Horizontal align="end" gap="xs" wrap="wrap">
                 <ToggleGroup.Root
                   type="single"
-                  aria-label="Rolling direction"
+                  aria-label="Relative direction"
                   size="sm"
                   variant="ghost"
                   selectedVariant="primary"
                   disabled={locked}
                   unselectable
-                  value={drafts.rolling.direction}
+                  value={drafts.relative.direction}
                   onChange={(direction: string) => {
-                    if (direction === 'past' || direction === 'future') setRolling({ direction })
+                    if (direction === 'last' || direction === 'next') setRelative({ direction })
                   }}
                 >
-                  {ROLLING_DIRECTIONS.map(direction => (
+                  {RELATIVE_DIRECTIONS.map(direction => (
                     <ToggleGroup.Item
                       key={direction}
                       value={direction}
-                      text={direction === 'past' ? 'Last' : 'Next'}
+                      text={direction === 'last' ? 'Last' : 'Next'}
                       disabled={!directions.includes(direction)}
                     />
                   ))}
                 </ToggleGroup.Root>
-                {pickerConfig.rolling.allowAmount && (
+                {pickerConfig.relative.allowAmount && (
                   <PositiveAmountInput
-                    aria-label="Rolling amount"
-                    value={drafts.rolling.amount}
+                    aria-label="Relative amount"
+                    value={drafts.relative.amount}
                     disabled={locked}
-                    onChange={amount => setRolling({ amount })}
+                    onChange={amount => setRelative({ amount })}
                   />
                 )}
                 <Select
-                  aria-label="Rolling unit"
-                  options={rollingUnits}
-                  value={drafts.rolling.unit}
+                  aria-label="Relative unit"
+                  options={relativeUnits}
+                  value={drafts.relative.unit}
                   disabled={locked}
-                  onChange={unit => setRolling({ unit })}
+                  onChange={unit => setRelative({ unit })}
                   size="sm"
                   wrapperClassName="w-32"
                   contentWidth="triggerWidth"
@@ -872,7 +866,7 @@ export const DateRangeV2Content = ({
                   unselectable
                   value={calendarDraft.position}
                   onChange={(position: string) => {
-                    if (position === 'previous' || position === 'current' || position === 'next') {
+                    if (position === 'previous' || position === 'this' || position === 'next') {
                       setCalendar(position, calendarDraft.unit, currentExtent)
                     }
                   }}
@@ -881,12 +875,12 @@ export const DateRangeV2Content = ({
                     <ToggleGroup.Item
                       key={position}
                       value={position}
-                      text={position === 'previous' ? 'Previous' : position === 'current' ? 'This' : 'Next'}
+                      text={position === 'previous' ? 'Previous' : position === 'this' ? 'This' : 'Next'}
                       disabled={!positions.includes(position)}
                     />
                   ))}
                 </ToggleGroup.Root>
-                {calendarDraft.position !== 'current' && pickerConfig.calendar.allowAmount && (
+                {calendarDraft.position !== 'this' && pickerConfig.calendar.allowAmount && (
                   <PositiveAmountInput
                     aria-label="Calendar amount"
                     value={calendarDraft.amount}
@@ -904,13 +898,13 @@ export const DateRangeV2Content = ({
                   wrapperClassName="w-32"
                   contentWidth="triggerWidth"
                 />
-                {calendarDraft.position === 'current' && extents.length > 1 && (
+                {calendarDraft.position === 'this' && extents.length > 1 && (
                   <Select
                     aria-label="Current period extent"
                     options={extents.map(extent => ({ value: extent, label: EXTENT_LABELS[extent] }))}
                     value={calendarDraft.extent}
                     disabled={locked}
-                    onChange={extent => setCalendar('current', calendarDraft.unit, extent)}
+                    onChange={extent => setCalendar('this', calendarDraft.unit, extent)}
                     size="sm"
                     wrapperClassName="w-36"
                     contentWidth="triggerWidth"
@@ -919,10 +913,10 @@ export const DateRangeV2Content = ({
               </Layout.Horizontal>
             )}
 
-            {section === 'custom' && (
+            {section === 'fixed' && (
               <Layout.Grid
                 columns={
-                  pickerConfig.custom.allowTime
+                  pickerConfig.fixed.allowTime
                     ? 'minmax(0, 1fr) auto minmax(0, 1fr) auto'
                     : 'minmax(0, 1fr) auto minmax(0, 1fr)'
                 }
@@ -931,13 +925,13 @@ export const DateRangeV2Content = ({
               >
                 <DateTimeEndpointField
                   label="Start"
-                  date={drafts.custom.from.date}
-                  time={drafts.custom.from.time}
-                  showTime={pickerConfig.custom.allowTime}
+                  date={drafts.fixed.from.date}
+                  time={drafts.fixed.from.time}
+                  showTime={pickerConfig.fixed.allowTime}
                   disabled={locked}
                   onDateChange={date => updateFixedDate('from', date)}
                   onTimeChange={(time: CivilTime) =>
-                    setFixed({ ...drafts.custom, from: { ...drafts.custom.from, time } })
+                    setFixed({ ...drafts.fixed, from: { ...drafts.fixed.from, time } })
                   }
                 />
                 <span className="flex h-8 items-center" aria-hidden>
@@ -945,14 +939,14 @@ export const DateRangeV2Content = ({
                 </span>
                 <DateTimeEndpointField
                   label="End"
-                  date={drafts.custom.to.date}
-                  time={drafts.custom.to.time}
-                  showTime={pickerConfig.custom.allowTime}
+                  date={drafts.fixed.to.date}
+                  time={drafts.fixed.to.time}
+                  showTime={pickerConfig.fixed.allowTime}
                   disabled={locked}
                   onDateChange={date => updateFixedDate('to', date)}
-                  onTimeChange={(time: CivilTime) => setFixed({ ...drafts.custom, to: { ...drafts.custom.to, time } })}
+                  onTimeChange={(time: CivilTime) => setFixed({ ...drafts.fixed, to: { ...drafts.fixed.to, time } })}
                 />
-                {pickerConfig.custom.allowTime && (
+                {pickerConfig.fixed.allowTime && (
                   <Button
                     size="sm"
                     variant="outline"
@@ -964,9 +958,9 @@ export const DateRangeV2Content = ({
                     }}
                     onClick={() =>
                       setFixed({
-                        ...drafts.custom,
-                        from: { ...drafts.custom.from, time: '00:00' },
-                        to: { ...drafts.custom.to, time: '23:59' }
+                        ...drafts.fixed,
+                        from: { ...drafts.fixed.from, time: '00:00' },
+                        to: { ...drafts.fixed.to, time: '23:59' }
                       })
                     }
                   >
@@ -1057,7 +1051,7 @@ export const DateRangeV2 = ({
     onValueChange(aligned)
   }, [config, pickerConfig, value, onValueChange])
 
-  // Old default preset ids, such as CURRENT_MONTH, are rewritten to the DateRangeV2 id.
+  // Old default preset ids, such as LAST_MONTH, are rewritten to the DateRangeV2 id.
   useEffect(() => {
     if (!value?.preset) return
     const nextPreset = migrateDefaultPreset(value.preset)
@@ -1093,7 +1087,7 @@ export const DateRangeV2 = ({
         timezone,
         pickerConfig.weekStartsOn,
         new Date(),
-        pickerConfig.label,
+        pickerConfig.triggerLabel,
         value ? [value.from.getTime(), value.to.getTime()] : undefined,
         configuredPresetLabel(value?.preset, pickerConfig.presets)
       ).triggerText
@@ -1113,7 +1107,7 @@ export const DateRangeV2 = ({
           >
             <IconV2 name="clock" size="sm" />
             <span className="truncate">{triggerText}</span>
-            {pickerConfig.label.showTimezone && <TimezoneOffsetBadge displayTimezone={timezone} />}
+            {pickerConfig.triggerLabel.showTimezone && <TimezoneOffsetBadge displayTimezone={timezone} />}
           </Button>
         </Popover.Trigger>
         <Popover.Content

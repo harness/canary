@@ -12,15 +12,15 @@ export type DateRangeV2Direction = 'past' | 'future' | 'any'
 
 export type DateRangeAvailability = DateRangeV2Direction
 
-export type DateRangeV2Mode = 'presets' | 'rolling' | 'calendar' | 'custom'
+export type DateRangeV2Mode = 'presets' | 'relative' | 'calendar' | 'fixed'
 
 export type Weekday = 0 | 1 | 2 | 3 | 4 | 5 | 6
 
-export type RollingUnit = 'minute' | 'hour' | 'day' | 'week' | 'month' | 'year'
+export type RelativeUnit = 'minute' | 'hour' | 'day' | 'week' | 'month' | 'year'
 
 export type CalendarUnit = 'day' | 'week' | 'month' | 'quarter' | 'year'
 
-export type CalendarExtent = 'full' | 'to_date' | 'from_now'
+export type CalendarExtent = 'full' | 'so_far' | 'from_now'
 
 /** Lines shown under a tab title. The title itself is always shown. */
 export type DateRangeV2TabDetail = 'description' | 'example' | 'note'
@@ -47,24 +47,24 @@ export interface CivilDateTime {
   time: CivilTime
 }
 
-export interface RollingRange {
-  kind: 'rolling'
-  direction: 'past' | 'future'
+export interface RelativeRange {
+  kind: 'relative'
+  direction: 'last' | 'next'
   amount: number
-  unit: RollingUnit
+  unit: RelativeUnit
 }
 
 export type CalendarRange =
   | {
       kind: 'calendar'
       position: 'previous' | 'next'
-      /** Number of complete periods. `LAST_2_CALENDAR_MONTHS` is 2. */
+      /** Number of complete periods. `PREVIOUS_2_CALENDAR_MONTHS` is 2. */
       amount: number
       unit: CalendarUnit
     }
   | {
       kind: 'calendar'
-      position: 'current'
+      position: 'this'
       unit: CalendarUnit
       extent: CalendarExtent
     }
@@ -75,7 +75,7 @@ export interface FixedRange {
   to: CivilDateTime
 }
 
-export type DateRangeV2Range = RollingRange | CalendarRange | FixedRange
+export type DateRangeV2Range = RelativeRange | CalendarRange | FixedRange
 
 /** `kind` stays on the stored range. A mode config already says which range it is. */
 type WithoutKind<T> = T extends unknown ? Omit<T, 'kind'> : never
@@ -85,15 +85,15 @@ export interface DateRangeV2State {
   range: DateRangeV2Range
 }
 
-export interface RollingModeConfig {
+export interface RelativeModeConfig {
   /** Shows the amount field. Stored amounts are kept when this is false. */
   allowAmount?: boolean
-  units?: readonly RollingUnit[]
+  units?: readonly RelativeUnit[]
   /**
-   * Draft used before a rolling value is applied.
+   * Draft used before a relative value is applied.
    * Omit this for Last 7 days.
    */
-  defaultValue?: WithoutKind<RollingRange>
+  defaultValue?: WithoutKind<RelativeRange>
   maxAmount?: number
 }
 
@@ -111,7 +111,7 @@ export interface CalendarModeConfig {
   maxAmount?: number
 }
 
-export interface CustomModeConfig {
+export interface FixedModeConfig {
   /** Shows the time inputs. Full days are stored when this is false. */
   allowTime?: boolean
   /**
@@ -134,12 +134,21 @@ export interface DateRangeV2LabelConfig {
   showTimezone?: boolean
 }
 
+/** A tab and its settings. Omit the extra fields to keep that mode's defaults. */
+export type DateRangeV2ModeEntry =
+  | { mode: 'presets'; label?: string; presets: readonly DateRangeV2Preset[] }
+  | ({ mode: 'relative'; label?: string } & RelativeModeConfig)
+  | ({ mode: 'calendar'; label?: string } & CalendarModeConfig)
+  | ({ mode: 'fixed'; label?: string } & FixedModeConfig)
+
 export interface DateRangeV2Config {
   /**
-   * Tab visibility and order. Omit this for Rolling, Calendar, and Fixed.
-   * A non-empty `presets` list also adds Presets in that default.
+   * Tab visibility, order, and settings. Omit this for Relative, Calendar, and Fixed.
+   * Each entry is `{ mode }` plus that mode's settings.
+   * `label` replaces the tab title. `{ mode: 'presets', presets }` supplies that tab's options.
+   * `{ mode: 'presets', presets: [] }` shows an empty preset select.
    */
-  modes?: readonly DateRangeV2Mode[]
+  modes?: readonly DateRangeV2ModeEntry[]
   /**
    * Lines inside each mode's info tooltip. Omit this to show description, example, and note.
    * An empty list leaves the title only.
@@ -164,23 +173,10 @@ export interface DateRangeV2Config {
       }
   /** Shows the delete icon on the standalone picker. */
   clearable?: boolean
-  /** Label options. Each flag defaults to true. */
-  label?: DateRangeV2LabelConfig
-  modeConfig?: {
-    rolling?: RollingModeConfig
-    calendar?: CalendarModeConfig
-    custom?: CustomModeConfig
-  }
+  /** Trigger label options. Each flag defaults to true. */
+  triggerLabel?: DateRangeV2LabelConfig
   /** Calendar options the picker does not own. `weekStartsOn` defaults to Monday. */
   calendarProps?: DateRangeV2CalendarProps
-  /**
-   * Preset options. With `modes` omitted, a non-empty list adds a Presets tab.
-   * `modes` that includes `presets` without this list shows an empty preset select.
-   * `modes` that leaves out `presets` hides the tab.
-   * Each preset matches the date range picker: `label`, `value`, `getRange`, and `group`.
-   * `getRange` receives `{ timezone }`.
-   */
-  presets?: readonly DateRangeV2Preset[]
 }
 
 export interface DateRangeV2Props {
@@ -204,9 +200,9 @@ export interface DateRangeV2Value {
   from: Date
   to: Date
   /**
-   * `LAST_7_DAYS` and `NEXT_2_WEEKS` are rolling.
-   * `LAST_2_CALENDAR_MONTHS` and `THIS_MONTH_TO_DATE` are calendar periods.
-   * `CUSTOM` keeps the stored bounds.
+   * `LAST_7_DAYS` and `NEXT_2_WEEKS` are relative.
+   * `PREVIOUS_2_CALENDAR_MONTHS`, `THIS_MONTH`, `THIS_MONTH_SO_FAR`, and `THIS_MONTH_FROM_NOW` are calendar periods.
+   * `FIXED` keeps the stored bounds.
    */
   preset?: string
   timezone?: TimeZoneId

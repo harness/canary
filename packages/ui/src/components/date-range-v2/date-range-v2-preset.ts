@@ -8,12 +8,12 @@ import type {
   DateRangeV2State,
   DateRangeV2Value,
   FixedRange,
-  RollingUnit,
+  RelativeUnit,
   TimeZoneId,
   Weekday
 } from './types'
 
-const ROLLING_UNITS = ['minute', 'hour', 'day', 'week', 'month', 'year'] as const
+const RELATIVE_UNITS = ['minute', 'hour', 'day', 'week', 'month', 'year'] as const
 const CALENDAR_UNITS = ['day', 'week', 'month', 'quarter', 'year'] as const
 
 const unitToken = (unit: string, amount: number): string => {
@@ -21,29 +21,29 @@ const unitToken = (unit: string, amount: number): string => {
   return amount === 1 ? word : `${word}S`
 }
 
-const parseUnit = (token: string): RollingUnit | CalendarUnit | undefined => {
+const parseUnit = (token: string): RelativeUnit | CalendarUnit | undefined => {
   const singular = token.endsWith('S') ? token.slice(0, -1) : token
   const unit = singular.toLowerCase()
   if ((CALENDAR_UNITS as readonly string[]).includes(unit)) return unit as CalendarUnit
-  if ((ROLLING_UNITS as readonly string[]).includes(unit)) return unit as RollingUnit
+  if ((RELATIVE_UNITS as readonly string[]).includes(unit)) return unit as RelativeUnit
   return undefined
 }
 
-const isRollingUnit = (unit: RollingUnit | CalendarUnit): unit is RollingUnit =>
-  (ROLLING_UNITS as readonly string[]).includes(unit)
+const isRelativeUnit = (unit: RelativeUnit | CalendarUnit): unit is RelativeUnit =>
+  (RELATIVE_UNITS as readonly string[]).includes(unit)
 
-const isCalendarUnit = (unit: RollingUnit | CalendarUnit): unit is CalendarUnit =>
+const isCalendarUnit = (unit: RelativeUnit | CalendarUnit): unit is CalendarUnit =>
   (CALENDAR_UNITS as readonly string[]).includes(unit)
 
 /**
  * Default presets from the previous date range field whose ids are not the DateRangeV2 form.
- * Rolling ids such as LAST_7_DAYS and to-date ids such as THIS_MONTH already match.
+ * Relative ids such as LAST_7_DAYS already match.
+ * A current period is `THIS_MONTH` for the full period, `THIS_MONTH_SO_FAR`, or `THIS_MONTH_FROM_NOW`.
  */
 const LEGACY_DEFAULT_PRESETS: Record<string, string> = {
-  CURRENT_MONTH: 'THIS_MONTH',
-  LAST_MONTH: 'LAST_1_CALENDAR_MONTH',
-  LAST_QUARTER: 'LAST_1_CALENDAR_QUARTER',
-  LAST_YEAR: 'LAST_1_CALENDAR_YEAR'
+  LAST_MONTH: 'PREVIOUS_1_CALENDAR_MONTH',
+  LAST_QUARTER: 'PREVIOUS_1_CALENDAR_QUARTER',
+  LAST_YEAR: 'PREVIOUS_1_CALENDAR_YEAR'
 }
 
 export const migrateDefaultPreset = (preset: string): string => {
@@ -51,38 +51,37 @@ export const migrateDefaultPreset = (preset: string): string => {
   return LEGACY_DEFAULT_PRESETS[token] ?? token
 }
 
-const extentToken = (extent: CalendarExtent): string =>
-  extent === 'full' ? 'FULL' : extent === 'from_now' ? 'FROM_NOW' : 'TO_DATE'
-
 const parseExtent = (token: string | undefined): CalendarExtent =>
-  token === 'FULL' ? 'full' : token === 'FROM_NOW' ? 'from_now' : 'to_date'
+  token === 'SO_FAR' ? 'so_far' : token === 'FROM_NOW' ? 'from_now' : 'full'
 
 export const formatDateRangeV2Preset = (range: DateRangeV2Range): string => {
-  if (range.kind === 'fixed') return 'CUSTOM'
-  if (range.kind === 'rolling') {
-    const direction = range.direction === 'past' ? 'LAST' : 'NEXT'
+  if (range.kind === 'fixed') return 'FIXED'
+  if (range.kind === 'relative') {
+    const direction = range.direction === 'last' ? 'LAST' : 'NEXT'
     return `${direction}_${range.amount}_${unitToken(range.unit, range.amount)}`
   }
-  if (range.position === 'current') {
+  if (range.position === 'this') {
     const unit = unitToken(range.unit, 1)
-    return range.extent === 'to_date' ? `THIS_${unit}` : `THIS_${unit}_${extentToken(range.extent)}`
+    if (range.extent === 'so_far') return `THIS_${unit}_SO_FAR`
+    if (range.extent === 'from_now') return `THIS_${unit}_FROM_NOW`
+    return `THIS_${unit}`
   }
-  const direction = range.position === 'previous' ? 'LAST' : 'NEXT'
+  const direction = range.position === 'previous' ? 'PREVIOUS' : 'NEXT'
   return `${direction}_${range.amount}_CALENDAR_${unitToken(range.unit, range.amount)}`
 }
 
 export const parseDateRangeV2Preset = (preset: string): DateRangeV2Range | undefined => {
   const token = migrateDefaultPreset(preset)
-  if (token === 'CUSTOM') return undefined
+  if (token === 'FIXED') return undefined
 
-  const current = /^(?:THIS|CURRENT)_([A-Z]+?)(?:_(TO_DATE|FULL|FROM_NOW))?$/.exec(token)
+  const current = /^THIS_([A-Z]+?)(?:_(SO_FAR|FULL|FROM_NOW))?$/.exec(token)
   if (current) {
     const unit = parseUnit(current[1])
     if (!unit || !isCalendarUnit(unit)) return undefined
-    return { kind: 'calendar', position: 'current', unit, extent: parseExtent(current[2]) }
+    return { kind: 'calendar', position: 'this', unit, extent: parseExtent(current[2]) }
   }
 
-  const calendarAmount = /^(LAST|NEXT)_(\d+)_CALENDAR_([A-Z]+)$/.exec(token)
+  const calendarAmount = /^(PREVIOUS|NEXT)_(\d+)_CALENDAR_([A-Z]+)$/.exec(token)
   if (calendarAmount) {
     return calendarRange(calendarAmount[1], Number(calendarAmount[2]), calendarAmount[3])
   }
@@ -93,12 +92,12 @@ export const parseDateRangeV2Preset = (preset: string): DateRangeV2Range | undef
     if (parsed) return parsed
   }
 
-  const rolling = /^(LAST|NEXT)_(\d+)_([A-Z]+)$/.exec(token)
-  if (!rolling) return undefined
-  const unit = parseUnit(rolling[3])
-  const amount = Number(rolling[2])
-  if (!unit || !isRollingUnit(unit) || !Number.isInteger(amount) || amount < 1) return undefined
-  return { kind: 'rolling', direction: rolling[1] === 'LAST' ? 'past' : 'future', amount, unit }
+  const relative = /^(LAST|NEXT)_(\d+)_([A-Z]+)$/.exec(token)
+  if (!relative) return undefined
+  const unit = parseUnit(relative[3])
+  const amount = Number(relative[2])
+  if (!unit || !isRelativeUnit(unit) || !Number.isInteger(amount) || amount < 1) return undefined
+  return { kind: 'relative', direction: relative[1] === 'LAST' ? 'last' : 'next', amount, unit }
 }
 
 const calendarRange = (direction: string, amount: number, unitTokenValue: string): CalendarRange | undefined => {
@@ -108,7 +107,7 @@ const calendarRange = (direction: string, amount: number, unitTokenValue: string
   }
   return {
     kind: 'calendar',
-    position: direction === 'LAST' ? 'previous' : 'next',
+    position: direction === 'NEXT' ? 'next' : 'previous',
     amount,
     unit
   }
@@ -125,7 +124,7 @@ const fixedRangeFromBounds = (from: Date, to: Date, timezone?: TimeZoneId): Fixe
 
 export const dateRangeV2StateFromValue = (value: DateRangeV2Value): DateRangeV2State => {
   const preset = value.preset ? migrateDefaultPreset(value.preset) : undefined
-  const range = preset && preset !== 'CUSTOM' ? parseDateRangeV2Preset(preset) : undefined
+  const range = preset && preset !== 'FIXED' ? parseDateRangeV2Preset(preset) : undefined
   return {
     version: 1,
     range: range ?? fixedRangeFromBounds(new Date(value.from), new Date(value.to), value.timezone)
@@ -152,8 +151,8 @@ export const refreshDateRangeV2Value = (
   now: Date = new Date(),
   weekStartsOn: Weekday = 1
 ): DateRangeV2Value => {
-  if (!value.preset || value.preset.toUpperCase() === 'CUSTOM') {
-    return { ...value, preset: 'CUSTOM', timezone: value.timezone ?? 'UTC' }
+  if (!value.preset || value.preset.toUpperCase() === 'FIXED') {
+    return { ...value, preset: 'FIXED', timezone: value.timezone ?? 'UTC' }
   }
   return toDateRangeV2Value(dateRangeV2StateFromValue(value), value.timezone ?? 'UTC', now, weekStartsOn)
 }

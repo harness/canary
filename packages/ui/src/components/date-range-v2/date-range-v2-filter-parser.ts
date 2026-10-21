@@ -30,20 +30,20 @@ export const dateRangeV2FilterParser = {
     if (!presetToken || rest.length > 0) return undefined
 
     const preset = presetToken.trim().toUpperCase()
-    if (preset === 'CUSTOM') {
+    if (preset === 'FIXED') {
       const fromMs = second ? parseEpoch(second) : undefined
       const toMs = third ? parseEpoch(third) : undefined
       if (fromMs === undefined || toMs === undefined) return undefined
       if (parts.length === 3) {
         return refreshDateRangeV2Value(
-          { from: new Date(fromMs), to: new Date(toMs), preset: 'CUSTOM', timezone: DEFAULT_TIME_ZONE },
+          { from: new Date(fromMs), to: new Date(toMs), preset: 'FIXED', timezone: DEFAULT_TIME_ZONE },
           now,
           weekStartsOn
         )
       }
       if (parts.length !== 4 || !fourth || !isTimezone(fourth)) return undefined
       return refreshDateRangeV2Value(
-        { from: new Date(fromMs), to: new Date(toMs), preset: 'CUSTOM', timezone: fourth },
+        { from: new Date(fromMs), to: new Date(toMs), preset: 'FIXED', timezone: fourth },
         now,
         weekStartsOn
       )
@@ -55,11 +55,11 @@ export const dateRangeV2FilterParser = {
     return refreshDateRangeV2Value({ from: now, to: now, preset, timezone }, now, weekStartsOn)
   },
   serialize: (value: DateRangeV2FilterValue): string => {
-    const preset = value.preset?.trim().toUpperCase() || 'CUSTOM'
+    const preset = value.preset?.trim().toUpperCase() || 'FIXED'
     const suffix = timezoneSuffix(value.timezone)
-    const range = preset === 'CUSTOM' ? undefined : parseDateRangeV2Preset(preset)
+    const range = preset === 'FIXED' ? undefined : parseDateRangeV2Preset(preset)
     if (range) return `${formatDateRangeV2Preset(range)}${suffix}`
-    return `CUSTOM|${value.from.getTime()}|${value.to.getTime()}${suffix}`
+    return `FIXED|${value.from.getTime()}|${value.to.getTime()}${suffix}`
   }
 }
 
@@ -87,8 +87,8 @@ export const createDateRangeV2FilterParser = (presets?: readonly DateRangeV2Pres
   const configured = (presets ?? []).filter(preset => preset.value.trim() && typeof preset.getRange === 'function')
   const matchPreset = (token: string): DateRangeV2Preset | undefined => {
     const key = presetKey(token)
-    // `CUSTOM` is the fixed-range query. A preset with that id would replace those bounds.
-    if (key === 'CUSTOM') return undefined
+    // `FIXED` is the fixed-range query. A preset with that id would replace those bounds.
+    if (key === 'FIXED') return undefined
     return configured.find(preset => presetKey(preset.value) === key)
   }
 

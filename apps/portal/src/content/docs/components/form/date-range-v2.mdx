@@ -1,23 +1,23 @@
 ---
 title: Date Range V2
-description: A picker for rolling windows, calendar periods, and fixed ranges
+description: A picker for relative windows, calendar periods, and fixed ranges
 beta: true
 ---
 
 import { DocsPage } from "@/components/docs-page";
 
-`DateRangeV2` stores `{ from, to, preset, timezone }`. A recognized preset rebuilds `from` and `to` on refresh. `CUSTOM` keeps the stored bounds. Rolling, calendar, and fixed drafts stay independent, so switching tabs does not convert one into another.
+`DateRangeV2` stores `{ from, to, preset, timezone }`. A recognized preset rebuilds `from` and `to` on refresh. `FIXED` keeps the stored bounds. Relative, calendar, and fixed drafts stay independent, so switching tabs does not convert one into another.
 
-Each box is one `config` field. Omit `modes` for Rolling, Calendar, and Fixed. A non-empty `presets` list also adds Presets in that default. A passed `modes` list controls which tabs show and their order. `presets` in that list with no preset options shows an empty preset select. `timezone: false` hides the timezone row.
+Each box is one `config` field. Omit `modes` for Relative, Calendar, and Fixed. Include `{ mode: 'presets', presets }` to add that tab. `presets` is required on that object. `{ mode: 'presets', presets: [] }` shows an empty preset select. `label` on a mode entry replaces the tab title. `timezone: false` hides the timezone row.
 
 <DocsPage.ComponentExample
   client:only
   contentClassName="place-items-start"
   code={`() => {
-    const rollingUnits = ['minute', 'hour', 'day', 'week', 'month', 'year'];
+    const relativeUnits = ['minute', 'hour', 'day', 'week', 'month', 'year'];
     const calendarUnits = ['day', 'week', 'month', 'quarter', 'year'];
-    const calendarExtents = ['full', 'to_date', 'from_now'];
-    const modes = ['rolling', 'calendar', 'custom'];
+    const calendarExtents = ['full', 'so_far', 'from_now'];
+    const modes = ['relative', 'calendar', 'fixed'];
     const weekdays = [
       { value: 0, label: '0 Sun' },
       { value: 1, label: '1 Mon' },
@@ -62,16 +62,16 @@ Each box is one `config` field. Omit `modes` for Rolling, Calendar, and Fixed. A
       timezoneOptions: 'all',
       defaultValue: 'UTC',
       weekStartsOn: 1,
-      rollingAllowAmount: true,
-      rollingUnits: rollingUnits,
-      rollingDefaultDirection: 'past',
-      rollingDefaultUnit: 'day',
-      rollingDefaultAmount: '7',
-      rollingMaxAmount: '',
+      relativeAllowAmount: true,
+      relativeUnits: relativeUnits,
+      relativeDefaultDirection: 'last',
+      relativeDefaultUnit: 'day',
+      relativeDefaultAmount: '7',
+      relativeMaxAmount: '',
       calendarAllowAmount: true,
       calendarUnits: calendarUnits,
       calendarExtents: calendarExtents,
-      calendarDefaultPosition: 'current',
+      calendarDefaultPosition: 'this',
       calendarDefaultUnit: 'month',
       calendarDefaultExtent: 'full',
       calendarDefaultAmount: '1',
@@ -82,6 +82,10 @@ Each box is one `config` field. Omit `modes` for Rolling, Calendar, and Fixed. A
       showTime: true,
       showTimezone: true,
       presetsEnabled: false,
+      relativeLabel: '',
+      calendarLabel: '',
+      fixedLabel: '',
+      presetsLabel: '',
       tabDetails: ['description', 'example', 'note'],
     });
     const [value, setValue] = React.useState({
@@ -109,9 +113,59 @@ Each box is one `config` field. Omit `modes` for Rolling, Calendar, and Fixed. A
       return Number.isInteger(parsed) && parsed >= 1 ? parsed : undefined;
     };
 
+    const labeled = (mode, settings, label) => {
+      const entry = Object.assign({ mode: mode }, settings);
+      const title = label.trim();
+      if (title) entry.label = title;
+      return entry;
+    };
+    const modeEntries = {
+      relative: labeled('relative', {
+        allowAmount: controls.relativeAllowAmount,
+        units: controls.relativeUnits,
+        defaultValue: {
+          direction: controls.relativeDefaultDirection,
+          amount: amount(controls.relativeDefaultAmount) || 7,
+          unit: controls.relativeDefaultUnit,
+        },
+        maxAmount: amount(controls.relativeMaxAmount),
+      }, controls.relativeLabel),
+      calendar: labeled('calendar', {
+        allowAmount: controls.calendarAllowAmount,
+        units: controls.calendarUnits,
+        extents: controls.calendarExtents,
+        defaultValue:
+          controls.calendarDefaultPosition === 'this'
+            ? {
+                position: 'this',
+                unit: controls.calendarDefaultUnit,
+                extent: controls.calendarDefaultExtent,
+              }
+            : {
+                position: controls.calendarDefaultPosition,
+                amount: amount(controls.calendarDefaultAmount) || 1,
+                unit: controls.calendarDefaultUnit,
+              },
+        maxAmount: amount(controls.calendarMaxAmount),
+      }, controls.calendarLabel),
+      fixed: labeled('fixed', {
+        allowTime: controls.allowTime,
+        ...(controls.customFrom && controls.customTo
+          ? {
+              defaultValue: {
+                from: { date: controls.customFrom, time: '00:00' },
+                to: { date: controls.customTo, time: '23:59' },
+              },
+            }
+          : {}),
+      }, controls.fixedLabel),
+    };
+    const selectedModes = controls.modes.map((mode) => modeEntries[mode]);
+    if (controls.presetsEnabled) selectedModes.unshift(labeled('presets', { presets: presets }, controls.presetsLabel));
+
     const pickerConfig = {
       direction: controls.direction,
-      modes: controls.modes,
+      modes: selectedModes,
       clearable: controls.clearable,
       timezone: controls.timezoneEnabled
         ? {
@@ -121,49 +175,7 @@ Each box is one `config` field. Omit `modes` for Rolling, Calendar, and Fixed. A
           }
         : false,
       calendarProps: { weekStartsOn: controls.weekStartsOn },
-      label: { showTime: controls.showTime, showTimezone: controls.showTimezone },
-      modeConfig: {
-        rolling: {
-          allowAmount: controls.rollingAllowAmount,
-          units: controls.rollingUnits,
-          defaultValue: {
-            direction: controls.rollingDefaultDirection,
-            amount: amount(controls.rollingDefaultAmount) || 7,
-            unit: controls.rollingDefaultUnit,
-          },
-          maxAmount: amount(controls.rollingMaxAmount),
-        },
-        calendar: {
-          allowAmount: controls.calendarAllowAmount,
-          units: controls.calendarUnits,
-          extents: controls.calendarExtents,
-          defaultValue:
-            controls.calendarDefaultPosition === 'current'
-              ? {
-                  position: 'current',
-                  unit: controls.calendarDefaultUnit,
-                  extent: controls.calendarDefaultExtent,
-                }
-              : {
-                  position: controls.calendarDefaultPosition,
-                  amount: amount(controls.calendarDefaultAmount) || 1,
-                  unit: controls.calendarDefaultUnit,
-                },
-          maxAmount: amount(controls.calendarMaxAmount),
-        },
-        custom: {
-          allowTime: controls.allowTime,
-          ...(controls.customFrom && controls.customTo
-            ? {
-                defaultValue: {
-                  from: { date: controls.customFrom, time: '00:00' },
-                  to: { date: controls.customTo, time: '23:59' },
-                },
-              }
-            : {}),
-        },
-      },
-      presets: controls.presetsEnabled ? presets : undefined,
+      triggerLabel: { showTime: controls.showTime, showTimezone: controls.showTimezone },
       tabDetails: controls.tabDetails,
     };
 
@@ -262,46 +274,64 @@ Each box is one `config` field. Omit `modes` for Rolling, Calendar, and Fixed. A
             field('weekStartsOn', choices(weekdays, controls.weekStartsOn, (weekStartsOn) => patch({ weekStartsOn: weekStartsOn })))
           )}
           {section(
-            'modeConfig.rolling',
+            'relative',
             <Layout.Flex direction="column" gapY="sm">
+              <TextInput
+                id="date-range-v2-relative-label"
+                label="label"
+                optional
+                size="sm"
+                placeholder="Relative"
+                value={controls.relativeLabel}
+                onChange={(event) => patch({ relativeLabel: event.target.value })}
+              />
               {field(
                 'allowAmount',
                 <Switch
-                  id="date-range-v2-rolling-amount"
+                  id="date-range-v2-relative-amount"
                   aria-label="allowAmount"
-                  checked={controls.rollingAllowAmount}
-                  onCheckedChange={(rollingAllowAmount) => patch({ rollingAllowAmount: rollingAllowAmount })}
+                  checked={controls.relativeAllowAmount}
+                  onCheckedChange={(relativeAllowAmount) => patch({ relativeAllowAmount: relativeAllowAmount })}
                 />
               )}
-              {field('units', toggles(rollingUnits, controls.rollingUnits, (unit) => toggleListed('rollingUnits', unit, rollingUnits, 'rollingDefaultUnit')))}
-              {field('defaultValue.direction', choices(['past', 'future'], controls.rollingDefaultDirection, (rollingDefaultDirection) => patch({ rollingDefaultDirection: rollingDefaultDirection })))}
-              {field('defaultValue.unit', choices(controls.rollingUnits, controls.rollingDefaultUnit, (rollingDefaultUnit) => patch({ rollingDefaultUnit: rollingDefaultUnit })))}
+              {field('units', toggles(relativeUnits, controls.relativeUnits, (unit) => toggleListed('relativeUnits', unit, relativeUnits, 'relativeDefaultUnit')))}
+              {field('defaultValue.direction', choices(['last', 'next'], controls.relativeDefaultDirection, (relativeDefaultDirection) => patch({ relativeDefaultDirection: relativeDefaultDirection })))}
+              {field('defaultValue.unit', choices(controls.relativeUnits, controls.relativeDefaultUnit, (relativeDefaultUnit) => patch({ relativeDefaultUnit: relativeDefaultUnit })))}
               <Layout.Flex direction="row" gapX="sm" wrap="wrap">
                 <TextInput
-                  id="date-range-v2-rolling-default-amount"
+                  id="date-range-v2-relative-default-amount"
                   label="defaultValue.amount"
                   optional
                   size="sm"
-                  value={controls.rollingDefaultAmount}
+                  value={controls.relativeDefaultAmount}
                   wrapperClassName="w-36"
-                  onChange={(event) => patch({ rollingDefaultAmount: event.target.value.replace(/[^0-9]/g, '') })}
+                  onChange={(event) => patch({ relativeDefaultAmount: event.target.value.replace(/[^0-9]/g, '') })}
                 />
                 <TextInput
-                  id="date-range-v2-rolling-max-amount"
+                  id="date-range-v2-relative-max-amount"
                   label="maxAmount"
                   optional
                   size="sm"
                   placeholder="none"
-                  value={controls.rollingMaxAmount}
+                  value={controls.relativeMaxAmount}
                   wrapperClassName="w-36"
-                  onChange={(event) => patch({ rollingMaxAmount: event.target.value.replace(/[^0-9]/g, '') })}
+                  onChange={(event) => patch({ relativeMaxAmount: event.target.value.replace(/[^0-9]/g, '') })}
                 />
               </Layout.Flex>
             </Layout.Flex>
           )}
           {section(
-            'modeConfig.calendar',
+            'calendar',
             <Layout.Flex direction="column" gapY="sm">
+              <TextInput
+                id="date-range-v2-calendar-label"
+                label="label"
+                optional
+                size="sm"
+                placeholder="Calendar periods"
+                value={controls.calendarLabel}
+                onChange={(event) => patch({ calendarLabel: event.target.value })}
+              />
               {field(
                 'allowAmount',
                 <Switch
@@ -313,13 +343,13 @@ Each box is one `config` field. Omit `modes` for Rolling, Calendar, and Fixed. A
               )}
               {field('units', toggles(calendarUnits, controls.calendarUnits, (unit) => toggleListed('calendarUnits', unit, calendarUnits, 'calendarDefaultUnit')))}
               {field('extents', toggles(calendarExtents, controls.calendarExtents, (extent) => toggleListed('calendarExtents', extent, calendarExtents, 'calendarDefaultExtent')))}
-              {field('defaultValue.position', choices(['previous', 'current', 'next'], controls.calendarDefaultPosition, (calendarDefaultPosition) => patch({ calendarDefaultPosition: calendarDefaultPosition })))}
+              {field('defaultValue.position', choices(['previous', 'this', 'next'], controls.calendarDefaultPosition, (calendarDefaultPosition) => patch({ calendarDefaultPosition: calendarDefaultPosition })))}
               {field('defaultValue.unit', choices(controls.calendarUnits, controls.calendarDefaultUnit, (calendarDefaultUnit) => patch({ calendarDefaultUnit: calendarDefaultUnit })))}
-              {controls.calendarDefaultPosition === 'current'
+              {controls.calendarDefaultPosition === 'this'
                 ? field('defaultValue.extent', choices(controls.calendarExtents, controls.calendarDefaultExtent, (calendarDefaultExtent) => patch({ calendarDefaultExtent: calendarDefaultExtent })))
                 : null}
               <Layout.Flex direction="row" gapX="sm" wrap="wrap">
-                {controls.calendarDefaultPosition === 'current' ? null : (
+                {controls.calendarDefaultPosition === 'this' ? null : (
                 <TextInput
                   id="date-range-v2-calendar-default-amount"
                   label="defaultValue.amount"
@@ -344,7 +374,7 @@ Each box is one `config` field. Omit `modes` for Rolling, Calendar, and Fixed. A
             </Layout.Flex>
           )}
           {section(
-            'label',
+            'triggerLabel',
             field(
               'showTime',
               <Switch
@@ -365,7 +395,7 @@ Each box is one `config` field. Omit `modes` for Rolling, Calendar, and Fixed. A
             )
           )}
           {section(
-            'modeConfig.custom',
+            'fixed',
             field(
               'allowTime',
               <Switch
@@ -400,12 +430,21 @@ Each box is one `config` field. Omit `modes` for Rolling, Calendar, and Fixed. A
           )}
           {section(
             'presets',
-            <Layout.Flex direction="column" gapY="2xs">
+            <Layout.Flex direction="column" gapY="sm">
               <Switch
                 id="date-range-v2-presets"
                 aria-label="presets"
                 checked={controls.presetsEnabled}
                 onCheckedChange={(presetsEnabled) => patch({ presetsEnabled: presetsEnabled })}
+              />
+              <TextInput
+                id="date-range-v2-presets-label"
+                label="label"
+                optional
+                size="sm"
+                placeholder="Presets"
+                value={controls.presetsLabel}
+                onChange={(event) => patch({ presetsLabel: event.target.value })}
               />
               <Text variant="caption-normal">Previous 3 days, Previous 14 days</Text>
             </Layout.Flex>
@@ -422,7 +461,7 @@ Each box is one `config` field. Omit `modes` for Rolling, Calendar, and Fixed. A
 
 ## Presets
 
-Omit `modes` and pass `config.presets` to add a Presets mode ahead of Rolling, Calendar, and Fixed. A passed `modes` list decides whether that tab shows. Include `presets` in `modes` without this list to show an empty preset select. Each preset is the date range picker shape: `label`, `value`, `getRange`, and `group` (`recommended`, `relative`, or `calendar`). The select is grouped by `group`. `getRange` receives `{ timezone }` for the zone selected in the picker, and again on reload from `PRESET_ID|TIMEZONE`. A preset that ignores the argument keeps its own dates. Apply stores `value`, that timezone, and the dates from `getRange`. An id in this list wins over a built-in id with the same name.
+Include `{ mode: 'presets', presets }` in `modes` to add that tab. Put it first to show it ahead of the other modes. `presets` is required on that object. `{ mode: 'presets', presets: [] }` shows an empty preset select. Each preset is the date range picker shape: `label`, `value`, `getRange`, and `group` (`recommended`, `relative`, or `calendar`). The select is grouped by `group`. `getRange` receives `{ timezone }` for the zone selected in the picker, and again on reload from `PRESET_ID|TIMEZONE`. A preset that ignores the argument keeps its own dates. Apply stores `value`, that timezone, and the dates from `getRange`. An id in this list wins over a built-in id with the same name.
 
 <DocsPage.ComponentExample
   client:only
@@ -498,7 +537,7 @@ Omit `modes` and pass `config.presets` to add a Presets mode ahead of Rolling, C
             direction: 'past',
             calendarProps: { weekStartsOn: 1 },
             tabDetails: [],
-            presets,
+            modes: [{ mode: 'presets', presets }, { mode: 'relative' }, { mode: 'calendar' }, { mode: 'fixed' }],
           }}
         />
         <pre style={{ margin: 0 }}>{JSON.stringify(value, null, 2)}</pre>
@@ -510,7 +549,7 @@ Omit `modes` and pass `config.presets` to add a Presets mode ahead of Rolling, C
 
 ## Filter field
 
-`FilterGroup` is the out-of-the-box path. A sticky `FilterFieldTypes.DateRangeV2` option keeps Rolling, Calendar, and Fixed on the built-in query. Presets in `filterFieldConfig.presets` reload through `getRange()`. `calendarProps.weekStartsOn` is used when a calendar week is read back, and it defaults to Monday. Apply and clear update the `timeframe` query param through the filters router. The value below is `location.search`.
+`FilterGroup` is the out-of-the-box path. A sticky `FilterFieldTypes.DateRangeV2` option keeps Relative, Calendar, and Fixed on the built-in query. Presets on `{ mode: 'presets', presets }` in `filterFieldConfig.modes` reload through `getRange()`. `calendarProps.weekStartsOn` is used when a calendar week is read back, and it defaults to Monday. Apply and clear update the `timeframe` query param through the filters router. The value below is `location.search`.
 
 <DocsPage.ComponentExample
   client:only
@@ -537,29 +576,37 @@ Omit `modes` and pass `config.presets` to add a Presets mode ahead of Rolling, C
                 calendarProps: { weekStartsOn: 1 },
                 timezone: { browserZone: 'dynamic' },
                 tabDetails: [],
-                presets: [
+                modes: [
                   {
-                    label: 'Previous 3 days',
-                    value: 'PREVIOUS_3_DAYS',
-                    group: 'recommended',
-                    getRange: () => {
-                      const to = new Date();
-                      const from = new Date(to);
-                      from.setDate(from.getDate() - 3);
-                      return { from, to };
-                    },
+                    mode: 'presets',
+                    presets: [
+                      {
+                        label: 'Previous 3 days',
+                        value: 'PREVIOUS_3_DAYS',
+                        group: 'recommended',
+                        getRange: () => {
+                          const to = new Date();
+                          const from = new Date(to);
+                          from.setDate(from.getDate() - 3);
+                          return { from, to };
+                        },
+                      },
+                      {
+                        label: 'Previous 14 days',
+                        value: 'PREVIOUS_14_DAYS',
+                        group: 'relative',
+                        getRange: () => {
+                          const to = new Date();
+                          const from = new Date(to);
+                          from.setDate(from.getDate() - 14);
+                          return { from, to };
+                        },
+                      },
+                    ],
                   },
-                  {
-                    label: 'Previous 14 days',
-                    value: 'PREVIOUS_14_DAYS',
-                    group: 'relative',
-                    getRange: () => {
-                      const to = new Date();
-                      const from = new Date(to);
-                      from.setDate(from.getDate() - 14);
-                      return { from, to };
-                    },
-                  },
+                  { mode: 'relative' },
+                  { mode: 'calendar' },
+                  { mode: 'fixed' },
                 ],
               },
             },
@@ -648,7 +695,7 @@ Omit `modes` and pass `config.presets` to add a Presets mode ahead of Rolling, C
                 calendarProps: { weekStartsOn: 1 },
                 timezone: { browserZone: 'dynamic' },
                 tabDetails: [],
-                presets: presets,
+                modes: [{ mode: 'presets', presets: presets }, { mode: 'relative' }, { mode: 'calendar' }, { mode: 'fixed' }],
               },
             },
           ]}
@@ -670,7 +717,7 @@ Omit `modes` and pass `config.presets` to add a Presets mode ahead of Rolling, C
     {
       name: "value",
       description:
-        "Controlled value. preset is the source of truth for rolling and calendar ranges. CUSTOM keeps from and to.",
+        "Controlled value. preset is the source of truth for relative and calendar ranges. FIXED keeps from and to.",
       required: false,
       value: "DateRangeV2Value",
     },
@@ -684,7 +731,7 @@ Omit `modes` and pass `config.presets` to add a Presets mode ahead of Rolling, C
     {
       name: "config",
       description:
-        "modes, tabDetails, direction, timezone, clearable, label, modeConfig, calendarProps, and presets. label.showTime adds a clock time when either end is not the start or end of a day. label.showTimezone adds the offset. Both default to true. tabDetails chooses description, example, and note inside each mode's info tooltip. Omit it to show all three. An empty list leaves the title only. Omit modes for Rolling, Calendar, and Fixed. A non-empty presets list also adds Presets in that default. A passed modes list controls which tabs show and their order. presets in that list with no preset options shows an empty preset select. Each preset matches the date range picker: label, value, getRange, and group. modeConfig.rolling.defaultValue is direction, amount, and unit. Omit it for Last 7 days. modeConfig.calendar.defaultValue is a calendar range. Previous and Next include amount. This includes extent. Omit it for This month, full period. modeConfig.custom.defaultValue is from and to. Omit it for today, 00:00 to 23:59, in the selected time zone. Timezone false hides the zone row. An object sets browserZone, defaultValue, and options. options locale-utc lists Browser Time and UTC only and hides search. The default zone is UTC. clearable shows the delete icon on the standalone picker. calendarProps.weekStartsOn sets the first weekday and defaults to Monday.",
+        "modes, tabDetails, direction, timezone, clearable, triggerLabel, and calendarProps. triggerLabel.showTime adds a clock time when either end is not the start or end of a day. triggerLabel.showTimezone adds the offset. Both default to true. tabDetails chooses description, example, and note inside each mode's info tooltip. Omit it to show all three. An empty list leaves the title only. Omit modes for Relative, Calendar, and Fixed. Each entry is { mode } plus that mode's settings. label on a mode entry replaces the tab title. Include { mode: 'presets', presets } to add that tab. presets is required on that object. { mode: 'presets', presets: [] } shows an empty preset select. Each preset matches the date range picker: label, value, getRange, and group. A relative entry's defaultValue is direction, amount, and unit. Omit it for Last 7 days. A calendar entry's defaultValue is a calendar range. Previous and Next include amount. This includes extent. Omit it for This month, full period. A fixed entry's defaultValue is from and to. Omit it for today, 00:00 to 23:59, in the selected time zone. Timezone false hides the zone row. An object sets browserZone, defaultValue, and options. options locale-utc lists Browser Time and UTC only and hides search. The default zone is UTC. clearable shows the delete icon on the standalone picker. calendarProps.weekStartsOn sets the first weekday and defaults to Monday.",
       required: false,
       value: "DateRangeV2Config",
     },

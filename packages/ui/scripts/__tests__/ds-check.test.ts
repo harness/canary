@@ -134,10 +134,24 @@ describe('ds-check', () => {
     })
 
     it('should report errors in readable format', async () => {
-      const result = await runDsCheck(['--schema'])
-      if (result.exitCode !== 0) {
-        // Error output should be readable
+      // Create a broken manifest to test error reporting
+      const brokenManifestPath = path.resolve(PACKAGE_ROOT, 'schemas/broken.manifest.json')
+      const brokenContent = JSON.stringify({
+        id: 'canary.broken',
+        name: 'Broken'
+        // missing required fields: description, props, governance
+      })
+      fs.writeFileSync(brokenManifestPath, brokenContent)
+
+      try {
+        const result = await runDsCheck(['--schema'])
+        expect(result.exitCode).toBe(1)
         expect(result.stderr || result.stdout).toContain('❌')
+      } finally {
+        // Cleanup
+        if (fs.existsSync(brokenManifestPath)) {
+          fs.unlinkSync(brokenManifestPath)
+        }
       }
     })
 

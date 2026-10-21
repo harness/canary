@@ -2,7 +2,7 @@
   "openapi": "3.0.0",
   "info": {
     "title": "StatusBadge Component Skill",
-    "description": "Harness StatusBadge component for displaying status indicators with muted, success, warning, and error themes",
+    "description": "Harness StatusBadge component for displaying status indicators. Five variants (primary, secondary, outline, ghost, status) and seven semantic themes (muted, success, warning, danger, info, merged, risk). The 'status' variant supports a pulse animation on the indicator dot.",
     "version": "1.0.0",
     "x-skill-id": "canary.status-badge",
     "x-skill-status": "stable",
@@ -20,29 +20,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "type": "object",
-                "properties": {
-                  "label": {
-                    "type": "string",
-                    "description": "Badge text content"
-                  },
-                  "theme": {
-                    "type": "string",
-                    "enum": ["muted", "success", "warning", "error"],
-                    "default": "muted",
-                    "description": "Visual theme indicating status"
-                  },
-                  "icon": {
-                    "type": "string",
-                    "description": "Optional icon name from Harness icon library"
-                  },
-                  "closeable": {
-                    "type": "boolean",
-                    "default": false,
-                    "description": "Show close button"
-                  }
-                },
-                "required": ["label"]
+                "$ref": "#/components/schemas/StatusBadgeProps"
               }
             }
           }
@@ -96,28 +74,94 @@
     "schemas": {
       "StatusBadgeProps": {
         "type": "object",
+        "description": "Props for the StatusBadge React component. Mirrors props in schemas/status-badge.manifest.json.",
         "properties": {
-          "label": { "type": "string" },
+          "variant": {
+            "type": "string",
+            "enum": ["primary", "secondary", "outline", "ghost", "status"],
+            "default": "primary",
+            "description": "Component style variant; 'status' enables pulse animation and indicator dot",
+            "x-provenance": "shared"
+          },
           "theme": {
             "type": "string",
-            "enum": ["muted", "success", "warning", "error"]
+            "enum": ["muted", "success", "warning", "danger", "info", "merged", "risk"],
+            "default": "muted",
+            "description": "Semantic color theme indicating the status type",
+            "x-provenance": "shared"
           },
-          "icon": { "type": "string" },
-          "closeable": { "type": "boolean" }
-        }
+          "size": {
+            "type": "string",
+            "enum": ["sm", "md"],
+            "default": "md",
+            "description": "Badge size",
+            "x-provenance": "shared"
+          },
+          "pulse": {
+            "type": "boolean",
+            "description": "Animates the indicator dot. Only valid with variant='status'; other variants reject this prop.",
+            "x-provenance": "designOnly"
+          },
+          "icon": {
+            "type": "string",
+            "description": "Optional IconV2 name. Figma has no icon picker, so agents must supply an explicit icon name. Not valid with variant='status'.",
+            "x-provenance": "codeOnly",
+            "x-trigger": "appearance-override"
+          },
+          "children": {
+            "type": "string",
+            "description": "Badge label/text content. Typed as React.ReactNode in code; represented here as a string for spec purposes.",
+            "x-provenance": "codeOnly",
+            "x-trigger": "content"
+          },
+          "className": {
+            "type": "string",
+            "description": "Additional Tailwind classes; must not override token-based styling",
+            "x-provenance": "codeOnly",
+            "x-trigger": "appearance-override"
+          }
+        },
+        "required": ["variant"],
+        "additionalProperties": false
       }
     }
   },
+  "x-tokens": {
+    "rootClass": "cn-badge",
+    "rule": "semantic-only"
+  },
+  "x-accessibility": {
+    "role": "status",
+    "notes": "Passive status indicator; not interactive. Children are announced as status updates. A decorative icon should be aria-hidden."
+  },
+  "x-examples": {
+    "correct": [
+      "<StatusBadge variant='status' theme='success' pulse>Active</StatusBadge>",
+      "<StatusBadge variant='primary' theme='warning' icon='alert'>Attention needed</StatusBadge>",
+      "<StatusBadge variant='secondary' theme='muted'>Draft</StatusBadge>"
+    ],
+    "incorrect": [
+      "<StatusBadge variant='primary' pulse>Pulse on non-status variant (rejected)</StatusBadge>",
+      "<StatusBadge onClick={() => {}}>Status badges are not interactive</StatusBadge>"
+    ]
+  },
+  "x-known-gaps": [
+    "No built-in close/dismiss action (use a wrapper component if needed)",
+    "Pulse animation only works with variant='status'; other variants reject the pulse prop"
+  ],
   "x-governance": {
     "systemRules": [
       "docs/system/accessibility.md",
-      "docs/system/interaction-states.md",
       "docs/system/color-system.md",
-      "docs/system/visual-primitives.md"
+      "docs/system/interaction-states.md",
+      "docs/system/visual-primitives.md",
+      "docs/system/typography.md",
+      "docs/system/spacing.md",
+      "docs/system/shadows.md",
+      "docs/system/component-architecture.md",
+      "docs/system/design-to-code-flow.md"
     ],
-    "componentRules": [
-      "docs/components/status-badge.md"
-    ]
+    "componentRules": ["schemas/status-badge.md"]
   },
   "x-internal-manifest": "schemas/status-badge.manifest.json"
 }

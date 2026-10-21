@@ -6,7 +6,7 @@ import figma from 'figma'
 
 const instance = figma.selectedInstance
 
-const label = instance.getString('text#1299:25')
+const label = instance.getString('textString#1299:25')
 
 const variant = instance.getEnum('variant', {
   primary: 'primary',
@@ -31,11 +31,22 @@ const theme = instance.getEnum('theme', {
   '🟠 risk': 'risk'
 })
 
-const hasIcon = variant !== 'status' && instance.getBoolean('icon#1293:13')
+// StatusBadge takes `icon` as an icon *name* (keyof IconNameMapV2) and renders
+// <IconV2 name={icon} /> internally — unlike Button, which has no icon prop and
+// takes icons as children. So the swapped instance's template is used only to
+// recover that name, not emitted as JSX.
+//
+// NOTE: the icon component set has no Code Connect mapping of its own, so
+// executeTemplate() currently yields nothing and the prop is omitted. This
+// resolves on its own once the icon component is connected; until then an icon
+// drawn in Figma will not appear in the generated snippet.
+const hasIcon = variant !== 'status' && instance.getBoolean('viewIcon#1293:13')
 const icon = hasIcon ? instance.getInstanceSwap('↳ icon#1299:52') : null
-let iconCode
+let iconName
 if (icon && icon.type === 'INSTANCE') {
-  iconCode = icon.executeTemplate().example
+  const iconExample = icon.executeTemplate().example
+  const iconNameMatch = iconExample ? /name="([^"]+)"/.exec(iconExample) : null
+  iconName = iconNameMatch ? iconNameMatch[1] : undefined
 }
 
 export default {
@@ -44,8 +55,8 @@ export default {
       variant="${variant}"
       size="${size}"
       theme="${theme}"
+      ${iconName ? figma.code`icon="${iconName}"` : ''}
     >
-      ${iconCode ? figma.code`${iconCode}` : ''}
       ${label}
     </StatusBadge>
   `,

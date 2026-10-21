@@ -2,8 +2,8 @@
   "openapi": "3.0.0",
   "info": {
     "title": "StatusBadge Component Skill",
-    "description": "Harness StatusBadge component for displaying status indicators. Five variants (primary, secondary, outline, ghost, status) and seven semantic themes (muted, success, warning, danger, info, merged, risk). The 'status' variant supports a pulse animation on the indicator dot.",
-    "version": "1.0.0",
+    "description": "Display a status indicator with a semantic theme (muted, success, warning, danger, info, merged, risk) and optional pulse animation on the 'status' variant",
+    "version": "1.4.1",
     "x-skill-id": "canary.status-badge",
     "x-skill-status": "stable",
     "x-skill-package": "@harnessio/ui"
@@ -35,7 +35,7 @@
                   "properties": {
                     "componentId": {
                       "type": "string",
-                      "description": "Unique identifier for the badge instance"
+                      "description": "Unique identifier for the instance"
                     },
                     "jsx": {
                       "type": "string",
@@ -44,19 +44,6 @@
                     "props": {
                       "type": "object",
                       "description": "Resolved prop values with defaults"
-                    },
-                    "accessibility": {
-                      "type": "object",
-                      "properties": {
-                        "role": {
-                          "type": "string",
-                          "description": "ARIA role (status)"
-                        },
-                        "ariaLabel": {
-                          "type": "string",
-                          "description": "Accessible label"
-                        }
-                      }
                     }
                   }
                 }
@@ -74,13 +61,13 @@
     "schemas": {
       "StatusBadgeProps": {
         "type": "object",
-        "description": "Props for the StatusBadge React component. Mirrors props in schemas/status-badge.manifest.json.",
+        "description": "Props for the StatusBadge React component. Generated from the manifest — do not edit by hand.",
         "properties": {
           "variant": {
             "type": "string",
             "enum": ["primary", "secondary", "outline", "ghost", "status"],
             "default": "primary",
-            "description": "Component style variant; 'status' enables pulse animation and indicator dot",
+            "description": "Component style variant; 'status' enables pulse animation and indicator dot. Required by the TypeScript type despite the CVA defaultVariants entry.",
             "x-provenance": "shared"
           },
           "theme": {
@@ -99,24 +86,26 @@
           },
           "pulse": {
             "type": "boolean",
-            "description": "Animates the indicator dot. Only valid with variant='status'; other variants reject this prop.",
-            "x-provenance": "designOnly"
+            "description": "Only works with variant='status'; controls animation on indicator dot, compiled to CSS animation",
+            "x-provenance": "designOnly",
+            "x-transform": "style-only"
           },
           "icon": {
             "type": "string",
-            "description": "Optional IconV2 name. Figma has no icon picker, so agents must supply an explicit icon name. Not valid with variant='status'.",
+            "description": "Optional IconV2 name; Figma doesn't support icon picker, agents must provide explicit icon names",
             "x-provenance": "codeOnly",
             "x-trigger": "appearance-override"
           },
           "children": {
             "type": "string",
-            "description": "Badge label/text content. Typed as React.ReactNode in code; represented here as a string for spec purposes.",
+            "x-code-type": "node",
+            "description": "Badge label/text content",
             "x-provenance": "codeOnly",
             "x-trigger": "content"
           },
           "className": {
             "type": "string",
-            "description": "Additional Tailwind classes; must not override token-based styling",
+            "description": "Additional CSS classes (Tailwind); should not override token-based styling",
             "x-provenance": "codeOnly",
             "x-trigger": "appearance-override"
           }
@@ -126,13 +115,29 @@
       }
     }
   },
+  "x-generated-from": "schemas/status-badge.manifest.json — regenerate with `pnpm ds-check --write`",
   "x-tokens": {
     "rootClass": "cn-badge",
-    "rule": "semantic-only"
+    "rule": "semantic-only",
+    "refs": {
+      "variant.primary": "badge.variant.primary",
+      "variant.secondary": "badge.variant.secondary",
+      "variant.outline": "badge.variant.outline",
+      "variant.ghost": "badge.variant.ghost",
+      "variant.status": "badge.variant.status",
+      "theme.muted": "badge.theme.muted",
+      "theme.success": "badge.theme.success",
+      "theme.warning": "badge.theme.warning",
+      "theme.danger": "badge.theme.danger",
+      "theme.info": "badge.theme.info",
+      "size.sm": "badge.size.sm",
+      "size.md": "badge.size.md",
+      "animation.pulse": "animation.pulse"
+    }
   },
   "x-accessibility": {
     "role": "status",
-    "notes": "Passive status indicator; not interactive. Children are announced as status updates. A decorative icon should be aria-hidden."
+    "notes": "Badge is a passive status indicator; not interactive. Children are announced as status updates. Icon (if present) should be decorative (aria-hidden)."
   },
   "x-examples": {
     "correct": [
@@ -141,13 +146,13 @@
       "<StatusBadge variant='secondary' theme='muted'>Draft</StatusBadge>"
     ],
     "incorrect": [
-      "<StatusBadge variant='primary' pulse>Pulse on non-status variant (rejected)</StatusBadge>",
+      "<StatusBadge variant='primary' pulse>Pulse on non-status variant (ignored)</StatusBadge>",
       "<StatusBadge onClick={() => {}}>Status badges are not interactive</StatusBadge>"
     ]
   },
   "x-known-gaps": [
-    "No built-in close/dismiss action (use a wrapper component if needed)",
-    "Pulse animation only works with variant='status'; other variants reject the pulse prop"
+    "No built-in close/dismiss action (use wrapper component if needed)",
+    "Pulse animation only works with variant='status'; other variants ignore the pulse prop"
   ],
   "x-governance": {
     "systemRules": [

@@ -27,7 +27,7 @@
   },
 
   "purpose": {
-    "summary": "Display a status indicator with semantic theme (success, warning, error) and optional animation",
+    "summary": "Display a status indicator with a semantic theme (muted, success, warning, danger, info, merged, risk) and optional pulse animation on the 'status' variant",
     "useWhen": [
       "Communicating the state of a system, process, or entity (active, pending, error, warning)",
       "Labeling a status alongside other metadata in tables, lists, or cards",
@@ -47,7 +47,8 @@
         "type": "enum",
         "values": ["primary", "secondary", "outline", "ghost", "status"],
         "default": "primary",
-        "codeNote": "Component style variant; 'status' enables pulse animation and indicator dot"
+        "required": true,
+        "codeNote": "Component style variant; 'status' enables pulse animation and indicator dot. Required by the TypeScript type despite the CVA defaultVariants entry."
       },
       {
         "name": "theme",

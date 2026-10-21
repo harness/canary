@@ -105,6 +105,11 @@
                 "uniqueItems": true
               },
               "default": {},
+              "required": {
+                "type": "boolean",
+                "description": "True when the code prop has no implicit fallback and must be passed explicitly. A CVA defaultVariants entry does not make a prop optional if the TypeScript type still demands it.",
+                "default": false
+              },
               "codeNote": { "type": "string" },
               "figmaNote": { "type": "string" }
             },
@@ -165,6 +170,11 @@
                   "appearance-override"
                 ],
                 "description": "Why this prop has no Figma counterpart. The first four are inherent — a static design file can never express them, so don't expect a Figma equivalent to appear. The last two are gaps in the Figma library rather than impossibilities: the prop could be represented in Figma and isn't yet. event-handler: callback/interaction. runtime-state: value changes while running. data-binding: value supplied from data at runtime. a11y-only: exists solely for assistive technology. content: text or child content Figma could hold but doesn't expose as a control. appearance-override: visual escape hatch (icon name, className) not surfaced as a Figma property."
+              },
+              "required": {
+                "type": "boolean",
+                "description": "True when the code prop must be passed explicitly.",
+                "default": false
               },
               "notes": { "type": "string" }
             }

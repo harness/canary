@@ -96,7 +96,7 @@
       "docs/system/visual-primitives.md"
     ],
     "componentRules": [
-      "docs/components/{component-kebab}.md"
+      "schemas/{component-kebab}.md"
     ]
   },
   "x-internal-manifest": "schemas/{component-kebab}.manifest.json"

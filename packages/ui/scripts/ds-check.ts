@@ -244,8 +244,24 @@ function resolveCodePath(codePath: string): string {
 }
 
 /**
+ * Skip over a quoted string starting at position i, handling escape sequences.
+ * Returns the position after the closing quote, or -1 if unterminated.
+ */
+function skipString(src: string, i: number, quote: string): number {
+  i++ // move past opening quote
+  while (i < src.length) {
+    if (src[i] === '\\')
+      i += 2 // skip escape sequence
+    else if (src[i] === quote) return i + 1
+    else i++
+  }
+  return -1 // unterminated string
+}
+
+/**
  * Return the contents of the `{...}` block that begins at or after `from`,
  * matched by brace balance so nested objects don't truncate the result.
+ * Skips over string literals and comments to avoid counting braces within them.
  */
 function extractBlock(src: string, from: number): string | undefined {
   const open = src.indexOf('{', from)
@@ -253,8 +269,35 @@ function extractBlock(src: string, from: number): string | undefined {
 
   let depth = 0
   for (let i = open; i < src.length; i++) {
-    if (src[i] === '{') depth++
-    else if (src[i] === '}') {
+    const ch = src[i]
+
+    // Skip string literals
+    if (ch === '"' || ch === "'" || ch === '`') {
+      i = skipString(src, i, ch)
+      if (i === -1) return undefined
+      i-- // back up one since the loop will increment
+      continue
+    }
+
+    // Skip comments
+    if (ch === '/' && i + 1 < src.length) {
+      if (src[i + 1] === '/') {
+        // Line comment: skip to end of line
+        const nl = src.indexOf('\n', i)
+        i = nl === -1 ? src.length - 1 : nl - 1
+        continue
+      }
+      if (src[i + 1] === '*') {
+        // Block comment: skip to */
+        const end = src.indexOf('*/', i + 2)
+        if (end === -1) return undefined
+        i = end + 1
+        continue
+      }
+    }
+
+    if (ch === '{') depth++
+    else if (ch === '}') {
       depth--
       if (depth === 0) return src.slice(open + 1, i)
     }
@@ -270,6 +313,30 @@ function topLevelKeys(block: string): string[] {
 
   for (let i = 0; i < block.length; i++) {
     const ch = block[i]
+
+    // Skip string literals
+    if (ch === '"' || ch === "'" || ch === '`') {
+      i = skipString(block, i, ch)
+      if (i === -1) break
+      i-- // back up one since the loop will increment
+      continue
+    }
+
+    // Skip comments
+    if (ch === '/' && i + 1 < block.length) {
+      if (block[i + 1] === '/') {
+        const nl = block.indexOf('\n', i)
+        i = nl === -1 ? block.length - 1 : nl - 1
+        continue
+      }
+      if (block[i + 1] === '*') {
+        const end = block.indexOf('*/', i + 2)
+        if (end === -1) break
+        i = end + 1
+        continue
+      }
+    }
+
     if (ch === '{' || ch === '[' || ch === '(') depth++
     else if (ch === '}' || ch === ']' || ch === ')') depth--
     else if (ch === ',' && depth === 0) atKeyPosition = true

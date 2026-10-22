@@ -117,6 +117,60 @@ export const PromptInputButton = ({ variant = 'outline', size = 'xs', ...props }
   return <Toggle {...props} variant={variant} size={size} iconOnly />
 }
 
+const SpeechMicIcon = () => (
+  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 16 16" aria-hidden className="size-3.5">
+    <path
+      stroke="currentColor"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      d="M8 1.75a2.25 2.25 0 0 0-2.25 2.25v3a2.25 2.25 0 1 0 4.5 0v-3A2.25 2.25 0 0 0 8 1.75Z"
+    />
+    <path
+      stroke="currentColor"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      d="M4.25 7.25a3.75 3.75 0 0 0 7.5 0M8 11v3.25M5.75 14.25h4.5"
+    />
+  </svg>
+)
+
+export type PromptInputSpeechProps = ComponentProps<typeof Button> & {
+  listening?: boolean
+}
+
+export const PromptInputSpeech = ({
+  listening = false,
+  className,
+  tooltipProps,
+  disabled,
+  children,
+  ...props
+}: PromptInputSpeechProps) => {
+  return (
+    <Button
+      type="button"
+      variant="ghost"
+      size="xs"
+      rounded
+      disabled={disabled}
+      data-listening={listening ? 'true' : undefined}
+      aria-pressed={listening}
+      className={cn('cn-prompt-input-speech cn-button-icon-only', className)}
+      tooltipProps={tooltipProps ?? { content: listening ? 'Stop listening' : 'Voice input' }}
+      {...props}
+    >
+      {listening && (
+        <>
+          <span className="cn-prompt-input-speech-ring" aria-hidden />
+          <span className="cn-prompt-input-speech-ring cn-prompt-input-speech-ring-delayed" aria-hidden />
+        </>
+      )}
+      {children ?? <SpeechMicIcon />}
+      <span className="sr-only">{listening ? 'Stop voice input' : 'Start voice input'}</span>
+    </Button>
+  )
+}
+
 export const PromptInput = {
   Root: PromptInputRoot,
   Tags: PromptInputTags,
@@ -124,5 +178,6 @@ export const PromptInput = {
   Toolbar: PromptInputToolbar,
   Tools: PromptInputTools,
   Submit: PromptInputSubmit,
-  Button: PromptInputButton
+  Button: PromptInputButton,
+  Speech: PromptInputSpeech
 }

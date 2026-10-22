@@ -97,5 +97,39 @@ export default {
       boxShadow:
         '0 0 3px 0 color-mix(in srgb, var(--cn-gradient-ai-stop-3) 30%, transparent), 0 0 12px 2px color-mix(in srgb, var(--cn-gradient-ai-stop-3) 15%, transparent), 0 0 28px 6px color-mix(in srgb, var(--cn-gradient-ai-stop-3) 8%, transparent)'
     }
+  },
+
+  '.cn-prompt-input-speech': {
+    position: 'relative',
+    overflow: 'visible',
+
+    '&[data-listening="true"]': {
+      color: 'var(--cn-set-red-solid-bg)',
+      backgroundColor: 'color-mix(in srgb, var(--cn-set-red-solid-bg) 12%, transparent)'
+    }
+  },
+
+  '.cn-prompt-input-speech-ring': {
+    position: 'absolute',
+    inset: '-3px',
+    borderRadius: '9999px',
+    border: '1px solid color-mix(in srgb, var(--cn-set-red-solid-bg) 55%, transparent)',
+    pointerEvents: 'none',
+    animation: 'cn-speech-pulse 1.6s ease-out infinite'
+  },
+
+  '.cn-prompt-input-speech-ring-delayed': {
+    animationDelay: '0.55s'
+  },
+
+  '@keyframes cn-speech-pulse': {
+    '0%': {
+      transform: 'scale(1)',
+      opacity: '0.7'
+    },
+    '100%': {
+      transform: 'scale(1.55)',
+      opacity: '0'
+    }
   }
 }

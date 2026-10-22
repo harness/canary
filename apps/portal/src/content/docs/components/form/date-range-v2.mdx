@@ -9,7 +9,7 @@ import { DocsPage } from "@/components/docs-page";
 
 `DateRangeV2` stores `{ range, timezone, from, to }`. `range` is a relative, calendar, fixed, or preset value. `from` and `to` are the epochs for that range. `resolveDateRangeV2` fills them for every range except a preset, which uses that preset's `getRange`. Apply refreshes the epochs. Weeks start on Monday. Relative, calendar, and fixed drafts stay independent, so switching tabs does not convert one into another.
 
-Each box is one `config` field. Omit `modes` for Relative, Calendar, and Fixed. Include `{ mode: 'presets', presets }` to add that tab. `presets` is required on that object. `{ mode: 'presets', presets: [] }` shows an empty preset select. `label` on a mode entry replaces the tab title. `timezone: false` hides the timezone row.
+Each box is one `config` field. A selected mode's settings are nested inside `modes`. Omit `modes` for Relative, Calendar, and Fixed. Include `{ mode: 'presets', presets }` to add that tab. `presets` is required on that object. `{ mode: 'presets', presets: [] }` shows an empty preset select. `label` on a mode entry replaces the tab title. `timezone: false` hides the timezone row.
 
 <DocsPage.ComponentExample
   client:only
@@ -18,7 +18,7 @@ Each box is one `config` field. Omit `modes` for Relative, Calendar, and Fixed. 
     const relativeUnits = ['minute', 'hour', 'day', 'week', 'month', 'year'];
     const calendarUnits = ['day', 'week', 'month', 'quarter', 'year'];
     const calendarExtents = ['full', 'so_far', 'from_now'];
-    const modes = ['relative', 'calendar', 'fixed'];
+    const modeOrder = ['presets', 'relative', 'calendar', 'fixed'];
     const timeZones = ['LOCALE', 'UTC', 'America/New_York', 'Europe/London', 'Asia/Kolkata'];
     const presets = [
       {
@@ -47,7 +47,7 @@ Each box is one `config` field. Omit `modes` for Relative, Calendar, and Fixed. 
 
     const [controls, setControls] = React.useState({
       direction: 'any',
-      modes: modes,
+      modes: ['relative', 'calendar', 'fixed'],
       clearable: true,
       timezoneEnabled: true,
       browserZone: 'dynamic',
@@ -70,9 +70,10 @@ Each box is one `config` field. Omit `modes` for Relative, Calendar, and Fixed. 
       allowTime: true,
       customFrom: '',
       customTo: '',
+      customFromTime: '',
+      customToTime: '',
       showTime: true,
       showTimezone: true,
-      presetsEnabled: false,
       relativeLabel: '',
       calendarLabel: '',
       fixedLabel: '',
@@ -103,6 +104,7 @@ Each box is one `config` field. Omit `modes` for Relative, Calendar, and Fixed. 
       const parsed = Number(raw);
       return Number.isInteger(parsed) && parsed >= 1 ? parsed : undefined;
     };
+    const clock = (raw, fallback) => (/^([01]\\d|2[0-3]):[0-5]\\d$/.test(raw) ? raw : fallback);
 
     const labeled = (mode, settings, label) => {
       const entry = Object.assign({ mode: mode }, settings);
@@ -111,6 +113,7 @@ Each box is one `config` field. Omit `modes` for Relative, Calendar, and Fixed. 
       return entry;
     };
     const modeEntries = {
+      presets: labeled('presets', { presets: presets }, controls.presetsLabel),
       relative: labeled('relative', {
         allowAmount: controls.relativeAllowAmount,
         units: controls.relativeUnits,
@@ -139,25 +142,26 @@ Each box is one `config` field. Omit `modes` for Relative, Calendar, and Fixed. 
               },
         maxAmount: amount(controls.calendarMaxAmount),
       }, controls.calendarLabel),
-      fixed: labeled('fixed', {
-        allowTime: controls.allowTime,
-        ...(controls.customFrom && controls.customTo
+      fixed: labeled('fixed', Object.assign(
+        { allowTime: controls.allowTime },
+        controls.customFrom && controls.customTo
           ? {
               defaultValue: {
-                from: { date: controls.customFrom, time: '00:00' },
-                to: { date: controls.customTo, time: '23:59' },
+                from: { date: controls.customFrom, time: controls.allowTime ? clock(controls.customFromTime, '00:00') : '00:00' },
+                to: { date: controls.customTo, time: controls.allowTime ? clock(controls.customToTime, '23:59') : '23:59' },
               },
             }
-          : {}),
-      }, controls.fixedLabel),
+          : {}
+      ), controls.fixedLabel),
     };
     const selectedModes = controls.modes.map((mode) => modeEntries[mode]);
-    if (controls.presetsEnabled) selectedModes.unshift(labeled('presets', { presets: presets }, controls.presetsLabel));
+    const modeOn = (mode) => controls.modes.indexOf(mode) >= 0;
 
     const pickerConfig = {
       direction: controls.direction,
-      modes: selectedModes,
+      tabDetails: controls.tabDetails,
       clearable: controls.clearable,
+      triggerLabel: { showTime: controls.showTime, showTimezone: controls.showTimezone },
       timezone: controls.timezoneEnabled
         ? {
             browserZone: controls.browserZone,
@@ -165,8 +169,7 @@ Each box is one `config` field. Omit `modes` for Relative, Calendar, and Fixed. 
             options: controls.timezoneOptions,
           }
         : false,
-      triggerLabel: { showTime: controls.showTime, showTimezone: controls.showTimezone },
-      tabDetails: controls.tabDetails,
+      modes: selectedModes,
     };
 
     const choices = (options, selected, onChange) => (
@@ -201,7 +204,7 @@ Each box is one `config` field. Omit `modes` for Relative, Calendar, and Fixed. 
         ))}
       </Layout.Flex>
     );
-    const section = (name, children) => (
+    const section = (name, ...children) => (
       <Layout.Flex direction="column" gapY="sm" className="w-full rounded-cn-3 border border-cn-3 p-cn-sm">
         <span className="font-mono text-cn-size-2 text-cn-3">{name}</span>
         {children}
@@ -223,7 +226,6 @@ Each box is one `config` field. Omit `modes` for Relative, Calendar, and Fixed. 
         <Layout.Flex direction="column" gapY="sm" className="w-full rounded-cn-4 border border-cn-3 p-cn-md">
           <span className="font-mono text-cn-size-2 text-cn-2">config</span>
           {section('direction', choices(['past', 'future', 'any'], controls.direction, (direction) => patch({ direction: direction })))}
-          {section('modes', toggles(modes, controls.modes, (mode) => toggleListed('modes', mode, modes)))}
           {section(
             'tabDetails',
             toggles(['description', 'example', 'note'], controls.tabDetails, (detail) => {
@@ -244,120 +246,6 @@ Each box is one `config` field. Omit `modes` for Relative, Calendar, and Fixed. 
               checked={controls.clearable}
               onCheckedChange={(clearable) => patch({ clearable: clearable })}
             />
-          )}
-          {section(
-            'timezone',
-            <Layout.Flex direction="column" gapY="sm">
-              <Switch
-                id="date-range-v2-timezone"
-                aria-label="timezone"
-                checked={controls.timezoneEnabled}
-                onCheckedChange={(timezoneEnabled) => patch({ timezoneEnabled: timezoneEnabled })}
-              />
-              {field('browserZone', choices(['dynamic', 'explicit'], controls.browserZone, (browserZone) => patch({ browserZone: browserZone })))}
-              {field('options', choices(['all', 'locale-utc'], controls.timezoneOptions, (timezoneOptions) => patch({ timezoneOptions: timezoneOptions })))}
-              {field('defaultValue', choices(timeZones, controls.defaultValue, (defaultValue) => patch({ defaultValue: defaultValue })))}
-            </Layout.Flex>
-          )}
-          {section(
-            'relative',
-            <Layout.Flex direction="column" gapY="sm">
-              <TextInput
-                id="date-range-v2-relative-label"
-                label="label"
-                optional
-                size="sm"
-                placeholder="Relative"
-                value={controls.relativeLabel}
-                onChange={(event) => patch({ relativeLabel: event.target.value })}
-              />
-              {field(
-                'allowAmount',
-                <Switch
-                  id="date-range-v2-relative-amount"
-                  aria-label="allowAmount"
-                  checked={controls.relativeAllowAmount}
-                  onCheckedChange={(relativeAllowAmount) => patch({ relativeAllowAmount: relativeAllowAmount })}
-                />
-              )}
-              {field('units', toggles(relativeUnits, controls.relativeUnits, (unit) => toggleListed('relativeUnits', unit, relativeUnits, 'relativeDefaultUnit')))}
-              {field('defaultValue.direction', choices(['last', 'next'], controls.relativeDefaultDirection, (relativeDefaultDirection) => patch({ relativeDefaultDirection: relativeDefaultDirection })))}
-              {field('defaultValue.unit', choices(controls.relativeUnits, controls.relativeDefaultUnit, (relativeDefaultUnit) => patch({ relativeDefaultUnit: relativeDefaultUnit })))}
-              <Layout.Flex direction="row" gapX="sm" wrap="wrap">
-                <TextInput
-                  id="date-range-v2-relative-default-amount"
-                  label="defaultValue.amount"
-                  optional
-                  size="sm"
-                  value={controls.relativeDefaultAmount}
-                  wrapperClassName="w-36"
-                  onChange={(event) => patch({ relativeDefaultAmount: event.target.value.replace(/[^0-9]/g, '') })}
-                />
-                <TextInput
-                  id="date-range-v2-relative-max-amount"
-                  label="maxAmount"
-                  optional
-                  size="sm"
-                  placeholder="none"
-                  value={controls.relativeMaxAmount}
-                  wrapperClassName="w-36"
-                  onChange={(event) => patch({ relativeMaxAmount: event.target.value.replace(/[^0-9]/g, '') })}
-                />
-              </Layout.Flex>
-            </Layout.Flex>
-          )}
-          {section(
-            'calendar',
-            <Layout.Flex direction="column" gapY="sm">
-              <TextInput
-                id="date-range-v2-calendar-label"
-                label="label"
-                optional
-                size="sm"
-                placeholder="Calendar periods"
-                value={controls.calendarLabel}
-                onChange={(event) => patch({ calendarLabel: event.target.value })}
-              />
-              {field(
-                'allowAmount',
-                <Switch
-                  id="date-range-v2-calendar-amount"
-                  aria-label="allowAmount"
-                  checked={controls.calendarAllowAmount}
-                  onCheckedChange={(calendarAllowAmount) => patch({ calendarAllowAmount: calendarAllowAmount })}
-                />
-              )}
-              {field('units', toggles(calendarUnits, controls.calendarUnits, (unit) => toggleListed('calendarUnits', unit, calendarUnits, 'calendarDefaultUnit')))}
-              {field('extents', toggles(calendarExtents, controls.calendarExtents, (extent) => toggleListed('calendarExtents', extent, calendarExtents, 'calendarDefaultExtent')))}
-              {field('defaultValue.position', choices(['previous', 'this', 'next'], controls.calendarDefaultPosition, (calendarDefaultPosition) => patch({ calendarDefaultPosition: calendarDefaultPosition })))}
-              {field('defaultValue.unit', choices(controls.calendarUnits, controls.calendarDefaultUnit, (calendarDefaultUnit) => patch({ calendarDefaultUnit: calendarDefaultUnit })))}
-              {controls.calendarDefaultPosition === 'this'
-                ? field('defaultValue.extent', choices(controls.calendarExtents, controls.calendarDefaultExtent, (calendarDefaultExtent) => patch({ calendarDefaultExtent: calendarDefaultExtent })))
-                : null}
-              <Layout.Flex direction="row" gapX="sm" wrap="wrap">
-                {controls.calendarDefaultPosition === 'this' ? null : (
-                <TextInput
-                  id="date-range-v2-calendar-default-amount"
-                  label="defaultValue.amount"
-                  optional
-                  size="sm"
-                  value={controls.calendarDefaultAmount}
-                  wrapperClassName="w-36"
-                  onChange={(event) => patch({ calendarDefaultAmount: event.target.value.replace(/[^0-9]/g, '') })}
-                />
-                )}
-                <TextInput
-                  id="date-range-v2-calendar-max-amount"
-                  label="maxAmount"
-                  optional
-                  size="sm"
-                  placeholder="none"
-                  value={controls.calendarMaxAmount}
-                  wrapperClassName="w-36"
-                  onChange={(event) => patch({ calendarMaxAmount: event.target.value.replace(/[^0-9]/g, '') })}
-                />
-              </Layout.Flex>
-            </Layout.Flex>
           )}
           {section(
             'triggerLabel',
@@ -381,59 +269,212 @@ Each box is one `config` field. Omit `modes` for Relative, Calendar, and Fixed. 
             )
           )}
           {section(
-            'fixed',
-            field(
-              'allowTime',
+            'timezone',
+            <Layout.Flex direction="column" gapY="sm">
               <Switch
-                id="date-range-v2-allow-time"
-                aria-label="allowTime"
-                checked={controls.allowTime}
-                onCheckedChange={(allowTime) => patch({ allowTime: allowTime })}
+                id="date-range-v2-timezone"
+                aria-label="timezone"
+                checked={controls.timezoneEnabled}
+                onCheckedChange={(timezoneEnabled) => patch({ timezoneEnabled: timezoneEnabled })}
               />
-            ),
-            <Layout.Flex direction="row" gapX="sm" wrap="wrap">
-              <TextInput
-                id="date-range-v2-custom-from"
-                label="defaultValue.from"
-                optional
-                size="sm"
-                placeholder="yyyy-MM-dd"
-                value={controls.customFrom}
-                wrapperClassName="w-40"
-                onChange={(event) => patch({ customFrom: event.target.value })}
-              />
-              <TextInput
-                id="date-range-v2-custom-to"
-                label="defaultValue.to"
-                optional
-                size="sm"
-                placeholder="yyyy-MM-dd"
-                value={controls.customTo}
-                wrapperClassName="w-40"
-                onChange={(event) => patch({ customTo: event.target.value })}
-              />
+              {field('browserZone', choices(['dynamic', 'explicit'], controls.browserZone, (browserZone) => patch({ browserZone: browserZone })))}
+              {field('options', choices(['all', 'locale-utc'], controls.timezoneOptions, (timezoneOptions) => patch({ timezoneOptions: timezoneOptions })))}
+              {field('defaultValue', choices(timeZones, controls.defaultValue, (defaultValue) => patch({ defaultValue: defaultValue })))}
             </Layout.Flex>
           )}
           {section(
-            'presets',
-            <Layout.Flex direction="column" gapY="sm">
-              <Switch
-                id="date-range-v2-presets"
-                aria-label="presets"
-                checked={controls.presetsEnabled}
-                onCheckedChange={(presetsEnabled) => patch({ presetsEnabled: presetsEnabled })}
-              />
-              <TextInput
-                id="date-range-v2-presets-label"
-                label="label"
-                optional
-                size="sm"
-                placeholder="Presets"
-                value={controls.presetsLabel}
-                onChange={(event) => patch({ presetsLabel: event.target.value })}
-              />
-              <Text variant="caption-normal">Previous 3 days, Previous 14 days</Text>
-            </Layout.Flex>
+            'modes',
+            toggles(modeOrder, controls.modes, (mode) => toggleListed('modes', mode, modeOrder)),
+            modeOn('presets')
+              ? section(
+                  'presets',
+                  <Layout.Flex direction="column" gapY="sm">
+                    <TextInput
+                      id="date-range-v2-presets-label"
+                      label="label"
+                      optional
+                      size="sm"
+                      placeholder="Presets"
+                      value={controls.presetsLabel}
+                      onChange={(event) => patch({ presetsLabel: event.target.value })}
+                    />
+                    <Text variant="caption-normal">Previous 3 days, Previous 14 days</Text>
+                  </Layout.Flex>
+                )
+              : null,
+            modeOn('relative')
+              ? section(
+                  'relative',
+                  <Layout.Flex direction="column" gapY="sm">
+                    <TextInput
+                      id="date-range-v2-relative-label"
+                      label="label"
+                      optional
+                      size="sm"
+                      placeholder="Relative"
+                      value={controls.relativeLabel}
+                      onChange={(event) => patch({ relativeLabel: event.target.value })}
+                    />
+                    {field(
+                      'allowAmount',
+                      <Switch
+                        id="date-range-v2-relative-amount"
+                        aria-label="allowAmount"
+                        checked={controls.relativeAllowAmount}
+                        onCheckedChange={(relativeAllowAmount) => patch({ relativeAllowAmount: relativeAllowAmount })}
+                      />
+                    )}
+                    {field('units', toggles(relativeUnits, controls.relativeUnits, (unit) => toggleListed('relativeUnits', unit, relativeUnits, 'relativeDefaultUnit')))}
+                    {field('defaultValue.direction', choices(['last', 'next'], controls.relativeDefaultDirection, (relativeDefaultDirection) => patch({ relativeDefaultDirection: relativeDefaultDirection })))}
+                    {field('defaultValue.unit', choices(controls.relativeUnits, controls.relativeDefaultUnit, (relativeDefaultUnit) => patch({ relativeDefaultUnit: relativeDefaultUnit })))}
+                    <Layout.Flex direction="row" gapX="sm" wrap="wrap">
+                      <TextInput
+                        id="date-range-v2-relative-default-amount"
+                        label="defaultValue.amount"
+                        optional
+                        size="sm"
+                        value={controls.relativeDefaultAmount}
+                        wrapperClassName="w-36"
+                        onChange={(event) => patch({ relativeDefaultAmount: event.target.value.replace(/[^0-9]/g, '') })}
+                      />
+                      <TextInput
+                        id="date-range-v2-relative-max-amount"
+                        label="maxAmount"
+                        optional
+                        size="sm"
+                        placeholder="none"
+                        value={controls.relativeMaxAmount}
+                        wrapperClassName="w-36"
+                        onChange={(event) => patch({ relativeMaxAmount: event.target.value.replace(/[^0-9]/g, '') })}
+                      />
+                    </Layout.Flex>
+                  </Layout.Flex>
+                )
+              : null,
+            modeOn('calendar')
+              ? section(
+                  'calendar',
+                  <Layout.Flex direction="column" gapY="sm">
+                    <TextInput
+                      id="date-range-v2-calendar-label"
+                      label="label"
+                      optional
+                      size="sm"
+                      placeholder="Calendar periods"
+                      value={controls.calendarLabel}
+                      onChange={(event) => patch({ calendarLabel: event.target.value })}
+                    />
+                    {field(
+                      'allowAmount',
+                      <Switch
+                        id="date-range-v2-calendar-amount"
+                        aria-label="allowAmount"
+                        checked={controls.calendarAllowAmount}
+                        onCheckedChange={(calendarAllowAmount) => patch({ calendarAllowAmount: calendarAllowAmount })}
+                      />
+                    )}
+                    {field('units', toggles(calendarUnits, controls.calendarUnits, (unit) => toggleListed('calendarUnits', unit, calendarUnits, 'calendarDefaultUnit')))}
+                    {field('extents', toggles(calendarExtents, controls.calendarExtents, (extent) => toggleListed('calendarExtents', extent, calendarExtents, 'calendarDefaultExtent')))}
+                    {field('defaultValue.position', choices(['previous', 'this', 'next'], controls.calendarDefaultPosition, (calendarDefaultPosition) => patch({ calendarDefaultPosition: calendarDefaultPosition })))}
+                    {field('defaultValue.unit', choices(controls.calendarUnits, controls.calendarDefaultUnit, (calendarDefaultUnit) => patch({ calendarDefaultUnit: calendarDefaultUnit })))}
+                    {controls.calendarDefaultPosition === 'this'
+                      ? field('defaultValue.extent', choices(controls.calendarExtents, controls.calendarDefaultExtent, (calendarDefaultExtent) => patch({ calendarDefaultExtent: calendarDefaultExtent })))
+                      : null}
+                    <Layout.Flex direction="row" gapX="sm" wrap="wrap">
+                      {controls.calendarDefaultPosition === 'this' ? null : (
+                      <TextInput
+                        id="date-range-v2-calendar-default-amount"
+                        label="defaultValue.amount"
+                        optional
+                        size="sm"
+                        value={controls.calendarDefaultAmount}
+                        wrapperClassName="w-36"
+                        onChange={(event) => patch({ calendarDefaultAmount: event.target.value.replace(/[^0-9]/g, '') })}
+                      />
+                      )}
+                      <TextInput
+                        id="date-range-v2-calendar-max-amount"
+                        label="maxAmount"
+                        optional
+                        size="sm"
+                        placeholder="none"
+                        value={controls.calendarMaxAmount}
+                        wrapperClassName="w-36"
+                        onChange={(event) => patch({ calendarMaxAmount: event.target.value.replace(/[^0-9]/g, '') })}
+                      />
+                    </Layout.Flex>
+                  </Layout.Flex>
+                )
+              : null,
+            modeOn('fixed')
+              ? section(
+                  'fixed',
+                  <TextInput
+                    id="date-range-v2-fixed-label"
+                    label="label"
+                    optional
+                    size="sm"
+                    placeholder="Fixed"
+                    value={controls.fixedLabel}
+                    onChange={(event) => patch({ fixedLabel: event.target.value })}
+                  />,
+                  field(
+                    'allowTime',
+                    <Switch
+                      id="date-range-v2-allow-time"
+                      aria-label="allowTime"
+                      checked={controls.allowTime}
+                      onCheckedChange={(allowTime) => patch({ allowTime: allowTime })}
+                    />
+                  ),
+                  <Layout.Flex direction="row" gapX="sm" wrap="wrap">
+                    <TextInput
+                      id="date-range-v2-custom-from"
+                      label="defaultValue.from.date"
+                      optional
+                      size="sm"
+                      placeholder="yyyy-MM-dd"
+                      value={controls.customFrom}
+                      wrapperClassName="w-40"
+                      onChange={(event) => patch({ customFrom: event.target.value })}
+                    />
+                    {controls.allowTime ? (
+                      <TextInput
+                        id="date-range-v2-custom-from-time"
+                        label="defaultValue.from.time"
+                        optional
+                        size="sm"
+                        placeholder="00:00"
+                        value={controls.customFromTime}
+                        wrapperClassName="w-36"
+                        onChange={(event) => patch({ customFromTime: event.target.value })}
+                      />
+                    ) : null}
+                    <TextInput
+                      id="date-range-v2-custom-to"
+                      label="defaultValue.to.date"
+                      optional
+                      size="sm"
+                      placeholder="yyyy-MM-dd"
+                      value={controls.customTo}
+                      wrapperClassName="w-40"
+                      onChange={(event) => patch({ customTo: event.target.value })}
+                    />
+                    {controls.allowTime ? (
+                      <TextInput
+                        id="date-range-v2-custom-to-time"
+                        label="defaultValue.to.time"
+                        optional
+                        size="sm"
+                        placeholder="23:59"
+                        value={controls.customToTime}
+                        wrapperClassName="w-36"
+                        onChange={(event) => patch({ customToTime: event.target.value })}
+                      />
+                    ) : null}
+                  </Layout.Flex>
+                )
+              : null
           )}
         </Layout.Flex>
 

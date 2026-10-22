@@ -33,10 +33,15 @@ authoritative list — the rule above is governance, not a technical limit):
 `inherit`, `danger`, `warning`, `success`, `info`, `neutral`, `merged`, `risk`.
 `neutral` renders via the `text-cn-disabled` class.
 
-> There is **no `disabled` color.** The published docs site lists one and omits `merged`;
-> it is wrong on both counts — most likely because `neutral` maps to a class named
-> `text-cn-disabled`. Trust this list and the component source, not the docs site, and do
-> not "fix" the code to match it.
+**Disabled icons use `neutral`.** It applies `text-cn-disabled`, the shared disabled text
+color. There is no `color="disabled"` on `IconV2`, even though `Text` spells the identical
+color `disabled` — the two components disagree on the name for one token. Known
+inconsistency, deliberately left alone for now; reach for `neutral` on icons and `disabled`
+on text.
+
+Because of that, `tag.tsx` greys a disabled icon by passing `className` rather than the
+`color` prop. Follow the existing pattern in a component rather than assuming
+`color="disabled"` exists.
 
 ---
 

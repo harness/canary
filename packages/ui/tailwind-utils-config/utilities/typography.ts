@@ -38,6 +38,8 @@ const FONT_VARIANTS: FontVariant[] = [
   { name: 'heading-default', weight: 'semibold', tracking: 'tight' },
   { name: 'heading-subsection', weight: 'semibold', tracking: 'tight' },
   { name: 'heading-base', weight: 'semibold', tracking: 'tight' },
+  { name: 'heading-base-normal', weight: 'regular', tracking: 'tight' },
+  { name: 'heading-subsection-normal', weight: 'regular', tracking: 'tight' },
   { name: 'heading-small', weight: 'semibold', tracking: 'normal' },
   { name: 'body-normal', weight: 'regular', tracking: 'tight' },
   { name: 'body-strong', weight: 'semibold', tracking: 'tight' },

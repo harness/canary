@@ -33,7 +33,6 @@
     "./context": "./dist/context.js",
     "./types": "./dist/types.js",
     "./yaml-output": "./dist/yaml-output.js",
-    "./.claude/manifest.json": "./.claude/manifest.json",
     "./docs/system/*": "./docs/system/*",
     "./schemas/registry.json": "./schemas/registry.json",
     "./schemas/*": "./schemas/*"

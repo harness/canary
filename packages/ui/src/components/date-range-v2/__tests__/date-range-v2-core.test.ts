@@ -5,7 +5,7 @@ import { createDateRangeV2FilterParser, dateRangeV2FilterParser } from '../date-
 import { formatDateRangeV2Preset, migrateDefaultPreset, parseDateRangeV2Preset } from '../date-range-v2-preset'
 import { configuredPresetLabel, describeDateRangeV2, formatDateRangeV2Label } from '../format-date-range-v2-label'
 import { resolveDateRangeV2, resolveDateRangeV2At } from '../resolve-date-range-v2'
-import type { DateRangeV2Range, TimeZoneId } from '../types'
+import type { DateRangeV2Preset, DateRangeV2Range, TimeZoneId } from '../types'
 
 const state = (range: DateRangeV2Range): DateRangeV2Range => range
 
@@ -470,13 +470,15 @@ describe.concurrent('dateRangeV2FilterParser', () => {
 })
 
 describe.concurrent('createDateRangeV2FilterParser', () => {
+  const parserFor = (presets: readonly DateRangeV2Preset[]) =>
+    createDateRangeV2FilterParser({ modes: [{ mode: 'presets', presets }] })
   const billingFrom = new Date('2026-01-01T00:00:00.000Z')
   const billingTo = new Date('2026-01-31T00:00:00.000Z')
   const localFrom = new Date('2026-10-01T00:00:00.000Z')
   const localTo = new Date('2026-10-07T00:00:00.000Z')
   const fixedFrom = 1788201000000
   const fixedTo = 1788978600000
-  const parser = createDateRangeV2FilterParser([
+  const parser = parserFor([
     {
       label: 'Billing cycle',
       value: 'Billing_Cycle',
@@ -532,7 +534,7 @@ describe.concurrent('createDateRangeV2FilterParser', () => {
 
   it('passes the query timezone into getRange', ({ expect }) => {
     const seen: string[] = []
-    const zoned = createDateRangeV2FilterParser([
+    const zoned = parserFor([
       {
         label: 'Billing cycle',
         value: 'Billing_Cycle',
@@ -592,7 +594,7 @@ describe.concurrent('createDateRangeV2FilterParser', () => {
   })
 
   it('does not let a preset named FIXED replace a fixed range', ({ expect }) => {
-    const namedFixed = createDateRangeV2FilterParser([
+    const namedFixed = parserFor([
       {
         label: 'Fixed',
         value: 'fixed',

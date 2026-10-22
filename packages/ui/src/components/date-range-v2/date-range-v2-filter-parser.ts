@@ -1,6 +1,12 @@
 import { fixedRangeFromBounds, formatDateRangeV2Preset, parseDateRangeV2Preset } from './date-range-v2-preset'
 import { resolveDateRangeV2 } from './resolve-date-range-v2'
-import type { DateRangeV2FilterValue, DateRangeV2Preset, DateRangeV2Range, TimeZoneId } from './types'
+import type {
+  DateRangeV2Config,
+  DateRangeV2FilterValue,
+  DateRangeV2Preset,
+  DateRangeV2Range,
+  TimeZoneId
+} from './types'
 
 const DEFAULT_TIME_ZONE: TimeZoneId = 'UTC'
 
@@ -76,10 +82,11 @@ const presetKey = (value: string): string => value.trim().toUpperCase()
 
 /**
  * Filter parser for one DateRangeV2 option.
- * A preset id in `presets` reloads through that preset's `getRange({ timezone })`.
+ * Presets on `{ mode: 'presets', presets }` reload through `getRange({ timezone })`.
  * Every other value uses `dateRangeV2FilterParser`.
  */
-export const createDateRangeV2FilterParser = (presets?: readonly DateRangeV2Preset[]) => {
+export const createDateRangeV2FilterParser = (config?: DateRangeV2Config) => {
+  const presets = config?.modes?.find(mode => mode.mode === 'presets')?.presets
   const configured = (presets ?? []).filter(preset => preset.value.trim() && typeof preset.getRange === 'function')
   const matchPreset = (token: string): DateRangeV2Preset | undefined => {
     const key = presetKey(token)

@@ -11,6 +11,8 @@ import {
 } from 'react'
 
 import {
+  createDateRangeV2FilterParser,
+  FilterFieldTypes,
   FilterOptionConfig,
   Layout,
   ListActions,
@@ -24,7 +26,6 @@ import {
 import { useTranslation } from '@harnessio/ui/context'
 
 import { createFilters } from '../Filters'
-import { resolveFilterParser } from '../parsers'
 import { FilterRefType } from '../types'
 import ListControlBar from './list-control-bar'
 import SaveFiltersDialog, { SaveFiltersDialogProps } from './save-filters-dialog'
@@ -226,7 +227,12 @@ const FilterGroupInner = <
                   {filterOptions.map(filterOption => {
                     return (
                       <FilterHandler.Component<keyof T>
-                        parser={resolveFilterParser(filterOption) as any}
+                        parser={
+                          (filterOption.type === FilterFieldTypes.DateRangeV2
+                            ? // A custom parser replaces the built-in query for every mode.
+                              (filterOption.parser ?? createDateRangeV2FilterParser(filterOption.filterFieldConfig))
+                            : filterOption.parser) as any
+                        }
                         filterKey={filterOption.value}
                         sticky={filterOption.sticky}
                         defaultValue={filterOption.defaultValue as T[keyof T]}

@@ -140,6 +140,7 @@ export const DateTimeEndpointField = ({
   return (
     <TextInput
       type="text"
+      size="sm"
       value={text}
       disabled={disabled}
       spellCheck={false}

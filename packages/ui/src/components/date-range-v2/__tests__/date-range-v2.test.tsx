@@ -38,6 +38,18 @@ describe('DateRangeV2Content', () => {
     expect(tablist.parentElement?.parentElement).toHaveClass('w-[760px]')
   })
 
+  test('opens when the stored value has epochs and no range', () => {
+    renderContent({
+      value: {
+        from: new Date('2026-09-05T15:30:00.000Z'),
+        to: new Date('2026-10-05T15:30:00.000Z'),
+        timezone: 'UTC'
+      } as DateRangeV2Value
+    })
+
+    expect(screen.getByRole('tab', { name: /Relative/ })).toHaveAttribute('aria-selected', 'true')
+  })
+
   test('shows only the tab lines named in tabDetails', () => {
     renderContent({ config: { tabDetails: ['description'] } })
 

@@ -2,6 +2,7 @@
 title: Date Range V2
 description: A picker for relative windows, calendar periods, and fixed ranges
 beta: true
+dontUseInProd: true
 ---
 
 import { DocsPage } from "@/components/docs-page";
@@ -81,7 +82,7 @@ Each box is one `config` field. Omit `modes` for Relative, Calendar, and Fixed. 
     const [value, setValue] = React.useState({
       from: new Date('2026-09-05T15:30:00.000Z'),
       to: new Date('2026-10-05T15:30:00.000Z'),
-      preset: 'LAST_1_MONTH',
+      range: { kind: 'relative', direction: 'last', amount: 1, unit: 'month' },
       timezone: 'UTC',
     });
 
@@ -647,9 +648,10 @@ Include `{ mode: 'presets', presets }` in `modes` to add that tab. Put it first 
         if (!preset) return undefined;
         const range = preset.getRange({ timezone });
         const [from, to] = range.from <= range.to ? [range.from, range.to] : [range.to, range.from];
-        return { from, to, preset: preset.value, timezone };
+        return { from, to, range: { kind: 'preset', preset: preset.value }, timezone };
       },
-      serialize: (value) => (value && value.preset ? value.preset + '|' + (value.timezone || 'UTC') : ''),
+      serialize: (value) =>
+        value && value.range && value.range.kind === 'preset' ? value.range.preset + '|' + (value.timezone || 'UTC') : '',
     };
     const query = new URLSearchParams(location.search).get('timeframe');
     const readBack = query ? parser.parse(query) : undefined;

@@ -3,7 +3,7 @@ import { StatusBadge } from "@harnessio/ui/components";
 
 // The full-width landing page provides its own hero headline, so suppress the
 // default page title there.
-const { title, beta, home } = Astro.locals.starlightRoute.entry.data;
+const { title, beta, home, dontUseInProd } = Astro.locals.starlightRoute.entry.data;
 ---
 
 {
@@ -13,6 +13,11 @@ const { title, beta, home } = Astro.locals.starlightRoute.entry.data;
       {beta && (
         <StatusBadge variant="outline" theme="info" size="sm">
           beta
+        </StatusBadge>
+      )}
+      {dontUseInProd && (
+        <StatusBadge variant="outline" theme="danger" size="sm">
+          Don't use in production
         </StatusBadge>
       )}
     </div>

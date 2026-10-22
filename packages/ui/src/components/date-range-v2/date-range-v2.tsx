@@ -163,7 +163,7 @@ const applyConfigDefaults = (
   config: ResolvedDateRangeV2Config,
   previous: ConfigDefaults
 ): DateRangeV2Value | undefined => {
-  if (value.range.kind === 'preset') return undefined
+  if (!value.range || value.range.kind === 'preset') return undefined
   const current = configDefaults(config)
   let range: DateRangeV2Range = value.range
 
@@ -369,7 +369,7 @@ const sectionFor = (value: DateRangeV2Value | undefined, config: ResolvedDateRan
     return 'presets'
   }
   const preferred: DateRangeV2Mode =
-    value?.range.kind === 'calendar' ? 'calendar' : value?.range.kind === 'fixed' ? 'fixed' : 'relative'
+    range?.kind === 'calendar' ? 'calendar' : range?.kind === 'fixed' ? 'fixed' : 'relative'
   const enabled = config.modes.map(tab => tab.mode)
   return enabled.includes(preferred) ? preferred : enabled[0]
 }
@@ -411,11 +411,12 @@ const presetBoundsOf = (preset: DateRangeV2Preset, timezone: TimeZoneId): { from
 
 /** Epochs for the active draft. Presets use `getRange`. The other modes use `resolveDateRangeV2`. */
 const valueFromDraft = (
-  range: DateRangeV2Value['range'],
+  range: DateRangeV2Value['range'] | undefined,
   timezone: TimeZoneId,
   presets: readonly DateRangeV2Preset[],
   now: Date = new Date()
 ): DateRangeV2Value | undefined => {
+  if (!range) return undefined
   if (range.kind === 'preset') {
     const preset = presets.find(item => item.value === range.preset)
     if (!preset) return undefined

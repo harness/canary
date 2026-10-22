@@ -52,7 +52,7 @@ describe('DateRangeV2Filter', () => {
     rerender(<DateRangeV2Filter filter={filter} config={config} onUpdateFilter={() => {}} onCancel={() => {}} />)
 
     expect(screen.getByRole('tab', { name: /Calendar periods/ })).toHaveAttribute('aria-selected', 'true')
-    expect(screen.getByText('This month')).toBeInTheDocument()
+    expect(screen.getByText('Previous month')).toBeInTheDocument()
   })
 
   test('includes the timezone offset in the filter label', () => {

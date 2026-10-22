@@ -17,6 +17,7 @@ export default mergeConfig(viteConfig, {
     },
     coverage: {
       provider: 'istanbul',
+      reporter: ['text', 'json', 'html', 'lcov'],
       include: ['src'],
       exclude: [
         'src/index.ts',

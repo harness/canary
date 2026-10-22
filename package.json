@@ -16,6 +16,7 @@
     "prepare": "husky",
     "pre-commit": "pnpm run -r --workspace-concurrency=1 pre-commit",
     "test": "pnpm -r test",
+    "test:coverage": "pnpm build && pnpm -r test -- --coverage",
     "playwright:test": "npx playwright test",
     "playwright:test-ui": "npx playwright test --ui",
     "playwright:update-snapshots": "npx playwright test --update-snapshots",

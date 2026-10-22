@@ -42,10 +42,8 @@ export type CivilDate = `${number}-${number}-${number}`
 /** A wall-clock time at minute precision. */
 export type CivilTime = `${number}:${number}`
 
-export interface CivilDateTime {
-  date: CivilDate
-  time: CivilTime
-}
+/** ISO 8601 local datetime at second precision: `yyyy-MM-ddTHH:mm:ss`. No offset. */
+export type CivilDateTime = `${number}-${number}-${number}T${number}:${number}:${number}`
 
 export interface RelativeRange {
   kind: 'relative'
@@ -111,18 +109,20 @@ export interface CalendarModeConfig {
   /**
    * Draft used before a calendar value is applied.
    * Previous and Next carry `amount`. This carries `extent`.
-   * Omit this for This month, full period.
+   * Omit this for Previous 1 month.
    */
   defaultValue?: WithoutKind<CalendarRange>
   maxAmount?: number
 }
 
 export interface FixedModeConfig {
-  /** Shows the time inputs. Full days are stored when this is false. */
+  /** Shows the clock in each field. Full days are stored when this is false. */
   allowTime?: boolean
+  /** Shows seconds in each field. Seconds are still stored when this is false. */
+  allowSeconds?: boolean
   /**
    * Draft used before a fixed value is applied.
-   * Omit this for today, from 00:00 to 23:59, in the selected time zone.
+   * Each end is `yyyy-MM-ddTHH:mm:ss`. Omit this to leave the start and end empty.
    */
   defaultValue?: WithoutKind<FixedRange>
 }
@@ -156,8 +156,8 @@ export interface DateRangeV2Config {
    */
   modes?: readonly DateRangeV2ModeEntry[]
   /**
-   * Lines inside each mode's info tooltip. Omit this to show description, example, and note.
-   * An empty list leaves the title only.
+   * Lines under each tab title. Omit this, or pass an empty list, to leave the title only.
+   * Include `description`, `example`, or `note` to show those lines.
    */
   tabDetails?: readonly DateRangeV2TabDetail[]
   /** Which side of now the user can select. Defaults to `any`. */

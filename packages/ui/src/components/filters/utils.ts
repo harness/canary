@@ -32,8 +32,8 @@ export const getDateRangeV2FilterLabel = (
       value.range.kind === 'preset'
         ? ({
             kind: 'fixed',
-            from: { date: '1970-01-01', time: '00:00' },
-            to: { date: '1970-01-01', time: '23:59' }
+            from: '1970-01-01T00:00:00',
+            to: '1970-01-01T23:59:59'
           } as const)
         : value.range
     const label = formatDateRangeV2Label(

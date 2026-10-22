@@ -1,8 +1,15 @@
 import { formatInTimeZone } from 'date-fns-tz'
 
 import { resolveDateRangeV2At, resolveTimeZone } from './resolve-date-range-v2'
-import { formatTimeZoneOffset } from './timezone-utils'
-import type { CalendarUnit, DateRangeV2LabelConfig, DateRangeV2Preset, DateRangeV2Range, TimeZoneId } from './types'
+import { formatTimeZoneOffset, zonedCivilDateTimeToUtc } from './timezone-utils'
+import type {
+  CalendarUnit,
+  CivilDateTime,
+  DateRangeV2LabelConfig,
+  DateRangeV2Preset,
+  DateRangeV2Range,
+  TimeZoneId
+} from './types'
 
 const RELATIVE_UNIT_LABEL: Record<string, [string, string]> = {
   minute: ['minute', 'minutes'],
@@ -101,6 +108,19 @@ export const configuredPresetLabel = (
   const key = presetId?.trim().toUpperCase()
   if (!key || key === 'FIXED' || !presets?.length) return undefined
   return presets.find(preset => preset.value.trim().toUpperCase() === key)?.label
+}
+
+/** A fixed draft that has a start and no end yet. Whole-day starts stay date-only. */
+export const formatFixedStartLabel = (
+  value: CivilDateTime,
+  timezone?: TimeZoneId,
+  label: DateRangeV2LabelConfig = {}
+): string => {
+  const zone = resolveTimeZone(timezone)
+  const instant = zonedCivilDateTimeToUtc(value, zone).getTime()
+  const withTime = (label.showTime ?? true) && !isDayBoundary(instant, zone)
+  const text = formatInstant(instant, zone, withTime)
+  return (label.showTimezone ?? true) ? `${text} · ${formatTimeZoneOffset(zone)}` : text
 }
 
 export const formatDateRangeV2Label = (

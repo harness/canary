@@ -14,11 +14,10 @@ import {
 import {
   fromZonedWallTime,
   getBrowserTimeZone,
-  isCivilDate,
-  isCivilTime,
+  isCivilDateTime,
   normalizeTimeZone,
   toZonedWallTime,
-  zonedCivilToUtc
+  zonedCivilDateTimeToUtc
 } from './timezone-utils'
 import type { CalendarUnit, DateRangeV2Range, RelativeUnit, TimeZoneId } from './types'
 
@@ -124,17 +123,11 @@ const resolveEpochs = (range: DateRangeV2Range, timezone: TimeZoneId | undefined
       end = inclusiveEnd(periodEnd)
     }
   } else {
-    if (
-      !isCivilDate(range.from.date) ||
-      !isCivilDate(range.to.date) ||
-      !isCivilTime(range.from.time) ||
-      !isCivilTime(range.to.time)
-    ) {
+    if (!isCivilDateTime(range.from) || !isCivilDateTime(range.to)) {
       throw new RangeError('Fixed range contains an invalid civil date or time')
     }
-    start = zonedCivilToUtc(range.from.date, range.from.time, zone).getTime()
-    const endMinute = zonedCivilToUtc(range.to.date, range.to.time, zone)
-    end = endMinute.getTime() + 60_000 - 1
+    start = zonedCivilDateTimeToUtc(range.from, zone).getTime()
+    end = zonedCivilDateTimeToUtc(range.to, zone).getTime()
   }
 
   if (start > end) throw new RangeError('Date range end must not be before its start')

@@ -3,7 +3,12 @@ import { describe, it } from 'vitest'
 import { isAllowedDateRangeV2, legalExtents } from '../date-range-v2'
 import { createDateRangeV2FilterParser, dateRangeV2FilterParser } from '../date-range-v2-filter-parser'
 import { formatDateRangeV2Preset, migrateDefaultPreset, parseDateRangeV2Preset } from '../date-range-v2-preset'
-import { configuredPresetLabel, describeDateRangeV2, formatDateRangeV2Label } from '../format-date-range-v2-label'
+import {
+  configuredPresetLabel,
+  describeDateRangeV2,
+  formatDateRangeV2Label,
+  formatFixedStartLabel
+} from '../format-date-range-v2-label'
 import { resolveDateRangeV2, resolveDateRangeV2At } from '../resolve-date-range-v2'
 import { resolveDateRangeV2Config } from '../resolve-picker-config'
 import type { DateRangeV2Preset, DateRangeV2Range, TimeZoneId } from '../types'
@@ -58,18 +63,18 @@ describe.concurrent('resolveDateRangeV2At', () => {
     expect(new Date(fromNow[1]).toISOString()).toBe('2026-10-31T23:59:59.999Z')
   })
 
-  it('interprets fixed civil times in the given zone and includes the last minute', ({ expect }) => {
+  it('interprets a fixed civil datetime as that exact second in the given zone', ({ expect }) => {
     const [start, end] = epochs(
       state({
         kind: 'fixed',
-        from: { date: '2026-10-01', time: '00:00' },
-        to: { date: '2026-10-06', time: '23:59' }
+        from: '2026-10-01T00:00:00',
+        to: '2026-10-06T23:59:00'
       }),
       NOW,
       'Asia/Kolkata'
     )
     expect(new Date(start).toISOString()).toBe('2026-09-30T18:30:00.000Z')
-    expect(new Date(end).toISOString()).toBe('2026-10-06T18:29:59.999Z')
+    expect(new Date(end).toISOString()).toBe('2026-10-06T18:29:00.000Z')
   })
 
   it('starts calendar weeks on Monday', ({ expect }) => {
@@ -91,8 +96,8 @@ describe.concurrent('resolveDateRangeV2At', () => {
       epochs(
         state({
           kind: 'fixed',
-          from: { date: '2026-10-06', time: '10:00' },
-          to: { date: '2026-10-06', time: '09:00' }
+          from: '2026-10-06T10:00:00',
+          to: '2026-10-06T09:00:00'
         }),
         NOW,
         'UTC'
@@ -172,8 +177,8 @@ describe.concurrent('labels', () => {
   it('names a configured preset instead of a fixed range', ({ expect }) => {
     const fixed = state({
       kind: 'fixed',
-      from: { date: '2026-10-11', time: '20:34' },
-      to: { date: '2026-10-14', time: '20:34' }
+      from: '2026-10-11T20:34:00',
+      to: '2026-10-14T20:34:00'
     })
     const presets = [{ label: 'Previous 3 days', value: 'PREVIOUS_3_DAYS' }]
     const label = formatDateRangeV2Label(
@@ -208,8 +213,8 @@ describe.concurrent('labels', () => {
     const sameDay = formatDateRangeV2Label(
       state({
         kind: 'fixed',
-        from: { date: '2026-10-05', time: '09:00' },
-        to: { date: '2026-10-05', time: '17:00' }
+        from: '2026-10-05T09:00:00',
+        to: '2026-10-05T17:00:00'
       }),
       'UTC'
     )
@@ -230,6 +235,12 @@ describe.concurrent('labels', () => {
       { showTimezone: false }
     )
     expect(hiddenZone.rangeText).toBe('Sep 5, 2026, 15:30 – Oct 5, 2026, 15:30')
+  })
+
+  it('labels a fixed start before an end is chosen', ({ expect }) => {
+    expect(formatFixedStartLabel('2026-10-09T00:00:00', 'UTC')).toBe('Oct 9, 2026 · UTC+00:00')
+    expect(formatFixedStartLabel('2026-10-09T11:00:00', 'UTC')).toBe('Oct 9, 2026, 11:00 · UTC+00:00')
+    expect(formatFixedStartLabel('2026-10-09T11:00:00', 'UTC', { showTimezone: false })).toBe('Oct 9, 2026, 11:00')
   })
 })
 
@@ -260,8 +271,8 @@ describe.concurrent('date range v2 presets', () => {
     expect(
       formatDateRangeV2Preset({
         kind: 'fixed',
-        from: { date: '2026-09-05', time: '09:30' },
-        to: { date: '2026-10-05', time: '09:30' }
+        from: '2026-09-05T09:30:00',
+        to: '2026-10-05T09:30:00'
       })
     ).toBe('FIXED')
   })
@@ -345,8 +356,8 @@ describe.concurrent('dateRangeV2FilterParser', () => {
       {
         range: state({
           kind: 'fixed',
-          from: { date: '2026-09-05', time: '09:30' },
-          to: { date: '2026-10-05', time: '09:30' }
+          from: '2026-09-05T09:30:00',
+          to: '2026-10-05T09:30:00'
         }),
         timezone: 'UTC'
       },
@@ -633,27 +644,28 @@ describe.concurrent('createDateRangeV2FilterParser', () => {
 })
 
 describe('resolveFixedDefault', () => {
-  const fixedDefault = (fromDate: string, toDate: string) =>
+  const fixedDefault = (from: string, to: string) =>
     resolveDateRangeV2Config({
       modes: [
         {
           mode: 'fixed',
           defaultValue: {
-            from: { date: fromDate as `${number}-${number}-${number}`, time: '00:00' },
-            to: { date: toDate as `${number}-${number}-${number}`, time: '23:59' }
+            from: from as `${number}-${number}-${number}T${number}:${number}:${number}`,
+            to: to as `${number}-${number}-${number}T${number}:${number}:${number}`
           }
         }
       ]
     }).fixed.defaultValue
 
-  it('keeps a date that exists on the calendar', ({ expect }) => {
-    expect(fixedDefault('2024-02-29', '2024-03-01')?.from.date).toBe('2024-02-29')
+  it('keeps a datetime that exists on the calendar', ({ expect }) => {
+    expect(fixedDefault('2024-02-29T00:00:00', '2024-03-01T23:59:59')?.from).toBe('2024-02-29T00:00:00')
   })
 
-  it('drops a date that only matches yyyy-MM-dd', ({ expect }) => {
-    expect(fixedDefault('2026-02-30', '2026-02-28')).toBeUndefined()
-    expect(fixedDefault('2026-02-29', '2026-03-01')).toBeUndefined()
-    expect(fixedDefault('2026-13-01', '2026-01-01')).toBeUndefined()
-    expect(fixedDefault('2026-04-31', '2026-04-30')).toBeUndefined()
+  it('drops a datetime that only matches the shape', ({ expect }) => {
+    expect(fixedDefault('2026-02-30T00:00:00', '2026-02-28T00:00:00')).toBeUndefined()
+    expect(fixedDefault('2026-02-29T00:00:00', '2026-03-01T00:00:00')).toBeUndefined()
+    expect(fixedDefault('2026-13-01T00:00:00', '2026-01-01T00:00:00')).toBeUndefined()
+    expect(fixedDefault('2026-04-31T00:00:00', '2026-04-30T00:00:00')).toBeUndefined()
+    expect(fixedDefault('2026-04-30T24:00:00', '2026-04-30T00:00:00')).toBeUndefined()
   })
 })

@@ -62,27 +62,24 @@ Each box is one `config` field. A selected mode's settings are nested inside `mo
       calendarAllowAmount: true,
       calendarUnits: calendarUnits,
       calendarExtents: calendarExtents,
-      calendarDefaultPosition: 'this',
+      calendarDefaultPosition: 'previous',
       calendarDefaultUnit: 'month',
       calendarDefaultExtent: 'full',
       calendarDefaultAmount: '1',
       calendarMaxAmount: '',
       allowTime: true,
+      allowSeconds: false,
       customFrom: '',
       customTo: '',
-      customFromTime: '',
-      customToTime: '',
       showTime: true,
       showTimezone: true,
       relativeLabel: '',
       calendarLabel: '',
       fixedLabel: '',
       presetsLabel: '',
-      tabDetails: ['description', 'example', 'note'],
+      tabDetails: [],
     });
     const [value, setValue] = React.useState({
-      from: new Date('2026-09-05T15:30:00.000Z'),
-      to: new Date('2026-10-05T15:30:00.000Z'),
       range: { kind: 'relative', direction: 'last', amount: 1, unit: 'month' },
       timezone: 'UTC',
     });
@@ -104,7 +101,6 @@ Each box is one `config` field. A selected mode's settings are nested inside `mo
       const parsed = Number(raw);
       return Number.isInteger(parsed) && parsed >= 1 ? parsed : undefined;
     };
-    const clock = (raw, fallback) => (/^([01]\\d|2[0-3]):[0-5]\\d$/.test(raw) ? raw : fallback);
 
     const labeled = (mode, settings, label) => {
       const entry = Object.assign({ mode: mode }, settings);
@@ -143,14 +139,9 @@ Each box is one `config` field. A selected mode's settings are nested inside `mo
         maxAmount: amount(controls.calendarMaxAmount),
       }, controls.calendarLabel),
       fixed: labeled('fixed', Object.assign(
-        { allowTime: controls.allowTime },
+        { allowTime: controls.allowTime, allowSeconds: controls.allowTime && controls.allowSeconds },
         controls.customFrom && controls.customTo
-          ? {
-              defaultValue: {
-                from: { date: controls.customFrom, time: controls.allowTime ? clock(controls.customFromTime, '00:00') : '00:00' },
-                to: { date: controls.customTo, time: controls.allowTime ? clock(controls.customToTime, '23:59') : '23:59' },
-              },
-            }
+          ? { defaultValue: { from: controls.customFrom, to: controls.customTo } }
           : {}
       ), controls.fixedLabel),
     };
@@ -427,51 +418,38 @@ Each box is one `config` field. A selected mode's settings are nested inside `mo
                       onCheckedChange={(allowTime) => patch({ allowTime: allowTime })}
                     />
                   ),
+                  controls.allowTime
+                    ? field(
+                        'allowSeconds',
+                        <Switch
+                          id="date-range-v2-allow-seconds"
+                          aria-label="allowSeconds"
+                          checked={controls.allowSeconds}
+                          onCheckedChange={(allowSeconds) => patch({ allowSeconds: allowSeconds })}
+                        />
+                      )
+                    : null,
                   <Layout.Flex direction="row" gapX="sm" wrap="wrap">
                     <TextInput
                       id="date-range-v2-custom-from"
-                      label="defaultValue.from.date"
+                      label="defaultValue.from"
                       optional
                       size="sm"
-                      placeholder="yyyy-MM-dd"
+                      placeholder="yyyy-MM-ddTHH:mm:ss"
                       value={controls.customFrom}
-                      wrapperClassName="w-40"
+                      wrapperClassName="w-56"
                       onChange={(event) => patch({ customFrom: event.target.value })}
                     />
-                    {controls.allowTime ? (
-                      <TextInput
-                        id="date-range-v2-custom-from-time"
-                        label="defaultValue.from.time"
-                        optional
-                        size="sm"
-                        placeholder="00:00"
-                        value={controls.customFromTime}
-                        wrapperClassName="w-36"
-                        onChange={(event) => patch({ customFromTime: event.target.value })}
-                      />
-                    ) : null}
                     <TextInput
                       id="date-range-v2-custom-to"
-                      label="defaultValue.to.date"
+                      label="defaultValue.to"
                       optional
                       size="sm"
-                      placeholder="yyyy-MM-dd"
+                      placeholder="yyyy-MM-ddTHH:mm:ss"
                       value={controls.customTo}
-                      wrapperClassName="w-40"
+                      wrapperClassName="w-56"
                       onChange={(event) => patch({ customTo: event.target.value })}
                     />
-                    {controls.allowTime ? (
-                      <TextInput
-                        id="date-range-v2-custom-to-time"
-                        label="defaultValue.to.time"
-                        optional
-                        size="sm"
-                        placeholder="23:59"
-                        value={controls.customToTime}
-                        wrapperClassName="w-36"
-                        onChange={(event) => patch({ customToTime: event.target.value })}
-                      />
-                    ) : null}
                   </Layout.Flex>
                 )
               : null
@@ -756,7 +734,7 @@ Include `{ mode: 'presets', presets }` in `modes` to add that tab. Put it first 
     {
       name: "config",
       description:
-        "modes, tabDetails, direction, timezone, clearable, triggerLabel, and calendarProps. triggerLabel.showTime adds a clock time when either end is not the start or end of a day. triggerLabel.showTimezone adds the offset. Both default to true. tabDetails chooses description, example, and note inside each mode's info tooltip. Omit it to show all three. An empty list leaves the title only. Omit modes for Relative, Calendar, and Fixed. Each entry is { mode } plus that mode's settings. label on a mode entry replaces the tab title. Include { mode: 'presets', presets } to add that tab. presets is required on that object. { mode: 'presets', presets: [] } shows an empty preset select. Each preset matches the date range picker: label, value, getRange, and group. A relative entry's defaultValue is direction, amount, and unit. Omit it for Last 7 days. A calendar entry's defaultValue is a calendar range. Previous and Next include amount. This includes extent. Omit it for This month, full period. A fixed entry's defaultValue is from and to. Omit it for today, 00:00 to 23:59, in the selected time zone. Timezone false hides the zone row. An object sets browserZone, defaultValue, and options. options locale-utc lists Browser Time and UTC only and hides search. The default zone is UTC. clearable shows the delete icon on the standalone picker. calendarProps passes calendar options the picker does not own. Weeks start on Monday. resolveDateRangeV2(value, now) returns from, to, range, and timezone for a relative, calendar, or fixed range.",
+        "modes, tabDetails, direction, timezone, clearable, triggerLabel, and calendarProps. triggerLabel.showTime adds a clock time when either end is not the start or end of a day. triggerLabel.showTimezone adds the offset. Both default to true. tabDetails chooses description, example, and note under each tab title. Omit it, or pass an empty list, to leave the title only. Omit modes for Relative, Calendar, and Fixed. Each entry is { mode } plus that mode's settings. label on a mode entry replaces the tab title. Include { mode: 'presets', presets } to add that tab. presets is required on that object. { mode: 'presets', presets: [] } shows an empty preset select. Each preset matches the date range picker: label, value, getRange, and group. A relative entry's defaultValue is direction, amount, and unit. Omit it for Last 7 days. A calendar entry's defaultValue is a calendar range. Previous and Next include amount. This includes extent. Omit it for Previous 1 month. A fixed entry's defaultValue is from and to, each yyyy-MM-ddTHH:mm:ss. Omit it to leave the start and end empty. allowTime shows the clock. allowSeconds shows seconds. Timezone false hides the zone row. An object sets browserZone, defaultValue, and options. options locale-utc lists Browser Time and UTC only and hides search. The default zone is UTC. clearable shows the delete icon on the standalone picker. calendarProps passes calendar options the picker does not own. Weeks start on Monday. resolveDateRangeV2(value, now) returns from, to, range, and timezone for a relative, calendar, or fixed range.",
       required: false,
       value: "DateRangeV2Config",
     },

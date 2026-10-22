@@ -1,4 +1,4 @@
-import { render, screen } from '@testing-library/react'
+import { render, screen, waitFor, within } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { vi } from 'vitest'
 
@@ -22,7 +22,7 @@ const renderContent = (props: Partial<Parameters<typeof DateRangeV2Content>[0]> 
 }
 
 describe('DateRangeV2Content', () => {
-  test('shows three vertical tabs with the active tab note', () => {
+  test('shows three vertical tabs and hides tab lines by default', () => {
     renderContent()
 
     const tablist = screen.getByRole('tablist', { name: 'Date range type' })
@@ -34,8 +34,8 @@ describe('DateRangeV2Content', () => {
     ])
     expect(screen.queryByText('Presets')).not.toBeInTheDocument()
     expect(screen.getByRole('tab', { name: /Relative/ })).toHaveAttribute('aria-selected', 'true')
-    expect(screen.getByText('Updates to the current time when you apply.')).toBeInTheDocument()
-    expect(tablist.parentElement?.parentElement).toHaveClass('w-[760px]')
+    expect(screen.queryByText('Updates to the current time when you apply.')).not.toBeInTheDocument()
+    expect(tablist.parentElement?.parentElement).toHaveClass('max-w-[calc(100vw-2rem)]')
   })
 
   test('opens when the stored value has epochs and no range', () => {
@@ -78,7 +78,7 @@ describe('DateRangeV2Content', () => {
     const { onApply } = renderContent()
 
     await userEvent.click(screen.getByRole('tab', { name: /Calendar periods/ }))
-    expect(screen.getByText('This month')).toBeInTheDocument()
+    expect(screen.getByText('Previous month')).toBeInTheDocument()
 
     await userEvent.click(screen.getByRole('tab', { name: /Relative/ }))
     expect(screen.getByText('Last 7 days')).toBeInTheDocument()
@@ -117,7 +117,7 @@ describe('DateRangeV2Content', () => {
     expect(screen.getByRole('radio', { name: 'Previous' })).toBeEnabled()
     expect(screen.getByRole('radio', { name: 'This' })).toBeEnabled()
     expect(screen.getByRole('radio', { name: 'Next' })).toBeDisabled()
-    expect(screen.getByText('This month, so far')).toBeInTheDocument()
+    expect(screen.getByText('Previous month')).toBeInTheDocument()
   })
 
   test('starts on the future side for future-only pickers', () => {
@@ -157,7 +157,7 @@ describe('DateRangeV2Content', () => {
   test('shows the timezone row when enabled', () => {
     renderContent({ config: { timezone: {} } })
 
-    expect(screen.getByText('Timezone')).toBeInTheDocument()
+    expect(document.getElementById('date-range-v2-timezone')).toBeInTheDocument()
     expect(screen.queryByText(/Query bounds:/)).not.toBeInTheDocument()
   })
 
@@ -390,7 +390,7 @@ describe('DateRangeV2Content', () => {
     expect(screen.queryByRole('tablist', { name: 'Date range type' })).not.toBeInTheDocument()
     expect(screen.queryByRole('tab', { name: /Calendar periods/ })).not.toBeInTheDocument()
     expect(screen.getByText('Last 7 days')).toBeInTheDocument()
-    expect(screen.getByText('Last 7 days').closest('.w-\\[520px\\]')).toBeInTheDocument()
+    expect(screen.getByText('Last 7 days').closest('.max-w-\\[calc\\(100vw-2rem\\)\\]')).toBeInTheDocument()
   })
 
   test('uses a mode label as the tab title', () => {
@@ -416,11 +416,11 @@ describe('DateRangeV2Content', () => {
     expect(screen.queryByRole('textbox', { name: 'Calendar amount' })).not.toBeInTheDocument()
   })
 
-  test('deletes the value without applying a range', async () => {
+  test('clears the value without applying a range', async () => {
     const onClear = vi.fn()
     renderContent({ config: { clearable: true }, onClear })
 
-    await userEvent.click(screen.getByRole('button', { name: 'Delete' }))
+    await userEvent.click(screen.getByRole('button', { name: 'Clear' }))
 
     expect(onClear).toHaveBeenCalledTimes(1)
   })
@@ -443,9 +443,28 @@ describe('DateRangeV2', () => {
         timezone: 'UTC'
       })
     )
-    const next = onValueChange.mock.calls[0][0]
+    const next = onValueChange.mock.calls.at(-1)?.[0]
     expect(next.from).toBeInstanceOf(Date)
     expect(next.to).toBeInstanceOf(Date)
+  })
+
+  test('fills epochs when a closed picker has a range without bounds', () => {
+    const onValueChange = vi.fn()
+    const value: DateRangeV2Value = {
+      range: { kind: 'relative', direction: 'last', amount: 1, unit: 'month' },
+      timezone: 'UTC'
+    }
+    const { rerender } = render(<DateRangeV2 value={value} onValueChange={onValueChange} />)
+
+    expect(onValueChange).toHaveBeenCalledTimes(1)
+    const next = onValueChange.mock.calls[0][0]
+    expect(next.range).toEqual(value.range)
+    expect(next.timezone).toBe('UTC')
+    expect(next.from).toBeInstanceOf(Date)
+    expect(next.to).toBeInstanceOf(Date)
+
+    rerender(<DateRangeV2 value={value} onValueChange={onValueChange} />)
+    expect(onValueChange).toHaveBeenCalledTimes(1)
   })
 
   test('keeps the stored bounds until the user applies', async () => {
@@ -536,11 +555,10 @@ describe('DateRangeV2', () => {
     expect(screen.getByText('Last 12 days')).toBeInTheDocument()
   })
 
-  test('uses amount 1 when leaving This and no calendar default is set', async () => {
+  test('opens the calendar draft on the previous month', async () => {
     renderContent({ value: undefined })
 
     await userEvent.click(screen.getByRole('tab', { name: /Calendar periods/ }))
-    await userEvent.click(screen.getByRole('radio', { name: 'Previous' }))
 
     expect(screen.getByRole('textbox', { name: 'Calendar amount' })).toHaveValue('1')
     expect(screen.getByText('Previous month')).toBeInTheDocument()
@@ -566,6 +584,66 @@ describe('DateRangeV2', () => {
     expect(screen.getByText('Previous 7 days')).toBeInTheDocument()
   })
 
+  test('fills the start field from the first day click and orders the second click', async () => {
+    render(
+      <TooltipProvider>
+        <DateRangeV2Content
+          value={undefined}
+          onApply={vi.fn()}
+          onCancel={vi.fn()}
+          config={{ modes: [{ mode: 'fixed' }] }}
+        />
+      </TooltipProvider>
+    )
+
+    const month = screen.getAllByRole('grid')[0]
+    const captionId = month.getAttribute('aria-labelledby')
+    const caption = document.getElementById(captionId ?? '')?.textContent ?? ''
+    const [monthName, year] = caption.split(' ')
+    const shortMonth = monthName.slice(0, 3)
+    const day = (name: string) => within(month).getByRole('gridcell', { name })
+    const start = () => screen.getByRole('textbox', { name: 'Start' })
+    const end = () => screen.getByRole('textbox', { name: 'End' })
+
+    expect(screen.getByText('Select a range')).toBeInTheDocument()
+
+    await userEvent.click(day('9'))
+
+    await waitFor(() => expect(start()).toHaveValue(`${shortMonth} 9, ${year}, 12:00 AM`))
+    expect(end()).toHaveValue('')
+    expect(screen.getByText(`${shortMonth} 9, ${year} · UTC+00:00`)).toBeInTheDocument()
+    expect(screen.getByRole('button', { name: 'Apply' })).toBeDisabled()
+
+    await userEvent.click(day('16'))
+
+    expect(start()).toHaveValue(`${shortMonth} 9, ${year}, 12:00 AM`)
+    await waitFor(() => expect(end()).toHaveValue(`${shortMonth} 16, ${year}, 11:59 PM`))
+    expect(screen.getByText(`${shortMonth} 9 – ${shortMonth} 16, ${year} · UTC+00:00`)).toBeInTheDocument()
+
+    await userEvent.click(day('4'))
+    await waitFor(() => expect(start()).toHaveValue(`${shortMonth} 4, ${year}, 12:00 AM`))
+    expect(end()).toHaveValue('')
+
+    await userEvent.click(day('2'))
+
+    await waitFor(() => expect(start()).toHaveValue(`${shortMonth} 2, ${year}, 12:00 AM`))
+    expect(end()).toHaveValue(`${shortMonth} 4, ${year}, 11:59 PM`)
+  })
+
+  test('leaves the fixed draft empty when no defaultValue is set', async () => {
+    render(
+      <TooltipProvider>
+        <DateRangeV2Content value={lastWeek} onApply={vi.fn()} onCancel={vi.fn()} />
+      </TooltipProvider>
+    )
+
+    await userEvent.click(screen.getByRole('tab', { name: /Fixed/ }))
+
+    expect(screen.getByRole('textbox', { name: 'Start' })).toHaveValue('')
+    expect(screen.getByRole('textbox', { name: 'End' })).toHaveValue('')
+    expect(screen.getByRole('button', { name: 'Apply' })).toBeDisabled()
+  })
+
   test('uses a custom defaultValue for an empty fixed draft', async () => {
     const onApply = vi.fn()
     render(
@@ -581,8 +659,8 @@ describe('DateRangeV2', () => {
               {
                 mode: 'fixed',
                 defaultValue: {
-                  from: { date: '2026-01-01', time: '09:30' },
-                  to: { date: '2026-01-07', time: '17:00' }
+                  from: '2026-01-01T09:30:00',
+                  to: '2026-01-07T17:00:00'
                 }
               }
             ]
@@ -593,10 +671,35 @@ describe('DateRangeV2', () => {
 
     await userEvent.click(screen.getByRole('tab', { name: /Fixed/ }))
 
-    expect(screen.getByRole('textbox', { name: 'Start date' })).toHaveValue('Jan 1, 2026')
-    expect(screen.getByRole('textbox', { name: 'Start time' })).toHaveValue('9:30 AM')
-    expect(screen.getByRole('textbox', { name: 'End date' })).toHaveValue('Jan 7, 2026')
-    expect(screen.getByRole('textbox', { name: 'End time' })).toHaveValue('5:00 PM')
+    expect(screen.getByRole('textbox', { name: 'Start' })).toHaveValue('Jan 1, 2026, 9:30 AM')
+    expect(screen.getByRole('textbox', { name: 'End' })).toHaveValue('Jan 7, 2026, 5:00 PM')
+  })
+
+  test('shows seconds when the fixed mode asks for them', async () => {
+    render(
+      <TooltipProvider>
+        <DateRangeV2Content
+          value={undefined}
+          onApply={vi.fn()}
+          onCancel={vi.fn()}
+          config={{
+            modes: [
+              {
+                mode: 'fixed',
+                allowSeconds: true,
+                defaultValue: {
+                  from: '2026-01-01T09:30:15',
+                  to: '2026-01-07T17:00:45'
+                }
+              }
+            ]
+          }}
+        />
+      </TooltipProvider>
+    )
+
+    expect(screen.getByRole('textbox', { name: 'Start' })).toHaveValue('Jan 1, 2026, 9:30:15 AM')
+    expect(screen.getByRole('textbox', { name: 'End' })).toHaveValue('Jan 7, 2026, 5:00:45 PM')
   })
 
   test('orders a same-day fixed default whose end time is earlier', () => {
@@ -611,8 +714,8 @@ describe('DateRangeV2', () => {
               {
                 mode: 'fixed',
                 defaultValue: {
-                  from: { date: '2026-01-05', time: '17:00' },
-                  to: { date: '2026-01-05', time: '09:00' }
+                  from: '2026-01-05T17:00:00',
+                  to: '2026-01-05T09:00:00'
                 }
               }
             ]
@@ -621,8 +724,45 @@ describe('DateRangeV2', () => {
       </TooltipProvider>
     )
 
-    expect(screen.getByRole('textbox', { name: 'Start time' })).toHaveValue('9:00 AM')
-    expect(screen.getByRole('textbox', { name: 'End time' })).toHaveValue('5:00 PM')
+    expect(screen.getByRole('textbox', { name: 'Start' })).toHaveValue('Jan 5, 2026, 9:00 AM')
+    expect(screen.getByRole('textbox', { name: 'End' })).toHaveValue('Jan 5, 2026, 5:00 PM')
+  })
+
+  test('shifts both ends when an arrow would reverse the range, and swaps a typed reversal on blur', async () => {
+    render(
+      <TooltipProvider>
+        <DateRangeV2Content
+          value={undefined}
+          onApply={vi.fn()}
+          onCancel={vi.fn()}
+          config={{
+            modes: [
+              {
+                mode: 'fixed',
+                defaultValue: {
+                  from: '2026-09-08T11:00:00',
+                  to: '2026-09-08T11:59:00'
+                }
+              }
+            ]
+          }}
+        />
+      </TooltipProvider>
+    )
+
+    const end = screen.getByRole('textbox', { name: 'End' })
+    end.focus()
+    await userEvent.keyboard('{ArrowDown}')
+
+    expect(screen.getByRole('textbox', { name: 'Start' })).toHaveValue('Sep 8, 2026, 10:00 AM')
+    expect(end).toHaveValue('Sep 8, 2026, 10:59 AM')
+
+    await userEvent.clear(end)
+    await userEvent.type(end, 'Sep 8, 2026, 9:00 AM')
+    await userEvent.tab()
+
+    expect(screen.getByRole('textbox', { name: 'Start' })).toHaveValue('Sep 8, 2026, 9:00 AM')
+    expect(screen.getByRole('textbox', { name: 'End' })).toHaveValue('Sep 8, 2026, 10:00 AM')
   })
 
   test('uses a This calendar defaultValue', async () => {
@@ -653,8 +793,8 @@ describe('DateRangeV2', () => {
 
     await userEvent.click(screen.getByRole('tab', { name: /Fixed/ }))
 
-    expect(screen.queryByRole('textbox', { name: 'Start time' })).not.toBeInTheDocument()
-    expect(screen.getByRole('textbox', { name: 'Start date' })).toBeInTheDocument()
+    expect(screen.getByRole('textbox', { name: 'Start' })).toBeInTheDocument()
+    expect(screen.getByRole('textbox', { name: 'Start' })).toHaveAttribute('placeholder', 'Describe date')
   })
 
   test('leaves a named timezone unchanged when browserZone changes', () => {
@@ -758,8 +898,8 @@ describe('DateRangeV2', () => {
       ...lastWeek,
       range: {
         kind: 'fixed',
-        from: { date: '2026-09-28', time: '15:30' },
-        to: { date: '2026-10-05', time: '15:30' }
+        from: '2026-09-28T15:30:00',
+        to: '2026-10-05T15:30:00'
       }
     }
     const { rerender } = render(<DateRangeV2 value={fixed} onValueChange={onValueChange} />)

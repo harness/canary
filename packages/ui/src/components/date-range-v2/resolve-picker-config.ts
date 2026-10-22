@@ -1,4 +1,4 @@
-import { isCivilDate, isCivilTime } from './timezone-utils'
+import { isCivilDateTime } from './timezone-utils'
 import type {
   CalendarExtent,
   CalendarModeConfig,
@@ -36,6 +36,7 @@ export interface ResolvedRelativeMode {
 
 export interface ResolvedFixedMode {
   allowTime: boolean
+  allowSeconds: boolean
   defaultValue?: FixedRange
 }
 
@@ -106,10 +107,8 @@ const resolvePresets = (presets: readonly DateRangeV2Preset[] | undefined): Date
       PRESET_GROUPS.has(preset.group)
   )
 
-const resolveTabDetails = (details: readonly DateRangeV2TabDetail[] | undefined): DateRangeV2TabDetail[] => {
-  if (!details) return DEFAULT_TAB_DETAILS
-  return DEFAULT_TAB_DETAILS.filter(detail => details.includes(detail))
-}
+const resolveTabDetails = (details: readonly DateRangeV2TabDetail[] | undefined): DateRangeV2TabDetail[] =>
+  DEFAULT_TAB_DETAILS.filter(detail => details?.includes(detail))
 
 const modeOf = (entry: DateRangeV2ModeEntry): DateRangeV2Mode | undefined =>
   entry && isMode(entry.mode) ? entry.mode : undefined
@@ -171,9 +170,7 @@ const resolveRelativeDefault = (
 const resolveFixedDefault = (requested: FixedModeConfig['defaultValue']): FixedRange | undefined => {
   if (!requested) return undefined
   const { from, to } = requested
-  if (!isCivilDate(from.date) || !isCivilDate(to.date) || !isCivilTime(from.time) || !isCivilTime(to.time)) {
-    return undefined
-  }
+  if (!isCivilDateTime(from) || !isCivilDateTime(to)) return undefined
   return { kind: 'fixed', from, to }
 }
 
@@ -185,13 +182,15 @@ const resolveCalendarDefault = (
 ): CalendarRange => {
   const unit =
     requested && units.includes(requested.unit) ? requested.unit : units.includes('month') ? 'month' : units[0]
-  if (!requested || requested.position === 'this') {
-    const extent =
-      requested?.position === 'this' && extents.includes(requested.extent)
-        ? requested.extent
-        : extents.includes('full')
-          ? 'full'
-          : extents[0]
+  if (!requested) {
+    return { kind: 'calendar', position: 'previous', unit, amount: positiveAmount(1, 1, maxAmount) }
+  }
+  if (requested.position === 'this') {
+    const extent = extents.includes(requested.extent)
+      ? requested.extent
+      : extents.includes('full')
+        ? 'full'
+        : extents[0]
     return { kind: 'calendar', position: 'this', unit, extent }
   }
   return {
@@ -245,6 +244,7 @@ export const resolveDateRangeV2Config = (config?: DateRangeV2Config): ResolvedDa
     },
     fixed: {
       allowTime: selected.fixed?.allowTime ?? true,
+      allowSeconds: selected.fixed?.allowSeconds ?? false,
       defaultValue: resolveFixedDefault(selected.fixed?.defaultValue)
     },
     triggerLabel: {

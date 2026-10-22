@@ -1,5 +1,5 @@
 import { resolveTimeZone } from './resolve-date-range-v2'
-import { utcToCivilDate, utcToCivilTime } from './timezone-utils'
+import { utcToCivilDateTime } from './timezone-utils'
 import type {
   CalendarExtent,
   CalendarRange,
@@ -115,7 +115,7 @@ export const fixedRangeFromBounds = (from: Date, to: Date, timezone?: TimeZoneId
   const zone = resolveTimeZone(timezone)
   return {
     kind: 'fixed',
-    from: { date: utcToCivilDate(from, zone), time: utcToCivilTime(from, zone) },
-    to: { date: utcToCivilDate(to, zone), time: utcToCivilTime(to, zone) }
+    from: utcToCivilDateTime(from, zone),
+    to: utcToCivilDateTime(to, zone)
   }
 }

@@ -15,7 +15,6 @@ import { cn } from '@utils/cn'
 import { Button } from '../button'
 import { ButtonLayout } from '../button-layout'
 import { Calendar } from '../calendar'
-import { Label } from '../form-primitives/label'
 import { Select } from '../form-primitives/select'
 import { IconV2 } from '../icon-v2'
 import { Layout } from '../layout'
@@ -25,7 +24,7 @@ import { Text } from '../text'
 import { ToggleGroup } from '../toggle-group'
 import { TooltipProvider } from '../tooltip'
 import { DateTimeEndpointField } from './date-time-endpoint-field'
-import { configuredPresetLabel, formatDateRangeV2Label } from './format-date-range-v2-label'
+import { configuredPresetLabel, formatDateRangeV2Label, formatFixedStartLabel } from './format-date-range-v2-label'
 import { PositiveAmountInput } from './positive-amount-input'
 import { resolveDateRangeV2, resolveDateRangeV2At, resolveTimeZone } from './resolve-date-range-v2'
 import { clampAmount, resolveDateRangeV2Config, type ResolvedDateRangeV2Config } from './resolve-picker-config'
@@ -33,16 +32,18 @@ import { TimezoneOffsetBadge, TimezoneOptionLabel } from './timezone-offset-badg
 import {
   getBrowserTimeZone,
   getSupportedTimeZones,
+  isCivilDateTime,
+  shiftCivilDateTimeHours,
   utcToCivilDate,
-  utcToCivilTime,
-  zonedCivilToUtc
+  utcToCivilDateTime,
+  zonedCivilDateTimeToUtc
 } from './timezone-utils'
 import type {
   CalendarExtent,
   CalendarRange,
   CalendarUnit,
   CivilDate,
-  CivilTime,
+  CivilDateTime,
   DateRangeAvailability,
   DateRangeV2Config,
   DateRangeV2Mode,
@@ -116,11 +117,7 @@ const presetSelectOptions = (presets: readonly DateRangeV2Preset[]) =>
 
 const fixedRangeFromDates = (from: Date, to: Date, timezone: TimeZoneId): FixedRange => {
   const [start, end] = from <= to ? [from, to] : [to, from]
-  return {
-    kind: 'fixed',
-    from: { date: utcToCivilDate(start, timezone), time: utcToCivilTime(start, timezone) },
-    to: { date: utcToCivilDate(end, timezone), time: utcToCivilTime(end, timezone) }
-  }
+  return { kind: 'fixed', from: utcToCivilDateTime(start, timezone), to: utcToCivilDateTime(end, timezone) }
 }
 
 const EXTENT_LABELS: Record<CalendarExtent, string> = {
@@ -133,8 +130,7 @@ const LOCALE: TimeZoneId = 'LOCALE'
 
 const relativeDefaultKey = (range: RelativeRange): string => `${range.direction}:${range.amount}:${range.unit}`
 
-const fixedDefaultKey = (range: FixedRange | undefined): string =>
-  range ? `${range.from.date}T${range.from.time}/${range.to.date}T${range.to.time}` : ''
+const fixedDefaultKey = (range: FixedRange | undefined): string => (range ? `${range.from}/${range.to}` : '')
 
 const calendarDefaultKey = (range: CalendarRange): string =>
   range.position === 'this' ? `this:${range.unit}:${range.extent}` : `${range.position}:${range.unit}:${range.amount}`
@@ -257,31 +253,43 @@ const civilDateToLocal = (value: string): Date => {
   return new Date(year, month - 1, day)
 }
 
+const DAY_START = '00:00:00'
+const DAY_END = '23:59:59'
+
+const withClock = (value: string, clock: string): CivilDateTime => `${value.slice(0, 10)}T${clock}` as CivilDateTime
+
 const normalizeFixed = (range: FixedRange, config: ResolvedDateRangeV2Config): FixedRange => {
   let from = range.from
   let to = range.to
-  const fromMs = zonedCivilToUtc(from.date, from.time).getTime()
-  const toMs = zonedCivilToUtc(to.date, to.time).getTime()
+  const fromMs = zonedCivilDateTimeToUtc(from).getTime()
+  const toMs = zonedCivilDateTimeToUtc(to).getTime()
   if (Number.isFinite(fromMs) && Number.isFinite(toMs) && fromMs > toMs) {
     const swap = from
     from = to
     to = swap
   }
   if (!config.fixed.allowTime) {
-    from = { ...from, time: '00:00' }
-    to = { ...to, time: '23:59' }
+    from = withClock(from, DAY_START)
+    to = withClock(to, DAY_END)
   }
   return { kind: 'fixed', from, to }
 }
 
-const defaultFixed = (zone: string, config: ResolvedDateRangeV2Config): FixedRange => {
+/** A fixed draft may have no dates yet. Apply stays off until both ends exist. */
+interface FixedDraft {
+  kind: 'fixed'
+  from?: CivilDateTime
+  to?: CivilDateTime
+}
+
+const defaultFixed = (config: ResolvedDateRangeV2Config): FixedDraft => {
   if (config.fixed.defaultValue) return normalizeFixed(config.fixed.defaultValue, config)
-  const today = utcToCivilDate(new Date(), zone)
-  return {
-    kind: 'fixed',
-    from: { date: today, time: '00:00' },
-    to: { date: today, time: '23:59' }
-  }
+  return { kind: 'fixed' }
+}
+
+const completeFixed = (draft: FixedDraft, config: ResolvedDateRangeV2Config): FixedRange | undefined => {
+  if (!isCivilDateTime(draft.from) || !isCivilDateTime(draft.to)) return undefined
+  return normalizeFixed({ kind: 'fixed', from: draft.from, to: draft.to }, config)
 }
 
 /** One draft per mode. The inactive ones stay in state while another tab is open. */
@@ -289,7 +297,7 @@ interface Drafts {
   preset: PresetRange
   relative: RelativeRange
   calendar: CalendarRange
-  fixed: FixedRange
+  fixed: FixedDraft
 }
 
 const sameRange = (left?: DateRangeV2Value['range'], right?: DateRangeV2Value['range']) =>
@@ -360,13 +368,13 @@ const coerceCalendar = (range: CalendarRange, config: ResolvedDateRangeV2Config)
   }
 }
 
-const draftsFor = (value: DateRangeV2Value | undefined, config: ResolvedDateRangeV2Config, zone: string): Drafts => {
+const draftsFor = (value: DateRangeV2Value | undefined, config: ResolvedDateRangeV2Config): Drafts => {
   const range = value?.range
   return {
     preset: { kind: 'preset', preset: range?.kind === 'preset' ? range.preset : (config.presets[0]?.value ?? '') },
     relative: range?.kind === 'relative' ? coerceRelative(range, config) : defaultRelative(config),
     calendar: range?.kind === 'calendar' ? coerceCalendar(range, config) : defaultCalendar(config),
-    fixed: range?.kind === 'fixed' ? range : defaultFixed(zone, config)
+    fixed: range?.kind === 'fixed' ? range : defaultFixed(config)
   }
 }
 
@@ -506,9 +514,7 @@ export const DateRangeV2Content = ({
   const [draftTimezone, setDraftTimezone] = useState<TimeZoneId>(initialTimezone)
   const zone = resolveTimeZone(draftTimezone)
   const [section, setSection] = useState<DateRangeV2Mode>(() => sectionFor(value, pickerConfig))
-  const [drafts, setDrafts] = useState<Drafts>(() => draftsFor(value, pickerConfig, zone))
-  /** First calendar click in Fixed mode. The second click completes the range. */
-  const [pendingStart, setPendingStart] = useState<Date>()
+  const [drafts, setDrafts] = useState<Drafts>(() => draftsFor(value, pickerConfig))
   const [month, setMonth] = useState<Date>(() => new Date())
   const tabRefs = useRef<Record<DateRangeV2Mode, HTMLButtonElement | null>>({
     presets: null,
@@ -531,8 +537,7 @@ export const DateRangeV2Content = ({
     const nextTimezone = timezone ?? pickerConfig.timezone.defaultValue
     setDraftTimezone(nextTimezone)
     setSection(sectionFor(value, pickerConfig))
-    setDrafts(draftsFor(value, pickerConfig, resolveTimeZone(nextTimezone)))
-    setPendingStart(undefined)
+    setDrafts(draftsFor(value, pickerConfig))
   }, [value, config, pickerConfig])
 
   // Fill epochs once when the parent stored a range without them.
@@ -550,25 +555,28 @@ export const DateRangeV2Content = ({
     section === 'presets' ? pickerConfig.presets.find(preset => preset.value === drafts.preset.preset) : undefined
   const presetBounds = selectedPreset?.getRange({ timezone: draftTimezone })
   const presetRange = presetBounds ? fixedRangeFromDates(presetBounds.from, presetBounds.to, draftTimezone) : undefined
-  const activeRange: DateRangeV2Range =
-    presetRange ?? (section === 'calendar' ? drafts.calendar : section === 'fixed' ? drafts.fixed : drafts.relative)
+  const fixedRange = completeFixed(drafts.fixed, pickerConfig)
+  const activeRange: DateRangeV2Range | undefined =
+    presetRange ?? (section === 'calendar' ? drafts.calendar : section === 'fixed' ? fixedRange : drafts.relative)
   const appliedTimezone = value?.timezone ?? pickerConfig.timezone.defaultValue
-  const draftRange = section === 'presets' ? drafts.preset : drafts[section]
+  const draftRange = section === 'presets' ? drafts.preset : section === 'fixed' ? fixedRange : drafts[section]
   // Opening the picker must not move an applied window. Recompute from now only after the draft changes.
   const showingApplied = Boolean(value && appliedTimezone === draftTimezone && sameRange(draftRange, value.range))
   const storedBounds: readonly [number, number] | undefined =
     showingApplied && value?.from && value.to ? [value.from.getTime(), value.to.getTime()] : undefined
-  const activeRangeKey =
-    activeRange.kind === 'relative'
+  const activeRangeKey = !activeRange
+    ? 'none'
+    : activeRange.kind === 'relative'
       ? `${activeRange.direction}:${activeRange.amount}:${activeRange.unit}`
       : activeRange.kind === 'calendar'
         ? activeRange.position === 'this'
           ? `${activeRange.position}:${activeRange.unit}:${activeRange.extent}`
           : `${activeRange.position}:${activeRange.unit}:${activeRange.amount}`
-        : `${activeRange.from.date}T${activeRange.from.time}/${activeRange.to.date}T${activeRange.to.time}`
+        : `${activeRange.from}/${activeRange.to}`
 
   const resolved = useMemo(() => {
     if (storedBounds) return storedBounds
+    if (!activeRange) return undefined
     try {
       const next = resolveDateRangeV2At({ range: activeRange, timezone: draftTimezone }, new Date())
       return [next.from.getTime(), next.to.getTime()] as const
@@ -577,28 +585,37 @@ export const DateRangeV2Content = ({
     }
   }, [storedBounds, activeRange, draftTimezone])
 
-  const label = formatDateRangeV2Label(
-    activeRange,
-    draftTimezone,
-    new Date(),
-    pickerConfig.triggerLabel,
-    storedBounds,
-    section === 'presets' ? selectedPreset?.label : undefined
-  )
+  const partialStart =
+    section === 'fixed' && drafts.fixed.from && isCivilDateTime(drafts.fixed.from)
+      ? formatFixedStartLabel(drafts.fixed.from, draftTimezone, pickerConfig.triggerLabel)
+      : ''
+  const label = activeRange
+    ? formatDateRangeV2Label(
+        activeRange,
+        draftTimezone,
+        new Date(),
+        pickerConfig.triggerLabel,
+        storedBounds,
+        section === 'presets' ? selectedPreset?.label : undefined
+      )
+    : { title: 'Fixed range', rangeText: partialStart, triggerText: '' }
   const allowed =
     section === 'presets' && presetBounds
       ? allowsPresetBounds(presetBounds, pickerConfig.direction)
-      : isAllowedDateRangeV2(activeRange, pickerConfig.direction, draftTimezone)
-  const canApply = Boolean(resolved) && allowed && !pendingStart && (section !== 'presets' || Boolean(selectedPreset))
+      : activeRange
+        ? isAllowedDateRangeV2(activeRange, pickerConfig.direction, draftTimezone)
+        : false
+  const canApply = Boolean(resolved) && allowed && (section !== 'presets' || Boolean(selectedPreset))
 
-  const selected: DateRange | undefined = pendingStart
-    ? { from: pendingStart, to: undefined }
-    : resolved
-      ? {
-          from: civilDateToLocal(utcToCivilDate(new Date(resolved[0]), zone)),
-          to: civilDateToLocal(utcToCivilDate(new Date(resolved[1]), zone))
-        }
-      : undefined
+  const selected: DateRange | undefined =
+    section === 'fixed' && drafts.fixed.from && !drafts.fixed.to
+      ? { from: civilDateToLocal(drafts.fixed.from.slice(0, 10)), to: undefined }
+      : resolved
+        ? {
+            from: civilDateToLocal(utcToCivilDate(new Date(resolved[0]), zone)),
+            to: civilDateToLocal(utcToCivilDate(new Date(resolved[1]), zone))
+          }
+        : undefined
 
   useEffect(() => {
     if (selected?.from) setMonth(selected.from)
@@ -645,31 +662,50 @@ export const DateRangeV2Content = ({
     })
   }
 
-  const setFixed = (fixed: FixedRange) => setDrafts(prev => ({ ...prev, fixed }))
+  const setFixed = (fixed: FixedDraft) => setDrafts(prev => ({ ...prev, fixed }))
 
-  const updateFixedDate = (endpoint: 'from' | 'to', date: CivilDate) => {
-    const next: FixedRange = { ...drafts.fixed, [endpoint]: { ...drafts.fixed[endpoint], date } }
-    if (next.from.date > next.to.date) {
-      const opposite = endpoint === 'from' ? 'to' : 'from'
-      next[opposite] = { ...next[opposite], date }
+  const updateFixedEndpoint = (endpoint: 'from' | 'to', value: CivilDateTime) => {
+    const next: FixedDraft = { ...drafts.fixed, [endpoint]: value }
+    if (next.from && next.to && next.from > next.to) {
+      const swap = next.from
+      next.from = next.to
+      next.to = swap
     }
     setFixed(next)
+  }
+
+  /** An arrow that would reverse the range moves both ends, so a typed edit is the only swap. */
+  const stepFixedEndpoint = (endpoint: 'from' | 'to', hours: number) => {
+    const current = drafts.fixed[endpoint]
+    if (!current) return
+    const stepped = shiftCivilDateTimeHours(current, hours)
+    const { from, to } = drafts.fixed
+    if (from && to && ((endpoint === 'from' && stepped > to) || (endpoint === 'to' && stepped < from))) {
+      setFixed({
+        kind: 'fixed',
+        from: shiftCivilDateTimeHours(from, hours),
+        to: shiftCivilDateTimeHours(to, hours)
+      })
+      return
+    }
+    setFixed({ ...drafts.fixed, [endpoint]: stepped })
   }
 
   const handleDayClick = (day: Date) => {
     if (locked || !fixedAllowed) return
     if (section !== 'fixed') setSection('fixed')
-    if (!pendingStart) {
-      setPendingStart(day)
+    const clicked = localToCivilDate(day)
+    const start = drafts.fixed.from
+    const startDate = start?.slice(0, 10)
+    if (!start || drafts.fixed.to) {
+      setFixed({ kind: 'fixed', from: withClock(clicked, DAY_START) })
       return
     }
-    const [from, to] = day < pendingStart ? [day, pendingStart] : [pendingStart, day]
-    setFixed({
-      kind: 'fixed',
-      from: { date: localToCivilDate(from), time: drafts.fixed.from.time },
-      to: { date: localToCivilDate(to), time: drafts.fixed.to.time }
-    })
-    setPendingStart(undefined)
+    if (startDate && clicked < startDate) {
+      setFixed({ kind: 'fixed', from: withClock(clicked, DAY_START), to: withClock(startDate, DAY_END) })
+      return
+    }
+    setFixed({ kind: 'fixed', from: start, to: withClock(clicked, DAY_END) })
   }
 
   const moveTabFocus = (event: KeyboardEvent<HTMLButtonElement>) => {
@@ -681,7 +717,6 @@ export const DateRangeV2Content = ({
         (index + (event.key === 'ArrowDown' ? 1 : -1) + pickerConfig.modes.length) % pickerConfig.modes.length
       ]
     setSection(next.mode)
-    setPendingStart(undefined)
     tabRefs.current[next.mode]?.focus()
   }
 
@@ -692,68 +727,23 @@ export const DateRangeV2Content = ({
   const currentExtent = calendarDraft.position === 'this' ? calendarDraft.extent : undefined
   const relativeUnits = RELATIVE_UNITS.filter(option => pickerConfig.relative.units.includes(option.value))
   const calendarUnits = CALENDAR_UNITS.filter(option => pickerConfig.calendar.units.includes(option.value))
-  const fixedForApply: FixedRange = pickerConfig.fixed.allowTime
-    ? drafts.fixed
-    : {
-        ...drafts.fixed,
-        from: { ...drafts.fixed.from, time: '00:00' },
-        to: { ...drafts.fixed.to, time: '23:59' }
-      }
-  const applyRange: DateRangeV2Range = section === 'fixed' ? fixedForApply : activeRange
+  const applyRange: DateRangeV2Range | undefined = section === 'fixed' ? fixedRange : activeRange
 
   return (
     <div
       className={cn(
         'max-w-[calc(100vw-2rem)] overflow-hidden rounded-cn-4 bg-cn-1',
         // One mode hides the tab column, so the panel loses that 240px.
-        pickerConfig.modes.length > 1 ? 'w-[760px]' : 'w-[520px]',
+        // pickerConfig.modes.length > 1 ? 'w-[760px]' : 'w-[520px]',
         className
       )}
     >
-      <Layout.Horizontal align="center" justify="between" gap="md" className="border-b border-cn-2 px-cn-md py-cn-sm">
-        <div className="min-w-0">
-          <Text variant="body-strong">{label.title}</Text>
-          <Text variant="caption-normal" color="foreground-3">
-            {label.rangeText}
-          </Text>
-        </div>
-        <ButtonLayout horizontalAlign="end">
-          {pickerConfig.clearable && (
-            <Button
-              size="sm"
-              variant="outline"
-              iconOnly
-              aria-label="Delete"
-              disabled={locked || !value || !onClear}
-              onClick={onClear}
-            >
-              <IconV2 name="trash" size="sm" />
-            </Button>
-          )}
-          <Button size="sm" variant="ghost" onClick={onCancel}>
-            Cancel
-          </Button>
-          <Button
-            size="sm"
-            disabled={locked || !canApply}
-            onClick={() => {
-              const next =
-                section === 'presets' && selectedPreset
-                  ? valueFromDraft(
-                      { kind: 'preset', preset: selectedPreset.value },
-                      draftTimezone,
-                      pickerConfig.presets
-                    )
-                  : resolveDateRangeV2({ range: applyRange, timezone: draftTimezone })
-              if (next) onApply(next)
-            }}
-          >
-            Apply
-          </Button>
-        </ButtonLayout>
-      </Layout.Horizontal>
+      <Layout.Vertical gap="3xs" className="border-b border-cn-2 px-cn-md py-cn-sm">
+        <Text variant="body-strong">{label.title}</Text>
+        <Text variant="caption-normal">{label.rangeText || 'Select a range'}</Text>
+      </Layout.Vertical>
 
-      <Layout.Horizontal gap="none" align="stretch" className="h-[400px]">
+      <Layout.Horizontal gap="none" align="stretch">
         {/* Tabs are hidden when only one mode is enabled. */}
         {pickerConfig.modes.length > 1 && (
           <div
@@ -777,17 +767,18 @@ export const DateRangeV2Content = ({
                   aria-selected={active}
                   aria-controls={`date-range-v2-panel-${tab.mode}`}
                   tabIndex={active ? 0 : -1}
-                  onClick={() => {
-                    setSection(tab.mode)
-                    setPendingStart(undefined)
-                  }}
+                  onClick={() => setSection(tab.mode)}
                   onKeyDown={moveTabFocus}
                   className={cn(
                     'block w-full border-r-2 px-cn-md py-cn-sm text-left',
                     active ? 'border-cn-brand bg-cn-brand-secondary-selected' : 'border-transparent hover:bg-cn-hover'
                   )}
                 >
-                  <Text variant="body-strong" color={active ? 'brand' : 'foreground-1'} className="block">
+                  <Text
+                    variant={active ? 'body-strong' : 'body-normal'}
+                    color={active ? 'brand' : 'foreground-1'}
+                    className="block"
+                  >
                     {tab.label}
                   </Text>
                   {pickerConfig.tabDetails.includes('description') && (
@@ -818,7 +809,7 @@ export const DateRangeV2Content = ({
           className="min-h-0 min-w-0 flex-1 overflow-y-auto"
         >
           {/* Controls for the active mode. The calendar below stays visible for every mode. */}
-          <div className="min-h-[72px] p-cn-md">
+          <div className="p-cn-md">
             {section === 'presets' && (
               <Select
                 aria-label="Preset"
@@ -917,7 +908,7 @@ export const DateRangeV2Content = ({
                   disabled={locked}
                   onChange={unit => setCalendar(calendarDraft.position, unit, currentExtent)}
                   size="sm"
-                  wrapperClassName="w-32"
+                  wrapperClassName="w-28"
                   contentWidth="triggerWidth"
                 />
                 {calendarDraft.position === 'this' && extents.length > 1 && (
@@ -928,7 +919,7 @@ export const DateRangeV2Content = ({
                     disabled={locked}
                     onChange={extent => setCalendar('this', calendarDraft.unit, extent)}
                     size="sm"
-                    wrapperClassName="w-36"
+                    wrapperClassName="w-32"
                     contentWidth="triggerWidth"
                   />
                 )}
@@ -936,59 +927,30 @@ export const DateRangeV2Content = ({
             )}
 
             {section === 'fixed' && (
-              <Layout.Grid
-                columns={
-                  pickerConfig.fixed.allowTime
-                    ? 'minmax(0, 1fr) auto minmax(0, 1fr) auto'
-                    : 'minmax(0, 1fr) auto minmax(0, 1fr)'
-                }
-                align="end"
-                gap="sm"
-              >
+              <Layout.Grid columns="minmax(0, 1fr) auto minmax(0, 1fr)" align="end" gap="xs">
                 <DateTimeEndpointField
                   label="Start"
-                  date={drafts.fixed.from.date}
-                  time={drafts.fixed.from.time}
+                  value={drafts.fixed.from}
                   showTime={pickerConfig.fixed.allowTime}
+                  showSeconds={pickerConfig.fixed.allowSeconds}
+                  dateOnlyClock="00:00:00"
                   disabled={locked}
-                  onDateChange={date => updateFixedDate('from', date)}
-                  onTimeChange={(time: CivilTime) =>
-                    setFixed({ ...drafts.fixed, from: { ...drafts.fixed.from, time } })
-                  }
+                  onChange={value => updateFixedEndpoint('from', value)}
+                  onStep={hours => stepFixedEndpoint('from', hours)}
                 />
                 <span className="flex h-8 items-center" aria-hidden>
                   <IconV2 name="arrow-long-right" size="sm" />
                 </span>
                 <DateTimeEndpointField
                   label="End"
-                  date={drafts.fixed.to.date}
-                  time={drafts.fixed.to.time}
+                  value={drafts.fixed.to}
                   showTime={pickerConfig.fixed.allowTime}
+                  showSeconds={pickerConfig.fixed.allowSeconds}
+                  dateOnlyClock="23:59:59"
                   disabled={locked}
-                  onDateChange={date => updateFixedDate('to', date)}
-                  onTimeChange={(time: CivilTime) => setFixed({ ...drafts.fixed, to: { ...drafts.fixed.to, time } })}
+                  onChange={value => updateFixedEndpoint('to', value)}
+                  onStep={hours => stepFixedEndpoint('to', hours)}
                 />
-                {pickerConfig.fixed.allowTime && (
-                  <Button
-                    size="sm"
-                    variant="outline"
-                    iconOnly
-                    aria-label="Full days"
-                    disabled={locked}
-                    tooltipProps={{
-                      content: 'Times default to 00:00 on the start day and 23:59 on the end day.'
-                    }}
-                    onClick={() =>
-                      setFixed({
-                        ...drafts.fixed,
-                        from: { ...drafts.fixed.from, time: '00:00' },
-                        to: { ...drafts.fixed.to, time: '23:59' }
-                      })
-                    }
-                  >
-                    <IconV2 name="refresh" size="sm" />
-                  </Button>
-                )}
               </Layout.Grid>
             )}
           </div>
@@ -1016,10 +978,9 @@ export const DateRangeV2Content = ({
         </div>
       </Layout.Horizontal>
 
-      {timezoneEnabled && (
-        <div className="flex items-center gap-cn-xs border-t border-cn-3 px-cn-md py-cn-sm">
-          <Label htmlFor={TIMEZONE_SELECT_ID}>Timezone</Label>
-          <div className="min-w-0 flex-1">
+      <div className="flex items-center gap-cn-xs border-t border-cn-3 px-cn-md py-cn-sm">
+        <div className="min-w-0 flex-1">
+          {timezoneEnabled && (
             <Select
               id={TIMEZONE_SELECT_ID}
               options={timezoneSelectOptions}
@@ -1031,9 +992,37 @@ export const DateRangeV2Content = ({
               contentWidth="triggerWidth"
               triggerClassName="w-full"
             />
-          </div>
+          )}
         </div>
-      )}
+        <ButtonLayout horizontalAlign="end">
+          {pickerConfig.clearable && (
+            <Button size="sm" variant="ghost" onClick={onClear} disabled={locked || !value || !onClear}>
+              Clear
+            </Button>
+          )}
+          <Button size="sm" variant="outline" onClick={onCancel}>
+            Cancel
+          </Button>
+          <Button
+            size="sm"
+            disabled={locked || !canApply}
+            onClick={() => {
+              if (!applyRange) return
+              const next =
+                section === 'presets' && selectedPreset
+                  ? valueFromDraft(
+                      { kind: 'preset', preset: selectedPreset.value },
+                      draftTimezone,
+                      pickerConfig.presets
+                    )
+                  : resolveDateRangeV2({ range: applyRange, timezone: draftTimezone })
+              if (next) onApply(next)
+            }}
+          >
+            Apply
+          </Button>
+        </ButtonLayout>
+      </div>
     </div>
   )
 }
@@ -1060,7 +1049,20 @@ export const DateRangeV2 = ({
   const timezone = value?.timezone ?? pickerConfig.timezone.defaultValue
   const browserZoneRef = useRef(pickerConfig.timezone.browserZone)
   const defaultsRef = useRef(configDefaults(pickerConfig))
+  const reportedBounds = useRef<string | undefined>(undefined)
   const [uncontrolledOpen, setUncontrolledOpen] = useState(false)
+
+  // A range without epochs is incomplete. Report the resolved value once, even while the popover is closed.
+  useEffect(() => {
+    if (!value?.range || (value.from && value.to)) return
+    const timezone = value.timezone ?? pickerConfig.timezone.defaultValue
+    const key = `${JSON.stringify(value.range)}|${timezone}`
+    if (reportedBounds.current === key) return
+    const next = valueFromDraft(value.range, timezone, pickerConfig.presets)
+    if (!next) return
+    reportedBounds.current = key
+    onValueChange(next)
+  }, [value, pickerConfig, onValueChange])
 
   // Push a new value when config defaults change, such as default amount or timezone.
   useEffect(() => {
@@ -1109,8 +1111,8 @@ export const DateRangeV2 = ({
         ? formatDateRangeV2Label(
             {
               kind: 'fixed',
-              from: { date: '1970-01-01', time: '00:00' },
-              to: { date: '1970-01-01', time: '23:59' }
+              from: '1970-01-01T00:00:00',
+              to: '1970-01-01T23:59:59'
             },
             timezone,
             new Date(),

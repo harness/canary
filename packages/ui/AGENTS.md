@@ -67,12 +67,15 @@ Not required for basic skill usage; use only if Figma Make needs automation.
 
 ### Finding a component
 
-1. **Component source:** `packages/ui/src/components/` — two layouts are both in use, so
-   check for each:
-   - **Folder:** `{component-name}/{component-name}.tsx` + `{component-name}.figma.ts`
-     (e.g. `status-badge/status-badge.tsx`) — 48 components
+1. **Component source:** `packages/ui/src/components/` — **three** layouts are in use, so do
+   not assume one:
    - **Flat file:** `{component-name}.tsx` + `{component-name}.figma.ts` directly in
-     `components/` (e.g. `button.tsx`) — 77 components
+     `components/` (e.g. `button.tsx`) — 77 components, the most common
+   - **Matching folder:** `{component-name}/{component-name}.tsx`
+     (e.g. `status-badge/status-badge.tsx`) — 20 components
+   - **Multi-file folder:** a folder whose parts are named individually, usually with an
+     `index.ts` (e.g. `alert/AlertRoot.tsx`, `checkbox-tree/checkbox-tree-root.tsx`,
+     `dialogs/`) — 26 components
    - The manifest's `code.path` is authoritative; read it rather than guessing the layout.
 
 2. **Component contract (manifest):** `packages/ui/schemas/{component-name}.manifest.json`

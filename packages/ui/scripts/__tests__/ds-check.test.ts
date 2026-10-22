@@ -172,6 +172,56 @@ describe('ds-check', () => {
       expect(result.stdout).toContain('✅ status-badge')
     })
 
+    // --source used to return valid+skipped whenever it could not parse a CVA variants
+    // block, printing ✅ for enum claims it had never checked. An unverifiable claim must
+    // not be reportable as a verified one.
+    it('should fail --source when enum props cannot be verified against the source', async () => {
+      await withProbeManifest(
+        'unverifiable-probe',
+        manifest => {
+          // A real component that does not use CVA, so no variants block can be parsed,
+          // while the manifest still claims variant/theme/size are enums.
+          manifest.code.path = 'packages/ui/src/components/alert-dialog.tsx'
+        },
+        async () => {
+          const result = await runDsCheck(['--source'])
+          expect(result.exitCode).toBe(1)
+          expect(result.stdout + result.stderr).toContain('cannot verify enum props')
+          expect(result.stdout + result.stderr).toContain('does not use CVA')
+        }
+      )
+    })
+
+    it('should fail --source when a declared enum prop is absent from the CVA block', async () => {
+      await withProbeManifest(
+        'unchecked-prop-probe',
+        manifest => {
+          manifest.props.shared.push({ name: 'notInCva', type: 'enum', values: ['a', 'b'], default: 'a' })
+        },
+        async () => {
+          const result = await runDsCheck(['--source'])
+          expect(result.exitCode).toBe(1)
+          expect(result.stdout + result.stderr).toContain('not found in the CVA variants block')
+          expect(result.stdout + result.stderr).toContain('notInCva')
+        }
+      )
+    })
+
+    it('should still skip --source cleanly when there are no enum props to verify', async () => {
+      await withProbeManifest(
+        'no-enums-probe',
+        manifest => {
+          manifest.code.path = 'packages/ui/src/components/alert-dialog.tsx'
+          manifest.props.shared = [{ name: 'onClick', type: 'function', default: 'noop' }]
+        },
+        async () => {
+          const result = await runDsCheck(['--source'])
+          expect(result.exitCode).toBe(0)
+          expect(result.stdout).toContain('✅ no-enums-probe')
+        }
+      )
+    })
+
     it('should validate registry paths with --refs', async () => {
       const result = await runDsCheck(['--refs'])
       // Should check that all paths in registry.json exist

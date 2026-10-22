@@ -78,6 +78,11 @@ function parseArgs(): CheckOptions {
     if (selectors.includes('--generated')) options.generated = true
   }
 
+  // Regeneration happens inside the generated check, so asking to write without it is a
+  // no-op: `--source --write` used to exit 0 having regenerated nothing. Writing implies
+  // the check that does the writing.
+  if (options.write) options.generated = true
+
   return options
 }
 

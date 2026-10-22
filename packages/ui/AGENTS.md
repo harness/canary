@@ -10,6 +10,10 @@ The main Harness UI component library. Contains React components built on Radix 
 
 Design system components are published as **portable skills** accessible to any AI tool on the Harness network:
 
+- **Start here:** `.claude/skills/design-system/SKILL.md` — the one routing skill. Tells an
+  agent which sources are authoritative, which are not, and the order to read them in.
+  Ships with the package, so Cursor / Figma Make / platformUI get it too. It is a router
+  only — add rules to `docs/system/`, never to the skill.
 - **Registry:** `schemas/registry.json` — Inventory of all component skills with metadata
 - **OpenAPI schemas:** `schemas/{component}.openapi.json` — Standard OpenAPI 3.0 specs for each component
 - **System rules:** `docs/system/` — Portable design governance (ships with `@harnessio/ui`)

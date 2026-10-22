@@ -133,11 +133,17 @@ function validateSchema(
 }
 
 /**
- * Resolve a manifest/registry doc path. Paths are package-root-relative
- * (e.g. "docs/system/spacing.md"), except repo-level paths like "apps/portal/...".
+ * Resolve a manifest/registry doc path. Paths are always package-root-relative
+ * (e.g. "docs/system/spacing.md").
+ *
+ * `apps/` paths used to resolve from the repo root so a manifest could cite a doc-site
+ * page. That is no longer allowed: the docs site is maintained separately, lags the code
+ * and is less detailed than the manifests, so it is not a reference for design-system
+ * rules. Such paths now resolve inside the package, fail to exist, and are reported — the
+ * rules live in docs/system/.
  */
 function resolveDocPath(docPath: string): string {
-  return docPath.startsWith('apps/') ? path.resolve(REPO_ROOT, docPath) : path.resolve(PACKAGE_ROOT, docPath)
+  return path.resolve(PACKAGE_ROOT, docPath)
 }
 
 function validateRulesDocs(manifest: Record<string, unknown>): { valid: boolean; errors?: string[] } {

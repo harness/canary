@@ -175,24 +175,26 @@ describe('ds-check', () => {
     // --source used to return valid+skipped whenever it could not parse a CVA variants
     // block, printing ✅ for enum claims it had never checked. An unverifiable claim must
     // not be reportable as a verified one.
-    it('should fail --source when enum props cannot be verified against the source', async () => {
+    it('should fail --source when an enum prop resolves in neither CVA nor the type', async () => {
       await withProbeManifest(
         'unverifiable-probe',
         manifest => {
-          // A real component that does not use CVA, so no variants block can be parsed,
-          // while the manifest still claims variant/theme/size are enums.
-          manifest.code.path = 'packages/ui/src/components/alert-dialog.tsx'
+          // split-button.tsx uses no cva(), and declares no `ghostProp` in its types, so
+          // neither source can confirm the manifest's claim.
+          manifest.code.path = 'packages/ui/src/components/split-button.tsx'
+          manifest.code.export = 'SplitButton'
+          manifest.props.shared = [{ name: 'ghostProp', type: 'enum', values: ['a', 'b'], default: 'a' }]
         },
         async () => {
           const result = await runDsCheck(['--source'])
           expect(result.exitCode).toBe(1)
           expect(result.stdout + result.stderr).toContain('cannot verify enum props')
-          expect(result.stdout + result.stderr).toContain('does not use CVA')
+          expect(result.stdout + result.stderr).toContain('ghostProp')
         }
       )
     })
 
-    it('should fail --source when a declared enum prop is absent from the CVA block', async () => {
+    it('should fail --source when a declared enum prop is absent from a CVA component', async () => {
       await withProbeManifest(
         'unchecked-prop-probe',
         manifest => {
@@ -201,8 +203,62 @@ describe('ds-check', () => {
         async () => {
           const result = await runDsCheck(['--source'])
           expect(result.exitCode).toBe(1)
-          expect(result.stdout + result.stderr).toContain('not found in the CVA variants block')
+          expect(result.stdout + result.stderr).toContain('not declared via CVA variants or a TypeScript union')
           expect(result.stdout + result.stderr).toContain('notInCva')
+        }
+      )
+    })
+
+    // Only 25 of 77 flat components use CVA; the rest declare variants in the TypeScript
+    // type. Without this, a manifest for any of those 52 could not pass without dropping
+    // `values` — i.e. withholding the exact information agents need.
+    it('should verify enum props declared as a TypeScript union', async () => {
+      await withProbeManifest(
+        'union-probe',
+        manifest => {
+          manifest.code.path = 'packages/ui/src/components/split-button.tsx'
+          manifest.code.export = 'SplitButton'
+          // split-button.tsx: `size?: 'sm' | 'md' | 'xs'`, no cva() anywhere
+          manifest.props.shared = [{ name: 'size', type: 'enum', values: ['sm', 'md', 'xs'], default: 'md' }]
+        },
+        async () => {
+          const result = await runDsCheck(['--source'])
+          expect(result.exitCode).toBe(0)
+          expect(result.stdout).toContain('✅ union-probe')
+        }
+      )
+    })
+
+    it('should detect drift against a TypeScript union', async () => {
+      await withProbeManifest(
+        'union-drift-probe',
+        manifest => {
+          manifest.code.path = 'packages/ui/src/components/split-button.tsx'
+          manifest.code.export = 'SplitButton'
+          manifest.props.shared = [{ name: 'size', type: 'enum', values: ['sm', 'md', 'HUGE'], default: 'md' }]
+        },
+        async () => {
+          const result = await runDsCheck(['--source'])
+          expect(result.exitCode).toBe(1)
+          expect(result.stdout + result.stderr).toContain('HUGE')
+          expect(result.stdout + result.stderr).toContain('xs') // real value the manifest omits
+        }
+      )
+    })
+
+    it('should resolve a one-level type alias to its union values', async () => {
+      await withProbeManifest(
+        'alias-probe',
+        manifest => {
+          manifest.code.path = 'packages/ui/src/components/card-select.tsx'
+          manifest.code.export = 'CardSelect'
+          // card-select.tsx: `type: CardSelectType` with `type CardSelectType = 'single' | 'multiple'`
+          manifest.props.shared = [{ name: 'type', type: 'enum', values: ['single', 'multiple'], default: 'single' }]
+        },
+        async () => {
+          const result = await runDsCheck(['--source'])
+          expect(result.exitCode).toBe(0)
+          expect(result.stdout).toContain('✅ alias-probe')
         }
       )
     })

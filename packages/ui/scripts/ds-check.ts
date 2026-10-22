@@ -8,6 +8,7 @@
  *   pnpm ds-check --refs       # Check governance.rulesDocs + registry paths exist
  *   pnpm ds-check --code       # Check code.export/path/import are present and well-formed
  *   pnpm ds-check --source     # Compare manifest enum values to the component's CVA variants
+ *                              # or TypeScript string-literal union
  *   pnpm ds-check --generated  # Fail if a committed OpenAPI spec is stale
  *   pnpm ds-check --write      # Regenerate OpenAPI specs from manifests
  *
@@ -366,6 +367,41 @@ function topLevelKeys(block: string): string[] {
  * component says `danger`). CVA-declared variants only — relationships encoded
  * in the TypeScript type (discriminated unions) are not expressible here.
  */
+/**
+ * Read a prop's allowed values from a TypeScript string-literal union, for the ~2/3 of
+ * components that declare variants in the type rather than through CVA. Handles both
+ * inline and multi-line unions, and resolves one level of named alias:
+ *
+ *   size?: 'sm' | 'md'
+ *   variant?:
+ *     | 'primary'
+ *     | 'secondary'
+ *   theme?: BadgeTheme          // with `type BadgeTheme = 'muted' | 'success'` in the file
+ *
+ * Returns [] when the prop is absent or its type is not a literal union, so the caller
+ * treats it as unverified rather than as an empty set.
+ */
+function unionValuesFor(src: string, propName: string): string[] {
+  // Capture the type expression: everything up to the terminator, including wrapped lines
+  // that begin with `|`.
+  const decl = new RegExp(`(?:^|[\\s{;])${propName}\\??\\s*:\\s*([^;\\n}]*(?:\\n\\s*\\|[^;\\n}]*)*)`, 'm').exec(src)
+  if (!decl) return []
+
+  const readLiterals = (expr: string): string[] => {
+    const quoted = expr.match(/'([^']+)'|"([^"]+)"/g)
+    return quoted ? quoted.map(q => q.slice(1, -1)) : []
+  }
+
+  const direct = readLiterals(decl[1])
+  if (direct.length > 0) return direct
+
+  // Bare identifier — resolve `type X = 'a' | 'b'` once, in the same file.
+  const alias = decl[1].trim().replace(/\[\]$/, '')
+  if (!/^[A-Za-z_$][\w$]*$/.test(alias)) return []
+  const aliasDecl = new RegExp(`type\\s+${alias}\\s*=\\s*([^;\\n]*(?:\\n\\s*\\|[^;\\n]*)*)`, 'm').exec(src)
+  return aliasDecl ? readLiterals(aliasDecl[1]) : []
+}
+
 function validateSourceProps(manifest: Record<string, unknown>): {
   valid: boolean
   errors?: string[]
@@ -401,17 +437,18 @@ function validateSourceProps(manifest: Record<string, unknown>): {
           valid: false,
           errors: [
             `cannot verify enum props against ${path.basename(codePath)} (${reason}): ${props.join(', ')}`,
-            `Either the variants are not statically parseable (e.g. cva(base, getVariants())), or these`,
-            `props are not CVA-driven — in which case remove "values" so the manifest stops claiming they are.`
+            `Values are read from the CVA variants block or a TypeScript string-literal union.`,
+            `Either the component builds them dynamically (e.g. cva(base, getVariants())), or these props`,
+            `are not enums in the source — in which case remove "values" so the manifest stops claiming they are.`
           ]
         }
 
+  // A component declares its variants either through CVA or in the TypeScript type. Only
+  // 25 of 77 flat components use CVA, so both are checked — CVA first, since when a
+  // component has both, CVA is what actually produces the classes.
   const cvaIdx = src.indexOf('cva(')
-  if (cvaIdx === -1) return unverifiable('component does not use CVA', declaredEnums)
-
-  const variantsIdx = src.indexOf('variants:', cvaIdx)
+  const variantsIdx = cvaIdx === -1 ? -1 : src.indexOf('variants:', cvaIdx)
   const variantsBlock = variantsIdx === -1 ? undefined : extractBlock(src, variantsIdx)
-  if (!variantsBlock) return unverifiable('no CVA variants block found', declaredEnums)
 
   const verified = new Set<string>()
 
@@ -420,14 +457,18 @@ function validateSourceProps(manifest: Record<string, unknown>): {
     const values = Array.isArray(prop.values) ? (prop.values as string[]) : undefined
     if (!name || !values) continue
 
-    const keyIdx = new RegExp(`(^|[\\s,{])${name}\\s*:`, 'm').exec(variantsBlock)?.index
-    if (keyIdx === undefined) continue // prop is not CVA-driven; nothing to compare
+    let sourceValues: string[] = []
 
-    const propBlock = extractBlock(variantsBlock, keyIdx)
-    if (!propBlock) continue
+    if (variantsBlock) {
+      const keyIdx = new RegExp(`(^|[\\s,{])${name}\\s*:`, 'm').exec(variantsBlock)?.index
+      if (keyIdx !== undefined) {
+        const propBlock = extractBlock(variantsBlock, keyIdx)
+        if (propBlock) sourceValues = topLevelKeys(propBlock)
+      }
+    }
 
-    const sourceValues = topLevelKeys(propBlock)
-    if (sourceValues.length === 0) continue
+    if (sourceValues.length === 0) sourceValues = unionValuesFor(src, name)
+    if (sourceValues.length === 0) continue // unverified — reported after the loop
 
     verified.add(name)
     const missingInManifest = sourceValues.filter(v => !values.includes(v))
@@ -448,7 +489,7 @@ function validateSourceProps(manifest: Record<string, unknown>): {
   // Any declared enum we never reached is an unchecked claim, even if others compared fine.
   const unchecked = declaredEnums.filter(n => !verified.has(n))
   if (unchecked.length > 0 && errors.length === 0) {
-    return unverifiable('not found in the CVA variants block', unchecked)
+    return unverifiable('not declared via CVA variants or a TypeScript union', unchecked)
   }
 
   return { valid: errors.length === 0, errors: errors.length > 0 ? errors : undefined }

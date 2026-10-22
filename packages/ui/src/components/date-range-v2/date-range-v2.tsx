@@ -30,7 +30,13 @@ import { PositiveAmountInput } from './positive-amount-input'
 import { resolveDateRangeV2, resolveDateRangeV2At, resolveTimeZone } from './resolve-date-range-v2'
 import { clampAmount, resolveDateRangeV2Config, type ResolvedDateRangeV2Config } from './resolve-picker-config'
 import { TimezoneOffsetBadge, TimezoneOptionLabel } from './timezone-offset-badge'
-import { getBrowserTimeZone, getSupportedTimeZones, utcToCivilDate, utcToCivilTime } from './timezone-utils'
+import {
+  getBrowserTimeZone,
+  getSupportedTimeZones,
+  utcToCivilDate,
+  utcToCivilTime,
+  zonedCivilToUtc
+} from './timezone-utils'
 import type {
   CalendarExtent,
   CalendarRange,
@@ -254,7 +260,9 @@ const civilDateToLocal = (value: string): Date => {
 const normalizeFixed = (range: FixedRange, config: ResolvedDateRangeV2Config): FixedRange => {
   let from = range.from
   let to = range.to
-  if (from.date > to.date) {
+  const fromMs = zonedCivilToUtc(from.date, from.time).getTime()
+  const toMs = zonedCivilToUtc(to.date, to.time).getTime()
+  if (Number.isFinite(fromMs) && Number.isFinite(toMs) && fromMs > toMs) {
     const swap = from
     from = to
     to = swap

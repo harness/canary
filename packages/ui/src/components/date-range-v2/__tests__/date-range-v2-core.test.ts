@@ -5,6 +5,7 @@ import { createDateRangeV2FilterParser, dateRangeV2FilterParser } from '../date-
 import { formatDateRangeV2Preset, migrateDefaultPreset, parseDateRangeV2Preset } from '../date-range-v2-preset'
 import { configuredPresetLabel, describeDateRangeV2, formatDateRangeV2Label } from '../format-date-range-v2-label'
 import { resolveDateRangeV2, resolveDateRangeV2At } from '../resolve-date-range-v2'
+import { resolveDateRangeV2Config } from '../resolve-picker-config'
 import type { DateRangeV2Preset, DateRangeV2Range, TimeZoneId } from '../types'
 
 const state = (range: DateRangeV2Range): DateRangeV2Range => range
@@ -628,5 +629,31 @@ describe.concurrent('createDateRangeV2FilterParser', () => {
       '2026-09-28T00:00:00.000Z'
     )
     expect(parser.parse('Billing_Cycle|UTC', NOW)?.from).toEqual(billingFrom)
+  })
+})
+
+describe('resolveFixedDefault', () => {
+  const fixedDefault = (fromDate: string, toDate: string) =>
+    resolveDateRangeV2Config({
+      modes: [
+        {
+          mode: 'fixed',
+          defaultValue: {
+            from: { date: fromDate as `${number}-${number}-${number}`, time: '00:00' },
+            to: { date: toDate as `${number}-${number}-${number}`, time: '23:59' }
+          }
+        }
+      ]
+    }).fixed.defaultValue
+
+  it('keeps a date that exists on the calendar', ({ expect }) => {
+    expect(fixedDefault('2024-02-29', '2024-03-01')?.from.date).toBe('2024-02-29')
+  })
+
+  it('drops a date that only matches yyyy-MM-dd', ({ expect }) => {
+    expect(fixedDefault('2026-02-30', '2026-02-28')).toBeUndefined()
+    expect(fixedDefault('2026-02-29', '2026-03-01')).toBeUndefined()
+    expect(fixedDefault('2026-13-01', '2026-01-01')).toBeUndefined()
+    expect(fixedDefault('2026-04-31', '2026-04-30')).toBeUndefined()
   })
 })

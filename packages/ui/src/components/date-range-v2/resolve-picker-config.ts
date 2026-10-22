@@ -1,3 +1,4 @@
+import { isCivilDate, isCivilTime } from './timezone-utils'
 import type {
   CalendarExtent,
   CalendarModeConfig,
@@ -153,9 +154,6 @@ const resolveModes = (
   }
 }
 
-const CIVIL_DATE = /^\d{4}-\d{2}-\d{2}$/
-const CIVIL_TIME = /^([01]\d|2[0-3]):[0-5]\d$/
-
 const resolveRelativeDefault = (
   requested: RelativeModeConfig['defaultValue'],
   units: RelativeUnit[],
@@ -173,12 +171,7 @@ const resolveRelativeDefault = (
 const resolveFixedDefault = (requested: FixedModeConfig['defaultValue']): FixedRange | undefined => {
   if (!requested) return undefined
   const { from, to } = requested
-  if (
-    !CIVIL_DATE.test(from.date) ||
-    !CIVIL_DATE.test(to.date) ||
-    !CIVIL_TIME.test(from.time) ||
-    !CIVIL_TIME.test(to.time)
-  ) {
+  if (!isCivilDate(from.date) || !isCivilDate(to.date) || !isCivilTime(from.time) || !isCivilTime(to.time)) {
     return undefined
   }
   return { kind: 'fixed', from, to }

@@ -599,6 +599,32 @@ describe('DateRangeV2', () => {
     expect(screen.getByRole('textbox', { name: 'End time' })).toHaveValue('5:00 PM')
   })
 
+  test('orders a same-day fixed default whose end time is earlier', () => {
+    render(
+      <TooltipProvider>
+        <DateRangeV2Content
+          value={undefined}
+          onApply={vi.fn()}
+          onCancel={vi.fn()}
+          config={{
+            modes: [
+              {
+                mode: 'fixed',
+                defaultValue: {
+                  from: { date: '2026-01-05', time: '17:00' },
+                  to: { date: '2026-01-05', time: '09:00' }
+                }
+              }
+            ]
+          }}
+        />
+      </TooltipProvider>
+    )
+
+    expect(screen.getByRole('textbox', { name: 'Start time' })).toHaveValue('9:00 AM')
+    expect(screen.getByRole('textbox', { name: 'End time' })).toHaveValue('5:00 PM')
+  })
+
   test('uses a This calendar defaultValue', async () => {
     renderContent({
       value: undefined,

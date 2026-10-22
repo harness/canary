@@ -382,15 +382,38 @@ function validateSourceProps(manifest: Record<string, unknown>): {
   }
 
   const src = fs.readFileSync(resolved, 'utf-8')
+  const shared = ((manifest.props as Record<string, unknown>)?.shared ?? []) as Array<Record<string, unknown>>
+
+  // Props the manifest claims are enums. These are the claims this check exists to verify.
+  const declaredEnums = shared
+    .filter(p => typeof p.name === 'string' && Array.isArray(p.values))
+    .map(p => String(p.name))
+
+  /**
+   * Skipping is only safe when there was nothing to verify. If the manifest declares enum
+   * props and we could not compare them, that is a failure — reporting ✅ for an
+   * unverifiable claim is indistinguishable from reporting ✅ for a verified one.
+   */
+  const unverifiable = (reason: string, props: string[]) =>
+    declaredEnums.length === 0
+      ? { valid: true, skipped: reason }
+      : {
+          valid: false,
+          errors: [
+            `cannot verify enum props against ${path.basename(codePath)} (${reason}): ${props.join(', ')}`,
+            `Either the variants are not statically parseable (e.g. cva(base, getVariants())), or these`,
+            `props are not CVA-driven — in which case remove "values" so the manifest stops claiming they are.`
+          ]
+        }
+
   const cvaIdx = src.indexOf('cva(')
-  if (cvaIdx === -1) return { valid: true, skipped: 'component does not use CVA' }
+  if (cvaIdx === -1) return unverifiable('component does not use CVA', declaredEnums)
 
   const variantsIdx = src.indexOf('variants:', cvaIdx)
   const variantsBlock = variantsIdx === -1 ? undefined : extractBlock(src, variantsIdx)
-  if (!variantsBlock) return { valid: true, skipped: 'no CVA variants block found' }
+  if (!variantsBlock) return unverifiable('no CVA variants block found', declaredEnums)
 
-  const shared = ((manifest.props as Record<string, unknown>)?.shared ?? []) as Array<Record<string, unknown>>
-  let compared = 0
+  const verified = new Set<string>()
 
   for (const prop of shared) {
     const name = typeof prop.name === 'string' ? prop.name : undefined
@@ -406,7 +429,7 @@ function validateSourceProps(manifest: Record<string, unknown>): {
     const sourceValues = topLevelKeys(propBlock)
     if (sourceValues.length === 0) continue
 
-    compared++
+    verified.add(name)
     const missingInManifest = sourceValues.filter(v => !values.includes(v))
     const missingInSource = values.filter(v => !sourceValues.includes(v))
 
@@ -422,7 +445,12 @@ function validateSourceProps(manifest: Record<string, unknown>): {
     }
   }
 
-  if (compared === 0) return { valid: true, skipped: 'no CVA-backed enum props to compare' }
+  // Any declared enum we never reached is an unchecked claim, even if others compared fine.
+  const unchecked = declaredEnums.filter(n => !verified.has(n))
+  if (unchecked.length > 0 && errors.length === 0) {
+    return unverifiable('not found in the CVA variants block', unchecked)
+  }
+
   return { valid: errors.length === 0, errors: errors.length > 0 ? errors : undefined }
 }
 

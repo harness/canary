@@ -474,7 +474,38 @@ describe('Table.Cell', () => {
     const button = container.querySelector('button.cn-table-v2-cell-clickable-block') as HTMLButtonElement
     expect(button).not.toBeNull()
     expect(button).toHaveAttribute('tabIndex', '-1')
+    expect(button).toHaveAttribute('type', 'button')
+    expect(button).toHaveClass('pointer-events-none')
+    expect(button.parentElement).toHaveClass('cursor-pointer')
     fireEvent.click(button)
+    expect(handleClick).toHaveBeenCalledTimes(1)
+  })
+
+  it('activates an onClick cell from its text without activating nested controls', () => {
+    const handleClick = vi.fn()
+    const handleNestedClick = vi.fn()
+
+    render(
+      <table>
+        <tbody>
+          <tr>
+            <Table.Cell onClick={handleClick}>
+              <span>Workload name</span>
+              <button type="button" onClick={handleNestedClick}>
+                Actions
+              </button>
+            </Table.Cell>
+          </tr>
+        </tbody>
+      </table>
+    )
+
+    fireEvent.click(screen.getByText('Workload name'))
+    expect(handleClick).toHaveBeenCalledTimes(1)
+    expect(handleNestedClick).not.toHaveBeenCalled()
+
+    fireEvent.click(screen.getByRole('button', { name: 'Actions' }))
+    expect(handleNestedClick).toHaveBeenCalledTimes(1)
     expect(handleClick).toHaveBeenCalledTimes(1)
   })
 

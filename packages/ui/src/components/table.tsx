@@ -5,6 +5,7 @@ import {
   forwardRef,
   HTMLAttributes,
   isValidElement,
+  MouseEvent,
   ReactNode,
   Ref,
   TdHTMLAttributes,
@@ -168,6 +169,8 @@ const TableRow = forwardRef<HTMLTableRowElement, TableRowProps>(({ className, se
     if (!disabled && (props.to || props.linkProps || props?.onClick)) {
       if (child.props.disableLink) return child
 
+      // One tab stop per row. The first interactive cell's overlay gets 0; the rest get -1.
+      // Table.Cell places this index on the overlay, which is the focused element.
       const currentTabIndex = isFirstLink ? 0 : -1
 
       if (child.props?.to || child.props?.linkProps || child.props?.onClick) {
@@ -309,14 +312,53 @@ interface TableCellProps extends TdHTMLAttributes<HTMLTableCellElement> {
   onClick?: () => void
 }
 
+const NESTED_ROW_CONTROL_SELECTOR =
+  'a, button, input, select, textarea, label, [role="button"], [role="link"], [role="menuitem"], [role="checkbox"], [role="switch"]'
+
+/** A control inside the cell owns the click. The row overlay button is included so keyboard activation does not run twice. */
+function isNestedRowControlClick(event: MouseEvent<HTMLTableCellElement>): boolean {
+  const target = event.target
+  if (!(target instanceof Element)) return false
+
+  const control = target.closest(NESTED_ROW_CONTROL_SELECTOR)
+  return !!control && event.currentTarget.contains(control)
+}
+
 const TableCell = forwardRef<HTMLTableCellElement, TableCellProps>(
   ({ className, to, linkProps, children, disableLink = false, onClick, tabIndex, ...props }, ref) => {
     const { Link } = useRouterContext()
     const shouldRenderLink = !disableLink && (!!to || !!linkProps)
     const shouldRenderButton = !disableLink && !to && !linkProps && !!onClick
 
+    // Click and focus are split on purpose.
+    //
+    // Focus: Table.Row passes tabIndex 0 for the first interactive cell and -1 for the rest.
+    // The index is set on the overlay, not the <td>, so each row is a single tab stop.
+    // The row focus ring keys off .cn-table-v2-cell-clickable-block:focus-visible.
+    //
+    // Link (`to` / `linkProps`): the overlay is a real anchor and receives the pointer,
+    // so Cmd-click and "open in new tab" work. The <td> has no onClick. The anchor's
+    // onClick runs the cell callback.
+    //
+    // Button (`onClick` only): the overlay does not receive the pointer. A mouse click
+    // hits the cell content and bubbles to the <td>, which runs the callback. The button
+    // stays as the keyboard target: Enter or Space fires its onClick, that event bubbles,
+    // and isNestedRowControlClick ignores the overlay so the callback runs once. Nested
+    // links, buttons, and inputs match that check and keep their own click.
     return (
-      <td ref={ref} className={cn('cn-table-v2-cell', className)} {...props}>
+      <td
+        ref={ref}
+        className={cn('cn-table-v2-cell', shouldRenderButton && 'cursor-pointer', className)}
+        {...props}
+        onClick={
+          shouldRenderButton
+            ? event => {
+                if (isNestedRowControlClick(event)) return
+                onClick?.()
+              }
+            : undefined
+        }
+      >
         {shouldRenderLink && (
           <Link
             to={to || ''}
@@ -327,7 +369,12 @@ const TableCell = forwardRef<HTMLTableCellElement, TableCellProps>(
           />
         )}
         {shouldRenderButton && (
-          <button className="cn-table-v2-cell-clickable-block" onClick={() => onClick?.()} tabIndex={tabIndex} />
+          <button
+            type="button"
+            className="cn-table-v2-cell-clickable-block pointer-events-none"
+            onClick={() => onClick?.()}
+            tabIndex={tabIndex}
+          />
         )}
         {children}
       </td>

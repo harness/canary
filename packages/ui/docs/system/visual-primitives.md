@@ -17,11 +17,26 @@ Three global design decisions for visual primitives (icons, logos, illustrations
 
 ## Icon colors are limited to global status colors
 
-**Rule:** `IconV2` color prop accepts only: `inherit`, `danger`, `warning`, `success`. These map to global semantic tokens.
+**Rule:** In global/shared UI, use only `inherit`, `danger`, `warning`, `success`. These map
+to global semantic tokens.
 
-**Product-specific colors:** Individual products (Pipelines, Code Repository, AI Code Review) may use `info`, `risk`, `merged` — these are NOT global rules and belong in product-specific guidance (domain rules). Don't assume they're available in all Harness contexts.
+**Product-specific colors:** Individual products (Pipelines, Code Repository, AI Code
+Review) may use `info`, `risk`, `merged` — these are NOT global rules and belong in
+product-specific guidance (domain rules). Don't assume they're available in all Harness
+contexts. `merged` is the purple used for merged-state indicators.
 
-**Why:** Keeps the global component lean; product-specific enums belong in domain-specific rules.
+**Why:** Keeps the global component lean; product-specific enums belong in domain-specific
+rules.
+
+**What the component actually accepts** (`src/components/icon-v2/icon-v2.tsx`, the
+authoritative list — the rule above is governance, not a technical limit):
+`inherit`, `danger`, `warning`, `success`, `info`, `neutral`, `merged`, `risk`.
+`neutral` renders via the `text-cn-disabled` class.
+
+> There is **no `disabled` color.** The published docs site lists one and omits `merged`;
+> it is wrong on both counts — most likely because `neutral` maps to a class named
+> `text-cn-disabled`. Trust this list and the component source, not the docs site, and do
+> not "fix" the code to match it.
 
 ---
 

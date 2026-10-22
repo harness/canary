@@ -728,13 +728,15 @@ export const DateRangeV2Content = ({
   const relativeUnits = RELATIVE_UNITS.filter(option => pickerConfig.relative.units.includes(option.value))
   const calendarUnits = CALENDAR_UNITS.filter(option => pickerConfig.calendar.units.includes(option.value))
   const applyRange: DateRangeV2Range | undefined = section === 'fixed' ? fixedRange : activeRange
+  const singleMode = pickerConfig.modes.length === 1
+  const controlsJustify = singleMode ? 'center' : 'start'
 
   return (
     <div
       className={cn(
         'max-w-[calc(100vw-2rem)] overflow-hidden rounded-cn-4 bg-cn-1',
         // One mode hides the tab column, so the panel loses that 240px.
-        // pickerConfig.modes.length > 1 ? 'w-[760px]' : 'w-[520px]',
+        singleMode && 'w-[520px]',
         className
       )}
     >
@@ -745,7 +747,7 @@ export const DateRangeV2Content = ({
 
       <Layout.Horizontal gap="none" align="stretch">
         {/* Tabs are hidden when only one mode is enabled. */}
-        {pickerConfig.modes.length > 1 && (
+        {!singleMode && (
           <div
             role="tablist"
             aria-orientation="vertical"
@@ -811,19 +813,21 @@ export const DateRangeV2Content = ({
           {/* Controls for the active mode. The calendar below stays visible for every mode. */}
           <div className="p-cn-md">
             {section === 'presets' && (
-              <Select
-                aria-label="Preset"
-                options={presetSelectOptions(pickerConfig.presets)}
-                value={drafts.preset.preset}
-                disabled={locked}
-                onChange={preset => setDrafts(current => ({ ...current, preset: { kind: 'preset', preset } }))}
-                size="sm"
-                wrapperClassName="w-64"
-                contentWidth="triggerWidth"
-              />
+              <Layout.Horizontal align="end" gap="xs" wrap="wrap" justify={controlsJustify}>
+                <Select
+                  aria-label="Preset"
+                  options={presetSelectOptions(pickerConfig.presets)}
+                  value={drafts.preset.preset}
+                  disabled={locked}
+                  onChange={preset => setDrafts(current => ({ ...current, preset: { kind: 'preset', preset } }))}
+                  size="sm"
+                  wrapperClassName="w-64"
+                  contentWidth="triggerWidth"
+                />
+              </Layout.Horizontal>
             )}
             {section === 'relative' && (
-              <Layout.Horizontal align="end" gap="xs" wrap="wrap">
+              <Layout.Horizontal align="end" gap="xs" wrap="wrap" justify={controlsJustify}>
                 <ToggleGroup.Root
                   type="single"
                   aria-label="Relative direction"
@@ -868,7 +872,7 @@ export const DateRangeV2Content = ({
             )}
 
             {section === 'calendar' && (
-              <Layout.Horizontal align="end" gap="xs" wrap="wrap">
+              <Layout.Horizontal align="end" gap="xs" wrap="wrap" justify={controlsJustify}>
                 <ToggleGroup.Root
                   type="single"
                   aria-label="Calendar position"
@@ -960,20 +964,22 @@ export const DateRangeV2Content = ({
           </div>
 
           <div className="p-cn-md">
-            <Calendar
-              aria-label="Date range calendar"
-              {...pickerConfig.calendarProps}
-              numberOfMonths={pickerConfig.calendarProps?.numberOfMonths ?? 2}
-              className={cn('!p-0', pickerConfig.calendarProps?.className)}
-              weekStartsOn={1}
-              mode="range"
-              month={month}
-              onMonthChange={setMonth}
-              selected={selected}
-              disabled={disabledDays}
-              onDayClick={handleDayClick}
-              showOutsideDays={pickerConfig.calendarProps?.showOutsideDays ?? false}
-            />
+            <Layout.Horizontal justify={controlsJustify}>
+              <Calendar
+                aria-label="Date range calendar"
+                {...pickerConfig.calendarProps}
+                numberOfMonths={pickerConfig.calendarProps?.numberOfMonths ?? 2}
+                className={cn('!p-0', pickerConfig.calendarProps?.className)}
+                weekStartsOn={1}
+                mode="range"
+                month={month}
+                onMonthChange={setMonth}
+                selected={selected}
+                disabled={disabledDays}
+                onDayClick={handleDayClick}
+                showOutsideDays={pickerConfig.calendarProps?.showOutsideDays ?? false}
+              />
+            </Layout.Horizontal>
           </div>
         </div>
       </Layout.Horizontal>

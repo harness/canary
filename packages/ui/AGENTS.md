@@ -63,11 +63,15 @@ Not required for basic skill usage; use only if Figma Make needs automation.
 
 ### Finding a component
 
-1. **Component source:** `packages/ui/src/components/{component-name}/`
-   - `.tsx` file: React component implementation
-   - `.figma.ts` file: Figma Code Connect mapping
+1. **Component source:** `packages/ui/src/components/` — two layouts are both in use, so
+   check for each:
+   - **Folder:** `{component-name}/{component-name}.tsx` + `{component-name}.figma.ts`
+     (e.g. `status-badge/status-badge.tsx`) — 48 components
+   - **Flat file:** `{component-name}.tsx` + `{component-name}.figma.ts` directly in
+     `components/` (e.g. `button.tsx`) — 77 components
+   - The manifest's `code.path` is authoritative; read it rather than guessing the layout.
 
-2. **Component contract (manifest):** `packages/ui/generated/manifests/{component-name}.manifest.json`
+2. **Component contract (manifest):** `packages/ui/schemas/{component-name}.manifest.json`
    - Machine-readable spec: props (shared/designOnly/codeOnly), states, accessibility, tokens, bindings
    - Links to system rules and component-specific pattern guidance
    - Use this to understand the component's API and design constraints
@@ -89,7 +93,7 @@ Not required for basic skill usage; use only if Figma Make needs automation.
 ### Example: Finding Button
 
 ```
-File: packages/ui/generated/manifests/button.manifest.json
+File: packages/ui/schemas/button.manifest.json
 
 {
   "id": "canary.button",
@@ -98,7 +102,7 @@ File: packages/ui/generated/manifests/button.manifest.json
   "code": {
     "export": "Button",
     "import": "import { Button } from '@harnessio/ui/components'",
-    "path": "packages/ui/src/components/button/button.tsx"
+    "path": "packages/ui/src/components/button.tsx"
   },
   
   "props": {
@@ -211,7 +215,11 @@ pnpm ds-check --generated        # Verify OpenAPI specs are in sync (fails if st
 pnpm ds-check --write            # Regenerate OpenAPI specs from manifest
 ```
 
-**Not run automatically.** Must be invoked manually or wired into CI/pre-commit hooks (see **Wiring into CI** below).
+**Runs automatically on every commit** via the `pre-commit` script in `package.json`
+(all five gates, before `lint-staged`). A commit that breaks a manifest contract is
+blocked. Run it by hand with the commands above, via `pnpm assist check-all`, or
+`./scripts/verify-design-system.sh` for every check at once. When a check fails, see
+[`schemas/TROUBLESHOOTING.md`](schemas/TROUBLESHOOTING.md).
 
 ---
 
@@ -221,26 +229,28 @@ pnpm ds-check --write            # Regenerate OpenAPI specs from manifest
 packages/ui/
 ├── src/
 │   └── components/
-│       ├── button/
-│       │   ├── button.tsx           # Component implementation
-│       │   └── button.figma.ts      # Code Connect mapping
-│       ├── status-badge/
+│       ├── button.tsx               # Flat layout: implementation
+│       ├── button.figma.ts          #   + Code Connect mapping alongside it
+│       ├── status-badge/            # Folder layout
 │       │   ├── status-badge.tsx
 │       │   └── status-badge.figma.ts
-│       └── ... (other components)
+│       └── ... (both layouts in use; see code.path in the manifest)
 │
-├── generated/
-│   └── manifests/
-│       ├── button.manifest.json      # Component contract
-│       ├── status-badge.manifest.json
-│       └── ... (one per component)
+├── docs/
+│   └── system/                        # Portable design rules (ships with the package)
 │
 ├── schemas/
+│   ├── registry.json                  # Skill inventory
+│   ├── status-badge.manifest.json     # Component contract (one per component)
+│   ├── status-badge.openapi.json      # Generated from the manifest — never hand-edit
+│   ├── status-badge.md                # Component-specific pattern doc
 │   ├── component-manifest.schema.json # Manifest validation schema
-│   └── TEMPLATE.manifest.json         # Template for new components
+│   ├── TEMPLATE.manifest.json         # Template for new components
+│   └── TROUBLESHOOTING.md             # What ds-check failures mean
 │
 └── scripts/
-    └── ds-check.ts                    # Validation script
+    ├── ds-check.ts                    # Validation script
+    └── verify-design-system.sh        # Manual run of every check at once
 ```
 
 ---
@@ -276,16 +286,16 @@ Component Pattern Rules ({component}.md)
 
 ### Agent: "Build a form with Save and Cancel buttons"
 
-1. Locate Button manifest: `packages/ui/generated/manifests/button.manifest.json`
+1. Locate Button manifest: `packages/ui/schemas/button.manifest.json`
 2. Read `purpose.useWhen` — confirm Button is right choice
 3. Check `props.shared` — variant, size, disabled options
 4. Read `governance.rulesDocs` — especially button.md (when Button vs other actions?)
-5. Read growth patterns: `apps/portal/src/content/docs/growth-patterns/form-actions.md`
+5. Read growth patterns: `apps/portal/src/content/docs/growth-patterns/overview.mdx`
 6. Import and compose: `<Button variant="primary" onClick={save}>Save</Button>`
 
 ### Designer: "Map Button to Figma"
 
-1. Open Code Connect: `packages/ui/src/components/button/button.figma.ts`
+1. Open Code Connect: `packages/ui/src/components/button.figma.ts`
 2. Check `variantPropertyMap` — Figma property names
 3. Confirm mapping: Figma `variant` property → code `variant` prop
 4. Test in Figma: select a Button instance, run Code Connect
@@ -307,9 +317,9 @@ Checks:
 
 ## References
 
-- **System Rules:** `packages/ui/docs/system/` — the authoritative copy. Some of these
-  are also published to `apps/portal/src/content/docs/design-system/` for the docs
-  site; treat the portal copies as output, not as a reference to cite or edit.
+- **System Rules:** `packages/ui/docs/system/` — the only home for these rules. Do not
+  copy them into `apps/portal/`; the docs site is maintained separately and is not the
+  reference for design-system rules.
 - **Patterns & Growth:** `apps/portal/src/content/docs/growth-patterns/`
 - **Token Architecture:** See `DESIGN.md` (root)
 - **Manifest Consumer Guide:** See `schemas/TEMPLATE.manifest.json` for example structure

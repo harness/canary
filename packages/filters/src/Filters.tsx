@@ -59,7 +59,10 @@ const Filters = forwardRef(function Filters<T extends Record<string, unknown>>(
   // merge params into search params
   const updateFilterParams = (params: URLSearchParams) => {
     const paramsOtherthanFilters: URLSearchParams = new URLSearchParams()
-    searchParams.forEach((value, key) => {
+    // Read the live URL, not the render-time `searchParams`: `onChange` runs before this write, and the
+    // consumer may have just changed non-filter params (e.g. reset `page`). A stale copy would restore them.
+    const currentSearchParams = new URLSearchParams(window.location.search)
+    currentSearchParams.forEach((value, key) => {
       if (!filtersMap[key as FilterKeys]) {
         paramsOtherthanFilters.append(key, value)
       }

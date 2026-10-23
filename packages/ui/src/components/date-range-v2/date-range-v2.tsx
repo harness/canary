@@ -49,12 +49,12 @@ import type {
   DateRangeV2Mode,
   DateRangeV2Preset,
   DateRangeV2Props,
-  DateRangeV2Range,
   DateRangeV2Value,
   FixedRange,
   PresetRange,
   RelativeRange,
   RelativeUnit,
+  ResolvableDateRangeV2,
   TimeZoneId
 } from './types'
 
@@ -167,7 +167,7 @@ const applyConfigDefaults = (
 ): DateRangeV2Value | undefined => {
   if (!value.range || value.range.kind === 'preset') return undefined
   const current = configDefaults(config)
-  let range: DateRangeV2Range = value.range
+  let range: ResolvableDateRangeV2 = value.range
 
   if (range.kind === 'relative') {
     const defaultChanged = previous.relativeDefault !== current.relativeDefault
@@ -405,7 +405,7 @@ const allowsPresetBounds = (bounds: { from: Date; to: Date }, availability: Date
 
 /** True when the resolved interval stays on the allowed side of `now`. */
 export const isAllowedDateRangeV2 = (
-  range: DateRangeV2Range,
+  range: ResolvableDateRangeV2,
   availability: DateRangeAvailability,
   timezone?: TimeZoneId,
   now: Date = new Date()
@@ -556,7 +556,7 @@ export const DateRangeV2Content = ({
   const presetBounds = selectedPreset?.getRange({ timezone: draftTimezone })
   const presetRange = presetBounds ? fixedRangeFromDates(presetBounds.from, presetBounds.to, draftTimezone) : undefined
   const fixedRange = completeFixed(drafts.fixed, pickerConfig)
-  const activeRange: DateRangeV2Range | undefined =
+  const activeRange: ResolvableDateRangeV2 | undefined =
     presetRange ?? (section === 'calendar' ? drafts.calendar : section === 'fixed' ? fixedRange : drafts.relative)
   const appliedTimezone = value?.timezone ?? pickerConfig.timezone.defaultValue
   const draftRange = section === 'presets' ? drafts.preset : section === 'fixed' ? fixedRange : drafts[section]
@@ -727,7 +727,7 @@ export const DateRangeV2Content = ({
   const currentExtent = calendarDraft.position === 'this' ? calendarDraft.extent : undefined
   const relativeUnits = RELATIVE_UNITS.filter(option => pickerConfig.relative.units.includes(option.value))
   const calendarUnits = CALENDAR_UNITS.filter(option => pickerConfig.calendar.units.includes(option.value))
-  const applyRange: DateRangeV2Range | undefined = section === 'fixed' ? fixedRange : activeRange
+  const applyRange: ResolvableDateRangeV2 | undefined = section === 'fixed' ? fixedRange : activeRange
   const singleMode = pickerConfig.modes.length === 1
   const controlsJustify = singleMode ? 'center' : 'start'
 

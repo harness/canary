@@ -4,9 +4,9 @@ import type {
   CalendarExtent,
   CalendarRange,
   CalendarUnit,
-  DateRangeV2Range,
   FixedRange,
   RelativeUnit,
+  ResolvableDateRangeV2,
   TimeZoneId
 } from './types'
 
@@ -51,7 +51,7 @@ export const migrateDefaultPreset = (preset: string): string => {
 const parseExtent = (token: string | undefined): CalendarExtent =>
   token === 'SO_FAR' ? 'so_far' : token === 'FROM_NOW' ? 'from_now' : 'full'
 
-export const formatDateRangeV2Preset = (range: DateRangeV2Range): string => {
+export const formatDateRangeV2Preset = (range: ResolvableDateRangeV2): string => {
   if (range.kind === 'fixed') return 'FIXED'
   if (range.kind === 'relative') {
     const direction = range.direction === 'last' ? 'LAST' : 'NEXT'
@@ -67,7 +67,7 @@ export const formatDateRangeV2Preset = (range: DateRangeV2Range): string => {
   return `${direction}_${range.amount}_CALENDAR_${unitToken(range.unit, range.amount)}`
 }
 
-export const parseDateRangeV2Preset = (preset: string): DateRangeV2Range | undefined => {
+export const parseDateRangeV2Preset = (preset: string): ResolvableDateRangeV2 | undefined => {
   const token = migrateDefaultPreset(preset)
   if (token === 'FIXED') return undefined
 

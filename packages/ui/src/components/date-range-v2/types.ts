@@ -1,7 +1,5 @@
 import type { CalendarProps } from '../calendar'
 
-export const DATE_RANGE_V2_CODEC_VERSION = 2 as const
-
 /** `LOCALE` is the only non-IANA value. The consumer resolves it from the browser. */
 export type TimeZoneId = 'LOCALE' | (string & NonNullable<unknown>)
 
@@ -13,8 +11,6 @@ export type DateRangeV2Direction = 'past' | 'future' | 'any'
 export type DateRangeAvailability = DateRangeV2Direction
 
 export type DateRangeV2Mode = 'presets' | 'relative' | 'calendar' | 'fixed'
-
-export type Weekday = 0 | 1 | 2 | 3 | 4 | 5 | 6
 
 export type RelativeUnit = 'minute' | 'hour' | 'day' | 'week' | 'month' | 'year'
 
@@ -79,15 +75,14 @@ export interface PresetRange {
   preset: string
 }
 
-export type DateRangeV2Range = RelativeRange | CalendarRange | FixedRange
+/** Every range a value can store. A preset is an id. The other kinds carry enough data to resolve epochs. */
+export type DateRangeV2Range = RelativeRange | CalendarRange | FixedRange | PresetRange
+
+/** Relative, calendar, and fixed. `resolveDateRangeV2` computes these without a preset list. */
+export type ResolvableDateRangeV2 = Exclude<DateRangeV2Range, PresetRange>
 
 /** `kind` stays on the stored range. A mode config already says which range it is. */
 type WithoutKind<T> = T extends unknown ? Omit<T, 'kind'> : never
-
-export interface DateRangeV2State {
-  version: 1
-  range: DateRangeV2Range
-}
 
 export interface RelativeModeConfig {
   /** Shows the amount field. Stored amounts are kept when this is false. */
@@ -208,7 +203,7 @@ export interface DateRangeV2Props {
 export interface DateRangeV2Value {
   from?: Date
   to?: Date
-  range: DateRangeV2Range | PresetRange
+  range: DateRangeV2Range
   timezone?: TimeZoneId
 }
 

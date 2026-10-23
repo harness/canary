@@ -11,13 +11,13 @@ import {
 } from '../format-date-range-v2-label'
 import { resolveDateRangeV2, resolveDateRangeV2At } from '../resolve-date-range-v2'
 import { resolveDateRangeV2Config } from '../resolve-picker-config'
-import type { DateRangeV2Preset, DateRangeV2Range, TimeZoneId } from '../types'
+import type { DateRangeV2Preset, ResolvableDateRangeV2, TimeZoneId } from '../types'
 
-const state = (range: DateRangeV2Range): DateRangeV2Range => range
+const state = (range: ResolvableDateRangeV2): ResolvableDateRangeV2 => range
 
 const NOW = new Date('2026-10-05T15:30:00.000Z')
 
-const epochs = (range: DateRangeV2Range, now: Date, timezone: TimeZoneId = 'UTC'): [number, number] => {
+const epochs = (range: ResolvableDateRangeV2, now: Date, timezone: TimeZoneId = 'UTC'): [number, number] => {
   const resolved = resolveDateRangeV2At({ range, timezone }, now)
   return [resolved.from.getTime(), resolved.to.getTime()]
 }

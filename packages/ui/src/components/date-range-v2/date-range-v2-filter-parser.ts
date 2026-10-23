@@ -4,7 +4,7 @@ import type {
   DateRangeV2Config,
   DateRangeV2FilterValue,
   DateRangeV2Preset,
-  DateRangeV2Range,
+  ResolvableDateRangeV2,
   TimeZoneId
 } from './types'
 
@@ -20,7 +20,7 @@ const parseEpoch = (token: string): number | undefined => {
   return Number.isSafeInteger(value) ? value : undefined
 }
 
-const resolvedEpochs = (range: DateRangeV2Range, timezone: TimeZoneId | undefined, now: Date) => {
+const resolvedEpochs = (range: ResolvableDateRangeV2, timezone: TimeZoneId | undefined, now: Date) => {
   const resolved = resolveDateRangeV2({ range, timezone }, now)
   return { from: resolved.from, to: resolved.to, range: resolved.range, timezone: resolved.timezone }
 }

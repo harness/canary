@@ -19,7 +19,7 @@ import {
   toZonedWallTime,
   zonedCivilDateTimeToUtc
 } from './timezone-utils'
-import type { CalendarUnit, DateRangeV2Range, RelativeUnit, TimeZoneId } from './types'
+import type { CalendarUnit, RelativeUnit, ResolvableDateRangeV2, TimeZoneId } from './types'
 
 /** Calendar weeks start on Monday. */
 const WEEK_STARTS_ON = 1
@@ -74,11 +74,11 @@ const inclusiveEnd = (exclusiveEnd: Date): number => exclusiveEnd.getTime() - 1
 export interface ResolvedDateRangeV2 {
   from: Date
   to: Date
-  range: DateRangeV2Range
+  range: ResolvableDateRangeV2
   timezone: TimeZoneId
 }
 
-const resolveEpochs = (range: DateRangeV2Range, timezone: TimeZoneId | undefined, now: Date): [number, number] => {
+const resolveEpochs = (range: ResolvableDateRangeV2, timezone: TimeZoneId | undefined, now: Date): [number, number] => {
   if (Number.isNaN(now.getTime())) throw new RangeError('now must be a valid Date')
 
   const zone = resolveTimeZone(timezone)
@@ -140,7 +140,7 @@ const resolveEpochs = (range: DateRangeV2Range, timezone: TimeZoneId | undefined
  * A configured preset is not accepted: its bounds come from `getRange`.
  */
 export const resolveDateRangeV2At = (
-  value: { range: DateRangeV2Range; timezone?: TimeZoneId },
+  value: { range: ResolvableDateRangeV2; timezone?: TimeZoneId },
   now: Date
 ): ResolvedDateRangeV2 => {
   const [start, end] = resolveEpochs(value.range, value.timezone, now)
@@ -153,6 +153,6 @@ export const resolveDateRangeV2At = (
 }
 
 export const resolveDateRangeV2 = (
-  value: { range: DateRangeV2Range; timezone?: TimeZoneId },
+  value: { range: ResolvableDateRangeV2; timezone?: TimeZoneId },
   now: Date = new Date()
 ): ResolvedDateRangeV2 => resolveDateRangeV2At(value, now)

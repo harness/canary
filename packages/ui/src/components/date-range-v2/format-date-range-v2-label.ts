@@ -7,7 +7,7 @@ import type {
   CivilDateTime,
   DateRangeV2LabelConfig,
   DateRangeV2Preset,
-  DateRangeV2Range,
+  ResolvableDateRangeV2,
   TimeZoneId
 } from './types'
 
@@ -66,7 +66,7 @@ const formatBounds = (start: number, end: number, zone: string, showTime: boolea
   return `${startText} – ${endText}`
 }
 
-export const describeDateRangeV2 = (range: DateRangeV2Range): Pick<DateRangeV2Label, 'title'> => {
+export const describeDateRangeV2 = (range: ResolvableDateRangeV2): Pick<DateRangeV2Label, 'title'> => {
   if (range.kind === 'relative') {
     const [singular, plural] = RELATIVE_UNIT_LABEL[range.unit]
     const unit = range.amount === 1 ? singular : plural
@@ -124,7 +124,7 @@ export const formatFixedStartLabel = (
 }
 
 export const formatDateRangeV2Label = (
-  range: DateRangeV2Range,
+  range: ResolvableDateRangeV2,
   timezone?: TimeZoneId,
   now: Date = new Date(),
   label: DateRangeV2LabelConfig = {},

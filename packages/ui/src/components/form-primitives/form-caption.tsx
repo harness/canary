@@ -56,7 +56,7 @@ export const FormCaption = forwardRef<HTMLParagraphElement, PropsWithChildren<Fo
         ref={ref}
       >
         {canShowIcon && <IconV2 name={effectiveIconName} size="md" />}
-        <span>{children}</span>
+        <span className="min-w-0 [overflow-wrap:anywhere]">{children}</span>
       </Text>
     )
   }

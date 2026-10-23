@@ -1,0 +1,329 @@
+---
+title: Single Pane Chat Stepper
+description: A single-column guided flow that keeps the stepper timeline and shows completed answers as chat messages instead of accordion cards.
+---
+
+import { DocsPage } from "@/components/docs-page";
+import { Aside } from "@astrojs/starlight/components";
+import { FlagOnboardingDemo } from "@/components/single-pane-stepper-v2-demo";
+
+The Single Pane Chat Stepper (`SinglePaneStepperV2`) is a single-column guided flow for conversational setup. It keeps the vertical stepper timeline from the original [Single Pane Stepper](/growth-patterns/single-pane-stepper) — checkmarks, connectors, and step badges — but completed answers render as chat messages.
+
+After a step is completed, the form is not collapsed into an accordion. The question stays in the timeline as the step header, and the selection appears as a user `MessageBubble` with edit, copy, and a timestamp.
+
+Use the Single Pane Chat Stepper for onboarding and PLG flows where the thread of answers should read like a conversation.
+
+## What changed from Single Pane Stepper
+
+| Single Pane Stepper                                               | Single Pane Chat Stepper                             |
+| ----------------------------------------------------------------- | ---------------------------------------------------- |
+| Completed card content collapses in an accordion under the step   | Completed card content is replaced by a chat message |
+| Restart lives in the step header / accordion chrome               | Edit and copy live on the message footer             |
+| Same `FlowConfig` + `useFlowCard` engine as the dual pane stepper | Same `FlowConfig` and `useFlowCard` API in this repo |
+
+## Interactive Example
+
+This example walks through creating a first feature flag. Complete a step to see the answer land as a chat message. Hide inactive steps to drop the upcoming questions and fade the active connector out.
+
+<FlagOnboardingDemo client:only="react" />
+
+<Aside type="tip">
+  Use the edit control on a completed message to go back. Subsequent answers are
+  discarded after confirmation.
+</Aside>
+
+## Usage
+
+```typescript jsx
+import { SinglePaneStepperV2, useFlowCard } from "@harnessio/ui/components";
+import type { FlowConfig } from "@harnessio/ui/components";
+
+function GoalCard() {
+  const { complete } = useFlowCard();
+
+  return (
+    <SinglePaneStepperV2.Card
+      title="What do you want your first flag to do?"
+      description="In a sentence or two, describe what functionality you want your first feature flag to control."
+    >
+      <textarea />
+      <button
+        onClick={() =>
+          complete({
+            answer: "Switch a Sign Up button from blue to green, or change its copy, for a subset of users.",
+          })
+        }
+      >
+        Continue
+      </button>
+    </SinglePaneStepperV2.Card>
+  );
+}
+
+const flow: FlowConfig = {
+  steps: {
+    goal: {
+      title: "What do you want your first flag to do?",
+      component: GoalCard,
+      next: "targeting",
+    },
+    targeting: {
+      title: "Who should see the new experience?",
+      component: TargetingCard,
+    },
+  },
+  initialStep: "goal",
+};
+
+<SinglePaneStepperV2.Root
+  flow={flow}
+  contentTitle="Create your first feature flag"
+/>
+```
+
+## Anatomy
+
+```typescript jsx
+<SinglePaneStepperV2.Root flow={flowConfig}>
+  {/* Cards are rendered automatically from flow.steps */}
+</SinglePaneStepperV2.Root>
+```
+
+Cards still use `useFlowCard` to complete, skip, error, or open drawers:
+
+```typescript jsx
+function MyCard() {
+  const { complete } = useFlowCard();
+
+  return (
+    <SinglePaneStepperV2.Card title="Choose an option">
+      <button onClick={() => complete({ answer: "Option A" })}>Option A</button>
+    </SinglePaneStepperV2.Card>
+  );
+}
+```
+
+## Chat answers
+
+Pass a string `answer` in `complete()` so the message survives remounts and back-navigation:
+
+```typescript jsx
+complete({ provider: "github", answer: "GitHub" });
+```
+
+You can also pass `answer` on the card. The card resolves display text in this order:
+
+1. The `answer` prop on `SinglePaneStepperV2.Card`
+2. `answer` stored on the completed history entry
+3. `stateSnapshot.answer`
+
+An empty string is not a chat message. It falls through to the next source, and `complete({ answer: "" })` does not store one.
+
+`answer` is also merged into the shared engine `state`, and every later `complete()` overwrites `state.answer`. Treat `answer` as reserved for this chat message. Keep domain values on their own keys (`goal`, `audience`).
+
+`complete()` only leaves `answer` on this step's snapshot when this call passed a non-empty string. A completed step with no answer of its own stays silent instead of repeating the previous message. `stateSnapshot.answer` is still the third display source for a resumed history entry that stored the message there.
+
+When a step is **active** or **errored**, the card renders `children` (the form). When it is **completed**, `children` are not shown. A resolved answer renders as the chat message; if there is no answer, the card renders the question header and nothing else. There is no accordion expand/collapse for the completed question.
+
+A **skipped** step shows “Skipped” and, when a later step is still in the thread, the same go-back control as a completed message. The timeline indicator can also go back.
+
+Upcoming steps that have not been visited use the `title` on `FlowConfig`. Visited cards use the `title` prop on `SinglePaneStepperV2.Card`. `Root` `children` render inside the engine provider, same as v1, for host overlays.
+
+`onComplete` runs only when `complete()` is called on a step that is already terminal and has no `next`. That path does not store `answer` or `completedAt`, so a last step flagged `terminal` cannot both notify the host and become a chat message. Leave the last step unflagged and pass `answer` from `complete()` to show the message. `onComplete` does not run for that first completion.
+
+Completed messages include:
+
+- Edit — reactivates the step after the same confirmation dialog used by the other steppers
+- Copy — copies the answer text
+- Timestamp — local time from when `complete()` ran
+
+## `Root`
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "flow",
+      required: true,
+      value: "FlowConfig",
+      description: "Flow configuration defining steps and the initial step",
+    },
+    {
+      name: "icon",
+      required: false,
+      value: "ReactNode",
+      description: "Optional header icon",
+    },
+    {
+      name: "title",
+      required: false,
+      value: "string",
+      description: "Root header title",
+    },
+    {
+      name: "stepperTitle",
+      required: false,
+      value: "string",
+      description:
+        "Optional title above the timeline when showStepperHeader is true",
+    },
+    {
+      name: "showStepperHeader",
+      required: false,
+      value: "boolean",
+      description: "Show stepperTitle above the timeline. Default false.",
+    },
+    {
+      name: "contentTitle",
+      required: false,
+      value: "string",
+      description: "Heading above the conversation",
+    },
+    {
+      name: "contentSubtitle",
+      required: false,
+      value: "string",
+      description: "Supporting text under contentTitle",
+    },
+    {
+      name: "drawers",
+      required: false,
+      value: "Record<string, ComponentType<DrawerComponentProps>>",
+      description: "Drawer adapters keyed by id",
+    },
+    {
+      name: "onComplete",
+      required: false,
+      value: "(state: Record<string, unknown>) => void",
+      description:
+        "Called when complete() runs on an already-terminal step with no next. That call does not store answer or completedAt.",
+    },
+    {
+      name: "onReactivate",
+      required: false,
+      value: "(stepId: string) => void",
+      description:
+        "Called after go-back is confirmed, with the step that is active again",
+    },
+    {
+      name: "initialEngineState",
+      required: false,
+      value: "InitialEngineState",
+      description:
+        "Host-owned snapshot used to resume a flow instead of starting at initialStep",
+    },
+    {
+      name: "disableAutoScroll",
+      required: false,
+      value: "boolean",
+      description:
+        "Skip automatic scrolling when the active step changes. Default false.",
+    },
+    {
+      name: "onClose",
+      required: false,
+      value: "() => void",
+      description: "Renders a close button in the root header",
+    },
+    {
+      name: "showRootHeader",
+      required: false,
+      value: "boolean",
+      description:
+        "Show the root header when icon, title, or onClose is provided. Default true.",
+    },
+    {
+      name: "hideHeader",
+      required: false,
+      value: "boolean",
+      description: "Deprecated alias for showRootHeader false",
+    },
+    {
+      name: "reactivationPrompt",
+      required: false,
+      value: "ReactivationPrompt",
+      description: "Title and description for the go-back confirmation dialog",
+    },
+    {
+      name: "showStepBadge",
+      required: false,
+      value: "boolean",
+      description:
+        "Show a Step n/total label next to each question. Default true.",
+    },
+    {
+      name: "showInactiveSteps",
+      required: false,
+      value: "boolean",
+      description:
+        "Show upcoming steps that have not been visited. When false, the active connector fades to transparent. Default true.",
+    },
+    {
+      name: "className",
+      required: false,
+      value: "string",
+      description: "Class name for the root column",
+    },
+    {
+      name: "children",
+      required: false,
+      value: "ReactNode",
+      description:
+        "Host overlay rendered inside the engine provider, same as v1",
+    },
+  ]}
+/>
+
+## `Card`
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "title",
+      required: true,
+      value: "string",
+      description:
+        "Question shown as the step header. Stays visible after completion.",
+    },
+    {
+      name: "description",
+      required: false,
+      value: "string",
+      description: "Supporting text under the question",
+    },
+    {
+      name: "answer",
+      required: false,
+      value: "string",
+      description:
+        "Optional in-card answer text. Prefer complete({ answer }) so it persists.",
+    },
+    {
+      name: "children",
+      required: true,
+      value: "ReactNode",
+      description:
+        "Active-step form. Not rendered after the step is completed.",
+    },
+    {
+      name: "className",
+      required: false,
+      value: "string",
+      description: "Class name for the card column",
+    },
+  ]}
+/>
+
+## Best practices
+
+1. Always send `answer` from `complete()` with a human-readable label, not a raw id (`"A subset of users"` instead of `"subset"`).
+2. Keep one question per card so the thread stays readable.
+3. Do not rebuild accordion or completed-form UI inside the card — the Single Pane Chat Stepper owns the completed state.
+4. Use the Single Pane Chat Stepper (`SinglePaneStepperV2`) for conversational setup. Use `SplitPaneStepper` when users need a persistent rail and a larger workspace.
+
+## Accessibility
+
+- Active steps use `aria-current="step"`
+- Completed indicators are buttons that request reactivation
+- Message edit is labeled `Edit this answer`
+- Copy uses the existing `CopyButton` control
+- The go-back confirmation dialog is the same warning `AlertDialog` used by the other steppers

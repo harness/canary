@@ -289,11 +289,26 @@ export function FlowEngineProvider({
       const resolvedNext = resolveNextStep(stepId, nextStepId, 'complete')
       const currentState = stateRef.current
       const newState = statePatch ? { ...currentState, ...statePatch } : currentState
+      const answer = typeof statePatch?.answer === 'string' ? statePatch.answer : undefined
+      // Shared state keeps the latest `answer`, so a step that omits one would
+      // otherwise snapshot the previous step's message and render it as its own.
+      const stateSnapshot = { ...newState }
+      if (!(typeof answer === 'string' && answer.length > 0)) {
+        delete stateSnapshot.answer
+      }
       if (statePatch) setState(newState)
 
       setCardHistory(prev => {
         const updated = prev.map(entry =>
-          entry.stepId === stepId ? { ...entry, status: 'completed' as const, stateSnapshot: newState } : entry
+          entry.stepId === stepId
+            ? {
+                ...entry,
+                status: 'completed' as const,
+                stateSnapshot,
+                ...(answer ? { answer } : {}),
+                completedAt: Date.now()
+              }
+            : entry
         )
         if (resolvedNext && !updated.find(e => e.stepId === resolvedNext)) {
           // Terminal only blocks re-entry (added to terminalRef below); it no longer forces
@@ -443,7 +458,10 @@ export function FlowEngineProvider({
               // Bump so card stacks remount this card's local state (collapse still uses forceMount).
               mountGeneration: (entry.mountGeneration ?? 0) + 1,
               // Idle header prompt while this step is active again. Cards set a fresh summary on complete.
-              summary: undefined
+              summary: undefined,
+              // Chat message fields follow the same go-back reset as summary.
+              answer: undefined,
+              completedAt: undefined
             }
           : entry
       )

@@ -54,6 +54,14 @@ describe('FormCaption', () => {
     expect(screen.queryByText('Icon')).not.toBeInTheDocument()
   })
 
+  it('allows long unbroken text to wrap within the caption', () => {
+    render(
+      <FormCaption theme="danger">https://feeds.dev.azure.com/org/_apis/packaging/feeds?api-version=5.1</FormCaption>
+    )
+
+    expect(screen.getByText(/feeds\.dev\.azure\.com/)).toHaveClass('min-w-0', '[overflow-wrap:anywhere]')
+  })
+
   it('sets disabled state when requested', () => {
     render(
       <FormCaption theme="danger" disabled>

@@ -85,6 +85,10 @@ export interface CardEntry {
   // Idle FlowConfig description is used while the step is active. Host cards call
   // setSummary() with the real selection (not the idle prompt). Go-back clears it.
   summary?: string
+  /** Display text for the user's selection, shown as a chat message in the Single Pane Chat Stepper. */
+  answer?: string
+  /** Epoch ms when the card was completed. Used for chat-message timestamps. */
+  completedAt?: number
 }
 
 /**

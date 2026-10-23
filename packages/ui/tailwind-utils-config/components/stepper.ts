@@ -157,7 +157,7 @@ export default {
     background: 'var(--cn-bg-1)',
     border: 'var(--cn-spacing-px) solid transparent',
     fontSize: 'var(--cn-font-size-2)',
-    fontWeight: 'var(--cn-font-weight-default-normal-600)',
+    fontWeight: 'var(--cn-font-weight-default-normal-heading)',
     lineHeight: '1',
     letterSpacing: 'var(--cn-tracking-wide)'
   },
@@ -258,7 +258,7 @@ export default {
     // --cn-font-size-2 at ~11.5px) and no --cn-line-height-* token matches 1.35, so these two stay
     // hardcoded rather than snapping to a visually-different token.
     fontSize: '11px',
-    fontWeight: 'var(--cn-font-weight-default-normal-600)',
+    fontWeight: 'var(--cn-font-weight-default-normal-heading)',
     lineHeight: '1.35'
   },
 
@@ -669,7 +669,7 @@ export default {
 
   '.cn-stepper-nested-step-ordinal': {
     fontSize: 'var(--cn-font-size-0)',
-    fontWeight: 'var(--cn-font-weight-default-normal-600)',
+    fontWeight: 'var(--cn-font-weight-default-normal-heading)',
     lineHeight: '1',
     color: 'var(--cn-text-3)',
 
@@ -690,7 +690,7 @@ export default {
 
   '.cn-stepper-nested-step-item:has(.cn-stepper-nested-step-completed):hover .cn-stepper-nested-step-title, .cn-stepper-nested-step-item:has(.cn-stepper-nested-step-skipped):hover .cn-stepper-nested-step-title':
     {
-      fontWeight: 'var(--cn-font-weight-default-normal-600)'
+      fontWeight: 'var(--cn-font-weight-default-normal-heading)'
     },
 
   '.cn-stepper-nested-step-description': {

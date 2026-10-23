@@ -64,8 +64,11 @@ const Filters = forwardRef(function Filters<T extends Record<string, unknown>>(
     // Read the live URL, not the render-time `searchParams`: `onChange` runs before this write, and the
     // consumer may have just changed non-filter params (e.g. reset `page`). A stale copy would restore them.
     // Only browser-history routers keep the query in `window.location`; hash and memory routers use the router copy.
+    // A root path (`/` or '') suffix-matches any URL, so it can't tell the router type and uses the router copy too.
     const isBrowserLocation =
-      !window.location.hash.startsWith('#/') && window.location.pathname.endsWith(location.pathname)
+      location.pathname.length > 1 &&
+      !window.location.hash.startsWith('#/') &&
+      window.location.pathname.endsWith(location.pathname)
     const currentSearchParams = isBrowserLocation ? new URLSearchParams(window.location.search) : searchParams
     currentSearchParams.forEach((value, key) => {
       if (!filtersMap[key as FilterKeys]) {

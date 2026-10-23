@@ -39,7 +39,7 @@ The design system uses two typefaces with optically adjusted weights for Inter:
           <td className="cn-table-v2-cell">
             All UI text — headings, body, captions, micro
           </td>
-          <td className="cn-table-v2-cell">400 · 530</td>
+          <td className="cn-table-v2-cell">400 · 500 · 530</td>
         </tr>
         <tr className="cn-table-v2-row">
           <td className="cn-table-v2-cell">
@@ -58,8 +58,9 @@ The design system uses two typefaces with optically adjusted weights for Inter:
 
 <Aside type="note" title="Optical weights">
   Inter uses variable font instances tuned for optical balance — the semibold
-  tier `600` maps to **530**, while `400` renders at its nominal **400**. The
-  `.font-*` Tailwind classes apply these values automatically.
+  tier `600` maps to **530**, the `heading` tier renders at **500**, and `400`
+  renders at its nominal **400**. The `.font-*` Tailwind classes apply these
+  values automatically.
 </Aside>
 
 ## Type Scale Reference
@@ -944,11 +945,12 @@ For the occasional **layout** case — e.g. sizing a placeholder box to a line o
 
 ### Font Weight
 
-Weight tokens are **named buckets**. The bucket name is the conventional CSS weight
-number (`400`, `600`, `700`), but its value is the **optically-tuned variable-font
-instance** that actually renders — which is why the bucket name and the rendered weight
-don't always match (e.g. the `600` bucket renders `530`). Reach for these via `.font-*`
-classes or `<Text>`, not raw weights.
+Weight tokens are **named buckets**. Most bucket names are the conventional CSS weight
+number (`400`, `600`, `700`) — the exception is `heading`, named for its role — but each
+value is the **optically-tuned variable-font instance** that actually renders, which is
+why the bucket name and the rendered weight don't always match (e.g. the `600` bucket
+renders `530`, and `heading` renders `500`). Reach for these via `.font-*` classes or
+`<Text>`, not raw weights.
 
 <div className="cn-table-v2 cn-table-v2-normal not-content">
   <div className="cn-table-v2-container">
@@ -980,6 +982,19 @@ classes or `<Text>`, not raw weights.
           <td className="cn-table-v2-cell">Regular</td>
           <td className="cn-table-v2-cell">
             <span style={{ fontWeight: 400 }}>
+              The quick brown fox jumps over the lazy dog.
+            </span>
+          </td>
+        </tr>
+        <tr className="cn-table-v2-row">
+          <td className="cn-table-v2-cell">Inter</td>
+          <td className="cn-table-v2-cell">
+            <code>heading</code>
+          </td>
+          <td className="cn-table-v2-cell">500</td>
+          <td className="cn-table-v2-cell">Medium</td>
+          <td className="cn-table-v2-cell">
+            <span style={{ fontWeight: 500 }}>
               The quick brown fox jumps over the lazy dog.
             </span>
           </td>

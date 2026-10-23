@@ -1,5 +1,6 @@
 import { formatInTimeZone } from 'date-fns-tz'
 
+import { presetBounds } from './date-range-v2-preset'
 import { resolveDateRangeV2At, resolveTimeZone } from './resolve-date-range-v2'
 import { formatTimeZoneOffset, zonedCivilDateTimeToUtc } from './timezone-utils'
 import type {
@@ -7,6 +8,7 @@ import type {
   CivilDateTime,
   DateRangeV2LabelConfig,
   DateRangeV2Preset,
+  DateRangeV2Value,
   ResolvableDateRangeV2,
   TimeZoneId
 } from './types'
@@ -110,6 +112,37 @@ export const configuredPresetLabel = (
   return presets.find(preset => preset.value.trim().toUpperCase() === key)?.label
 }
 
+const storedEpochs = (from?: Date, to?: Date): readonly [number, number] | undefined => {
+  if (!from || !to) return undefined
+  const start = from.getTime()
+  const end = to.getTime()
+  if (!Number.isFinite(start) || !Number.isFinite(end)) return undefined
+  return [start, end]
+}
+
+const assembleLabel = (
+  title: string,
+  dates: string,
+  zone: string,
+  showTimezone: boolean,
+  wrapTitle: boolean
+): DateRangeV2Label => ({
+  title,
+  rangeText: showTimezone ? `${dates} · ${formatTimeZoneOffset(zone)}` : dates,
+  triggerText: wrapTitle ? `${title} (${dates})` : dates
+})
+
+const presetEpochs = (
+  presetId: string,
+  presets: readonly Pick<DateRangeV2Preset, 'value' | 'getRange'>[] | undefined,
+  timezone: TimeZoneId | undefined
+): readonly [number, number] | undefined => {
+  const preset = presets?.find(item => item.value === presetId)
+  if (!preset) return undefined
+  const bounds = presetBounds(preset, timezone ?? 'UTC')
+  return storedEpochs(bounds.from, bounds.to)
+}
+
 /** A fixed draft that has a start and no end yet. Whole-day starts stay date-only. */
 export const formatFixedStartLabel = (
   value: CivilDateTime,
@@ -129,13 +162,11 @@ export const formatDateRangeV2Label = (
   now: Date = new Date(),
   label: DateRangeV2LabelConfig = {},
   /** Stored from/to. When set, the label does not recompute the window from `now`. */
-  bounds?: readonly [number, number],
-  /** Preset name. A custom preset id is otherwise described as a fixed range. */
-  title?: string
+  bounds?: readonly [number, number]
 ): DateRangeV2Label => {
   const zone = resolveTimeZone(timezone)
-  const described = title?.trim() ? { title: title.trim() } : describeDateRangeV2(range)
-  let rangeText = described.title
+  const described = describeDateRangeV2(range)
+  let dates = described.title
   try {
     let start = bounds?.[0]
     let end = bounds?.[1]
@@ -144,12 +175,48 @@ export const formatDateRangeV2Label = (
       start = resolved.from.getTime()
       end = resolved.to.getTime()
     }
-    rangeText = formatBounds(start, end, zone, label.showTime ?? true)
+    dates = formatBounds(start, end, zone, label.showTime ?? true)
   } catch {
-    rangeText = described.title
+    dates = described.title
   }
-  const offset = formatTimeZoneOffset(zone)
-  const showTimezone = label.showTimezone ?? true
-  const triggerText = title?.trim() || range.kind !== 'fixed' ? `${described.title} (${rangeText})` : rangeText
-  return { ...described, rangeText: showTimezone ? `${rangeText} · ${offset}` : rangeText, triggerText }
+  return assembleLabel(described.title, dates, zone, label.showTimezone ?? true, range.kind !== 'fixed')
+}
+
+export interface DateRangeV2ValueLabelOptions {
+  presets?: readonly Pick<DateRangeV2Preset, 'value' | 'label' | 'getRange'>[]
+  label?: DateRangeV2LabelConfig
+  now?: Date
+  /** Epochs to show. When omitted, a preset uses `from`/`to` and then `getRange`. */
+  bounds?: readonly [number, number]
+}
+
+/**
+ * Label for a stored value. A preset uses its configured name and its epochs.
+ * Relative, calendar, and fixed ranges use `formatDateRangeV2Label`.
+ */
+export const formatDateRangeV2ValueLabel = (
+  value: Pick<DateRangeV2Value, 'range' | 'from' | 'to' | 'timezone'>,
+  options: DateRangeV2ValueLabelOptions = {}
+): DateRangeV2Label => {
+  const { range, timezone } = value
+  if (range.kind !== 'preset') {
+    return formatDateRangeV2Label(
+      range,
+      timezone,
+      options.now,
+      options.label,
+      options.bounds ?? storedEpochs(value.from, value.to)
+    )
+  }
+
+  const presetName = configuredPresetLabel(range.preset, options.presets)?.trim() || range.preset.trim()
+  const zone = resolveTimeZone(timezone)
+  const label = options.label ?? {}
+  const epochs =
+    options.bounds ?? storedEpochs(value.from, value.to) ?? presetEpochs(range.preset, options.presets, timezone)
+  if (!epochs) {
+    return { title: presetName || 'Fixed range', rangeText: '', triggerText: presetName }
+  }
+  const dates = formatBounds(epochs[0], epochs[1], zone, label.showTime ?? true)
+  return assembleLabel(presetName || 'Fixed range', dates, zone, label.showTimezone ?? true, Boolean(presetName))
 }

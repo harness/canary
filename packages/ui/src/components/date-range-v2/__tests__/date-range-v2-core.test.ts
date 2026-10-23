@@ -7,6 +7,7 @@ import {
   configuredPresetLabel,
   describeDateRangeV2,
   formatDateRangeV2Label,
+  formatDateRangeV2ValueLabel,
   formatFixedStartLabel
 } from '../format-date-range-v2-label'
 import { resolveDateRangeV2, resolveDateRangeV2At } from '../resolve-date-range-v2'
@@ -175,24 +176,31 @@ describe.concurrent('labels', () => {
   })
 
   it('names a configured preset instead of a fixed range', ({ expect }) => {
-    const fixed = state({
-      kind: 'fixed',
-      from: '2026-10-11T20:34:00',
-      to: '2026-10-14T20:34:00'
-    })
-    const presets = [{ label: 'Previous 3 days', value: 'PREVIOUS_3_DAYS' }]
-    const label = formatDateRangeV2Label(
-      fixed,
-      'UTC',
-      NOW,
-      {},
-      undefined,
-      configuredPresetLabel('PREVIOUS_3_DAYS', presets)
+    const presets = [{ label: 'Previous 3 days', value: 'PREVIOUS_3_DAYS', getRange: () => ({ from: NOW, to: NOW }) }]
+    const label = formatDateRangeV2ValueLabel(
+      {
+        range: { kind: 'preset', preset: 'PREVIOUS_3_DAYS' },
+        from: new Date('2026-10-11T20:34:00.000Z'),
+        to: new Date('2026-10-14T20:34:00.000Z'),
+        timezone: 'UTC'
+      },
+      { presets }
     )
 
     expect(label.title).toBe('Previous 3 days')
     expect(label.triggerText).toBe('Previous 3 days (Oct 11, 2026, 20:34 – Oct 14, 2026, 20:34)')
+    expect(label.rangeText).toBe('Oct 11, 2026, 20:34 – Oct 14, 2026, 20:34 · UTC+00:00')
     expect(configuredPresetLabel('FIXED', presets)).toBeUndefined()
+  })
+
+  it('uses the preset id when the value has no epochs and no configured label', ({ expect }) => {
+    const label = formatDateRangeV2ValueLabel({
+      range: { kind: 'preset', preset: 'BILLING_CYCLE' },
+      timezone: 'UTC'
+    })
+
+    expect(label.triggerText).toBe('BILLING_CYCLE')
+    expect(label.rangeText).toBe('')
   })
 
   it('keeps whole days date-only and shows a time on both ends when either end is mid-day', ({ expect }) => {

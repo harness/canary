@@ -3,7 +3,7 @@ import { ReactNode } from 'react'
 import type { MultiSelectOption } from '@components/multi-select'
 import { format } from 'date-fns'
 
-import { configuredPresetLabel, formatDateRangeV2Label } from '../date-range-v2/format-date-range-v2-label'
+import { formatDateRangeV2ValueLabel } from '../date-range-v2/format-date-range-v2-label'
 import { resolveTimeZone } from '../date-range-v2/resolve-date-range-v2'
 import { resolveDateRangeV2Config } from '../date-range-v2/resolve-picker-config'
 import { formatTimeZoneOffset } from '../date-range-v2/timezone-utils'
@@ -25,25 +25,10 @@ export const getDateRangeV2FilterLabel = (
   if (!value) return ''
   try {
     const resolved = resolveDateRangeV2Config(config)
-    const bounds = value.from && value.to ? ([value.from.getTime(), value.to.getTime()] as const) : undefined
-    const presetTitle =
-      value.range.kind === 'preset' ? configuredPresetLabel(value.range.preset, resolved.presets) : undefined
-    const labelRange =
-      value.range.kind === 'preset'
-        ? ({
-            kind: 'fixed',
-            from: '1970-01-01T00:00:00',
-            to: '1970-01-01T23:59:59'
-          } as const)
-        : value.range
-    const label = formatDateRangeV2Label(
-      labelRange,
-      value.timezone,
-      new Date(),
-      resolved.triggerLabel,
-      bounds,
-      presetTitle
-    )
+    const label = formatDateRangeV2ValueLabel(value, {
+      presets: resolved.presets,
+      label: resolved.triggerLabel
+    })
     const offset = resolved.triggerLabel.showTimezone
       ? ` · ${formatTimeZoneOffset(resolveTimeZone(value.timezone))}`
       : ''

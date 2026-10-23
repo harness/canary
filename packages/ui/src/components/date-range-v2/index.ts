@@ -4,10 +4,14 @@ export {
   configuredPresetLabel,
   describeDateRangeV2,
   formatDateRangeV2Label,
-  type DateRangeV2Label
+  formatDateRangeV2ValueLabel,
+  type DateRangeV2Label,
+  type DateRangeV2ValueLabelOptions
 } from './format-date-range-v2-label'
 export {
   fixedRangeFromBounds,
+  orderedBounds,
+  presetBounds,
   formatDateRangeV2Preset,
   migrateDefaultPreset,
   parseDateRangeV2Preset

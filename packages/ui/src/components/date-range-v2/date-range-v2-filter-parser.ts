@@ -1,4 +1,9 @@
-import { fixedRangeFromBounds, formatDateRangeV2Preset, parseDateRangeV2Preset } from './date-range-v2-preset'
+import {
+  fixedRangeFromBounds,
+  formatDateRangeV2Preset,
+  parseDateRangeV2Preset,
+  presetBounds
+} from './date-range-v2-preset'
 import { resolveDateRangeV2 } from './resolve-date-range-v2'
 import type {
   DateRangeV2Config,
@@ -103,9 +108,8 @@ export const createDateRangeV2FilterParser = (config?: DateRangeV2Config) => {
         const preset = presetToken ? matchPreset(presetToken) : undefined
         if (preset) {
           const timezone = timezoneToken || DEFAULT_TIME_ZONE
-          const { from, to } = preset.getRange({ timezone })
-          const [start, end] = from <= to ? [from, to] : [to, from]
-          return { from: start, to: end, range: { kind: 'preset', preset: preset.value }, timezone }
+          const { from, to } = presetBounds(preset, timezone)
+          return { from, to, range: { kind: 'preset', preset: preset.value }, timezone }
         }
       }
       return dateRangeV2FilterParser.parse(serialized, now)

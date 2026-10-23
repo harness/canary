@@ -23,8 +23,13 @@ import { Separator } from '../separator'
 import { Text } from '../text'
 import { ToggleGroup } from '../toggle-group'
 import { TooltipProvider } from '../tooltip'
+import { orderedBounds, presetBounds } from './date-range-v2-preset'
 import { DateTimeEndpointField } from './date-time-endpoint-field'
-import { configuredPresetLabel, formatDateRangeV2Label, formatFixedStartLabel } from './format-date-range-v2-label'
+import {
+  formatDateRangeV2Label,
+  formatDateRangeV2ValueLabel,
+  formatFixedStartLabel
+} from './format-date-range-v2-label'
 import { PositiveAmountInput } from './positive-amount-input'
 import { resolveDateRangeV2, resolveDateRangeV2At, resolveTimeZone } from './resolve-date-range-v2'
 import { clampAmount, resolveDateRangeV2Config, type ResolvedDateRangeV2Config } from './resolve-picker-config'
@@ -116,8 +121,8 @@ const presetSelectOptions = (presets: readonly DateRangeV2Preset[]) =>
     .filter(group => group.options.length > 0)
 
 const fixedRangeFromDates = (from: Date, to: Date, timezone: TimeZoneId): FixedRange => {
-  const [start, end] = from <= to ? [from, to] : [to, from]
-  return { kind: 'fixed', from: utcToCivilDateTime(start, timezone), to: utcToCivilDateTime(end, timezone) }
+  const bounds = orderedBounds(from, to)
+  return { kind: 'fixed', from: utcToCivilDateTime(bounds.from, timezone), to: utcToCivilDateTime(bounds.to, timezone) }
 }
 
 const EXTENT_LABELS: Record<CalendarExtent, string> = {
@@ -420,11 +425,6 @@ export const isAllowedDateRangeV2 = (
   }
 }
 
-const presetBoundsOf = (preset: DateRangeV2Preset, timezone: TimeZoneId): { from: Date; to: Date } => {
-  const { from, to } = preset.getRange({ timezone })
-  return from <= to ? { from, to } : { from: to, to: from }
-}
-
 /** Epochs for the active draft. Presets use `getRange`. The other modes use `resolveDateRangeV2`. */
 const valueFromDraft = (
   range: DateRangeV2Value['range'] | undefined,
@@ -436,7 +436,7 @@ const valueFromDraft = (
   if (range.kind === 'preset') {
     const preset = presets.find(item => item.value === range.preset)
     if (!preset) return undefined
-    const bounds = presetBoundsOf(preset, timezone)
+    const bounds = presetBounds(preset, timezone)
     return { from: bounds.from, to: bounds.to, range, timezone }
   }
   return resolveDateRangeV2({ range, timezone }, now)
@@ -553,8 +553,10 @@ export const DateRangeV2Content = ({
   // Presets preview through the consumer's getRange. Other tabs preview their own draft.
   const selectedPreset =
     section === 'presets' ? pickerConfig.presets.find(preset => preset.value === drafts.preset.preset) : undefined
-  const presetBounds = selectedPreset?.getRange({ timezone: draftTimezone })
-  const presetRange = presetBounds ? fixedRangeFromDates(presetBounds.from, presetBounds.to, draftTimezone) : undefined
+  const selectedPresetBounds = selectedPreset?.getRange({ timezone: draftTimezone })
+  const presetRange = selectedPresetBounds
+    ? fixedRangeFromDates(selectedPresetBounds.from, selectedPresetBounds.to, draftTimezone)
+    : undefined
   const fixedRange = completeFixed(drafts.fixed, pickerConfig)
   const activeRange: ResolvableDateRangeV2 | undefined =
     presetRange ?? (section === 'calendar' ? drafts.calendar : section === 'fixed' ? fixedRange : drafts.relative)
@@ -589,19 +591,18 @@ export const DateRangeV2Content = ({
     section === 'fixed' && drafts.fixed.from && isCivilDateTime(drafts.fixed.from)
       ? formatFixedStartLabel(drafts.fixed.from, draftTimezone, pickerConfig.triggerLabel)
       : ''
-  const label = activeRange
-    ? formatDateRangeV2Label(
-        activeRange,
-        draftTimezone,
-        new Date(),
-        pickerConfig.triggerLabel,
-        storedBounds,
-        section === 'presets' ? selectedPreset?.label : undefined
-      )
-    : { title: 'Fixed range', rangeText: partialStart, triggerText: '' }
+  const label =
+    section === 'presets' && selectedPreset && resolved
+      ? formatDateRangeV2ValueLabel(
+          { range: { kind: 'preset', preset: selectedPreset.value }, timezone: draftTimezone },
+          { presets: pickerConfig.presets, label: pickerConfig.triggerLabel, bounds: resolved }
+        )
+      : activeRange
+        ? formatDateRangeV2Label(activeRange, draftTimezone, new Date(), pickerConfig.triggerLabel, storedBounds)
+        : { title: 'Fixed range', rangeText: partialStart, triggerText: '' }
   const allowed =
-    section === 'presets' && presetBounds
-      ? allowsPresetBounds(presetBounds, pickerConfig.direction)
+    section === 'presets' && selectedPresetBounds
+      ? allowsPresetBounds(selectedPresetBounds, pickerConfig.direction)
       : activeRange
         ? isAllowedDateRangeV2(activeRange, pickerConfig.direction, draftTimezone)
         : false
@@ -1097,39 +1098,12 @@ export const DateRangeV2 = ({
     onOpenChange?.(next)
     if (openProp === undefined) setUncontrolledOpen(next)
   }
-  const storedBounds = value?.from && value.to ? ([value.from.getTime(), value.to.getTime()] as const) : undefined
-  const storedRange = value?.range
-  const presetTitle =
-    storedRange?.kind === 'preset'
-      ? (configuredPresetLabel(storedRange.preset, pickerConfig.presets) ?? storedRange.preset)
-      : undefined
-  const presetDisplayBounds = (() => {
-    if (storedRange?.kind !== 'preset') return undefined
-    if (storedBounds) return storedBounds
-    const preset = pickerConfig.presets.find(item => item.value === storedRange.preset)
-    if (!preset) return undefined
-    const bounds = presetBoundsOf(preset, timezone)
-    return [bounds.from.getTime(), bounds.to.getTime()] as const
-  })()
-  const triggerText =
-    storedRange?.kind === 'preset'
-      ? presetDisplayBounds
-        ? formatDateRangeV2Label(
-            {
-              kind: 'fixed',
-              from: '1970-01-01T00:00:00',
-              to: '1970-01-01T23:59:59'
-            },
-            timezone,
-            new Date(),
-            pickerConfig.triggerLabel,
-            presetDisplayBounds,
-            presetTitle
-          ).triggerText
-        : (presetTitle ?? placeholder)
-      : storedRange
-        ? formatDateRangeV2Label(storedRange, timezone, new Date(), pickerConfig.triggerLabel, storedBounds).triggerText
-        : placeholder
+  const triggerText = value?.range
+    ? formatDateRangeV2ValueLabel(value, {
+        presets: pickerConfig.presets,
+        label: pickerConfig.triggerLabel
+      }).triggerText || placeholder
+    : placeholder
   return (
     <TooltipProvider>
       <Popover.Root open={open} onOpenChange={setOpen}>

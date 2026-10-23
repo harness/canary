@@ -4,6 +4,7 @@ import type {
   CalendarExtent,
   CalendarRange,
   CalendarUnit,
+  DateRangeV2Preset,
   FixedRange,
   RelativeUnit,
   ResolvableDateRangeV2,
@@ -108,6 +109,18 @@ const calendarRange = (direction: string, amount: number, unitTokenValue: string
     amount,
     unit
   }
+}
+
+export const orderedBounds = (from: Date, to: Date): { from: Date; to: Date } =>
+  from <= to ? { from, to } : { from: to, to: from }
+
+/** Epochs from `getRange`, with the ends ordered. */
+export const presetBounds = (
+  preset: Pick<DateRangeV2Preset, 'getRange'>,
+  timezone: TimeZoneId
+): { from: Date; to: Date } => {
+  const { from, to } = preset.getRange({ timezone })
+  return orderedBounds(from, to)
 }
 
 /** Civil fixed range for instants already stored as epochs. */

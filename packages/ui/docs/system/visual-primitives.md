@@ -25,6 +25,11 @@ Review) may use `info`, `risk`, `merged` — these are NOT global rules and belo
 product-specific guidance (domain rules). Don't assume they're available in all Harness
 contexts. `merged` is the purple used for merged-state indicators.
 
+**Which product colors are actually exercised** (platformUI consumer telemetry, point-in-time
+late 2026 — a usage hint, not verifiable from this repo): `info` is widely used (~95+ call
+sites); `risk` has no call sites yet. Useful when judging which product colors to lean on,
+but confirm current usage before treating either as settled.
+
 **Why:** Keeps the global component lean; product-specific enums belong in domain-specific
 rules.
 
@@ -42,6 +47,21 @@ on text.
 Because of that, `tag.tsx` greys a disabled icon by passing `className` rather than the
 `color` prop. Follow the existing pattern in a component rather than assuming
 `color="disabled"` exists.
+
+---
+
+## Compose IconV2 as a child; its name prop is `name`, not `iconName`
+
+**Rule:** `IconV2` is a standalone `forwardRef<SVGSVGElement>`. Its own icon prop is `name`
+(type `IconV2NamesType`) — there is no `iconName` on `IconV2` itself. Compose it as a child
+element (e.g. inside `Button`) rather than passing an icon as a string prop to an arbitrary
+component.
+
+**But `iconName` is a real prop elsewhere.** ~11 wrapper components (e.g. `PageHeaderV2`,
+`SidebarItem`) do accept an `iconName?: IconV2NamesType` string. So the anti-pattern is not
+"`iconName` never exists" — it's *don't invent or assume it*. Before wiring an icon into a
+component, check that component's actual props: some want a composed `IconV2` child, some
+want an `iconName` string. Don't guess which.
 
 ---
 

@@ -313,6 +313,7 @@ import McpConnector from './icons/mcp-connector.svg'
 import MenuMoreHorizontal from './icons/menu-more-horizontal.svg'
 import MenuScale from './icons/menu-scale.svg'
 import Menu from './icons/menu.svg'
+import Microphone from './icons/microphone.svg'
 import MinusCircleSolid from './icons/minus-circle-solid.svg'
 import MinusCircle from './icons/minus-circle.svg'
 import MinusSquare from './icons/minus-square.svg'
@@ -853,6 +854,7 @@ export const IconNameMapV2 = {
   'menu-more-horizontal': MenuMoreHorizontal,
   'menu-scale': MenuScale,
   menu: Menu,
+  microphone: Microphone,
   'minus-circle-solid': MinusCircleSolid,
   'minus-circle': MinusCircle,
   'minus-square': MinusSquare,

@@ -328,7 +328,7 @@ describe('PromptInput', () => {
 
       const button = screen.getByRole('button', { name: /stop voice input/i })
       expect(button).toHaveAttribute('aria-pressed', 'true')
-      expect(button).toHaveAttribute('data-listening', 'true')
+      expect(container.querySelector('.cn-prompt-input-speech')).toHaveAttribute('data-listening', 'true')
       expect(container.querySelectorAll('.cn-prompt-input-speech-ring')).toHaveLength(2)
     })
   })

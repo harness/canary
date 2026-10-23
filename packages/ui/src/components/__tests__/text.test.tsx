@@ -52,22 +52,6 @@ describe('Text', () => {
       expect(text).toBeInTheDocument()
     })
 
-    test('should render heading-base-normal variant with heading role', () => {
-      const { container } = renderComponent({ variant: 'heading-base-normal' })
-
-      const text = container.querySelector('.font-heading-base-normal')
-      expect(text).toBeInTheDocument()
-      expect(container.querySelector('[role="heading"]')).toBeInTheDocument()
-    })
-
-    test('should render heading-subsection-normal variant with heading role', () => {
-      const { container } = renderComponent({ variant: 'heading-subsection-normal' })
-
-      const text = container.querySelector('.font-heading-subsection-normal')
-      expect(text).toBeInTheDocument()
-      expect(container.querySelector('[role="heading"]')).toBeInTheDocument()
-    })
-
     test('should render body-strong variant', () => {
       const { container } = renderComponent({ variant: 'body-strong' })
 
@@ -381,9 +365,7 @@ describe('Text', () => {
         'heading-hero',
         'heading-section',
         'heading-subsection',
-        'heading-subsection-normal',
         'heading-base',
-        'heading-base-normal',
         'heading-small',
         'body-normal',
         'body-single-line-normal',
@@ -604,9 +586,7 @@ describe('Text', () => {
         'heading-hero',
         'heading-section',
         'heading-subsection',
-        'heading-subsection-normal',
         'heading-base',
-        'heading-base-normal',
         'heading-small'
       ] as const
 

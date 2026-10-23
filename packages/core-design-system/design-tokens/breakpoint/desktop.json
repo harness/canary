@@ -39,7 +39,7 @@
       "$type": "typography",
       "$value": {
         "fontFamily": "{fontFamily.default}",
-        "fontWeight": "{fontWeight.default.normal.600}",
+        "fontWeight": "{fontWeight.default.normal.heading}",
         "fontSize": "{fontSize.10}",
         "lineHeight": "{lineHeight.36}",
         "letterSpacing": "{tracking.tight}",
@@ -51,7 +51,7 @@
       "$type": "typography",
       "$value": {
         "fontFamily": "{fontFamily.default}",
-        "fontWeight": "{fontWeight.default.normal.600}",
+        "fontWeight": "{fontWeight.default.normal.heading}",
         "fontSize": "{fontSize.9}",
         "lineHeight": "{lineHeight.36}",
         "letterSpacing": "{tracking.tight}",
@@ -63,7 +63,7 @@
       "$type": "typography",
       "$value": {
         "fontFamily": "{fontFamily.default}",
-        "fontWeight": "{fontWeight.default.normal.600}",
+        "fontWeight": "{fontWeight.default.normal.heading}",
         "fontSize": "{fontSize.8}",
         "lineHeight": "{lineHeight.28}",
         "letterSpacing": "{tracking.tight}"
@@ -74,49 +74,29 @@
       "$type": "typography",
       "$value": {
         "fontFamily": "{fontFamily.default}",
-        "fontWeight": "{fontWeight.default.normal.600}",
+        "fontWeight": "{fontWeight.default.normal.heading}",
         "fontSize": "{fontSize.7}",
         "lineHeight": "{lineHeight.24}",
         "letterSpacing": "{tracking.tight}"
       },
       "$description": "Secondary heading for logical grouping within larger content sections. Creates clear visual hierarchy through weight and size contrast while maintaining typographic cohesion with section headings above it.\n\nCommon uses: Sub-topics within longer articles, Feature description headers, FAQ question headings, Setting category labels, Card headers in grid layouts."
     },
-    "subsection-normal": {
-      "$type": "typography",
-      "$value": {
-        "fontFamily": "{fontFamily.default}",
-        "fontWeight": "{fontWeight.default.normal.400}",
-        "fontSize": "{fontSize.7}",
-        "lineHeight": "{lineHeight.24}",
-        "letterSpacing": "{tracking.tight}"
-      }
-    },
     "base": {
       "$type": "typography",
       "$value": {
         "fontFamily": "{fontFamily.default}",
-        "fontWeight": "{fontWeight.default.normal.600}",
+        "fontWeight": "{fontWeight.default.normal.heading}",
         "fontSize": "{fontSize.6}",
         "lineHeight": "{lineHeight.20}",
         "letterSpacing": "{tracking.tight}"
       },
       "$description": "Versatile heading for content organization at the paragraph level. Provides subtle visual separation while maintaining content flow. Creates recognizable signposts for scanning without overwhelming surrounding text.\n\nCommon uses: Small widget headers, Related content groups, List section headers, Step-by-step instructions titles, Table headers."
     },
-    "base-normal": {
-      "$type": "typography",
-      "$value": {
-        "fontFamily": "{fontFamily.default}",
-        "fontWeight": "{fontWeight.default.normal.400}",
-        "fontSize": "{fontSize.6}",
-        "lineHeight": "{lineHeight.20}",
-        "letterSpacing": "{tracking.tight}"
-      }
-    },
     "small": {
       "$type": "typography",
       "$value": {
         "fontFamily": "{fontFamily.default}",
-        "fontWeight": "{fontWeight.default.normal.600}",
+        "fontWeight": "{fontWeight.default.normal.heading}",
         "fontSize": "{fontSize.5}",
         "lineHeight": "{lineHeight.20}",
         "letterSpacing": "{tracking.normal}"

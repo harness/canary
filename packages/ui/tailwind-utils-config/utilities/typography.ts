@@ -35,9 +35,9 @@ interface FontVariant {
 const FONT_VARIANTS: FontVariant[] = [
   { name: 'heading-hero', weight: 'semibold', tracking: 'tight' },
   { name: 'heading-section', weight: 'semibold', tracking: 'tight' },
-  { name: 'heading-default', weight: 'semibold', tracking: 'normal' },
-  { name: 'heading-subsection', weight: 'semibold', tracking: 'normal' },
-  { name: 'heading-base', weight: 'semibold', tracking: 'normal' },
+  { name: 'heading-default', weight: 'semibold', tracking: 'tight' },
+  { name: 'heading-subsection', weight: 'semibold', tracking: 'tight' },
+  { name: 'heading-base', weight: 'semibold', tracking: 'tight' },
   { name: 'heading-small', weight: 'semibold', tracking: 'normal' },
   { name: 'body-normal', weight: 'regular', tracking: 'tight' },
   { name: 'body-strong', weight: 'semibold', tracking: 'tight' },

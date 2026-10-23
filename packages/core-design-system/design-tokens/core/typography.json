@@ -2,7 +2,7 @@
   "tracking": {
     "tight": {
       "$type": "letterSpacing",
-      "$value": "-0.02em",
+      "$value": "-0.01em",
       "$description": "Headings"
     },
     "normal": {

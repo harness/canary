@@ -66,7 +66,7 @@
         "fontWeight": "{fontWeight.default.normal.heading}",
         "fontSize": "{fontSize.8}",
         "lineHeight": "{lineHeight.28}",
-        "letterSpacing": "{tracking.normal}"
+        "letterSpacing": "{tracking.tight}"
       },
       "$description": "General-purpose heading and the default choice for most content headings. Provides clear hierarchy without the visual weight of larger section headings, striking a balance suited to the majority of interface contexts.\n\nCommon uses: Panel and card titles, Form and settings section headers, Dashboard widget titles, Detail-page headings, Dialog and drawer content headings."
     },
@@ -77,7 +77,7 @@
         "fontWeight": "{fontWeight.default.normal.heading}",
         "fontSize": "{fontSize.7}",
         "lineHeight": "{lineHeight.24}",
-        "letterSpacing": "{tracking.normal}"
+        "letterSpacing": "{tracking.tight}"
       },
       "$description": "Secondary heading for logical grouping within larger content sections. Creates clear visual hierarchy through weight and size contrast while maintaining typographic cohesion with section headings above it.\n\nCommon uses: Sub-topics within longer articles, Feature description headers, FAQ question headings, Setting category labels, Card headers in grid layouts."
     },
@@ -88,7 +88,7 @@
         "fontWeight": "{fontWeight.default.normal.heading}",
         "fontSize": "{fontSize.6}",
         "lineHeight": "{lineHeight.20}",
-        "letterSpacing": "{tracking.normal}"
+        "letterSpacing": "{tracking.tight}"
       },
       "$description": "Versatile heading for content organization at the paragraph level. Provides subtle visual separation while maintaining content flow. Creates recognizable signposts for scanning without overwhelming surrounding text.\n\nCommon uses: Small widget headers, Related content groups, List section headers, Step-by-step instructions titles, Table headers."
     },

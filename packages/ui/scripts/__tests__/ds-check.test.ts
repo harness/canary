@@ -263,6 +263,46 @@ describe('ds-check', () => {
       )
     })
 
+    // dialog.tsx makes several cva() calls: `size` lives in the first block, `theme` in a
+    // later one (headerVariants) with no matching TS union. Scanning only the first cva()
+    // would leave `theme` unverifiable and falsely fail a correct manifest.
+    it('should verify an enum prop defined in a non-first cva() block', async () => {
+      await withProbeManifest(
+        'multi-cva-probe',
+        manifest => {
+          manifest.code.path = 'packages/ui/src/components/dialog.tsx'
+          manifest.code.export = 'Content'
+          manifest.props.shared = [
+            { name: 'theme', type: 'enum', values: ['default', 'warning', 'danger'], default: 'default' }
+          ]
+        },
+        async () => {
+          const result = await runDsCheck(['--source'])
+          expect(result.exitCode).toBe(0)
+          expect(result.stdout).toContain('✅ multi-cva-probe')
+        }
+      )
+    })
+
+    it('should detect drift against an enum in a non-first cva() block', async () => {
+      await withProbeManifest(
+        'multi-cva-drift-probe',
+        manifest => {
+          manifest.code.path = 'packages/ui/src/components/dialog.tsx'
+          manifest.code.export = 'Content'
+          manifest.props.shared = [
+            { name: 'theme', type: 'enum', values: ['default', 'warning', 'WRONG'], default: 'default' }
+          ]
+        },
+        async () => {
+          const result = await runDsCheck(['--source'])
+          expect(result.exitCode).toBe(1)
+          expect(result.stdout + result.stderr).toContain('WRONG')
+          expect(result.stdout + result.stderr).toContain('danger') // real value the manifest omits
+        }
+      )
+    })
+
     it('should still skip --source cleanly when there are no enum props to verify', async () => {
       await withProbeManifest(
         'no-enums-probe',

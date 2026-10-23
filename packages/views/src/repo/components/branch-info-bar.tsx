@@ -4,6 +4,7 @@ import { BranchSelectorListItem, BranchSelectorTab, easyPluralize, TypesReposito
 
 import { Button, IconV2, Layout, Link, Popover, Link as StyledLink, Tag, Text } from '@harnessio/ui/components'
 import { useTranslation } from '@harnessio/ui/context'
+import { encodeGitRef } from '@harnessio/ui/utils'
 
 interface BranchInfoBarProps {
   defaultBranchName?: string
@@ -49,13 +50,13 @@ export const BranchInfoBar: FC<BranchInfoBarProps> = ({
         ? `refs/tags/${selectedBranchTag.name}`
         : selectedBranchTag?.name
     return {
-      aheadCompare: `${baseUrl}/${compareDefaultBranch}...${selectedRef}`,
-      behindCompare: `${baseUrl}/${selectedRef}...${compareDefaultBranch}`
+      aheadCompare: `${baseUrl}/${encodeGitRef(compareDefaultBranch)}...${encodeGitRef(selectedRef)}`,
+      behindCompare: `${baseUrl}/${encodeGitRef(selectedRef)}...${encodeGitRef(compareDefaultBranch)}`
     }
   }, [spaceId, repoId, compareDefaultBranch, selectedBranchTag?.name, refType])
 
   const defaultBranchUrl = useMemo(
-    () => `${spaceId ? `/${spaceId}` : ''}/repos/${repoId}/files/${defaultBranchName}`,
+    () => `${spaceId ? `/${spaceId}` : ''}/repos/${repoId}/files/${encodeGitRef(defaultBranchName)}`,
     [spaceId, repoId, defaultBranchName]
   )
 

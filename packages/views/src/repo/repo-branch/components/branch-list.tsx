@@ -20,7 +20,7 @@ import {
   TimeAgoCard
 } from '@harnessio/ui/components'
 import { useCustomDialogTrigger, useTranslation } from '@harnessio/ui/context'
-import { cn, createPaginationLinks } from '@harnessio/ui/utils'
+import { cn, createPaginationLinks, encodeGitRef } from '@harnessio/ui/utils'
 
 import { BranchListPageProps } from '../types'
 import { DivergenceGauge } from './divergence-gauge'
@@ -214,7 +214,7 @@ export const BranchesList: FC<BranchListPageProps> = ({
                       ? [
                           {
                             title: t('views:repos.compare', 'Compare'),
-                            to: toPullRequestCompare?.({ diffRefs: `${defaultBranch}...${branch.name}` }) || '',
+                            to: toPullRequestCompare?.({ diffRefs: `${encodeGitRef(defaultBranch)}...${encodeGitRef(branch.name)}` }) || '',
                             iconName: 'git-pull-request'
                           } as ActionData
                         ]

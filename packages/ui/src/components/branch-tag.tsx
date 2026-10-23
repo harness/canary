@@ -1,4 +1,5 @@
 import { CopyTag, Link, Tag } from '@/components'
+import { encodeGitRef } from '@/utils/utils'
 
 import type { TagProps } from './tag'
 
@@ -93,7 +94,7 @@ const BranchTag: React.FC<BranchTagProps> = ({
     <Link
       noHoverUnderline
       className="min-w-0 max-w-[var(--cn-tag-max-width)]"
-      to={`${spaceId ? `/${spaceId}` : ''}/repos/${repoId}/files/${branchName}`}
+      to={`${spaceId ? `/${spaceId}` : ''}/repos/${repoId}/files/${encodeGitRef(branchName)}`}
     >
       <TagComponent
         variant={variant}

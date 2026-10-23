@@ -35,6 +35,7 @@ export interface BranchProps {
 
 interface RoutingProps {
   toBranchRules: () => string
+  /** `diffRefs` is already URL-encoded per segment; do not encode it again. */
   toPullRequestCompare: ({ diffRefs }: { diffRefs: string }) => string
   toPullRequest: ({ pullRequestId }: { pullRequestId: number }) => string
   toCode: ({ branchName }: { branchName: string }) => string

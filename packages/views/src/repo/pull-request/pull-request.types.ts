@@ -272,6 +272,7 @@ export interface PRListLabelType {
 interface RoutingProps {
   toPullRequest: ({ prNumber, repoId, repoPath }: { prNumber: number; repoId?: string; repoPath?: string }) => string
   onClickPullRequest: ({ prNumber, repo }: { prNumber?: number; repo: Pick<RepositoryType, 'name' | 'path'> }) => void
+  /** `branch` is passed raw; consumers must URL-encode it (e.g. per-segment encodeURIComponent) before using it in a path. */
   toBranch: ({ branch, repoId }: { branch: string; repoId?: string }) => string
 }
 

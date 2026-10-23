@@ -2,6 +2,7 @@ import { FC } from 'react'
 
 import { Button, IconV2, Layout, Link, Text, TimeAgoCard } from '@harnessio/ui/components'
 import { useRouterContext, useTranslation } from '@harnessio/ui/context'
+import { encodeGitRef } from '@harnessio/ui/utils'
 import { TypesBranchTable } from '@views'
 
 export interface BranchInfo {
@@ -38,7 +39,7 @@ const BranchCompareBanner: FC<BranchCompareBannerProps> = ({
       <Layout.Grid gap="2xs" align="center" flow="column">
         <IconV2 name="git-branch" size="sm" color="success" />
         <Link
-          to={`${spaceId ? `/${spaceId}` : ''}/repos/${repoId}/summary/refs/heads/${branch.name}`}
+          to={`${spaceId ? `/${spaceId}` : ''}/repos/${repoId}/summary/refs/heads/${encodeGitRef(branch.name)}`}
           className="font-body-strong text-cn-1 inline-block w-auto truncate"
         >
           {branch.name}
@@ -51,7 +52,7 @@ const BranchCompareBanner: FC<BranchCompareBannerProps> = ({
       <Layout.Flex gap="xs" align="center">
         <Button variant="primary" theme="success" asChild>
           <RouterLink
-            to={`${spaceId ? `/${spaceId}` : ''}/repos/${repoId}/pulls/compare/${defaultBranchName}...${branch.name}`}
+            to={`${spaceId ? `/${spaceId}` : ''}/repos/${repoId}/pulls/compare/${encodeGitRef(defaultBranchName)}...${encodeGitRef(branch.name)}`}
           >
             {t('views:repos.compareAndPullRequest', 'Compare & pull request')}
           </RouterLink>

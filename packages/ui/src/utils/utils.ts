@@ -105,6 +105,16 @@ export const encodeResourcePath = (resourcePath?: string): string => {
     .join('/')
 }
 
+// Single-encodes each `/`-separated segment of a branch/tag/ref name so characters
+// like `%` do not make React Router's decodeURIComponent throw during route matching.
+export const encodeGitRef = (ref?: string): string => {
+  if (!ref) return ''
+  return ref
+    .split('/')
+    .map(segment => encodeURIComponent(segment))
+    .join('/')
+}
+
 export const decodeURIComponentIfValid = (path: string) => {
   try {
     return decodeURIComponent(path)

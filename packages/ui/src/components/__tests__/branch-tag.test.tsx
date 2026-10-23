@@ -287,7 +287,17 @@ describe('BranchTag', () => {
 
       const link = container.querySelector('a')
       expect(link).toBeInTheDocument()
-      expect(link).toHaveAttribute('to', '/repos/repo-1/files/branch name')
+      expect(link).toHaveAttribute('to', '/repos/repo-1/files/' + encodeURIComponent('branch name'))
+    })
+
+    test('should encode % and keep / separators in branch names', () => {
+      const { container } = renderComponent({
+        branchName: 'feat/dashboard-%-not-visible',
+        repoId: 'repo-1'
+      })
+
+      const link = container.querySelector('a')
+      expect(link).toHaveAttribute('to', '/repos/repo-1/files/feat/dashboard-%25-not-visible')
     })
   })
 

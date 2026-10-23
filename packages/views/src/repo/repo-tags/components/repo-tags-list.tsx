@@ -16,7 +16,7 @@ import {
 } from '@harnessio/ui/components'
 import { useCustomDialogTrigger, useTranslation } from '@harnessio/ui/context'
 import { BranchSelectorListItem, CommitTagType, RepoTagsStore } from '@views'
-import { createPaginationLinks } from '@harnessio/ui/utils'
+import { createPaginationLinks, encodeGitRef } from '@harnessio/ui/utils'
 
 interface RepoTagsListProps {
   onDeleteTag: (tagName: string) => void
@@ -72,7 +72,7 @@ export const RepoTagsList: FC<RepoTagsListProps> = ({
     {
       iconName: 'folder',
       title: t('views:repos.viewFiles', 'View Files'),
-      to: `../files/refs/tags/${tag.name}`
+      to: `../files/refs/tags/${encodeGitRef(tag.name)}`
     },
     {
       iconName: 'trash',
@@ -179,7 +179,7 @@ export const RepoTagsList: FC<RepoTagsListProps> = ({
 
       <Table.Body>
         {tagsList.map(tag => (
-          <Table.Row key={tag.sha} to={`../summary/refs/tags/${tag.name}`}>
+          <Table.Row key={tag.sha} to={`../summary/refs/tags/${encodeGitRef(tag.name)}`}>
             <Table.Cell>
               <CopyTag value={tag.name} theme="violet" size="md" variant="secondary" className="max-w-full" />
             </Table.Cell>

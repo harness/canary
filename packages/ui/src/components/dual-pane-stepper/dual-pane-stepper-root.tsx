@@ -3,6 +3,7 @@ import { useMemo } from 'react'
 import { cn } from '@utils/cn'
 
 import { AlertDialog } from '../alert-dialog'
+import { DEFAULT_REACTIVATION_PROMPT } from '../flow-stepper/default-reactivation-prompt'
 import { FlowEngineProvider, useEngineContext } from '../flow-stepper/engine'
 import { FlowStepperRail } from '../flow-stepper/flow-stepper-rail'
 import { resolveShowRootHeader } from '../flow-stepper/resolve-show-root-header'
@@ -13,11 +14,6 @@ import { Resizable } from '../resizable'
 import { Text } from '../text'
 import { DualPaneStepperCardStack } from './dual-pane-stepper-card-stack'
 import { DualPaneStepperRootProps } from './dual-pane-stepper-types'
-
-const DEFAULT_REACTIVATION_PROMPT = {
-  title: 'Go back?',
-  description: 'Going back to this step will discard your progress on subsequent steps. Are you sure?'
-}
 
 function DualPaneStepperContent({
   title,
@@ -71,7 +67,7 @@ function DualPaneStepperContent({
           <Layout.Horizontal as="header" align="center" gap="sm" className="cn-dual-pane-stepper-header">
             {icon}
             {title && (
-              <Text as="h1" variant="heading-section" color="foreground-1" className="min-w-0 flex-1 !m-0">
+              <Text as="h1" variant="heading-section" color="foreground-1" className="!m-0 min-w-0 flex-1">
                 {title}
               </Text>
             )}

@@ -30,7 +30,11 @@ function BlockedMessage({ message }: { message: string }) {
 const INTERACTIVE_STATES: Set<CardStatus> = new Set(['active', 'error'])
 const TERMINAL_STATES: Set<CardStatus> = new Set(['completed', 'skipped'])
 
-function shouldShowRestart(status: CardStatus, cardHistory: { stepId: string; status: CardStatus }[], stepId: string) {
+export function shouldShowRestart(
+  status: CardStatus,
+  cardHistory: { stepId: string; status: CardStatus }[],
+  stepId: string
+) {
   const isTerminal = TERMINAL_STATES.has(status)
   const isLastCard = cardHistory[cardHistory.length - 1]?.stepId === stepId
   const isFlowComplete = !cardHistory.some(e => INTERACTIVE_STATES.has(e.status))

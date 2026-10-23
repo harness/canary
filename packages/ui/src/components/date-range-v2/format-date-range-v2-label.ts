@@ -1,7 +1,6 @@
 import { formatInTimeZone } from 'date-fns-tz'
 
-import { presetBounds } from './date-range-v2-preset'
-import { resolveDateRangeV2At, resolveTimeZone } from './resolve-date-range-v2'
+import { resolveDateRangeV2At, resolvePresetBounds, resolveTimeZone } from './resolve-date-range-v2'
 import { formatTimeZoneOffset, zonedCivilDateTimeToUtc } from './timezone-utils'
 import type {
   CalendarUnit,
@@ -107,9 +106,8 @@ export const configuredPresetLabel = (
   presetId: string | undefined,
   presets: readonly Pick<DateRangeV2Preset, 'value' | 'label'>[] | undefined
 ): string | undefined => {
-  const key = presetId?.trim().toUpperCase()
-  if (!key || key === 'FIXED' || !presets?.length) return undefined
-  return presets.find(preset => preset.value.trim().toUpperCase() === key)?.label
+  if (!presetId || presetId === 'FIXED' || !presets?.length) return undefined
+  return presets.find(preset => preset.value === presetId)?.label
 }
 
 const storedEpochs = (from?: Date, to?: Date): readonly [number, number] | undefined => {
@@ -139,7 +137,7 @@ const presetEpochs = (
 ): readonly [number, number] | undefined => {
   const preset = presets?.find(item => item.value === presetId)
   if (!preset) return undefined
-  const bounds = presetBounds(preset, timezone ?? 'UTC')
+  const bounds = resolvePresetBounds(preset, timezone ?? 'UTC')
   return storedEpochs(bounds.from, bounds.to)
 }
 
@@ -209,7 +207,7 @@ export const formatDateRangeV2ValueLabel = (
     )
   }
 
-  const presetName = configuredPresetLabel(range.preset, options.presets)?.trim() || range.preset.trim()
+  const presetName = configuredPresetLabel(range.preset, options.presets)?.trim() || range.preset
   const zone = resolveTimeZone(timezone)
   const label = options.label ?? {}
   const epochs =

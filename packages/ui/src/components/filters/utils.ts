@@ -5,9 +5,9 @@ import { format } from 'date-fns'
 
 import { formatDateRangeV2ValueLabel } from '../date-range-v2/format-date-range-v2-label'
 import { resolveTimeZone } from '../date-range-v2/resolve-date-range-v2'
-import { resolveDateRangeV2Config } from '../date-range-v2/resolve-picker-config'
+import { normalizeDateRangeV2Config } from '../date-range-v2/resolve-picker-config'
 import { formatTimeZoneOffset } from '../date-range-v2/timezone-utils'
-import type { DateRangeV2Config, DateRangeV2FilterValue } from '../date-range-v2/types'
+import type { DateRangeV2Config, DateRangeV2Value } from '../date-range-v2/types'
 import { ComboBoxOptions } from './filters-bar/actions/variants/combo-box'
 import {
   CheckboxOptions,
@@ -18,18 +18,15 @@ import {
   FilterValueTypes
 } from './types'
 
-export const getDateRangeV2FilterLabel = (
-  value: DateRangeV2FilterValue | undefined,
-  config?: DateRangeV2Config
-): string => {
+export const getDateRangeV2FilterLabel = (value: DateRangeV2Value | undefined, config?: DateRangeV2Config): string => {
   if (!value) return ''
   try {
-    const resolved = resolveDateRangeV2Config(config)
+    const normalized = normalizeDateRangeV2Config(config)
     const label = formatDateRangeV2ValueLabel(value, {
-      presets: resolved.presets,
-      label: resolved.triggerLabel
+      presets: normalized.presets,
+      label: normalized.triggerLabel
     })
-    const offset = resolved.triggerLabel.showTimezone
+    const offset = normalized.triggerLabel.showTimezone
       ? ` · ${formatTimeZoneOffset(resolveTimeZone(value.timezone))}`
       : ''
     return `${label.triggerText}${offset}`
@@ -79,7 +76,7 @@ export const getFilterLabelValue = <
       return `${format(fromDate, 'MMM d, yyyy')} - ${format(toDate, 'MMM d, yyyy')}`
     }
     case FilterFieldTypes.DateRangeV2: {
-      const filterValue = filter.value as DateRangeV2FilterValue | undefined
+      const filterValue = filter.value as DateRangeV2Value | undefined
       return getDateRangeV2FilterLabel(filterValue, filterOption.filterFieldConfig)
     }
     case FilterFieldTypes.ComboBox: {

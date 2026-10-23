@@ -206,5 +206,3 @@ export interface DateRangeV2Value {
   range: DateRangeV2Range
   timezone?: TimeZoneId
 }
-
-export type DateRangeV2FilterValue = DateRangeV2Value

@@ -27,20 +27,20 @@ const DEFAULT_CALENDAR_UNITS: CalendarUnit[] = ['day', 'week', 'month', 'quarter
 const DEFAULT_EXTENTS: CalendarExtent[] = ['full', 'so_far', 'from_now']
 const DEFAULT_TIME_ZONE: TimeZoneId = 'UTC'
 
-export interface ResolvedRelativeMode {
+export interface NormalizedRelativeMode {
   allowAmount: boolean
   units: RelativeUnit[]
   defaultValue: RelativeRange
   maxAmount?: number
 }
 
-export interface ResolvedFixedMode {
+export interface NormalizedFixedMode {
   allowTime: boolean
   allowSeconds: boolean
   defaultValue?: FixedRange
 }
 
-export interface ResolvedCalendarMode {
+export interface NormalizedCalendarMode {
   allowAmount: boolean
   units: CalendarUnit[]
   extents: CalendarExtent[]
@@ -48,7 +48,7 @@ export interface ResolvedCalendarMode {
   maxAmount?: number
 }
 
-export interface ResolvedDateRangeV2Mode {
+export interface NormalizedDateRangeV2Mode {
   mode: DateRangeV2Mode
   /** Tab title. A blank `label` keeps the default title. */
   label: string
@@ -64,8 +64,8 @@ const DEFAULT_MODE_LABEL: Record<DateRangeV2Mode, string> = {
 const isMode = (value: string): value is DateRangeV2Mode =>
   value === 'presets' || value === 'relative' || value === 'calendar' || value === 'fixed'
 
-export interface ResolvedDateRangeV2Config {
-  modes: ResolvedDateRangeV2Mode[]
+export interface NormalizedDateRangeV2Config {
+  modes: NormalizedDateRangeV2Mode[]
   tabDetails: DateRangeV2TabDetail[]
   direction: DateRangeV2Direction
   clearable: boolean
@@ -75,9 +75,9 @@ export interface ResolvedDateRangeV2Config {
     defaultValue: TimeZoneId
     options: TimeZoneOptionList
   }
-  relative: ResolvedRelativeMode
-  calendar: ResolvedCalendarMode
-  fixed: ResolvedFixedMode
+  relative: NormalizedRelativeMode
+  calendar: NormalizedCalendarMode
+  fixed: NormalizedFixedMode
   triggerLabel: Required<DateRangeV2LabelConfig>
   presets: DateRangeV2Preset[]
   calendarProps: DateRangeV2Config['calendarProps']
@@ -98,7 +98,8 @@ export const clampAmount = (amount: number, maxAmount?: number): number => {
 
 const PRESET_GROUPS = new Set<DateRangeV2Preset['group']>(['recommended', 'relative', 'calendar'])
 
-const resolvePresets = (presets: readonly DateRangeV2Preset[] | undefined): DateRangeV2Preset[] =>
+/** A preset needs a label, a value, a known group, and `getRange`. A blank value is omitted. The stored value is unchanged. */
+export const normalizePresets = (presets: readonly DateRangeV2Preset[] | undefined): DateRangeV2Preset[] =>
   (presets ?? []).filter(
     preset =>
       preset.label.trim() &&
@@ -107,7 +108,7 @@ const resolvePresets = (presets: readonly DateRangeV2Preset[] | undefined): Date
       PRESET_GROUPS.has(preset.group)
   )
 
-const resolveTabDetails = (details: readonly DateRangeV2TabDetail[] | undefined): DateRangeV2TabDetail[] =>
+const normalizeTabDetails = (details: readonly DateRangeV2TabDetail[] | undefined): DateRangeV2TabDetail[] =>
   DEFAULT_TAB_DETAILS.filter(detail => details?.includes(detail))
 
 const modeOf = (entry: DateRangeV2ModeEntry): DateRangeV2Mode | undefined =>
@@ -118,10 +119,10 @@ const displayLabel = (entry: DateRangeV2ModeEntry, mode: DateRangeV2Mode): strin
   return label || DEFAULT_MODE_LABEL[mode]
 }
 
-const resolveModes = (
+const normalizeModes = (
   modes: readonly DateRangeV2ModeEntry[] | undefined
 ): {
-  tabs: ResolvedDateRangeV2Mode[]
+  tabs: NormalizedDateRangeV2Mode[]
   relative?: RelativeModeConfig
   calendar?: CalendarModeConfig
   fixed?: FixedModeConfig
@@ -129,7 +130,7 @@ const resolveModes = (
 } => {
   const source: readonly DateRangeV2ModeEntry[] = modes && modes.length > 0 ? modes : DEFAULT_MODES
   const seen = new Set<DateRangeV2Mode>()
-  const tabs: ResolvedDateRangeV2Mode[] = []
+  const tabs: NormalizedDateRangeV2Mode[] = []
   let relative: RelativeModeConfig | undefined
   let calendar: CalendarModeConfig | undefined
   let fixed: FixedModeConfig | undefined
@@ -146,14 +147,14 @@ const resolveModes = (
     else presets = entry.presets
   }
 
-  if (tabs.length > 0) return { tabs, relative, calendar, fixed, presets: resolvePresets(presets) }
+  if (tabs.length > 0) return { tabs, relative, calendar, fixed, presets: normalizePresets(presets) }
   return {
     tabs: DEFAULT_MODES.map(entry => ({ mode: entry.mode, label: DEFAULT_MODE_LABEL[entry.mode] })),
     presets: []
   }
 }
 
-const resolveRelativeDefault = (
+const normalizeRelativeDefault = (
   requested: RelativeModeConfig['defaultValue'],
   units: RelativeUnit[],
   maxAmount?: number
@@ -167,14 +168,14 @@ const resolveRelativeDefault = (
   }
 }
 
-const resolveFixedDefault = (requested: FixedModeConfig['defaultValue']): FixedRange | undefined => {
+const normalizeFixedDefault = (requested: FixedModeConfig['defaultValue']): FixedRange | undefined => {
   if (!requested) return undefined
   const { from, to } = requested
   if (!isCivilDateTime(from) || !isCivilDateTime(to)) return undefined
   return { kind: 'fixed', from, to }
 }
 
-const resolveCalendarDefault = (
+const normalizeCalendarDefault = (
   requested: CalendarModeConfig['defaultValue'],
   units: CalendarUnit[],
   extents: CalendarExtent[],
@@ -201,15 +202,15 @@ const resolveCalendarDefault = (
   }
 }
 
-export const resolveDateRangeV2Config = (config?: DateRangeV2Config): ResolvedDateRangeV2Config => {
+export const normalizeDateRangeV2Config = (config?: DateRangeV2Config): NormalizedDateRangeV2Config => {
   const timezone = config?.timezone
-  const selected = resolveModes(config?.modes)
+  const selected = normalizeModes(config?.modes)
   const relativeUnits = listed(selected.relative?.units, DEFAULT_RELATIVE_UNITS)
   const calendarUnits = listed(selected.calendar?.units, DEFAULT_CALENDAR_UNITS)
   const relativeMax = selected.relative?.maxAmount
   const calendarMax = selected.calendar?.maxAmount
   const calendarExtents = listed(selected.calendar?.extents, DEFAULT_EXTENTS)
-  const calendarDefaultValue = resolveCalendarDefault(
+  const calendarDefaultValue = normalizeCalendarDefault(
     selected.calendar?.defaultValue,
     calendarUnits,
     calendarExtents,
@@ -218,7 +219,7 @@ export const resolveDateRangeV2Config = (config?: DateRangeV2Config): ResolvedDa
 
   return {
     modes: selected.tabs,
-    tabDetails: resolveTabDetails(config?.tabDetails),
+    tabDetails: normalizeTabDetails(config?.tabDetails),
     direction: config?.direction ?? 'any',
     clearable: config?.clearable ?? false,
     timezone: timezone
@@ -232,7 +233,7 @@ export const resolveDateRangeV2Config = (config?: DateRangeV2Config): ResolvedDa
     relative: {
       allowAmount: selected.relative?.allowAmount ?? true,
       units: relativeUnits,
-      defaultValue: resolveRelativeDefault(selected.relative?.defaultValue, relativeUnits, relativeMax),
+      defaultValue: normalizeRelativeDefault(selected.relative?.defaultValue, relativeUnits, relativeMax),
       maxAmount: relativeMax
     },
     calendar: {
@@ -245,7 +246,7 @@ export const resolveDateRangeV2Config = (config?: DateRangeV2Config): ResolvedDa
     fixed: {
       allowTime: selected.fixed?.allowTime ?? true,
       allowSeconds: selected.fixed?.allowSeconds ?? false,
-      defaultValue: resolveFixedDefault(selected.fixed?.defaultValue)
+      defaultValue: normalizeFixedDefault(selected.fixed?.defaultValue)
     },
     triggerLabel: {
       showTime: config?.triggerLabel?.showTime ?? true,

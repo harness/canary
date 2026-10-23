@@ -19,7 +19,7 @@ import {
   toZonedWallTime,
   zonedCivilDateTimeToUtc
 } from './timezone-utils'
-import type { CalendarUnit, RelativeUnit, ResolvableDateRangeV2, TimeZoneId } from './types'
+import type { CalendarUnit, DateRangeV2Preset, RelativeUnit, ResolvableDateRangeV2, TimeZoneId } from './types'
 
 /** Calendar weeks start on Monday. */
 const WEEK_STARTS_ON = 1
@@ -137,7 +137,7 @@ const resolveEpochs = (range: ResolvableDateRangeV2, timezone: TimeZoneId | unde
 /**
  * Resolves a relative, calendar, or fixed range to inclusive epochs.
  * `range` is returned unchanged. An omitted timezone is returned as UTC.
- * A configured preset is not accepted: its bounds come from `getRange`.
+ * A configured preset is not accepted: its bounds come from `resolvePresetBounds`.
  */
 export const resolveDateRangeV2At = (
   value: { range: ResolvableDateRangeV2; timezone?: TimeZoneId },
@@ -156,3 +156,12 @@ export const resolveDateRangeV2 = (
   value: { range: ResolvableDateRangeV2; timezone?: TimeZoneId },
   now: Date = new Date()
 ): ResolvedDateRangeV2 => resolveDateRangeV2At(value, now)
+
+/** Epochs from `getRange`, with the ends ordered. */
+export const resolvePresetBounds = (
+  preset: Pick<DateRangeV2Preset, 'getRange'>,
+  timezone: TimeZoneId
+): { from: Date; to: Date } => {
+  const { from, to } = preset.getRange({ timezone })
+  return from <= to ? { from, to } : { from: to, to: from }
+}

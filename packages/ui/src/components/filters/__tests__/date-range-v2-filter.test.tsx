@@ -1,7 +1,7 @@
 import { render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 
-import type { DateRangeV2FilterValue } from '../../date-range-v2/types'
+import type { DateRangeV2Value } from '../../date-range-v2/types'
 import { TooltipProvider } from '../../tooltip'
 import DateRangeV2Filter from '../filters-bar/actions/variants/date-range-v2-filter'
 import FilterField from '../filters-field'
@@ -111,7 +111,7 @@ describe('DateRangeV2Filter', () => {
   test('lets the filter menu grow to the available height', () => {
     render(
       <TooltipProvider>
-        <FilterField<'timeframe', DateRangeV2FilterValue>
+        <FilterField<'timeframe', DateRangeV2Value>
           filterOption={{
             label: 'Timeframe',
             value: 'timeframe',

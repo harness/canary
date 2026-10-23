@@ -5,7 +5,7 @@ import { Label } from '@components/form-primitives'
 import { MultiSelectOption } from '@components/multi-select'
 import { cn } from '@utils/cn'
 
-import type { DateRangeV2FilterValue } from '../date-range-v2/types'
+import type { DateRangeV2Value } from '../date-range-v2/types'
 import FilterBoxWrapper, { type FilterFieldTriggerVariant } from './filter-box-wrapper'
 import Calendar from './filters-bar/actions/variants/calendar-field'
 import { MultiSelectFilter } from './filters-bar/actions/variants/checkbox'
@@ -92,7 +92,7 @@ const FilterFieldInternal = <T extends string, V extends FilterValueTypes, Custo
       )
     }
     case FilterFieldTypes.DateRangeV2: {
-      const dateRangeV2Filter = filter as FilterField<DateRangeV2FilterValue>
+      const dateRangeV2Filter = filter as FilterField<DateRangeV2Value>
       return (
         <DateRangeV2Filter
           filter={dateRangeV2Filter}

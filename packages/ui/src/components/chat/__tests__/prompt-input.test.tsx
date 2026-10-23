@@ -1,7 +1,7 @@
 import { type CSSProperties } from 'react'
 
 import * as TooltipPrimitive from '@radix-ui/react-tooltip'
-import { render, screen } from '@testing-library/react'
+import { fireEvent, render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { vi } from 'vitest'
 
@@ -202,6 +202,44 @@ describe('PromptInput', () => {
       await userEvent.keyboard('{Shift>}{Enter}{/Shift}')
 
       expect(onSubmit).not.toHaveBeenCalled()
+    })
+
+    test('does not submit on Enter while an IME composition is in progress', () => {
+      const onSubmit = vi.fn((e: React.FormEvent<HTMLFormElement>) => e.preventDefault())
+      renderComposer({ onSubmit })
+
+      const textarea = screen.getByRole('textbox')
+      // IME (Japanese/Chinese/Korean) fires keydown with isComposing=true when
+      // Enter confirms a conversion candidate — that must not send the message.
+      fireEvent.keyDown(textarea, { key: 'Enter', isComposing: true })
+
+      expect(onSubmit).not.toHaveBeenCalled()
+    })
+
+    test('does not submit on Enter with keyCode 229 (IME processing)', () => {
+      const onSubmit = vi.fn((e: React.FormEvent<HTMLFormElement>) => e.preventDefault())
+      renderComposer({ onSubmit })
+
+      const textarea = screen.getByRole('textbox')
+      fireEvent.keyDown(textarea, { key: 'Enter', keyCode: 229, isComposing: false })
+
+      expect(onSubmit).not.toHaveBeenCalled()
+    })
+
+    test('does not submit on WebKit ordering: compositionEnd then Enter with isComposing false', async () => {
+      const onSubmit = vi.fn((e: React.FormEvent<HTMLFormElement>) => e.preventDefault())
+      renderComposer({ onSubmit })
+
+      const textarea = screen.getByRole('textbox')
+      fireEvent.compositionStart(textarea)
+      fireEvent.compositionEnd(textarea)
+      fireEvent.keyDown(textarea, { key: 'Enter', isComposing: false, keyCode: 229 })
+
+      expect(onSubmit).not.toHaveBeenCalled()
+
+      await new Promise(resolve => setTimeout(resolve, 0))
+      fireEvent.keyDown(textarea, { key: 'Enter', isComposing: false })
+      expect(onSubmit).toHaveBeenCalledTimes(1)
     })
 
     test('calls onChange when the user types', async () => {

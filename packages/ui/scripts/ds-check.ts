@@ -451,9 +451,21 @@ function validateSourceProps(manifest: Record<string, unknown>): {
   // A component declares its variants either through CVA or in the TypeScript type. Only
   // 25 of 77 flat components use CVA, so both are checked — CVA first, since when a
   // component has both, CVA is what actually produces the classes.
-  const cvaIdx = src.indexOf('cva(')
-  const variantsIdx = cvaIdx === -1 ? -1 : src.indexOf('variants:', cvaIdx)
-  const variantsBlock = variantsIdx === -1 ? undefined : extractBlock(src, variantsIdx)
+  //
+  // A component may make several cva() calls (tabs, dialog, accordion each declare
+  // several). Collect the variants block from every call: scanning only the first
+  // compared the manifest against the wrong block, inventing or missing mismatches.
+  // Each `variants:` is bounded to its own cva() so a later call's block isn't stolen.
+  const variantsBlocks: string[] = []
+  const cvaIndices: number[] = []
+  for (let i = src.indexOf('cva('); i !== -1; i = src.indexOf('cva(', i + 1)) cvaIndices.push(i)
+  for (let c = 0; c < cvaIndices.length; c++) {
+    const nextCva = c + 1 < cvaIndices.length ? cvaIndices[c + 1] : src.length
+    const vIdx = src.indexOf('variants:', cvaIndices[c])
+    if (vIdx === -1 || vIdx >= nextCva) continue
+    const block = extractBlock(src, vIdx)
+    if (block) variantsBlocks.push(block)
+  }
 
   const verified = new Set<string>()
 
@@ -464,12 +476,17 @@ function validateSourceProps(manifest: Record<string, unknown>): {
 
     let sourceValues: string[] = []
 
-    if (variantsBlock) {
-      const keyIdx = new RegExp(`(^|[\\s,{])${name}\\s*:`, 'm').exec(variantsBlock)?.index
-      if (keyIdx !== undefined) {
-        const propBlock = extractBlock(variantsBlock, keyIdx)
-        if (propBlock) sourceValues = topLevelKeys(propBlock)
+    // A prop may be split across cva() calls; union its keys from every block that
+    // defines it so the manifest is compared against the full set of produced values.
+    if (variantsBlocks.length > 0) {
+      const merged = new Set<string>()
+      for (const block of variantsBlocks) {
+        const keyIdx = new RegExp(`(^|[\\s,{])${name}\\s*:`, 'm').exec(block)?.index
+        if (keyIdx === undefined) continue
+        const propBlock = extractBlock(block, keyIdx)
+        if (propBlock) for (const k of topLevelKeys(propBlock)) merged.add(k)
       }
+      if (merged.size > 0) sourceValues = [...merged]
     }
 
     if (sourceValues.length === 0) sourceValues = unionValuesFor(src, name)

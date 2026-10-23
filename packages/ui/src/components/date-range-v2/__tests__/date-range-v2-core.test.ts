@@ -9,8 +9,8 @@ import {
   formatDateRangeV2ValueLabel,
   formatFixedStartLabel
 } from '../format-date-range-v2-label'
+import { normalizeDateRangeV2Config } from '../normalize-picker-config'
 import { resolveDateRangeV2, resolveDateRangeV2At } from '../resolve-date-range-v2'
-import { normalizeDateRangeV2Config } from '../resolve-picker-config'
 import type { DateRangeV2Preset, ResolvableDateRangeV2, TimeZoneId } from '../types'
 
 const state = (range: ResolvableDateRangeV2): ResolvableDateRangeV2 => range

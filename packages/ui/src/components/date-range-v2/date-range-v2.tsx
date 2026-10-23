@@ -29,9 +29,9 @@ import {
   formatDateRangeV2ValueLabel,
   formatFixedStartLabel
 } from './format-date-range-v2-label'
+import { clampAmount, normalizeDateRangeV2Config, type NormalizedDateRangeV2Config } from './normalize-picker-config'
 import { PositiveAmountInput } from './positive-amount-input'
 import { resolveDateRangeV2, resolveDateRangeV2At, resolvePresetBounds, resolveTimeZone } from './resolve-date-range-v2'
-import { clampAmount, normalizeDateRangeV2Config, type NormalizedDateRangeV2Config } from './resolve-picker-config'
 import { TimezoneOffsetBadge, TimezoneOptionLabel } from './timezone-offset-badge'
 import {
   getBrowserTimeZone,

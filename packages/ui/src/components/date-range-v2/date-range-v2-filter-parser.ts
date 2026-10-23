@@ -1,5 +1,5 @@
+import { normalizePresets } from './normalize-picker-config'
 import { resolveDateRangeV2, resolvePresetBounds, resolveTimeZone } from './resolve-date-range-v2'
-import { normalizePresets } from './resolve-picker-config'
 import { utcToCivilDateTime } from './timezone-utils'
 import type {
   CalendarExtent,
@@ -60,7 +60,9 @@ const decodeRangeQuery = (rangeQuery: string): string | undefined => {
  * Relative, calendar, or fixed range inside a rangeQuery, plus its timezone.
  * A missing timezone is UTC.
  */
-const parseRangeQuery = (rangeQuery: string): { range: ResolvableDateRangeV2; timezone: TimeZoneId } | undefined => {
+export const parseRangeQuery = (
+  rangeQuery: string
+): { range: ResolvableDateRangeV2; timezone: TimeZoneId } | undefined => {
   const query = decodeRangeQuery(rangeQuery)
   if (!query) return undefined
 

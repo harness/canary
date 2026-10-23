@@ -270,7 +270,7 @@
         "$type": "typography",
         "$value": {
           "fontFamily": "{fontFamily.default}",
-          "fontWeight": "{fontWeight.default.normal.600}",
+          "fontWeight": "{fontWeight.default.normal.heading}",
           "fontSize": "{fontSize.3}",
           "lineHeight": "{lineHeight.20}",
           "letterSpacing": "{tracking.normal}",
@@ -284,7 +284,7 @@
         "$type": "typography",
         "$value": {
           "fontFamily": "{fontFamily.default}",
-          "fontWeight": "{fontWeight.default.normal.600}",
+          "fontWeight": "{fontWeight.default.normal.heading}",
           "fontSize": "{fontSize.8}",
           "lineHeight": "{lineHeight.24}",
           "letterSpacing": "{tracking.tight}"
@@ -345,7 +345,7 @@
           "$type": "typography",
           "$value": {
             "fontFamily": "{fontFamily.default}",
-            "fontWeight": "{fontWeight.default.normal.600}",
+            "fontWeight": "{fontWeight.default.normal.heading}",
             "fontSize": "{fontSize.6}",
             "lineHeight": "{lineHeight.28}",
             "letterSpacing": "{tracking.tight}",
@@ -411,7 +411,7 @@
           "$type": "typography",
           "$value": {
             "fontFamily": "{fontFamily.default}",
-            "fontWeight": "{fontWeight.default.normal.600}",
+            "fontWeight": "{fontWeight.default.normal.heading}",
             "fontSize": "{fontSize.5}",
             "lineHeight": "{lineHeight.24}",
             "letterSpacing": "{tracking.tight}",

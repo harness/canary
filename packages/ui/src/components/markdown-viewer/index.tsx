@@ -1,4 +1,14 @@
-import { CSSProperties, memo, ReactNode, useCallback, useEffect, useMemo, useRef, useState } from 'react'
+import {
+  ComponentProps,
+  CSSProperties,
+  memo,
+  ReactNode,
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState
+} from 'react'
 
 import { CopyButton, IconV2, IconV2NamesType, Text } from '@/components'
 import MarkdownPreview from '@uiw/react-markdown-preview'
@@ -15,6 +25,7 @@ import { cn } from '@utils/cn'
 import { cva, type VariantProps } from 'class-variance-authority'
 
 import { CodeSuggestionBlock, SuggestionBlock } from './CodeSuggestionBlock'
+import { applyAllowedClasses, type MarkdownViewerPlugin } from './markdown-plugin-classes'
 
 export const getIsMarkdown = (language?: string) => language === 'markdown'
 
@@ -76,6 +87,13 @@ export type MarkdownViewerProps = {
   imageUrlTransform?: (src: string) => string
   /** Use muted text color (text-cn-3) for markdown content */
   muted?: boolean
+  /**
+   * Extra rehype plugins, run before sanitizing. Each plugin lists the classes it may leave on each tag.
+   * `div` and `p` already allow any class. Every other class is removed.
+   */
+  additionalRehypePlugins?: ReadonlyArray<
+    MarkdownViewerPlugin<NonNullable<ComponentProps<typeof MarkdownPreview>['rehypePlugins']>[number]>
+  >
 } & VariantProps<typeof markdownViewerVariants>
 
 const MarkdownViewerLocal = ({
@@ -93,7 +111,8 @@ const MarkdownViewerLocal = ({
   isLoading = false,
   imageUrlTransform,
   variant = 'default',
-  muted = false
+  muted = false,
+  additionalRehypePlugins
 }: MarkdownViewerProps) => {
   const { navigate, location } = useRouterContext()
   const refRootHref = useMemo(() => document.getElementById('repository-ref-root')?.getAttribute('href'), [])
@@ -280,11 +299,14 @@ const MarkdownViewerLocal = ({
   const sanitizeSchema = {
     ...defaultSchema,
     tagNames: [...(defaultSchema.tagNames || [])],
-    attributes: {
-      ...(defaultSchema.attributes || {}),
-      div: [...(defaultSchema.attributes?.div || []), 'className'],
-      p: [...(defaultSchema.attributes?.p || []), 'className']
-    }
+    attributes: applyAllowedClasses(
+      {
+        ...(defaultSchema.attributes || {}),
+        div: [...(defaultSchema.attributes?.div || []), 'className'],
+        p: [...(defaultSchema.attributes?.p || []), 'className']
+      },
+      additionalRehypePlugins ?? []
+    )
   }
 
   return (
@@ -302,6 +324,8 @@ const MarkdownViewerLocal = ({
           rehypeRewrite={rehypeRewrite}
           remarkPlugins={[remarkBreaks]}
           rehypePlugins={[
+            // Before sanitizing, so classes a plugin adds are checked against the classes it declared.
+            ...(additionalRehypePlugins ?? []).map(plugin => plugin.rehypePlugin),
             [rehypeSanitize, sanitizeSchema],
             [rehypeVideo, { test: /\.(mp4|mov|webm|mkv|flv)$/, details: false }],
             [rehypeExternalLinks, { rel: ['nofollow noreferrer noopener'], target: '_blank' }]
@@ -379,7 +403,7 @@ const MarkdownViewerLocal = ({
 
               return <p className={className}>{children}</p>
             },
-            pre: ({ children, node }) => {
+            pre: ({ children, node, className }) => {
               const code = node && node.children ? getCodeString(node.children) : (children as string)
 
               let codeContent = ''
@@ -396,8 +420,8 @@ const MarkdownViewerLocal = ({
 
               if (isSuggestion) {
                 return (
-                  <div className="rounded-cn-2 overflow-hidden border">
-                    <div className="bg-cn-2 px-cn-md py-cn-sm border-b">
+                  <div className={cn('rounded-cn-2 overflow-hidden border', className)}>
+                    <div className="border-b bg-cn-2 px-cn-md py-cn-sm">
                       <Text variant="body-strong" color="foreground-1" className="!m-0">
                         {suggestionTitle}
                       </Text>
@@ -412,11 +436,12 @@ const MarkdownViewerLocal = ({
                 <div
                   className={cn(
                     'min-h-[52px] mb-cn-md bg-cn-2 rounded-cn-2 pl-cn-md pr-cn-sm py-cn-sm relative overflow-hidden border',
-                    { '!pt-[15px]': codeLines.length === 1 }
+                    { '!pt-[15px]': codeLines.length === 1 },
+                    className
                   )}
                 >
                   <CopyButton
-                    className="right-cn-sm top-cn-sm absolute z-10"
+                    className="absolute right-cn-sm top-cn-sm z-10"
                     buttonVariant="outline"
                     name={code}
                     iconSize="xs"
@@ -425,9 +450,9 @@ const MarkdownViewerLocal = ({
                   <pre>
                     {hasLineNumbers ? (
                       <div className="relative flex w-full bg-transparent">
-                        <div className="bg-cn-2 flex-none select-none text-right">
+                        <div className="flex-none select-none bg-cn-2 text-right">
                           {filteredLines.map((_, i) => (
-                            <Text as="span" key={i} className="pr-cn-sm block pt-[0.5px]">
+                            <Text as="span" key={i} className="block pr-cn-sm pt-[0.5px]">
                               {i + 1}
                             </Text>
                           ))}
@@ -471,3 +496,4 @@ MarkdownViewerLocal.displayName = 'MarkdownViewer'
 const MarkdownViewer = memo(MarkdownViewerLocal)
 
 export { MarkdownViewer }
+export type { MarkdownViewerPlugin }

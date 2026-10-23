@@ -56,8 +56,8 @@ Each box is one `config` field. A selected mode's settings are nested inside `mo
       relativeAllowAmount: true,
       relativeUnits: relativeUnits,
       relativeDefaultDirection: 'last',
-      relativeDefaultUnit: 'day',
-      relativeDefaultAmount: '7',
+      relativeDefaultUnit: 'month',
+      relativeDefaultAmount: '1',
       relativeMaxAmount: '',
       calendarAllowAmount: true,
       calendarUnits: calendarUnits,
@@ -101,6 +101,18 @@ Each box is one `config` field. A selected mode's settings are nested inside `mo
       const parsed = Number(raw);
       return Number.isInteger(parsed) && parsed >= 1 ? parsed : undefined;
     };
+    const filled = (value) => {
+      const next = {};
+      Object.keys(value).forEach((key) => {
+        if (value[key] !== undefined && value[key] !== '') next[key] = value[key];
+      });
+      return Object.keys(next).length ? next : undefined;
+    };
+    const pick = (key, next) => {
+      const update = {};
+      update[key] = controls[key] === next ? '' : next;
+      patch(update);
+    };
 
     const labeled = (mode, settings, label) => {
       const entry = Object.assign({ mode: mode }, settings);
@@ -113,18 +125,18 @@ Each box is one `config` field. A selected mode's settings are nested inside `mo
       relative: labeled('relative', {
         allowAmount: controls.relativeAllowAmount,
         units: controls.relativeUnits,
-        defaultValue: {
+        defaultValue: filled({
           direction: controls.relativeDefaultDirection,
-          amount: amount(controls.relativeDefaultAmount) || 7,
+          amount: amount(controls.relativeDefaultAmount),
           unit: controls.relativeDefaultUnit,
-        },
+        }),
         maxAmount: amount(controls.relativeMaxAmount),
       }, controls.relativeLabel),
       calendar: labeled('calendar', {
         allowAmount: controls.calendarAllowAmount,
         units: controls.calendarUnits,
         extents: controls.calendarExtents,
-        defaultValue:
+        defaultValue: filled(
           controls.calendarDefaultPosition === 'this'
             ? {
                 position: 'this',
@@ -133,9 +145,10 @@ Each box is one `config` field. A selected mode's settings are nested inside `mo
               }
             : {
                 position: controls.calendarDefaultPosition,
-                amount: amount(controls.calendarDefaultAmount) || 1,
+                amount: amount(controls.calendarDefaultAmount),
                 unit: controls.calendarDefaultUnit,
-              },
+              }
+        ),
         maxAmount: amount(controls.calendarMaxAmount),
       }, controls.calendarLabel),
       fixed: labeled('fixed', Object.assign(
@@ -316,8 +329,8 @@ Each box is one `config` field. A selected mode's settings are nested inside `mo
                       />
                     )}
                     {field('units', toggles(relativeUnits, controls.relativeUnits, (unit) => toggleListed('relativeUnits', unit, relativeUnits, 'relativeDefaultUnit')))}
-                    {field('defaultValue.direction', choices(['last', 'next'], controls.relativeDefaultDirection, (relativeDefaultDirection) => patch({ relativeDefaultDirection: relativeDefaultDirection })))}
-                    {field('defaultValue.unit', choices(controls.relativeUnits, controls.relativeDefaultUnit, (relativeDefaultUnit) => patch({ relativeDefaultUnit: relativeDefaultUnit })))}
+                    {field('defaultValue.direction', choices(['last', 'next'], controls.relativeDefaultDirection, (next) => pick('relativeDefaultDirection', next)))}
+                    {field('defaultValue.unit', choices(controls.relativeUnits, controls.relativeDefaultUnit, (next) => pick('relativeDefaultUnit', next)))}
                     <Layout.Flex direction="row" gapX="sm" wrap="wrap">
                       <TextInput
                         id="date-range-v2-relative-default-amount"
@@ -366,10 +379,10 @@ Each box is one `config` field. A selected mode's settings are nested inside `mo
                     )}
                     {field('units', toggles(calendarUnits, controls.calendarUnits, (unit) => toggleListed('calendarUnits', unit, calendarUnits, 'calendarDefaultUnit')))}
                     {field('extents', toggles(calendarExtents, controls.calendarExtents, (extent) => toggleListed('calendarExtents', extent, calendarExtents, 'calendarDefaultExtent')))}
-                    {field('defaultValue.position', choices(['previous', 'this', 'next'], controls.calendarDefaultPosition, (calendarDefaultPosition) => patch({ calendarDefaultPosition: calendarDefaultPosition })))}
-                    {field('defaultValue.unit', choices(controls.calendarUnits, controls.calendarDefaultUnit, (calendarDefaultUnit) => patch({ calendarDefaultUnit: calendarDefaultUnit })))}
+                    {field('defaultValue.position', choices(['previous', 'this', 'next'], controls.calendarDefaultPosition, (next) => pick('calendarDefaultPosition', next)))}
+                    {field('defaultValue.unit', choices(controls.calendarUnits, controls.calendarDefaultUnit, (next) => pick('calendarDefaultUnit', next)))}
                     {controls.calendarDefaultPosition === 'this'
-                      ? field('defaultValue.extent', choices(controls.calendarExtents, controls.calendarDefaultExtent, (calendarDefaultExtent) => patch({ calendarDefaultExtent: calendarDefaultExtent })))
+                      ? field('defaultValue.extent', choices(controls.calendarExtents, controls.calendarDefaultExtent, (next) => pick('calendarDefaultExtent', next)))
                       : null}
                     <Layout.Flex direction="row" gapX="sm" wrap="wrap">
                       {controls.calendarDefaultPosition === 'this' ? null : (
@@ -734,7 +747,7 @@ Include `{ mode: 'presets', presets }` in `modes` to add that tab. Put it first 
     {
       name: "config",
       description:
-        "modes, tabDetails, direction, timezone, clearable, triggerLabel, and calendarProps. triggerLabel.showTime adds a clock time when either end is not the start or end of a day. triggerLabel.showTimezone adds the offset. Both default to true. tabDetails chooses description, example, and note under each tab title. Omit it, or pass an empty list, to leave the title only. Omit modes for Relative, Calendar, and Fixed. Each entry is { mode } plus that mode's settings. label on a mode entry replaces the tab title. Include { mode: 'presets', presets } to add that tab. presets is required on that object. { mode: 'presets', presets: [] } shows an empty preset select. Each preset matches the date range picker: label, value, getRange, and group. A relative entry's defaultValue is direction, amount, and unit. Omit it for Last 7 days. A calendar entry's defaultValue is a calendar range. Previous and Next include amount. This includes extent. Omit it for Previous 1 month. A fixed entry's defaultValue is from and to, each yyyy-MM-ddTHH:mm:ss. Omit it to leave the start and end empty. allowTime shows the clock. allowSeconds shows seconds. Timezone false hides the zone row. An object sets browserZone, defaultValue, and options. options locale-utc lists Browser Time and UTC only and hides search. The default zone is UTC. clearable shows the delete icon on the standalone picker. calendarProps passes calendar options the picker does not own. Weeks start on Monday. resolveDateRangeV2(value, now) returns from, to, range, and timezone for a relative, calendar, or fixed range.",
+        "modes, tabDetails, direction, timezone, clearable, triggerLabel, and calendarProps. triggerLabel.showTime adds a clock time when either end is not the start or end of a day. triggerLabel.showTimezone adds the offset. Both default to true. tabDetails chooses description, example, and note under each tab title. Omit it, or pass an empty list, to leave the title only. Omit modes for Relative, Calendar, and Fixed. Each entry is { mode } plus that mode's settings. label on a mode entry replaces the tab title. Include { mode: 'presets', presets } to add that tab. presets is required on that object. { mode: 'presets', presets: [] } shows an empty preset select. Each preset matches the date range picker: label, value, getRange, and group. A relative entry's defaultValue is direction, amount, and unit. Omit it for Last 1 month. A calendar entry's defaultValue is a calendar range. Previous and Next include amount. This includes extent. Omit it for Previous 1 month. A fixed entry's defaultValue is from and to, each yyyy-MM-ddTHH:mm:ss. Omit it to leave the start and end empty. allowTime shows the clock. allowSeconds shows seconds. Timezone false hides the zone row. An object sets browserZone, defaultValue, and options. options locale-utc lists Browser Time and UTC only and hides search. The default zone is UTC. clearable shows the delete icon on the standalone picker. calendarProps passes calendar options the picker does not own. Weeks start on Monday. resolveDateRangeV2(value, now) returns from, to, range, and timezone for a relative, calendar, or fixed range.",
       required: false,
       value: "DateRangeV2Config",
     },

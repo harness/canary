@@ -123,9 +123,18 @@ describe('DateRangeV2Content', () => {
   test('starts on the future side for future-only pickers', () => {
     renderContent({ value: undefined, config: { direction: 'future' } })
 
-    expect(screen.getByText('Next 7 days')).toBeInTheDocument()
+    expect(screen.getByText('Next 1 month')).toBeInTheDocument()
     expect(screen.getByRole('radio', { name: 'Last' })).toBeDisabled()
     expect(screen.getByRole('radio', { name: 'Next' })).toBeEnabled()
+  })
+
+  test('opens an empty value on last 1 month and the previous month', async () => {
+    renderContent({ value: undefined })
+
+    expect(screen.getByText('Last 1 month')).toBeInTheDocument()
+
+    await userEvent.click(screen.getByRole('tab', { name: /Calendar periods/ }))
+    expect(screen.getByText('Previous month')).toBeInTheDocument()
   })
 
   test('hides the timezone row unless enabled', () => {
@@ -852,7 +861,7 @@ describe('DateRangeV2', () => {
 
     rerender(<DateRangeV2 value={lastWeek} onValueChange={onValueChange} config={{ direction: 'future' }} />)
     expect(onValueChange).toHaveBeenLastCalledWith(
-      expect.objectContaining({ range: { kind: 'relative', direction: 'next', amount: 7, unit: 'day' } })
+      expect.objectContaining({ range: { kind: 'relative', direction: 'next', amount: 1, unit: 'month' } })
     )
 
     const calendarValue: DateRangeV2Value = {

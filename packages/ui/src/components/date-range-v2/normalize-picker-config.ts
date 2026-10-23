@@ -83,11 +83,17 @@ export interface NormalizedDateRangeV2Config {
   calendarProps: DateRangeV2Config['calendarProps']
 }
 
-const listed = <T extends string>(values: readonly T[] | undefined, fallback: T[]): T[] =>
-  values && values.length > 0 ? [...values] : fallback
+const listed = <T extends string>(values: readonly T[] | undefined, fallback: readonly T[]): T[] =>
+  values && values.length > 0 ? [...values] : [...fallback]
 
-const positiveAmount = (amount: number | undefined, fallback: number, maxAmount?: number): number => {
-  const next = amount !== undefined && Number.isInteger(amount) && amount >= 1 ? amount : fallback
+/** A requested choice when it is allowed. Otherwise the built-in choice, or the first allowed one. */
+const choice = <T extends string>(requested: T | undefined, allowed: readonly T[], preferred: T): T => {
+  if (requested !== undefined && allowed.includes(requested)) return requested
+  return allowed.includes(preferred) ? preferred : allowed[0]
+}
+
+const positiveAmount = (amount: number | undefined, maxAmount?: number): number => {
+  const next = amount !== undefined && Number.isInteger(amount) && amount >= 1 ? amount : 1
   return maxAmount !== undefined ? Math.min(next, maxAmount) : next
 }
 
@@ -154,17 +160,34 @@ const normalizeModes = (
   }
 }
 
+/** Last 1 month. A requested direction, unit, or amount replaces that piece when it is allowed. */
 const normalizeRelativeDefault = (
   requested: RelativeModeConfig['defaultValue'],
   units: RelativeUnit[],
   maxAmount?: number
-): RelativeRange => {
-  const fallbackUnit = units.includes('day') ? 'day' : units[0]
+): RelativeRange => ({
+  kind: 'relative',
+  direction: requested?.direction === 'next' ? 'next' : 'last',
+  unit: choice(requested?.unit, units, 'month'),
+  amount: positiveAmount(requested?.amount, maxAmount)
+})
+
+/** Previous 1 month. This uses the requested extent. Previous and next use the requested amount. */
+const normalizeCalendarDefault = (
+  requested: CalendarModeConfig['defaultValue'],
+  units: CalendarUnit[],
+  extents: CalendarExtent[],
+  maxAmount?: number
+): CalendarRange => {
+  const unit = choice(requested?.unit, units, 'month')
+  if (requested?.position === 'this') {
+    return { kind: 'calendar', position: 'this', unit, extent: choice(requested.extent, extents, 'full') }
+  }
   return {
-    kind: 'relative',
-    direction: requested?.direction === 'next' ? 'next' : 'last',
-    unit: requested && units.includes(requested.unit) ? requested.unit : fallbackUnit,
-    amount: positiveAmount(requested?.amount, requested ? 1 : 7, maxAmount)
+    kind: 'calendar',
+    position: requested?.position === 'next' ? 'next' : 'previous',
+    unit,
+    amount: positiveAmount(requested?.amount, maxAmount)
   }
 }
 
@@ -173,33 +196,6 @@ const normalizeFixedDefault = (requested: FixedModeConfig['defaultValue']): Fixe
   const { from, to } = requested
   if (!isCivilDateTime(from) || !isCivilDateTime(to)) return undefined
   return { kind: 'fixed', from, to }
-}
-
-const normalizeCalendarDefault = (
-  requested: CalendarModeConfig['defaultValue'],
-  units: CalendarUnit[],
-  extents: CalendarExtent[],
-  maxAmount?: number
-): CalendarRange => {
-  const unit =
-    requested && units.includes(requested.unit) ? requested.unit : units.includes('month') ? 'month' : units[0]
-  if (!requested) {
-    return { kind: 'calendar', position: 'previous', unit, amount: positiveAmount(1, 1, maxAmount) }
-  }
-  if (requested.position === 'this') {
-    const extent = extents.includes(requested.extent)
-      ? requested.extent
-      : extents.includes('full')
-        ? 'full'
-        : extents[0]
-    return { kind: 'calendar', position: 'this', unit, extent }
-  }
-  return {
-    kind: 'calendar',
-    position: requested.position,
-    unit,
-    amount: positiveAmount(requested.amount, 1, maxAmount)
-  }
 }
 
 export const normalizeDateRangeV2Config = (config?: DateRangeV2Config): NormalizedDateRangeV2Config => {

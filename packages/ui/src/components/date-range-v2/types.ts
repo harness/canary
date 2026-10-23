@@ -90,7 +90,7 @@ export interface RelativeModeConfig {
   units?: readonly RelativeUnit[]
   /**
    * Draft used before a relative value is applied.
-   * Omit this for Last 7 days.
+   * Omit this for Last 1 month.
    */
   defaultValue?: WithoutKind<RelativeRange>
   maxAmount?: number

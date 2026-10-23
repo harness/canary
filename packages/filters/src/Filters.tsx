@@ -13,6 +13,7 @@ import { debug, warn } from './debug'
 import Filter, { FilterProps } from './Filter'
 import FiltersContent, { FiltersContentProps } from './FiltersContent'
 import FiltersDropdown, { FiltersDropdownProps } from './FiltersDropdown'
+import { useRouterContext } from './router-context'
 import { FilterConfig, FilterRefType, FilterStatus, FilterType, InitializeFiltersConfigType } from './types'
 import useRouter from './useRouter'
 import { createQueryString, isNullable, mergeURLSearchParams } from './utils'
@@ -53,6 +54,7 @@ const Filters = forwardRef(function Filters<T extends Record<string, unknown>>(
     {} as Record<FilterKeys, FilterConfig>
   )
   const { searchParams, updateURL: routerUpdateURL } = useRouter()
+  const { location } = useRouterContext()
   const { savedFilterKey, getSavedFilters } = savedFiltersConfig || {}
   const initialFiltersRef = useRef<Record<FilterKeys, FilterType> | undefined>(undefined)
 
@@ -61,7 +63,10 @@ const Filters = forwardRef(function Filters<T extends Record<string, unknown>>(
     const paramsOtherthanFilters: URLSearchParams = new URLSearchParams()
     // Read the live URL, not the render-time `searchParams`: `onChange` runs before this write, and the
     // consumer may have just changed non-filter params (e.g. reset `page`). A stale copy would restore them.
-    const currentSearchParams = new URLSearchParams(window.location.search)
+    // Only browser-history routers keep the query in `window.location`; hash and memory routers use the router copy.
+    const isBrowserLocation =
+      !window.location.hash.startsWith('#/') && window.location.pathname.endsWith(location.pathname)
+    const currentSearchParams = isBrowserLocation ? new URLSearchParams(window.location.search) : searchParams
     currentSearchParams.forEach((value, key) => {
       if (!filtersMap[key as FilterKeys]) {
         paramsOtherthanFilters.append(key, value)

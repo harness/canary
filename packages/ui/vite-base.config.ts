@@ -1,5 +1,5 @@
 import { createHash } from 'crypto'
-import { mkdirSync, readdirSync, readFileSync, writeFileSync } from 'fs'
+import { mkdirSync, readdirSync, readFileSync, writeFileSync, type Dirent } from 'fs'
 import { basename, extname, join, resolve } from 'path'
 
 import react from '@vitejs/plugin-react-swc'
@@ -83,6 +83,17 @@ function extractCssFontsPlugin(fontDir: string): Plugin {
 }
 
 /**
+ * Rewrite non-ASCII characters as CSS escapes so theme CSS stays ASCII-only.
+ * Trailing space terminates the escape so following hex digits are not absorbed.
+ */
+function toAsciiCss(css: string): string {
+  return css.replace(/[^\x00-\x7F]/gu, ch => {
+    const code = ch.codePointAt(0)!
+    return `\\${code.toString(16)} `
+  })
+}
+
+/**
  * Copies individual theme CSS files from core-design-system into dist/themes/
  * with content-hash filenames for long-lived caching. Generates a
  * theme-manifest.json that maps logical theme names to hashed filenames.
@@ -112,7 +123,8 @@ function buildThemesPlugin(): Plugin {
       for (const file of themeFiles) {
         const themeName = basename(file, '.css')
         const sourcePath = resolve(__dirname, '../core-design-system/dist/styles', `${themeName}.css`)
-        const themeContent = readFileSync(sourcePath, 'utf-8')
+        // Escape non-ASCII (today: em-dashes in comments) so shipped theme CSS is ASCII-only.
+        const themeContent = toAsciiCss(readFileSync(sourcePath, 'utf-8'))
 
         const hash = createHash('md5').update(themeContent).digest('hex').slice(0, 8)
         const hashedFilename = `${themeName}.${hash}.css`
@@ -132,6 +144,60 @@ function buildThemesPlugin(): Plugin {
   }
 }
 
+/**
+ * Fails the build if any emitted CSS file contains non-ASCII bytes.
+ * Keeps shipped stylesheets encoding-agnostic so host apps that serve or
+ * decode CSS as anything other than UTF-8 cannot show mojibake (e.g. â€‹
+ * for a zero-width space in skeleton typography).
+ */
+function assertAsciiCssPlugin(): Plugin {
+  const collectCssFiles = (dir: string): string[] => {
+    let entries: Dirent[]
+    try {
+      entries = readdirSync(dir, { withFileTypes: true })
+    } catch {
+      return []
+    }
+
+    const files: string[] = []
+    for (const entry of entries) {
+      const fullPath = join(dir, entry.name)
+      if (entry.isDirectory()) {
+        files.push(...collectCssFiles(fullPath))
+      } else if (entry.isFile() && entry.name.endsWith('.css')) {
+        files.push(fullPath)
+      }
+    }
+    return files
+  }
+
+  return {
+    name: 'assert-ascii-css',
+    apply: 'build',
+    writeBundle(options) {
+      const outDir = options.dir || 'dist'
+      const cssFiles = collectCssFiles(outDir)
+
+      for (const cssPath of cssFiles) {
+        const bytes = readFileSync(cssPath)
+        for (let i = 0; i < bytes.length; i++) {
+          const byte = bytes[i]
+          if (byte > 0x7f) {
+            const start = Math.max(0, i - 40)
+            const end = Math.min(bytes.length, i + 40)
+            const context = bytes.subarray(start, end).toString('latin1')
+            throw new Error(
+              `[assert-ascii-css] Non-ASCII byte 0x${byte.toString(16)} at offset ${i} in ${cssPath}. ` +
+                `Context: ${JSON.stringify(context)}. ` +
+                `Ensure CSS uses escapes (e.g. "\\200B") and esbuild.charset is "ascii".`
+            )
+          }
+        }
+      }
+    }
+  }
+}
+
 export default defineConfig({
   plugins: [
     react(),
@@ -139,8 +205,14 @@ export default defineConfig({
     tsConfigPaths(),
     dts({ rollupTypes: true }),
     extractCssFontsPlugin(resolve(__dirname, 'src/fonts')),
-    buildThemesPlugin()
+    buildThemesPlugin(),
+    // Runs after CSS is written so it sees the final on-disk contents.
+    assertAsciiCssPlugin()
   ],
+  // Vite's CSS minifier reads config.esbuild.charset and defaults to "utf8", which turns
+  // CSS escapes like "\200B" back into raw non-ASCII bytes. Force ASCII so dist CSS is
+  // encoding-agnostic (host apps that serve/decode CSS as non-UTF-8 otherwise show mojibake).
+  esbuild: { charset: 'ascii' },
   resolve: {
     alias: {
       'vaul/style.css?raw': resolve(__dirname, 'node_modules/vaul/style.css?raw')

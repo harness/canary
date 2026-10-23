@@ -17,6 +17,12 @@ export const backgroundColor = {
   '.bg-cn-diff-danger': {
     backgroundColor: 'var(--cn-comp-diff-del-content)'
   },
+  '.bg-cn-diff-success-strong': {
+    backgroundColor: 'var(--cn-comp-diff-add-content-highlight)'
+  },
+  '.bg-cn-diff-danger-strong': {
+    backgroundColor: 'var(--cn-comp-diff-del-content-highlight)'
+  },
   '.bg-cn-graph-card-canvas-1': {
     backgroundColor: 'var(--cn-comp-pipeline-card-canvas-1-bg)'
   },

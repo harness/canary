@@ -6,6 +6,17 @@ description: Recent changes to the Harness Design System, automatically updated 
 import ChangelogList from "@/components/changelog/ChangelogList";
 
 <div className="not-content">
+  <p className="font-caption-normal text-cn-3">October 23, 2026</p>
+  <h2 className="font-heading-default text-cn-1">
+    Semibold weights migrated to the heading weight (UUI-4286)
+  </h2>
+</div>
+
+Every typographic style that previously rendered **Semibold (optical 530)** now renders at the **`heading` weight (optical 500, "Medium")** — lighter and more balanced while keeping clear hierarchy over body text. This covers the `-strong` body and caption styles (`body-strong`, `body-single-line-strong`, `caption-strong`), `micro-normal`, small links, dialog titles, emphasized and heading markdown, chart values, and the Avatar, Stepper, Drawer, and Sheet titles. Nothing needs to change in consuming code — the `.font-*` utilities and `<Text>` variants resolve to the new weight automatically.
+
+The `600` bucket (optical `530`) is **no longer used** anywhere in the library. It remains defined for backwards-compatibility, and a follow-up will retire it — along with the other deprecated weight buckets — once remaining direct consumers migrate.
+
+<div className="not-content">
   <p className="font-caption-normal text-cn-3">October 7, 2026</p>
   <h2 className="font-heading-default text-cn-1">
     Typography weight normalization (UUI-3467)

@@ -484,7 +484,7 @@
       "$type": "typography",
       "$value": {
         "fontFamily": "{fontFamily.default}",
-        "fontWeight": "{fontWeight.default.normal.600}",
+        "fontWeight": "{fontWeight.default.normal.heading}",
         "fontSize": "0.6875rem",
         "lineHeight": "{lineHeight.16}",
         "letterSpacing": "{tracking.wide}"

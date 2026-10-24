@@ -1,6 +1,6 @@
 import { normalizePresets } from './normalize-picker-config'
-import { resolveDateRangeV2, resolvePresetBounds, resolveTimeZone } from './resolve-date-range-v2'
-import { utcToCivilDateTime } from './timezone-utils'
+import { resolveDateRangeV2, resolvePresetBounds } from './resolve-date-range-v2'
+import { isCivilDateTime } from './timezone-utils'
 import type {
   CalendarExtent,
   CalendarUnit,
@@ -26,12 +26,6 @@ const timezoneOf = (timezone?: TimeZoneId): TimeZoneId => timezone || DEFAULT_TI
 const unitToken = (unit: string, amount: number): string => {
   const word = unit.toUpperCase()
   return amount === 1 ? word : `${word}S`
-}
-
-const parseEpoch = (token: string): number | undefined => {
-  if (!/^-?\d+$/.test(token)) return undefined
-  const value = Number(token)
-  return Number.isSafeInteger(value) ? value : undefined
 }
 
 const parseExtent = (token: string | undefined): CalendarExtent =>
@@ -66,22 +60,13 @@ export const parseRangeQuery = (
   const query = decodeRangeQuery(rangeQuery)
   if (!query) return undefined
 
-  // FIXED|FROM_MS|TO_MS|TIMEZONE
-  const fixed = /^FIXED\|(?<from>-?\d+)\|(?<to>-?\d+)(?:\|(?<timezone>[^|]+))?$/.exec(query)
+  // FIXED|yyyy-MM-ddTHH:mm:ss|yyyy-MM-ddTHH:mm:ss|TIMEZONE
+  const fixed = /^FIXED\|(?<from>[^|]+)\|(?<to>[^|]+)(?:\|(?<timezone>[^|]+))?$/.exec(query)
   if (fixed?.groups) {
-    const fromMs = parseEpoch(fixed.groups.from)
-    const toMs = parseEpoch(fixed.groups.to)
+    const { from, to } = fixed.groups
     const timezone = parseTimezone(fixed.groups.timezone)
-    if (fromMs === undefined || toMs === undefined || !timezone) return undefined
-    const zone = resolveTimeZone(timezone)
-    return {
-      range: {
-        kind: 'fixed',
-        from: utcToCivilDateTime(new Date(fromMs), zone),
-        to: utcToCivilDateTime(new Date(toMs), zone)
-      },
-      timezone
-    }
+    if (!isCivilDateTime(from) || !isCivilDateTime(to) || !timezone) return undefined
+    return { range: { kind: 'fixed', from, to }, timezone }
   }
 
   // (LAST|NEXT)_AMOUNT_(MINUTE|HOUR|DAY|WEEK|MONTH|YEAR)S?|TIMEZONE
@@ -180,11 +165,9 @@ export const dateRangeV2FilterParser = {
     const timezone = timezoneOf(value.timezone)
     const range = value.range
     switch (range.kind) {
-      case 'fixed': {
-        // FIXED|FROM_MS|TO_MS|TIMEZONE
-        const resolved = resolveDateRangeV2({ range, timezone })
-        return `FIXED|${resolved.from.getTime()}|${resolved.to.getTime()}|${timezone}`
-      }
+      case 'fixed':
+        // FIXED|yyyy-MM-ddTHH:mm:ss|yyyy-MM-ddTHH:mm:ss|TIMEZONE
+        return `FIXED|${range.from}|${range.to}|${timezone}`
       case 'relative':
         // (LAST|NEXT)_AMOUNT_(MINUTE|HOUR|DAY|WEEK|MONTH|YEAR)S?|TIMEZONE
         return `${range.direction.toUpperCase()}_${range.amount}_${unitToken(range.unit, range.amount)}|${timezone}`

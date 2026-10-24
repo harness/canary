@@ -128,42 +128,40 @@ describe('parseRangeQuery', () => {
   })
 
   describe('fixed', () => {
-    const from = Date.parse('2026-09-05T09:30:00.000Z')
-    const to = Date.parse('2026-10-05T09:30:00.000Z')
+    const from = '2026-09-05T09:30:00'
+    const to = '2026-10-05T09:30:00'
 
-    it('turns epoch milliseconds into civil datetimes in the query timezone', () => {
+    it('keeps the civil datetimes and the query timezone', () => {
       expect(parseRangeQuery(`FIXED|${from}|${to}`)).toEqual({
-        range: { kind: 'fixed', from: '2026-09-05T09:30:00', to: '2026-10-05T09:30:00' },
+        range: { kind: 'fixed', from, to },
         timezone: 'UTC'
       })
       expect(parseRangeQuery(`FIXED|${from}|${to}|Asia/Kolkata`)).toEqual({
-        range: { kind: 'fixed', from: '2026-09-05T15:00:00', to: '2026-10-05T15:00:00' },
+        range: { kind: 'fixed', from, to },
         timezone: 'Asia/Kolkata'
       })
     })
 
-    it('keeps a negative epoch', () => {
-      expect(parseRangeQuery('FIXED|-3600000|0')).toEqual({
-        range: { kind: 'fixed', from: '1969-12-31T23:00:00', to: '1970-01-01T00:00:00' },
-        timezone: 'UTC'
-      })
-    })
-
-    it('returns the civil ends even when the later epoch is written first', () => {
+    it('returns the civil ends in the order they were written', () => {
       expect(parseRangeQuery(`FIXED|${to}|${from}|UTC`)?.range).toEqual({
         kind: 'fixed',
-        from: '2026-10-05T09:30:00',
-        to: '2026-09-05T09:30:00'
+        from: to,
+        to: from
       })
     })
 
-    it('rejects an epoch that is not a safe integer', () => {
-      const unsafe = (BigInt(Number.MAX_SAFE_INTEGER) + 1n).toString()
-      expect(parseRangeQuery(`FIXED|${unsafe}|${to}`)).toBeUndefined()
-      expect(parseRangeQuery(`FIXED|${from}|${unsafe}`)).toBeUndefined()
+    it('decodes a URL-encoded fixed query once', () => {
+      const encoded = encodeURIComponent(`FIXED|${from}|${to}|Asia/Kolkata`)
+      expect(parseRangeQuery(encoded)).toEqual({
+        range: { kind: 'fixed', from, to },
+        timezone: 'Asia/Kolkata'
+      })
     })
 
-    it('rejects a non-numeric epoch and the wrong number of pieces', () => {
+    it('rejects an invalid civil datetime, epoch milliseconds, and the wrong number of pieces', () => {
+      expect(parseRangeQuery('FIXED|2026-02-30T00:00:00|2026-03-01T00:00:00')).toBeUndefined()
+      expect(parseRangeQuery('FIXED|2026-09-05T09:30|2026-10-05T09:30:00')).toBeUndefined()
+      expect(parseRangeQuery('FIXED|1788201000000|1788978600000')).toBeUndefined()
       expect(parseRangeQuery('FIXED|nope|1')).toBeUndefined()
       expect(parseRangeQuery(`FIXED|${from}`)).toBeUndefined()
       expect(parseRangeQuery(`FIXED|${from}|${to}|UTC|extra`)).toBeUndefined()

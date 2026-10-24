@@ -278,8 +278,8 @@ describe.concurrent('date range v2 presets', () => {
     expect(query({ kind: 'calendar', position: 'this', unit: 'month', extent: 'from_now' })).toBe(
       'THIS_MONTH_FROM_NOW|UTC'
     )
-    expect(query({ kind: 'fixed', from: '2026-09-05T09:30:00', to: '2026-10-05T09:30:00' })).toMatch(
-      /^FIXED\|\d+\|\d+\|UTC$/
+    expect(query({ kind: 'fixed', from: '2026-09-05T09:30:00', to: '2026-10-05T09:30:00' })).toBe(
+      'FIXED|2026-09-05T09:30:00|2026-10-05T09:30:00|UTC'
     )
   })
 
@@ -362,7 +362,7 @@ describe.concurrent('dateRangeV2FilterParser', () => {
       `LAST_1_MONTH|Asia/Kolkata`,
       'THIS_MONTH_FROM_NOW|LOCALE',
       'PREVIOUS_1_CALENDAR_QUARTER|UTC',
-      `FIXED|${values[3].from.getTime()}|${values[3].to.getTime()}|UTC`
+      'FIXED|2026-09-05T09:30:00|2026-10-05T09:30:00|UTC'
     ])
   })
 
@@ -423,8 +423,8 @@ describe.concurrent('dateRangeV2FilterParser', () => {
     expect(dateRangeV2FilterParser.parse('THIS_MONTH|UTC', NOW)?.timezone).toBe('UTC')
     expect(dateRangeV2FilterParser.parse('THIS_MONTH|Asia/Calcutta', NOW)?.timezone).toBe('Asia/Calcutta')
 
-    const from = 1788201000000
-    const to = 1788978600000
+    const from = '2026-09-05T09:30:00'
+    const to = '2026-10-05T09:30:00'
     const fixed = dateRangeV2FilterParser.parse(`FIXED|${from}|${to}`, NOW)
     expect(fixed?.range.kind).toBe('fixed')
     expect(fixed?.timezone).toBe('UTC')
@@ -474,8 +474,8 @@ describe.concurrent('createDateRangeV2FilterParser', () => {
   const billingTo = new Date('2026-01-31T00:00:00.000Z')
   const localFrom = new Date('2026-10-01T00:00:00.000Z')
   const localTo = new Date('2026-10-07T00:00:00.000Z')
-  const fixedFrom = 1788201000000
-  const fixedTo = 1788978600000
+  const fixedFrom = '2026-09-05T09:30:00'
+  const fixedTo = '2026-10-05T09:30:00'
   const parser = parserFor([
     {
       label: 'Billing cycle',
@@ -623,9 +623,7 @@ describe.concurrent('createDateRangeV2FilterParser', () => {
     ])
     const fixed = dateRangeV2FilterParser.parse(`FIXED|${fixedFrom}|${fixedTo}|UTC`, NOW)
 
-    expect(fixed && namedFixed.serialize(fixed)).toBe(
-      fixed && `FIXED|${fixed.from?.getTime()}|${fixed.to?.getTime()}|UTC`
-    )
+    expect(fixed && namedFixed.serialize(fixed)).toBe(`FIXED|${fixedFrom}|${fixedTo}|UTC`)
     expect(namedFixed.parse(`FIXED|${fixedFrom}|${fixedTo}|UTC`, NOW)).toEqual(fixed)
     expect(namedFixed.parse('FIXED|UTC', NOW)).toBeUndefined()
     expect(namedFixed.parse('fixed', NOW)).toEqual({

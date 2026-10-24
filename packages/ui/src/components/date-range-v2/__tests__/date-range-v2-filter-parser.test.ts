@@ -380,6 +380,23 @@ describe('migrateDateRangeV2RangeQuery', () => {
     expect(migrateDateRangeV2RangeQuery(`CUSTOM|${to}|${from}|UTC`)).toBe(`FIXED|${TO}|${FROM}|UTC`)
   })
 
+  it('rewrites a short custom preset id and an epoch pair into the current query', () => {
+    expect(migrateDateRangeV2RangeQuery('24h')).toBe('LAST_24_HOURS')
+    expect(migrateDateRangeV2RangeQuery('7d')).toBe('LAST_7_DAYS')
+    expect(migrateDateRangeV2RangeQuery('30d')).toBe('LAST_30_DAYS')
+    expect(migrateDateRangeV2RangeQuery('90d')).toBe('LAST_90_DAYS')
+    expect(migrateDateRangeV2RangeQuery('1y')).toBe('LAST_1_YEAR')
+    expect(migrateDateRangeV2RangeQuery('1m')).toBe('LAST_1_MINUTE')
+    expect(migrateDateRangeV2RangeQuery('2w')).toBe('LAST_2_WEEKS')
+    expect(migrateDateRangeV2RangeQuery('1M')).toBe('LAST_1_MONTH')
+    const from = Date.parse('2026-09-05T09:30:00.000Z')
+    const to = Date.parse('2026-10-05T09:30:00.000Z')
+    expect(migrateDateRangeV2RangeQuery(`${from}-${to}`)).toBe(`FIXED|${FROM}|${TO}`)
+    expect(migrateDateRangeV2RangeQuery('0d')).toBe('0d')
+    expect(migrateDateRangeV2RangeQuery('1x')).toBe('1x')
+    expect(migrateDateRangeV2RangeQuery('30d|UTC')).toBe('30d|UTC')
+  })
+
   it('leaves a broken custom query, a trailing separator, and an unknown id unchanged', () => {
     expect(migrateDateRangeV2RangeQuery('CUSTOM|nope|1')).toBe('CUSTOM|nope|1')
     expect(migrateDateRangeV2RangeQuery('CUSTOM|1|2|UTC|extra')).toBe('CUSTOM|1|2|UTC|extra')
@@ -531,6 +548,12 @@ describe('dateRangeV2FilterParser', () => {
     expect(parse(`CUSTOM|${from}|${to}|Asia/Kolkata`)).toEqual(
       parse('FIXED|2026-09-05T15:00:00|2026-10-05T15:00:00|Asia/Kolkata')
     )
+    expect(parse('24h')).toEqual(parse('LAST_24_HOURS'))
+    expect(parse('7d')).toEqual(parse('LAST_7_DAYS'))
+    expect(parse('30d')).toEqual(parse('LAST_30_DAYS'))
+    expect(parse('90d')).toEqual(parse('LAST_90_DAYS'))
+    expect(parse('1y')).toEqual(parse('LAST_1_YEAR'))
+    expect(parse(`${from}-${to}`)).toEqual(parse(`FIXED|${FROM}|${TO}`))
   })
 
   it('rejects a legacy amount of 0 after rewriting it, and rejects a query migration does not know', () => {

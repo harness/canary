@@ -49,6 +49,16 @@ const parseEpoch = (token: string): number | undefined => {
 
 const withTimezone = (id: string, timezone: string | undefined): string => (timezone ? `${id}|${timezone}` : id)
 
+/** Short preset ids from the old date range picker. `M` is month and `m` is minute. */
+const SHORT_RELATIVE_UNIT: Record<string, string> = {
+  m: 'minute',
+  h: 'hour',
+  d: 'day',
+  w: 'week',
+  M: 'month',
+  y: 'year'
+}
+
 const decodeRangeQuery = (rangeQuery: string): string | undefined => {
   if (!rangeQuery) return undefined
   try {
@@ -60,7 +70,7 @@ const decodeRangeQuery = (rangeQuery: string): string | undefined => {
 
 /**
  * Rewrites an older rangeQuery into the current grammar. The result is only a string.
- * Each branch matches one older DateRangeV2 query or a default DateRangeField preset id.
+ * Each branch matches one older DateRangeV2 query, a default DateRangeField preset id, or a short custom preset id such as `30d`.
  * A query that is already current is returned unchanged. `parseRangeQuery` reads the result.
  */
 export const migrateDateRangeV2RangeQuery = (rangeQuery: string): string => {
@@ -114,6 +124,33 @@ export const migrateDateRangeV2RangeQuery = (rangeQuery: string): string => {
   const lastPeriod = /^LAST_(?<unit>MONTH|QUARTER|YEAR)(?:\|(?<timezone>[^|]+))?$/.exec(query)
   if (lastPeriod?.groups) {
     return withTimezone(`PREVIOUS_1_CALENDAR_${lastPeriod.groups.unit}`, lastPeriod.groups.timezone)
+  }
+
+  /**
+   * Note: Custom presets on the old date range picker stored a past relative window as an amount plus a
+   * suffix (`24h`, `7d`, `30d`, `90d`, `1y`, and also `1m`, `2w`, `1M`).
+   */
+  // AMOUNT(m|h|d|w|M|y) → LAST_AMOUNT_(MINUTE|HOUR|DAY|WEEK|MONTH|YEAR)S?
+  const shortRelative = /^(?<amount>\d+)(?<suffix>[mhdwMy])$/.exec(query)
+  if (shortRelative?.groups) {
+    const amount = parseAmount(shortRelative.groups.amount)
+    const unit = SHORT_RELATIVE_UNIT[shortRelative.groups.suffix]
+    if (amount !== undefined && unit) return `LAST_${amount}_${unitToken(unit, amount)}`
+  }
+
+  /**
+   * Note: A fixed window from the old picker can be stored as `epochStart-epochEnd`.
+   * The epochs are UTC, same as a CUSTOM query that has no timezone.
+   */
+  // epochStart-epochEnd → FIXED|yyyy-MM-ddTHH:mm:ss|yyyy-MM-ddTHH:mm:ss
+  const epochPair = /^(?<from>-?\d+)-(?<to>-?\d+)$/.exec(query)
+  if (epochPair?.groups) {
+    const fromMs = parseEpoch(epochPair.groups.from)
+    const toMs = parseEpoch(epochPair.groups.to)
+    if (fromMs !== undefined && toMs !== undefined) {
+      const zone = resolveTimeZone(DEFAULT_TIME_ZONE)
+      return `FIXED|${utcToCivilDateTime(new Date(fromMs), zone)}|${utcToCivilDateTime(new Date(toMs), zone)}`
+    }
   }
 
   return query

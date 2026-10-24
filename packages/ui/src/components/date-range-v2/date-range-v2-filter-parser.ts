@@ -118,10 +118,11 @@ export const migrateDateRangeV2RangeQuery = (rangeQuery: string): string => {
   if (currentPeriod?.groups) return withTimezone(`THIS_${currentPeriod.groups.unit}`, currentPeriod.groups.timezone)
 
   /**
-   * Note: Amount less preset ids were part of getDefaultPresets of DateRangeField (V1)
+   * Note: Amount less preset ids were part of getDefaultPresets of DateRangeField (V1).
+   * Day and week use the same calendar units as month, quarter, and year.
    */
-  // LAST_(MONTH|QUARTER|YEAR)|TIMEZONE → PREVIOUS_1_CALENDAR_(UNIT)|TIMEZONE
-  const lastPeriod = /^LAST_(?<unit>MONTH|QUARTER|YEAR)(?:\|(?<timezone>[^|]+))?$/.exec(query)
+  // LAST_(DAY|WEEK|MONTH|QUARTER|YEAR)S?|TIMEZONE → PREVIOUS_1_CALENDAR_(UNIT)|TIMEZONE
+  const lastPeriod = /^LAST_(?<unit>DAY|WEEK|MONTH|QUARTER|YEAR)S?(?:\|(?<timezone>[^|]+))?$/.exec(query)
   if (lastPeriod?.groups) {
     return withTimezone(`PREVIOUS_1_CALENDAR_${lastPeriod.groups.unit}`, lastPeriod.groups.timezone)
   }

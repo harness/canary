@@ -118,14 +118,20 @@ describe('DateRangeV2Content', () => {
     expect(screen.getByRole('radio', { name: 'This' })).toBeEnabled()
     expect(screen.getByRole('radio', { name: 'Next' })).toBeDisabled()
     expect(screen.getByText('Previous month')).toBeInTheDocument()
+
+    await userEvent.click(screen.getByRole('radio', { name: 'This' }))
+    expect(screen.getByRole('button', { name: 'So far' })).toBeDisabled()
   })
 
-  test('starts on the future side for future-only pickers', () => {
+  test('starts on the future side for future-only pickers', async () => {
     renderContent({ value: undefined, config: { direction: 'future' } })
 
     expect(screen.getByText('Next 1 month')).toBeInTheDocument()
     expect(screen.getByRole('radio', { name: 'Last' })).toBeDisabled()
     expect(screen.getByRole('radio', { name: 'Next' })).toBeEnabled()
+
+    await userEvent.click(screen.getByRole('tab', { name: /Calendar periods/ }))
+    expect(screen.getByRole('button', { name: 'From now' })).toBeDisabled()
   })
 
   test('opens an empty value on last 1 month and the previous month', async () => {

@@ -352,19 +352,23 @@ describe('migrateDateRangeV2RangeQuery', () => {
       expect(migrateDateRangeV2RangeQuery(`CURRENT_${token(unit, 1)}`)).toBe(`THIS_${token(unit, 1)}`)
       expect(migrateDateRangeV2RangeQuery(`CURRENT_${token(unit, 2)}|UTC`)).toBe(`THIS_${unit.toUpperCase()}|UTC`)
     }
-    expect(migrateDateRangeV2RangeQuery('LAST_MONTH|UTC')).toBe('PREVIOUS_1_CALENDAR_MONTH|UTC')
-    expect(migrateDateRangeV2RangeQuery('LAST_QUARTER')).toBe('PREVIOUS_1_CALENDAR_QUARTER')
+    for (const unit of CALENDAR_UNITS) {
+      expect(migrateDateRangeV2RangeQuery(`LAST_${token(unit, 1)}`)).toBe(`PREVIOUS_1_CALENDAR_${token(unit, 1)}`)
+      expect(migrateDateRangeV2RangeQuery(`LAST_${token(unit, 2)}|UTC`)).toBe(
+        `PREVIOUS_1_CALENDAR_${unit.toUpperCase()}|UTC`
+      )
+    }
     expect(migrateDateRangeV2RangeQuery('LAST_YEAR|Asia/Kolkata')).toBe('PREVIOUS_1_CALENDAR_YEAR|Asia/Kolkata')
   })
 
-  it('keeps rolling preset ids and amount-less periods that are not month, quarter, or year', () => {
+  it('keeps rolling preset ids and amount-less periods that are not a calendar unit', () => {
     expect(migrateDateRangeV2RangeQuery('LAST_7_DAYS')).toBe('LAST_7_DAYS')
     expect(migrateDateRangeV2RangeQuery('LAST_30_DAYS|UTC')).toBe('LAST_30_DAYS|UTC')
     expect(migrateDateRangeV2RangeQuery('LAST_3_MONTHS')).toBe('LAST_3_MONTHS')
     expect(migrateDateRangeV2RangeQuery('LAST_12_MONTHS')).toBe('LAST_12_MONTHS')
     expect(migrateDateRangeV2RangeQuery('THIS_MONTH')).toBe('THIS_MONTH')
-    expect(migrateDateRangeV2RangeQuery('LAST_WEEK')).toBe('LAST_WEEK')
-    expect(migrateDateRangeV2RangeQuery('LAST_DAY|UTC')).toBe('LAST_DAY|UTC')
+    expect(migrateDateRangeV2RangeQuery('LAST_HOUR')).toBe('LAST_HOUR')
+    expect(migrateDateRangeV2RangeQuery('LAST_MINUTE')).toBe('LAST_MINUTE')
     expect(migrateDateRangeV2RangeQuery('NEXT_MONTH')).toBe('NEXT_MONTH')
   })
 
@@ -523,6 +527,8 @@ describe('dateRangeV2FilterParser', () => {
     expect(parse('THIS_MONTH_FULL|UTC')).toEqual(parse('THIS_MONTH|UTC'))
     expect(parse('CURRENT_WEEK')).toEqual(parse('THIS_WEEK'))
     expect(parse('CURRENT_MONTHS|Asia/Kolkata')).toEqual(parse('THIS_MONTH|Asia/Kolkata'))
+    expect(parse('LAST_DAY|UTC')).toEqual(parse('PREVIOUS_1_CALENDAR_DAY|UTC'))
+    expect(parse('LAST_WEEK')).toEqual(parse('PREVIOUS_1_CALENDAR_WEEK'))
     expect(parse('LAST_MONTH|LOCALE')?.range).toEqual({
       kind: 'calendar',
       position: 'previous',
@@ -558,7 +564,8 @@ describe('dateRangeV2FilterParser', () => {
 
   it('rejects a legacy amount of 0 after rewriting it, and rejects a query migration does not know', () => {
     expect(parse('LAST_0_CALENDAR_MONTHS')).toBeUndefined()
-    expect(parse('LAST_WEEK')).toBeUndefined()
+    expect(parse('LAST_HOUR')).toBeUndefined()
+    expect(parse('LAST_MINUTE')).toBeUndefined()
     expect(parse('CUSTOM|nope|1')).toBeUndefined()
     expect(parse('CUSTOM|9007199254740993|1')).toBeUndefined()
     expect(parse('THIS_MONTH_TO_DATE')).toBeUndefined()

@@ -916,12 +916,12 @@ export const DateRangeV2Content = ({
                   wrapperClassName="w-28"
                   contentWidth="triggerWidth"
                 />
-                {calendarDraft.position === 'this' && extents.length > 1 && (
+                {calendarDraft.position === 'this' && (extents.length > 1 || normalizedConfig.direction !== 'any') && (
                   <Select
                     aria-label="Current period extent"
                     options={extents.map(extent => ({ value: extent, label: EXTENT_LABELS[extent] }))}
                     value={calendarDraft.extent}
-                    disabled={locked}
+                    disabled={locked || extents.length < 2}
                     onChange={extent => setCalendar('this', calendarDraft.unit, extent)}
                     size="sm"
                     wrapperClassName="w-32"

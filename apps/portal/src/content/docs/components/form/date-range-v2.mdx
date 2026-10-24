@@ -7,9 +7,13 @@ dontUseInProd: true
 
 import { DocsPage } from "@/components/docs-page";
 
-`DateRangeV2` stores `{ range, timezone, from, to }`. `range` is a relative, calendar, fixed, or preset value. `from` and `to` are the epochs for that range. `resolveDateRangeV2` fills them for every range except a preset, which uses that preset's `getRange`. Apply refreshes the epochs. Weeks start on Monday. Relative, calendar, and fixed drafts stay independent, so switching tabs does not convert one into another.
+`DateRangeV2` stores `{ range, timezone, from, to }`. `range` is the source of truth: relative, calendar, fixed, or preset. `from` and `to` are the epochs for that range. Apply fills them. `resolveDateRangeV2` does that for every range except a preset, which uses `getRange`. Weeks start on Monday. Relative, calendar, and fixed drafts stay independent, so switching tabs does not convert one range into another.
 
-Each box is one `config` field. A selected mode's settings are nested inside `modes`. Omit `modes` for Relative, Calendar, and Fixed. Include `{ mode: 'presets', presets }` to add that tab. `presets` is required on that object. `{ mode: 'presets', presets: [] }` shows an empty preset select. `label` on a mode entry replaces the tab title. `timezone: false` hides the timezone row.
+## Standalone
+
+Omit `config` for the defaults. The tabs are Relative, Calendar, and Fixed. Direction is any time. Clear is shown once a value is stored, and it unsets that value. The timezone row stays hidden until `timezone` is an object. The default zone is UTC. `label` on a mode entry replaces the tab title. `tabDetails` adds a description, an example, or a note under each title. Omit it to leave the title only.
+
+The picker below starts with no `config`. Open Config builder to change it. Each box is one field, and a selected mode's settings are nested inside `modes`. Generated config lists only the fields that differ from these defaults. Open it to copy the object the picker is using.
 
 <DocsPage.ComponentExample
   client:only
@@ -49,7 +53,7 @@ Each box is one `config` field. A selected mode's settings are nested inside `mo
       direction: 'any',
       modes: ['relative', 'calendar', 'fixed'],
       clearable: true,
-      timezoneEnabled: true,
+      timezoneEnabled: false,
       browserZone: 'dynamic',
       timezoneOptions: 'all',
       defaultValue: 'UTC',
@@ -83,7 +87,6 @@ Each box is one `config` field. A selected mode's settings are nested inside `mo
       range: { kind: 'relative', direction: 'last', amount: 1, unit: 'month' },
       timezone: 'UTC',
     });
-
     const patch = (partial) => setControls((current) => Object.assign({}, current, partial));
     const toggleListed = (key, item, all, defaultKey) => {
       setControls((current) => {
@@ -101,80 +104,112 @@ Each box is one `config` field. A selected mode's settings are nested inside `mo
       const parsed = Number(raw);
       return Number.isInteger(parsed) && parsed >= 1 ? parsed : undefined;
     };
-    const filled = (value) => {
-      const next = {};
-      Object.keys(value).forEach((key) => {
-        if (value[key] !== undefined && value[key] !== '') next[key] = value[key];
-      });
-      return Object.keys(next).length ? next : undefined;
-    };
     const pick = (key, next) => {
       const update = {};
       update[key] = controls[key] === next ? '' : next;
       patch(update);
     };
 
+    const sameList = (left, right) => left.length === right.length && left.every((item, index) => item === right[index]);
+    const changed = (value, defaults) => {
+      const next = {};
+      Object.keys(value).forEach((key) => {
+        const entry = value[key];
+        if (entry === undefined || entry === '' || entry === defaults[key]) return;
+        if (Array.isArray(entry) && Array.isArray(defaults[key]) && sameList(entry, defaults[key])) return;
+        next[key] = entry;
+      });
+      return next;
+    };
     const labeled = (mode, settings, label) => {
       const entry = Object.assign({ mode: mode }, settings);
       const title = label.trim();
       if (title) entry.label = title;
       return entry;
     };
-    const modeEntries = {
-      presets: labeled('presets', { presets: presets }, controls.presetsLabel),
-      relative: labeled('relative', {
+    const relativeDefault = changed(
+      {
+        direction: controls.relativeDefaultDirection || 'last',
+        amount: amount(controls.relativeDefaultAmount) || 1,
+        unit: controls.relativeDefaultUnit || 'month',
+      },
+      { direction: 'last', amount: 1, unit: 'month' }
+    );
+    const calendarDefault =
+      controls.calendarDefaultPosition === 'this'
+        ? changed(
+            {
+              position: 'this',
+              unit: controls.calendarDefaultUnit || 'month',
+              extent: controls.calendarDefaultExtent || 'full',
+            },
+            { position: 'previous', unit: 'month', extent: 'full' }
+          )
+        : changed(
+            {
+              position: controls.calendarDefaultPosition || 'previous',
+              amount: amount(controls.calendarDefaultAmount) || 1,
+              unit: controls.calendarDefaultUnit || 'month',
+            },
+            { position: 'previous', amount: 1, unit: 'month' }
+          );
+    const relativeSettings = changed(
+      {
         allowAmount: controls.relativeAllowAmount,
         units: controls.relativeUnits,
-        defaultValue: filled({
-          direction: controls.relativeDefaultDirection,
-          amount: amount(controls.relativeDefaultAmount),
-          unit: controls.relativeDefaultUnit,
-        }),
         maxAmount: amount(controls.relativeMaxAmount),
-      }, controls.relativeLabel),
-      calendar: labeled('calendar', {
+      },
+      { allowAmount: true, units: relativeUnits }
+    );
+    if (Object.keys(relativeDefault).length) relativeSettings.defaultValue = relativeDefault;
+    const calendarSettings = changed(
+      {
         allowAmount: controls.calendarAllowAmount,
         units: controls.calendarUnits,
         extents: controls.calendarExtents,
-        defaultValue: filled(
-          controls.calendarDefaultPosition === 'this'
-            ? {
-                position: 'this',
-                unit: controls.calendarDefaultUnit,
-                extent: controls.calendarDefaultExtent,
-              }
-            : {
-                position: controls.calendarDefaultPosition,
-                amount: amount(controls.calendarDefaultAmount),
-                unit: controls.calendarDefaultUnit,
-              }
-        ),
         maxAmount: amount(controls.calendarMaxAmount),
-      }, controls.calendarLabel),
-      fixed: labeled('fixed', Object.assign(
-        { allowTime: controls.allowTime, allowSeconds: controls.allowTime && controls.allowSeconds },
-        controls.customFrom && controls.customTo
-          ? { defaultValue: { from: controls.customFrom, to: controls.customTo } }
-          : {}
-      ), controls.fixedLabel),
+      },
+      { allowAmount: true, units: calendarUnits, extents: calendarExtents }
+    );
+    if (Object.keys(calendarDefault).length) calendarSettings.defaultValue = calendarDefault;
+    const fixedSettings = {};
+    if (!controls.allowTime) fixedSettings.allowTime = false;
+    if (controls.allowTime && controls.allowSeconds) fixedSettings.allowSeconds = true;
+    if (controls.customFrom && controls.customTo) {
+      fixedSettings.defaultValue = { from: controls.customFrom, to: controls.customTo };
+    }
+    const modeEntries = {
+      presets: labeled('presets', { presets: presets }, controls.presetsLabel),
+      relative: labeled('relative', relativeSettings, controls.relativeLabel),
+      calendar: labeled('calendar', calendarSettings, controls.calendarLabel),
+      fixed: labeled('fixed', fixedSettings, controls.fixedLabel),
     };
     const selectedModes = controls.modes.map((mode) => modeEntries[mode]);
     const modeOn = (mode) => controls.modes.indexOf(mode) >= 0;
+    const modesAreDefault =
+      sameList(controls.modes, ['relative', 'calendar', 'fixed']) &&
+      selectedModes.every((entry) => Object.keys(entry).length === 1);
+    const triggerLabel = changed(
+      { showTime: controls.showTime, showTimezone: controls.showTimezone },
+      { showTime: true, showTimezone: true }
+    );
 
-    const pickerConfig = {
-      direction: controls.direction,
-      tabDetails: controls.tabDetails,
-      clearable: controls.clearable,
-      triggerLabel: { showTime: controls.showTime, showTimezone: controls.showTimezone },
-      timezone: controls.timezoneEnabled
-        ? {
-            browserZone: controls.browserZone,
-            defaultValue: controls.defaultValue,
-            options: controls.timezoneOptions,
-          }
-        : false,
-      modes: selectedModes,
-    };
+    const pickerConfig = {};
+    if (controls.direction !== 'any') pickerConfig.direction = controls.direction;
+    if (controls.tabDetails.length) pickerConfig.tabDetails = controls.tabDetails;
+    if (!controls.clearable) pickerConfig.clearable = false;
+    if (Object.keys(triggerLabel).length) pickerConfig.triggerLabel = triggerLabel;
+    if (controls.timezoneEnabled) {
+      pickerConfig.timezone = changed(
+        {
+          browserZone: controls.browserZone,
+          defaultValue: controls.defaultValue,
+          options: controls.timezoneOptions,
+        },
+        { browserZone: 'dynamic', defaultValue: 'UTC', options: 'all' }
+      );
+    }
+    if (!modesAreDefault) pickerConfig.modes = selectedModes;
 
     const choices = (options, selected, onChange) => (
       <Layout.Flex direction="row" gapX="2xs" wrap="wrap">
@@ -223,12 +258,15 @@ Each box is one `config` field. A selected mode's settings are nested inside `mo
 
     return (
       <Layout.Flex direction="column" gapY="md" align="start" className="w-full">
-        <DateRangeV2 value={value} onValueChange={setValue} config={pickerConfig} />
+        <DateRangeV2 value={value} onValueChange={setValue} config={Object.keys(pickerConfig).length ? pickerConfig : undefined} />
         <Text variant="caption-code">value</Text>
         <pre style={{ margin: 0 }}>{JSON.stringify(value, null, 2)}</pre>
 
-        <Layout.Flex direction="column" gapY="sm" className="w-full rounded-cn-4 border border-cn-3 p-cn-md">
-          <span className="font-mono text-cn-size-2 text-cn-2">config</span>
+        <Accordion.Root type="multiple" variant="card" className="w-full">
+          <Accordion.Item value="builder">
+            <Accordion.Trigger>Config builder</Accordion.Trigger>
+            <Accordion.Content>
+              <Layout.Flex direction="column" gapY="sm" className="w-full">
           {section('direction', choices(['past', 'future', 'any'], controls.direction, (direction) => patch({ direction: direction })))}
           {section(
             'tabDetails',
@@ -281,9 +319,9 @@ Each box is one `config` field. A selected mode's settings are nested inside `mo
                 checked={controls.timezoneEnabled}
                 onCheckedChange={(timezoneEnabled) => patch({ timezoneEnabled: timezoneEnabled })}
               />
-              {field('browserZone', choices(['dynamic', 'explicit'], controls.browserZone, (browserZone) => patch({ browserZone: browserZone })))}
-              {field('options', choices(['all', 'locale-utc'], controls.timezoneOptions, (timezoneOptions) => patch({ timezoneOptions: timezoneOptions })))}
-              {field('defaultValue', choices(timeZones, controls.defaultValue, (defaultValue) => patch({ defaultValue: defaultValue })))}
+              {controls.timezoneEnabled ? field('browserZone', choices(['dynamic', 'explicit'], controls.browserZone, (browserZone) => patch({ browserZone: browserZone }))) : null}
+              {controls.timezoneEnabled ? field('options', choices(['all', 'locale-utc'], controls.timezoneOptions, (timezoneOptions) => patch({ timezoneOptions: timezoneOptions }))) : null}
+              {controls.timezoneEnabled ? field('defaultValue', choices(timeZones, controls.defaultValue, (defaultValue) => patch({ defaultValue: defaultValue }))) : null}
             </Layout.Flex>
           )}
           {section(
@@ -467,19 +505,31 @@ Each box is one `config` field. A selected mode's settings are nested inside `mo
                 )
               : null
           )}
-        </Layout.Flex>
-
-        <Text variant="caption-code">config</Text>
-        <pre style={{ margin: 0 }}>{JSON.stringify(pickerConfig, (key, value) => typeof value === 'function' ? '() => ({ from, to })' : value, 2)}</pre>
+              </Layout.Flex>
+            </Accordion.Content>
+          </Accordion.Item>
+          <Accordion.Item value="config">
+            <Accordion.Trigger>Generated config</Accordion.Trigger>
+            <Accordion.Content>
+              <pre style={{ margin: 0, whiteSpace: 'pre-wrap' }}>
+                {Object.keys(pickerConfig).length
+                  ? JSON.stringify(pickerConfig, (key, entry) => (typeof entry === 'function' ? '() => ({ from, to })' : entry), 2)
+                  : 'No config is passed. Using default values.'}
+              </pre>
+            </Accordion.Content>
+          </Accordion.Item>
+        </Accordion.Root>
       </Layout.Flex>
     );
 
 }`}
 />
 
-## Presets
+## Custom presets
 
-Include `{ mode: 'presets', presets }` in `modes` to add that tab. Put it first to show it ahead of the other modes. `presets` is required on that object. `{ mode: 'presets', presets: [] }` shows an empty preset select. Each preset is the date range picker shape: `label`, `value`, `getRange`, and `group` (`recommended`, `relative`, or `calendar`). The select is grouped by `group`. `getRange` receives `{ timezone }` for the zone selected in the picker, and again on reload from `PRESET_ID|TIMEZONE`. A preset that ignores the argument keeps its own dates. Apply stores `value`, that timezone, and the dates from `getRange`. An id in this list wins over a built-in id with the same name.
+Include `{ mode: 'presets', presets }` in `modes` to add that tab. Put it first to show it ahead of the other modes. `presets` is required on that object. `{ mode: 'presets', presets: [] }` shows an empty preset select. Each preset uses the date range picker shape: `label`, `value`, `getRange`, and `group` (`recommended`, `relative`, or `calendar`). The select is grouped by `group`.
+
+`getRange` receives `{ timezone }` for the zone selected in the picker. Use that argument when the window should follow the zone. A preset that ignores it keeps its own dates. Apply stores the preset id, that timezone, and the dates from `getRange`. The same list works on a filter. Put it on `filterFieldConfig.modes`. The built-in filter parser reloads `PRESET_ID|TIMEZONE` through `getRange`. An id in this list wins over a built-in id with the same name.
 
 <DocsPage.ComponentExample
   client:only
@@ -564,9 +614,25 @@ Include `{ mode: 'presets', presets }` in `modes` to add that tab. Put it first 
 }`}
 />
 
-## Filter field
+## Filters
 
-`FilterGroup` is the out-of-the-box path. A `FilterFieldTypes.DateRangeV2` option keeps Relative, Calendar, and Fixed on the built-in query. The parser turns `range` into one preset param, such as `LAST_7_DAYS|UTC`, and rebuilds `range` plus `from` and `to` on refresh. Presets on `{ mode: 'presets', presets }` in `filterFieldConfig.modes` reload through `getRange()`. Calendar weeks start on Monday. Apply and clear update the `timeframe` query param through the filters router. The value below is `location.search`.
+### Built-in parser
+
+`FilterFieldTypes.DateRangeV2` on a `FilterGroup` uses the built-in parser. Do not pass `parser`. `filterFieldConfig` is the same config as the standalone picker. Omit it for Relative, Calendar, and Fixed.
+
+The parser reads and writes one query param. A missing timezone is UTC. Clear writes an empty string, which drops the param and leaves the filter on the bar. The next Apply writes the current grammar.
+
+```text
+Relative       LAST_7_DAYS|UTC    NEXT_2_HOURS|Asia/Kolkata
+This period    THIS_MONTH|UTC     THIS_WEEK_SO_FAR|UTC     THIS_DAY_FROM_NOW|UTC
+Calendar       PREVIOUS_1_CALENDAR_MONTH|UTC    NEXT_2_CALENDAR_QUARTERS|UTC
+Fixed          FIXED|2026-09-05T09:30:00|2026-10-05T09:30:00|UTC
+Preset         PREVIOUS_3_DAYS|UTC
+```
+
+Amount 1 stays singular (`LAST_1_DAY`). A larger amount is plural (`LAST_7_DAYS`). A full current period omits `_FULL`. Presets on `filterFieldConfig.modes` use this same parser. The query is the preset id and the timezone, and `getRange` receives that timezone.
+
+Status below is a multi-select of objects, so that field needs its own parser. Timeframe does not. Add Timeframe, apply a range, and the search string is the query above.
 
 <DocsPage.ComponentExample
   client:only
@@ -599,43 +665,6 @@ Include `{ mode: 'presets', presets }` in `modes` to add that tab. Put it first 
               type: FilterFieldTypes.DateRangeV2,
               label: 'Timeframe',
               value: 'timeframe',
-              filterFieldConfig: {
-                direction: 'any',
-                timezone: { browserZone: 'dynamic' },
-                tabDetails: [],
-                modes: [
-                  {
-                    mode: 'presets',
-                    presets: [
-                      {
-                        label: 'Previous 3 days',
-                        value: 'PREVIOUS_3_DAYS',
-                        group: 'recommended',
-                        getRange: () => {
-                          const to = new Date();
-                          const from = new Date(to);
-                          from.setDate(from.getDate() - 3);
-                          return { from, to };
-                        },
-                      },
-                      {
-                        label: 'Previous 14 days',
-                        value: 'PREVIOUS_14_DAYS',
-                        group: 'relative',
-                        getRange: () => {
-                          const to = new Date();
-                          const from = new Date(to);
-                          from.setDate(from.getDate() - 14);
-                          return { from, to };
-                        },
-                      },
-                    ],
-                  },
-                  { mode: 'relative' },
-                  { mode: 'calendar' },
-                  { mode: 'fixed' },
-                ],
-              },
             },
             {
               type: FilterFieldTypes.MultiSelect,
@@ -657,9 +686,9 @@ Include `{ mode: 'presets', presets }` in `modes` to add that tab. Put it first 
 }`}
 />
 
-## Custom parser
+### Custom parser
 
-`parser` on the filter option replaces the built-in query for that field. It has to read and write every mode the picker can apply. The parser in this example only accepts `PREVIOUS_3_DAYS` and `PREVIOUS_14_DAYS`.
+Pass `parser` only when the query is not the grammar above. The parser has to read and write every mode the picker can apply, and the timezone on each one. This parser keeps a relative range and gives that range to `dateRangeV2FilterParser`, so Last 7 days in Kolkata round-trips. A calendar period, a fixed range, or a preset serializes to an empty string. Apply clears the query, and a refresh cannot restore it.
 
 <DocsPage.ComponentExample
   client:only
@@ -679,31 +708,17 @@ Include `{ mode: 'presets', presets }` in `modes` to add that tab. Put it first 
           return { from, to };
         },
       },
-      {
-        label: 'Previous 14 days',
-        value: 'PREVIOUS_14_DAYS',
-        group: 'relative',
-        getRange: () => {
-          const to = new Date();
-          const from = new Date(to);
-          from.setDate(from.getDate() - 14);
-          return { from, to };
-        },
-      },
     ];
-    const matchPreset = (id) => presets.find((preset) => preset.value === id);
     const parser = {
       parse: (serialized) => {
-        if (!serialized) return undefined;
-        const [id, timezone = 'UTC'] = decodeURIComponent(serialized).split('|');
-        const preset = matchPreset(id);
-        if (!preset) return undefined;
-        const range = preset.getRange({ timezone });
-        const [from, to] = range.from <= range.to ? [range.from, range.to] : [range.to, range.from];
-        return { from, to, range: { kind: 'preset', preset: preset.value }, timezone };
+        const value = dateRangeV2FilterParser.parse(serialized);
+        if (!value || value.range.kind !== 'relative') return undefined;
+        return value;
       },
-      serialize: (value) =>
-        value && value.range && value.range.kind === 'preset' ? value.range.preset + '|' + (value.timezone || 'UTC') : '',
+      serialize: (value) => {
+        if (!value || !value.range || value.range.kind !== 'relative') return '';
+        return dateRangeV2FilterParser.serialize(value);
+      },
     };
     const query = new URLSearchParams(location.search).get('timeframe');
     const readBack = query ? parser.parse(query) : undefined;
@@ -712,7 +727,7 @@ Include `{ mode: 'presets', presets }` in `modes` to add that tab. Put it first 
       <Layout.Flex direction="column" gapY="md" align="start" className="w-full">
         <AlertItem theme="warning" read className="w-full">
           <AlertItem.Description>
-            If you pass a custom parser, you need to handle all the modes. Otherwise you may get the following broken experience.
+            This parser only keeps a relative range. Apply a calendar period, a fixed range, or a preset and the query is cleared.
           </AlertItem.Description>
         </AlertItem>
         <FilterGroup
@@ -744,6 +759,64 @@ Include `{ mode: 'presets', presets }` in `modes` to add that tab. Put it first 
     );
 
 }`}
+/>
+
+### Migrations
+
+The built-in parser rewrites an older query before it reads it. A custom parser does not, unless it calls `dateRangeV2FilterParser`. A preset configured with the same id is matched first, so that preset wins over these rewrites. The next Apply stores the current grammar, so `7d` becomes `LAST_7_DAYS|UTC`.
+
+`M` is a month and `m` is a minute. An amount-less `LAST_DAY`, `LAST_WEEK`, `LAST_MONTH`, `LAST_QUARTER`, or `LAST_YEAR` becomes the previous calendar period. `0d`, `1x`, `30d|UTC`, and `NEXT_MONTH` stay unchanged. `30d|UTC` is not a short preset id, because it already has a timezone.
+
+<DocsPage.ComponentExample
+  client:only
+  contentClassName="place-items-start"
+  code={`() => {
+    const fromMs = Date.parse('2026-09-05T09:30:00.000Z');
+    const toMs = Date.parse('2026-10-05T09:30:00.000Z');
+    const queries = [
+      '24h',
+      '7d',
+      '30d',
+      '90d',
+      '1y',
+      '1m',
+      '2w',
+      '1M',
+      'LAST_DAY',
+      'LAST_WEEK',
+      'LAST_MONTH',
+      'LAST_QUARTER',
+      'LAST_YEAR',
+      'CURRENT_MONTH',
+      'THIS_MONTH_FULL',
+      'LAST_2_CALENDAR_MONTHS',
+      'CUSTOM|' + fromMs + '|' + toMs + '|Asia/Kolkata',
+      String(fromMs) + '-' + String(toMs),
+      '0d',
+      '1x',
+      '30d|UTC',
+      'NEXT_MONTH',
+    ];
+    const readBack = (query) => {
+      const value = dateRangeV2FilterParser.parse(query);
+      return value ? dateRangeV2FilterParser.serialize(value) : 'unchanged';
+    };
+
+    return (
+      <Layout.Flex direction="column" gapY="xs" className="w-full">
+        <Layout.Flex direction="row" gapX="md" className="w-full">
+          <span className="w-1/2 font-mono text-cn-size-1 text-cn-3">Stored query</span>
+          <span className="w-1/2 font-mono text-cn-size-1 text-cn-3">Read back</span>
+        </Layout.Flex>
+        {queries.map((query) => (
+          <Layout.Flex key={query} direction="row" gapX="md" className="w-full">
+            <span className="w-1/2 break-all font-mono text-cn-size-1">{query}</span>
+            <span className="w-1/2 break-all font-mono text-cn-size-1">{readBack(query)}</span>
+          </Layout.Flex>
+        ))}
+      </Layout.Flex>
+    );
+  }`}
 />
 
 ## API reference

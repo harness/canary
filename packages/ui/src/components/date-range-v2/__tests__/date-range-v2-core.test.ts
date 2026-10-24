@@ -407,7 +407,7 @@ describe.concurrent('dateRangeV2FilterParser', () => {
     expect(dateRangeV2FilterParser.parse('FIXED|nope|1')).toBeUndefined()
     expect(dateRangeV2FilterParser.parse('CUSTOM|nope|1')).toBeUndefined()
     expect(dateRangeV2FilterParser.parse('THIS_MONTH_TO_DATE')).toBeUndefined()
-    expect(dateRangeV2FilterParser.parse('LAST_WEEK')).toBeUndefined()
+    expect(dateRangeV2FilterParser.parse('LAST_HOUR')).toBeUndefined()
     expect(dateRangeV2FilterParser.parse('THIS_MONTH|UTC|extra')).toBeUndefined()
     expect(dateRangeV2FilterParser.parse('[object Object]')).toBeUndefined()
   })

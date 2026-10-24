@@ -1002,8 +1002,8 @@ export const DateRangeV2Content = ({
           )}
         </div>
         <ButtonLayout horizontalAlign="end">
-          {normalizedConfig.clearable && (
-            <Button size="sm" variant="ghost" onClick={onClear} disabled={locked || !value || !onClear}>
+          {normalizedConfig.clearable && value && (
+            <Button size="sm" variant="ghost" onClick={onClear} disabled={locked || !onClear}>
               Clear
             </Button>
           )}

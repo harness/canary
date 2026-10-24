@@ -1,55 +1,66 @@
 import { render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
+import { vi } from 'vitest'
 
 import type { DateRangeV2Value } from '../../date-range-v2/types'
 import { TooltipProvider } from '../../tooltip'
-import DateRangeV2Filter from '../filters-bar/actions/variants/date-range-v2-filter'
 import FilterField from '../filters-field'
 import { FilterFieldTypes } from '../types'
 import { getDateRangeV2FilterLabel } from '../utils'
 
-describe('DateRangeV2Filter', () => {
-  test('leaves delete to the filter header', () => {
+const storedRange: DateRangeV2Value = {
+  from: new Date('2026-10-06T00:00:00.000Z'),
+  to: new Date('2026-10-13T00:00:00.000Z'),
+  range: { kind: 'relative', direction: 'last', amount: 7, unit: 'day' },
+  timezone: 'UTC'
+}
+
+const timeframe = {
+  label: 'Timeframe',
+  value: 'timeframe' as const,
+  type: FilterFieldTypes.DateRangeV2,
+  filterFieldConfig: { clearable: true }
+}
+
+describe('DateRangeV2 filter field', () => {
+  test('unsets the filter value from Clear and closes the panel', async () => {
+    const onChange = vi.fn()
     render(
-      <DateRangeV2Filter
-        filter={{
-          type: 'daterangev2',
-          value: {
-            from: new Date('2026-10-06T00:00:00.000Z'),
-            to: new Date('2026-10-13T00:00:00.000Z'),
-            range: { kind: 'relative' as const, direction: 'last' as const, amount: 7, unit: 'day' as const },
-            timezone: 'UTC'
-          }
-        }}
-        config={{ clearable: true }}
-        onUpdateFilter={() => {}}
-        onCancel={() => {}}
-      />
+      <TooltipProvider>
+        <FilterField<'timeframe', DateRangeV2Value>
+          filterOption={timeframe}
+          value={storedRange}
+          removeFilter={() => {}}
+          shouldOpenFilter
+          onChange={onChange}
+        />
+      </TooltipProvider>
     )
 
     expect(screen.queryByRole('button', { name: 'Delete' })).not.toBeInTheDocument()
-    expect(screen.getByRole('button', { name: 'Apply' })).toBeInTheDocument()
-    expect(screen.getByRole('button', { name: 'Cancel' })).toBeInTheDocument()
+
+    await userEvent.click(screen.getByRole('button', { name: 'Clear' }))
+
+    expect(onChange).toHaveBeenCalledTimes(1)
+    expect(onChange).toHaveBeenCalledWith(undefined)
+    expect(document.querySelector('.cn-dropdown-menu')).not.toBeInTheDocument()
   })
 
   test('keeps in-progress edits when the filter re-renders', async () => {
-    const filter = {
-      type: 'daterangev2' as const,
-      value: {
-        from: new Date('2026-10-06T00:00:00.000Z'),
-        to: new Date('2026-10-13T00:00:00.000Z'),
-        range: { kind: 'relative' as const, direction: 'last' as const, amount: 7, unit: 'day' as const },
-        timezone: 'UTC'
-      }
-    }
-    const config = { clearable: true }
-    const { rerender } = render(
-      <DateRangeV2Filter filter={filter} config={config} onUpdateFilter={() => {}} onCancel={() => {}} />
+    const field = (
+      <FilterField<'timeframe', DateRangeV2Value>
+        filterOption={timeframe}
+        value={storedRange}
+        removeFilter={() => {}}
+        shouldOpenFilter
+        onChange={() => {}}
+      />
     )
+    const { rerender } = render(<TooltipProvider>{field}</TooltipProvider>)
 
     await userEvent.click(screen.getByRole('tab', { name: /Calendar periods/ }))
 
-    rerender(<DateRangeV2Filter filter={filter} config={config} onUpdateFilter={() => {}} onCancel={() => {}} />)
+    rerender(<TooltipProvider>{field}</TooltipProvider>)
 
     expect(screen.getByRole('tab', { name: /Calendar periods/ })).toHaveAttribute('aria-selected', 'true')
     expect(screen.getByText('Previous month')).toBeInTheDocument()

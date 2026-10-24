@@ -132,6 +132,7 @@ describe('DateRangeV2Content', () => {
     renderContent({ value: undefined })
 
     expect(screen.getByText('Last 1 month')).toBeInTheDocument()
+    expect(screen.queryByRole('button', { name: 'Clear' })).not.toBeInTheDocument()
 
     await userEvent.click(screen.getByRole('tab', { name: /Calendar periods/ }))
     expect(screen.getByText('Previous month')).toBeInTheDocument()

@@ -566,7 +566,7 @@ Include `{ mode: 'presets', presets }` in `modes` to add that tab. Put it first 
 
 ## Filter field
 
-`FilterGroup` is the out-of-the-box path. A sticky `FilterFieldTypes.DateRangeV2` option keeps Relative, Calendar, and Fixed on the built-in query. The parser turns `range` into one preset param, such as `LAST_7_DAYS|UTC`, and rebuilds `range` plus `from` and `to` on refresh. Presets on `{ mode: 'presets', presets }` in `filterFieldConfig.modes` reload through `getRange()`. Calendar weeks start on Monday. Apply and clear update the `timeframe` query param through the filters router. The value below is `location.search`.
+`FilterGroup` is the out-of-the-box path. A `FilterFieldTypes.DateRangeV2` option keeps Relative, Calendar, and Fixed on the built-in query. The parser turns `range` into one preset param, such as `LAST_7_DAYS|UTC`, and rebuilds `range` plus `from` and `to` on refresh. Presets on `{ mode: 'presets', presets }` in `filterFieldConfig.modes` reload through `getRange()`. Calendar weeks start on Monday. Apply and clear update the `timeframe` query param through the filters router. The value below is `location.search`.
 
 <DocsPage.ComponentExample
   client:only
@@ -574,12 +574,24 @@ Include `{ mode: 'presets', presets }` in `modes` to add that tab. Put it first 
   code={`() => {
     const location = useLocation();
     const [filters, setFilters] = React.useState({});
+    const statusOptions = [
+      { label: 'Success', value: 'success' },
+      { label: 'Failed', value: 'failed' },
+      { label: 'Running', value: 'running' },
+    ];
+    const statusParser = {
+      parse: (value) =>
+        decodeURIComponent(value)
+          .split(',')
+          .filter(Boolean)
+          .map((id) => statusOptions.find((option) => option.value === id))
+          .filter(Boolean),
+      serialize: (value) => (value ? value.map((option) => option.value).join(',') : ''),
+    };
 
     return (
       <Layout.Flex direction="column" gapY="md" align="start" className="w-full">
         <FilterGroup
-          hideSearch
-          hideAddFilter
           handleInputChange={() => {}}
           onFilterValueChange={setFilters}
           filterOptions={[
@@ -587,7 +599,6 @@ Include `{ mode: 'presets', presets }` in `modes` to add that tab. Put it first 
               type: FilterFieldTypes.DateRangeV2,
               label: 'Timeframe',
               value: 'timeframe',
-              sticky: true,
               filterFieldConfig: {
                 direction: 'any',
                 timezone: { browserZone: 'dynamic' },
@@ -624,6 +635,15 @@ Include `{ mode: 'presets', presets }` in `modes` to add that tab. Put it first 
                   { mode: 'calendar' },
                   { mode: 'fixed' },
                 ],
+              },
+            },
+            {
+              type: FilterFieldTypes.MultiSelect,
+              label: 'Status',
+              value: 'status',
+              parser: statusParser,
+              filterFieldConfig: {
+                options: statusOptions,
               },
             },
           ]}
@@ -747,7 +767,7 @@ Include `{ mode: 'presets', presets }` in `modes` to add that tab. Put it first 
     {
       name: "config",
       description:
-        "modes, tabDetails, direction, timezone, clearable, triggerLabel, and calendarProps. triggerLabel.showTime adds a clock time when either end is not the start or end of a day. triggerLabel.showTimezone adds the offset. Both default to true. tabDetails chooses description, example, and note under each tab title. Omit it, or pass an empty list, to leave the title only. Omit modes for Relative, Calendar, and Fixed. Each entry is { mode } plus that mode's settings. label on a mode entry replaces the tab title. Include { mode: 'presets', presets } to add that tab. presets is required on that object. { mode: 'presets', presets: [] } shows an empty preset select. Each preset matches the date range picker: label, value, getRange, and group. A relative entry's defaultValue is direction, amount, and unit. Omit it for Last 1 month. A calendar entry's defaultValue is a calendar range. Previous and Next include amount. This includes extent. Omit it for Previous 1 month. A fixed entry's defaultValue is from and to, each yyyy-MM-ddTHH:mm:ss. Omit it to leave the start and end empty. allowTime shows the clock. allowSeconds shows seconds. Timezone false hides the zone row. An object sets browserZone, defaultValue, and options. options locale-utc lists Browser Time and UTC only and hides search. The default zone is UTC. clearable shows the delete icon on the standalone picker. calendarProps passes calendar options the picker does not own. Weeks start on Monday. resolveDateRangeV2(value, now) returns from, to, range, and timezone for a relative, calendar, or fixed range.",
+        "modes, tabDetails, direction, timezone, clearable, triggerLabel, and calendarProps. triggerLabel.showTime adds a clock time when either end is not the start or end of a day. triggerLabel.showTimezone adds the offset. Both default to true. tabDetails chooses description, example, and note under each tab title. Omit it, or pass an empty list, to leave the title only. Omit modes for Relative, Calendar, and Fixed. Each entry is { mode } plus that mode's settings. label on a mode entry replaces the tab title. Include { mode: 'presets', presets } to add that tab. presets is required on that object. { mode: 'presets', presets: [] } shows an empty preset select. Each preset matches the date range picker: label, value, getRange, and group. A relative entry's defaultValue is direction, amount, and unit. Omit it for Last 1 month. A calendar entry's defaultValue is a calendar range. Previous and Next include amount. This includes extent. Omit it for Previous 1 month. A fixed entry's defaultValue is from and to, each yyyy-MM-ddTHH:mm:ss. Omit it to leave the start and end empty. allowTime shows the clock. allowSeconds shows seconds. Timezone false hides the zone row. An object sets browserZone, defaultValue, and options. options locale-utc lists Browser Time and UTC only and hides search. The default zone is UTC. clearable defaults to true and shows Clear, which unsets the value. Set it to false to hide Clear. calendarProps passes calendar options the picker does not own. Weeks start on Monday. resolveDateRangeV2(value, now) returns from, to, range, and timezone for a relative, calendar, or fixed range.",
       required: false,
       value: "DateRangeV2Config",
     },

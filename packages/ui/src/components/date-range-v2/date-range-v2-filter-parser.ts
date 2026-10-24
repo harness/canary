@@ -243,6 +243,7 @@ export const parseRangeQuery = (
  * Then `resolveDateRangeV2` fills `from` and `to`, returning a ResolvableDateRangeV2Value.
  *
  * `serialize` converts `ResolvableDateRangeV2Value` to a rangeQuery string using the current grammar.
+ * An undefined value is an empty string, which drops the filter query.
  */
 export const dateRangeV2FilterParser = {
   parse: (rangeQuery: string, now: Date = new Date()): ResolvableDateRangeV2Value | undefined => {
@@ -250,8 +251,9 @@ export const dateRangeV2FilterParser = {
     if (!parsed) return undefined
     return resolveDateRangeV2({ range: parsed.range, timezone: parsed.timezone }, now)
   },
-  /** A rangeQuery for a relative, calendar, or fixed range. */
-  serialize: (value: ResolvableDateRangeV2Value): string => {
+  /** A rangeQuery for a relative, calendar, or fixed range. An undefined value is an empty string. */
+  serialize: (value?: ResolvableDateRangeV2Value): string => {
+    if (!value) return ''
     const timezone = timezoneOf(value.timezone)
     const range = value.range
     switch (range.kind) {
@@ -278,7 +280,7 @@ export const dateRangeV2FilterParser = {
 /**
  * Parses and serializes a PresetRange from the PresetModeConfig provided by the user.
  * `parse` uses `preset.getRange({ timezone })` to turn the rangeQuery into a PresetRange value.
- * `serialize` writes `preset.value` as the rangeQuery string.
+ * `serialize` writes `preset.value` as the rangeQuery string. An undefined value is an empty string.
  *
  * Every other rangeQuery is handled by `dateRangeV2FilterParser`.
  */
@@ -305,7 +307,8 @@ export const createDateRangeV2FilterParser = (config?: DateRangeV2Config) => {
       }
       return dateRangeV2FilterParser.parse(rangeQuery, now)
     },
-    serialize: (value: DateRangeV2Value): string => {
+    serialize: (value?: DateRangeV2Value): string => {
+      if (!value) return ''
       const { range } = value
       if (range.kind === 'preset') {
         // PRESET|TIMEZONE

@@ -217,7 +217,7 @@ export const normalizeDateRangeV2Config = (config?: DateRangeV2Config): Normaliz
     modes: selected.tabs,
     tabDetails: normalizeTabDetails(config?.tabDetails),
     direction: config?.direction ?? 'any',
-    clearable: config?.clearable ?? false,
+    clearable: config?.clearable ?? true,
     timezone: timezone
       ? {
           enabled: true,

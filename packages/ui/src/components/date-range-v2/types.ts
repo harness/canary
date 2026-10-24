@@ -176,7 +176,7 @@ export interface DateRangeV2Config {
          */
         options?: TimeZoneOptionList
       }
-  /** Shows the delete icon on the standalone picker. */
+  /** Shows Clear button, which unsets the value. Defaults to true. */
   clearable?: boolean
   /** Trigger label options. Each flag defaults to true. */
   triggerLabel?: DateRangeV2LabelConfig

@@ -611,6 +611,10 @@ describe('dateRangeV2FilterParser', () => {
     )
   })
 
+  it('writes an empty string when the value is cleared', () => {
+    expect(dateRangeV2FilterParser.serialize(undefined)).toBe('')
+  })
+
   it('writes UTC when the stored timezone is omitted or empty', () => {
     const range: ResolvableDateRangeV2 = { kind: 'relative', direction: 'last', amount: 1, unit: 'month' }
     expect(dateRangeV2FilterParser.serialize({ range })).toBe('LAST_1_MONTH|UTC')
@@ -821,6 +825,8 @@ describe('createDateRangeV2FilterParser', () => {
         timezone: ''
       })
     ).toBe('Billing_Cycle|UTC')
+    expect(parser.serialize(undefined)).toBe('')
+    expect(createDateRangeV2FilterParser().serialize(undefined)).toBe('')
     expect(parser.serialize({ range: { kind: 'preset', preset: 'Billing_Cycle' } })).toBe('Billing_Cycle|UTC')
 
     const fixed = dateRangeV2FilterParser.parse(`FIXED|${FROM}|${TO}|UTC`, NOW)

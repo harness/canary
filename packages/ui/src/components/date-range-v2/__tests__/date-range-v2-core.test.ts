@@ -284,6 +284,18 @@ describe.concurrent('date range v2 presets', () => {
   })
 
   it('keeps existing DateRange preset names on the same side of the clock', ({ expect }) => {
+    expect(dateRangeV2FilterParser.parse('CURRENT_MONTH')?.range).toEqual({
+      kind: 'calendar',
+      position: 'this',
+      unit: 'month',
+      extent: 'full'
+    })
+    expect(dateRangeV2FilterParser.parse('LAST_1_CALENDAR_MONTH')?.range).toEqual({
+      kind: 'calendar',
+      position: 'previous',
+      amount: 1,
+      unit: 'month'
+    })
     expect(dateRangeV2FilterParser.parse('LAST_MONTH')?.range).toEqual({
       kind: 'calendar',
       position: 'previous',
@@ -393,9 +405,9 @@ describe.concurrent('dateRangeV2FilterParser', () => {
     expect(dateRangeV2FilterParser.parse('LAST_0_DAYS')).toBeUndefined()
     expect(dateRangeV2FilterParser.parse('NOPE')).toBeUndefined()
     expect(dateRangeV2FilterParser.parse('FIXED|nope|1')).toBeUndefined()
-    expect(dateRangeV2FilterParser.parse('CUSTOM|1788201000000|1788978600000|UTC')).toBeUndefined()
+    expect(dateRangeV2FilterParser.parse('CUSTOM|nope|1')).toBeUndefined()
     expect(dateRangeV2FilterParser.parse('THIS_MONTH_TO_DATE')).toBeUndefined()
-    expect(dateRangeV2FilterParser.parse('CURRENT_MONTH')).toBeUndefined()
+    expect(dateRangeV2FilterParser.parse('LAST_WEEK')).toBeUndefined()
     expect(dateRangeV2FilterParser.parse('THIS_MONTH|UTC|extra')).toBeUndefined()
     expect(dateRangeV2FilterParser.parse('[object Object]')).toBeUndefined()
   })

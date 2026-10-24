@@ -1,6 +1,6 @@
 import { normalizePresets } from './normalize-picker-config'
-import { resolveDateRangeV2, resolvePresetBounds } from './resolve-date-range-v2'
-import { isCivilDateTime } from './timezone-utils'
+import { resolveDateRangeV2, resolvePresetBounds, resolveTimeZone } from './resolve-date-range-v2'
+import { isCivilDateTime, utcToCivilDateTime } from './timezone-utils'
 import type {
   CalendarExtent,
   CalendarUnit,
@@ -41,6 +41,14 @@ const parseAmount = (token: string): number | undefined => {
   return Number.isInteger(amount) && amount >= 1 ? amount : undefined
 }
 
+const parseEpoch = (token: string): number | undefined => {
+  if (!/^-?\d+$/.test(token)) return undefined
+  const value = Number(token)
+  return Number.isSafeInteger(value) ? value : undefined
+}
+
+const withTimezone = (id: string, timezone: string | undefined): string => (timezone ? `${id}|${timezone}` : id)
+
 const decodeRangeQuery = (rangeQuery: string): string | undefined => {
   if (!rangeQuery) return undefined
   try {
@@ -51,7 +59,68 @@ const decodeRangeQuery = (rangeQuery: string): string | undefined => {
 }
 
 /**
- * Relative, calendar, or fixed range inside a rangeQuery, plus its timezone.
+ * Rewrites an older rangeQuery into the current grammar. The result is only a string.
+ * Each branch matches one older DateRangeV2 query or a default DateRangeField preset id.
+ * A query that is already current is returned unchanged. `parseRangeQuery` reads the result.
+ */
+export const migrateDateRangeV2RangeQuery = (rangeQuery: string): string => {
+  const query = decodeRangeQuery(rangeQuery)
+  if (!query) return rangeQuery
+
+  /**
+   * Note: DateRangeV2 used to write CUSTOM range as `CUSTOM|FROM_MS|TO_MS|TIMEZONE`
+   */
+  // CUSTOM|FROM_MS|TO_MS|TIMEZONE → FIXED|yyyy-MM-ddTHH:mm:ss|yyyy-MM-ddTHH:mm:ss|TIMEZONE
+  const custom = /^CUSTOM\|(?<from>-?\d+)\|(?<to>-?\d+)(?:\|(?<timezone>[^|]+))?$/.exec(query)
+  if (custom?.groups) {
+    const fromMs = parseEpoch(custom.groups.from)
+    const toMs = parseEpoch(custom.groups.to)
+    const timezone = custom.groups.timezone ?? DEFAULT_TIME_ZONE
+    if (fromMs === undefined || toMs === undefined || !isTimezone(timezone)) return query
+    const zone = resolveTimeZone(timezone)
+    return `FIXED|${utcToCivilDateTime(new Date(fromMs), zone)}|${utcToCivilDateTime(new Date(toMs), zone)}|${timezone}`
+  }
+
+  /**
+   * Note: DateRangeV2 wrote a full period as `THIS_MONTH_FULL`. The current grammar omits `_FULL`.
+   */
+  // THIS_(DAY|WEEK|MONTH|QUARTER|YEAR)_FULL|TIMEZONE → THIS_(UNIT)|TIMEZONE
+  const fullPeriod = /^THIS_(?<unit>DAY|WEEK|MONTH|QUARTER|YEAR)S?_FULL(?:\|(?<timezone>[^|]+))?$/.exec(query)
+  if (fullPeriod?.groups) return withTimezone(`THIS_${fullPeriod.groups.unit}`, fullPeriod.groups.timezone)
+
+  /**
+   * Note: DateRangeV2 used to write last calendar period as `LAST_AMOUNT_CALENDAR_(DAY|WEEK|MONTH|QUARTER|YEAR)S?|TIMEZONE` and now it is rewritten to `PREVIOUS_AMOUNT_CALENDAR_(DAY|WEEK|MONTH|QUARTER|YEAR)S?|TIMEZONE`
+   */
+  // LAST_AMOUNT_CALENDAR_(DAY|WEEK|MONTH|QUARTER|YEAR)S?|TIMEZONE → PREVIOUS_...
+  const lastCalendar =
+    /^LAST_(?<amount>\d+)_CALENDAR_(?<unit>DAY|WEEK|MONTH|QUARTER|YEAR)S?(?:\|(?<timezone>[^|]+))?$/.exec(query)
+  if (lastCalendar?.groups) {
+    const { amount, unit, timezone } = lastCalendar.groups
+    return withTimezone(`PREVIOUS_${amount}_CALENDAR_${unit}`, timezone)
+  }
+
+  /**
+   * Note: getDefaultPresets of DateRangeField (V1) used to write the current period as `CURRENT_MONTH|TIMEZONE`.
+   * It is rewritten to `THIS_(DAY|WEEK|MONTH|QUARTER|YEAR)|TIMEZONE`.
+   */
+  // CURRENT_(DAY|WEEK|MONTH|QUARTER|YEAR)|TIMEZONE → THIS_(UNIT)|TIMEZONE
+  const currentPeriod = /^CURRENT_(?<unit>DAY|WEEK|MONTH|QUARTER|YEAR)S?(?:\|(?<timezone>[^|]+))?$/.exec(query)
+  if (currentPeriod?.groups) return withTimezone(`THIS_${currentPeriod.groups.unit}`, currentPeriod.groups.timezone)
+
+  /**
+   * Note: Amount less preset ids were part of getDefaultPresets of DateRangeField (V1)
+   */
+  // LAST_(MONTH|QUARTER|YEAR)|TIMEZONE → PREVIOUS_1_CALENDAR_(UNIT)|TIMEZONE
+  const lastPeriod = /^LAST_(?<unit>MONTH|QUARTER|YEAR)(?:\|(?<timezone>[^|]+))?$/.exec(query)
+  if (lastPeriod?.groups) {
+    return withTimezone(`PREVIOUS_1_CALENDAR_${lastPeriod.groups.unit}`, lastPeriod.groups.timezone)
+  }
+
+  return query
+}
+
+/**
+ * Relative, calendar, or fixed range inside a current rangeQuery, plus its timezone.
  * A missing timezone is UTC.
  */
 export const parseRangeQuery = (
@@ -89,17 +158,9 @@ export const parseRangeQuery = (
     }
   }
 
-  /**
-   * Note: `_FULL` is kept because there was a bug in the previous implementation, which
-   * wrote a full period as `THIS_MONTH_FULL` and so far as `THIS_MONTH`.
-   * Serialize now writes a full period as `THIS_MONTH` and never writes `_FULL`.
-   * `THIS_MONTH_FULL` still parses as the full period, so queries saved by that bug keep working.
-   */
-  // THIS_(DAY|WEEK|MONTH|QUARTER|YEAR)(_SO_FAR|_FULL|_FROM_NOW)?|TIMEZONE
+  // THIS_(DAY|WEEK|MONTH|QUARTER|YEAR)(_SO_FAR|_FROM_NOW)?|TIMEZONE
   const current =
-    /^THIS_(?<unit>DAY|WEEK|MONTH|QUARTER|YEAR)S?(?:_(?<extent>SO_FAR|FULL|FROM_NOW))?(?:\|(?<timezone>[^|]+))?$/.exec(
-      query
-    )
+    /^THIS_(?<unit>DAY|WEEK|MONTH|QUARTER|YEAR)S?(?:_(?<extent>SO_FAR|FROM_NOW))?(?:\|(?<timezone>[^|]+))?$/.exec(query)
   if (current?.groups) {
     const timezone = parseTimezone(current.groups.timezone)
     if (!timezone) return undefined
@@ -134,29 +195,21 @@ export const parseRangeQuery = (
     }
   }
 
-  // LAST_WEEK and NEXT_MONTH are one calendar period.
-  const calendarAlias =
-    /^(?<direction>LAST|NEXT)_(?<unit>DAY|WEEK|MONTH|QUARTER|YEAR)S?(?:\|(?<timezone>[^|]+))?$/.exec(query)
-  if (calendarAlias?.groups) {
-    const timezone = parseTimezone(calendarAlias.groups.timezone)
-    if (!timezone) return undefined
-    return {
-      range: {
-        kind: 'calendar',
-        position: calendarAlias.groups.direction === 'NEXT' ? 'next' : 'previous',
-        amount: 1,
-        unit: calendarAlias.groups.unit.toLowerCase() as CalendarUnit
-      },
-      timezone
-    }
-  }
-
   return undefined
 }
 
+/**
+ * Parses and serializes a RelativeRange, CalendarRange, or FixedRange using the current rangeQuery grammar.
+ *
+ * `parse` first uses `migrateDateRangeV2RangeQuery` to rewrite a legacy rangeQuery into the current grammar.
+ * Then `parseRangeQuery` reads that string as a ResolvableDateRangeV2.
+ * Then `resolveDateRangeV2` fills `from` and `to`, returning a ResolvableDateRangeV2Value.
+ *
+ * `serialize` converts `ResolvableDateRangeV2Value` to a rangeQuery string using the current grammar.
+ */
 export const dateRangeV2FilterParser = {
   parse: (rangeQuery: string, now: Date = new Date()): ResolvableDateRangeV2Value | undefined => {
-    const parsed = parseRangeQuery(rangeQuery)
+    const parsed = parseRangeQuery(migrateDateRangeV2RangeQuery(rangeQuery))
     if (!parsed) return undefined
     return resolveDateRangeV2({ range: parsed.range, timezone: parsed.timezone }, now)
   },
@@ -186,27 +239,11 @@ export const dateRangeV2FilterParser = {
 }
 
 /**
- * Ids from the previous date range field.
- * `LAST_MONTH`, `LAST_QUARTER`, and `LAST_YEAR` become the previous calendar period.
- * Relative ids such as `LAST_7_DAYS` already match.
- */
-const LEGACY_RANGE_IDS: Record<string, string> = {
-  LAST_MONTH: 'PREVIOUS_1_CALENDAR_MONTH',
-  LAST_QUARTER: 'PREVIOUS_1_CALENDAR_QUARTER',
-  LAST_YEAR: 'PREVIOUS_1_CALENDAR_YEAR'
-}
-
-/** Rewrites a migrateable id and keeps the timezone piece. */
-const migrateLegacyRangeQuery = (parts: string[]): string | undefined => {
-  const migrated = LEGACY_RANGE_IDS[parts[0].trim().toUpperCase()]
-  return migrated ? [migrated, ...parts.slice(1)].join('|') : undefined
-}
-
-/**
- * Filter parser for one DateRangeV2 option.
- * A PresetRange is `PRESET` or `PRESET|TIMEZONE` and reloads through `getRange({ timezone })`.
- * `LAST_MONTH`, `LAST_QUARTER`, and `LAST_YEAR` are rewritten, then parsed by `dateRangeV2FilterParser`.
- * Every other rangeQuery uses `dateRangeV2FilterParser` as-is.
+ * Parses and serializes a PresetRange from the PresetModeConfig provided by the user.
+ * `parse` uses `preset.getRange({ timezone })` to turn the rangeQuery into a PresetRange value.
+ * `serialize` writes `preset.value` as the rangeQuery string.
+ *
+ * Every other rangeQuery is handled by `dateRangeV2FilterParser`.
  */
 export const createDateRangeV2FilterParser = (config?: DateRangeV2Config) => {
   const normalizedPresets = normalizePresets(config?.modes?.find(mode => mode.mode === 'presets')?.presets)
@@ -229,8 +266,7 @@ export const createDateRangeV2FilterParser = (config?: DateRangeV2Config) => {
           return { from, to, range: { kind: 'preset', preset: preset.value }, timezone }
         }
       }
-      const migrated = parts ? migrateLegacyRangeQuery(parts) : undefined
-      return dateRangeV2FilterParser.parse(migrated ?? rangeQuery, now)
+      return dateRangeV2FilterParser.parse(rangeQuery, now)
     },
     serialize: (value: DateRangeV2Value): string => {
       const { range } = value

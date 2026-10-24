@@ -122,6 +122,10 @@ export interface FixedModeConfig {
   defaultValue?: WithoutKind<FixedRange>
 }
 
+export interface PresetModeConfig {
+  presets: readonly DateRangeV2Preset[]
+}
+
 /** Calendar props the picker does not own. Range selection and the Monday week start stay under the picker's control. */
 export type DateRangeV2CalendarProps = Omit<
   CalendarProps,
@@ -137,7 +141,7 @@ export interface DateRangeV2LabelConfig {
 
 /** A tab and its settings. Omit the extra fields to keep that mode's defaults. */
 export type DateRangeV2ModeEntry =
-  | { mode: 'presets'; label?: string; presets: readonly DateRangeV2Preset[] }
+  | ({ mode: 'presets'; label?: string } & PresetModeConfig)
   | ({ mode: 'relative'; label?: string } & RelativeModeConfig)
   | ({ mode: 'calendar'; label?: string } & CalendarModeConfig)
   | ({ mode: 'fixed'; label?: string } & FixedModeConfig)

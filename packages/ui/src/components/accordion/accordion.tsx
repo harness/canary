@@ -113,8 +113,9 @@ const AccordionItem = forwardRef<ElementRef<typeof AccordionPrimitive.Item>, Acc
     const { variant, cardSize } = useContext(AccordionContext)
 
     if (variant === 'card') {
+      // Interactive cards disable text selection. Accordion content needs to stay selectable.
       return (
-        <Card.Root size={cardSize} className="w-full" wrapperClassname="!p-0">
+        <Card.Root size={cardSize} interactive={false} className="w-full" wrapperClassname="!p-0">
           <AccordionPrimitive.Item ref={ref} className="w-full" {...props} />
         </Card.Root>
       )

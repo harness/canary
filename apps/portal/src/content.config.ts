@@ -8,6 +8,7 @@ export const collections = {
     schema: docsSchema({
       extend: z.object({
         beta: z.boolean().optional().default(false),
+        dontUseInProd: z.boolean().optional().default(false),
         // Marks the full-width landing page (rendered without the docs sidebar).
         home: z.boolean().optional().default(false),
       }),

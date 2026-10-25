@@ -231,7 +231,20 @@ export default defineConfig({
               ],
             },
             "components/feedback/counter-badge",
-            "components/form/date-range-filter",
+            {
+              label: "Date Range Filter",
+              collapsed: true,
+              items: [
+                {
+                  slug: "components/form/date-range-filter",
+                  label: "Date Range Filter",
+                },
+                {
+                  slug: "components/form/date-range-v2",
+                  label: "Date Range V2 (beta)",
+                },
+              ],
+            },
             "components/overlays/dialog",
             "components/markdown-display/diff-viewer",
             {
@@ -370,7 +383,6 @@ export default defineConfig({
             "components/feedback/tag",
             "components/foundations/text",
             "components/form/textarea",
-            "components/form/date-range-v2",
             "components/overlays/time-ago-card",
             "components/feedback/toast",
             {

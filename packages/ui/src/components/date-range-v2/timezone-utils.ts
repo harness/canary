@@ -1,10 +1,11 @@
 import { formatInTimeZone, fromZonedTime, getTimezoneOffset, toZonedTime } from 'date-fns-tz'
 
-import type { CivilDate, CivilTime, TimeZoneId } from './types'
+import type { CivilDate, CivilDateTime, CivilTime, TimeZoneId } from './types'
 
 const DEFAULT_TIME_ZONE: TimeZoneId = 'UTC'
 const CIVIL_DATE_PATTERN = /^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01])$/
 const CIVIL_TIME_PATTERN = /^([01]\d|2[0-3]):[0-5]\d$/
+const CIVIL_DATE_TIME_PATTERN = /^(\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01]))T([01]\d|2[0-3]):[0-5]\d:[0-5]\d$/
 
 const isValidTimeZone = (timeZone: unknown): timeZone is TimeZoneId => {
   if (typeof timeZone !== 'string' || timeZone.length === 0 || timeZone === 'LOCALE') return false
@@ -29,17 +30,39 @@ export const isCivilDate = (value: unknown): value is CivilDate => {
 export const isCivilTime = (value: unknown): value is CivilTime =>
   typeof value === 'string' && CIVIL_TIME_PATTERN.test(value)
 
+export const isCivilDateTime = (value: unknown): value is CivilDateTime => {
+  if (typeof value !== 'string' || !CIVIL_DATE_TIME_PATTERN.test(value)) return false
+  return isCivilDate(value.slice(0, 10))
+}
+
 export const zonedCivilToUtc = (
   date: CivilDate,
   time: CivilTime = '00:00',
   timeZone: TimeZoneId = DEFAULT_TIME_ZONE
 ): Date => fromZonedTime(`${date}T${time}:00.000`, normalizeTimeZone(timeZone))
 
+/** The string is the exact local second. It has no offset of its own. */
+export const zonedCivilDateTimeToUtc = (value: CivilDateTime, timeZone: TimeZoneId = DEFAULT_TIME_ZONE): Date =>
+  fromZonedTime(`${value}.000`, normalizeTimeZone(timeZone))
+
 export const utcToCivilDate = (date: Date, timeZone: TimeZoneId = DEFAULT_TIME_ZONE): CivilDate =>
   formatInTimeZone(date, normalizeTimeZone(timeZone), 'yyyy-MM-dd') as CivilDate
 
 export const utcToCivilTime = (date: Date, timeZone: TimeZoneId = DEFAULT_TIME_ZONE): CivilTime =>
   formatInTimeZone(date, normalizeTimeZone(timeZone), 'HH:mm') as CivilTime
+
+export const utcToCivilDateTime = (date: Date, timeZone: TimeZoneId = DEFAULT_TIME_ZONE): CivilDateTime =>
+  formatInTimeZone(date, normalizeTimeZone(timeZone), "yyyy-MM-dd'T'HH:mm:ss") as CivilDateTime
+
+/** Moves the civil clock by whole hours. The browser zone never changes the result. */
+export const shiftCivilDateTimeHours = (value: CivilDateTime, hours: number): CivilDateTime => {
+  const [date, time] = value.split('T')
+  const [year, month, day] = date.split('-').map(Number)
+  const [hour, minute, second] = time.split(':').map(Number)
+  const next = new Date(Date.UTC(year, month - 1, day, hour + hours, minute, second))
+  const pad = (part: number) => String(part).padStart(2, '0')
+  return `${next.getUTCFullYear()}-${pad(next.getUTCMonth() + 1)}-${pad(next.getUTCDate())}T${pad(next.getUTCHours())}:${pad(next.getUTCMinutes())}:${pad(next.getUTCSeconds())}` as CivilDateTime
+}
 
 export const formatTimeZoneOffset = (timeZone: TimeZoneId, at: Date = new Date()): string => {
   const offsetMinutes = Math.round(getTimezoneOffset(normalizeTimeZone(timeZone), at) / 60_000)

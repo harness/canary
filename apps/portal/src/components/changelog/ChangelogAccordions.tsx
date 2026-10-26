@@ -1,12 +1,13 @@
 import type { FC, ReactNode } from "react";
-import { Accordion, Text } from "@harnessio/ui/components";
+import { Accordion, StatusBadge, Text } from "@harnessio/ui/components";
 
 // Hand-maintained change log entries. To add a new entry, prepend an object to
-// this array: give it a unique `value`, the `date` and `title` shown in the
-// collapsed header, and the `body` revealed when the item is expanded.
+// this array: give it a unique `value`, the `date`, `status`, and `title` shown
+// in the collapsed header, and the `body` revealed when the item is expanded.
 interface ChangelogEntry {
   value: string;
   date: string;
+  status: string;
   title: string;
   body: ReactNode;
 }
@@ -23,7 +24,8 @@ const ENTRIES: ChangelogEntry[] = [
   {
     value: "uui-4286",
     date: "October 23, 2026",
-    title: "Semibold weights migrated to the heading weight (UUI-4286)",
+    status: "In Progress",
+    title: "Semibold weights migrated to the heading weight",
     body: (
       <>
         <Text as="p" variant="body-normal" color="foreground-2">
@@ -55,7 +57,8 @@ const ENTRIES: ChangelogEntry[] = [
   {
     value: "uui-3467",
     date: "October 7, 2026",
-    title: "Typography weight normalization (UUI-3467)",
+    status: "In Progress",
+    title: "Typography weight normalization",
     body: (
       <>
         <Text as="p" variant="body-normal" color="foreground-2">
@@ -102,10 +105,15 @@ const ChangelogAccordions: FC = () => (
       <Accordion.Item key={entry.value} value={entry.value}>
         <Accordion.Trigger>
           <span className="flex flex-col gap-cn-3xs text-left">
-            <Text variant="caption-normal" color="foreground-3">
-              {entry.date}
-            </Text>
-            <Text variant="heading-small" color="foreground-1">
+            <span className="flex items-center gap-cn-sm">
+              <Text variant="caption-normal" color="foreground-3">
+                {entry.date}
+              </Text>
+              <StatusBadge variant="outline" theme="warning" size="sm">
+                {entry.status}
+              </StatusBadge>
+            </span>
+            <Text variant="heading-base" color="foreground-1">
               {entry.title}
             </Text>
           </span>

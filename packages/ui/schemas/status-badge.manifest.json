@@ -109,6 +109,8 @@
       "theme.warning": "badge.theme.warning",
       "theme.danger": "badge.theme.danger",
       "theme.info": "badge.theme.info",
+      "theme.merged": "badge.theme.merged",
+      "theme.risk": "badge.theme.risk",
       "size.sm": "badge.size.sm",
       "size.md": "badge.size.md",
       "animation.pulse": "animation.pulse"
@@ -152,7 +154,7 @@
       "docs/system/design-to-code-flow.md",
       "schemas/status-badge.md"
     ],
-    "tokenStatus": "All color and animation tokens verified; size tokens pending audit"
+    "tokenStatus": "All theme and animation color refs recorded and verified; size tokens pending audit"
   },
 
   "knownGaps": [

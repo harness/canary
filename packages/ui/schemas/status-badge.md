@@ -50,6 +50,37 @@ implies good, bad, or waiting — and is backed by a system process.
 
 ---
 
+## Theme vocabulary: everyday words → real values
+
+People describing a status rarely use the prop value. Someone asking for "a red badge", "an
+error state" or "mark it failed" all mean `theme="danger"` — the word `error` does not exist
+anywhere in this system, as a prop value, a token, or a CSS class. Translate the request;
+never pass the word you were given.
+
+| If the request says… | Use |
+|---|---|
+| error, failed, failure, broken, critical, fatal, red | `danger` |
+| passed, succeeded, healthy, complete, approved, green | `success` |
+| warning, warn, caution, degraded, unstable, flaky, amber, yellow | `warning` |
+| neutral, inactive, idle, unknown, not started, n/a, draft, grey | `muted` |
+| informational, note, notice, blue | `info` |
+| merged, purple | `merged` — merged-state indicators only (see below) |
+
+**These six plus `risk` are the complete set.** If a request maps to nothing here, it has no
+theme — say so rather than inventing one. In particular there is no `purple` theme: `merged`
+*is* the purple (`--cn-text-merged` resolves to `--cn-set-purple-secondary-text`), but it
+carries "this was merged" semantics, so it is the wrong answer for a decorative purple. A
+request for purple that is not about a merge usually wants **Tag**, whose themes are
+decorative colour names and which also has a built-in dismiss action.
+
+`risk` has no established vocabulary and, per `docs/system/visual-primitives.md`, no call
+sites yet — do not reach for it without product-specific guidance.
+
+Remember that `info`, `merged` and `risk` are product-specific rather than global (Pipelines,
+Code Repository, AI Code Review); the rule below still applies.
+
+---
+
 ## Do's and Don'ts
 
 ### ✅ Do

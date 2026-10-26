@@ -3,7 +3,7 @@
   "info": {
     "title": "StatusBadge Component Skill",
     "description": "Display a status indicator with a semantic theme (muted, success, warning, danger, info, merged, risk) and optional pulse animation on the 'status' variant",
-    "version": "1.4.1",
+    "version": "1.5.5",
     "x-skill-id": "canary.status-badge",
     "x-skill-status": "stable",
     "x-skill-package": "@harnessio/ui"
@@ -130,6 +130,8 @@
       "theme.warning": "badge.theme.warning",
       "theme.danger": "badge.theme.danger",
       "theme.info": "badge.theme.info",
+      "theme.merged": "badge.theme.merged",
+      "theme.risk": "badge.theme.risk",
       "size.sm": "badge.size.sm",
       "size.md": "badge.size.md",
       "animation.pulse": "animation.pulse"

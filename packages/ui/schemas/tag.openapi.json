@@ -3,7 +3,7 @@
   "info": {
     "title": "Tag Component Skill",
     "description": "Label a stable, descriptive attribute with a decorative colour theme, optionally as a two-part key/value pair with an icon and a dismiss action",
-    "version": "1.0.0",
+    "version": "1.5.5",
     "x-skill-id": "canary.tag",
     "x-skill-status": "stable",
     "x-skill-package": "@harnessio/ui"

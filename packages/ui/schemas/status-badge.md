@@ -101,6 +101,7 @@ Code Repository, AI Code Review); the rule below still applies.
   | Queued / Paused | `pause` |
   | Rejected | `prohibition` |
   | Expired / Error | `warning-circle` |
+  | Merged | `git-merge` |
 
 - Render **one** badge per object — if several statuses apply, show the most urgent
 

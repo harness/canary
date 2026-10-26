@@ -110,37 +110,6 @@ Content scrolls when it exceeds the max height and max width.
   `}
 />
 
-### Footer
-
-Use the `footer` prop for content that stays fixed at the bottom when the body scrolls.
-
-<DocsPage.ComponentExample
-  client:only
-  code={`
-    <TooltipProvider>
-      <div className="flex justify-center">
-        <Tooltip
-          title="Tooltip with footer"
-          content={
-            <ul className="flex flex-col gap-y-cn-4xs">
-              {Array.from({ length: 20 }, (_, i) => i + 1).map((i) => (
-                <li key={i}>Item {i}</li>
-              ))}
-            </ul>
-          }
-          footer={
-            <Button variant="link" size="md">
-              View details
-            </Button>
-          }
-        >
-          <Button variant="secondary">Hover for tooltip with footer</Button>
-        </Tooltip>
-      </div>
-    </TooltipProvider>
-  `}
-/>
-
 ## Installation
 
 ```tsx

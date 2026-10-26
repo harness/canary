@@ -18,18 +18,9 @@ import PageTabsToc from "@/components/page-tabs-toc.astro";
 
 The `Tooltip` component surfaces additional information for an element in a small overlay that appears on hover or focus. It supports a title, a scrollable body, a fixed footer, an arrow, and positioning on any side. Every `Tooltip` must have a `TooltipProvider` ancestor — typically wrapped around the entire app.
 
-<DocsPage.ComponentExample
-  client:only
-  code={`<TooltipProvider>
-    <div className="flex justify-center">
-        <Tooltip
-            content="Tooltips provide helpful context and information"
-        >
-            <Button variant="secondary">Hover me</Button>
-        </Tooltip>
-    </div>
-</TooltipProvider>`}
-/>
+## Playground
+
+<DocsPage.TooltipPlayground client:only />
 
 ## Variations
 

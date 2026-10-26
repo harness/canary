@@ -37,8 +37,12 @@ const VARIANT_OPTIONS = ["outline", "secondary"];
 const SIZE_OPTIONS = ["md", "sm"];
 const ICON_OPTIONS = ["none", "label", "plus", "info-circle", "check"];
 
-// ① The state shape — one field per control.
+// ① The state shape — one field per control. `type` picks between the two tag
+//    shapes: a plain tag (just `value`) or a split tag (a `label` key segment +
+//    the `value`). The component infers "split" from receiving both props, so the
+//    playground makes that an explicit choice instead of a side effect of typing.
 interface State {
+  type: "default" | "split";
   value: string;
   label: string;
   variant: "outline" | "secondary";
@@ -51,9 +55,10 @@ interface State {
   disabled: boolean;
 }
 
-// ② Defaults. A split tag (label + value) is the starting point so the key/value
-//    feature is visible straight away.
+// ② Defaults. Starts as a plain tag; switch `type` to "split" to reveal the
+//    key (`label`) segment.
 const INITIAL_STATE: State = {
+  type: "default",
   value: "Production",
   label: "Env",
   variant: "secondary",
@@ -66,12 +71,14 @@ const INITIAL_STATE: State = {
   disabled: false,
 };
 
-// ③ Mirror the preview exactly. `value` is required so it's always emitted; everything
-//    else only when it differs from the component defaults. A non-empty `label` makes it
-//    a split tag, and `removable` expands to the actionIcon + onActionClick pair.
+// ③ Mirror the preview exactly. A split tag emits `label` (its presence alongside
+//    `value` is what makes the component render split); `value` is always emitted.
+//    Everything else only when it differs from the component defaults, and
+//    `removable` expands to the actionIcon + onActionClick pair.
 function generateCode(s: State): string {
-  const attrs: string[] = [`value="${s.value}"`];
-  if (s.label) attrs.push(`label="${s.label}"`);
+  const attrs: string[] = [];
+  if (s.type === "split") attrs.push(`label="${s.label}"`);
+  attrs.push(`value="${s.value}"`);
   if (s.variant !== "outline") attrs.push(`variant="${s.variant}"`);
   if (s.size !== "md") attrs.push(`size="${s.size}"`);
   if (s.theme !== "gray") attrs.push(`theme="${s.theme}"`);
@@ -96,19 +103,32 @@ const TagPlayground: FC = () => {
 
   const reset = () => setState(INITIAL_STATE);
 
-  // ④ The curated control set.
+  // ④ The curated control set. The `label` key field only appears for a split
+  //    tag — on a default tag it has no effect, so showing it would mislead.
   const controls: PropControl[] = [
+    {
+      name: "type",
+      type: "select",
+      options: ["default", "split"],
+      description: "Plain tag or key / value split",
+    },
     {
       name: "value",
       type: "text",
       required: true,
-      description: "The tag's main text",
+      description:
+        state.type === "split" ? "Value segment (right)" : "The tag's text",
     },
-    {
-      name: "label",
-      type: "text",
-      description: "Set a key to make a split tag (empty = single)",
-    },
+    ...(state.type === "split"
+      ? [
+          {
+            name: "label",
+            type: "text" as const,
+            required: true,
+            description: "Key segment (left)",
+          },
+        ]
+      : []),
     {
       name: "variant",
       type: "select",
@@ -167,13 +187,14 @@ const TagPlayground: FC = () => {
     />
   );
 
-  // ⑤ Render the real Tag from state. Empty `label` is coerced to undefined so the tag
-  //    stays single rather than split; `removable` expands to the actionIcon pair with a
-  //    no-op handler (the snippet shows where real remove logic would go).
+  // ⑤ Render the real Tag from state. `label` is passed only for a split tag (its
+  //    presence alongside `value` is what triggers split rendering); `removable`
+  //    expands to the actionIcon pair with a no-op handler (the snippet shows where
+  //    real remove logic would go).
   const preview = (
     <Tag
       value={state.value}
-      label={state.label || undefined}
+      label={state.type === "split" ? state.label : undefined}
       variant={state.variant}
       size={state.size}
       theme={state.theme as never}

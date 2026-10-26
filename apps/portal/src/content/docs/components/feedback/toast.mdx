@@ -16,33 +16,11 @@ import PageTabsToc from "@/components/page-tabs-toc.astro";
 
 <TabItem label="Overview">
 
-`toast` is an imperative API for showing transient notifications. You call it from anywhere in your app, and the `Toaster` component — mounted once at the root — renders the result. To show a simple toast, call the `toast` function.
+`toast` is an imperative API for showing transient notifications. You call it from anywhere in your app, and the `Toaster` component — mounted once at the root — renders the result.
 
-<DocsPage.ComponentExample
-  client:only
-  code={`
-    <Button
-      onClick={() =>
-        toast({
-          title: 'Toast title',
-          description: Array.from({ length: Math.floor(Math.random() * 1000) + 1 })
-            .map(() => 'a')
-            .join(''),
-          options: {
-            duration: 3000,
-            action: {
-              label: 'Undo',
-              onClick: () => {
-                console.log('Undo')
-              }
-            }
-          }
-        })
-      }
-    >
-      Show toast
-    </Button>`}
-/>
+Choose a `type` to pick which function fires — `toast` for neutral messages, `toast.success` / `toast.danger` for outcomes, `toast.info` for notices, and `toast.loading` / `toast.promise` for in-progress work. `title` is the bold heading and `description` the detail line (loading and promise toasts show only a title). Through `options` you can set a `duration`, allow or block dismissal with `dismissible`, and attach an `action` button; info toasts additionally take a `secondaryAction`, a `ctaPosition`, and a `severity` border. Try them in the playground below.
+
+<DocsPage.ToastPlayground client:only />
 
 <Code
   code={`

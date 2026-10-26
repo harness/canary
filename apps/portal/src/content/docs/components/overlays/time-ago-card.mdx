@@ -164,6 +164,13 @@ import { TimeAgoCard } from "@harnessio/ui/components";
 
 - Don't rely on `TimeAgoCard` alone to convey a critical exact time — the precise value lives in the hover tooltip, which isn't visible at a glance.
 
+## Content
+
+- The relative time is generated and localized for you — the only text you write is the `prefix`.
+- Keep the `prefix` to a short label, usually a past-tense verb like "Updated", "Created", or "Last run".
+- Don't append "on", "at", or "ago" to the `prefix` — the component already reads as "Updated 5 min. ago", so extra connecting words make it redundant.
+- Match the casing of the surrounding UI; use sentence case ("Last updated") unless the context calls for a capitalized label.
+
 ## Accessibility
 
 ### Keyboard

@@ -54,65 +54,6 @@ The `Toggle` component can be used in both controlled and uncontrolled modes. In
 )}`}
 />
 
-### Variants
-
-The `variant` prop controls the unselected style: `outline`, `ghost`, or `transparent`. The `selectedVariant` prop controls the style when the toggle is selected, with options `primary` and `secondary`.
-
-<Aside type="note">
-  When `variant` is set to `transparent`, `selectedVariant` is ignored — the
-  selected state also stays `transparent`, following the design specification.
-</Aside>
-
-<DocsPage.ComponentExample
-  client:only
-  code={`<div className="space-y-cn-sm w-full">
-  <div className="flex items-center gap-cn-md border-b border-cn-borders-3 pb-cn-sm">
-    <span className="text-cn-size-2 text-cn-3 w-48 shrink-0 font-mono">outline / primary</span>
-    <Toggle text="Toggle" />
-  </div>
-  <div className="flex items-center gap-cn-md border-b border-cn-borders-3 pb-cn-sm">
-    <span className="text-cn-size-2 text-cn-3 w-48 shrink-0 font-mono">outline / secondary</span>
-    <Toggle text="Toggle" selectedVariant="secondary" />
-  </div>
-  <div className="flex items-center gap-cn-md border-b border-cn-borders-3 pb-cn-sm">
-    <span className="text-cn-size-2 text-cn-3 w-48 shrink-0 font-mono">ghost / primary</span>
-    <Toggle text="Toggle" variant="ghost" />
-  </div>
-  <div className="flex items-center gap-cn-md border-b border-cn-borders-3 pb-cn-sm">
-    <span className="text-cn-size-2 text-cn-3 w-48 shrink-0 font-mono">ghost / secondary</span>
-    <Toggle text="Toggle" variant="ghost" selectedVariant="secondary" />
-  </div>
-  <div className="flex items-center gap-cn-md">
-    <span className="text-cn-size-2 text-cn-3 w-48 shrink-0 font-mono">transparent</span>
-    <Toggle text="Toggle" variant="transparent" />
-  </div>
-</div>
-`}
-/>
-
-### Sizes
-
-The `size` prop controls the toggle's overall dimensions. Supported values are `md` (default), `sm`, and `xs`.
-
-<DocsPage.ComponentExample
-  client:only
-  code={`<div className="space-y-cn-sm w-full">
-  <div className="flex items-center gap-cn-md border-b border-cn-borders-3 pb-cn-sm">
-    <span className="text-cn-size-2 text-cn-3 w-40 shrink-0 font-mono">md</span>
-    <Toggle text="Toggle" prefixIcon="plus" suffixIcon="minus" />
-  </div>
-  <div className="flex items-center gap-cn-md border-b border-cn-borders-3 pb-cn-sm">
-    <span className="text-cn-size-2 text-cn-3 w-40 shrink-0 font-mono">sm</span>
-    <Toggle size="sm" text="Toggle" prefixIcon="plus" suffixIcon="minus" prefixIconProps={{ size: 'sm' }} suffixIconProps={{ size: 'sm' }} />
-  </div>
-  <div className="flex items-center gap-cn-md">
-    <span className="text-cn-size-2 text-cn-3 w-40 shrink-0 font-mono">xs</span>
-    <Toggle size="xs" text="Toggle" prefixIcon="plus" suffixIcon="minus" prefixIconProps={{ size: 'xs' }} suffixIconProps={{ size: 'xs' }} />
-  </div>
-</div>
-`}
-/>
-
 ### Rounded
 
 Pass `rounded` to give the underlying button fully rounded corners.
@@ -124,16 +65,9 @@ Pass `rounded` to give the underlying button fully rounded corners.
 `}
 />
 
-### Icon only
+## Playground
 
-Pass `iconOnly` to size the toggle to fit a single icon, suitable for icon-only buttons. When `iconOnly` is set, the `prefixIcon` is the only icon displayed and the `text` prop becomes the button's `aria-label`.
-
-<DocsPage.ComponentExample
-  client:only
-  code={`
-    <Toggle iconOnly prefixIcon="plus" text="Add" />
-`}
-/>
+<DocsPage.TogglePlayground client:only />
 
 ### With tooltip
 
@@ -151,10 +85,6 @@ Pass `tooltipProps` to wrap the toggle in a `Tooltip`. It accepts the `title`, `
     />
 `}
 />
-
-## Playground
-
-<DocsPage.TogglePlayground client:only />
 
 ## Installation
 

@@ -29,6 +29,7 @@ function generateCode(
     .filter(([, v]) => v !== undefined && v !== "" && v !== null)
     .map(([key, v]) => {
       if (typeof v === "boolean") return v ? key : `${key}={false}`;
+      if (typeof v === "number") return `${key}={${v}}`;
       return `${key}=${formatValue(v)}`;
     })
     .join(" ");

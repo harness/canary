@@ -6,6 +6,7 @@ export interface PropControl {
   defaultValue?: unknown;
   options?: string[]; // only used when type === "select"
   description?: string;
+  placeholder?: string; // hint text for text inputs
   required?: boolean;
 }
 

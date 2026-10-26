@@ -2,12 +2,16 @@ import type { FC, ReactNode } from "react";
 import { Accordion, StatusBadge, Text } from "@harnessio/ui/components";
 
 // Hand-maintained change log entries. To add a new entry, prepend an object to
-// this array: give it a unique `value`, the `date`, `status`, and `title` shown
-// in the collapsed header, and the `body` revealed when the item is expanded.
+// this array: give it a unique `value`, the `date`, `status` (+ `statusTheme`),
+// and `title` shown in the collapsed header, and the `body` revealed when the
+// item is expanded.
 interface ChangelogEntry {
   value: string;
   date: string;
   status: string;
+  // Intent color for the status chip: "info" for upcoming/planned work,
+  // "warning" for in-progress, "success" once shipped.
+  statusTheme: "info" | "warning" | "success";
   title: string;
   body: ReactNode;
 }
@@ -22,9 +26,55 @@ const Code: FC<{ children: ReactNode }> = ({ children }) => (
 
 const ENTRIES: ChangelogEntry[] = [
   {
+    value: "weight-bucket-cleanup",
+    date: "Planned",
+    status: "Upcoming",
+    statusTheme: "info",
+    title: "Retiring the 600 weight bucket and renaming heading → 500",
+    body: (
+      <>
+        <Text as="p" variant="body-normal" color="foreground-2">
+          An upcoming release will retire the deprecated weight buckets and align
+          the remaining bucket names with the optical weight they actually render.
+          The <Code>600</Code> bucket (optical <Code>530</Code>, the old semibold)
+          will be <strong>removed</strong> — it is already unused across the
+          library after the October 23 migration and is kept only for
+          backwards-compatibility. The deprecated <Code>500</Code> bucket (optical{" "}
+          <Code>440</Code>) will be retired in the same pass.
+        </Text>
+        <Text as="p" variant="body-normal" color="foreground-2">
+          With <Code>530</Code> and <Code>440</Code> gone, the <Code>heading</Code>{" "}
+          bucket (optical 500) will be <strong>renamed to <Code>500</Code></strong>
+          , so every bucket name finally matches the weight it renders and the one
+          “named for its role” exception disappears. In CSS-variable terms,{" "}
+          <Code>--cn-font-weight-default-normal-heading</Code> becomes{" "}
+          <Code>--cn-font-weight-default-normal-500</Code>, and{" "}
+          <Code>--cn-font-weight-default-normal-600</Code> goes away entirely.
+        </Text>
+        <Text as="p" variant="body-normal" color="foreground-2">
+          <strong>Nothing changes</strong> for code that uses the{" "}
+          <Code>.font-*</Code> utilities or <Code>{"<Text>"}</Code> variants —
+          those resolve through the composite tokens automatically. Only code that
+          references the raw weight variables directly is affected. Before this
+          lands, migrate any direct use of{" "}
+          <Code>--cn-font-weight-default-normal-600</Code> onto the heading weight
+          (or a literal <Code>font-weight: 530</Code> if you specifically need the
+          old semibold), and expect{" "}
+          <Code>--cn-font-weight-default-normal-heading</Code> to be renamed to{" "}
+          <Code>--cn-font-weight-default-normal-500</Code>.
+        </Text>
+        <Text as="p" variant="body-normal" color="foreground-2">
+          This will ship as one coordinated change across <Code>@harnessio/ui</Code>{" "}
+          and its consumers. A dated entry will replace this one once it lands.
+        </Text>
+      </>
+    ),
+  },
+  {
     value: "uui-4286",
     date: "October 23, 2026",
     status: "In Progress",
+    statusTheme: "warning",
     title: "Semibold weights migrated to the heading weight",
     body: (
       <>
@@ -58,6 +108,7 @@ const ENTRIES: ChangelogEntry[] = [
     value: "uui-3467",
     date: "October 7, 2026",
     status: "In Progress",
+    statusTheme: "warning",
     title: "Typography weight normalization",
     body: (
       <>
@@ -109,7 +160,7 @@ const ChangelogAccordions: FC = () => (
               <Text variant="caption-normal" color="foreground-3">
                 {entry.date}
               </Text>
-              <StatusBadge variant="outline" theme="warning" size="sm">
+              <StatusBadge variant="outline" theme={entry.statusTheme} size="sm">
                 {entry.status}
               </StatusBadge>
             </span>

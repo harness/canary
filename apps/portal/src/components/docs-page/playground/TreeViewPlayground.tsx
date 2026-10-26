@@ -100,14 +100,11 @@ const SAMPLE_TREE: TreeViewElement[] = [
   },
 ];
 
-// Folders expanded on mount so the whole tree is visible. Fixed (not a control)
-// but mirrored into the snippet.
-const EXPANDED_IDS = [
-  "pipeline-main",
-  "stage-build",
-  "stage-test",
-  "pipeline-hotfix",
-];
+// Only the top-level pipelines start expanded, so the stage folders begin closed.
+// Picking a row then auto-expands the path down to it — the behaviour the
+// `selectedId` control is there to show. Fixed (not a control) but mirrored into
+// the snippet.
+const INITIAL_EXPANDED = ["pipeline-main", "pipeline-hotfix"];
 
 // The selectable file rows, offered by the `selectedId` control. Selection only
 // highlights File rows (folders are structural), so these are all files.
@@ -182,8 +179,8 @@ function codeForNode(node: TreeViewElement, level: number, s: State): string {
   ].join("\n");
 }
 
-// Serialize the sample tree to a JS literal — only needed when CollapseButton is
-// on, since it (and the Tree) need the `elements` array to toggle everything.
+// Serialize the sample tree to a JS literal. The Tree needs this `elements` array
+// to auto-expand the path to initialSelectedId (and CollapseButton uses it too).
 function serializeNode(
   node: TreeViewElement,
   depth: number,
@@ -212,21 +209,21 @@ function serializeNode(
 }
 
 function generateCode(s: State): string {
-  const elementsConst = s.collapseButton
-    ? `const treeElements = [
+  const elementsConst = `const treeElements = [
 ${SAMPLE_TREE.map((n) => serializeNode(n, 1, s)).join(",\n")}
 ]
 
-`
-    : "";
+`;
 
+  // `elements` is what lets the Tree auto-expand the path to initialSelectedId,
+  // so it's always passed.
   const treeAttrs = [
     `initialSelectedId="${s.selectedId}"`,
-    `initialExpendedItems={${JSON.stringify(EXPANDED_IDS)}}`,
+    `initialExpendedItems={${JSON.stringify(INITIAL_EXPANDED)}}`,
+    "elements={treeElements}",
   ];
   if (!s.indicator) treeAttrs.push("indicator={false}");
   if (s.dir === "rtl") treeAttrs.push(`dir="rtl"`);
-  if (s.collapseButton) treeAttrs.push("elements={treeElements}");
   treeAttrs.push(`className="h-80 w-full rounded-cn-3 border"`);
 
   const body = SAMPLE_TREE.map((n) => codeForNode(n, 0, s)).join("\n");
@@ -347,11 +344,16 @@ const TreeViewPlayground: FC = () => {
 
           <div className="w-[520px] max-w-full">
             <Tree
+              // Remount on selection change so the auto-expand reveals *only*
+              // the newly-selected row's path (expandSpecificTargetedElements
+              // only ever adds, never collapses). Playground-only — kept out of
+              // the generated snippet.
+              key={state.selectedId}
               initialSelectedId={state.selectedId}
-              initialExpendedItems={EXPANDED_IDS}
+              initialExpendedItems={INITIAL_EXPANDED}
               indicator={state.indicator}
               dir={state.dir}
-              elements={state.collapseButton ? SAMPLE_TREE : undefined}
+              elements={SAMPLE_TREE}
               className="h-80 w-full rounded-cn-3 border"
             >
               {renderNodes(SAMPLE_TREE, 0)}

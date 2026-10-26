@@ -18,17 +18,6 @@ import PageTabsToc from "@/components/page-tabs-toc.astro";
 
 The `ToggleGroup` component groups a set of toggle buttons for switching between related states or options. It is composed of `ToggleGroup.Root` and `ToggleGroup.Item`, and supports single or multiple selection.
 
-<DocsPage.ComponentExample
-  client:only
-  code={`
-    <ToggleGroup.Root type="multiple" value={['2']}>
-      <ToggleGroup.Item value="1" text="Option 1" />
-      <ToggleGroup.Item value="2" text="Option 2" />
-      <ToggleGroup.Item value="3" text="Option 3" />
-    </ToggleGroup.Root>
-  `}
-/>
-
 ## Playground
 
 <DocsPage.ToggleGroupPlayground client:only />

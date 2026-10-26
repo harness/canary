@@ -22,59 +22,6 @@ The `TypingAnimation` component reveals text one character at a time, simulating
 
 <DocsPage.TypingAnimationPlayground client:only />
 
-<DocsPage.ComponentExample
-  client:only
-  code={`<TypingAnimation text="Hello! How can I help you today?" />`}
-/>
-
-## Variations
-
-### Custom speed
-
-Control the typing speed with `typingSpeed` (milliseconds per character).
-
-<DocsPage.ComponentExample
-  client:only
-  code={`<div className="flex flex-col gap-cn-md">
-  <TypingAnimation text="Fast typing (25ms)" typingSpeed={25} />
-  <TypingAnimation text="Default typing (50ms)" typingSpeed={50} />
-  <TypingAnimation text="Slow typing (100ms)" typingSpeed={100} />
-</div>`}
-/>
-
-### With delay
-
-Add a delay before the animation starts with `delay` (milliseconds).
-
-<DocsPage.ComponentExample
-  client:only
-  code={`<TypingAnimation text="This appears after 1 second..." delay={1000} />`}
-/>
-
-### With text variants
-
-Because `TypingAnimation` extends `TextProps`, you can use any Text variant.
-
-<DocsPage.ComponentExample
-  client:only
-  code={`<div className="flex flex-col gap-cn-md">
-  <TypingAnimation text="Heading style" variant="heading-base" />
-  <TypingAnimation text="Body style" variant="body-normal" />
-  <TypingAnimation text="Caption style" variant="caption-normal" />
-</div>`}
-/>
-
-### With colors
-
-<DocsPage.ComponentExample
-  client:only
-  code={`<div className="flex flex-col gap-cn-md">
-  <TypingAnimation text="Primary text" color="foreground-1" />
-  <TypingAnimation text="Secondary text" color="foreground-2" />
-  <TypingAnimation text="Brand colored" color="brand" />
-</div>`}
-/>
-
 ## Installation
 
 ```tsx

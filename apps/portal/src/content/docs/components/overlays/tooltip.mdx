@@ -24,23 +24,6 @@ The `Tooltip` component surfaces additional information for an element in a smal
 
 ## Variations
 
-### Hide arrow
-
-Use `hideArrow` to remove the tooltip arrow.
-
-<DocsPage.ComponentExample
-  client:only
-  code={`
-    <TooltipProvider>
-      <div className="flex justify-center">
-        <Tooltip content="Tooltip without arrow" hideArrow>
-          <Button variant="secondary">Tooltip Without Arrow</Button>
-        </Tooltip>
-      </div>
-    </TooltipProvider>
-  `}
-/>
-
 ### Vertical scroll
 
 Content scrolls when it exceeds the max height.
@@ -154,82 +137,6 @@ Use the `footer` prop for content that stays fixed at the bottom when the body s
           <Button variant="secondary">Hover for tooltip with footer</Button>
         </Tooltip>
       </div>
-    </TooltipProvider>
-  `}
-/>
-
-### Sides
-
-The tooltip can be positioned on any side: `top` (default), `bottom`, `left`, or `right`.
-
-<DocsPage.ComponentExample
-  client:only
-  code={`
-    <TooltipProvider>
-      <ButtonLayout orientation="vertical" className="items-center">
-        <Tooltip
-          side="top"
-          content="Tooltip appears above the trigger"
-        >
-          <Button variant="secondary">Top Side</Button>
-        </Tooltip>
-
-        <Tooltip
-          side="bottom"
-          content="Tooltip appears below the trigger"
-        >
-          <Button variant="secondary">Bottom Side</Button>
-        </Tooltip>
-
-        <Tooltip
-          side="right"
-          content="Tooltip appears to the right"
-        >
-          <Button variant="secondary">Right Side</Button>
-        </Tooltip>
-
-        <Tooltip
-          side="left"
-          content="Tooltip appears to the left"
-        >
-          <Button variant="secondary">Left Side</Button>
-        </Tooltip>
-      </ButtonLayout>
-    </TooltipProvider>
-
-`}
-/>
-
-### Alignment
-
-Control tooltip alignment relative to the trigger using `align`: `start`, `center` (default), or `end`.
-
-<DocsPage.ComponentExample
-  client:only
-  code={`
-    <TooltipProvider>
-      <ButtonLayout className="justify-center">
-        <Tooltip
-          side="top"
-          content="Tooltip centered on the trigger"
-        >
-          <Button variant="secondary">Center (default)</Button>
-        </Tooltip>
-        <Tooltip
-          side="top"
-          align="start"
-          content="Tooltip aligned to the start"
-        >
-          <Button variant="secondary">Start Aligned</Button>
-        </Tooltip>
-        <Tooltip
-          side="top"
-          align="end"
-          content="Tooltip aligned to the end"
-        >
-          <Button variant="secondary">End Aligned Button</Button>
-        </Tooltip>
-      </ButtonLayout>
     </TooltipProvider>
   `}
 />

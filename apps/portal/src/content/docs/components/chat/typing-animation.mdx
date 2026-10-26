@@ -112,6 +112,30 @@ import { TypingAnimation } from "@harnessio/ui/components";
   animation has already completed).
 </Aside>
 
+## Recommended speeds and delays
+
+`typingSpeed` is the pause between characters and `delay` is the wait before typing begins — both in milliseconds. Start from these values and adjust to the length and tone of the message.
+
+### Typing speed
+
+| Speed            | `typingSpeed` | When to use                                                               |
+| ---------------- | ------------- | ------------------------------------------------------------------------- |
+| Fast             | `25`          | Short confirmations, labels, and snappy inline responses.                 |
+| Default          | `50`          | Standard assistant replies and chat messages. A good default.             |
+| Deliberate       | `75`–`100`    | Short, emphasized phrases where a slower reveal adds weight.              |
+
+Keep longer messages at `25`–`50ms` so readers aren't left waiting; reserve `75ms`+ for brief text only.
+
+### Start delay
+
+| Delay            | `delay`       | When to use                                                               |
+| ---------------- | ------------- | ------------------------------------------------------------------------- |
+| None             | `0`           | Begin typing immediately. The default for most cases.                     |
+| Stagger          | `150`–`300`   | Let a preceding element (avatar, message bubble) settle before typing.    |
+| Thinking         | `500`–`1000`  | Suggest the assistant is "thinking" before an answer streams in.          |
+
+Use delays sparingly — anything beyond ~1s reads as lag rather than intent.
+
 ## Best practices
 
 {/* TODO: editorial — please review against product guidance. */}
@@ -119,7 +143,7 @@ import { TypingAnimation } from "@harnessio/ui/components";
 **Do**
 
 - Use it for streamed or assistant-style responses where the reveal reinforces that content is being generated.
-- Keep `typingSpeed` fast enough that readers aren't waiting on the effect — the default of 50ms works for short messages.
+- Keep `typingSpeed` fast enough that readers aren't waiting on the effect — see the recommended speeds and delays above.
 - Override `lineClamp` when the message is expected to wrap across multiple lines.
 
 **Don't**

@@ -194,6 +194,28 @@ describe('ds-check', () => {
       )
     })
 
+    // A CVA key that needs quoting (`'forest-green': 'cn-tag-forest-green'`) was swallowed
+    // by the string-literal skip before it could be read as a key, so every hyphenated
+    // variant looked absent from the source and a correct manifest failed.
+    it('should read a quoted, hyphenated CVA variant key', async () => {
+      await withProbeManifest(
+        'quoted-key-probe',
+        manifest => {
+          manifest.code.path = 'packages/ui/src/components/tag.tsx'
+          manifest.code.export = 'Tag'
+          // Deliberately omits tag.tsx's quoted 'forest-green' key: the drift must be
+          // reported against the source, which only happens if the key was parsed.
+          manifest.props.shared = [{ name: 'theme', type: 'enum', values: ['gray', 'lime'], default: 'gray' }]
+        },
+        async () => {
+          const result = await runDsCheck(['--source'])
+          expect(result.exitCode).toBe(1)
+          expect(result.stdout + result.stderr).toContain('in tag.tsx but not the manifest')
+          expect(result.stdout + result.stderr).toContain('forest-green')
+        }
+      )
+    })
+
     it('should fail --source when a declared enum prop is absent from a CVA component', async () => {
       await withProbeManifest(
         'unchecked-prop-probe',
@@ -437,6 +459,24 @@ describe('ds-check', () => {
       const result = await runDsCheck(['--generated'])
       expect(result.exitCode).toBe(0)
       expect(result.stdout).toContain('status-badge')
+    })
+  })
+
+  describe('tag manifest', () => {
+    it('should pass all checks for tag', async () => {
+      const result = await runDsCheck(['--schema', '--refs', '--code', '--source', '--generated'])
+      expect(result.exitCode).toBe(0)
+      expect(result.stdout).toContain('✅ tag')
+      expect(result.stdout).toContain('0 failed')
+    })
+
+    it('should have fresh OpenAPI spec', async () => {
+      const specPath = path.resolve(PACKAGE_ROOT, 'schemas/tag.openapi.json')
+      expect(fs.existsSync(specPath)).toBe(true)
+
+      const result = await runDsCheck(['--generated'])
+      expect(result.exitCode).toBe(0)
+      expect(result.stdout).toContain('tag')
     })
   })
 })

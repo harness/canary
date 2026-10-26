@@ -1,0 +1,279 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Tag Component Skill",
+    "description": "Label a stable, descriptive attribute with a decorative colour theme, optionally as a two-part key/value pair with an icon and a dismiss action",
+    "version": "1.0.0",
+    "x-skill-id": "canary.tag",
+    "x-skill-status": "stable",
+    "x-skill-package": "@harnessio/ui"
+  },
+  "servers": [],
+  "paths": {
+    "/components/tag": {
+      "post": {
+        "summary": "Create a Tag component",
+        "description": "Generate or validate a Tag component instance with specified props",
+        "operationId": "createTag",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TagProps"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Tag component created successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "componentId": {
+                      "type": "string",
+                      "description": "Unique identifier for the instance"
+                    },
+                    "jsx": {
+                      "type": "string",
+                      "description": "Generated JSX/TSX code"
+                    },
+                    "props": {
+                      "type": "object",
+                      "description": "Resolved prop values with defaults"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid Tag configuration"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "TagProps": {
+        "type": "object",
+        "description": "Props for the Tag React component. Generated from the manifest — do not edit by hand.",
+        "properties": {
+          "variant": {
+            "type": "string",
+            "enum": ["outline", "secondary"],
+            "default": "outline",
+            "description": "Fill treatment. 'outline' uses the theme's outline background and border; 'secondary' uses its filled secondary background.",
+            "x-provenance": "shared"
+          },
+          "size": {
+            "type": "string",
+            "enum": ["md", "sm"],
+            "default": "md",
+            "description": "Tag height and type scale. 'sm' also shrinks the action button from size '2xs' to '3xs'.",
+            "x-provenance": "shared"
+          },
+          "theme": {
+            "type": "string",
+            "enum": [
+              "gray",
+              "blue",
+              "brown",
+              "cyan",
+              "green",
+              "forest-green",
+              "indigo",
+              "lime",
+              "mint",
+              "orange",
+              "pink",
+              "purple",
+              "red",
+              "violet",
+              "yellow"
+            ],
+            "default": "gray",
+            "description": "Decorative colour name, not a semantic status. Three values resolve to semantic colour sets internally: green→success, red→danger, yellow→warning. The prop value is still the colour name.",
+            "x-provenance": "shared"
+          },
+          "value": {
+            "type": "string",
+            "default": null,
+            "description": "The tag's text, and the only required prop. In a single tag it renders as {value || label}; in a split tag it is the right-hand half.",
+            "x-provenance": "shared"
+          },
+          "icon": {
+            "type": "string",
+            "description": "An IconV2 name, rendered at size 'xs' before the text. In split mode it is applied to the left tag only — the right tag never takes a tag icon.",
+            "x-provenance": "codeOnly",
+            "x-trigger": "appearance-override"
+          },
+          "label": {
+            "type": "string",
+            "description": "Passing label *and* value switches rendering to an internal two-tag split composite: label on the left, value on the right. Passing label alone renders a single tag whose text is the label. This mode switch is silent and changes which other props are honoured (see knownGaps).",
+            "x-provenance": "codeOnly",
+            "x-trigger": "content"
+          },
+          "iconProps": {
+            "type": "object",
+            "additionalProperties": true,
+            "description": "An IconPropsV2 object passed through to IconV2, excluding name, size, fallback and ref. Dropped entirely in split mode — Tag does not forward it to the split composite.",
+            "x-provenance": "codeOnly",
+            "x-trigger": "appearance-override"
+          },
+          "actionIcon": {
+            "type": "string",
+            "description": "An IconV2 name rendered inside a transparent icon-only Button after the text — the dismiss/remove affordance. In split mode it is applied to the right tag only.",
+            "x-provenance": "codeOnly",
+            "x-trigger": "appearance-override"
+          },
+          "onActionClick": {
+            "x-code-type": "function",
+            "description": "Fires on the action button. The handler calls stopPropagation() and preventDefault() first, so an action click never also triggers the tag's own onClick.",
+            "x-provenance": "codeOnly",
+            "x-trigger": "event-handler"
+          },
+          "onClick": {
+            "x-code-type": "function",
+            "description": "Inherited from React.HTMLAttributes rather than declared, so it does not appear in TagProps' own members. Its presence implies hover styling and cursor-pointer. It is the one inherited attribute forwarded into split mode, where it is attached to both halves.",
+            "x-provenance": "codeOnly",
+            "x-trigger": "event-handler"
+          },
+          "enableHover": {
+            "type": "boolean",
+            "description": "Applies hover styling to a non-clickable tag. Ignored in split mode: the split path overwrites it with Boolean(onClick), so a hoverable split tag requires an onClick.",
+            "x-provenance": "codeOnly",
+            "x-trigger": "appearance-override"
+          },
+          "rounded": {
+            "type": "boolean",
+            "description": "Switches the corner radius from the default to a full pill. In split mode the outer corners round and the shared inner edge stays square.",
+            "x-provenance": "codeOnly",
+            "x-trigger": "appearance-override"
+          },
+          "disabled": {
+            "type": "boolean",
+            "description": "Visual and cursor state only — it is not a CVA variant and sets no aria-disabled. The tag is a div, so there is nothing for it to disable; onClick still fires. It does disable the action Button.",
+            "x-provenance": "codeOnly",
+            "x-trigger": "runtime-state"
+          },
+          "title": {
+            "type": "string",
+            "description": "Native tooltip on the text span, defaulting to title || value || label so truncated text is always recoverable on hover. Dropped in split mode, where each half falls back to its own text.",
+            "x-provenance": "codeOnly",
+            "x-trigger": "content"
+          },
+          "className": {
+            "type": "string",
+            "description": "Additional classes on the tag root, or on the split wrapper in split mode. Should not override token-based styling.",
+            "x-provenance": "codeOnly",
+            "x-trigger": "appearance-override"
+          },
+          "labelClassName": {
+            "type": "string",
+            "description": "Classes for the left half of a split tag. No effect on a single tag.",
+            "x-provenance": "codeOnly",
+            "x-trigger": "appearance-override"
+          },
+          "valueClassName": {
+            "type": "string",
+            "description": "Classes for the right half of a split tag. No effect on a single tag.",
+            "x-provenance": "codeOnly",
+            "x-trigger": "appearance-override"
+          }
+        },
+        "required": ["value"],
+        "additionalProperties": false
+      }
+    }
+  },
+  "x-generated-from": "schemas/tag.manifest.json — regenerate with `pnpm ds-check --write`",
+  "x-tokens": {
+    "rootClass": "cn-tag",
+    "rule": "semantic-only",
+    "refs": {
+      "layout.px": "tag.px",
+      "layout.py": "tag.py",
+      "layout.gap": "tag.gap",
+      "layout.border": "tag.border",
+      "layout.max-width": "tag.max-width",
+      "radius.default": "tag.radius-default",
+      "radius.full": "tag.radius-full",
+      "size.md": "tag.size-md",
+      "size.sm": "tag.size-sm",
+      "split.max-width": "tag.split-max-width",
+      "split.left-radius-l": "tag.split-left-radius-l",
+      "split.left-radius-r": "tag.split-left-radius-r",
+      "split.right-radius-l": "tag.split-right-radius-l",
+      "split.right-radius-r": "tag.split-right-radius-r",
+      "action.opacity-rest": "opacity.70",
+      "action.opacity-hover": "opacity.100",
+      "theme.gray": "set.gray",
+      "theme.blue": "set.blue",
+      "theme.brown": "set.brown",
+      "theme.cyan": "set.cyan",
+      "theme.green": "set.success",
+      "theme.forest-green": "set.forest-green",
+      "theme.indigo": "set.indigo",
+      "theme.lime": "set.lime",
+      "theme.mint": "set.mint",
+      "theme.orange": "set.orange",
+      "theme.pink": "set.pink",
+      "theme.purple": "set.purple",
+      "theme.red": "set.danger",
+      "theme.violet": "set.violet",
+      "theme.yellow": "set.warning"
+    }
+  },
+  "x-accessibility": {
+    "keyboardSupport": [
+      "Tab — reaches the action button only, when actionIcon is set",
+      "Enter / Space — activates the focused action button",
+      "No keyboard path to the tag itself; role and tabIndex are omitted from TagProps and cannot be supplied"
+    ],
+    "notes": "A single tag is a plain div with no role, so it is announced as text. The type deliberately omits 'role' and 'tabIndex', which means a Tag with onClick cannot be made keyboard-operable or announced as a control from the outside — use Button for anything that must be actionable. The action button is a real <button> and is focusable, but it renders with ignoreIconOnlyTooltip and an unlabelled icon, so it has no accessible name."
+  },
+  "x-examples": {
+    "correct": [
+      "<Tag variant='outline' theme='blue' value='Production' />",
+      "<Tag variant='secondary' theme='purple' size='sm' label='env' value='staging' />",
+      "<Tag theme='gray' value='react' actionIcon='xmark' onActionClick={() => remove('react')} />",
+      "<Tag variant='outline' theme='mint' icon='sparks' value='Beta' rounded />"
+    ],
+    "incorrect": [
+      "<Tag theme='error' value='Failed' />",
+      "<Tag theme='green' value='Succeeded' />",
+      "<Tag value='Delete' onClick={remove} />",
+      "<Tag label='env' value='prod' enableHover />",
+      "<Tag label='env' value='prod' title='Environment' />",
+      "<Tag value='x' theme='blue'>Label as children</Tag>"
+    ]
+  },
+  "x-known-gaps": [
+    "TAG-001: A clickable Tag is not keyboard-operable. The type omits 'role' and 'tabIndex', so no consumer can fix it from outside — use Button when the thing must be actionable",
+    "TAG-002: The action button has no accessible name. It renders iconOnly with ignoreIconOnlyTooltip and an unlabelled icon, and Tag exposes no prop to label it",
+    "TAG-003: Split mode drops most inherited attributes. Passing label + value forwards only onClick to the split composite, so id, data-*, aria-*, title, iconProps and other HTMLAttributes are silently discarded",
+    "TAG-004: Split mode overrides enableHover with Boolean(onClick), so a caller's enableHover is ignored there",
+    "TAG-005: 'forest-green' and 'lime' exist in code but not in the Figma component's theme variant, so a design cannot specify them and Code Connect cannot produce them",
+    "TAG-006: 'children' is accepted by the inherited HTMLAttributes type but never rendered — the text comes from value/label only",
+    "TAG-007: 'disabled' sets no aria-disabled and does not stop onClick; it is visual state only"
+  ],
+  "x-governance": {
+    "systemRules": [
+      "docs/system/accessibility.md",
+      "docs/system/color-system.md",
+      "docs/system/interaction-states.md",
+      "docs/system/visual-primitives.md",
+      "docs/system/typography.md",
+      "docs/system/spacing.md",
+      "docs/system/component-architecture.md",
+      "docs/system/design-to-code-flow.md"
+    ],
+    "componentRules": ["schemas/tag.md"]
+  },
+  "x-internal-manifest": "schemas/tag.manifest.json"
+}

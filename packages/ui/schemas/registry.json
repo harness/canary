@@ -35,6 +35,33 @@
           "endpoint": "/components/status-badge"
         }
       }
+    },
+    {
+      "id": "canary.tag",
+      "name": "Tag Component",
+      "status": "stable",
+      "description": "Decorative-colour label for stable attributes, with optional icon, split label/value pair, and dismiss action",
+      "openapi": "schemas/tag.openapi.json",
+      "manifest": "schemas/tag.manifest.json",
+      "version": "1.0.0",
+      "package": "@harnessio/ui",
+      "export": "Tag",
+      "import": "@harnessio/ui/components",
+      "documentation": "https://harness.io/docs/design-system/tag",
+      "consumption": {
+        "claude": {
+          "method": "npm-import",
+          "example": "import { Tag } from '@harnessio/ui/components'"
+        },
+        "cursor": {
+          "method": "npm-import",
+          "example": "import { Tag } from '@harnessio/ui/components'"
+        },
+        "figma-make": {
+          "method": "http-openapi",
+          "endpoint": "/components/tag"
+        }
+      }
     }
   ],
   "systemRules": [

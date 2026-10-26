@@ -1,11 +1,5 @@
 import { useMemo, useState } from "react";
-import {
-  CardSelect,
-  Layout,
-  Pagination,
-  StatusBadge,
-  Text,
-} from "@harnessio/ui/components";
+import { Pagination, StatusBadge, Text } from "@harnessio/ui/components";
 import changelog from "@/data/changelog.json";
 
 export interface ChangelogEntry {
@@ -68,10 +62,6 @@ function getEntrySummary(entry: ChangelogEntry): string {
   return `${normalized}. Review the merged pull request for the complete set of changes and discussion.`;
 }
 
-function openPullRequest(entry: ChangelogEntry) {
-  window.open(entry.url, "_blank", "noopener,noreferrer");
-}
-
 export default function ChangelogList() {
   const entries = changelog as ChangelogEntry[];
   const [page, setPage] = useState(1);
@@ -109,47 +99,51 @@ export default function ChangelogList() {
         <section key={`${page}-${month}`} className="changelog-group">
           <h2 className="changelog-month">{month}</h2>
 
-          <CardSelect.Root
-            type="single"
-            layout="vertical"
-            gap="sm"
-            className="changelog-card-select"
-            onValueChange={(value: unknown) => {
-              const entry = monthEntries.find(
-                (item) => item.prNumber === Number(value),
-              );
-              if (entry) openPullRequest(entry);
-            }}
-          >
+          <div className="changelog-entries">
             {monthEntries.map((entry) => (
-              <CardSelect.Item
+              <a
                 key={entry.prNumber}
-                value={entry.prNumber}
-                className="changelog-card-select-item"
+                className="changelog-entry"
+                href={entry.url}
+                target="_blank"
+                rel="noopener noreferrer"
               >
-                <Layout.Horizontal
-                  align="center"
-                  gap="sm"
-                  className="changelog-item-meta"
-                >
+                <span className="changelog-entry-dot" aria-hidden="true" />
+                <div className="changelog-entry-meta">
                   <StatusBadge size="sm" variant="outline" theme="merged">
                     PR #{entry.prNumber}
                   </StatusBadge>
-                  <Text variant="caption-normal" color="foreground-3">
+                  <Text
+                    as="time"
+                    dateTime={entry.mergedAt}
+                    variant="caption-normal"
+                    color="foreground-3"
+                  >
                     {formatDate(entry.mergedAt)}
                   </Text>
                   <Text variant="caption-normal" color="foreground-3">
                     @{entry.author}
                   </Text>
-                </Layout.Horizontal>
+                </div>
 
-                <CardSelect.Title>{entry.title}</CardSelect.Title>
-                <CardSelect.Description>
+                <Text
+                  as="h3"
+                  variant="heading-small"
+                  color="foreground-1"
+                  className="changelog-entry-title"
+                >
+                  {cleanTitle(entry.title)}
+                </Text>
+                <Text
+                  variant="body-normal"
+                  color="foreground-2"
+                  className="changelog-entry-summary"
+                >
                   {getEntrySummary(entry)}
-                </CardSelect.Description>
-              </CardSelect.Item>
+                </Text>
+              </a>
             ))}
-          </CardSelect.Root>
+          </div>
         </section>
       ))}
 
@@ -211,28 +205,83 @@ export default function ChangelogList() {
           letter-spacing: -0.01em;
         }
 
-        .changelog-card-select {
-          width: 100%;
-        }
-
-        .changelog-card-select .cn-card-select-check {
-          display: none;
-        }
-
-        .changelog-card-select .cn-card-select-item[data-state="checked"] {
-          border-color: var(--cn-border-brand);
-          background: var(--cn-bg-1);
-        }
-
-        .changelog-card-select-item .cn-card-select-content-container {
+        /* Timeline rail the entries hang off of. */
+        .changelog-entries {
+          position: relative;
           display: flex;
           flex-direction: column;
-          gap: var(--cn-layout-3xs, 4px);
-          min-width: 0;
+          gap: var(--cn-layout-xl, 32px);
+          margin: 0;
+          padding-left: var(--cn-layout-lg, 24px);
+          border-left: 1px solid var(--cn-border-3);
         }
 
-        .changelog-item-meta {
+        .changelog-entry {
+          position: relative;
+          display: flex;
+          flex-direction: column;
+          gap: var(--cn-layout-2xs, 6px);
+          text-decoration: none;
+          color: inherit;
+        }
+
+        /* Dot sitting on the rail, centered over the 1px border. Rendered as
+           a real element (not a pseudo) to keep this inline style free of
+           quote characters, which the SSR pass escapes and then mismatches on
+           hydration. */
+        .changelog-entry-dot {
+          position: absolute;
+          top: 7px;
+          left: calc(-1 * var(--cn-layout-lg, 24px) - 4.5px);
+          width: 9px;
+          height: 9px;
+          border-radius: 999px;
+          background: var(--cn-bg-1);
+          border: 2px solid var(--cn-border-3);
+          transition:
+            border-color 0.15s ease,
+            background-color 0.15s ease,
+            transform 0.15s ease;
+        }
+
+        .changelog-entry:hover .changelog-entry-dot {
+          border-color: var(--cn-border-brand);
+          background-color: var(--cn-border-brand);
+          transform: scale(1.2);
+        }
+
+        .changelog-entry-meta {
+          display: flex;
+          align-items: center;
+          gap: var(--cn-layout-xs, 8px);
           flex-wrap: wrap;
+        }
+
+        .changelog-entry-title {
+          margin: 0;
+          letter-spacing: -0.01em;
+          transition: color 0.15s ease;
+        }
+
+        .changelog-entry:hover .changelog-entry-title {
+          color: var(--cn-text-brand, var(--cn-border-brand));
+        }
+
+        .changelog-entry-summary {
+          margin: 0;
+          max-width: 68ch;
+          line-height: 1.55;
+        }
+
+        .changelog-entry:focus-visible {
+          outline: 2px solid var(--cn-border-brand);
+          outline-offset: 4px;
+          border-radius: var(--cn-rounded-3, 4px);
+        }
+
+        .changelog-entry:focus-visible .changelog-entry-dot {
+          border-color: var(--cn-border-brand);
+          background-color: var(--cn-border-brand);
         }
 
         .changelog-pagination {

@@ -326,6 +326,18 @@ function topLevelKeys(block: string): string[] {
   for (let i = 0; i < block.length; i++) {
     const ch = block[i]
 
+    // A quoted key (`'forest-green': '…'`) must be read before the string-literal skip
+    // below, which would otherwise swallow the key and drop the variant entirely.
+    if (depth === 0 && atKeyPosition && (ch === '"' || ch === "'")) {
+      const quoted = /^['"]([\w-]+)['"]\s*:/.exec(block.slice(i))
+      if (quoted) {
+        keys.push(quoted[1])
+        i += quoted[0].length - 1
+        atKeyPosition = false
+        continue
+      }
+    }
+
     // Skip string literals
     if (ch === '"' || ch === "'" || ch === '`') {
       i = skipString(block, i, ch)
@@ -531,6 +543,10 @@ function openApiTypeFor(prop: Record<string, unknown>): Record<string, unknown> 
       return { type: 'boolean' }
     case 'array':
       return { type: 'array', items: { type: 'string' } }
+    case 'object':
+      // A props-bag (e.g. iconProps). Its members are the nested component's contract,
+      // not this one's, so record the shape without enumerating them here.
+      return { type: 'object', additionalProperties: true }
     case 'node':
       return { type: 'string', 'x-code-type': 'node' }
     case 'function':

@@ -100,15 +100,26 @@ const SAMPLE_TREE: TreeViewElement[] = [
   },
 ];
 
-// Folders expanded on mount so the whole tree is visible, and one row highlighted
-// to show selection. These are fixed (not controls) but mirrored into the snippet.
+// Folders expanded on mount so the whole tree is visible. Fixed (not a control)
+// but mirrored into the snippet.
 const EXPANDED_IDS = [
   "pipeline-main",
   "stage-build",
   "stage-test",
   "pipeline-hotfix",
 ];
-const SELECTED_ID = "unit-tests";
+
+// The selectable file rows, offered by the `selectedId` control. Selection only
+// highlights File rows (folders are structural), so these are all files.
+const FILE_IDS = [
+  "step-install",
+  "step-compile",
+  "unit-tests",
+  "integration-tests",
+  "e2e-tests",
+  "quick-build",
+  "critical-test",
+];
 
 const isFolder = (node: TreeViewElement) =>
   Array.isArray(node.children) && node.children.length > 0;
@@ -116,15 +127,19 @@ const isFolder = (node: TreeViewElement) =>
 // ② State — one field per control.
 interface State {
   dir: "ltr" | "rtl";
+  selectedId: string;
   indicator: boolean;
   showDurations: boolean;
+  nonSelectable: boolean;
   collapseButton: boolean;
 }
 
 const INITIAL_STATE: State = {
   dir: "ltr",
+  selectedId: "unit-tests",
   indicator: true,
   showDurations: true,
+  nonSelectable: false,
   collapseButton: false,
 };
 
@@ -153,6 +168,7 @@ function codeForNode(node: TreeViewElement, level: number, s: State): string {
     `status="${node.status}"`,
   ];
   if (hasDuration) attrs.push(`duration="${node.duration}"`);
+  if (s.nonSelectable) attrs.push("isSelectable={false}");
   attrs.push(`level={${level}}`);
   const children = (node.children ?? [])
     .map((c) => codeForNode(c, level + 1, s))
@@ -168,7 +184,12 @@ function codeForNode(node: TreeViewElement, level: number, s: State): string {
 
 // Serialize the sample tree to a JS literal — only needed when CollapseButton is
 // on, since it (and the Tree) need the `elements` array to toggle everything.
-function serializeNode(node: TreeViewElement, depth: number): string {
+function serializeNode(
+  node: TreeViewElement,
+  depth: number,
+  s: State,
+): string {
+  const folder = isFolder(node);
   const lines = [
     `${pad(depth)}{`,
     `${pad(depth + 1)}id: "${node.id}",`,
@@ -177,9 +198,13 @@ function serializeNode(node: TreeViewElement, depth: number): string {
   ];
   if (node.duration)
     lines.push(`${pad(depth + 1)}duration: "${node.duration}",`);
+  if (s.nonSelectable && folder)
+    lines.push(`${pad(depth + 1)}isSelectable: false,`);
   if (node.children?.length) {
     lines.push(`${pad(depth + 1)}children: [`);
-    lines.push(node.children.map((c) => serializeNode(c, depth + 2)).join(",\n"));
+    lines.push(
+      node.children.map((c) => serializeNode(c, depth + 2, s)).join(",\n"),
+    );
     lines.push(`${pad(depth + 1)}],`);
   }
   lines.push(`${pad(depth)}}`);
@@ -189,14 +214,14 @@ function serializeNode(node: TreeViewElement, depth: number): string {
 function generateCode(s: State): string {
   const elementsConst = s.collapseButton
     ? `const treeElements = [
-${SAMPLE_TREE.map((n) => serializeNode(n, 1)).join(",\n")}
+${SAMPLE_TREE.map((n) => serializeNode(n, 1, s)).join(",\n")}
 ]
 
 `
     : "";
 
   const treeAttrs = [
-    `initialSelectedId="${SELECTED_ID}"`,
+    `initialSelectedId="${s.selectedId}"`,
     `initialExpendedItems={${JSON.stringify(EXPANDED_IDS)}}`,
   ];
   if (!s.indicator) treeAttrs.push("indicator={false}");
@@ -229,6 +254,12 @@ const TreeViewPlayground: FC = () => {
   //    interactive (expand/collapse folders, click a row to select it).
   const controls: PropControl[] = [
     {
+      name: "selectedId",
+      type: "select",
+      options: FILE_IDS,
+      description: "Row selected on mount (ancestors auto-expand)",
+    },
+    {
       name: "dir",
       type: "select",
       options: ["ltr", "rtl"],
@@ -243,6 +274,11 @@ const TreeViewPlayground: FC = () => {
       name: "showDurations",
       type: "boolean",
       description: "Show the duration on the right of each row",
+    },
+    {
+      name: "nonSelectable",
+      type: "boolean",
+      description: "Mark the structural folders as non-selectable",
     },
     {
       name: "collapseButton",
@@ -273,6 +309,7 @@ const TreeViewPlayground: FC = () => {
           value={node.id}
           status={node.status}
           duration={state.showDurations ? node.duration : undefined}
+          isSelectable={state.nonSelectable ? false : undefined}
           level={level}
         >
           {renderNodes(node.children ?? [], level + 1)}
@@ -310,7 +347,7 @@ const TreeViewPlayground: FC = () => {
 
           <div className="w-[520px] max-w-full">
             <Tree
-              initialSelectedId={SELECTED_ID}
+              initialSelectedId={state.selectedId}
               initialExpendedItems={EXPANDED_IDS}
               indicator={state.indicator}
               dir={state.dir}

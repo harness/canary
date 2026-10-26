@@ -209,7 +209,7 @@ export default {
     background: 'var(--cn-bg-2)',
     color: 'var(--cn-text-3)',
     fontSize: '11px',
-    fontWeight: 'var(--cn-font-weight-default-normal-600)',
+    fontWeight: 'var(--cn-font-weight-default-normal-heading)',
     lineHeight: '1.35'
   },
 

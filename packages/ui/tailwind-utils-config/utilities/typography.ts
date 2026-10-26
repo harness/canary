@@ -39,11 +39,11 @@ const FONT_VARIANTS: FontVariant[] = [
   { name: 'heading-subsection', weight: 'semibold', tracking: 'tight' },
   { name: 'heading-base', weight: 'semibold', tracking: 'tight' },
   { name: 'heading-small', weight: 'semibold', tracking: 'normal' },
-  { name: 'body-normal', weight: 'regular', tracking: 'tight' },
-  { name: 'body-strong', weight: 'semibold', tracking: 'tight' },
+  { name: 'body-normal', weight: 'regular', tracking: 'normal' },
+  { name: 'body-strong', weight: 'semibold', tracking: 'normal' },
   /** @deprecated Use `body-normal`. Light weight retained for backwards-compatibility only; flagged by the deprecation lint rule in eslint/rules.js. */
   { name: 'body-light', weight: 'light', tracking: 'tight', deprecated: true },
-  { name: 'body-code', weight: 'regular', tracking: 'tight' },
+  { name: 'body-code', weight: 'regular', tracking: 'normal' },
   { name: 'caption-normal', weight: 'regular', tracking: 'normal' },
   { name: 'caption-strong', weight: 'semibold', tracking: 'normal' },
   /** @deprecated Use `caption-normal`. Light weight retained for backwards-compatibility only; flagged by the deprecation lint rule in eslint/rules.js. */

@@ -259,7 +259,7 @@ describe('SinglePaneStepper', () => {
 
       const title = singlePaneStepperStyles['.cn-single-pane-stepper-content-title']
       expect(title.fontSize).toBe('var(--cn-font-size-6)')
-      expect(title.fontWeight).toBe('var(--cn-font-weight-default-normal-600)')
+      expect(title.fontWeight).toBe('var(--cn-font-weight-default-normal-heading)')
       expect(title.lineHeight).toBe('var(--cn-line-height-6-normal)')
       expect(title.color).toBe('var(--cn-text-1)')
 

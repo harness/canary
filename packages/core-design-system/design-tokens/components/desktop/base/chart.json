@@ -239,7 +239,7 @@
           "$type": "typography",
           "$value": {
             "fontFamily": "{fontFamily.default}",
-            "fontWeight": "{fontWeight.default.normal.600}",
+            "fontWeight": "{fontWeight.default.normal.heading}",
             "fontSize": "{fontSize.10}",
             "lineHeight": "{lineHeight.chart.10.none}",
             "letterSpacing": "{tracking.tight}"
@@ -250,7 +250,7 @@
           "$type": "typography",
           "$value": {
             "fontFamily": "{fontFamily.default}",
-            "fontWeight": "{fontWeight.default.normal.600}",
+            "fontWeight": "{fontWeight.default.normal.heading}",
             "fontSize": "{fontSize.15}",
             "lineHeight": "{lineHeight.chart.15.none}",
             "letterSpacing": "{tracking.tight}"
@@ -296,7 +296,7 @@
           "$type": "typography",
           "$value": {
             "fontFamily": "{fontFamily.default}",
-            "fontWeight": "{fontWeight.default.normal.600}",
+            "fontWeight": "{fontWeight.default.normal.heading}",
             "fontSize": "{fontSize.10}",
             "lineHeight": "{lineHeight.chart.10.none}",
             "letterSpacing": "{tracking.tight}"
@@ -307,7 +307,7 @@
           "$type": "typography",
           "$value": {
             "fontFamily": "{fontFamily.default}",
-            "fontWeight": "{fontWeight.default.normal.600}",
+            "fontWeight": "{fontWeight.default.normal.heading}",
             "fontSize": "{fontSize.6}",
             "lineHeight": "{lineHeight.chart.6.none}",
             "letterSpacing": "{tracking.normal}"

@@ -12,14 +12,14 @@ function createAvatarSizeStyles() {
         width: `var(--cn-avatar-size-${size})`,
         fontSize: `var(--cn-font-size-0)`,
         letterSpacing: `var(--cn-tracking-wide)`,
-        fontWeight: `var(--cn-font-weight-default-normal-600)`
+        fontWeight: `var(--cn-font-weight-default-normal-heading)`
       }
     } else {
       styles[`&:where(.cn-avatar-${size})`] = {
         height: `var(--cn-avatar-size-${size})`,
         width: `var(--cn-avatar-size-${size})`,
         fontSize: size === 'lg' ? `var(--cn-font-size-5)` : `var(--cn-font-size-2)`,
-        fontWeight: `var(--cn-font-weight-default-normal-600)`
+        fontWeight: `var(--cn-font-weight-default-normal-heading)`
       }
     }
   })

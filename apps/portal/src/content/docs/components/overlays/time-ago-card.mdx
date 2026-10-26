@@ -18,12 +18,9 @@ import PageTabsToc from "@/components/page-tabs-toc.astro";
 
 The `TimeAgoCard` component displays a timestamp in a human-readable format, such as "5 min. ago". Hovering (or focusing) the value reveals a tooltip with the full date and time in both UTC and the local timezone.
 
-<DocsPage.ComponentExample
-  client:only
-  code={`<div className="flex flex-col gap-cn-2xl">
-    <TimeAgoCard timestamp={new Date(Date.now() - 30 * 1000).toISOString()} />
-  </div>`}
-/>
+`timestamp` is the time to display (an ISO string or Unix number), rendered as a relative "time ago" value — past and future times are both supported. Add a `prefix` such as "Updated" for context, and set `live` to have the value re-render every second so it stays current. Try them in the playground below.
+
+<DocsPage.TimeAgoCardPlayground client:only />
 
 ## Variations
 

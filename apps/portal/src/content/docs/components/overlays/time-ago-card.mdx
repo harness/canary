@@ -22,110 +22,6 @@ The `TimeAgoCard` component displays a timestamp in a human-readable format, suc
 
 <DocsPage.TimeAgoCardPlayground client:only />
 
-## Variations
-
-### Timestamp variants
-
-The `timestamp` prop accepts an ISO 8601 string, a Unix timestamp number, or `null`. When omitted, nothing is rendered.
-
-<DocsPage.ComponentExample
-  client:only
-  code={`<div className="flex flex-col gap-cn-2xl">
-    <Text>
-      without timestamp: <TimeAgoCard />
-    </Text>
-    <Text>
-      string timestamp: <TimeAgoCard timestamp="2022-01-01T00:00:00Z" />
-    </Text>
-    <Text>
-      number timestamp: <TimeAgoCard timestamp={new Date("2022-01-01T00:00:00Z").getTime()} />
-    </Text>
-  </div>`}
-/>
-
-### Time difference examples
-
-The component displays relative time in a narrow format for all time ranges:
-
-<DocsPage.ComponentExample
-  client:only
-  code={`<div className="flex flex-col gap-cn-md">
-    <Text>
-      1 second ago: <TimeAgoCard timestamp={new Date(Date.now() - 1000).toISOString()} />
-    </Text>
-    <Text>
-      30 seconds ago: <TimeAgoCard timestamp={new Date(Date.now() - 30 * 1000).toISOString()} />
-    </Text>
-    <Text>
-      3 minutes ago: <TimeAgoCard timestamp={new Date(Date.now() - 3 * 60 * 1000).toISOString()} />
-    </Text>
-    <Text>
-      2 hours ago: <TimeAgoCard timestamp={new Date(Date.now() - 2 * 60 * 60 * 1000).toISOString()} />
-    </Text>
-    <Text>
-      1 day ago: <TimeAgoCard timestamp={new Date(Date.now() - 24 * 60 * 60 * 1000).toISOString()} />
-    </Text>
-    <Text>
-      5 days ago: <TimeAgoCard timestamp={new Date(Date.now() - 5 * 24 * 60 * 60 * 1000).toISOString()} />
-    </Text>
-    <Text>
-      2 weeks ago: <TimeAgoCard timestamp={new Date(Date.now() - 14 * 24 * 60 * 60 * 1000).toISOString()} />
-    </Text>
-    <Text>
-      2 months ago: <TimeAgoCard timestamp={new Date(Date.now() - 60 * 24 * 60 * 60 * 1000).toISOString()} />
-    </Text>
-    <Text>
-      2 years ago: <TimeAgoCard timestamp={new Date(Date.now() - 730 * 24 * 60 * 60 * 1000).toISOString()} />
-    </Text>
-  </div>`}
-/>
-
-### Future timestamps
-
-The component also handles future timestamps:
-
-<DocsPage.ComponentExample
-  client:only
-  code={`<div className="flex flex-col gap-cn-md">
-    <Text>
-      in 1 day: <TimeAgoCard timestamp={new Date(Date.now() + 24 * 60 * 60 * 1000).toISOString()} />
-    </Text>
-    <Text>
-      in 3 months: <TimeAgoCard timestamp={new Date(Date.now() + 90 * 24 * 60 * 60 * 1000).toISOString()} />
-    </Text>
-    <Text>
-      in 1 year: <TimeAgoCard timestamp={new Date(Date.now() + 365 * 24 * 60 * 60 * 1000).toISOString()} />
-    </Text>
-  </div>`}
-/>
-
-### With prefix
-
-<DocsPage.ComponentExample
-  client:only
-  code={`<div className="flex flex-col gap-cn-md">
-    <Text>
-      <TimeAgoCard prefix="Updated" timestamp={new Date(Date.now() - 2 * 60 * 60 * 1000).toISOString()} />
-    </Text>
-    <Text>
-      <TimeAgoCard prefix="Created" timestamp={new Date(Date.now() - 5 * 24 * 60 * 60 * 1000).toISOString()} />
-    </Text>
-  </div>`}
-/>
-
-### Live updating
-
-Set `live` to have the relative time re-render every second so it stays current without a page refresh.
-
-<DocsPage.ComponentExample
-  client:only
-  code={`<div className="flex flex-col gap-cn-md">
-    <Text>
-      live: <TimeAgoCard live timestamp={new Date(Date.now() - 3 * 1000).toISOString()} />
-    </Text>
-  </div>`}
-/>
-
 ## Installation
 
 ```tsx
@@ -194,7 +90,7 @@ import { TimeAgoCard } from "@harnessio/ui/components";
     {
       name: "timestamp",
       description:
-        "The timestamp to display. Invalid dates render nothing and log a console warning.",
+        "The timestamp to display, as an ISO 8601 string or a Unix timestamp number. Omitted or null renders nothing; invalid dates render nothing and log a console warning.",
       required: false,
       value: "string | number | null",
     },

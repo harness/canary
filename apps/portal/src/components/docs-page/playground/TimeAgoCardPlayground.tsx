@@ -129,6 +129,7 @@ const TimeAgoCardPlayground: FC = () => {
     {
       name: "prefix",
       type: "text",
+      placeholder: "Updated",
       description: "Text shown before the time (e.g. Updated)",
     },
     {

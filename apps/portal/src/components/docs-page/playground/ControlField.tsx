@@ -71,6 +71,7 @@ const ControlField: FC<ControlFieldProps> = ({ prop, value, onChange }) => {
           caption={prop.description}
           optional={!prop.required}
           type="text"
+          placeholder={prop.placeholder}
           value={typeof value === "string" ? value : ""}
           onChange={(e) => onChange(e.target.value)}
         />

@@ -56,6 +56,7 @@ import TextPlayground from "./playground/TextPlayground.tsx";
 import TextInputPlayground from "./playground/TextInputPlayground.tsx";
 import TextareaPlayground from "./playground/TextareaPlayground.tsx";
 import ToastPlayground from "./playground/ToastPlayground.tsx";
+import TooltipPlayground from "./playground/TooltipPlayground.tsx";
 import TimeAgoCardPlayground from "./playground/TimeAgoCardPlayground.tsx";
 import TimeInputPlayground from "./playground/TimeInputPlayground.tsx";
 import TogglePlayground from "./playground/TogglePlayground.tsx";
@@ -128,4 +129,5 @@ export const DocsPage = {
   TextareaPlayground,
   TimeAgoCardPlayground,
   ToastPlayground,
+  TooltipPlayground,
 };

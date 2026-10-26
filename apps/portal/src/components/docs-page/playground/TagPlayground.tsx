@@ -49,7 +49,6 @@ interface State {
   size: "md" | "sm";
   theme: string;
   icon: string;
-  rounded: boolean;
   removable: boolean;
   enableHover: boolean;
   disabled: boolean;
@@ -65,7 +64,6 @@ const INITIAL_STATE: State = {
   size: "md",
   theme: "green",
   icon: "none",
-  rounded: false,
   removable: false,
   enableHover: false,
   disabled: false,
@@ -83,7 +81,6 @@ function generateCode(s: State): string {
   if (s.size !== "md") attrs.push(`size="${s.size}"`);
   if (s.theme !== "gray") attrs.push(`theme="${s.theme}"`);
   if (s.icon !== "none") attrs.push(`icon="${s.icon}"`);
-  if (s.rounded) attrs.push("rounded");
   if (s.removable) {
     attrs.push('actionIcon="xmark"');
     attrs.push("onActionClick={() => remove()}");
@@ -154,11 +151,6 @@ const TagPlayground: FC = () => {
       description: "Leading icon (sits with the key in a split tag)",
     },
     {
-      name: "rounded",
-      type: "boolean",
-      description: "Fully rounded corners",
-    },
-    {
       name: "removable",
       type: "boolean",
       description: "Add a trailing ✕ action button",
@@ -199,7 +191,6 @@ const TagPlayground: FC = () => {
       size={state.size}
       theme={state.theme as never}
       icon={state.icon === "none" ? undefined : (state.icon as never)}
-      rounded={state.rounded}
       enableHover={state.enableHover}
       disabled={state.disabled}
       actionIcon={state.removable ? ("xmark" as never) : undefined}

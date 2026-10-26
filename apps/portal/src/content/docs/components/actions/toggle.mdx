@@ -22,23 +22,6 @@ The `Toggle` component is a button that switches between two states — selected
 
 <DocsPage.TogglePlayground client:only />
 
-### With tooltip
-
-Pass `tooltipProps` to wrap the toggle in a `Tooltip`. It accepts the `title`, `content`, `side`, and `align` properties from `TooltipProps`.
-
-<DocsPage.ComponentExample
-  client:only
-  code={`
-    <Toggle
-      tooltipProps={{
-        title: 'Title',
-        content: <p>This is a tooltip</p>
-      }}
-      text="With tooltip"
-    />
-`}
-/>
-
 ## Variations
 
 ### Controlled and uncontrolled
@@ -76,6 +59,23 @@ Pass `rounded` to give the underlying button fully rounded corners.
   client:only
   code={`
     <Toggle text="Rounded" rounded />
+`}
+/>
+
+### With tooltip
+
+Pass `tooltipProps` to wrap the toggle in a `Tooltip`. It accepts the `title`, `content`, `side`, and `align` properties from `TooltipProps`.
+
+<DocsPage.ComponentExample
+  client:only
+  code={`
+    <Toggle
+      tooltipProps={{
+        title: 'Title',
+        content: <p>This is a tooltip</p>
+      }}
+      text="With tooltip"
+    />
 `}
 />
 

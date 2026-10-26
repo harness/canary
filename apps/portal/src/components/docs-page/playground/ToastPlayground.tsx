@@ -21,6 +21,12 @@ import type { PropControl } from "./types";
 const ACTION = { label: "Undo", onClick: () => {} };
 const SECONDARY_ACTION = { label: "Dismiss", onClick: () => {} };
 
+// Playground-only: loading toasts have no close button and never auto-close, so
+// we dismiss them on a timer to avoid leaving a stuck toast on the page. Real
+// callers close a loading toast with toast.dismiss(id), so this is intentionally
+// kept out of generateCode.
+const PLAYGROUND_LOADING_DISMISS_MS = 4000;
+
 type ToastType =
   | "default"
   | "success"
@@ -132,10 +138,13 @@ const ToastPlayground: FC = () => {
     }
 
     if (state.type === "loading") {
-      toast.loading({
+      const id = toast.loading({
         title,
         options: state.action ? { action: ACTION } : {},
       });
+      // Playground-only safety timer so the un-dismissable loading toast clears
+      // itself (see PLAYGROUND_LOADING_DISMISS_MS). Not reflected in the snippet.
+      window.setTimeout(() => toast.dismiss(id), PLAYGROUND_LOADING_DISMISS_MS);
       return;
     }
 
@@ -265,7 +274,9 @@ const ToastPlayground: FC = () => {
 
           <Button onClick={fire}>Show toast</Button>
           <Text variant="caption-normal" color="foreground-3">
-            Fires a {state.type} toast — it appears in the corner of the screen
+            {state.type === "loading"
+              ? "Fires a loading toast — auto-dismissed after a few seconds (playground only)"
+              : `Fires a ${state.type} toast — it appears in the corner of the screen`}
           </Text>
           <Toaster className="not-content" />
         </div>

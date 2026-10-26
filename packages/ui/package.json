@@ -10,7 +10,10 @@
   },
   "exports": {
     ".": "./dist/index.js",
-    "./components": "./dist/components.js",
+    "./components": {
+      "types": "./dist/components.d.ts",
+      "default": "./dist/components.js"
+    },
     "./utils": "./dist/utils.js",
     "./hooks": "./dist/hooks.js",
     "./locales": "./dist/locales.js",

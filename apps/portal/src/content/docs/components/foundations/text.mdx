@@ -18,6 +18,8 @@ import PageTabsToc from "@/components/page-tabs-toc.astro";
 
 The `Text` component is a versatile typographic component that supports various styling options through variants, colors, and text alignment. It picks a sensible default HTML element based on the selected variant, which you can override with `as`.
 
+Use `variant` to set the typographic style (headings, body, and caption scales) and `color` to tint it — leave `color` unset to inherit the variant's own default. `align` controls horizontal alignment, while `wrap` tunes how lines break. For overflow, `truncate` cuts a single line with an ellipsis and `lineClamp` limits the text to a set number of lines (it takes precedence over `truncate`). Try them in the playground below.
+
 <DocsPage.TextPlayground client:only />
 
 ## Variations

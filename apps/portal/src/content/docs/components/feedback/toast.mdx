@@ -86,20 +86,34 @@ toast({
 - **Promise toasts** close automatically 7 seconds after the promise settles.
 - Loading and promise toasts cannot display a `description`.
 
-## Best practices
+## When to use a toast
 
-{/* TODO: editorial — please review against product guidance. */}
+Use a success toast only when the user can't already see that the action worked.
 
-**Do**
+**Skip the toast when**
 
-- Use the type that matches the message: `success`/`danger` for outcomes, `info` for neutral notices, `loading`/`promise` for in-progress work.
-- Keep `title` short and put detail in `description`.
-- Provide an `action` (e.g. "Undo", "View details") when there's a meaningful next step.
+- The result is on screen: a new row appears, a toggle flips, an edit saves in place.
+- The user lands on the result, like being taken to a new item's page after creating it.
+- The action is small and easy to undo, like checking a box or changing a filter.
+- It would fire over and over, like autosave.
+- The action is a delete. Deletes always use a confirmation dialog, never a toast.
 
-**Don't**
+**Use a toast when**
 
-- Don't use a toast for critical information a user must not miss — it's transient and auto-dismisses.
-- Don't stack many toasts at once; only 3 show, and the rest queue.
+- The result is somewhere else — for example, moving an item to another project.
+- Nothing changes on screen. Copying to the clipboard is the classic case.
+- The work takes time. Confirm when it starts ("Export started") and when it finishes ("Export ready"), especially if the user may have moved on.
+- Many things happened at once. Say what happened: "12 members added," or "9 of 12 added, 3 failed," with a link to details.
+
+**Writing them**
+
+- Be specific and use past tense — "Member added" is better than "Success!"
+- Match the type to the message: `success` / `danger` for outcomes, `info` for neutral notices, `loading` / `promise` for in-progress work.
+- Keep the `title` short and put any detail in the `description`.
+- Add an `action` like "Undo" or "View details" when there's a meaningful next step.
+- Dismiss automatically after about 5 seconds.
+- Keep it to one toast at a time, and combine multiple results into one message.
+- Don't use a toast for errors or anything the user needs to act on — those should stay on screen.
 
 ## Accessibility
 

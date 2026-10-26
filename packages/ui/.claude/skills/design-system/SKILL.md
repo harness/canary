@@ -59,15 +59,24 @@ than adding it.
    `props.shared` / `props.codeOnly`. Use `code.import` verbatim for the import, and
    `code.path` to locate the source — the repo uses both `components/{name}.tsx` and
    `components/{name}/{name}.tsx`, so do not guess the layout.
+
+   `code.path` is **repo-relative and only resolves inside canary**. From an installed
+   package there is no `src/`, so do not try to open it — the shipped equivalent is
+   `dist/components.d.ts`, which carries the component's real prop types.
 3. **Read its pattern doc** (`schemas/{component}.md`) and the `docs/system/` rules listed
    in the manifest's `governance.rulesDocs`. These decide whether this component is the
    right choice, not just how to call it.
 4. **Generate.** Use only props and values that appear in the manifest. Use semantic
    tokens, never literal hex or px. Do not invent a prop, a variant, or a theme value
    because it seems plausible — if it is not in the manifest, it does not exist.
-5. **Validate.** Run `pnpm ds-check` from `packages/ui`. If you changed a manifest, run
-   `pnpm ds-check --write` to regenerate its OpenAPI spec; never hand-edit a
+5. **Validate.** *In canary:* run `pnpm ds-check` from `packages/ui`. If you changed a
+   manifest, run `pnpm ds-check --write` to regenerate its OpenAPI spec; never hand-edit a
    `*.openapi.json`. When a check fails, read `schemas/TROUBLESHOOTING.md`.
+
+   *In a consuming app:* `ds-check` is not shipped — `scripts/` is excluded from the
+   published package, so there is nothing to run. Verify with your own type check
+   (`tsc --noEmit`) instead; the shipped `.d.ts` files enforce the same prop contract the
+   manifest describes.
 
 ## If a source disagrees with the code
 

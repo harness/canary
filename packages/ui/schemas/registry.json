@@ -43,7 +43,7 @@
       "description": "Decorative-colour label for stable attributes, with optional icon, split label/value pair, and dismiss action",
       "openapi": "schemas/tag.openapi.json",
       "manifest": "schemas/tag.manifest.json",
-      "version": "1.0.0",
+      "version": "1.5.5",
       "package": "@harnessio/ui",
       "export": "Tag",
       "import": "@harnessio/ui/components",

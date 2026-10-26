@@ -1,0 +1,344 @@
+{
+  "$schema": "https://your-org.com/schemas/component-manifest-v1.json",
+  "id": "canary.tag",
+  "status": "stable",
+
+  "code": {
+    "package": "@harnessio/ui",
+    "export": "Tag",
+    "import": "import { Tag } from '@harnessio/ui/components'",
+    "path": "packages/ui/src/components/tag.tsx"
+  },
+
+  "figma": {
+    "library": "HDS | Components 3.0",
+    "fileKey": "AIgjIyUzcuZzuVnuoOyhQE",
+    "name": "Tag",
+    "exampleNodeId": "1444:10547",
+    "codeConnect": "packages/ui/src/components/tag.figma.ts",
+    "componentSetKey": null,
+    "variantPropertyMap": {
+      "variant": "variant",
+      "size": "size",
+      "theme": "theme"
+    },
+    "publishStatus": "published",
+    "enforceSync": true
+  },
+
+  "purpose": {
+    "summary": "Label a stable, descriptive attribute with a decorative colour theme, optionally as a two-part key/value pair with an icon and a dismiss action",
+    "useWhen": [
+      "Labelling what something *is* — a category, scope, tier, environment, or marketing label — rather than what state it is in",
+      "Showing a key/value pair as one unit (pass both label and value; it renders as a split tag)",
+      "Displaying a removable filter or selection chip, using actionIcon plus onActionClick"
+    ],
+    "doNotUseWhen": [
+      "The value is system-driven and changes on its own, or the colour implies good/bad/waiting (use StatusBadge instead)",
+      "Showing a count (use CounterBadge instead)",
+      "You need a keyboard-operable control — a clickable Tag is a div with no role and no tabIndex (see knownGaps)"
+    ]
+  },
+
+  "props": {
+    "shared": [
+      {
+        "name": "variant",
+        "type": "enum",
+        "values": ["outline", "secondary"],
+        "default": "outline",
+        "codeNote": "Fill treatment. 'outline' uses the theme's outline background and border; 'secondary' uses its filled secondary background."
+      },
+      {
+        "name": "size",
+        "type": "enum",
+        "values": ["md", "sm"],
+        "default": "md",
+        "codeNote": "Tag height and type scale. 'sm' also shrinks the action button from size '2xs' to '3xs'."
+      },
+      {
+        "name": "theme",
+        "type": "enum",
+        "values": [
+          "gray",
+          "blue",
+          "brown",
+          "cyan",
+          "green",
+          "forest-green",
+          "indigo",
+          "lime",
+          "mint",
+          "orange",
+          "pink",
+          "purple",
+          "red",
+          "violet",
+          "yellow"
+        ],
+        "default": "gray",
+        "codeNote": "Decorative colour name, not a semantic status. Three values resolve to semantic colour sets internally: green→success, red→danger, yellow→warning. The prop value is still the colour name.",
+        "figmaNote": "Figma's theme variant names carry an emoji prefix ('⚫ gray', '🔵 blue'); Code Connect strips it. Figma exposes 13 of the 15 — 'forest-green' and 'lime' are code-only (see knownGaps)."
+      },
+      {
+        "name": "value",
+        "type": "string",
+        "default": null,
+        "required": true,
+        "codeNote": "The tag's text, and the only required prop. In a single tag it renders as {value || label}; in a split tag it is the right-hand half.",
+        "figmaNote": "Bound to the Figma TEXT property 'text#1444:4'. Note the asymmetry: a one-part Figma tag's text maps to `value`, not `label`."
+      }
+    ],
+    "designOnly": [
+      {
+        "name": "icon",
+        "type": "boolean",
+        "figmaProperty": "icon#1444:5",
+        "transform": "compose-derived",
+        "notes": "A boolean toggle that reveals the Figma icon slot, paired with the instance swap '↳ icon#1444:6'. Code has no boolean — the icon renders whenever the `icon` prop holds a name, so Code Connect derives this from presence."
+      }
+    ],
+    "codeOnly": [
+      {
+        "name": "label",
+        "type": "string",
+        "trigger": "content",
+        "notes": "Passing label *and* value switches rendering to an internal two-tag split composite: label on the left, value on the right. Passing label alone renders a single tag whose text is the label. This mode switch is silent and changes which other props are honoured (see knownGaps)."
+      },
+      {
+        "name": "icon",
+        "type": "string",
+        "trigger": "appearance-override",
+        "notes": "An IconV2 name, rendered at size 'xs' before the text. In split mode it is applied to the left tag only — the right tag never takes a tag icon."
+      },
+      {
+        "name": "iconProps",
+        "type": "object",
+        "trigger": "appearance-override",
+        "notes": "An IconPropsV2 object passed through to IconV2, excluding name, size, fallback and ref. Dropped entirely in split mode — Tag does not forward it to the split composite."
+      },
+      {
+        "name": "actionIcon",
+        "type": "string",
+        "trigger": "appearance-override",
+        "notes": "An IconV2 name rendered inside a transparent icon-only Button after the text — the dismiss/remove affordance. In split mode it is applied to the right tag only."
+      },
+      {
+        "name": "onActionClick",
+        "type": "function",
+        "trigger": "event-handler",
+        "notes": "Fires on the action button. The handler calls stopPropagation() and preventDefault() first, so an action click never also triggers the tag's own onClick."
+      },
+      {
+        "name": "onClick",
+        "type": "function",
+        "trigger": "event-handler",
+        "notes": "Inherited from React.HTMLAttributes rather than declared, so it does not appear in TagProps' own members. Its presence implies hover styling and cursor-pointer. It is the one inherited attribute forwarded into split mode, where it is attached to both halves."
+      },
+      {
+        "name": "enableHover",
+        "type": "boolean",
+        "trigger": "appearance-override",
+        "notes": "Applies hover styling to a non-clickable tag. Ignored in split mode: the split path overwrites it with Boolean(onClick), so a hoverable split tag requires an onClick."
+      },
+      {
+        "name": "rounded",
+        "type": "boolean",
+        "trigger": "appearance-override",
+        "notes": "Switches the corner radius from the default to a full pill. In split mode the outer corners round and the shared inner edge stays square."
+      },
+      {
+        "name": "disabled",
+        "type": "boolean",
+        "trigger": "runtime-state",
+        "notes": "Visual and cursor state only — it is not a CVA variant and sets no aria-disabled. The tag is a div, so there is nothing for it to disable; onClick still fires. It does disable the action Button."
+      },
+      {
+        "name": "title",
+        "type": "string",
+        "trigger": "content",
+        "notes": "Native tooltip on the text span, defaulting to title || value || label so truncated text is always recoverable on hover. Dropped in split mode, where each half falls back to its own text."
+      },
+      {
+        "name": "className",
+        "type": "string",
+        "trigger": "appearance-override",
+        "notes": "Additional classes on the tag root, or on the split wrapper in split mode. Should not override token-based styling."
+      },
+      {
+        "name": "labelClassName",
+        "type": "string",
+        "trigger": "appearance-override",
+        "notes": "Classes for the left half of a split tag. No effect on a single tag."
+      },
+      {
+        "name": "valueClassName",
+        "type": "string",
+        "trigger": "appearance-override",
+        "notes": "Classes for the right half of a split tag. No effect on a single tag."
+      }
+    ]
+  },
+
+  "bindings": [
+    {
+      "figmaProperty": "variant",
+      "codeProp": "variant",
+      "transform": "direct"
+    },
+    {
+      "figmaProperty": "size",
+      "codeProp": "size",
+      "transform": "direct"
+    },
+    {
+      "figmaProperty": "theme",
+      "codeProp": "theme",
+      "transform": "enum-map",
+      "enumMap": {
+        "⚫ gray": "gray",
+        "🔵 blue": "blue",
+        "🟤 brown": "brown",
+        "🔵 cyan": "cyan",
+        "🟢 green": "green",
+        "🔵 indigo": "indigo",
+        "🟣 violet": "violet",
+        "🟠 orange": "orange",
+        "🟢 mint": "mint",
+        "🟣 pink": "pink",
+        "🔴 red": "red",
+        "🟣 purple": "purple",
+        "🟡 yellow": "yellow"
+      },
+      "transformNote": "Figma prefixes each theme name with a colour emoji. The map is the complete set Code Connect handles; 'forest-green' and 'lime' have no Figma entry."
+    },
+    {
+      "figmaProperty": "text#1444:4",
+      "codeProp": "value",
+      "transform": "direct",
+      "transformNote": "Figma's single text property maps to `value`, not `label` — a one-part Figma tag is a one-part code tag."
+    },
+    {
+      "figmaProperty": "icon#1444:5",
+      "codeProp": "icon",
+      "transform": "derived",
+      "transformNote": "Boolean toggle in Figma; the icon *name* comes from the instance swap '↳ icon#1444:6' via executeTemplate(). Omitted when the toggle is off."
+    }
+  ],
+
+  "tokens": {
+    "rootClass": "cn-tag",
+    "rule": "semantic-only",
+    "refs": {
+      "layout.px": "tag.px",
+      "layout.py": "tag.py",
+      "layout.gap": "tag.gap",
+      "layout.border": "tag.border",
+      "layout.max-width": "tag.max-width",
+      "radius.default": "tag.radius-default",
+      "radius.full": "tag.radius-full",
+      "size.md": "tag.size-md",
+      "size.sm": "tag.size-sm",
+      "split.max-width": "tag.split-max-width",
+      "split.left-radius-l": "tag.split-left-radius-l",
+      "split.left-radius-r": "tag.split-left-radius-r",
+      "split.right-radius-l": "tag.split-right-radius-l",
+      "split.right-radius-r": "tag.split-right-radius-r",
+      "action.opacity-rest": "opacity.70",
+      "action.opacity-hover": "opacity.100",
+      "theme.gray": "set.gray",
+      "theme.blue": "set.blue",
+      "theme.brown": "set.brown",
+      "theme.cyan": "set.cyan",
+      "theme.green": "set.success",
+      "theme.forest-green": "set.forest-green",
+      "theme.indigo": "set.indigo",
+      "theme.lime": "set.lime",
+      "theme.mint": "set.mint",
+      "theme.orange": "set.orange",
+      "theme.pink": "set.pink",
+      "theme.purple": "set.purple",
+      "theme.red": "set.danger",
+      "theme.violet": "set.violet",
+      "theme.yellow": "set.warning"
+    }
+  },
+
+  "accessibility": {
+    "keyboardSupport": [
+      "Tab — reaches the action button only, when actionIcon is set",
+      "Enter / Space — activates the focused action button",
+      "No keyboard path to the tag itself; role and tabIndex are omitted from TagProps and cannot be supplied"
+    ],
+    "notes": "A single tag is a plain div with no role, so it is announced as text. The type deliberately omits 'role' and 'tabIndex', which means a Tag with onClick cannot be made keyboard-operable or announced as a control from the outside — use Button for anything that must be actionable. The action button is a real <button> and is focusable, but it renders with ignoreIconOnlyTooltip and an unlabelled icon, so it has no accessible name."
+  },
+
+  "states": [
+    {
+      "name": "base",
+      "triggeredBy": {
+        "source": "interaction",
+        "ref": "none"
+      },
+      "description": "Default tag appearance"
+    },
+    {
+      "name": "hoverable",
+      "triggeredBy": {
+        "source": "prop",
+        "ref": "enableHover"
+      },
+      "description": "Hover background and border shift (cn-tag-hoverable). Also applied implicitly whenever onClick is set, and in split mode only when onClick is set."
+    },
+    {
+      "name": "disabled",
+      "triggeredBy": {
+        "source": "prop",
+        "ref": "disabled"
+      },
+      "description": "Disabled text colour and not-allowed cursor; suppresses hover styling and disables the action button. Applied via utility classes, not a CVA variant."
+    }
+  ],
+
+  "governance": {
+    "rulesDocs": [
+      "docs/system/accessibility.md",
+      "docs/system/color-system.md",
+      "docs/system/interaction-states.md",
+      "docs/system/visual-primitives.md",
+      "docs/system/typography.md",
+      "docs/system/spacing.md",
+      "docs/system/component-architecture.md",
+      "docs/system/design-to-code-flow.md",
+      "schemas/tag.md"
+    ],
+    "tokenStatus": "Layout, radius, size and split refs verified against tailwind-utils-config/components/tag.ts and the built stylesheet; theme refs record the colour *set* each theme resolves to, not the per-slot variables within it"
+  },
+
+  "knownGaps": [
+    "TAG-001: A clickable Tag is not keyboard-operable. The type omits 'role' and 'tabIndex', so no consumer can fix it from outside — use Button when the thing must be actionable",
+    "TAG-002: The action button has no accessible name. It renders iconOnly with ignoreIconOnlyTooltip and an unlabelled icon, and Tag exposes no prop to label it",
+    "TAG-003: Split mode drops most inherited attributes. Passing label + value forwards only onClick to the split composite, so id, data-*, aria-*, title, iconProps and other HTMLAttributes are silently discarded",
+    "TAG-004: Split mode overrides enableHover with Boolean(onClick), so a caller's enableHover is ignored there",
+    "TAG-005: 'forest-green' and 'lime' exist in code but not in the Figma component's theme variant, so a design cannot specify them and Code Connect cannot produce them",
+    "TAG-006: 'children' is accepted by the inherited HTMLAttributes type but never rendered — the text comes from value/label only",
+    "TAG-007: 'disabled' sets no aria-disabled and does not stop onClick; it is visual state only"
+  ],
+
+  "examples": {
+    "correct": [
+      "<Tag variant='outline' theme='blue' value='Production' />",
+      "<Tag variant='secondary' theme='purple' size='sm' label='env' value='staging' />",
+      "<Tag theme='gray' value='react' actionIcon='xmark' onActionClick={() => remove('react')} />",
+      "<Tag variant='outline' theme='mint' icon='sparks' value='Beta' rounded />"
+    ],
+    "incorrect": [
+      "<Tag theme='error' value='Failed' />",
+      "<Tag theme='green' value='Succeeded' />",
+      "<Tag value='Delete' onClick={remove} />",
+      "<Tag label='env' value='prod' enableHover />",
+      "<Tag label='env' value='prod' title='Environment' />",
+      "<Tag value='x' theme='blue'>Label as children</Tag>"
+    ]
+  }
+}

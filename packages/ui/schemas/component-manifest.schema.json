@@ -96,7 +96,7 @@
               "name": { "type": "string" },
               "type": {
                 "type": "string",
-                "enum": ["string", "number", "boolean", "enum", "function", "node", "array"]
+                "enum": ["string", "number", "boolean", "enum", "function", "node", "array", "object"]
               },
               "values": {
                 "type": "array",
@@ -157,7 +157,7 @@
               "name": { "type": "string" },
               "type": {
                 "type": "string",
-                "enum": ["string", "number", "boolean", "enum", "function", "node", "array"]
+                "enum": ["string", "number", "boolean", "enum", "function", "node", "array", "object"]
               },
               "trigger": {
                 "type": "string",

@@ -28,7 +28,6 @@ interface State {
   prefixIcon: string;
   suffixIcon: string;
   iconOnly: boolean;
-  rounded: boolean;
   disabled: boolean;
 }
 
@@ -40,7 +39,6 @@ const INITIAL_STATE: State = {
   prefixIcon: "none",
   suffixIcon: "none",
   iconOnly: false,
-  rounded: false,
   disabled: false,
 };
 
@@ -72,7 +70,6 @@ function generateCode(s: State): string {
     if (s.suffixIcon !== "none") attrs.push(`  suffixIcon="${s.suffixIcon}"`);
   }
 
-  if (s.rounded) attrs.push("  rounded");
   if (s.disabled) attrs.push("  disabled");
 
   return ["<Toggle", ...attrs, "/>"].join("\n");
@@ -122,7 +119,6 @@ const TogglePlayground: FC = () => {
       type: "boolean",
       description: "Render only the prefix icon",
     },
-    { name: "rounded", type: "boolean", description: "Fully rounded corners" },
     { name: "disabled", type: "boolean", description: "Disable the toggle" },
   ];
 
@@ -152,7 +148,6 @@ const TogglePlayground: FC = () => {
       iconOnly
       prefixIcon={prefix as never}
       tooltipProps={{ content: state.text }}
-      rounded={state.rounded}
       disabled={state.disabled}
       selected={selected}
       onChange={setSelected}
@@ -167,7 +162,6 @@ const TogglePlayground: FC = () => {
       suffixIcon={
         state.suffixIcon === "none" ? undefined : (state.suffixIcon as never)
       }
-      rounded={state.rounded}
       disabled={state.disabled}
       selected={selected}
       onChange={setSelected}

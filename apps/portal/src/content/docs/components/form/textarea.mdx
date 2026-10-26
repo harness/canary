@@ -24,156 +24,14 @@ The `Textarea` component is a multi-line text input with options for a label, ca
 
 ## Variations
 
-### Disabled
-
-<DocsPage.ComponentExample
-  client:only
-  code={`
-  <Layout.Vertical gap="xl" className="min-w-[400px]">
-    <Textarea
-      id="disabled"
-      name="disabled"
-      label="Disabled"
-      disabled
-      placeholder="Placeholder"
-      rows={4}
-    />
-  </Layout.Vertical>
-`}
-/>
-
-### Resizable
-
-<DocsPage.ComponentExample
-  client:only
-  code={`
-  <Layout.Vertical gap="xl" className="min-w-[400px]">
-    <Textarea
-      id="2"
-      name="resizable"
-      label="Resizable"
-      placeholder="Placeholder"
-      resizable
-      rows={4}
-    />
-  </Layout.Vertical>
-`}
-/>
-
-### Auto resize
-
-The `Textarea` component supports automatic height adjustment based on content with the `autoResize` prop. When enabled, the textarea grows and shrinks to fit its content, eliminating the need for manual scrolling.
-
-<DocsPage.ComponentExample
-  client:only
-  code={`
-  <Layout.Vertical gap="xl" className="min-w-[400px]">
-    <Textarea
-      id="auto-resize"
-      name="auto-resize"
-      label="Auto Resize"
-      placeholder="Start typing and watch the textarea grow automatically..."
-      autoResize
-    />
-  </Layout.Vertical>
-`}
-/>
-
-`autoResize` uses the native CSS `field-sizing: content` when the browser supports it, and respects a maximum height limit to prevent excessive growth. It may not work as expected in Firefox, which does not yet support `field-sizing: content`.
-
-### Theme
-
-`Textarea` derives its visual state from `error` and `warning`: passing an `error` message applies the `danger` theme, and passing a `warning` message applies the `warning` theme. You can also set `theme` directly (`warning`) to colour the field without a message.
-
-<DocsPage.ComponentExample
-  client:only
-  code={`
-  <Layout.Vertical gap="xl" className="min-w-[400px]">
-    <Textarea
-      id="error"
-      name="error"
-      label="This component in error state"
-      placeholder="Placeholder"
-      error="Error message"
-      optional
-      rows={4}
-    />
-    <Textarea
-      id="warning"
-      name="warning"
-      label="This component in warning state"
-      placeholder="Placeholder"
-      warning="Warning message"
-      optional
-      rows={4}
-    />
-  </Layout.Vertical>
-`}
-/>
-
-### Character limit
-
-The `Textarea` component supports a `maxCharacters` prop, which shows a live `used / max` counter beside the label. The counter is informational — it does not block typing past the limit.
-
-<DocsPage.ComponentExample
-  client:only
-  code={`
-  <Layout.Vertical gap="xl" className="min-w-[400px]">
-    <Textarea
-      id="max-characters"
-      name="max-characters"
-      label="Character Limit"
-      placeholder="Placeholder"
-      maxCharacters={200}
-      rows={4}
-    />
-  </Layout.Vertical>
-`}
-/>
-
-### Sizes
-
-The `Textarea` component supports the sizes `sm` and `md`. The default size is `md`.
-
-<DocsPage.ComponentExample
-  client:only
-  code={`
-  <Layout.Vertical gap="xl" className="min-w-[400px]">
-    <Textarea
-      id="1"
-      name="md"
-      label="Size md"
-      placeholder="Placeholder"
-      rows={4}
-    />
-    <Textarea
-      id="2"
-      name="sm"
-      label="Size sm"
-      placeholder="Placeholder"
-      rows={4}
-      size="sm"
-    />
-  </Layout.Vertical>
-`}
-/>
-
 ### With tooltip
 
-`tooltipContent` sets the content of the label's info tooltip. `tooltipProps` passes additional props to the tooltip.
+`tooltipContent` sets the content of the label's info tooltip (available as a control in the playground above). Pass `tooltipProps` to customise the tooltip — for example, swapping its icon:
 
 <DocsPage.ComponentExample
   client:only
   code={`
   <Layout.Vertical gap="xl" className="min-w-[400px]">
-    <Textarea
-      id="with-tooltip"
-      name="with-tooltip"
-      label="With default Tooltip"
-      placeholder="Placeholder"
-      tooltipContent="Tooltip content"
-      rows={4}
-    />
     <Textarea
       id="with-tooltip-custom-icon"
       name="with-tooltip-custom-icon"
@@ -188,37 +46,6 @@ The `Textarea` component supports the sizes `sm` and `md`. The default size is `
         },
       }}
       rows={4}
-    />
-  </Layout.Vertical>
-`}
-/>
-
-### Orientation
-
-The `Textarea` component accepts an optional `orientation` prop, which defines the layout direction of the textarea and its label. Available options are `horizontal` and `vertical` (default).
-
-<DocsPage.ComponentExample
-  client:only
-  code={`
-  <Layout.Vertical gap="xl" className="min-w-[400px]">
-    <Textarea
-      id="vertical"
-      name="vertical"
-      label="Vertical"
-      placeholder="Placeholder"
-      rows={4}
-      caption="Caption text"
-      maxCharacters={200}
-    />
-    <Textarea
-      id="horizontal"
-      name="horizontal"
-      label="Horizontal"
-      placeholder="Placeholder"
-      rows={4}
-      orientation="horizontal"
-      caption="Caption text"
-      maxCharacters={200}
     />
   </Layout.Vertical>
 `}
@@ -278,6 +105,13 @@ import { Textarea } from "@harnessio/ui/components";
 
 - Don't rely on `maxCharacters` to enforce a limit — pair it with your own validation.
 - Don't set both `resizable` and `autoResize` expecting them to combine cleanly; `autoResize` already manages height.
+
+<Aside type="caution">
+  `autoResize` uses the native CSS `field-sizing: content` when the browser
+  supports it, and respects a maximum height limit to prevent excessive growth.
+  It may not work as expected in Firefox, which does not yet support
+  `field-sizing: content`.
+</Aside>
 
 ## Content
 

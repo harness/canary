@@ -37,6 +37,24 @@ question from the portal when a manifest or pattern doc covers it.
 Do not treat a `*.figma.ts` Code Connect file as evidence of what Figma exposes either; its
 lookups fail silently when a Figma property is renamed.
 
+## Before the first component renders — consumer app setup
+
+Installing the package is not enough to make components look right. The styles are built in
+canary but only reach a running app if that app pulls them in:
+
+1. **Import the stylesheet once, at the app root:** `import '@harnessio/ui/styles.css'`. It
+   carries the `:root` token definitions and the pre-compiled component classes. Without it
+   components render as unstyled text — correct markup, no colors, no shape.
+2. **Import it exactly once.** It includes the Tailwind preflight reset, so a second import
+   double-applies it.
+3. **Only if the app writes its own Tailwind utility classes:** add the preset
+   `@harnessio/ui/tailwind-design-system` to its `tailwind.config`, and include just
+   `@tailwind utilities` — base and component styles already come from the stylesheet.
+
+This is app setup, not component usage. Do not add the stylesheet import to a component file
+to work around a missing one. If you cannot tell whether the host app already imports it,
+say so rather than adding one.
+
 ## Workflow
 
 1. **Find the component.** Read `schemas/registry.json`. If the component has no manifest,

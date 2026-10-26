@@ -18,21 +18,9 @@ import PageTabsToc from "@/components/page-tabs-toc.astro";
 
 The `Textarea` component is a multi-line text input with options for a label, caption, character counter, resizing behaviour, validation states, and an info tooltip.
 
-<DocsPage.ComponentExample
-  client:only
-  code={`
-  <Layout.Vertical gap="xl" className="min-w-[400px]">
-    <Textarea
-      id="1"
-      name="default"
-      label="Default"
-      placeholder="Placeholder"
-      caption="Caption text"
-      rows={4}
-    />
-  </Layout.Vertical>
-  `}
-/>
+`label`, `placeholder`, and `caption` cover the text around the field, while `error` and `warning` show a validation message and switch the theme (otherwise set `theme` directly). `rows` sets the starting height, `resizable` lets the user drag to resize, and `autoResize` grows the field to fit its content. `maxCharacters` shows a used / max counter, and `orientation` places the label above or beside the field. Try them in the playground below.
+
+<DocsPage.TextareaPlayground client:only />
 
 ## Variations
 

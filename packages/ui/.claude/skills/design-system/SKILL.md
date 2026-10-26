@@ -20,9 +20,9 @@ them with `packages/ui/`.
 | Pattern doc | `schemas/{component}.md` | When to use this component, when not to, known gaps |
 | System rules | `docs/system/*.md` | Cross-cutting rules (9 files, listed below) |
 
-`docs/system/` contains: `accessibility.md`, `color-system.md`, `component-architecture.md`,
-`design-to-code-flow.md`, `interaction-states.md`, `shadows.md`, `spacing.md`,
-`typography.md`, `visual-primitives.md`.
+`docs/system/` contains: `accessibility.md`, `app-setup.md`, `color-system.md`,
+`component-architecture.md`, `design-to-code-flow.md`, `interaction-states.md`, `shadows.md`,
+`spacing.md`, `typography.md`, `visual-primitives.md`.
 
 ## Not authoritative — do not cite these
 
@@ -39,21 +39,17 @@ lookups fail silently when a Figma property is renamed.
 
 ## Before the first component renders — consumer app setup
 
-Installing the package is not enough to make components look right. The styles are built in
-canary but only reach a running app if that app pulls them in:
+Installing the package is not enough to make components look right. A host app must import
+the stylesheet once, put a **theme class** and `cn-root` on an ancestor itself (the package
+applies neither), and route portaled overlays through a `cn-root` host. Get these wrong and
+the failure is quiet — half-themed surfaces, or `border-*` utilities drawing nothing.
 
-1. **Import the stylesheet once, at the app root:** `import '@harnessio/ui/styles.css'`. It
-   carries the `:root` token definitions and the pre-compiled component classes. Without it
-   components render as unstyled text — correct markup, no colors, no shape.
-2. **Import it exactly once.** It includes the Tailwind preflight reset, so a second import
-   double-applies it.
-3. **Only if the app writes its own Tailwind utility classes:** add the preset
-   `@harnessio/ui/tailwind-design-system` to its `tailwind.config`, and include just
-   `@tailwind utilities` — base and component styles already come from the stylesheet.
+**Read `docs/system/app-setup.md` before diagnosing any "it renders but looks wrong" report,
+and before adding a stylesheet import or a wrapper class to anything.**
 
-This is app setup, not component usage. Do not add the stylesheet import to a component file
-to work around a missing one. If you cannot tell whether the host app already imports it,
-say so rather than adding one.
+This is app setup, not component usage. Do not work around a missing one from inside a
+component file, and if you cannot tell whether the host app already does it, say so rather
+than adding it.
 
 ## Workflow
 

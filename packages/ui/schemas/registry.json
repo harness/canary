@@ -82,6 +82,11 @@
       "path": "docs/system/design-to-code-flow.md",
       "title": "Design-to-Code Flow",
       "applies-to": ["all"]
+    },
+    {
+      "path": "docs/system/app-setup.md",
+      "title": "App Setup",
+      "applies-to": ["all"]
     }
   ],
   "consumption-guide": {

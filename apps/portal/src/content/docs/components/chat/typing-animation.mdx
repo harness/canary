@@ -65,21 +65,21 @@ import { TypingAnimation } from "@harnessio/ui/components";
 
 ### Typing speed
 
-| Speed            | `typingSpeed` | When to use                                                               |
-| ---------------- | ------------- | ------------------------------------------------------------------------- |
-| Fast             | `25`          | Short confirmations, labels, and snappy inline responses.                 |
-| Default          | `50`          | Standard assistant replies and chat messages. A good default.             |
-| Deliberate       | `75`–`100`    | Short, emphasized phrases where a slower reveal adds weight.              |
+| Speed      | `typingSpeed` | When to use                                                   |
+| ---------- | ------------- | ------------------------------------------------------------- |
+| Fast       | `25`          | Short confirmations, labels, and snappy inline responses.     |
+| Default    | `50`          | Standard assistant replies and chat messages. A good default. |
+| Deliberate | `75`–`100`    | Short, emphasized phrases where a slower reveal adds weight.  |
 
 Keep longer messages at `25`–`50ms` so readers aren't left waiting; reserve `75ms`+ for brief text only.
 
 ### Start delay
 
-| Delay            | `delay`       | When to use                                                               |
-| ---------------- | ------------- | ------------------------------------------------------------------------- |
-| None             | `0`           | Begin typing immediately. The default for most cases.                     |
-| Stagger          | `150`–`300`   | Let a preceding element (avatar, message bubble) settle before typing.    |
-| Thinking         | `500`–`1000`  | Suggest the assistant is "thinking" before an answer streams in.          |
+| Delay    | `delay`      | When to use                                                            |
+| -------- | ------------ | ---------------------------------------------------------------------- |
+| None     | `0`          | Begin typing immediately. The default for most cases.                  |
+| Stagger  | `150`–`300`  | Let a preceding element (avatar, message bubble) settle before typing. |
+| Thinking | `500`–`1000` | Suggest the assistant is "thinking" before an answer streams in.       |
 
 Use delays sparingly — anything beyond ~1s reads as lag rather than intent.
 

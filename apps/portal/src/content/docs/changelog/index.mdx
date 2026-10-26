@@ -1,36 +1,8 @@
 ---
 title: Change log
-description: Recent changes to the Harness Design System, automatically updated from merged pull requests
+description: Recent changes to the Harness Design System, hand-maintained from merged pull requests
 ---
 
-import ChangelogList from "@/components/changelog/ChangelogList";
+import ChangelogAccordions from "@/components/changelog/ChangelogAccordions";
 
-<div className="not-content">
-  <p className="font-caption-normal text-cn-3">October 23, 2026</p>
-  <h2 className="font-heading-default text-cn-1">
-    Semibold weights migrated to the heading weight (UUI-4286)
-  </h2>
-</div>
-
-Every typographic style that previously rendered **Semibold (optical 530)** now renders at the **`heading` weight (optical 500, "Medium")** — lighter and more balanced while keeping clear hierarchy over body text. This covers the `-strong` body and caption styles (`body-strong`, `body-single-line-strong`, `caption-strong`), `micro-normal`, small links, dialog titles, emphasized and heading markdown, chart values, and the Avatar, Stepper, Drawer, and Sheet titles. Nothing needs to change in consuming code — the `.font-*` utilities and `<Text>` variants resolve to the new weight automatically.
-
-The `600` bucket (optical `530`) is **no longer used** anywhere in the library. It remains defined for backwards-compatibility, and a follow-up will retire it — along with the other deprecated weight buckets — once remaining direct consumers migrate.
-
-<hr
-  style={{ border: 0, height: "4px", backgroundColor: "var(--cn-border-2)" }}
-/>
-
-<div className="not-content">
-  <p className="font-caption-normal text-cn-3">October 7, 2026</p>
-  <h2 className="font-heading-default text-cn-1">
-    Typography weight normalization (UUI-3467)
-  </h2>
-</div>
-
-The typography scale has been normalized to two optical weights: **Regular (400)** and **Semibold (600, which renders at optical 530)** for Inter, while JetBrains Mono keeps **Regular** and **Bold**. The in-between weights are no longer part of the recommended scale, and every `.font-*` utility and `<Text>` variant now resolves to one of these normalized weights.
-
-The previous **light (300)**, **medium (500)**, and **bold (700)** weights have **not been removed** — they are retained for backwards-compatibility and are now marked **deprecated** across every layer of the system: the `caption-light` Text variant, the `.font-body-light` and `.font-caption-light` utilities, the `body.light` and `caption.light` composite tokens, and the underlying weight primitives (Inter `300 / 500 / 700`, JetBrains Mono `300 / 500`). Existing usage keeps working and the deprecated specimens remain on the [Typography foundations](/foundations/typography/) page for reference, but new adoption is blocked by an ESLint rule — migrate to the `-normal` / `-strong` siblings instead.
-
-**Timeline — started October 7, 2026 · due October 30, 2026.** Teams should complete migration off the deprecated weights to the `-normal` / `-strong` siblings before this date.
-
-<ChangelogList client:load />
+<ChangelogAccordions client:only />

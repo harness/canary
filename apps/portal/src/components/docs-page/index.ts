@@ -61,6 +61,7 @@ import TimeAgoCardPlayground from "./playground/TimeAgoCardPlayground.tsx";
 import TimeInputPlayground from "./playground/TimeInputPlayground.tsx";
 import TogglePlayground from "./playground/TogglePlayground.tsx";
 import ToggleGroupPlayground from "./playground/ToggleGroupPlayground.tsx";
+import TreeViewPlayground from "./playground/TreeViewPlayground.tsx";
 import Playground from "./playground/Playground.tsx";
 import PropsTable from "./props-table.tsx";
 
@@ -130,4 +131,5 @@ export const DocsPage = {
   TimeAgoCardPlayground,
   ToastPlayground,
   TooltipPlayground,
+  TreeViewPlayground,
 };

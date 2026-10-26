@@ -52,6 +52,7 @@ import StatusBadgePlayground from "./playground/StatusBadgePlayground.tsx";
 import SwitchPlayground from "./playground/SwitchPlayground.tsx";
 import TabsPlayground from "./playground/TabsPlayground.tsx";
 import TagPlayground from "./playground/TagPlayground.tsx";
+import TextPlayground from "./playground/TextPlayground.tsx";
 import TextInputPlayground from "./playground/TextInputPlayground.tsx";
 import TimeInputPlayground from "./playground/TimeInputPlayground.tsx";
 import TogglePlayground from "./playground/TogglePlayground.tsx";
@@ -120,4 +121,5 @@ export const DocsPage = {
   SwitchPlayground,
   TabsPlayground,
   TagPlayground,
+  TextPlayground,
 };

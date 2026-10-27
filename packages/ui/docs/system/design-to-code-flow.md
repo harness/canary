@@ -21,6 +21,8 @@ Global rules for how design decisions travel from this repo into consuming appli
 
 **Why:** Downstream overrides are invisible to canary's audits and break on the next upgrade. They also hide the real signal — that the system is missing a variant.
 
+**When a request can't be met with the manifest's props:** Don't fake it with `className`, `style`, or an unsupported prop (for example, colouring a `link` Button, which takes no `theme`). Use the nearest supported variant and theme (for example, `ghost` with `theme="danger"`), say in your reply what you substituted and why, and offer to raise the gap upstream. If no supported option is close, say so and ask rather than improvising.
+
 ---
 
 ## Respect package boundaries within the monorepo

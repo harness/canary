@@ -435,12 +435,24 @@ function validateSourceProps(manifest: Record<string, unknown>): {
   }
 
   const src = fs.readFileSync(resolved, 'utf-8')
-  const shared = ((manifest.props as Record<string, unknown>)?.shared ?? []) as Array<Record<string, unknown>>
+  const props = (manifest.props ?? {}) as Record<string, unknown>
+
+  /**
+   * Both shared and codeOnly props exist in the source, so both are checkable. The bucket
+   * records where a prop comes from — Figma and code, or code alone — and says nothing about
+   * whether its values can be verified. Checking only `shared` conflated the two: a component
+   * with no Figma counterpart has to declare every prop in codeOnly, which left all of its
+   * enums unverified, so the honest bucket cost you the check. designOnly stays out, since
+   * those props deliberately have no code counterpart to compare against.
+   */
+  const checkable = (['shared', 'codeOnly'] as const).flatMap(bucket =>
+    ((props[bucket] ?? []) as Array<Record<string, unknown>>).map(prop => ({ bucket, prop }))
+  )
 
   // Props the manifest claims are enums. These are the claims this check exists to verify.
-  const declaredEnums = shared
-    .filter(p => typeof p.name === 'string' && Array.isArray(p.values))
-    .map(p => String(p.name))
+  const declaredEnums = checkable
+    .filter(({ prop }) => typeof prop.name === 'string' && Array.isArray(prop.values))
+    .map(({ prop }) => String(prop.name))
 
   /**
    * Skipping is only safe when there was nothing to verify. If the manifest declares enum
@@ -481,7 +493,7 @@ function validateSourceProps(manifest: Record<string, unknown>): {
 
   const verified = new Set<string>()
 
-  for (const prop of shared) {
+  for (const { bucket, prop } of checkable) {
     const name = typeof prop.name === 'string' ? prop.name : undefined
     const values = Array.isArray(prop.values) ? (prop.values as string[]) : undefined
     if (!name || !values) continue
@@ -510,12 +522,12 @@ function validateSourceProps(manifest: Record<string, unknown>): {
 
     if (missingInManifest.length > 0) {
       errors.push(
-        `props.shared "${name}": in ${path.basename(codePath)} but not the manifest: ${missingInManifest.join(', ')}`
+        `props.${bucket} "${name}": in ${path.basename(codePath)} but not the manifest: ${missingInManifest.join(', ')}`
       )
     }
     if (missingInSource.length > 0) {
       errors.push(
-        `props.shared "${name}": in the manifest but not ${path.basename(codePath)}: ${missingInSource.join(', ')}`
+        `props.${bucket} "${name}": in the manifest but not ${path.basename(codePath)}: ${missingInSource.join(', ')}`
       )
     }
   }

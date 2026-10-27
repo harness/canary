@@ -132,6 +132,26 @@ promise settles — resolve *or* reject — and is disabled throughout. So:
 
 ---
 
+## Writing the label
+
+These are content rules, from the Harness UX writing guidelines. None is checked by the type or
+by `ds-check`.
+
+- **One or two words, starting with an action verb.** "Start", "Continue", "Open", "Add",
+  "Create". Or a verb plus the item it acts on: "Create pipeline", "Add stage"
+- **A verb plus a brand or proper noun is allowed, sparingly.** "Sync Git"
+- **Let the surrounding context carry the meaning.** A section header or page title already
+  says what the button belongs to, so don't pad the label to repeat it
+- **No terminal punctuation.** No period, exclamation point, question mark or colon
+- **No articles.** "Create template", not "Create a template"
+- **Sentence case.** Capitalize only the first word and proper nouns
+- **Don't use ellipses** in a label
+- **A primary button in a dialog or drawer names that surface's own action and matches its
+  header.** Never a generic "Yes". A header reading "Discard changes?" gets a button reading
+  "Discard"
+
+---
+
 ## Do's and Don'ts
 
 ### ✅ Do

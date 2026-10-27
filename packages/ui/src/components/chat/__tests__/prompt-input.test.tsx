@@ -299,4 +299,37 @@ describe('PromptInput', () => {
       expect(tools?.querySelector('button')).toBeTruthy()
     })
   })
+
+  describe('Speech', () => {
+    test('renders an idle voice-input control that does not submit the form', async () => {
+      const onSubmit = vi.fn((e: React.FormEvent<HTMLFormElement>) => e.preventDefault())
+      render(
+        <TestWrapper>
+          <PromptInput.Root onSubmit={onSubmit}>
+            <PromptInput.Speech />
+          </PromptInput.Root>
+        </TestWrapper>
+      )
+
+      const button = screen.getByRole('button', { name: /start voice input/i })
+      expect(button).toHaveAttribute('type', 'button')
+      expect(button).toHaveAttribute('aria-pressed', 'false')
+
+      await userEvent.click(button)
+      expect(onSubmit).not.toHaveBeenCalled()
+    })
+
+    test('shows listening rings and stop label while listening', () => {
+      const { container } = render(
+        <TestWrapper>
+          <PromptInput.Speech listening />
+        </TestWrapper>
+      )
+
+      const button = screen.getByRole('button', { name: /stop voice input/i })
+      expect(button).toHaveAttribute('aria-pressed', 'true')
+      expect(container.querySelector('.cn-prompt-input-speech')).toHaveAttribute('data-listening', 'true')
+      expect(container.querySelectorAll('.cn-prompt-input-speech-ring')).toHaveLength(2)
+    })
+  })
 })

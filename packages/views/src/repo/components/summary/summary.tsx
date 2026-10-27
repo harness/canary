@@ -17,6 +17,8 @@ interface SummaryProps extends RoutingProps {
   toCommitDetails?: ({ sha }: { sha: string }) => string
   toRepoFileDetails?: ({ path }: { path: string }) => string
   scheduleFileMetaFetch?: (paths: string[]) => void
+  /** Resolves a symlink (fetching its target) and navigates; the row is not treated as a directory link. */
+  onSymlinkClick?: (file: RepoFile) => void
 }
 
 export const Summary = ({
@@ -25,9 +27,13 @@ export const Summary = ({
   hideHeader = false,
   toCommitDetails,
   toRepoFileDetails,
-  scheduleFileMetaFetch
+  scheduleFileMetaFetch,
+  onSymlinkClick
 }: SummaryProps) => {
   const { t } = useTranslation()
+
+  const getIconName = (file: RepoFile) =>
+    file.type === SummaryItemType.Symlink ? 'link' : file.type === SummaryItemType.File ? 'empty-page' : 'folder'
 
   // files that have been observed and metadata requested
   const observedFilesRef = useRef(new Set<string>())
@@ -129,10 +135,13 @@ export const Summary = ({
             <Table.Row
               key={file.id}
               to={
-                toRepoFileDetails?.({
-                  path: encodeResourcePath(file.path)
-                }) ?? ''
+                file.type === SummaryItemType.Symlink
+                  ? undefined
+                  : (toRepoFileDetails?.({
+                      path: encodeResourcePath(file.path)
+                    }) ?? '')
               }
+              onClick={file.type === SummaryItemType.Symlink ? () => onSymlinkClick?.(file) : undefined}
               data-file-id={file.id}
               ref={element => setTableRowRef(element, file.id)}
             >
@@ -163,17 +172,14 @@ export const Summary = ({
                     name={
                       file.status
                         ? file.status === FileStatus.SAFE
-                          ? file.type === SummaryItemType.File
-                            ? 'empty-page'
-                            : 'folder'
+                          ? getIconName(file)
                           : 'warning-triangle-solid'
-                        : file.type === SummaryItemType.File
-                          ? 'empty-page'
-                          : 'folder'
+                        : getIconName(file)
                     }
                   />
                   <Text color="foreground-1" truncate className="w-[300px]">
                     {file.name}
+                    {file.type === SummaryItemType.Symlink && file.symlinkTarget ? ` -> ${file.symlinkTarget}` : ''}
                   </Text>
                 </div>
               </Table.Cell>

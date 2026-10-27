@@ -31,7 +31,8 @@ export interface Branch {
 
 export enum SummaryItemType {
   Folder,
-  File
+  File,
+  Symlink
 }
 
 export interface User {
@@ -55,6 +56,8 @@ export interface RepoFile {
   user?: User
   sha?: string
   path: string
+  /** Raw symlink target, when known (type === Symlink) */
+  symlinkTarget?: string
   toCommitDetails?: ({ sha }: { sha: string }) => string
   status?: string
   signature?: TypesCommitSignature | null

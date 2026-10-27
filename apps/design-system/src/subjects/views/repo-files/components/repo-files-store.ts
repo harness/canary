@@ -34,7 +34,7 @@ export interface OpenapiContentInfo {
   name?: string
   path?: string
   sha?: string
-  type?: 'dir' | 'file'
+  type?: 'dir' | 'file' | 'symlink' | 'submodule'
 }
 
 export interface RepoFilesStoreType {

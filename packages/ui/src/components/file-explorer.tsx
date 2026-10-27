@@ -15,9 +15,14 @@ import {
   TooltipProps
 } from '@/components'
 import { LinkProps, useRouterContext } from '@/context'
+import { accessibleNameProps } from '@utils/accessible-name-props'
 import { cn } from '@utils/cn'
 
 type SidebarItemActionButtonPropsType = ButtonProps & {
+  /**
+   * These buttons render at 2xs, where the title child is filtered out, so when a title is given
+   * it becomes the accessible name instead (see the aria-label below).
+   */
   title?: string
   iconName?: IconV2NamesType
   iconProps?: Omit<IconPropsV2, 'ref' | 'name' | 'fallback'>
@@ -61,7 +66,14 @@ const InteractiveItem = forwardRef<HTMLDivElement, ItemProps>(
           {actionButtons?.map((buttonProps, index) => {
             const { title, iconOnly = true, iconName, iconProps, ...rest } = buttonProps
             return (
-              <Button key={index} size="2xs" variant="ghost" iconOnly={iconOnly} {...rest}>
+              <Button
+                key={index}
+                size="2xs"
+                variant="ghost"
+                iconOnly={iconOnly}
+                {...accessibleNameProps(title)}
+                {...rest}
+              >
                 {iconName && <IconV2 name={iconName} {...iconProps} />}
                 {title}
               </Button>

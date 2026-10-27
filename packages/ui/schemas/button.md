@@ -47,12 +47,17 @@ stop.
 | Question                                                        | Answer | Variant       |
 | --------------------------------------------------------------- | ------ | ------------- |
 | Is this *the* action the view exists for?                       | Yes    | `primary`     |
-| Is it a real alternative sitting beside the primary?            | Yes    | `secondary`   |
-| Is it secondary but needs a visible edge against a busy surface? | Yes    | `outline`     |
+| Is it a real alternative sitting beside the primary?            | Yes    | `outline`     |
+| Is it an alternative where `outline` genuinely cannot be used?   | Yes    | `secondary`   |
 | Is it a quiet action in a toolbar, table row, or card header?    | Yes    | `ghost`       |
 | Is it initiated by or handing off to AI?                        | Yes    | `ai`          |
 | Does it need to read as inline text inside a sentence?           | Yes    | `link`        |
 | Do you need the behaviour with no chrome at all?                 | Yes    | `transparent` |
+
+**Bias order: `primary`, then `outline`, then `secondary`.** When picking a variant, reach for
+`primary` first, `outline` second, and `secondary` last. It can look backwards, but it is the
+design team's call, so don't swap `outline` for `secondary` on instinct. This is guidance, not
+something the type or a check enforces.
 
 **One `primary` per view or dialog.** Two primaries means neither is. If a view seems to need
 two, one of them is a `secondary`.
@@ -78,7 +83,7 @@ Three traps:
 
 | Trap                                       | What happens                                                                                     |
 | ------------------------------------------ | ------------------------------------------------------------------------------------------------ |
-| `theme` on `ai`, `link`, `transparent`     | Rejected by the type. These three are single-appearance by design and have no themes (BTN-003)   |
+| `theme` on `ai`, `link`, `transparent`     | **Hard rule.** Rejected by the type. These three are single-appearance by design and have no themes (BTN-003) |
 | `theme="warning"`                          | Works in code and exists in Figma; Code Connect cannot map it yet (BTN-004)                       |
 | `variant="primary"` + `theme="default"`    | Resolves to the **brand** colour set, not gray. The default primary button is deliberately brand  |
 
@@ -99,9 +104,9 @@ issue: writing the literal `iconOnly` makes `tooltipProps` required, unless you 
    button nameless, and development builds log a warning for it (BTN-002)
 2. **`tooltipProps={{}}` satisfies the type and renders nothing** (BTN-007)
 3. **`size="2xs"` and `size="3xs"` drop any text child**, deliberately — they are for very tight
-   spaces and composite components. Because they can never carry a visible label, the type
-   requires them to supply a name: `aria-label`, `tooltipProps`, or `ignoreIconOnlyTooltip`
-   (BTN-001)
+   spaces and composite components. Because they can never carry a visible label, give them a
+   name with `aria-label` or `tooltipProps`. This is a suggestion, not a block: it still
+   compiles without one, and development builds log a warning (BTN-001)
 
 Pass exactly one `IconV2` child. In icon-only mode the children are filtered by display name and
 only the first icon survives — a second icon, a count badge, or any text is discarded (BTN-008).
@@ -149,8 +154,8 @@ promise settles — resolve *or* reject — and is disabled throughout. So:
   order, so a keyboard user may never find it to learn why. Put the reason in visible text, or
   keep the button enabled and explain on click
 - **Don't put text in a `2xs`/`3xs` button** — it is dropped by design; name it instead (BTN-001)
-- **Don't pass `theme` to `ai`, `link` or `transparent`** — they take none, and the type now
-  rejects it (BTN-003)
+- **Don't pass `theme` to `ai`, `link` or `transparent`** — they take none, and the type
+  rejects it. This one is a hard rule (BTN-003)
 - **Don't assume `asChild` keeps the button's behaviour.** The child owns the semantics, so
   `disabled` and `type` stop applying and a disabled `asChild` button is still clickable
   (BTN-009)
@@ -195,7 +200,7 @@ promise settles — resolve *or* reject — and is disabled throughout. So:
 ### ❌ Incorrect
 
 ```tsx
-// ❌ Don't: the text is dropped and nothing names the button. This no longer compiles (BTN-001)
+// ❌ Don't: the text is dropped and nothing names the button. It compiles, but warns in development (BTN-001)
 <Button size="2xs">Save</Button>
 
 // ❌ Don't: satisfies the type, renders no tooltip, names nothing (BTN-007, BTN-002)
@@ -243,19 +248,17 @@ What a consumer of this component must do:
 
 ## Known Gaps
 
-- [x] **BTN-001:** closed. `size="2xs"` / `"3xs"` used to force icon-only rendering without
-      demanding a tooltip, because the type checked the literal `iconOnly` while the component
-      computed `iconOnly || isMicroSize`. The type now requires a micro-size button to carry an
-      accessible name. Text children are still dropped at these sizes — by design. Remaining:
-      `ButtonGroup` forwards one size to every button and keeps it behind a documented cast,
-      because narrowing its `size` would break callers, so each entry in `buttonsProps` has to
-      name itself
+- [ ] **BTN-001:** a suggestion, not a block. `size="2xs"` / `"3xs"` force icon-only rendering
+      and drop text children, so a micro button with no accessible name ships as an unlabelled
+      square. The type does not stop it. Development builds log a warning when no `aria-label`,
+      `aria-labelledby`, tooltip text or `ignoreIconOnlyTooltip` is present. Nothing enforces it
+      in production or in CI
 - [x] **BTN-002:** mostly closed. An icon-only button now derives its name from the tooltip's
       `title`, or `content` when there is no title, since Radix wires a Tooltip as a description
       rather than a name. Text is read from string and simple ReactNode `content`. Remaining:
       content with no text of its own gives nothing to copy, so such a button still needs an
       explicit `aria-label`; development builds log a warning when one is left nameless
-- [x] **BTN-003:** CLOSED. `ai`, `link` and `transparent` are single-appearance by design and
+- [x] **BTN-003:** CLOSED, and a hard rule. `ai`, `link` and `transparent` are single-appearance by design and
       carry no themes, and the type now says so: pass a theme and the variant must be provably
       theme-capable, so `<Button variant="link" theme="danger">` no longer compiles. A wrapper
       that forwards an arbitrary `ButtonVariants` alongside a theme either narrows its own

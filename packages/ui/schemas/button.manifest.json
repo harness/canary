@@ -51,7 +51,7 @@
         "type": "enum",
         "values": ["primary", "secondary", "outline", "ai", "ghost", "link", "transparent"],
         "default": "primary",
-        "codeNote": "Emphasis level. Exactly one 'primary' per view or dialog — it marks the single expected action. 'ai' renders the gradient border and is reserved for AI-initiated actions. 'link' and 'transparent' drop the border and the horizontal padding entirely.",
+        "codeNote": "Emphasis level. Exactly one 'primary' per view or dialog — it marks the single expected action. Design bias when choosing a variant: primary first, then outline, then secondary — reach for 'secondary' last (guidance, not enforced). 'ai' renders the gradient border and is reserved for AI-initiated actions. 'link' and 'transparent' drop the border and the horizontal padding entirely.",
         "figmaNote": "A real Figma variant property; values pass through unchanged."
       },
       {
@@ -59,7 +59,7 @@
         "type": "enum",
         "values": ["md", "sm", "xs", "2xs", "3xs"],
         "default": "md",
-        "codeNote": "Height, padding and gap. '2xs' and '3xs' are icon-only sizes: the component forces iconOnly for them regardless of what you pass, so any text child is dropped — deliberately, since these exist for very tight spaces and inside composite components. Because they can therefore never carry a visible label, the type requires them to supply an accessible name: aria-label, tooltipProps, or an explicit ignoreIconOnlyTooltip (see BTN-001).",
+        "codeNote": "Height, padding and gap. '2xs' and '3xs' are icon-only sizes: the component forces iconOnly for them regardless of what you pass, so any text child is dropped — deliberately, since these exist for very tight spaces and inside composite components. Because they can therefore never carry a visible label, they should be given an accessible name (aria-label, or tooltipProps with a title or text); this is a suggestion, not enforced by the type — development builds log a warning when none is supplied (see BTN-001).",
         "figmaNote": "Not a Figma variant property. Figma ships one component per size, and each Code Connect template hard-codes its own size literal. Figma covers sm, md and xs only — there is no 2xs or 3xs component (see BTN-005)."
       },
       {
@@ -67,7 +67,7 @@
         "type": "enum",
         "values": ["default", "success", "danger", "warning"],
         "default": "default",
-        "codeNote": "Semantic intent of the action, not decoration. Applies to variant 'primary', 'secondary', 'outline' and 'ghost'. Variants 'ai', 'link' and 'transparent' are deliberately single-appearance and take no theme at all: the type rejects the combination, so <Button variant='link' theme='danger'> does not compile (see BTN-003). A component that forwards an arbitrary variant alongside a theme either narrows its own variant prop to the theme-capable set, exported as ButtonThemedVariants, or keeps its public prop wide behind a documented cast (see BTN-003).",
+        "codeNote": "Semantic intent of the action, not decoration. Applies to variant 'primary', 'secondary', 'outline' and 'ghost'. Variants 'ai', 'link' and 'transparent' are deliberately single-appearance and take no theme at all. This is a hard rule: the type rejects the combination, so <Button variant='link' theme='danger'> does not compile (see BTN-003). A component that forwards an arbitrary variant alongside a theme either narrows its own variant prop to the theme-capable set, exported as ButtonThemedVariants, or keeps its public prop wide behind a documented cast (see BTN-003).",
         "figmaNote": "Figma exposes three of the four with emoji prefixes ('⚫ default', '🟢 success', '🔴 danger') plus a '-' option that maps to undefined. 'warning' exists in Figma but is not yet mapped in button.figma.ts (see BTN-004)."
       },
       {
@@ -81,7 +81,7 @@
         "name": "iconOnly",
         "type": "boolean",
         "default": false,
-        "codeNote": "Renders a square button holding one icon and no text. The type then demands either tooltipProps or an explicit ignoreIconOnlyTooltip, so an unlabelled icon button cannot compile. The micro sizes are covered by a separate rule that accepts aria-label as well (see BTN-001). Only the first IconV2 child survives (see BTN-008).",
+        "codeNote": "Renders a square button holding one icon and no text. The type then demands either tooltipProps or an explicit ignoreIconOnlyTooltip, so an unlabelled icon button cannot compile. The micro sizes force iconOnly and are covered by a development warning (see BTN-001). Only the first IconV2 child survives (see BTN-008).",
         "figmaNote": "Not a variant property. Figma ships separate '-icon-only' components per size."
       },
       {
@@ -349,7 +349,7 @@
   },
 
   "knownGaps": [
-    "BTN-001: CLOSED. size '2xs' and '3xs' used to force icon-only rendering without demanding a tooltip, so <Button size='2xs'>Save</Button> compiled, dropped the text and shipped an unlabelled square. The type now requires a micro-size button to carry an accessible name — aria-label, tooltipProps, or an explicit ignoreIconOnlyTooltip. Text children are still dropped at these sizes, which is deliberate: they exist for very tight spaces and inside composite components, so they are never meant to carry a visible label. What remains: ButtonGroup forwards one size to every button inside it and keeps that behind a documented cast, because narrowing its size would break callers, so a group at a micro size can contain a button that names nothing — each entry in buttonsProps has to supply its own name",
+    "BTN-001: SUGGESTION. size '2xs' and '3xs' force icon-only rendering and drop text children, so a micro-size button with no accessible name ships as an unlabelled square. This is deliberately a suggestion and not a type error: the type does not block it, and development builds log a console warning (shared with the icon-only check, BTN-002) when no aria-label, aria-labelledby, tooltip text or ignoreIconOnlyTooltip is present. The type rule that briefly enforced it was removed, along with the ButtonGroup cast it needed. Remaining: nothing enforces it in production builds or in CI, so an unnamed micro button can still ship",
     "BTN-002: mostly closed. An icon-only button now derives an accessible name from its tooltip — title when present, otherwise content — because a Tooltip is wired as a description (aria-describedby) and is not itself a name. An explicit aria-label still wins. The text is read from string content and from simple ReactNode content, so <span>Delete</span> names a button like the string does. What remains: content with no text of its own, such as a custom component that renders its own copy, gives nothing to copy, so such a button is still nameless unless it passes aria-label. In development Button logs a console.warn for an icon-only button left without a name; ignoreIconOnlyTooltip, aria-label or aria-labelledby silences it",
     "BTN-003: CLOSED. variant 'ai', 'link' and 'transparent' are single-appearance by design and carry no themes. A theme used to be accepted on them and silently ignored — <Button variant='link' theme='danger'> type-checked and rendered an ordinary link, so the call site read as a danger link that was not red. The type now pairs the two: pass no theme and any variant is fine, pass a theme and the variant must be provably theme-capable. What remains: MoreActionsTooltip, Carousel (previous/next), SidebarTrigger and SplitButton each forward a full-union variant alongside a theme and keep it behind a documented cast, because narrowing a published prop would break its consumers, so those components can still be given an inert theme",
     "BTN-004: theme='warning' exists in Figma and in code, but button.figma.ts has not been updated to map it, so Code Connect cannot yet produce it. A Code Connect lag, not a design gap",

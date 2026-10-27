@@ -54,7 +54,7 @@ export default {
   '.cn-single-pane-stepper-content-title': {
     margin: '0',
     fontSize: 'var(--cn-font-size-6)',
-    fontWeight: 'var(--cn-font-weight-default-normal-600)',
+    fontWeight: 'var(--cn-font-weight-default-normal-heading)',
     lineHeight: 'var(--cn-line-height-6-normal)',
     letterSpacing: 'var(--cn-tracking-tight)',
     color: 'var(--cn-text-1)'

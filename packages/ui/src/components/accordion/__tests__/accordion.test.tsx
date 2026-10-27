@@ -140,4 +140,19 @@ describe('Accordion', () => {
       expect(container.querySelector('.cn-accordion-trigger-indicator')).toBe(before)
     }
   )
+
+  test('keeps card accordion content selectable', () => {
+    const { container } = render(
+      <Accordion.Root type="single" variant="card" defaultValue="config">
+        <Accordion.Item value="config">
+          <Accordion.Trigger>Generated config</Accordion.Trigger>
+          <Accordion.Content>{'{ "clearable": false }'}</Accordion.Content>
+        </Accordion.Item>
+      </Accordion.Root>
+    )
+
+    expect(container.querySelector('.cn-card')).toBeInTheDocument()
+    expect(container.querySelector('.cn-card-interactive')).not.toBeInTheDocument()
+    expect(screen.getByText('{ "clearable": false }')).toBeInTheDocument()
+  })
 })

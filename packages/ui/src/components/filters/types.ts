@@ -4,7 +4,7 @@ import { ClassNames, DayPickerRangeProps } from 'react-day-picker'
 import { ComboBoxOptions } from '@components/filters/filters-bar/actions/variants/combo-box'
 import { MultiSelectOption, MultiSelectProps } from '@components/multi-select'
 
-import type { DateRangeV2Config, DateRangeV2FilterValue } from '../date-range-v2/types'
+import type { DateRangeV2Config, DateRangeV2Value } from '../date-range-v2/types'
 
 export type DateRangeCalendarProps = Omit<
   DayPickerRangeProps,
@@ -139,8 +139,7 @@ interface DateRangeFilterOptionConfig<T extends string = string> extends FilterO
   }
 }
 
-interface DateRangeV2FilterOptionConfig<T extends string = string>
-  extends FilterOptionConfigBase<T, DateRangeV2FilterValue> {
+interface DateRangeV2FilterOptionConfig<T extends string = string> extends FilterOptionConfigBase<T, DateRangeV2Value> {
   type: FilterFieldTypes.DateRangeV2
   filterFieldConfig?: DateRangeV2Config
 }

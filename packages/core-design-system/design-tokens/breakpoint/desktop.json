@@ -39,7 +39,7 @@
       "$type": "typography",
       "$value": {
         "fontFamily": "{fontFamily.default}",
-        "fontWeight": "{fontWeight.default.normal.600}",
+        "fontWeight": "{fontWeight.default.normal.heading}",
         "fontSize": "{fontSize.10}",
         "lineHeight": "{lineHeight.36}",
         "letterSpacing": "{tracking.tight}",
@@ -51,7 +51,7 @@
       "$type": "typography",
       "$value": {
         "fontFamily": "{fontFamily.default}",
-        "fontWeight": "{fontWeight.default.normal.600}",
+        "fontWeight": "{fontWeight.default.normal.heading}",
         "fontSize": "{fontSize.9}",
         "lineHeight": "{lineHeight.36}",
         "letterSpacing": "{tracking.tight}",
@@ -63,7 +63,7 @@
       "$type": "typography",
       "$value": {
         "fontFamily": "{fontFamily.default}",
-        "fontWeight": "{fontWeight.default.normal.600}",
+        "fontWeight": "{fontWeight.default.normal.heading}",
         "fontSize": "{fontSize.8}",
         "lineHeight": "{lineHeight.28}",
         "letterSpacing": "{tracking.tight}"
@@ -74,7 +74,7 @@
       "$type": "typography",
       "$value": {
         "fontFamily": "{fontFamily.default}",
-        "fontWeight": "{fontWeight.default.normal.600}",
+        "fontWeight": "{fontWeight.default.normal.heading}",
         "fontSize": "{fontSize.7}",
         "lineHeight": "{lineHeight.24}",
         "letterSpacing": "{tracking.tight}"
@@ -85,7 +85,7 @@
       "$type": "typography",
       "$value": {
         "fontFamily": "{fontFamily.default}",
-        "fontWeight": "{fontWeight.default.normal.600}",
+        "fontWeight": "{fontWeight.default.normal.heading}",
         "fontSize": "{fontSize.6}",
         "lineHeight": "{lineHeight.20}",
         "letterSpacing": "{tracking.tight}"
@@ -96,7 +96,7 @@
       "$type": "typography",
       "$value": {
         "fontFamily": "{fontFamily.default}",
-        "fontWeight": "{fontWeight.default.normal.600}",
+        "fontWeight": "{fontWeight.default.normal.heading}",
         "fontSize": "{fontSize.5}",
         "lineHeight": "{lineHeight.20}",
         "letterSpacing": "{tracking.normal}"
@@ -112,7 +112,7 @@
         "fontWeight": "{fontWeight.default.normal.400}",
         "fontSize": "{fontSize.5}",
         "lineHeight": "{lineHeight.20}",
-        "letterSpacing": "{tracking.tight}",
+        "letterSpacing": "{tracking.normal}",
         "paragraphSpacing": "0.375rem"
       },
       "$description": "Core reading typography optimized for extended content consumption. Balances character density, line height, and spacing to reduce eye fatigue across different screen sizes and reading environments.\n\nCommon uses: Main content, Product descriptions."
@@ -121,7 +121,7 @@
       "$type": "typography",
       "$value": {
         "fontFamily": "{fontFamily.default}",
-        "fontWeight": "{fontWeight.default.normal.600}",
+        "fontWeight": "{fontWeight.default.normal.heading}",
         "fontSize": "{fontSize.5}",
         "lineHeight": "{lineHeight.20}",
         "letterSpacing": "{tracking.normal}",
@@ -136,7 +136,7 @@
         "fontWeight": "{fontWeight.mono.normal.400}",
         "fontSize": "0.75rem",
         "lineHeight": "{lineHeight.20}",
-        "letterSpacing": "{tracking.tight}"
+        "letterSpacing": "{tracking.normal}"
       },
       "$description": "Monospaced typography that ensures character alignment for technical content. Maintains consistent spacing and character width to preserve code formatting while integrating harmoniously with surrounding text.\n\nCommon uses: Code snippets and examples, Terminal command instructions, File paths and system references, API endpoints."
     },
@@ -168,7 +168,7 @@
         "$type": "typography",
         "$value": {
           "fontFamily": "{fontFamily.default}",
-          "fontWeight": "{fontWeight.default.normal.600}",
+          "fontWeight": "{fontWeight.default.normal.heading}",
           "fontSize": "{fontSize.5}",
           "lineHeight": "{lineHeight.16}",
           "letterSpacing": "{tracking.normal}"
@@ -194,7 +194,7 @@
       "$type": "typography",
       "$value": {
         "fontFamily": "{fontFamily.default}",
-        "fontWeight": "{fontWeight.default.normal.600}",
+        "fontWeight": "{fontWeight.default.normal.heading}",
         "fontSize": "0.75rem",
         "lineHeight": "{lineHeight.20}",
         "letterSpacing": "{tracking.normal}",
@@ -270,7 +270,7 @@
         "$type": "typography",
         "$value": {
           "fontFamily": "{fontFamily.default}",
-          "fontWeight": "{fontWeight.default.normal.600}",
+          "fontWeight": "{fontWeight.default.normal.heading}",
           "fontSize": "{fontSize.3}",
           "lineHeight": "{lineHeight.20}",
           "letterSpacing": "{tracking.normal}",
@@ -284,7 +284,7 @@
         "$type": "typography",
         "$value": {
           "fontFamily": "{fontFamily.default}",
-          "fontWeight": "{fontWeight.default.normal.600}",
+          "fontWeight": "{fontWeight.default.normal.heading}",
           "fontSize": "{fontSize.8}",
           "lineHeight": "{lineHeight.24}",
           "letterSpacing": "{tracking.tight}"
@@ -298,7 +298,7 @@
           "$type": "typography",
           "$value": {
             "fontFamily": "{fontFamily.default}",
-            "fontWeight": "{fontWeight.default.normal.600}",
+            "fontWeight": "{fontWeight.default.normal.heading}",
             "fontSize": "{fontSize.10}",
             "lineHeight": "{lineHeight.40}",
             "letterSpacing": "{tracking.tight}"
@@ -309,7 +309,7 @@
           "$type": "typography",
           "$value": {
             "fontFamily": "{fontFamily.default}",
-            "fontWeight": "{fontWeight.default.normal.600}",
+            "fontWeight": "{fontWeight.default.normal.heading}",
             "fontSize": "{fontSize.9}",
             "lineHeight": "{lineHeight.36}",
             "letterSpacing": "{tracking.tight}"
@@ -320,7 +320,7 @@
           "$type": "typography",
           "$value": {
             "fontFamily": "{fontFamily.default}",
-            "fontWeight": "{fontWeight.default.normal.600}",
+            "fontWeight": "{fontWeight.default.normal.heading}",
             "fontSize": "{fontSize.8}",
             "lineHeight": "{lineHeight.24}",
             "letterSpacing": "{tracking.tight}"
@@ -345,7 +345,7 @@
           "$type": "typography",
           "$value": {
             "fontFamily": "{fontFamily.default}",
-            "fontWeight": "{fontWeight.default.normal.600}",
+            "fontWeight": "{fontWeight.default.normal.heading}",
             "fontSize": "{fontSize.6}",
             "lineHeight": "{lineHeight.28}",
             "letterSpacing": "{tracking.tight}",
@@ -361,7 +361,7 @@
           "$type": "typography",
           "$value": {
             "fontFamily": "{fontFamily.default}",
-            "fontWeight": "{fontWeight.default.normal.600}",
+            "fontWeight": "{fontWeight.default.normal.heading}",
             "fontSize": "{fontSize.7}",
             "lineHeight": "{lineHeight.24}",
             "letterSpacing": "{tracking.tight}",
@@ -373,7 +373,7 @@
           "$type": "typography",
           "$value": {
             "fontFamily": "{fontFamily.default}",
-            "fontWeight": "{fontWeight.default.normal.600}",
+            "fontWeight": "{fontWeight.default.normal.heading}",
             "fontSize": "{fontSize.6}",
             "lineHeight": "{lineHeight.24}",
             "letterSpacing": "{tracking.tight}",
@@ -385,7 +385,7 @@
           "$type": "typography",
           "$value": {
             "fontFamily": "{fontFamily.default}",
-            "fontWeight": "{fontWeight.default.normal.600}",
+            "fontWeight": "{fontWeight.default.normal.heading}",
             "fontSize": "{fontSize.5}",
             "lineHeight": "{lineHeight.20}",
             "letterSpacing": "{tracking.tight}",
@@ -411,7 +411,7 @@
           "$type": "typography",
           "$value": {
             "fontFamily": "{fontFamily.default}",
-            "fontWeight": "{fontWeight.default.normal.600}",
+            "fontWeight": "{fontWeight.default.normal.heading}",
             "fontSize": "{fontSize.5}",
             "lineHeight": "{lineHeight.24}",
             "letterSpacing": "{tracking.tight}",
@@ -484,7 +484,7 @@
       "$type": "typography",
       "$value": {
         "fontFamily": "{fontFamily.default}",
-        "fontWeight": "{fontWeight.default.normal.600}",
+        "fontWeight": "{fontWeight.default.normal.heading}",
         "fontSize": "0.6875rem",
         "lineHeight": "{lineHeight.16}",
         "letterSpacing": "{tracking.wide}"

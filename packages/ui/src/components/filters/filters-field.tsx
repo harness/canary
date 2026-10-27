@@ -5,13 +5,13 @@ import { Label } from '@components/form-primitives'
 import { MultiSelectOption } from '@components/multi-select'
 import { cn } from '@utils/cn'
 
-import type { DateRangeV2FilterValue } from '../date-range-v2/types'
+import { DateRangeV2Content } from '../date-range-v2/date-range-v2'
+import type { DateRangeV2Value } from '../date-range-v2/types'
 import FilterBoxWrapper, { type FilterFieldTriggerVariant } from './filter-box-wrapper'
 import Calendar from './filters-bar/actions/variants/calendar-field'
 import { MultiSelectFilter } from './filters-bar/actions/variants/checkbox'
 import Combobox, { ComboBoxOptions } from './filters-bar/actions/variants/combo-box'
 import DateRangeField from './filters-bar/actions/variants/date-range-field'
-import DateRangeV2Filter from './filters-bar/actions/variants/date-range-v2-filter'
 import MultiTagFilter from './filters-bar/actions/variants/multi-tag'
 import Text from './filters-bar/actions/variants/text-field'
 import {
@@ -92,14 +92,21 @@ const FilterFieldInternal = <T extends string, V extends FilterValueTypes, Custo
       )
     }
     case FilterFieldTypes.DateRangeV2: {
-      const dateRangeV2Filter = filter as FilterField<DateRangeV2FilterValue>
+      const dateRangeV2Filter = filter as FilterField<DateRangeV2Value>
       return (
-        <DateRangeV2Filter
-          filter={dateRangeV2Filter}
+        <DateRangeV2Content
+          value={dateRangeV2Filter.value}
           config={filterOption.filterFieldConfig}
-          onUpdateFilter={values => {
+          onFillBounds={values => {
             onUpdateFilter(values as V)
-            if (values) setIsOpen(false)
+          }}
+          onApply={values => {
+            onUpdateFilter(values as V)
+            setIsOpen(false)
+          }}
+          onClear={() => {
+            onUpdateFilter(undefined as V)
+            setIsOpen(false)
           }}
           onCancel={() => setIsOpen(false)}
         />

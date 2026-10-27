@@ -230,11 +230,7 @@ const FilterGroupInner = <
                         parser={
                           (filterOption.type === FilterFieldTypes.DateRangeV2
                             ? // A custom parser replaces the built-in query for every mode.
-                              (filterOption.parser ??
-                              createDateRangeV2FilterParser(
-                                filterOption.filterFieldConfig?.presets,
-                                filterOption.filterFieldConfig?.calendarProps?.weekStartsOn
-                              ))
+                              (filterOption.parser ?? createDateRangeV2FilterParser(filterOption.filterFieldConfig))
                             : filterOption.parser) as any
                         }
                         filterKey={filterOption.value}

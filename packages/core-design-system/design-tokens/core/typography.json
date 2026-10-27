@@ -2,7 +2,7 @@
   "tracking": {
     "tight": {
       "$type": "letterSpacing",
-      "$value": "-0.02em",
+      "$value": "-0.01em",
       "$description": "Headings"
     },
     "normal": {
@@ -36,6 +36,11 @@
         "600": {
           "$type": "fontWeights",
           "$value": "530"
+        },
+        "heading": {
+          "$type": "fontWeights",
+          "$value": "500",
+          "$description": "Heading weight (optical 500). Used by the heading typography variants — lighter than semibold (optical 530) while keeping clear hierarchy over body text."
         },
         "700": {
           "$type": "fontWeights",

@@ -3,12 +3,11 @@ import { ReactNode } from 'react'
 import type { MultiSelectOption } from '@components/multi-select'
 import { format } from 'date-fns'
 
-import { dateRangeV2StateFromValue } from '../date-range-v2/date-range-v2-preset'
-import { configuredPresetLabel, formatDateRangeV2Label } from '../date-range-v2/format-date-range-v2-label'
+import { formatDateRangeV2Label } from '../date-range-v2/format-date-range-v2-label'
+import { normalizeDateRangeV2Config } from '../date-range-v2/normalize-picker-config'
 import { resolveTimeZone } from '../date-range-v2/resolve-date-range-v2'
-import { resolveDateRangeV2Config } from '../date-range-v2/resolve-picker-config'
 import { formatTimeZoneOffset } from '../date-range-v2/timezone-utils'
-import type { DateRangeV2Config, DateRangeV2FilterValue } from '../date-range-v2/types'
+import type { DateRangeV2Config, DateRangeV2Value } from '../date-range-v2/types'
 import { ComboBoxOptions } from './filters-bar/actions/variants/combo-box'
 import {
   CheckboxOptions,
@@ -19,24 +18,18 @@ import {
   FilterValueTypes
 } from './types'
 
-export const getDateRangeV2FilterLabel = (
-  value: DateRangeV2FilterValue | undefined,
-  config?: DateRangeV2Config
-): string => {
+export const getDateRangeV2FilterLabel = (value: DateRangeV2Value | undefined, config?: DateRangeV2Config): string => {
   if (!value) return ''
   try {
-    const resolved = resolveDateRangeV2Config(config)
-    const label = formatDateRangeV2Label(
-      dateRangeV2StateFromValue(value),
-      value.timezone,
-      resolved.weekStartsOn,
-      new Date(),
-      resolved.label,
-      [value.from.getTime(), value.to.getTime()],
-      configuredPresetLabel(value.preset, resolved.presets)
-    )
-    const offset = resolved.label.showTimezone ? ` · ${formatTimeZoneOffset(resolveTimeZone(value.timezone))}` : ''
-    return `${label.triggerText}${offset}`
+    const normalized = normalizeDateRangeV2Config(config)
+    const formatted = formatDateRangeV2Label(value, {
+      presets: normalized.presets,
+      triggerLabelConfig: normalized.triggerLabelConfig
+    })
+    const offset = normalized.triggerLabelConfig.showTimezone
+      ? ` · ${formatTimeZoneOffset(resolveTimeZone(value.timezone))}`
+      : ''
+    return `${formatted.buttonText}${offset}`
   } catch {
     return ''
   }
@@ -83,7 +76,7 @@ export const getFilterLabelValue = <
       return `${format(fromDate, 'MMM d, yyyy')} - ${format(toDate, 'MMM d, yyyy')}`
     }
     case FilterFieldTypes.DateRangeV2: {
-      const filterValue = filter.value as DateRangeV2FilterValue | undefined
+      const filterValue = filter.value as DateRangeV2Value | undefined
       return getDateRangeV2FilterLabel(filterValue, filterOption.filterFieldConfig)
     }
     case FilterFieldTypes.ComboBox: {

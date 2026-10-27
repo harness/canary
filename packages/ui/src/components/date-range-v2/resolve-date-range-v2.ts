@@ -14,15 +14,17 @@ import {
 import {
   fromZonedWallTime,
   getBrowserTimeZone,
-  isCivilDate,
-  isCivilTime,
+  isCivilDateTime,
   normalizeTimeZone,
   toZonedWallTime,
-  zonedCivilToUtc
+  zonedCivilDateTimeToUtc
 } from './timezone-utils'
-import type { CalendarUnit, DateRangeV2State, RollingUnit, TimeZoneId, Weekday } from './types'
+import type { CalendarUnit, DateRangeV2Preset, RelativeUnit, ResolvableDateRangeV2, TimeZoneId } from './types'
 
-const rollingAdders: Record<RollingUnit, (date: Date, amount: number) => Date> = {
+/** Calendar weeks start on Monday. */
+const WEEK_STARTS_ON = 1
+
+const relativeAdders: Record<RelativeUnit, (date: Date, amount: number) => Date> = {
   minute: addMinutes,
   hour: addHours,
   day: addDays,
@@ -39,20 +41,20 @@ const calendarAdders: Record<CalendarUnit, (date: Date, amount: number) => Date>
   year: addYears
 }
 
-const addZoned = (instant: Date, amount: number, unit: RollingUnit | CalendarUnit, timeZone: string): Date => {
-  const adder = unit in rollingAdders ? rollingAdders[unit as RollingUnit] : calendarAdders[unit as CalendarUnit]
+const addZoned = (instant: Date, amount: number, unit: RelativeUnit | CalendarUnit, timeZone: string): Date => {
+  const adder = unit in relativeAdders ? relativeAdders[unit as RelativeUnit] : calendarAdders[unit as CalendarUnit]
   return unit === 'minute' || unit === 'hour'
     ? adder(instant, amount)
     : fromZonedWallTime(adder(toZonedWallTime(instant, timeZone), amount), timeZone)
 }
 
-const startOfZonedUnit = (instant: Date, unit: CalendarUnit, timeZone: string, weekStartsOn: Weekday): Date => {
+const startOfZonedUnit = (instant: Date, unit: CalendarUnit, timeZone: string): Date => {
   const wallTime = toZonedWallTime(instant, timeZone)
   const start =
     unit === 'day'
       ? new Date(wallTime.getFullYear(), wallTime.getMonth(), wallTime.getDate())
       : unit === 'week'
-        ? startOfWeek(wallTime, { weekStartsOn })
+        ? startOfWeek(wallTime, { weekStartsOn: WEEK_STARTS_ON })
         : unit === 'month'
           ? startOfMonth(wallTime)
           : unit === 'quarter'
@@ -69,53 +71,33 @@ export const resolveTimeZone = (timezone?: TimeZoneId): string => {
 
 const inclusiveEnd = (exclusiveEnd: Date): number => exclusiveEnd.getTime() - 1
 
-function assertWeekStartsOn(weekStartsOn: number): asserts weekStartsOn is Weekday {
-  if (!Number.isInteger(weekStartsOn) || weekStartsOn < 0 || weekStartsOn > 6) {
-    throw new RangeError('weekStartsOn must be between 0 and 6')
-  }
+export interface ResolvedDateRangeV2 {
+  from: Date
+  to: Date
+  range: ResolvableDateRangeV2
+  timezone: TimeZoneId
 }
 
-/**
- * Resolves a saved range to inclusive epoch milliseconds `[startTime, endTime]`.
- * Rolling windows include the anchor instant. Calendar and fixed ends include the
- * last millisecond of the ending minute or period.
- */
-export const resolveDateRangeV2 = (
-  value: DateRangeV2State,
-  timezone?: TimeZoneId,
-  weekStartsOn: Weekday = 1
-): [startTime: number, endTime: number] => {
-  const now = new Date()
-  return resolveDateRangeV2At(value, now, timezone, weekStartsOn)
-}
-
-export const resolveDateRangeV2At = (
-  value: DateRangeV2State,
-  now: Date,
-  timezone?: TimeZoneId,
-  weekStartsOn: Weekday = 1
-): [startTime: number, endTime: number] => {
-  assertWeekStartsOn(weekStartsOn)
+const resolveEpochs = (range: ResolvableDateRangeV2, timezone: TimeZoneId | undefined, now: Date): [number, number] => {
   if (Number.isNaN(now.getTime())) throw new RangeError('now must be a valid Date')
 
   const zone = resolveTimeZone(timezone)
-  const range = value.range
   let start: number
   let end: number
 
-  if (range.kind === 'rolling') {
+  if (range.kind === 'relative') {
     if (!Number.isInteger(range.amount) || range.amount < 1) {
-      throw new RangeError('Rolling amount must be a positive integer')
+      throw new RangeError('Relative amount must be a positive integer')
     }
-    const shifted = addZoned(now, range.direction === 'past' ? -range.amount : range.amount, range.unit, zone)
-    start = range.direction === 'past' ? shifted.getTime() : now.getTime()
-    end = range.direction === 'past' ? now.getTime() : shifted.getTime()
+    const shifted = addZoned(now, range.direction === 'last' ? -range.amount : range.amount, range.unit, zone)
+    start = range.direction === 'last' ? shifted.getTime() : now.getTime()
+    end = range.direction === 'last' ? now.getTime() : shifted.getTime()
   } else if (range.kind === 'calendar') {
-    const amount = range.position === 'current' ? 1 : range.amount
+    const amount = range.position === 'this' ? 1 : range.amount
     if (!Number.isInteger(amount) || amount < 1) {
       throw new RangeError('Calendar amount must be a positive integer')
     }
-    const currentStart = startOfZonedUnit(now, range.unit, zone, weekStartsOn)
+    const currentStart = startOfZonedUnit(now, range.unit, zone)
     const periodStart =
       range.position === 'previous'
         ? addZoned(currentStart, -amount, range.unit, zone)
@@ -128,9 +110,9 @@ export const resolveDateRangeV2At = (
         : range.position === 'next'
           ? addZoned(currentStart, amount + 1, range.unit, zone)
           : addZoned(currentStart, 1, range.unit, zone)
-    const extent = range.position === 'current' ? range.extent : 'full'
+    const extent = range.position === 'this' ? range.extent : 'full'
 
-    if (extent === 'to_date') {
+    if (extent === 'so_far') {
       start = periodStart.getTime()
       end = now.getTime()
     } else if (extent === 'from_now') {
@@ -141,19 +123,47 @@ export const resolveDateRangeV2At = (
       end = inclusiveEnd(periodEnd)
     }
   } else {
-    if (
-      !isCivilDate(range.from.date) ||
-      !isCivilDate(range.to.date) ||
-      !isCivilTime(range.from.time) ||
-      !isCivilTime(range.to.time)
-    ) {
+    if (!isCivilDateTime(range.from) || !isCivilDateTime(range.to)) {
       throw new RangeError('Fixed range contains an invalid civil date or time')
     }
-    start = zonedCivilToUtc(range.from.date, range.from.time, zone).getTime()
-    const endMinute = zonedCivilToUtc(range.to.date, range.to.time, zone)
-    end = endMinute.getTime() + 60_000 - 1
+    start = zonedCivilDateTimeToUtc(range.from, zone).getTime()
+    end = zonedCivilDateTimeToUtc(range.to, zone).getTime()
+    // A civil end of HH:mm:59 includes the rest of that second. The stored string stays HH:mm:59.
+    if (range.to.endsWith(':59')) end += 999
   }
 
   if (start > end) throw new RangeError('Date range end must not be before its start')
   return [start, end]
+}
+
+/**
+ * Resolves a relative, calendar, or fixed range to inclusive epochs.
+ * `range` is returned unchanged. An omitted timezone is returned as UTC.
+ * A configured preset is not accepted: its bounds come from `resolvePresetBounds`.
+ */
+export const resolveDateRangeV2At = (
+  value: { range: ResolvableDateRangeV2; timezone?: TimeZoneId },
+  now: Date
+): ResolvedDateRangeV2 => {
+  const [start, end] = resolveEpochs(value.range, value.timezone, now)
+  return {
+    from: new Date(start),
+    to: new Date(end),
+    range: value.range,
+    timezone: value.timezone ?? 'UTC'
+  }
+}
+
+export const resolveDateRangeV2 = (
+  value: { range: ResolvableDateRangeV2; timezone?: TimeZoneId },
+  now: Date = new Date()
+): ResolvedDateRangeV2 => resolveDateRangeV2At(value, now)
+
+/** Epochs from `getRange`, with the ends ordered. */
+export const resolvePresetBounds = (
+  preset: Pick<DateRangeV2Preset, 'getRange'>,
+  timezone: TimeZoneId
+): { from: Date; to: Date } => {
+  const { from, to } = preset.getRange({ timezone })
+  return from <= to ? { from, to } : { from: to, to: from }
 }

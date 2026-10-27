@@ -88,7 +88,7 @@ export default {
         display: 'inline-block',
         minWidth: '45px',
         // height: ['1em', '1lh'] is a Tailwind CSS utility that sets the height of the element to 1em or 1lh, depending on the browser's support for the lh unit.
-        height: ['1em', '1lh'],      
+        height: ['1em', '1lh'],
         lineHeight: '1',
         verticalAlign: 'middle'
       }

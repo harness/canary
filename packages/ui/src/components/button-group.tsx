@@ -1,6 +1,6 @@
 import { ComponentProps, FC, forwardRef, ReactNode, Ref } from 'react'
 
-import { Button, ButtonProps, DropdownMenu, TooltipProps } from '@/components'
+import { Button, ButtonNonMicroSizes, ButtonProps, DropdownMenu, TooltipProps } from '@/components'
 import { cn } from '@utils/cn'
 import omit from 'lodash-es/omit'
 
@@ -77,7 +77,13 @@ export const ButtonGroup = forwardRef<HTMLDivElement, ButtonGroupProps>(
                   { 'cn-button-group-last': index === buttonsProps.length - 1 }
                 )}
                 variant={variant ?? 'outline'}
-                size={size}
+                /*
+                 * A micro size demands an accessible name (see button.tsx), and the group cannot
+                 * supply one: it forwards a single size to every button and knows nothing about
+                 * them. Narrowing `size` here would be a breaking change for callers, so the cast
+                 * keeps the group's API as it was and leaves naming to each entry in buttonsProps.
+                 */
+                size={size as ButtonNonMicroSizes}
                 {...omit(restButtonProps, ['tooltipProps', 'dropdownProps'])}
                 iconOnly={iconOnly}
                 tooltipProps={mergedTooltip}

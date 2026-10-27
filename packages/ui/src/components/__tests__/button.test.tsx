@@ -10,10 +10,17 @@ const TestWrapper = ({ children }: { children: React.ReactNode }) => (
   <TooltipPrimitive.Provider>{children}</TooltipPrimitive.Provider>
 )
 
-const renderComponent = (props: Partial<React.ComponentProps<typeof Button>> = {}): RenderResult => {
+type TestButtonProps = Partial<React.ComponentProps<typeof Button>>
+
+const renderComponent = (props: TestButtonProps = {}): RenderResult => {
   return render(
     <TestWrapper>
-      <Button {...props}>Click Me</Button>
+      {/*
+       * Cast because Partial<> collapses Button's size/accessible-name union, and because some
+       * tests deliberately render a micro size with no name to assert the size classes. The
+       * rule itself is covered by the dedicated accessible-name tests below.
+       */}
+      <Button {...(props as React.ComponentProps<typeof Button>)}>Click Me</Button>
     </TestWrapper>
   )
 }
@@ -749,7 +756,8 @@ describe('Button', () => {
         sizes.forEach(size => {
           const { container } = render(
             <TestWrapper>
-              <Button variant={variant} size={size}>
+              {/* aria-label because the matrix includes the micro sizes, which demand a name */}
+              <Button variant={variant} size={size} aria-label="Button">
                 Button
               </Button>
             </TestWrapper>
@@ -846,6 +854,86 @@ describe('Button', () => {
 
       await userEvent.keyboard('{Enter}')
       expect(handleClick).toHaveBeenCalled()
+    })
+  })
+
+  describe('Icon-only accessible name', () => {
+    const renderIconOnly = (props: Record<string, unknown>) =>
+      render(
+        <TestWrapper>
+          <Button iconOnly data-testid="btn" {...(props as React.ComponentProps<typeof Button>)} />
+        </TestWrapper>
+      )
+
+    test('uses a string tooltip content as the name', () => {
+      renderIconOnly({ tooltipProps: { content: 'Delete' } })
+      expect(screen.getByTestId('btn')).toHaveAttribute('aria-label', 'Delete')
+    })
+
+    test('prefers the tooltip title over content', () => {
+      renderIconOnly({ tooltipProps: { title: 'Remove', content: 'Deletes the item' } })
+      expect(screen.getByTestId('btn')).toHaveAttribute('aria-label', 'Remove')
+    })
+
+    test('finds the text inside simple ReactNode tooltip content', () => {
+      renderIconOnly({
+        tooltipProps: {
+          content: (
+            <span>
+              Delete <b>item</b>
+            </span>
+          )
+        }
+      })
+      expect(screen.getByTestId('btn')).toHaveAttribute('aria-label', 'Delete item')
+    })
+
+    test('an explicit aria-label wins over the tooltip text', () => {
+      renderIconOnly({ 'aria-label': 'Explicit', tooltipProps: { content: 'Delete' } })
+      expect(screen.getByTestId('btn')).toHaveAttribute('aria-label', 'Explicit')
+    })
+
+    test('does not add an aria-label to a button that has visible text', () => {
+      render(
+        <TestWrapper>
+          <Button data-testid="btn" tooltipProps={{ content: 'Save' }}>
+            Save changes
+          </Button>
+        </TestWrapper>
+      )
+      expect(screen.getByTestId('btn')).not.toHaveAttribute('aria-label')
+    })
+
+    describe('development warning', () => {
+      const NoText = () => <svg />
+      let warn: ReturnType<typeof vi.spyOn>
+
+      beforeEach(() => {
+        vi.stubEnv('NODE_ENV', 'development')
+        warn = vi.spyOn(console, 'warn').mockImplementation(() => {})
+      })
+      afterEach(() => {
+        warn.mockRestore()
+        vi.unstubAllEnvs()
+      })
+
+      test('warns when tooltip content has no text to use as a name', () => {
+        renderIconOnly({ tooltipProps: { content: <NoText /> } })
+        expect(screen.getByTestId('btn')).not.toHaveAttribute('aria-label')
+        expect(warn).toHaveBeenCalledWith(expect.stringContaining('no accessible name'))
+      })
+
+      test('stays quiet when the button is named', () => {
+        renderIconOnly({ tooltipProps: { content: 'Delete' } })
+        renderIconOnly({ 'aria-label': 'Delete', tooltipProps: { content: <NoText /> } })
+        renderIconOnly({ 'aria-labelledby': 'label-id', tooltipProps: { content: <NoText /> } })
+        expect(warn).not.toHaveBeenCalled()
+      })
+
+      test('stays quiet when the name is deliberately opted out', () => {
+        renderIconOnly({ ignoreIconOnlyTooltip: true })
+        expect(warn).not.toHaveBeenCalled()
+      })
     })
   })
 

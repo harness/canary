@@ -31,6 +31,7 @@ import {
 import { NavLinkProps, useRouterContext } from '@/context'
 import { filterChildrenByDisplayNames } from '@/utils'
 import { SyntheticListenerMap } from '@dnd-kit/core/dist/hooks/utilities'
+import { accessibleNameProps } from '@utils/accessible-name-props'
 import { cn } from '@utils/cn'
 import omit from 'lodash-es/omit'
 
@@ -49,6 +50,10 @@ interface SidebarBadgeProps extends Omit<StatusBadgeProps, 'children' | 'size' |
 }
 
 type SidebarItemActionButtonPropsType = ButtonProps & {
+  /**
+   * These buttons render at 2xs, where the title child is filtered out, so when a title is given
+   * it becomes the accessible name instead (see the aria-label below).
+   */
   title?: string
   iconName?: IconV2NamesType
   iconProps?: Omit<IconPropsV2, 'ref' | 'name' | 'fallback'>
@@ -249,6 +254,7 @@ const SidebarItemTrigger = forwardRef<HTMLButtonElement | HTMLAnchorElement, Sid
                 size="2xs"
                 variant="ghost"
                 iconOnly={iconOnly}
+                {...accessibleNameProps(title)}
                 onClick={e => {
                   e.preventDefault()
                   e.stopPropagation()
@@ -276,7 +282,7 @@ const SidebarItemTrigger = forwardRef<HTMLButtonElement | HTMLAnchorElement, Sid
       >
         {withIcon &&
           (withDescription ? (
-            <div className="cn-sidebar-item-content-icon cn-sidebar-item-content-icon-w-border">
+            <div className="cn-sidebar-item-content-icon-w-border cn-sidebar-item-content-icon">
               <IconV2 name={props.icon} size="sm" fallback="stop" />
             </div>
           ) : (
@@ -417,7 +423,7 @@ const SidebarItemTrigger = forwardRef<HTMLButtonElement | HTMLAnchorElement, Sid
               onClick={handleMainItemClick as React.MouseEventHandler<HTMLButtonElement>}
             >
               {withDragHandle && (
-                <div className="cn-sidebar-item-grip-handle left-cn-1xs" {...dragAttributes} {...dragListeners}>
+                <div className="left-cn-1xs cn-sidebar-item-grip-handle" {...dragAttributes} {...dragListeners}>
                   <IconV2 name="grip-dots" size="2xs" className="cn-sidebar-item-grip-icon" />
                 </div>
               )}
@@ -440,7 +446,7 @@ const SidebarItemTrigger = forwardRef<HTMLButtonElement | HTMLAnchorElement, Sid
               onClick={handleMainItemClick as React.MouseEventHandler<HTMLButtonElement>}
             >
               {withDragHandle && (
-                <div className="cn-sidebar-item-grip-handle left-cn-1xs" {...dragAttributes} {...dragListeners}>
+                <div className="left-cn-1xs cn-sidebar-item-grip-handle" {...dragAttributes} {...dragListeners}>
                   <IconV2 name="grip-dots" size="2xs" className="cn-sidebar-item-grip-icon" />
                 </div>
               )}
@@ -470,7 +476,7 @@ const SidebarItemTrigger = forwardRef<HTMLButtonElement | HTMLAnchorElement, Sid
               }
             >
               {withDragHandle && (
-                <div className="cn-sidebar-item-grip-handle left-cn-1xs" {...dragAttributes} {...dragListeners}>
+                <div className="left-cn-1xs cn-sidebar-item-grip-handle" {...dragAttributes} {...dragListeners}>
                   <IconV2 name="grip-dots" size="2xs" className="cn-sidebar-item-grip-icon" />
                 </div>
               )}
@@ -490,7 +496,7 @@ const SidebarItemTrigger = forwardRef<HTMLButtonElement | HTMLAnchorElement, Sid
         )}
 
         {active && (
-          <div className="absolute left-0 top-1/2 -translate-y-1/2 h-[12px] w-[2px] cn-sidebar-item-active-indicator" />
+          <div className="cn-sidebar-item-active-indicator absolute left-0 top-1/2 h-[12px] w-[2px] -translate-y-1/2" />
         )}
       </div>
     )
@@ -621,7 +627,7 @@ export const SidebarMenuSubItem = forwardRef<HTMLAnchorElement, NavLinkProps & {
     return (
       <Layout.Flex>
         {active && (
-          <div className="relative left-cn-4xs top-[10px] h-3 w-0.5 cn-sidebar-submenu-item-active-indicator" />
+          <div className="cn-sidebar-submenu-item-active-indicator relative left-cn-4xs top-[10px] h-3 w-0.5" />
         )}
         <NavLink className={cn('w-full cn-sidebar-submenu-item', className)} role="menuitem" {...props} ref={ref}>
           <Text

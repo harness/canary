@@ -54,14 +54,16 @@ export const useCopyButton = ({ onClick, copyData, color, iconSize }: UseCopyBut
   const iconColor = copied ? 'success' : color
   const changeIcon = copied ? 'check' : 'copy'
 
-  const copyButtonProps: ButtonProps = {
+  // `satisfies` rather than an annotation: widening these to ButtonProps hides the aria-label
+  // from the caller, and Button's type needs to see it to allow a micro size (see button.tsx).
+  const copyButtonProps = {
     iconOnly: true,
     'aria-label': 'Copy',
     onClick: handleClick,
     tooltipProps: {
       content: 'Copy'
     }
-  }
+  } satisfies ButtonProps
 
   return {
     copied,

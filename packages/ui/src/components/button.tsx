@@ -72,7 +72,7 @@ type ButtonTooltipProps = Pick<TooltipProps, 'title' | 'content' | 'side' | 'ali
 // `size`, `variant` and `theme` are intersected in separately below so the micro sizes can demand
 // an accessible name and the themeless variants can refuse a theme.
 type CommonButtonProps = Omit<ButtonHTMLAttributes<HTMLButtonElement>, 'onClick'> &
-  Omit<VariantProps<typeof buttonVariants>, 'size' | 'variant' | 'theme'> & {
+  Omit<VariantProps<typeof buttonVariants>, 'variant' | 'theme'> & {
     asChild?: boolean
     loading?: boolean
     rounded?: boolean
@@ -100,35 +100,6 @@ type ButtonVariants = VariantProps<typeof buttonVariants>['variant']
 type ButtonSizes = VariantProps<typeof buttonVariants>['size']
 
 /**
- * 2xs and 3xs are forced icon-only at runtime (see `microSize` below) and their text children
- * are discarded, which is deliberate — they exist for very tight spaces and inside composite
- * components. The consequence is that they can never carry a visible label, so the only thing
- * standing between them and a button a screen reader announces as a bare "button" is this type.
- */
-type ButtonMicroSizes = Extract<NonNullable<ButtonSizes>, '2xs' | '3xs'>
-type ButtonNonMicroSizes = Exclude<NonNullable<ButtonSizes>, ButtonMicroSizes>
-
-/**
- * The ways a micro-size button may supply its accessible name. `tooltipProps` counts because
- * its title is copied onto aria-label at render time; a tooltip alone is wired as a
- * description, which is not a name. `ignoreIconOnlyTooltip` remains the explicit opt-out for
- * a button whose name already comes from elsewhere, such as an aria-labelledby on a wrapper.
- */
-type ButtonAccessibleName =
-  | { 'aria-label': string }
-  | { tooltipProps: ButtonTooltipProps }
-  | { ignoreIconOnlyTooltip: true }
-
-/**
- * The rule: either the size is provably not micro, or the button carries an accessible name.
- * A wrapper that forwards an arbitrary ButtonSizes satisfies it by naming its button — which is
- * what it has to do regardless, since it cannot know whether its caller will ask for 2xs.
- * Null is kept because that is how CVA types an unset variant, and callers forward it verbatim.
- */
-type ButtonPropsNonMicroSize = { size?: ButtonNonMicroSizes | null }
-type ButtonPropsNamed = { size?: ButtonSizes } & ButtonAccessibleName
-
-/**
  * BTN-003. `link`, `transparent` and `ai` are defined by their own appearance — link uses the
  * link color, transparent has no surface of its own to tint, and ai carries the fixed AI
  * treatment — so the theme CVA contributes nothing to them. Passing one used to compile and be
@@ -148,7 +119,6 @@ type ButtonPropsThemed = { variant?: ButtonThemedVariants | null; theme?: Button
 
 type ButtonProps = CommonButtonProps &
   (ButtonPropsIconOnlyRequired | ButtonPropsIconOnlyIgnored | ButtonPropsRegular) &
-  (ButtonPropsNonMicroSize | ButtonPropsNamed) &
   (ButtonPropsThemeless | ButtonPropsThemed)
 
 const Button = forwardRef<HTMLButtonElement, ButtonProps>(
@@ -279,7 +249,6 @@ export type {
   ButtonThemes,
   ButtonVariants,
   ButtonSizes,
-  ButtonNonMicroSizes,
   ButtonThemedVariants,
   ButtonTooltipProps,
   ButtonPropsIconOnlyRequired,

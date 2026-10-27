@@ -1,6 +1,7 @@
 import { useCallback, useMemo, useState } from 'react'
 
 import { AppSidebarItem, IconV2NamesType, NavbarItemType, Sidebar } from '@/components'
+import { useTranslation } from '@/context'
 import { useNav } from '@hooks/useNav'
 import { noop } from 'lodash-es'
 
@@ -12,6 +13,7 @@ interface SidebarItemProps {
 export default function SidebarItem({ item, isPinned }: SidebarItemProps) {
   const [open, setOpen] = useState(true)
   const { setRecent, setPinned } = useNav()
+  const { t } = useTranslation()
 
   const handleChangePinnedMenuItem = useCallback(
     (item: NavbarItemType, pin: boolean) => setPinned(item, pin),
@@ -28,10 +30,11 @@ export default function SidebarItem({ item, isPinned }: SidebarItemProps) {
     return [
       {
         iconName: isPinned ? ('pin-slash-solid' as IconV2NamesType) : ('pin' as IconV2NamesType),
+        title: isPinned ? t('component:navbar.unpin', 'Unpin') : t('component:navbar.pin', 'Pin'),
         onClick: () => handleChangePinnedMenuItem(item, isPinned ? false : true)
       }
     ]
-  }, [item, isPinned, handleChangePinnedMenuItem])
+  }, [item, isPinned, handleChangePinnedMenuItem, t])
 
   if (Array.isArray(item.subItems) && item.subItems.length > 0) {
     return (

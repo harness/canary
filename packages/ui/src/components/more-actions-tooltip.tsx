@@ -1,7 +1,7 @@
 import { forwardRef, useCallback, useEffect, useRef, useState } from 'react'
 
 import { useRouterContext } from '@/context'
-import { Button, ButtonProps, ButtonSizes, ButtonVariants } from '@components/button'
+import { Button, ButtonProps, ButtonSizes, ButtonThemedVariants, ButtonVariants } from '@components/button'
 import { DropdownMenu } from '@components/dropdown-menu'
 import { IconV2, type IconPropsV2 } from '@components/icon-v2'
 import { Tooltip, TooltipProps } from '@components/tooltip'
@@ -86,7 +86,14 @@ export const MoreActionsTooltip = forwardRef<HTMLButtonElement, MoreActionsToolt
           <Button
             theme={theme}
             className="text-cn-gray-secondary"
-            variant={buttonVariant}
+            /*
+             * A theme needs a theme-capable variant (BTN-003 in button.tsx), which this component
+             * cannot prove: `buttonVariant` is the full union and consumers forward their own
+             * ButtonVariants into it, so narrowing it would be a breaking change. The cast keeps
+             * the public prop as it was; a themeless variant here just leaves the theme inert, as
+             * it always has.
+             */
+            variant={buttonVariant as ButtonThemedVariants}
             iconOnly
             size={buttonSize}
             aria-label={label}

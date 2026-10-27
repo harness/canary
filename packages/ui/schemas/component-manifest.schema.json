@@ -4,7 +4,7 @@
   "title": "Component Manifest",
   "description": "Machine-checkable manifest describing a design system component for both human and agent consumers — one authoritative, declarative description, checked by tooling rather than agreed to by two parties. Covers a three-way prop split (shared/designOnly/codeOnly), structured bindings, and structured state triggers.",
   "type": "object",
-  "required": ["id", "status", "code", "figma", "purpose", "props", "tokens", "governance"],
+  "required": ["id", "status", "code", "purpose", "props", "tokens", "governance"],
   "additionalProperties": false,
   "properties": {
 
@@ -35,6 +35,7 @@
 
     "figma": {
       "type": "object",
+      "description": "Omit this block entirely when the component has no Figma counterpart — plenty of components in this repo exist only in code. Omission is the honest answer; a half-filled block that names a library but no node asserts a Figma component that does not exist. When the block IS present it must be complete, so an agent can trust every field it finds here. Record a deliberate absence in knownGaps, not as empty fields.",
       "required": ["library", "fileKey", "name", "exampleNodeId", "publishStatus"],
       "additionalProperties": false,
       "properties": {
@@ -159,6 +160,14 @@
                 "type": "string",
                 "enum": ["string", "number", "boolean", "enum", "function", "node", "array", "object"]
               },
+              "values": {
+                "type": "array",
+                "items": { "type": "string" },
+                "minItems": 1,
+                "uniqueItems": true,
+                "description": "Required when type is 'enum'. Listed here for the same reason as on a shared prop: ds-check --source compares these against the component's CVA variants or TypeScript union, so an enum declared in this bucket is verified too."
+              },
+              "default": {},
               "trigger": {
                 "type": "string",
                 "enum": [
@@ -167,9 +176,10 @@
                   "data-binding",
                   "a11y-only",
                   "content",
-                  "appearance-override"
+                  "appearance-override",
+                  "no-figma-component"
                 ],
-                "description": "Why this prop has no Figma counterpart. The first four are inherent — a static design file can never express them, so don't expect a Figma equivalent to appear. The last two are gaps in the Figma library rather than impossibilities: the prop could be represented in Figma and isn't yet. event-handler: callback/interaction. runtime-state: value changes while running. data-binding: value supplied from data at runtime. a11y-only: exists solely for assistive technology. content: text or child content Figma could hold but doesn't expose as a control. appearance-override: visual escape hatch (icon name, className) not surfaced as a Figma property."
+                "description": "Why this prop has no Figma counterpart. The first four are inherent — a static design file can never express them, so don't expect a Figma equivalent to appear. The last two are gaps in the Figma library rather than impossibilities: the prop could be represented in Figma and isn't yet. event-handler: callback/interaction. runtime-state: value changes while running. data-binding: value supplied from data at runtime. a11y-only: exists solely for assistive technology. content: text or child content Figma could hold but doesn't expose as a control. appearance-override: visual escape hatch (icon name, className) not surfaced as a Figma property. no-figma-component: the component itself has no Figma counterpart, so none of its props can have one — use this only on a manifest with no 'figma' block, and record the absence in knownGaps."
               },
               "required": {
                 "type": "boolean",
@@ -177,7 +187,10 @@
                 "default": false
               },
               "notes": { "type": "string" }
-            }
+            },
+            "allOf": [
+              { "if": { "properties": { "type": { "const": "enum" } } }, "then": { "required": ["values"] } }
+            ]
           }
         }
       }
@@ -271,7 +284,11 @@
       "required": ["rootClass", "rule", "refs"],
       "additionalProperties": false,
       "properties": {
-        "rootClass": { "type": "string", "pattern": "^cn-[a-z][a-z0-9-]*$" },
+        "rootClass": {
+          "type": ["string", "null"],
+          "pattern": "^cn-[a-z][a-z0-9-]*$",
+          "description": "The component's own class. Null when the component emits no class of its own and is composed from utilities instead (layout primitives) — not a licence to omit one that exists."
+        },
         "rule": {
           "type": "string",
           "const": "semantic-only",

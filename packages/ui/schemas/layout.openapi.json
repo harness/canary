@@ -1,0 +1,229 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Layout Component Skill",
+    "description": "Arrange elements with tokenised spacing — the only sanctioned way to put gaps between things",
+    "version": "1.5.5",
+    "x-skill-id": "canary.layout",
+    "x-skill-status": "stable",
+    "x-skill-package": "@harnessio/ui"
+  },
+  "servers": [],
+  "paths": {
+    "/components/layout": {
+      "post": {
+        "summary": "Create a Layout component",
+        "description": "Generate or validate a Layout component instance with specified props",
+        "operationId": "createLayout",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/LayoutProps"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Layout component created successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "componentId": {
+                      "type": "string",
+                      "description": "Unique identifier for the instance"
+                    },
+                    "jsx": {
+                      "type": "string",
+                      "description": "Generated JSX/TSX code"
+                    },
+                    "props": {
+                      "type": "object",
+                      "description": "Resolved prop values with defaults"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid Layout configuration"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "LayoutProps": {
+        "type": "object",
+        "description": "Props for the Layout React component. Generated from the manifest — do not edit by hand.",
+        "properties": {
+          "direction": {
+            "type": "string",
+            "enum": ["row", "column", "row-reverse", "column-reverse"],
+            "default": "row",
+            "description": "Layout.Flex only. Layout.Horizontal and Layout.Vertical fix it to row and column respectively and ignore anything you pass. Prefer Horizontal/Vertical over Flex with an explicit direction — they read better and carry a gap default. A designer expresses this as auto-layout direction on an ordinary frame.",
+            "x-provenance": "codeOnly",
+            "x-trigger": "no-figma-component"
+          },
+          "align": {
+            "type": "string",
+            "enum": ["start", "center", "end", "baseline", "stretch"],
+            "default": null,
+            "description": "Cross-axis alignment (align-items), on both Flex and Grid. With no value the browser default (stretch) applies, which is usually what a column wants and rarely what a row of mixed-height items wants — pass 'center' for a row of a label and a control.",
+            "x-provenance": "codeOnly",
+            "x-trigger": "no-figma-component"
+          },
+          "justify": {
+            "type": "string",
+            "enum": ["start", "center", "end", "between"],
+            "default": null,
+            "description": "Main-axis distribution (justify-content), on both Flex and Grid. There is no 'around' or 'evenly' — if you need those, the arrangement is probably a grid with sized tracks.",
+            "x-provenance": "codeOnly",
+            "x-trigger": "no-figma-component"
+          },
+          "wrap": {
+            "type": "string",
+            "enum": ["nowrap", "wrap", "wrap-reverse"],
+            "default": null,
+            "description": "Layout.Flex, Horizontal and Vertical only. Unset means the browser default of nowrap, so a row of chips or tags that can overflow needs an explicit wrap — this is the single most common omission.",
+            "x-provenance": "codeOnly",
+            "x-trigger": "no-figma-component"
+          },
+          "gap": {
+            "type": "string",
+            "enum": ["none", "4xs", "3xs", "2xs", "xs", "sm", "md", "lg", "xl", "2xl", "3xl", "4xl"],
+            "default": null,
+            "description": "Space on both axes, from the layout token scale. Available on every namespace member. Layout.Horizontal and Layout.Vertical default it to 'md'; Layout.Flex and Layout.Grid have no default at all and render flush unless you pass one (see LYT-001).",
+            "x-provenance": "codeOnly",
+            "x-trigger": "no-figma-component"
+          },
+          "gapX": {
+            "type": "string",
+            "enum": ["none", "4xs", "3xs", "2xs", "xs", "sm", "md", "lg", "xl", "2xl", "3xl", "4xl"],
+            "default": null,
+            "description": "Horizontal gap only (column-gap). Use with gapY for a wrapping row or a grid that needs different spacing per axis. Passing gap as well applies both classes and the result depends on stylesheet order — pass gapX/gapY or gap, not both (see LYT-002).",
+            "x-provenance": "codeOnly",
+            "x-trigger": "no-figma-component"
+          },
+          "gapY": {
+            "type": "string",
+            "enum": ["none", "4xs", "3xs", "2xs", "xs", "sm", "md", "lg", "xl", "2xl", "3xl", "4xl"],
+            "default": null,
+            "description": "Vertical gap only (row-gap). The one that matters on a wrapping row: without it, wrapped lines sit flush against each other.",
+            "x-provenance": "codeOnly",
+            "x-trigger": "no-figma-component"
+          },
+          "flow": {
+            "type": "string",
+            "enum": ["row", "column", "dense", "row dense", "column dense"],
+            "default": null,
+            "description": "Layout.Grid only (grid-auto-flow). Applied as an inline style, not a class, because Tailwind cannot emit a utility for a value only known at runtime.",
+            "x-provenance": "codeOnly",
+            "x-trigger": "no-figma-component"
+          },
+          "grow": {
+            "type": "boolean",
+            "description": "Layout.Flex, Horizontal and Vertical only. Sets flex-grow on the container itself, so it fills its own parent — it does not make the children grow. For that, put the grow on the child, or make it a Grid with sized tracks.",
+            "x-provenance": "codeOnly",
+            "x-trigger": "no-figma-component"
+          },
+          "columns": {
+            "type": "string",
+            "description": "Layout.Grid only. A number becomes that many equal columns; a string is passed straight through as grid-template-columns ('1fr 2fr', 'repeat(auto-fit, minmax(12rem, 1fr))'). Applied as an inline style because the value is runtime-known. The raw-string form is an escape hatch, not a token-governed value — keep any lengths in it to rem or fr, never px.",
+            "x-provenance": "codeOnly",
+            "x-trigger": "no-figma-component"
+          },
+          "rows": {
+            "type": "string",
+            "description": "Layout.Grid only, the grid-template-rows equivalent of columns, with the same inline-style mechanics and the same caution about raw lengths.",
+            "x-provenance": "codeOnly",
+            "x-trigger": "no-figma-component"
+          },
+          "className": {
+            "type": "string",
+            "description": "Merged through cn() after the variant classes. This is where positioning, sizing, overflow and borders go, since Layout emits none of them. Do not put a gap or a padding here — gap has a prop, and padding belongs to the component being laid out.",
+            "x-provenance": "codeOnly",
+            "x-trigger": "appearance-override"
+          },
+          "children": {
+            "type": "string",
+            "x-code-type": "node",
+            "description": "The elements being arranged. Layout renders a plain div wrapper and does not inspect, filter or clone them.",
+            "x-provenance": "codeOnly",
+            "x-trigger": "content"
+          }
+        },
+        "additionalProperties": false
+      }
+    }
+  },
+  "x-generated-from": "schemas/layout.manifest.json — regenerate with `pnpm ds-check --write`",
+  "x-tokens": {
+    "rootClass": null,
+    "rule": "semantic-only",
+    "refs": {
+      "gap.none": "spacing.0",
+      "gap.4xs": "layout.4xs",
+      "gap.3xs": "layout.3xs",
+      "gap.2xs": "layout.2xs",
+      "gap.xs": "layout.xs",
+      "gap.sm": "layout.sm",
+      "gap.md": "layout.md",
+      "gap.lg": "layout.lg",
+      "gap.xl": "layout.xl",
+      "gap.2xl": "layout.2xl",
+      "gap.3xl": "layout.3xl",
+      "gap.4xl": "layout.4xl"
+    }
+  },
+  "x-accessibility": {
+    "role": "none",
+    "keyboardSupport": ["None. Layout renders a plain div and is not focusable, so it adds nothing to the tab order"],
+    "notes": "Layout is presentational and contributes no semantics. Two consequences worth stating: visual order comes from direction, so 'row-reverse' and 'column-reverse' make the reading order disagree with the DOM order, which is what a screen reader and the tab sequence follow — avoid them for anything interactive. And Layout emits no landmark, list or group semantics, so a toolbar, navigation region or list needs the right element or role around it; a Layout is not a substitute."
+  },
+  "x-examples": {
+    "correct": [
+      "<Layout.Horizontal gap='sm' align='center'><IconV2 name='info' /><Text>Pipeline is running</Text></Layout.Horizontal>",
+      "<Layout.Vertical gap='lg'><FormField /><FormField /></Layout.Vertical>",
+      "<Layout.Horizontal gap='xs' wrap='wrap' gapY='xs'><Tag value='react' /><Tag value='vite' /></Layout.Horizontal>",
+      "<Layout.Grid columns={3} gap='md'><Card /><Card /><Card /></Layout.Grid>",
+      "<Layout.Grid columns='repeat(auto-fit, minmax(16rem, 1fr))' gap='lg'><Card /></Layout.Grid>",
+      "<Layout.Horizontal justify='between' align='center' gap='md'><Text>Title</Text><Button>Save</Button></Layout.Horizontal>"
+    ],
+    "incorrect": [
+      "<Layout.Flex direction='row'><Button>Save</Button><Button>Cancel</Button></Layout.Flex>",
+      "<Layout.Horizontal gap='md' gapX='sm'><Button /><Button /></Layout.Horizontal>",
+      "<Layout.Horizontal className='gap-4'><Button /><Button /></Layout.Horizontal>",
+      "<Layout.Grid columns='320px 1fr' gap='md'><Sidebar /><Main /></Layout.Grid>",
+      "<Layout.Horizontal direction='row-reverse' gap='sm'><Button>Back</Button><Button>Next</Button></Layout.Horizontal>",
+      "<Layout.Horizontal gap='xs'><Tag value='react' /><Tag value='vite' /><Tag value='tailwind' /></Layout.Horizontal>"
+    ]
+  },
+  "x-known-gaps": [
+    "LYT-001: gap defaults are inconsistent across the namespace. Layout.Horizontal and Layout.Vertical default gap to 'md'; Layout.Flex and Layout.Grid have no gap default and render flush. Swapping Horizontal for Flex with direction='row' silently removes all spacing",
+    "LYT-002: gap and gapX/gapY are not mutually exclusive in the type. Passing both emits both class sets and the outcome depends on stylesheet order rather than on anything the call site can see",
+    "LYT-003: columns, rows and flow are applied as inline styles because Tailwind cannot generate utilities for runtime values. They therefore win over any className, cannot be overridden by a consumer's class, and sit outside the token system — columns='320px 1fr' is accepted with no warning",
+    "LYT-004: no Figma component and no Code Connect file. Arrangement is expressed as auto-layout on a plain frame, so design and code cannot be checked against each other, and a designer's gap choice reaches code only by hand",
+    "LYT-005: Layout emits no class of its own, so there is no cn-layout hook for a consumer to target in a stylesheet or for a tool to find in the built CSS",
+    "LYT-006: direction 'row-reverse' and 'column-reverse' decouple visual order from DOM order, and nothing in the API warns about it",
+    "LYT-007: grow is a container-level flex-grow and is frequently mistaken for a child-level one. There is no prop for making children grow",
+    "LYT-008: the JSDoc gap table in the source maps each size straight to a --cn-spacing-* value, skipping the --cn-layout-* alias the utilities actually reference. The resolved values are correct today but the table will go stale if the alias layer is retargeted"
+  ],
+  "x-governance": {
+    "systemRules": [
+      "docs/system/spacing.md",
+      "docs/system/accessibility.md",
+      "docs/system/visual-primitives.md",
+      "docs/system/component-architecture.md",
+      "docs/system/design-to-code-flow.md"
+    ],
+    "componentRules": ["schemas/layout.md"]
+  },
+  "x-internal-manifest": "schemas/layout.manifest.json"
+}

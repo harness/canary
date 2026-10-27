@@ -1,0 +1,382 @@
+{
+  "$schema": "https://your-org.com/schemas/component-manifest-v1.json",
+  "id": "canary.button",
+  "status": "stable",
+
+  "code": {
+    "package": "@harnessio/ui",
+    "export": "Button",
+    "import": "import { Button } from '@harnessio/ui/components'",
+    "path": "packages/ui/src/components/button.tsx"
+  },
+
+  "figma": {
+    "library": "HDS | Components 3.0",
+    "fileKey": "AIgjIyUzcuZzuVnuoOyhQE",
+    "name": "Button",
+    "exampleNodeId": "28553:15927",
+    "codeConnect": "packages/ui/src/components/button.figma.ts",
+    "componentSetKey": null,
+    "variantPropertyMap": {
+      "variant": "variant",
+      "theme": "theme",
+      "disabled": "👁️ disabled",
+      "loading": "state",
+      "children": "button text#1567:0"
+    },
+    "publishStatus": "published",
+    "enforceSync": true
+  },
+
+  "purpose": {
+    "summary": "Trigger an action — the one keyboard-operable, focusable control for anything a person can do",
+    "useWhen": [
+      "A person activates something: submit, save, cancel, delete, open a menu, run a pipeline",
+      "The thing must be reachable by keyboard and announced as a control — Button is the only component in the library that guarantees this",
+      "You need an icon-only affordance in a toolbar or table row (pass iconOnly plus tooltipProps, or an explicit ignoreIconOnlyTooltip)",
+      "The action is asynchronous and should show its own pending state (return a promise from onClick; loading is handled for you)"
+    ],
+    "doNotUseWhen": [
+      "The target is a route or an external address — use Link, so it opens in a new tab, copies, and reads as a link. variant='link' styles a Button as a link but is still a <button>",
+      "The element only labels or describes something — use Tag or StatusBadge",
+      "You need a toggle with on/off state — use Toggle or ToggleGroup, which carry aria-pressed",
+      "You are building a split primary/dropdown pair or a row of related actions by hand — use SplitButton, ButtonGroup, or ButtonLayout"
+    ]
+  },
+
+  "props": {
+    "shared": [
+      {
+        "name": "variant",
+        "type": "enum",
+        "values": ["primary", "secondary", "outline", "ai", "ghost", "link", "transparent"],
+        "default": "primary",
+        "codeNote": "Emphasis level. Exactly one 'primary' per view or dialog — it marks the single expected action. 'ai' renders the gradient border and is reserved for AI-initiated actions. 'link' and 'transparent' drop the border and the horizontal padding entirely.",
+        "figmaNote": "A real Figma variant property; values pass through unchanged."
+      },
+      {
+        "name": "size",
+        "type": "enum",
+        "values": ["md", "sm", "xs", "2xs", "3xs"],
+        "default": "md",
+        "codeNote": "Height, padding and gap. '2xs' and '3xs' are icon-only sizes: the component forces iconOnly for them regardless of what you pass, so any text child is dropped — deliberately, since these exist for very tight spaces and inside composite components. Because they can therefore never carry a visible label, the type requires them to supply an accessible name: aria-label, tooltipProps, or an explicit ignoreIconOnlyTooltip (see BTN-001).",
+        "figmaNote": "Not a Figma variant property. Figma ships one component per size, and each Code Connect template hard-codes its own size literal. Figma covers sm, md and xs only — there is no 2xs or 3xs component (see BTN-005)."
+      },
+      {
+        "name": "theme",
+        "type": "enum",
+        "values": ["default", "success", "danger", "warning"],
+        "default": "default",
+        "codeNote": "Semantic intent of the action, not decoration. Applies to variant 'primary', 'secondary', 'outline' and 'ghost'. Variants 'ai', 'link' and 'transparent' are deliberately single-appearance and take no theme at all: the type rejects the combination, so <Button variant='link' theme='danger'> does not compile (see BTN-003). A component that forwards an arbitrary variant alongside a theme either narrows its own variant prop to the theme-capable set, exported as ButtonThemedVariants, or keeps its public prop wide behind a documented cast (see BTN-003).",
+        "figmaNote": "Figma exposes three of the four with emoji prefixes ('⚫ default', '🟢 success', '🔴 danger') plus a '-' option that maps to undefined. 'warning' exists in Figma but is not yet mapped in button.figma.ts (see BTN-004)."
+      },
+      {
+        "name": "rounded",
+        "type": "boolean",
+        "default": false,
+        "codeNote": "Swaps the corner radius from --cn-btn-default-radius to --cn-btn-rounded-radius (a full pill). Appearance only.",
+        "figmaNote": "Not a variant property. Figma ships a separate '-rounded' component per size, whose template emits the bare `rounded` attribute."
+      },
+      {
+        "name": "iconOnly",
+        "type": "boolean",
+        "default": false,
+        "codeNote": "Renders a square button holding one icon and no text. The type then demands either tooltipProps or an explicit ignoreIconOnlyTooltip, so an unlabelled icon button cannot compile. The micro sizes are covered by a separate rule that accepts aria-label as well (see BTN-001). Only the first IconV2 child survives (see BTN-008).",
+        "figmaNote": "Not a variant property. Figma ships separate '-icon-only' components per size."
+      },
+      {
+        "name": "disabled",
+        "type": "boolean",
+        "default": false,
+        "codeNote": "Native button disabled. Forced true while loading. Applies not-allowed cursor and --cn-disabled-opacity. A disabled button is removed from the tab order, so never use it as the only explanation for why an action is unavailable.",
+        "figmaNote": "Bound to Figma's '👁️ disabled' on/off property."
+      },
+      {
+        "name": "loading",
+        "type": "boolean",
+        "default": false,
+        "codeNote": "Replaces the leading content with a spinning 'loader' icon, sets data-loading, and disables the button. In iconOnly mode the spinner replaces the icon entirely. Set automatically whenever onClick returns a promise, so an async handler needs no loading state of its own.",
+        "figmaNote": "Derived from Figma's 'state' variant: only state='loading' reaches code. 'hover' and 'active' compile to CSS and produce nothing."
+      },
+      {
+        "name": "children",
+        "type": "node",
+        "default": null,
+        "codeNote": "The label, and any IconV2 elements shown beside it. Icons are passed as children — there is no icon prop. Order decides position: an IconV2 before the text is a leading icon, after it a trailing one.",
+        "figmaNote": "Composed from the Figma text property 'button text#1567:0' plus whatever the icon slots resolve to."
+      },
+      {
+        "name": "tooltipProps",
+        "type": "object",
+        "default": null,
+        "codeNote": "A Pick of TooltipProps — title, content, side, align, open. When non-empty, the button is wrapped in a Tooltip with hideArrow. Required by the type when iconOnly is literally set, unless ignoreIconOnlyTooltip is passed. An empty object satisfies the type and renders no tooltip (see BTN-007).",
+        "figmaNote": "Composed, on the icon-only components only, from 'tooltip#7883:0', 'tooltip text#5971:0', 'title#7308:9' and 'title text#7308:7'. The text components do not expose it."
+      }
+    ],
+    "designOnly": [
+      {
+        "name": "icon",
+        "type": "boolean",
+        "figmaProperty": "icon#1567:1",
+        "transform": "compose-derived",
+        "notes": "A boolean toggle revealing the Figma leading-icon slot, paired with the instance swap '↳ icon#1567:2'. Code has no icon prop — Code Connect resolves the swap through executeTemplate() and emits an IconV2 element as the first child."
+      },
+      {
+        "name": "suffix icon",
+        "type": "boolean",
+        "figmaProperty": "suffix icon#1687:61",
+        "transform": "compose-derived",
+        "notes": "The trailing-icon equivalent, paired with '↳ suffix#2114:51'. Emitted as the last child."
+      },
+      {
+        "name": "state",
+        "type": "enum",
+        "figmaProperty": "state",
+        "transform": "style-only",
+        "notes": "Figma offers default / hover / active / loading. Only 'loading' maps to a prop; 'hover' and 'active' exist so a designer can show those states in the file and compile to CSS pseudo-classes, never to code."
+      }
+    ],
+    "codeOnly": [
+      {
+        "name": "onClick",
+        "type": "function",
+        "trigger": "event-handler",
+        "notes": "May return void or a promise. A returned promise puts the button into its loading state until it settles — resolve or reject — so async handlers should not manage loading themselves. The promise's rejection is not caught: handle errors inside the handler."
+      },
+      {
+        "name": "ignoreIconOnlyTooltip",
+        "type": "boolean",
+        "trigger": "a11y-only",
+        "notes": "The explicit opt-out from the icon-only tooltip requirement, for a button whose meaning is already given nearby. It suppresses the type error, not the accessibility need — pass aria-label as well. Stripped before reaching the DOM."
+      },
+      {
+        "name": "aria-label",
+        "type": "string",
+        "trigger": "a11y-only",
+        "notes": "Inherited from ButtonHTMLAttributes rather than declared. The surest way to name an icon-only button: it is applied before the props spread, so an explicit aria-label always wins over the one derived from the tooltip (see BTN-002)."
+      },
+      {
+        "name": "asChild",
+        "type": "boolean",
+        "trigger": "appearance-override",
+        "notes": "Renders through Radix Slot, merging the button's classes and props onto a single child element instead of emitting a <button>. Used to style a router Link as a button. The child then owns the semantics — disabled and type stop applying, so a disabled asChild button is still clickable."
+      },
+      {
+        "name": "type",
+        "type": "string",
+        "trigger": "event-handler",
+        "notes": "Native button type, defaulted to 'button' rather than the HTML default of 'submit', so a Button inside a form does not submit by accident. Pass type='submit' deliberately for the form's submit control."
+      },
+      {
+        "name": "className",
+        "type": "string",
+        "trigger": "appearance-override",
+        "notes": "Merged through cn() after the variant classes, so it wins ties. Use it for layout (width, margin), not for colour, radius or size — those have props and tokens."
+      }
+    ]
+  },
+
+  "composition": [
+    {
+      "slot": "children",
+      "accepts": ["IconV2", "text"],
+      "cardinality": "many",
+      "required": false,
+      "notes": "Icons are children, not props. In iconOnly mode the children are filtered to IconV2 by display name and only the first survives, so exactly one icon and no text should be passed."
+    }
+  ],
+
+  "bindings": [
+    {
+      "figmaProperty": "variant",
+      "codeProp": "variant",
+      "transform": "direct"
+    },
+    {
+      "figmaProperty": "theme",
+      "codeProp": "theme",
+      "transform": "enum-map",
+      "enumMap": {
+        "⚫ default": "default",
+        "🟢 success": "success",
+        "🔴 danger": "danger"
+      },
+      "transformNote": "Figma prefixes each theme with a colour emoji and offers a '-' option that Code Connect maps to undefined, omitting the prop. 'warning' exists in Figma but is absent from the enumMap because button.figma.ts has not been updated to include it yet. The templates emit theme unconditionally, so a design that sets a theme on the ai, link or transparent variant now generates a snippet that does not compile (BTN-003) — the generated code is correct to reject it, but Figma will not warn the designer."
+    },
+    {
+      "figmaProperty": "👁️ disabled",
+      "codeProp": "disabled",
+      "transform": "enum-map",
+      "enumMap": {
+        "on": "true",
+        "off": "false"
+      },
+      "transformNote": "An on/off enum in Figma rather than a boolean property; the template emits the bare `disabled` attribute when on."
+    },
+    {
+      "figmaProperty": "state",
+      "codeProp": "loading",
+      "transform": "derived",
+      "transformNote": "state='loading' emits the bare `loading` attribute; default, hover and active all emit nothing."
+    },
+    {
+      "figmaProperty": "button text#1567:0",
+      "codeProp": "children",
+      "transform": "direct",
+      "transformNote": "Emitted as the text child. Absent from the icon-only components, which have no text property."
+    },
+    {
+      "figmaProperty": "icon#1567:1",
+      "codeProp": "children",
+      "transform": "derived",
+      "transformNote": "Boolean toggle in Figma; the icon element comes from the instance swap '↳ icon#1567:2' via executeTemplate(), prepended to children. Omitted when the toggle is off."
+    },
+    {
+      "figmaProperty": "suffix icon#1687:61",
+      "codeProp": "children",
+      "transform": "derived",
+      "transformNote": "As above, from '↳ suffix#2114:51', appended to children."
+    },
+    {
+      "figmaProperty": "tooltip#7883:0",
+      "codeProp": "tooltipProps",
+      "transform": "derived",
+      "transformNote": "Icon-only components only. Assembled from 'tooltip text#5971:0' and the optional 'title#7308:9' / 'title text#7308:7' pair. When the toggle is off the template emits ignoreIconOnlyTooltip instead."
+    },
+    {
+      "figmaProperty": "size",
+      "codeProp": "size",
+      "transform": "none",
+      "transformNote": "There is no size property to bind. Figma ships twelve Button components — {sm,md,xs} × {text,icon-only} × {square,rounded} — and each Code Connect template writes its own size, rounded and iconOnly literals. Changing size in a design means swapping the component."
+    }
+  ],
+
+  "tokens": {
+    "rootClass": "cn-button",
+    "rule": "semantic-only",
+    "refs": {
+      "radius.default": "btn.default-radius",
+      "radius.rounded": "btn.rounded-radius",
+      "layout.border": "btn.border",
+      "layout.ai-border": "btn.ai-border",
+      "size.md": "btn.size-md",
+      "size.sm": "btn.size-sm",
+      "size.xs": "btn.size-xs",
+      "size.2xs": "btn.size-2xs",
+      "size.3xs": "btn.size-3xs",
+      "px.md": "btn.px-md",
+      "px.sm": "btn.px-sm",
+      "px.xs": "btn.px-xs",
+      "px.2xs": "btn.px-2xs",
+      "px.3xs": "btn.px-3xs",
+      "py.md": "btn.py-md",
+      "py.sm": "btn.py-sm",
+      "py.xs": "btn.py-xs",
+      "py.2xs": "btn.py-2xs",
+      "py.3xs": "btn.py-3xs",
+      "gap.md": "btn.gap-md",
+      "gap.sm": "btn.gap-sm",
+      "gap.xs": "btn.gap-xs",
+      "gap.2xs": "btn.gap-2xs",
+      "gap.3xs": "btn.gap-3xs",
+      "theme.default": "set.gray",
+      "theme.default-primary": "set.brand",
+      "theme.success": "set.success",
+      "theme.danger": "set.danger",
+      "theme.warning": "set.warning",
+      "variant.ai": "set.ai",
+      "variant.link": "comp.link-text",
+      "variant.ghost-hover": "state.hover",
+      "variant.ghost-selected": "state.selected",
+      "separator.opacity": "opacity.20",
+      "focus.outline": "focus.ring",
+      "disabled.opacity": "disabled.opacity",
+      "shadow.ai-inner": "comp.shadow-ai-inner"
+    }
+  },
+
+  "accessibility": {
+    "role": "button",
+    "keyboardSupport": [
+      "Tab — moves focus to the button; a disabled button is skipped",
+      "Enter / Space — activates it (native <button> behaviour)",
+      "Focus ring is --cn-focus plus an inset 2px --cn-chrome-25 shadow, applied on :focus-visible only"
+    ],
+    "notes": "A real <button> element, so role, focus and keyboard activation come free — this is the only component in the library that can be relied on for an actionable control. Two things it does not do for you: it sets no accessible name for an icon-only button (the source still carries the unimplemented 'add icon only aria attr' note), and it sets no aria-busy or aria-disabled while loading. Pass aria-label for icon-only buttons. With asChild the child element owns all of this instead."
+  },
+
+  "states": [
+    {
+      "name": "hover",
+      "triggeredBy": { "source": "interaction", "ref": "onPointerEnter" },
+      "description": "Background, and for filled variants border, shift to the theme's -bg-hover token. Suppressed while disabled."
+    },
+    {
+      "name": "active",
+      "triggeredBy": { "source": "interaction", "ref": "onPointerDown" },
+      "description": "Moves to the -bg-selected token and scales to 0.99. The scale is suppressed for split-dropdown buttons, where the wrapper scales instead. Also applied via the .cn-button-active class and [data-state=open] so a button driving an open menu stays visibly pressed."
+    },
+    {
+      "name": "focus-visible",
+      "triggeredBy": { "source": "interaction", "ref": "onFocusVisible" },
+      "description": "Outline plus inset ring, with position relative and z-index 1 so the ring is not clipped by an adjacent dropdown."
+    },
+    {
+      "name": "disabled",
+      "triggeredBy": { "source": "prop", "ref": "disabled" },
+      "description": "not-allowed cursor and --cn-disabled-opacity, shared by every variant. Suppresses hover and active."
+    },
+    {
+      "name": "loading",
+      "triggeredBy": { "source": "async", "ref": "onClick" },
+      "description": "Spinner replaces the leading content, data-loading is set, and the button is disabled. Entered either from the loading prop or automatically from a promise-returning onClick."
+    }
+  ],
+
+  "governance": {
+    "rulesDocs": [
+      "docs/system/accessibility.md",
+      "docs/system/color-system.md",
+      "docs/system/interaction-states.md",
+      "docs/system/visual-primitives.md",
+      "docs/system/typography.md",
+      "docs/system/spacing.md",
+      "docs/system/component-architecture.md",
+      "docs/system/design-to-code-flow.md",
+      "schemas/button.md"
+    ],
+    "tokenStatus": "Size, padding, gap, radius and border refs verified name-by-name against the built stylesheet; theme refs record the colour *set* each theme resolves to via themeStyleMapper in tailwind-utils-config/components/button.ts, not the per-slot variables within it. Note that variant 'primary' with theme 'default' resolves to set.brand, not set.gray"
+  },
+
+  "knownGaps": [
+    "BTN-001: CLOSED. size '2xs' and '3xs' used to force icon-only rendering without demanding a tooltip, so <Button size='2xs'>Save</Button> compiled, dropped the text and shipped an unlabelled square. The type now requires a micro-size button to carry an accessible name — aria-label, tooltipProps, or an explicit ignoreIconOnlyTooltip. Text children are still dropped at these sizes, which is deliberate: they exist for very tight spaces and inside composite components, so they are never meant to carry a visible label. What remains: ButtonGroup forwards one size to every button inside it and keeps that behind a documented cast, because narrowing its size would break callers, so a group at a micro size can contain a button that names nothing — each entry in buttonsProps has to supply its own name",
+    "BTN-002: mostly closed. An icon-only button now derives an accessible name from its tooltip — title when present, otherwise content — because a Tooltip is wired as a description (aria-describedby) and is not itself a name. An explicit aria-label still wins. The text is read from string content and from simple ReactNode content, so <span>Delete</span> names a button like the string does. What remains: content with no text of its own, such as a custom component that renders its own copy, gives nothing to copy, so such a button is still nameless unless it passes aria-label. In development Button logs a console.warn for an icon-only button left without a name; ignoreIconOnlyTooltip, aria-label or aria-labelledby silences it",
+    "BTN-003: CLOSED. variant 'ai', 'link' and 'transparent' are single-appearance by design and carry no themes. A theme used to be accepted on them and silently ignored — <Button variant='link' theme='danger'> type-checked and rendered an ordinary link, so the call site read as a danger link that was not red. The type now pairs the two: pass no theme and any variant is fine, pass a theme and the variant must be provably theme-capable. What remains: MoreActionsTooltip, Carousel (previous/next), SidebarTrigger and SplitButton each forward a full-union variant alongside a theme and keep it behind a documented cast, because narrowing a published prop would break its consumers, so those components can still be given an inert theme",
+    "BTN-004: theme='warning' exists in Figma and in code, but button.figma.ts has not been updated to map it, so Code Connect cannot yet produce it. A Code Connect lag, not a design gap",
+    "BTN-005: Figma models size, rounded and iconOnly as twelve separate components rather than variant properties, and covers only sm, md and xs. A design cannot express a 2xs or 3xs button, and one code prop set maps to twelve Code Connect files that must be kept in step by hand",
+    "BTN-006: loading sets data-loading and disables the button but no aria-busy and no aria-disabled. A screen reader user hears the control become unavailable with no indication that work is in progress",
+    "BTN-007: tooltipProps={{}} satisfies the icon-only type requirement and renders no tooltip, because the wrap is gated on isEmpty. The compile-time guarantee can be defeated with an empty object",
+    "BTN-008: in icon-only mode children are filtered to IconV2 by display name and only the first match is rendered. A second icon, a count, or any text is discarded with no warning",
+    "BTN-009: asChild hands semantics to the child, so disabled and type stop having any effect. A disabled asChild button still receives clicks"
+  ],
+
+  "examples": {
+    "correct": [
+      "<Button onClick={save}>Save</Button>",
+      "<Button variant='outline' onClick={cancel}>Cancel</Button>",
+      "<Button variant='secondary' theme='danger' onClick={remove}>Delete</Button>",
+      "<Button onClick={async () => await deploy()}>Deploy</Button>",
+      "<Button iconOnly aria-label='Edit' tooltipProps={{ content: 'Edit' }} onClick={edit}><IconV2 name='edit-pencil' /></Button>",
+      "<Button variant='ghost' size='xs' onClick={refresh}><IconV2 name='refresh' />Refresh</Button>"
+    ],
+    "incorrect": [
+      "<Button size='2xs'>Save</Button>",
+      "<Button iconOnly tooltipProps={{}}><IconV2 name='trash' /></Button>",
+      "<Button variant='link' theme='danger'>Delete</Button>",
+      "<Button variant='link' onClick={() => navigate('/settings')}>Settings</Button>",
+      "<Button loading onClick={save}>Saving…</Button>",
+      "<Button iconOnly ignoreIconOnlyTooltip><IconV2 name='trash' /></Button>",
+      "<Button className='bg-red-500 rounded-full'>Delete</Button>"
+    ]
+  }
+}

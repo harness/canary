@@ -1,0 +1,281 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Button Component Skill",
+    "description": "Trigger an action — the one keyboard-operable, focusable control for anything a person can do",
+    "version": "1.5.5",
+    "x-skill-id": "canary.button",
+    "x-skill-status": "stable",
+    "x-skill-package": "@harnessio/ui"
+  },
+  "servers": [],
+  "paths": {
+    "/components/button": {
+      "post": {
+        "summary": "Create a Button component",
+        "description": "Generate or validate a Button component instance with specified props",
+        "operationId": "createButton",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ButtonProps"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Button component created successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "componentId": {
+                      "type": "string",
+                      "description": "Unique identifier for the instance"
+                    },
+                    "jsx": {
+                      "type": "string",
+                      "description": "Generated JSX/TSX code"
+                    },
+                    "props": {
+                      "type": "object",
+                      "description": "Resolved prop values with defaults"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid Button configuration"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "ButtonProps": {
+        "type": "object",
+        "description": "Props for the Button React component. Generated from the manifest — do not edit by hand.",
+        "properties": {
+          "variant": {
+            "type": "string",
+            "enum": ["primary", "secondary", "outline", "ai", "ghost", "link", "transparent"],
+            "default": "primary",
+            "description": "Emphasis level. Exactly one 'primary' per view or dialog — it marks the single expected action. 'ai' renders the gradient border and is reserved for AI-initiated actions. 'link' and 'transparent' drop the border and the horizontal padding entirely.",
+            "x-provenance": "shared"
+          },
+          "size": {
+            "type": "string",
+            "enum": ["md", "sm", "xs", "2xs", "3xs"],
+            "default": "md",
+            "description": "Height, padding and gap. '2xs' and '3xs' are icon-only sizes: the component forces iconOnly for them regardless of what you pass, so any text child is dropped — deliberately, since these exist for very tight spaces and inside composite components. Because they can therefore never carry a visible label, the type requires them to supply an accessible name: aria-label, tooltipProps, or an explicit ignoreIconOnlyTooltip (see BTN-001).",
+            "x-provenance": "shared"
+          },
+          "theme": {
+            "type": "string",
+            "enum": ["default", "success", "danger", "warning"],
+            "default": "default",
+            "description": "Semantic intent of the action, not decoration. Applies to variant 'primary', 'secondary', 'outline' and 'ghost'. Variants 'ai', 'link' and 'transparent' are deliberately single-appearance and take no theme at all: the type rejects the combination, so <Button variant='link' theme='danger'> does not compile (see BTN-003). A component that forwards an arbitrary variant alongside a theme either narrows its own variant prop to the theme-capable set, exported as ButtonThemedVariants, or keeps its public prop wide behind a documented cast (see BTN-003).",
+            "x-provenance": "shared"
+          },
+          "rounded": {
+            "type": "boolean",
+            "default": false,
+            "description": "Swaps the corner radius from --cn-btn-default-radius to --cn-btn-rounded-radius (a full pill). Appearance only.",
+            "x-provenance": "shared"
+          },
+          "iconOnly": {
+            "type": "boolean",
+            "default": false,
+            "description": "Renders a square button holding one icon and no text. The type then demands either tooltipProps or an explicit ignoreIconOnlyTooltip, so an unlabelled icon button cannot compile. The micro sizes are covered by a separate rule that accepts aria-label as well (see BTN-001). Only the first IconV2 child survives (see BTN-008).",
+            "x-provenance": "shared"
+          },
+          "disabled": {
+            "type": "boolean",
+            "default": false,
+            "description": "Native button disabled. Forced true while loading. Applies not-allowed cursor and --cn-disabled-opacity. A disabled button is removed from the tab order, so never use it as the only explanation for why an action is unavailable.",
+            "x-provenance": "shared"
+          },
+          "loading": {
+            "type": "boolean",
+            "default": false,
+            "description": "Replaces the leading content with a spinning 'loader' icon, sets data-loading, and disables the button. In iconOnly mode the spinner replaces the icon entirely. Set automatically whenever onClick returns a promise, so an async handler needs no loading state of its own.",
+            "x-provenance": "shared"
+          },
+          "children": {
+            "type": "string",
+            "x-code-type": "node",
+            "default": null,
+            "description": "The label, and any IconV2 elements shown beside it. Icons are passed as children — there is no icon prop. Order decides position: an IconV2 before the text is a leading icon, after it a trailing one.",
+            "x-provenance": "shared"
+          },
+          "tooltipProps": {
+            "type": "object",
+            "additionalProperties": true,
+            "default": null,
+            "description": "A Pick of TooltipProps — title, content, side, align, open. When non-empty, the button is wrapped in a Tooltip with hideArrow. Required by the type when iconOnly is literally set, unless ignoreIconOnlyTooltip is passed. An empty object satisfies the type and renders no tooltip (see BTN-007).",
+            "x-provenance": "shared"
+          },
+          "icon": {
+            "type": "boolean",
+            "description": "A boolean toggle revealing the Figma leading-icon slot, paired with the instance swap '↳ icon#1567:2'. Code has no icon prop — Code Connect resolves the swap through executeTemplate() and emits an IconV2 element as the first child.",
+            "x-provenance": "designOnly",
+            "x-transform": "compose-derived"
+          },
+          "suffix icon": {
+            "type": "boolean",
+            "description": "The trailing-icon equivalent, paired with '↳ suffix#2114:51'. Emitted as the last child.",
+            "x-provenance": "designOnly",
+            "x-transform": "compose-derived"
+          },
+          "state": {
+            "type": "string",
+            "description": "Figma offers default / hover / active / loading. Only 'loading' maps to a prop; 'hover' and 'active' exist so a designer can show those states in the file and compile to CSS pseudo-classes, never to code.",
+            "x-provenance": "designOnly",
+            "x-transform": "style-only"
+          },
+          "onClick": {
+            "x-code-type": "function",
+            "description": "May return void or a promise. A returned promise puts the button into its loading state until it settles — resolve or reject — so async handlers should not manage loading themselves. The promise's rejection is not caught: handle errors inside the handler.",
+            "x-provenance": "codeOnly",
+            "x-trigger": "event-handler"
+          },
+          "ignoreIconOnlyTooltip": {
+            "type": "boolean",
+            "description": "The explicit opt-out from the icon-only tooltip requirement, for a button whose meaning is already given nearby. It suppresses the type error, not the accessibility need — pass aria-label as well. Stripped before reaching the DOM.",
+            "x-provenance": "codeOnly",
+            "x-trigger": "a11y-only"
+          },
+          "aria-label": {
+            "type": "string",
+            "description": "Inherited from ButtonHTMLAttributes rather than declared. The surest way to name an icon-only button: it is applied before the props spread, so an explicit aria-label always wins over the one derived from the tooltip (see BTN-002).",
+            "x-provenance": "codeOnly",
+            "x-trigger": "a11y-only"
+          },
+          "asChild": {
+            "type": "boolean",
+            "description": "Renders through Radix Slot, merging the button's classes and props onto a single child element instead of emitting a <button>. Used to style a router Link as a button. The child then owns the semantics — disabled and type stop applying, so a disabled asChild button is still clickable.",
+            "x-provenance": "codeOnly",
+            "x-trigger": "appearance-override"
+          },
+          "type": {
+            "type": "string",
+            "description": "Native button type, defaulted to 'button' rather than the HTML default of 'submit', so a Button inside a form does not submit by accident. Pass type='submit' deliberately for the form's submit control.",
+            "x-provenance": "codeOnly",
+            "x-trigger": "event-handler"
+          },
+          "className": {
+            "type": "string",
+            "description": "Merged through cn() after the variant classes, so it wins ties. Use it for layout (width, margin), not for colour, radius or size — those have props and tokens.",
+            "x-provenance": "codeOnly",
+            "x-trigger": "appearance-override"
+          }
+        },
+        "additionalProperties": false
+      }
+    }
+  },
+  "x-generated-from": "schemas/button.manifest.json — regenerate with `pnpm ds-check --write`",
+  "x-tokens": {
+    "rootClass": "cn-button",
+    "rule": "semantic-only",
+    "refs": {
+      "radius.default": "btn.default-radius",
+      "radius.rounded": "btn.rounded-radius",
+      "layout.border": "btn.border",
+      "layout.ai-border": "btn.ai-border",
+      "size.md": "btn.size-md",
+      "size.sm": "btn.size-sm",
+      "size.xs": "btn.size-xs",
+      "size.2xs": "btn.size-2xs",
+      "size.3xs": "btn.size-3xs",
+      "px.md": "btn.px-md",
+      "px.sm": "btn.px-sm",
+      "px.xs": "btn.px-xs",
+      "px.2xs": "btn.px-2xs",
+      "px.3xs": "btn.px-3xs",
+      "py.md": "btn.py-md",
+      "py.sm": "btn.py-sm",
+      "py.xs": "btn.py-xs",
+      "py.2xs": "btn.py-2xs",
+      "py.3xs": "btn.py-3xs",
+      "gap.md": "btn.gap-md",
+      "gap.sm": "btn.gap-sm",
+      "gap.xs": "btn.gap-xs",
+      "gap.2xs": "btn.gap-2xs",
+      "gap.3xs": "btn.gap-3xs",
+      "theme.default": "set.gray",
+      "theme.default-primary": "set.brand",
+      "theme.success": "set.success",
+      "theme.danger": "set.danger",
+      "theme.warning": "set.warning",
+      "variant.ai": "set.ai",
+      "variant.link": "comp.link-text",
+      "variant.ghost-hover": "state.hover",
+      "variant.ghost-selected": "state.selected",
+      "separator.opacity": "opacity.20",
+      "focus.outline": "focus.ring",
+      "disabled.opacity": "disabled.opacity",
+      "shadow.ai-inner": "comp.shadow-ai-inner"
+    }
+  },
+  "x-accessibility": {
+    "role": "button",
+    "keyboardSupport": [
+      "Tab — moves focus to the button; a disabled button is skipped",
+      "Enter / Space — activates it (native <button> behaviour)",
+      "Focus ring is --cn-focus plus an inset 2px --cn-chrome-25 shadow, applied on :focus-visible only"
+    ],
+    "notes": "A real <button> element, so role, focus and keyboard activation come free — this is the only component in the library that can be relied on for an actionable control. Two things it does not do for you: it sets no accessible name for an icon-only button (the source still carries the unimplemented 'add icon only aria attr' note), and it sets no aria-busy or aria-disabled while loading. Pass aria-label for icon-only buttons. With asChild the child element owns all of this instead."
+  },
+  "x-examples": {
+    "correct": [
+      "<Button onClick={save}>Save</Button>",
+      "<Button variant='outline' onClick={cancel}>Cancel</Button>",
+      "<Button variant='secondary' theme='danger' onClick={remove}>Delete</Button>",
+      "<Button onClick={async () => await deploy()}>Deploy</Button>",
+      "<Button iconOnly aria-label='Edit' tooltipProps={{ content: 'Edit' }} onClick={edit}><IconV2 name='edit-pencil' /></Button>",
+      "<Button variant='ghost' size='xs' onClick={refresh}><IconV2 name='refresh' />Refresh</Button>"
+    ],
+    "incorrect": [
+      "<Button size='2xs'>Save</Button>",
+      "<Button iconOnly tooltipProps={{}}><IconV2 name='trash' /></Button>",
+      "<Button variant='link' theme='danger'>Delete</Button>",
+      "<Button variant='link' onClick={() => navigate('/settings')}>Settings</Button>",
+      "<Button loading onClick={save}>Saving…</Button>",
+      "<Button iconOnly ignoreIconOnlyTooltip><IconV2 name='trash' /></Button>",
+      "<Button className='bg-red-500 rounded-full'>Delete</Button>"
+    ]
+  },
+  "x-known-gaps": [
+    "BTN-001: CLOSED. size '2xs' and '3xs' used to force icon-only rendering without demanding a tooltip, so <Button size='2xs'>Save</Button> compiled, dropped the text and shipped an unlabelled square. The type now requires a micro-size button to carry an accessible name — aria-label, tooltipProps, or an explicit ignoreIconOnlyTooltip. Text children are still dropped at these sizes, which is deliberate: they exist for very tight spaces and inside composite components, so they are never meant to carry a visible label. What remains: ButtonGroup forwards one size to every button inside it and keeps that behind a documented cast, because narrowing its size would break callers, so a group at a micro size can contain a button that names nothing — each entry in buttonsProps has to supply its own name",
+    "BTN-002: mostly closed. An icon-only button now derives an accessible name from its tooltip — title when present, otherwise content — because a Tooltip is wired as a description (aria-describedby) and is not itself a name. An explicit aria-label still wins. The text is read from string content and from simple ReactNode content, so <span>Delete</span> names a button like the string does. What remains: content with no text of its own, such as a custom component that renders its own copy, gives nothing to copy, so such a button is still nameless unless it passes aria-label. In development Button logs a console.warn for an icon-only button left without a name; ignoreIconOnlyTooltip, aria-label or aria-labelledby silences it",
+    "BTN-003: CLOSED. variant 'ai', 'link' and 'transparent' are single-appearance by design and carry no themes. A theme used to be accepted on them and silently ignored — <Button variant='link' theme='danger'> type-checked and rendered an ordinary link, so the call site read as a danger link that was not red. The type now pairs the two: pass no theme and any variant is fine, pass a theme and the variant must be provably theme-capable. What remains: MoreActionsTooltip, Carousel (previous/next), SidebarTrigger and SplitButton each forward a full-union variant alongside a theme and keep it behind a documented cast, because narrowing a published prop would break its consumers, so those components can still be given an inert theme",
+    "BTN-004: theme='warning' exists in Figma and in code, but button.figma.ts has not been updated to map it, so Code Connect cannot yet produce it. A Code Connect lag, not a design gap",
+    "BTN-005: Figma models size, rounded and iconOnly as twelve separate components rather than variant properties, and covers only sm, md and xs. A design cannot express a 2xs or 3xs button, and one code prop set maps to twelve Code Connect files that must be kept in step by hand",
+    "BTN-006: loading sets data-loading and disables the button but no aria-busy and no aria-disabled. A screen reader user hears the control become unavailable with no indication that work is in progress",
+    "BTN-007: tooltipProps={{}} satisfies the icon-only type requirement and renders no tooltip, because the wrap is gated on isEmpty. The compile-time guarantee can be defeated with an empty object",
+    "BTN-008: in icon-only mode children are filtered to IconV2 by display name and only the first match is rendered. A second icon, a count, or any text is discarded with no warning",
+    "BTN-009: asChild hands semantics to the child, so disabled and type stop having any effect. A disabled asChild button still receives clicks"
+  ],
+  "x-governance": {
+    "systemRules": [
+      "docs/system/accessibility.md",
+      "docs/system/color-system.md",
+      "docs/system/interaction-states.md",
+      "docs/system/visual-primitives.md",
+      "docs/system/typography.md",
+      "docs/system/spacing.md",
+      "docs/system/component-architecture.md",
+      "docs/system/design-to-code-flow.md"
+    ],
+    "componentRules": ["schemas/button.md"]
+  },
+  "x-internal-manifest": "schemas/button.manifest.json"
+}

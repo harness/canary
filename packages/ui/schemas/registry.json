@@ -10,6 +10,60 @@
   },
   "skills": [
     {
+      "id": "canary.button",
+      "name": "Button Component",
+      "status": "stable",
+      "description": "The library's only guaranteed-actionable control — seven emphasis variants, four semantic themes, five sizes, icon-only mode, and automatic loading from a promise-returning onClick",
+      "openapi": "schemas/button.openapi.json",
+      "manifest": "schemas/button.manifest.json",
+      "version": "1.5.5",
+      "package": "@harnessio/ui",
+      "export": "Button",
+      "import": "@harnessio/ui/components",
+      "documentation": "https://harness.io/docs/design-system/button",
+      "consumption": {
+        "claude": {
+          "method": "npm-import",
+          "example": "import { Button } from '@harnessio/ui/components'"
+        },
+        "cursor": {
+          "method": "npm-import",
+          "example": "import { Button } from '@harnessio/ui/components'"
+        },
+        "figma-make": {
+          "method": "http-openapi",
+          "endpoint": "/components/button"
+        }
+      }
+    },
+    {
+      "id": "canary.layout",
+      "name": "Layout Component",
+      "status": "stable",
+      "description": "Arrangement primitives — Horizontal, Vertical, Flex and Grid — and the only sanctioned way to put tokenised space between elements",
+      "openapi": "schemas/layout.openapi.json",
+      "manifest": "schemas/layout.manifest.json",
+      "version": "1.5.5",
+      "package": "@harnessio/ui",
+      "export": "Layout",
+      "import": "@harnessio/ui/components",
+      "documentation": "https://harness.io/docs/design-system/layout",
+      "consumption": {
+        "claude": {
+          "method": "npm-import",
+          "example": "import { Layout } from '@harnessio/ui/components'"
+        },
+        "cursor": {
+          "method": "npm-import",
+          "example": "import { Layout } from '@harnessio/ui/components'"
+        },
+        "figma-make": {
+          "method": "http-openapi",
+          "endpoint": "/components/layout"
+        }
+      }
+    },
+    {
       "id": "canary.status-badge",
       "name": "StatusBadge Component",
       "status": "stable",

@@ -930,6 +930,24 @@ describe('Button', () => {
         expect(warn).not.toHaveBeenCalled()
       })
 
+      test('warns for a micro-size button with no name, and stays quiet once named (BTN-001)', () => {
+        render(
+          <TestWrapper>
+            <Button size="2xs">Save</Button>
+          </TestWrapper>
+        )
+        expect(warn).toHaveBeenCalledWith(expect.stringContaining('no accessible name'))
+        warn.mockClear()
+        render(
+          <TestWrapper>
+            <Button size="3xs" aria-label="Save">
+              Save
+            </Button>
+          </TestWrapper>
+        )
+        expect(warn).not.toHaveBeenCalled()
+      })
+
       test('stays quiet when the name is deliberately opted out', () => {
         renderIconOnly({ ignoreIconOnlyTooltip: true })
         expect(warn).not.toHaveBeenCalled()

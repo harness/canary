@@ -151,7 +151,7 @@ system that otherwise has none.
 ```tsx
 // A row of a label and a control — align, not the stretch default
 <Layout.Horizontal gap="sm" align="center">
-  <IconV2 name="info" />
+  <IconV2 name="info-circle" />
   <Text>Pipeline is running</Text>
 </Layout.Horizontal>
 
@@ -162,7 +162,7 @@ system that otherwise has none.
 </Layout.Vertical>
 
 // A wrapping row — gapY is what keeps the wrapped lines apart
-<Layout.Horizontal gap="xs" gapY="xs" wrap="wrap">
+<Layout.Horizontal gapX="xs" gapY="xs" wrap="wrap">
   <Tag value="react" />
   <Tag value="vite" />
   <Tag value="tailwind" />

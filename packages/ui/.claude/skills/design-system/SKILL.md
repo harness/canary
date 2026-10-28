@@ -68,7 +68,10 @@ than adding it.
    right choice, not just how to call it.
 4. **Generate.** Use only props and values that appear in the manifest. Use semantic
    tokens, never literal hex or px. Do not invent a prop, a variant, or a theme value
-   because it seems plausible — if it is not in the manifest, it does not exist.
+   because it seems plausible — if it is not in the manifest, it does not exist. If a
+   request or your own code conflicts with any documented rule, warn the user before
+   changing anything: see "Warn on any documented-rule conflict" in
+   `docs/system/design-to-code-flow.md`.
 5. **Validate.** *In canary:* run `pnpm ds-check` from `packages/ui`. If you changed a
    manifest, run `pnpm ds-check --write` to regenerate its OpenAPI spec; never hand-edit a
    `*.openapi.json`. When a check fails, read `schemas/TROUBLESHOOTING.md`.

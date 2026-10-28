@@ -104,7 +104,8 @@ export default {
   // UUI-3726 — `disableCompletedFade` on Root adds `.cn-stepper-disable-completed-fade` so
   // completed-flow consumers can skip this mute (full opacity, no hover flash).
   '.cn-stepper:not(.cn-stepper-disable-completed-fade) .cn-stepper-step-item': {
-    '&:has(.cn-stepper-step-completed)': {
+    // UUI-4361 — selected completed stays full contrast. Mute is "you're past this."
+    '&:has(.cn-stepper-step-completed):not(.cn-stepper-step-item-selected)': {
       opacity: '0.6',
 
       '&:hover': {

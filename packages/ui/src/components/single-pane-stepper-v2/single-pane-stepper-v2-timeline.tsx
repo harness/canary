@@ -114,7 +114,9 @@ export function SinglePaneStepperV2Timeline({ children }: { children?: ReactNode
             <li
               key={`${entry.stepId}-${entry.mountGeneration ?? 0}`}
               data-card-id={entry.stepId}
-              className="cn-stepper-step-item cn-single-pane-stepper-v2-step-item"
+              className={cn('cn-stepper-step-item cn-single-pane-stepper-v2-step-item', {
+                'cn-stepper-step-item-selected': entry.stepId === activeStepId
+              })}
             >
               <div
                 className={cn('cn-stepper-step', `cn-stepper-step-${derivedState}`)}

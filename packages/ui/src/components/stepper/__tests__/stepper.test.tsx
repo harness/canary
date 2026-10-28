@@ -489,6 +489,122 @@ describe('Stepper', () => {
       const panel = completedItem?.querySelector('.cn-stepper-nested-step-panel-collapsible')
       expect(panel).toHaveAttribute('data-state', 'closed')
     })
+
+    // Last onboarding card (Generate / Save & deploy) calls complete() with no next step, so Root
+    // value stays on that nested id. Collapse would hide Go to Pipeline Studio / Run pipeline.
+    test('collapsible nested step stays expanded when it completes and remains selected', () => {
+      const { container, rerender } = render(
+        <Stepper.Root value="sub1" onValueChange={vi.fn()} collapsibleNestedSteps>
+          <Stepper.StepGroup value="step1" title="First" hasNestedSteps>
+            <Stepper.Step value="sub1" title="Sub One" state="active">
+              <div>Panel content</div>
+            </Stepper.Step>
+          </Stepper.StepGroup>
+        </Stepper.Root>
+      )
+
+      rerender(
+        <Stepper.Root value="sub1" onValueChange={vi.fn()} collapsibleNestedSteps>
+          <Stepper.StepGroup value="step1" title="First" hasNestedSteps>
+            <Stepper.Step value="sub1" title="Sub One" state="completed">
+              <div>Panel content</div>
+            </Stepper.Step>
+          </Stepper.StepGroup>
+        </Stepper.Root>
+      )
+
+      const completedItem = container.querySelector(
+        '.cn-stepper-nested-step-completed.cn-stepper-nested-step-item-collapsible'
+      )
+      const panel = completedItem?.querySelector('.cn-stepper-nested-step-panel-collapsible')
+      expect(panel).toHaveAttribute('data-state', 'open')
+    })
+
+    test('collapsible completed nested step stays expanded on mount when it is selected', () => {
+      const { container } = render(
+        <Stepper.Root value="sub1" onValueChange={vi.fn()} collapsibleNestedSteps>
+          <Stepper.StepGroup value="step1" title="First" hasNestedSteps>
+            <Stepper.Step value="sub1" title="Sub One" state="completed">
+              <div>Completed panel content</div>
+            </Stepper.Step>
+          </Stepper.StepGroup>
+        </Stepper.Root>
+      )
+
+      const completedItem = container.querySelector(
+        '.cn-stepper-nested-step-completed.cn-stepper-nested-step-item-collapsible'
+      )
+      const panel = completedItem?.querySelector('.cn-stepper-nested-step-panel-collapsible')
+      expect(panel).toHaveAttribute('data-state', 'open')
+    })
+
+    test('collapsible nested step collapses when selection leaves a completed step', () => {
+      const { container, rerender } = render(
+        <Stepper.Root value="sub1" onValueChange={vi.fn()} collapsibleNestedSteps>
+          <Stepper.StepGroup value="step1" title="First" hasNestedSteps>
+            <Stepper.Step value="sub1" title="Sub One" state="completed">
+              <div>Panel content</div>
+            </Stepper.Step>
+          </Stepper.StepGroup>
+        </Stepper.Root>
+      )
+
+      const selectedPanel = container.querySelector(
+        '.cn-stepper-nested-step-completed .cn-stepper-nested-step-panel-collapsible'
+      )
+      expect(selectedPanel).toHaveAttribute('data-state', 'open')
+
+      rerender(
+        <Stepper.Root value="sub2" onValueChange={vi.fn()} collapsibleNestedSteps>
+          <Stepper.StepGroup value="step1" title="First" hasNestedSteps>
+            <Stepper.Step value="sub1" title="Sub One" state="completed">
+              <div>Panel content</div>
+            </Stepper.Step>
+            <Stepper.Step value="sub2" title="Sub Two" state="active">
+              <div>Active panel</div>
+            </Stepper.Step>
+          </Stepper.StepGroup>
+        </Stepper.Root>
+      )
+
+      const completedItem = container.querySelector(
+        '.cn-stepper-nested-step-completed.cn-stepper-nested-step-item-collapsible'
+      )
+      const panel = completedItem?.querySelector('.cn-stepper-nested-step-panel-collapsible')
+      expect(panel).toHaveAttribute('data-state', 'closed')
+    })
+
+    test('collapsible completed selected step item is marked selected so mute does not apply', () => {
+      const { container } = render(
+        <Stepper.Root value="step2" onValueChange={vi.fn()} collapsibleNestedSteps>
+          <Stepper.Step value="step1" title="First" state="completed">
+            <div>Earlier panel</div>
+          </Stepper.Step>
+          <Stepper.Step value="step2" title="Last" state="completed">
+            <div>Handoff panel</div>
+          </Stepper.Step>
+        </Stepper.Root>
+      )
+
+      const items = container.querySelectorAll(':scope .cn-stepper-list > .cn-stepper-step-item')
+      expect(items[0]).not.toHaveClass('cn-stepper-step-item-selected')
+      expect(items[1]).toHaveClass('cn-stepper-step-item-selected')
+    })
+
+    test('completed parent group is marked selected when the selected nested step is inside it', () => {
+      const { container } = render(
+        <Stepper.Root value="sub1" onValueChange={vi.fn()} collapsibleNestedSteps>
+          <Stepper.StepGroup value="step1" title="First" hasNestedSteps>
+            <Stepper.Step value="sub1" title="Sub One" state="completed">
+              <div>Handoff panel</div>
+            </Stepper.Step>
+          </Stepper.StepGroup>
+        </Stepper.Root>
+      )
+
+      const groupItem = container.querySelector(':scope .cn-stepper-list > .cn-stepper-step-item')
+      expect(groupItem).toHaveClass('cn-stepper-step-item-selected')
+    })
   })
 
   describe('Nested Steps', () => {
@@ -1236,10 +1352,15 @@ describe('Stepper', () => {
       const completedItem = stepperStyles[
         '.cn-stepper:not(.cn-stepper-disable-completed-fade) .cn-stepper-step-item'
       ] as {
-        '&:has(.cn-stepper-step-completed)': { opacity: string; '&:hover': { opacity: string } }
+        '&:has(.cn-stepper-step-completed):not(.cn-stepper-step-item-selected)': {
+          opacity: string
+          '&:hover': { opacity: string }
+        }
       }
-      expect(completedItem['&:has(.cn-stepper-step-completed)'].opacity).toBe('0.6')
-      expect(completedItem['&:has(.cn-stepper-step-completed)']['&:hover'].opacity).toBe('1')
+      expect(completedItem['&:has(.cn-stepper-step-completed):not(.cn-stepper-step-item-selected)'].opacity).toBe('0.6')
+      expect(
+        completedItem['&:has(.cn-stepper-step-completed):not(.cn-stepper-step-item-selected)']['&:hover'].opacity
+      ).toBe('1')
     })
   })
 

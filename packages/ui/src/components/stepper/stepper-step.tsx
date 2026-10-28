@@ -8,8 +8,36 @@ import { cn } from '@utils/cn'
 import { useParentStep, useStepperContext } from './stepper-context'
 import { StepperStepProps, type StepState } from './stepper-types'
 
-function isStepExpandedByDefault(state: StepState): boolean {
-  return state === 'active' || state === 'error'
+function isStepExpandedByDefault(state: StepState, isSelected: boolean): boolean {
+  if (state === 'active' || state === 'error') return true
+  // Last card in a finished flow stays selected after complete(), so keep it open for handoff CTAs.
+  return isSelected && (state === 'completed' || state === 'skipped')
+}
+
+function shouldAutoCollapseOnComplete(state: StepState, isSelected: boolean): boolean {
+  return (state === 'completed' || state === 'skipped') && !isSelected
+}
+
+function useCollapsibleStepExpanded(derivedState: StepState, isSelected: boolean) {
+  const [expanded, setExpanded] = useState(() => isStepExpandedByDefault(derivedState, isSelected))
+  const prevDerivedStateRef = useRef(derivedState)
+  const prevIsSelectedRef = useRef(isSelected)
+
+  useEffect(() => {
+    const stateChanged = prevDerivedStateRef.current !== derivedState
+    const selectionChanged = prevIsSelectedRef.current !== isSelected
+    prevDerivedStateRef.current = derivedState
+    prevIsSelectedRef.current = isSelected
+    if (!stateChanged && !selectionChanged) return
+
+    if (derivedState === 'active' || derivedState === 'error') {
+      setExpanded(true)
+    } else if (shouldAutoCollapseOnComplete(derivedState, isSelected)) {
+      setExpanded(false)
+    }
+  }, [derivedState, isSelected])
+
+  return [expanded, setExpanded] as const
 }
 
 // Top-level Step: no ancestor StepGroup (ParentStepProvider). Registers/derives state exactly like
@@ -57,19 +85,8 @@ function TopLevelStep({
   const isActive = derivedState === 'active'
   const isCollapsible = ctx.collapsibleNestedSteps && Boolean(children)
 
-  const [expanded, setExpanded] = useState(() => isStepExpandedByDefault(derivedState))
-  const prevDerivedStateRef = useRef(derivedState)
-
-  useEffect(() => {
-    if (prevDerivedStateRef.current === derivedState) return
-    prevDerivedStateRef.current = derivedState
-
-    if (derivedState === 'active' || derivedState === 'error') {
-      setExpanded(true)
-    } else if (derivedState === 'completed' || derivedState === 'skipped') {
-      setExpanded(false)
-    }
-  }, [derivedState])
+  const isSelected = ctx.value === value
+  const [expanded, setExpanded] = useCollapsibleStepExpanded(derivedState, isSelected)
 
   const stateClass = `cn-stepper-step-${displayState}`
 
@@ -135,15 +152,16 @@ function TopLevelStep({
     <span className={cn('cn-stepper-connector', `cn-stepper-connector-${derivedState}`)} aria-hidden="true" />
   )
 
+  const stepItemClassName = cn('cn-stepper-step-item', {
+    'cn-stepper-step-item-selected': isSelected,
+    'cn-stepper-step-transitioning': isTransitionSource || isTransitionTarget,
+    'cn-stepper-indicator-leaving': isTransitionSource,
+    'cn-stepper-indicator-entering': isTransitionTarget
+  })
+
   if (!isCollapsible) {
     return (
-      <li
-        className={cn('cn-stepper-step-item', {
-          'cn-stepper-step-transitioning': isTransitionSource || isTransitionTarget,
-          'cn-stepper-indicator-leaving': isTransitionSource,
-          'cn-stepper-indicator-entering': isTransitionTarget
-        })}
-      >
+      <li className={stepItemClassName}>
         {stepButton}
 
         {connector}
@@ -159,13 +177,7 @@ function TopLevelStep({
 
   return (
     <CollapsiblePrimitive.Root open={expanded} onOpenChange={setExpanded} asChild>
-      <li
-        className={cn('cn-stepper-step-item', {
-          'cn-stepper-step-transitioning': isTransitionSource || isTransitionTarget,
-          'cn-stepper-indicator-leaving': isTransitionSource,
-          'cn-stepper-indicator-entering': isTransitionTarget
-        })}
-      >
+      <li className={stepItemClassName}>
         <div className="cn-stepper-step-header">
           {stepButton}
           {headerActions ? <span className="cn-stepper-header-actions">{headerActions}</span> : null}
@@ -234,19 +246,8 @@ function NestedStep({
   const isActive = derivedState === 'active'
   const isCollapsible = ctx.collapsibleNestedSteps && Boolean(children)
 
-  const [expanded, setExpanded] = useState(() => isStepExpandedByDefault(derivedState))
-  const prevDerivedStateRef = useRef(derivedState)
-
-  useEffect(() => {
-    if (prevDerivedStateRef.current === derivedState) return
-    prevDerivedStateRef.current = derivedState
-
-    if (derivedState === 'active' || derivedState === 'error') {
-      setExpanded(true)
-    } else if (derivedState === 'completed' || derivedState === 'skipped') {
-      setExpanded(false)
-    }
-  }, [derivedState])
+  const isSelected = ctx.value === value
+  const [expanded, setExpanded] = useCollapsibleStepExpanded(derivedState, isSelected)
 
   const stateClass = `cn-stepper-nested-step-${displayState}`
 

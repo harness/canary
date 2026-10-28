@@ -357,10 +357,13 @@ export function StepperGroup({
     </span>
   )
 
+  const isSelected = ctx.value === value || nestedStepValues.includes(ctx.value)
+
   return (
     <li
       ref={stepItemRef}
       className={cn('cn-stepper-step-item', {
+        'cn-stepper-step-item-selected': isSelected,
         'cn-stepper-step-transitioning': isTransitionSource || isTransitionTarget,
         'cn-stepper-indicator-leaving': isTransitionSource,
         'cn-stepper-indicator-entering': isTransitionTarget

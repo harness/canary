@@ -135,7 +135,8 @@ export default {
 
     // Same mute as `.cn-stepper .cn-stepper-step-item:has(.cn-stepper-step-completed)`.
     // v2 is not inside `.cn-stepper`, so that rule never reaches these cards.
-    '&:has(.cn-stepper-step-completed)': {
+    // UUI-4361 — selected completed stays full contrast.
+    '&:has(.cn-stepper-step-completed):not(.cn-stepper-step-item-selected)': {
       opacity: '0.6',
 
       '&:hover': {

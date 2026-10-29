@@ -34,7 +34,9 @@ export default {
     zIndex: '50',
     minWidth: 'var(--cn-dropdown-min-width)',
     maxWidth: 'var(--cn-size-69)',
-    maxHeight: 'calc(var(--radix-dropdown-menu-content-available-height) - 4px)',
+    // floor lets Radix flip when this side is short; capped at ~50vh so it always fits the roomier side
+    maxHeight:
+      'max(calc(var(--radix-dropdown-menu-content-available-height) - 4px), min(var(--cn-size-60), calc(50vh - 24px)))',
     border: 'var(--cn-dropdown-border) solid var(--cn-border-3)',
     borderRadius: 'var(--cn-dropdown-radius)',
     backgroundColor: 'var(--cn-bg-3)',
@@ -85,10 +87,12 @@ export default {
       overflow: 'hidden',
 
       '&-header': {
+        flexShrink: '0',
         borderBottom: 'var(--cn-dropdown-border) solid var(--cn-border-3)'
       },
 
       '&-footer': {
+        flexShrink: '0',
         borderTop: 'var(--cn-dropdown-border) solid var(--cn-border-3)'
       }
     },

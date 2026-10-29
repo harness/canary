@@ -196,7 +196,7 @@
   },
   "x-examples": {
     "correct": [
-      "<Layout.Horizontal gap='sm' align='center'><IconV2 name='info' /><Text>Pipeline is running</Text></Layout.Horizontal>",
+      "<Layout.Horizontal gap='sm' align='center'><IconV2 name='info-circle' /><Text>Pipeline is running</Text></Layout.Horizontal>",
       "<Layout.Vertical gap='lg'><FormField /><FormField /></Layout.Vertical>",
       "<Layout.Horizontal gap='xs' wrap='wrap' gapY='xs'><Tag value='react' /><Tag value='vite' /></Layout.Horizontal>",
       "<Layout.Grid columns={3} gap='md'><Card /><Card /><Card /></Layout.Grid>",

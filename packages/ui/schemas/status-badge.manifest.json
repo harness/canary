@@ -46,9 +46,8 @@
         "name": "variant",
         "type": "enum",
         "values": ["primary", "secondary", "outline", "ghost", "status"],
-        "default": "primary",
-        "required": true,
-        "codeNote": "Component style variant; 'status' enables pulse animation and indicator dot. Required by the TypeScript type despite the CVA defaultVariants entry."
+        "default": "outline",
+        "codeNote": "Component style variant. Defaults to 'outline' when omitted; pass another only when the design calls for it. 'status' (dot plus label) is the only variant that takes pulse, and the only one that cannot take an icon."
       },
       {
         "name": "theme",
@@ -78,12 +77,14 @@
         "name": "icon",
         "type": "string",
         "trigger": "appearance-override",
+        "neverWhen": { "variant": ["status"] },
         "notes": "Optional IconV2 name (a key of IconNameMapV2). Figma does expose icon controls ('viewIcon#1293:13' plus the instance swap '↳ icon#1299:52'), but those select an icon *instance* while this prop takes an icon *name*, and the icon component set has no Code Connect mapping to recover a name from. Agents must supply the name explicitly."
       },
       {
         "name": "pulse",
         "type": "boolean",
         "trigger": "appearance-override",
+        "onlyWhen": { "variant": ["status"] },
         "notes": "Animates the status indicator dot (CSS animate-pulse). Requires variant='status'; the discriminated union types it as never on every other variant. No Figma property corresponds to it, though the Figma component does draw the indicator dot."
       },
       {

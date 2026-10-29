@@ -162,13 +162,13 @@
             "type": "boolean",
             "description": "Renders through Radix Slot, merging the button's classes and props onto a single child element instead of emitting a <button>. Used to style a router Link as a button. The child then owns the semantics — disabled and type stop applying, so a disabled asChild button is still clickable.",
             "x-provenance": "codeOnly",
-            "x-trigger": "appearance-override"
+            "x-trigger": "native-behaviour"
           },
           "type": {
             "type": "string",
             "description": "Native button type, defaulted to 'button' rather than the HTML default of 'submit', so a Button inside a form does not submit by accident. Pass type='submit' deliberately for the form's submit control.",
             "x-provenance": "codeOnly",
-            "x-trigger": "event-handler"
+            "x-trigger": "native-behaviour"
           },
           "className": {
             "type": "string",

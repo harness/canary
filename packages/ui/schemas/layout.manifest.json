@@ -113,6 +113,13 @@
         "notes": "Layout.Grid only, the grid-template-rows equivalent of columns, with the same inline-style mechanics and the same caution about raw lengths."
       },
       {
+        "name": "as",
+        "type": "string",
+        "trigger": "native-behaviour",
+        "default": "div",
+        "notes": "The element the container renders as (an HTML tag name such as 'section' or 'ul', or a component). Use it when the container needs different semantics, not to change how it looks. The TypeScript type is ElementType."
+      },
+      {
         "name": "className",
         "type": "string",
         "trigger": "appearance-override",
@@ -158,9 +165,7 @@
 
   "accessibility": {
     "role": "none",
-    "keyboardSupport": [
-      "None. Layout renders a plain div and is not focusable, so it adds nothing to the tab order"
-    ],
+    "keyboardSupport": ["None. Layout renders a plain div and is not focusable, so it adds nothing to the tab order"],
     "notes": "Layout is presentational and contributes no semantics. Two consequences worth stating: visual order comes from direction, so 'row-reverse' and 'column-reverse' make the reading order disagree with the DOM order, which is what a screen reader and the tab sequence follow — avoid them for anything interactive. And Layout emits no landmark, list or group semantics, so a toolbar, navigation region or list needs the right element or role around it; a Layout is not a substitute."
   },
 

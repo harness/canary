@@ -145,6 +145,13 @@
             "x-provenance": "codeOnly",
             "x-trigger": "no-figma-component"
           },
+          "as": {
+            "type": "string",
+            "default": "div",
+            "description": "The element the container renders as (an HTML tag name such as 'section' or 'ul', or a component). Use it when the container needs different semantics, not to change how it looks. The TypeScript type is ElementType.",
+            "x-provenance": "codeOnly",
+            "x-trigger": "native-behaviour"
+          },
           "className": {
             "type": "string",
             "description": "Merged through cn() after the variant classes. This is where positioning, sizing, overflow and borders go, since Layout emits none of them. Do not put a gap or a padding here — gap has a prop, and padding belongs to the component being laid out.",

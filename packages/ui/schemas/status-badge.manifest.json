@@ -11,12 +11,12 @@
   },
 
   "figma": {
-    "library": "Harness Design System",
-    "fileKey": "ABC123XYZ",
+    "library": "HDS | Components 3.0",
+    "fileKey": "AIgjIyUzcuZzuVnuoOyhQE",
     "name": "StatusBadge",
-    "exampleNodeId": "1234:5678",
-    "componentKey": "1A2B3C:status-badge",
-    "componentSetKey": null,
+    "exampleNodeId": "1293:5995",
+    "codeConnect": "packages/ui/src/components/status-badge/status-badge.figma.ts",
+    "componentSetKey": "b115d5f844f94a65ee1ab379e75cd382baea256c",
     "variantPropertyMap": {
       "variant": "variant",
       "theme": "theme",

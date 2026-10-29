@@ -87,8 +87,8 @@ Code Repository, AI Code Review); the rule below still applies.
 
 - **Always pass text as `children`.** Text carries all semantic meaning; colour and icon
   are reinforcement only
-- **Pass `variant` explicitly** — the type requires it, and `outline` is the right default
-  when you have no specific reason to choose otherwise
+- **Leave `variant` off to get `outline`**, the default. Pass another variant only when the
+  design calls for it. `pulse` is optional and belongs to `variant="status"` (dot plus label) only
 - Wrap in `aria-live="polite"` when the status can change while on screen (connectivity,
   job progress)
 - Use the shared icon vocabulary so a status reads the same across products:

@@ -158,13 +158,13 @@
       {
         "name": "asChild",
         "type": "boolean",
-        "trigger": "appearance-override",
+        "trigger": "native-behaviour",
         "notes": "Renders through Radix Slot, merging the button's classes and props onto a single child element instead of emitting a <button>. Used to style a router Link as a button. The child then owns the semantics — disabled and type stop applying, so a disabled asChild button is still clickable."
       },
       {
         "name": "type",
         "type": "string",
-        "trigger": "event-handler",
+        "trigger": "native-behaviour",
         "notes": "Native button type, defaulted to 'button' rather than the HTML default of 'submit', so a Button inside a form does not submit by accident. Pass type='submit' deliberately for the form's submit control."
       },
       {

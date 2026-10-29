@@ -7,7 +7,6 @@
   "required": ["id", "status", "code", "purpose", "props", "tokens", "governance"],
   "additionalProperties": false,
   "properties": {
-
     "$schema": { "type": "string" },
 
     "id": {
@@ -85,7 +84,6 @@
       "required": ["shared", "designOnly", "codeOnly"],
       "additionalProperties": false,
       "properties": {
-
         "shared": {
           "type": "array",
           "description": "Props that exist as both a Figma variant/property and a code prop.",
@@ -114,9 +112,7 @@
               "codeNote": { "type": "string" },
               "figmaNote": { "type": "string" }
             },
-            "allOf": [
-              { "if": { "properties": { "type": { "const": "enum" } } }, "then": { "required": ["values"] } }
-            ]
+            "allOf": [{ "if": { "properties": { "type": { "const": "enum" } } }, "then": { "required": ["values"] } }]
           }
         },
 
@@ -175,11 +171,34 @@
                   "runtime-state",
                   "data-binding",
                   "a11y-only",
+                  "native-behaviour",
                   "content",
                   "appearance-override",
                   "no-figma-component"
                 ],
-                "description": "Why this prop has no Figma counterpart. The first four are inherent — a static design file can never express them, so don't expect a Figma equivalent to appear. The last two are gaps in the Figma library rather than impossibilities: the prop could be represented in Figma and isn't yet. event-handler: callback/interaction. runtime-state: value changes while running. data-binding: value supplied from data at runtime. a11y-only: exists solely for assistive technology. content: text or child content Figma could hold but doesn't expose as a control. appearance-override: visual escape hatch (icon name, className) not surfaced as a Figma property. no-figma-component: the component itself has no Figma counterpart, so none of its props can have one — use this only on a manifest with no 'figma' block, and record the absence in knownGaps."
+                "description": "Why this prop has no Figma counterpart. The first five are inherent — a static design file can never express them, so don't expect a Figma equivalent to appear. The last two are gaps in the Figma library rather than impossibilities: the prop could be represented in Figma and isn't yet. event-handler: callback/interaction. runtime-state: value changes while running. data-binding: value supplied from data at runtime. a11y-only: exists solely for assistive technology. native-behaviour: passes through or switches a browser-native behaviour (a button's type, rendering as another element via asChild) that a design file has no concept of. content: text or child content Figma could hold but doesn't expose as a control. appearance-override: visual escape hatch (icon name, className) not surfaced as a Figma property. no-figma-component: the component itself has no Figma counterpart, so none of its props can have one — use this only on a manifest with no 'figma' block, and record the absence in knownGaps."
+              },
+              "onlyWhen": {
+                "type": "object",
+                "minProperties": 1,
+                "additionalProperties": {
+                  "type": "array",
+                  "items": { "type": "string" },
+                  "minItems": 1,
+                  "uniqueItems": true
+                },
+                "description": "The prop applies only when every listed enum prop has one of the listed values, e.g. {\"variant\": [\"status\"]}. Outside that, the component's types reject it. Each key must be an enum prop in this manifest and each value one of its values; ds-check --schema verifies that."
+              },
+              "neverWhen": {
+                "type": "object",
+                "minProperties": 1,
+                "additionalProperties": {
+                  "type": "array",
+                  "items": { "type": "string" },
+                  "minItems": 1,
+                  "uniqueItems": true
+                },
+                "description": "The prop must not be passed when any listed enum prop has one of the listed values, e.g. {\"variant\": [\"status\"]}. Same key and value rules as onlyWhen."
               },
               "required": {
                 "type": "boolean",
@@ -188,9 +207,7 @@
               },
               "notes": { "type": "string" }
             },
-            "allOf": [
-              { "if": { "properties": { "type": { "const": "enum" } } }, "then": { "required": ["values"] } }
-            ]
+            "allOf": [{ "if": { "properties": { "type": { "const": "enum" } } }, "then": { "required": ["values"] } }]
           }
         }
       }
@@ -331,11 +348,18 @@
           "description": "[DEPRECATED] Use rulesDocs array instead. Kept for backwards compatibility during migration."
         },
         "note": { "type": "string" },
-        "tokenStatus": { "type": "string", "description": "Brief status of token ref verification (e.g., 'color refs verified; sizing unverified')." }
+        "tokenStatus": {
+          "type": "string",
+          "description": "Brief status of token ref verification (e.g., 'color refs verified; sizing unverified')."
+        }
       }
     },
 
-    "knownGaps": { "type": "array", "items": { "type": "string" }, "description": "Critical gaps with cross-references to rule IDs in the pattern doc (e.g., 'SBD-008: no aria-live region')." },
+    "knownGaps": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "Critical gaps with cross-references to rule IDs in the pattern doc (e.g., 'SBD-008: no aria-live region')."
+    },
 
     "deprecated": { "type": "boolean", "default": false },
     "supersededBy": { "type": ["string", "null"], "default": null }

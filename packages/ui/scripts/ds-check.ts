@@ -27,6 +27,7 @@ import { fileURLToPath } from 'url'
 // Plain 'ajv' defaults to draft-07 and throws on the $schema ref.
 import Ajv from 'ajv/dist/2020.js'
 import { format as prettierFormat, resolveConfig as prettierResolveConfig } from 'prettier'
+import * as ts from 'typescript'
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
 const PACKAGE_ROOT = path.resolve(__dirname, '..')
@@ -138,7 +139,61 @@ function validateSchema(
   const conditionErrors = conditionalPropErrors(manifest)
   if (conditionErrors.length > 0) return { valid: false, errors: conditionErrors }
 
+  const contentErrors = [...placeholderErrors(manifest), ...exampleIconErrors(manifest)]
+  if (contentErrors.length > 0) return { valid: false, errors: contentErrors }
+
   return { valid: true }
+}
+
+/**
+ * Scaffold values from TEMPLATE.manifest.json and from the docs. The schema only checks the
+ * *format* of the Figma identifiers, so a copied placeholder like "1234:5678" is valid
+ * against it and would otherwise ship as if it pointed at a real node.
+ */
+const FIGMA_PLACEHOLDERS = [/^ABC123/i, /^1A2B3C/i, /^1234:5678$/, /\{[^}]*\}/]
+
+function placeholderErrors(manifest: Record<string, unknown>): Array<{ message: string; instancePath: string }> {
+  const figma = manifest.figma as Record<string, unknown> | undefined
+  if (!figma) return []
+  return Object.entries(figma)
+    .filter(([, value]) => typeof value === 'string' && FIGMA_PLACEHOLDERS.some(re => re.test(value)))
+    .map(([key, value]) => ({
+      instancePath: `/figma/${key}`,
+      message: `figma.${key} is a template placeholder ("${value}"); replace it with the real value from Figma`
+    }))
+}
+
+/** Icon names the library actually ships: the keys of IconNameMapV2. */
+function loadIconNames(): Set<string> {
+  const file = path.resolve(PACKAGE_ROOT, 'src/components/icon-v2/icon-name-map.ts')
+  const src = fs.readFileSync(file, 'utf-8')
+  const body = src.slice(src.indexOf('export const IconNameMapV2'))
+  return new Set([...body.matchAll(/^\s+['"]?([a-z0-9][a-z0-9-]*)['"]?:/gm)].map(m => m[1]))
+}
+
+/**
+ * A correct example that names an icon the library doesn't have teaches agents a prop value
+ * the type rejects. Only `examples.correct` is checked: `incorrect` examples may be wrong on purpose.
+ */
+function exampleIconErrors(manifest: Record<string, unknown>): Array<{ message: string; instancePath: string }> {
+  const correct = (manifest.examples as { correct?: unknown } | undefined)?.correct
+  if (!Array.isArray(correct)) return []
+  const known = loadIconNames()
+  const errors: Array<{ message: string; instancePath: string }> = []
+  correct.forEach((example, index) => {
+    if (typeof example !== 'string') return
+    const names = [
+      ...example.matchAll(/\bicon=(['"])([^'"]+)\1/g),
+      ...example.matchAll(/<IconV2\b[^>]*?\bname=(['"])([^'"]+)\1/g)
+    ].map(m => m[2])
+    for (const name of names.filter(n => !known.has(n))) {
+      errors.push({
+        instancePath: `/examples/correct/${index}`,
+        message: `example uses icon "${name}", which is not a key of IconNameMapV2`
+      })
+    }
+  })
+  return errors
 }
 
 /**
@@ -509,6 +564,116 @@ function declaredPropNames(src: string): Set<string> {
     }
   }
   return names
+}
+
+/**
+ * `onlyWhen` / `neverWhen` are claims about the component's TypeScript types: "pulse is
+ * rejected unless variant is 'status'". Nothing else checks that. This compiles a throwaway
+ * probe against the real types — one assignment per case — and requires the allowed
+ * combinations to compile and the forbidden ones to fail.
+ */
+function validateConditionalTypes(manifest: Record<string, unknown>): { valid: boolean; errors?: string[] } {
+  const code = manifest.code as Record<string, unknown> | undefined
+  const codePath = typeof code?.path === 'string' ? code.path : undefined
+  const exportName = typeof code?.export === 'string' ? code.export : undefined
+  if (!codePath || !exportName) return { valid: true }
+
+  const props = (manifest.props ?? {}) as Record<string, Array<Record<string, unknown>>>
+  const all = (['shared', 'designOnly', 'codeOnly'] as const).flatMap(bucket => props[bucket] ?? [])
+  const enums = new Map(all.filter(p => Array.isArray(p.values)).map(p => [String(p.name), p]))
+
+  interface Case {
+    line: string
+    describe: string
+    expect: 'accept' | 'reject'
+  }
+  const cases: Case[] = []
+  const lit = (v: string) => JSON.stringify(v)
+  const add = (prop: string, target: string | null, value: string | null, expect: Case['expect'], why: string) => {
+    const fields = [...(target && value !== null ? [`${target}: ${lit(value)}`] : []), `${prop}: sample_${prop}`]
+    cases.push({
+      line: `const _${cases.length}: P = { ${fields.join(', ')} }`,
+      describe: `${prop} with ${target && value !== null ? `${target}=${lit(value)}` : `${target ?? 'its condition'} omitted`} ${why}`,
+      expect
+    })
+  }
+
+  const sampled = new Set<string>()
+  for (const prop of all) {
+    const name = String(prop.name)
+    for (const field of ['onlyWhen', 'neverWhen'] as const) {
+      const condition = prop[field] as Record<string, string[]> | undefined
+      if (!condition) continue
+      sampled.add(name)
+      for (const [target, listed] of Object.entries(condition)) {
+        const every = (enums.get(target)?.values ?? []) as string[]
+        const others = every.filter(v => !listed.includes(v))
+        const fallback = enums.get(target)?.default as string | undefined
+        if (field === 'onlyWhen') {
+          listed.forEach(v => add(name, target, v, 'accept', 'should be accepted (onlyWhen)'))
+          others.forEach(v => add(name, target, v, 'reject', 'should be rejected (onlyWhen)'))
+          if (fallback !== undefined && !listed.includes(fallback)) {
+            add(name, null, null, 'reject', `should be rejected: the default ${target} is "${fallback}" (onlyWhen)`)
+          }
+        } else {
+          listed.forEach(v => add(name, target, v, 'reject', 'should be rejected (neverWhen)'))
+          others.forEach(v => add(name, target, v, 'accept', 'should be accepted (neverWhen)'))
+        }
+      }
+    }
+  }
+  if (cases.length === 0) return { valid: true }
+
+  const probePath = path.resolve(PACKAGE_ROOT, 'scripts/.ds-check-probe.tsx')
+  const modulePath = resolveCodePath(codePath).replace(/\.tsx?$/, '')
+  const header = [
+    `import type * as React from 'react'`,
+    `import { ${exportName} } from ${lit(modulePath)}`,
+    `type P = React.ComponentProps<typeof ${exportName}>`,
+    // Any value the prop accepts on any union member, so the probe never guesses a literal
+    `type Val<K extends string> = P extends unknown ? (K extends keyof P ? NonNullable<P[K]> : never) : never`,
+    ...[...sampled].map(n => `declare const sample_${n}: Val<${lit(n)}>`)
+  ]
+  const text = [...header, ...cases.map(c => c.line)].join('\n') + '\n'
+
+  const configPath = path.resolve(PACKAGE_ROOT, 'tsconfig.json')
+  const config = ts.readConfigFile(configPath, ts.sys.readFile)
+  const parsed = ts.parseJsonConfigFileContent(config.config, ts.sys, PACKAGE_ROOT)
+  const options: ts.CompilerOptions = { ...parsed.options, noEmit: true }
+  const host = ts.createCompilerHost(options)
+  const getSourceFile = host.getSourceFile.bind(host)
+  host.getSourceFile = (file, languageVersion, ...rest) =>
+    path.resolve(file) === probePath
+      ? ts.createSourceFile(file, text, languageVersion, true, ts.ScriptKind.TSX)
+      : getSourceFile(file, languageVersion, ...rest)
+  const fileExists = host.fileExists.bind(host)
+  host.fileExists = file => path.resolve(file) === probePath || fileExists(file)
+
+  const program = ts.createProgram([probePath], options, host)
+  const probe = program.getSourceFile(probePath)
+  if (!probe) return { valid: false, errors: ['could not build the type probe'] }
+
+  const failedLines = new Map<number, string>()
+  const setupErrors: string[] = []
+  for (const d of program.getSemanticDiagnostics(probe)) {
+    const line = d.start === undefined ? -1 : ts.getLineAndCharacterOfPosition(probe, d.start).line - header.length
+    const message = ts.flattenDiagnosticMessageText(d.messageText, ' ')
+    if (line >= 0 && line < cases.length) failedLines.set(line, message)
+    else setupErrors.push(message)
+  }
+  if (setupErrors.length > 0) {
+    return { valid: false, errors: [`cannot probe the types of ${exportName}: ${setupErrors[0]}`] }
+  }
+
+  const errors: string[] = []
+  cases.forEach((c, i) => {
+    const rejected = failedLines.has(i)
+    if (c.expect === 'reject' && !rejected) errors.push(`${c.describe}, but the type accepts it`)
+    if (c.expect === 'accept' && rejected) {
+      errors.push(`${c.describe}, but the type rejects it: ${failedLines.get(i)}`)
+    }
+  })
+  return errors.length > 0 ? { valid: false, errors } : { valid: true }
 }
 
 function validateSourceProps(manifest: Record<string, unknown>): {
@@ -990,6 +1155,15 @@ async function runChecks(options: CheckOptions): Promise<void> {
           componentPassed = false
         } else if (sourceResult.skipped && options.verbose) {
           console.log(`   ℹ️  source check skipped: ${sourceResult.skipped}`)
+        }
+
+        if (sourceResult.valid) {
+          const typeResult = validateConditionalTypes(manifest)
+          if (!typeResult.valid) {
+            console.error(`❌ ${componentName}: onlyWhen/neverWhen are not enforced by the types`)
+            typeResult.errors?.forEach(err => console.error(`   ${err}`))
+            componentPassed = false
+          }
         }
       }
 

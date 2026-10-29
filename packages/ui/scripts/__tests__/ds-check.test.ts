@@ -398,6 +398,78 @@ describe('ds-check', () => {
       )
     })
 
+    // The schema only checks the format of Figma ids, so a copied template value would pass it.
+    it('should fail --schema when the figma block still holds a template placeholder', async () => {
+      await withProbeManifest(
+        'placeholder-figma-probe',
+        manifest => {
+          manifest.figma.exampleNodeId = '1234:5678'
+          manifest.figma.componentSetKey = 'ABC123XYZ'
+        },
+        async () => {
+          const result = await runDsCheck(['--schema'])
+          const output = result.stdout + result.stderr
+          expect(result.exitCode).toBe(1)
+          expect(output).toContain('figma.exampleNodeId is a template placeholder')
+          expect(output).toContain('figma.componentSetKey is a template placeholder')
+        }
+      )
+    })
+
+    it('should fail --schema when a correct example names an icon that does not exist', async () => {
+      await withProbeManifest(
+        'bad-icon-example-probe',
+        manifest => {
+          manifest.examples.correct = ["<StatusBadge icon='alert'>Attention</StatusBadge>"]
+        },
+        async () => {
+          const result = await runDsCheck(['--schema'])
+          expect(result.exitCode).toBe(1)
+          expect(result.stdout + result.stderr).toContain('icon "alert", which is not a key of IconNameMapV2')
+        }
+      )
+    })
+
+    // onlyWhen / neverWhen are claims about the component's types, so --source compiles the
+    // real types against each case rather than trusting the manifest.
+    it('should fail --source when the types accept a prop that neverWhen says is rejected', async () => {
+      await withProbeManifest(
+        'unenforced-never-when-probe',
+        manifest => {
+          // size is accepted on every variant, so this rule is not enforced by the type
+          manifest.props.shared.find((prop: { name: string }) => prop.name === 'size').neverWhen = {
+            variant: ['outline']
+          }
+        },
+        async () => {
+          const result = await runDsCheck(['--source'])
+          expect(result.exitCode).toBe(1)
+          expect(result.stdout + result.stderr).toContain(
+            'size with variant="outline" should be rejected (neverWhen), but the type accepts it'
+          )
+        }
+      )
+    })
+
+    it('should fail --source when onlyWhen excludes a variant the types actually allow', async () => {
+      await withProbeManifest(
+        'unenforced-only-when-probe',
+        manifest => {
+          // pulse is only typed for variant 'status', so claiming it for 'outline' is wrong
+          manifest.props.codeOnly.find((prop: { name: string }) => prop.name === 'pulse').onlyWhen = {
+            variant: ['outline']
+          }
+        },
+        async () => {
+          const result = await runDsCheck(['--source'])
+          expect(result.exitCode).toBe(1)
+          expect(result.stdout + result.stderr).toContain(
+            'pulse with variant="outline" should be accepted (onlyWhen), but the type rejects it'
+          )
+        }
+      )
+    })
+
     it('should still skip --source cleanly when there are no enum props to verify', async () => {
       await withProbeManifest(
         'no-enums-probe',

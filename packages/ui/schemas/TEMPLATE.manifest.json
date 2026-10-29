@@ -22,14 +22,8 @@
 
   "purpose": {
     "summary": "One sentence describing what this component does and when to use it.",
-    "useWhen": [
-      "Use case 1",
-      "Use case 2"
-    ],
-    "doNotUseWhen": [
-      "Anti-pattern 1",
-      "Alternative component reference"
-    ]
+    "useWhen": ["Use case 1", "Use case 2"],
+    "doNotUseWhen": ["Anti-pattern 1", "Alternative component reference"]
   },
 
   "props": {

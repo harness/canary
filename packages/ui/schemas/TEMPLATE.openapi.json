@@ -95,9 +95,7 @@
       "docs/system/color-system.md",
       "docs/system/visual-primitives.md"
     ],
-    "componentRules": [
-      "schemas/{component-kebab}.md"
-    ]
+    "componentRules": ["schemas/{component-kebab}.md"]
   },
   "x-internal-manifest": "schemas/{component-kebab}.manifest.json"
 }

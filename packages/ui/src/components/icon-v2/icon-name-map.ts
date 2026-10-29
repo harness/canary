@@ -258,6 +258,7 @@ import GripDots from './icons/grip-dots.svg'
 import Group1 from './icons/group-1.svg'
 import HalfMoon from './icons/half-moon.svg'
 import HarnessPlugins from './icons/harness-plugins.svg'
+import HarnessVibe from './icons/harness-vibe.svg'
 import Hashtag from './icons/hashtag.svg'
 import Header from './icons/header.svg'
 import HeadsetHelp from './icons/headset-help.svg'
@@ -799,6 +800,7 @@ export const IconNameMapV2 = {
   'group-1': Group1,
   'half-moon': HalfMoon,
   'harness-plugins': HarnessPlugins,
+  'harness-vibe': HarnessVibe,
   hashtag: Hashtag,
   header: Header,
   'headset-help': HeadsetHelp,

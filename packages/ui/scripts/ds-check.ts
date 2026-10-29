@@ -135,7 +135,51 @@ function validateSchema(
     return { valid: false, errors: validate.errors ?? [] }
   }
 
+  const conditionErrors = conditionalPropErrors(manifest)
+  if (conditionErrors.length > 0) return { valid: false, errors: conditionErrors }
+
   return { valid: true }
+}
+
+/**
+ * `onlyWhen` / `neverWhen` name another prop and some of its values. JSON Schema can't check
+ * that those exist in the same manifest, so a typo (`"varient"`, `"statuss"`) would silently
+ * describe a rule that never applies.
+ */
+function conditionalPropErrors(manifest: Record<string, unknown>): Array<{ message: string; instancePath: string }> {
+  const props = (manifest.props ?? {}) as Record<string, Array<Record<string, unknown>>>
+  const all = (['shared', 'designOnly', 'codeOnly'] as const).flatMap(bucket =>
+    (props[bucket] ?? []).map((prop, index) => ({ bucket, index, prop }))
+  )
+  const enums = new Map(
+    all.filter(({ prop }) => Array.isArray(prop.values)).map(({ prop }) => [String(prop.name), prop.values as string[]])
+  )
+  const errors: Array<{ message: string; instancePath: string }> = []
+
+  for (const { bucket, index, prop } of all) {
+    for (const field of ['onlyWhen', 'neverWhen'] as const) {
+      const condition = prop[field] as Record<string, string[]> | undefined
+      if (!condition) continue
+      for (const [target, values] of Object.entries(condition)) {
+        const at = `/props/${bucket}/${index}/${field}/${target}`
+        const allowed = enums.get(target)
+        if (!allowed) {
+          errors.push({
+            instancePath: at,
+            message: `"${prop.name}" ${field} refers to "${target}", which is not an enum prop in this manifest`
+          })
+          continue
+        }
+        for (const value of values.filter(v => !allowed.includes(v))) {
+          errors.push({
+            instancePath: at,
+            message: `"${prop.name}" ${field} lists "${value}", which is not a value of "${target}"`
+          })
+        }
+      }
+    }
+  }
+  return errors
 }
 
 /**
@@ -317,8 +361,11 @@ function extractBlock(src: string, from: number): string | undefined {
   return undefined
 }
 
-/** Keys declared directly in an object-literal block, ignoring nested levels. */
-function topLevelKeys(block: string): string[] {
+/**
+ * Keys declared directly in an object-literal block, ignoring nested levels. Object literals
+ * separate entries with commas; type literals may also use newlines or semicolons (typeMembers).
+ */
+function topLevelKeys(block: string, typeMembers = false): string[] {
   const keys: string[] = []
   let depth = 0
   let atKeyPosition = true
@@ -329,7 +376,7 @@ function topLevelKeys(block: string): string[] {
     // A quoted key (`'forest-green': '…'`) must be read before the string-literal skip
     // below, which would otherwise swallow the key and drop the variant entirely.
     if (depth === 0 && atKeyPosition && (ch === '"' || ch === "'")) {
-      const quoted = /^['"]([\w-]+)['"]\s*:/.exec(block.slice(i))
+      const quoted = /^['"]([\w-]+)['"]\??\s*:/.exec(block.slice(i))
       if (quoted) {
         keys.push(quoted[1])
         i += quoted[0].length - 1
@@ -363,10 +410,10 @@ function topLevelKeys(block: string): string[] {
 
     if (ch === '{' || ch === '[' || ch === '(') depth++
     else if (ch === '}' || ch === ']' || ch === ')') depth--
-    else if (ch === ',' && depth === 0) atKeyPosition = true
+    else if ((ch === ',' || (typeMembers && (ch === ';' || ch === '\n'))) && depth === 0) atKeyPosition = true
     else if (depth === 0 && atKeyPosition && /[\w'"]/.test(ch)) {
       const rest = block.slice(i)
-      const m = /^['"]?([\w-]+)['"]?\s*:/.exec(rest)
+      const m = /^['"]?([\w-]+)['"]?\??\s*:/.exec(rest)
       if (m) {
         keys.push(m[1])
         i += m[0].length - 1
@@ -417,6 +464,51 @@ function unionValuesFor(src: string, propName: string): string[] {
   if (!/^[A-Za-z_$][\w$]*$/.test(alias)) return []
   const aliasDecl = new RegExp(`type\\s+${alias}\\s*=\\s*([^;\\n]*(?:\\n\\s*\\|[^;\\n]*)*)`, 'm').exec(src)
   return aliasDecl ? readLiterals(aliasDecl[1]) : []
+}
+
+/**
+ * Prop names declared in the component's own `…Props` types: every key of every object
+ * literal inside a `type XProps = …` or `interface XProps { … }` declaration, including
+ * the literals on each side of an intersection or union. Props that only arrive through
+ * a spread type (React.HTMLAttributes and the like) are not declared here, so they are
+ * never reported as missing from the manifest.
+ */
+function declaredPropNames(src: string): Set<string> {
+  const names = new Set<string>()
+  const decl = /\b(?:type\s+\w*Props\w*[^=\n]*=|interface\s+\w*Props\w*[^{\n]*)/g
+
+  for (const m of src.matchAll(decl)) {
+    let i = (m.index ?? 0) + m[0].length
+    let depth = 0
+
+    while (i < src.length) {
+      const ch = src[i]
+      if (ch === '"' || ch === "'" || ch === '`') {
+        const next = skipString(src, i, ch)
+        if (next === -1) break
+        i = next
+        continue
+      }
+      if (ch === '{' && depth === 0) {
+        const block = extractBlock(src, i)
+        if (block === undefined) break
+        for (const key of topLevelKeys(block, true)) names.add(key)
+        i += block.length + 2
+        continue
+      }
+      if (ch === '(' || ch === '[' || ch === '<') depth++
+      else if (ch === ')' || ch === ']' || (ch === '>' && src[i - 1] !== '=')) depth--
+      else if (depth <= 0 && ch === ';') break
+      else if (depth <= 0 && ch === '\n') {
+        // A declaration continues while a line ends or the next begins with & or |.
+        const before = src.slice(0, i).trimEnd().slice(-1)
+        const after = src.slice(i).trimStart()[0]
+        if (!'&|=,<'.includes(before) && after !== '&' && after !== '|') break
+      }
+      i++
+    }
+  }
+  return names
 }
 
 function validateSourceProps(manifest: Record<string, unknown>): {
@@ -538,6 +630,44 @@ function validateSourceProps(manifest: Record<string, unknown>): {
     return unverifiable('not declared via CVA variants or a TypeScript union', unchecked)
   }
 
+  /**
+   * Prop names, both directions. The enum check above only sees props that have values, so
+   * a prop added to, renamed in or removed from the component would leave the manifest wrong
+   * with every gate green. Declared props must appear in the manifest (any bucket, since
+   * designOnly props are still documented), and manifest props must exist in the source.
+   * A manifest prop that is not declared in the component's own types passes only when it is
+   * an HTML attribute the component inherits.
+   */
+  const declared = declaredPropNames(src)
+  // Props typed through VariantProps<typeof x> are the CVA variant names, not written in a type literal.
+  for (const block of variantsBlocks) for (const key of topLevelKeys(block)) declared.add(key)
+  const inherited = (n: string) =>
+    /^(aria|data)-/.test(n) ||
+    ['className', 'children', 'style', 'id', 'title', 'disabled', 'onClick', 'type'].includes(n)
+  const manifestNames = new Set(
+    (['shared', 'designOnly', 'codeOnly'] as const).flatMap(bucket =>
+      ((props[bucket] ?? []) as Array<Record<string, unknown>>).map(p => String(p.name))
+    )
+  )
+  const sourceChecked = new Set(checkable.map(({ prop }) => String(prop.name)))
+
+  if (declared.size === 0 && sourceChecked.size > 0) {
+    errors.push(
+      `cannot verify prop names against ${path.basename(codePath)}: no "type …Props" or "interface …Props" with declared props found`
+    )
+  } else {
+    for (const name of sourceChecked) {
+      if (!declared.has(name) && !inherited(name)) {
+        errors.push(`props "${name}": in the manifest but not declared in ${path.basename(codePath)}`)
+      }
+    }
+    for (const name of declared) {
+      if (!manifestNames.has(name)) {
+        errors.push(`props "${name}": declared in ${path.basename(codePath)} but not in the manifest`)
+      }
+    }
+  }
+
   return { valid: errors.length === 0, errors: errors.length > 0 ? errors : undefined }
 }
 
@@ -605,6 +735,8 @@ function buildOpenApi(manifest: Record<string, unknown>, version: string): Recor
         ...(description ? { description: String(description) } : {}),
         'x-provenance': provenance,
         ...(prop.trigger ? { 'x-trigger': String(prop.trigger) } : {}),
+        ...(prop.onlyWhen ? { 'x-only-when': prop.onlyWhen } : {}),
+        ...(prop.neverWhen ? { 'x-never-when': prop.neverWhen } : {}),
         ...(prop.transform ? { 'x-transform': String(prop.transform) } : {})
       }
       if (prop.required === true) required.push(name)

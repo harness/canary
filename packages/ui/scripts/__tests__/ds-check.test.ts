@@ -32,6 +32,16 @@ function runDsCheck(flags: string[] = []): Promise<{ exitCode: number; stdout: s
   })
 }
 
+/**
+ * These probes are partial manifests pointed at other components, so they exercise the enum
+ * check only. The prop-name check, which compares the full prop list, correctly fails them;
+ * assert on the enum outcome alone.
+ */
+function expectNoEnumProblems(output: string): void {
+  expect(output).not.toContain('cannot verify enum')
+  expect(output).not.toMatch(/props\.(shared|codeOnly) "/)
+}
+
 const STATUS_BADGE_MANIFEST = path.resolve(PACKAGE_ROOT, 'schemas/status-badge.manifest.json')
 
 /**
@@ -245,8 +255,7 @@ describe('ds-check', () => {
         },
         async () => {
           const result = await runDsCheck(['--source'])
-          expect(result.exitCode).toBe(0)
-          expect(result.stdout).toContain('✅ union-probe')
+          expectNoEnumProblems(result.stdout + result.stderr)
         }
       )
     })
@@ -279,8 +288,7 @@ describe('ds-check', () => {
         },
         async () => {
           const result = await runDsCheck(['--source'])
-          expect(result.exitCode).toBe(0)
-          expect(result.stdout).toContain('✅ alias-probe')
+          expectNoEnumProblems(result.stdout + result.stderr)
         }
       )
     })
@@ -300,8 +308,7 @@ describe('ds-check', () => {
         },
         async () => {
           const result = await runDsCheck(['--source'])
-          expect(result.exitCode).toBe(0)
-          expect(result.stdout).toContain('✅ multi-cva-probe')
+          expectNoEnumProblems(result.stdout + result.stderr)
         }
       )
     })
@@ -325,6 +332,72 @@ describe('ds-check', () => {
       )
     })
 
+    // The enum check never looked at props without values, so a prop added to, removed from or
+    // renamed in the component left the manifest wrong with every gate green.
+    it('should fail --source when a manifest prop does not exist in the component', async () => {
+      await withProbeManifest(
+        'ghost-prop-probe',
+        manifest => {
+          manifest.props.codeOnly.push({ name: 'ghostProp', type: 'string' })
+        },
+        async () => {
+          const result = await runDsCheck(['--source'])
+          expect(result.exitCode).toBe(1)
+          expect(result.stdout + result.stderr).toContain('"ghostProp": in the manifest but not declared')
+        }
+      )
+    })
+
+    it('should fail --source when the component declares a prop the manifest omits', async () => {
+      await withProbeManifest(
+        'missing-prop-probe',
+        manifest => {
+          manifest.props.codeOnly = manifest.props.codeOnly.filter((prop: { name: string }) => prop.name !== 'pulse')
+        },
+        async () => {
+          const result = await runDsCheck(['--source'])
+          expect(result.exitCode).toBe(1)
+          expect(result.stdout + result.stderr).toContain(
+            '"pulse": declared in status-badge.tsx but not in the manifest'
+          )
+        }
+      )
+    })
+
+    // onlyWhen / neverWhen name another prop and its values; a typo would describe a rule
+    // that never applies, so --schema must reject references that do not resolve.
+    it('should fail --schema when onlyWhen names a value the enum does not have', async () => {
+      await withProbeManifest(
+        'bad-condition-value-probe',
+        manifest => {
+          manifest.props.codeOnly.find((prop: { name: string }) => prop.name === 'pulse').onlyWhen = {
+            variant: ['statuss']
+          }
+        },
+        async () => {
+          const result = await runDsCheck(['--schema'])
+          expect(result.exitCode).toBe(1)
+          expect(result.stdout + result.stderr).toContain('"statuss", which is not a value of "variant"')
+        }
+      )
+    })
+
+    it('should fail --schema when neverWhen names a prop that is not an enum in the manifest', async () => {
+      await withProbeManifest(
+        'bad-condition-prop-probe',
+        manifest => {
+          manifest.props.codeOnly.find((prop: { name: string }) => prop.name === 'icon').neverWhen = {
+            varient: ['status']
+          }
+        },
+        async () => {
+          const result = await runDsCheck(['--schema'])
+          expect(result.exitCode).toBe(1)
+          expect(result.stdout + result.stderr).toContain('"varient", which is not an enum prop')
+        }
+      )
+    })
+
     it('should still skip --source cleanly when there are no enum props to verify', async () => {
       await withProbeManifest(
         'no-enums-probe',
@@ -334,8 +407,7 @@ describe('ds-check', () => {
         },
         async () => {
           const result = await runDsCheck(['--source'])
-          expect(result.exitCode).toBe(0)
-          expect(result.stdout).toContain('✅ no-enums-probe')
+          expectNoEnumProblems(result.stdout + result.stderr)
         }
       )
     })

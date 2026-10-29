@@ -29,7 +29,7 @@ const statusBadgeVariants = cva('cn-badge inline-flex w-fit items-center transit
     }
   },
   defaultVariants: {
-    variant: 'primary',
+    variant: 'outline',
     size: 'md',
     theme: 'muted'
   }
@@ -46,7 +46,7 @@ type BadgeBaseProps = Omit<
   icon?: keyof typeof IconNameMapV2
 }
 
-// Status theme props (variant is required)
+// Status variant props (the only variant that takes pulse)
 type StatusBadgeStatusVariantProps = BadgeBaseProps & {
   theme?: StatusBadgeTheme
   variant: 'status'
@@ -54,10 +54,10 @@ type StatusBadgeStatusVariantProps = BadgeBaseProps & {
   icon?: never
 }
 
-// Other theme props (variant is required)
+// Other theme props (variant defaults to 'outline')
 type StatusBadgeOtherThemeProps = BadgeBaseProps & {
   theme?: StatusBadgeTheme
-  variant: NonNullable<Exclude<VariantProps<typeof statusBadgeVariants>['variant'], 'status' | 'counter'>> // Make variant required
+  variant?: NonNullable<Exclude<VariantProps<typeof statusBadgeVariants>['variant'], 'status' | 'counter'>>
   pulse?: never
 }
 

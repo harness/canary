@@ -66,8 +66,8 @@
           "variant": {
             "type": "string",
             "enum": ["primary", "secondary", "outline", "ghost", "status"],
-            "default": "primary",
-            "description": "Component style variant; 'status' enables pulse animation and indicator dot. Required by the TypeScript type despite the CVA defaultVariants entry.",
+            "default": "outline",
+            "description": "Component style variant. Defaults to 'outline' when omitted; pass another only when the design calls for it. 'status' (dot plus label) is the only variant that takes pulse, and the only one that cannot take an icon.",
             "x-provenance": "shared"
           },
           "theme": {
@@ -95,13 +95,19 @@
             "type": "string",
             "description": "Optional IconV2 name (a key of IconNameMapV2). Figma does expose icon controls ('viewIcon#1293:13' plus the instance swap '↳ icon#1299:52'), but those select an icon *instance* while this prop takes an icon *name*, and the icon component set has no Code Connect mapping to recover a name from. Agents must supply the name explicitly.",
             "x-provenance": "codeOnly",
-            "x-trigger": "appearance-override"
+            "x-trigger": "appearance-override",
+            "x-never-when": {
+              "variant": ["status"]
+            }
           },
           "pulse": {
             "type": "boolean",
             "description": "Animates the status indicator dot (CSS animate-pulse). Requires variant='status'; the discriminated union types it as never on every other variant. No Figma property corresponds to it, though the Figma component does draw the indicator dot.",
             "x-provenance": "codeOnly",
-            "x-trigger": "appearance-override"
+            "x-trigger": "appearance-override",
+            "x-only-when": {
+              "variant": ["status"]
+            }
           },
           "className": {
             "type": "string",
@@ -110,7 +116,6 @@
             "x-trigger": "appearance-override"
           }
         },
-        "required": ["variant"],
         "additionalProperties": false
       }
     }

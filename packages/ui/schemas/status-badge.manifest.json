@@ -119,8 +119,7 @@
   },
 
   "accessibility": {
-    "role": "status",
-    "notes": "Badge is a passive status indicator; not interactive. Children are announced as status updates. Icon (if present) should be decorative (aria-hidden)."
+    "notes": "Badge is a passive status indicator; not interactive. It renders a plain div with no ARIA role, so it is not a live region and changes are not announced. Text is the only carrier of meaning. Icon (if present) should be decorative (aria-hidden)."
   },
 
   "states": [
@@ -158,19 +157,16 @@
     "tokenStatus": "All theme and animation color refs recorded and verified; size tokens pending audit"
   },
 
-  "knownGaps": [
-    "No built-in close/dismiss action (use wrapper component if needed)",
-    "Pulse animation only works with variant='status'; other variants ignore the pulse prop"
-  ],
+  "knownGaps": ["No built-in close/dismiss action (use wrapper component if needed)"],
 
   "examples": {
     "correct": [
       "<StatusBadge variant='status' theme='success' pulse>Active</StatusBadge>",
-      "<StatusBadge variant='primary' theme='warning' icon='alert'>Attention needed</StatusBadge>",
+      "<StatusBadge theme='warning' icon='warning-circle'>Attention needed</StatusBadge>",
       "<StatusBadge variant='secondary' theme='muted'>Draft</StatusBadge>"
     ],
     "incorrect": [
-      "<StatusBadge variant='primary' pulse>Pulse on non-status variant (ignored)</StatusBadge>",
+      "<StatusBadge variant='outline' pulse>Pulse is only allowed on variant='status' (rejected by the type)</StatusBadge>",
       "<StatusBadge onClick={() => {}}>Status badges are not interactive</StatusBadge>"
     ]
   }

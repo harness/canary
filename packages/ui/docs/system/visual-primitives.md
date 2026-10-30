@@ -59,7 +59,7 @@ component.
 
 **But `iconName` is a real prop elsewhere.** ~11 wrapper components (e.g. `PageHeaderV2`,
 `SidebarItem`) do accept an `iconName?: IconV2NamesType` string. So the anti-pattern is not
-"`iconName` never exists" — it's *don't invent or assume it*. Before wiring an icon into a
+"`iconName` never exists" — it's _don't invent or assume it_. Before wiring an icon into a
 component, check that component's actual props: some want a composed `IconV2` child, some
 want an `iconName` string. Don't guess which.
 

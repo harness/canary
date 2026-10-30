@@ -30,7 +30,7 @@ affordance. When something must be operable, it is a Button.
 **Do not use when:**
 
 - The target is a route or an external address → **Link**. `variant="link"` makes a Button
-  *look* like a link; it is still a `<button>`, so it cannot be middle-clicked, copied,
+  _look_ like a link; it is still a `<button>`, so it cannot be middle-clicked, copied,
   opened in a new tab, or announced as a link
 - The element only labels or describes → **Tag** / **StatusBadge**
 - You need an on/off control → **Toggle** / **ToggleGroup**, which carry `aria-pressed`
@@ -44,15 +44,15 @@ affordance. When something must be operable, it is a Button.
 Variant is **emphasis**, not decoration. Pick it from the action's standing in the view, then
 stop.
 
-| Question                                                        | Answer | Variant       |
-| --------------------------------------------------------------- | ------ | ------------- |
-| Is this *the* action the view exists for?                       | Yes    | `primary`     |
-| Is it a real alternative sitting beside the primary?            | Yes    | `outline`     |
-| Is it an alternative where `outline` genuinely cannot be used?   | Yes    | `secondary`   |
-| Is it a quiet action in a toolbar, table row, or card header?    | Yes    | `ghost`       |
-| Is it initiated by or handing off to AI?                        | Yes    | `ai`          |
-| Does it need to read as inline text inside a sentence?           | Yes    | `link`        |
-| Do you need the behaviour with no chrome at all?                 | Yes    | `transparent` |
+| Question                                                       | Answer | Variant       |
+| -------------------------------------------------------------- | ------ | ------------- |
+| Is this _the_ action the view exists for?                      | Yes    | `primary`     |
+| Is it a real alternative sitting beside the primary?           | Yes    | `outline`     |
+| Is it an alternative where `outline` genuinely cannot be used? | Yes    | `secondary`   |
+| Is it a quiet action in a toolbar, table row, or card header?  | Yes    | `ghost`       |
+| Is it initiated by or handing off to AI?                       | Yes    | `ai`          |
+| Does it need to read as inline text inside a sentence?         | Yes    | `link`        |
+| Do you need the behaviour with no chrome at all?               | Yes    | `transparent` |
 
 **Bias order: `primary`, then `outline`, then `secondary`.** When picking a variant, reach for
 `primary` first, `outline` second, and `secondary` last. It can look backwards, but it is the
@@ -78,14 +78,14 @@ two, one of them is a `secondary`.
 
 ## Theme: semantic, and only on four variants
 
-`theme` states what the action *means* — success, danger, warning — and is not a palette.
+`theme` states what the action _means_ — success, danger, warning — and is not a palette.
 Three traps:
 
-| Trap                                       | What happens                                                                                     |
-| ------------------------------------------ | ------------------------------------------------------------------------------------------------ |
-| `theme` on `ai`, `link`, `transparent`     | **Hard rule for new code.** Button's type still accepts it (the theme is ignored); `StrictButtonProps` rejects it. These three are single-appearance by design and have no themes (BTN-003) |
-| `theme="warning"`                          | Works in code and exists in Figma; Code Connect cannot map it yet (BTN-004)                       |
-| `variant="primary"` + `theme="default"`    | Resolves to the **brand** colour set, not gray. The default primary button is deliberately brand  |
+| Trap                                    | What happens                                                                                                                                                                                |
+| --------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `theme` on `ai`, `link`, `transparent`  | **Hard rule for new code.** Button's type still accepts it (the theme is ignored); `StrictButtonProps` rejects it. These three are single-appearance by design and have no themes (BTN-003) |
+| `theme="warning"`                       | Works in code and exists in Figma; Code Connect cannot map it yet (BTN-004)                                                                                                                 |
+| `variant="primary"` + `theme="default"` | Resolves to the **brand** colour set, not gray. The default primary button is deliberately brand                                                                                            |
 
 Reach for `danger` only when the action destroys or cannot be undone. A `danger` button on a
 reversible action teaches people to ignore red.
@@ -119,7 +119,7 @@ adjacent text. It suppresses a type error, not the accessibility need.
 ## Async actions
 
 `onClick` may return a promise. When it does, the button enters its loading state until the
-promise settles — resolve *or* reject — and is disabled throughout. So:
+promise settles — resolve _or_ reject — and is disabled throughout. So:
 
 - **Don't hand-manage `loading` for an async handler.** Returning the promise is enough
 - **Don't pass `loading` as a constant.** `loading` with no way out is a permanently dead
@@ -283,7 +283,7 @@ What a consumer of this component must do:
       still compiles and the theme is ignored. A type that rejected it was withdrawn because it
       broke wrappers that spread a wide props object; it ships as the opt-in `StrictButtonProps`
       instead, with `ButtonThemedVariants` as the theme-capable set. `MoreActionsTooltip`,
-      `Carousel`, `SidebarTrigger` and `SplitButton` keep their `variant` wide behind a cast
+      `Carousel`, `SidebarTrigger` and `SplitButton` forward a wide `variant` with a theme, which is accepted and ignored
 - [ ] **BTN-004:** `theme="warning"` exists in Figma and in code, but `button.figma.ts` does not
       map it yet, so Code Connect cannot produce it. A Code Connect lag, not a design gap
 - [ ] **BTN-005:** Figma models size, rounded and icon-only as twelve separate components rather
@@ -306,7 +306,7 @@ What a consumer of this component must do:
 
 1. Update [`button.manifest.json`](./button.manifest.json) — the single source of truth
 2. Run `pnpm ds-check --write` to regenerate the OpenAPI spec
-3. Update the guidance in this file if the change affects *when* to use it
+3. Update the guidance in this file if the change affects _when_ to use it
 4. Run `pnpm ds-check` and commit both files together
 
 A new variant or theme also needs an entry in

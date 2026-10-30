@@ -24,6 +24,7 @@ Global color token rules sourced from the Harness design-token architecture (LCH
 ## Background, text, and border hierarchies are separate
 
 **Rule:** Three parallel numbering systems; don't cross them:
+
 - **Background (`bg.0..3`):** nav/sidebar → app background → cards/containers → popovers/tooltips (visual depth)
 - **Text (`text.1..4`):** headings (max contrast) → body text → secondary/metadata → disabled (emphasis)
 - **Border (`border.1..3`):** focus/hover outlines → cards/fields/dividers → subtle separators (strength)
@@ -47,6 +48,7 @@ Note: `text.2` and `border.2` are unrelated despite sharing a number.
 **Rule:** Every semantic color has three levels — `primary` (saturated, high contrast), `secondary` (muted tint), `outline` (near-transparent). Background and text colors must use the same set and level, or contrast breaks.
 
 **Example:**
+
 ```tsx
 // ✓ Correct — same set, same level
 <Badge className="bg-cn-success-secondary text-cn-success-secondary">Done</Badge>

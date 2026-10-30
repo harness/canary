@@ -430,6 +430,20 @@ describe('ds-check', () => {
       )
     })
 
+    it('should fail --schema when a correct Button example passes a theme to a themeless variant', async () => {
+      const probePath = path.resolve(PACKAGE_ROOT, 'schemas/theme-example-probe.manifest.json')
+      const manifest = JSON.parse(fs.readFileSync(path.resolve(PACKAGE_ROOT, 'schemas/button.manifest.json'), 'utf-8'))
+      manifest.examples.correct = ['<Button variant="link" theme="danger">Delete</Button>']
+      fs.writeFileSync(probePath, `${JSON.stringify(manifest, null, 2)}\n`)
+      try {
+        const result = await runDsCheck(['--schema'])
+        expect(result.exitCode).toBe(1)
+        expect(result.stdout + result.stderr).toContain('BTN-003: example passes theme with variant="link"')
+      } finally {
+        fs.unlinkSync(probePath)
+      }
+    })
+
     // onlyWhen / neverWhen are claims about the component's types, so --source compiles the
     // real types against each case rather than trusting the manifest.
     it('should fail --source when the types accept a prop that neverWhen says is rejected', async () => {

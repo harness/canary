@@ -139,7 +139,11 @@ function validateSchema(
   const conditionErrors = conditionalPropErrors(manifest)
   if (conditionErrors.length > 0) return { valid: false, errors: conditionErrors }
 
-  const contentErrors = [...placeholderErrors(manifest), ...exampleIconErrors(manifest)]
+  const contentErrors = [
+    ...placeholderErrors(manifest),
+    ...exampleIconErrors(manifest),
+    ...exampleIgnoredPropErrors(manifest)
+  ]
   if (contentErrors.length > 0) return { valid: false, errors: contentErrors }
 
   return { valid: true }
@@ -191,6 +195,35 @@ function exampleIconErrors(manifest: Record<string, unknown>): Array<{ message: 
         instancePath: `/examples/correct/${index}`,
         message: `example uses icon "${name}", which is not a key of IconNameMapV2`
       })
+    }
+  })
+  return errors
+}
+
+/**
+ * Props the component accepts but silently ignores for some variants, so the type probe can't
+ * express the rule (see BTN-003: a union that rejected it broke consumers' spread wrappers).
+ * Correct examples must not teach the combination.
+ */
+const IGNORED_PROP_RULES: Record<string, { prop: string; variantProp: string; variants: string[]; rule: string }> = {
+  button: { prop: 'theme', variantProp: 'variant', variants: ['ai', 'link', 'transparent'], rule: 'BTN-003' }
+}
+
+function exampleIgnoredPropErrors(manifest: Record<string, unknown>): Array<{ message: string; instancePath: string }> {
+  const config = IGNORED_PROP_RULES[String(manifest.id).split('.').pop() ?? '']
+  const correct = (manifest.examples as { correct?: unknown } | undefined)?.correct
+  if (!config || !Array.isArray(correct)) return []
+  const errors: Array<{ message: string; instancePath: string }> = []
+  correct.forEach((example, index) => {
+    if (typeof example !== 'string') return
+    for (const tag of example.matchAll(/<Button\b[^>]*>/g)) {
+      const variant = tag[0].match(new RegExp(`\\b${config.variantProp}=(['"])([^'"]+)\\1`))?.[2]
+      if (variant && config.variants.includes(variant) && new RegExp(`\\b${config.prop}=`).test(tag[0])) {
+        errors.push({
+          instancePath: `/examples/correct/${index}`,
+          message: `${config.rule}: example passes ${config.prop} with ${config.variantProp}="${variant}", which ignores it`
+        })
+      }
     }
   })
   return errors

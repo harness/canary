@@ -73,6 +73,34 @@ want an `iconName` string. Don't guess which.
 
 ---
 
+## Icons: sizing, and missing names fail silently
+
+**Sizing:** `size` is a fixed enum — `2xs`, `xs`, `sm`, `md`, `lg`, `xl` — default `sm`. To size via CSS, set `skipSize` instead of fighting the size class with `className`.
+
+**Missing names:** if `name` isn't in the icon map, `IconV2` renders the `fallback` icon (if given) or nothing, and logs a `console.warn`. It never throws and shows no broken-icon marker, so a typo'd or removed icon just disappears. Always pass a `fallback` when the name comes from dynamic or external data.
+
+**`IconWithTooltip`** composes `IconV2` inside a real `<button>` wrapped by `Tooltip`. `content` is the tooltip body, `iconProps` forwards to the icon (default `info-circle` at `md`), and `disabled` suppresses the tooltip without removing the icon. Its tooltip is a description, not a name — see the Accessibility rules.
+
+---
+
+## Logos: LogoV2 is fixed-color; LogoSymbol follows text color
+
+**`LogoV2`** has no `color` prop and no light/dark asset split — every entry renders one fixed brand-colored asset. Don't recolor it or stretch it with mismatched dimensions. If a mark must follow the theme or text color, use `LogoSymbol`.
+
+**`LogoSymbol`** is monochrome and drawn with `currentColor`, so it inherits the parent's text color. Set it with a text-color class on the parent or the element, not a `color` prop (it has none) and not a `fill`/`color` CSS override.
+
+**Shared behavior:** sizes are `xs`, `sm`, `md`, `lg`, default `lg` (unlike `IconV2`, which defaults to `sm`). `skipSize` and the missing-name fallback work exactly as for icons: a `fallback` name renders with a `console.warn`, no fallback renders nothing. Both components share the brand name set.
+
+---
+
+## Illustrations: pixel sizing, and theme-dependent assets need a `-light` variant
+
+**Sizing:** `Illustration` takes `size?: number` in raw pixels (default `112`), or separate `width`/`height` overrides. The icon/logo size enum does not apply.
+
+**Theme handling:** with `themeDependent` on and a light theme, the component looks for a `<name>-light` entry in `IllustrationsNameMap` and uses it if present. If there isn't one, it applies a CSS `invert` to the dark asset — a geometric approximation, not a real light illustration. If the dark asset doesn't invert cleanly (e.g. a red accent turning cyan), author a real `-light` variant. The fallback gives a wrong-looking result silently, not an error.
+
+---
+
 ## Cross-references
 
 - **Accessibility** — Rules for icon-only buttons, accessible names, decorative-vs-interactive graphics

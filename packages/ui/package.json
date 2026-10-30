@@ -5,15 +5,9 @@
   "private": false,
   "type": "module",
   "main": "./dist/index.js",
-  "publishConfig": {
-    "registry": "https://harness0.harness.io/pkg/l7B_kbSEQD2wjrM7PShm5w/npm-registry/npm/"
-  },
   "exports": {
     ".": "./dist/index.js",
-    "./components": {
-      "types": "./dist/components.d.ts",
-      "default": "./dist/components.js"
-    },
+    "./components": "./dist/components.js",
     "./utils": "./dist/utils.js",
     "./hooks": "./dist/hooks.js",
     "./locales": "./dist/locales.js",

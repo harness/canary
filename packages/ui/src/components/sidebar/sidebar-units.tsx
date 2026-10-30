@@ -10,18 +10,7 @@ import {
   useState
 } from 'react'
 
-import {
-  Button,
-  ButtonThemedVariants,
-  ButtonThemes,
-  IconV2,
-  IconV2NamesType,
-  Layout,
-  ScrollArea,
-  Separator,
-  Text,
-  useScrollArea
-} from '@/components'
+import { Button, IconV2, IconV2NamesType, Layout, ScrollArea, Separator, Text, useScrollArea } from '@/components'
 import { useTranslation } from '@/context'
 import { cn } from '@utils/cn'
 
@@ -68,15 +57,7 @@ export const SidebarTrigger = forwardRef<ElementRef<typeof Button>, SidebarTrigg
         tooltipProps={{
           content: t('component:sidebar.toggle', 'Toggle sidebar')
         }}
-        /*
-         * `props` may carry a theme alongside any variant, which Button only accepts with a
-         * theme-capable one (BTN-003 in button.tsx). The public props stay wide so callers are
-         * not broken; a themeless variant here leaves the theme inert, as it always has.
-         */
-        {...(props as Omit<typeof props, 'variant' | 'theme'> & {
-          variant?: ButtonThemedVariants
-          theme?: ButtonThemes
-        })}
+        {...props}
       >
         <IconV2 name="sidebar" />
         <span className="sr-only">{t('component:sidebar.toggle', 'Toggle sidebar')}</span>

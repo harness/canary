@@ -22,7 +22,7 @@ const newCode = `pipeline:
 export function Unified() {
   return (
     <div style={{ width: 720, padding: 16 }}>
-      <DiffViewer oldCode={oldCode} newCode={newCode} />
+      <DiffViewer oldCode={oldCode} newCode={newCode} diffViewMode={4 as any} />
     </div>
   )
 }

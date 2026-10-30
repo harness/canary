@@ -8,9 +8,9 @@ export function Default() {
         <PromptInput.Textarea placeholder="Ask about your pipelines..." />
         <PromptInput.Toolbar>
           <PromptInput.Tools>
-            <PromptInput.Button text="Search" />
+            <PromptInput.Button text="Attach file" prefixIcon="attachment" />
           </PromptInput.Tools>
-          <PromptInput.Submit>Send</PromptInput.Submit>
+          <PromptInput.Submit />
         </PromptInput.Toolbar>
       </PromptInput.Root>
     </div>
@@ -23,8 +23,10 @@ export function WithTags() {
         <PromptInput.Tags tags={[{ id: '1', displayName: 'build-and-deploy' } as any, { id: '2', displayName: 'canary' } as any]} />
         <PromptInput.Textarea defaultValue="Why is this pipeline slow?" />
         <PromptInput.Toolbar>
-          <PromptInput.Tools />
-          <PromptInput.Submit>Send</PromptInput.Submit>
+          <PromptInput.Tools>
+            <PromptInput.Button text="Attach file" prefixIcon="attachment" />
+          </PromptInput.Tools>
+          <PromptInput.Submit />
         </PromptInput.Toolbar>
       </PromptInput.Root>
     </div>

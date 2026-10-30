@@ -29,13 +29,16 @@ Shape: `package` (no Storybook). Project: Harness Design System, `d7027915-eb54-
 
 ## Known gaps
 - 47 `--cn-set-*` tokens are used by components but defined nowhere (upstream gap). `--vscode-*`, `--cn-tw-*`, `--radix-*` are runtime/Monaco variables.
-- Monaco and shiki are stubbed: DiffViewer (wrong token colours, split layout), ChatDiffViewer (header only), MarkdownViewer/ChatPreviewWrapper code blocks (unhighlighted), CodeEditor, YamlEditor.
-- PromptInput icon-only buttons render blank glyphs. These cells are graded needs-work.
+- Monaco and most shiki chunks are stubbed: MarkdownViewer/ChatPreviewWrapper code blocks (unhighlighted except go/yaml), CodeEditor, YamlEditor. `stage-pkg.mjs` keeps the shiki onig engine, github themes, go and yaml so DiffViewer/ChatDiffViewer highlight (bundle ~10.9 MB of the 12 MB cap). Add a grammar to its `keep` regex only if headroom allows.
+- DiffViewer renders in the dark diff theme inside the light card (useTheme default). Cosmetic.
+- Undefined custom properties are triaged in `.design-sync/TOKENS.md` (upstream gap, no shim).
 - CheckboxTree props are a stub; ChatV2, NoProblemsFound, SidebarSearch have no props.
 - d.ts quirks: `ref?: React.Ref` unparameterized in member interfaces; Button's top-level `CSSProperties` unqualified. `[DTS_STYLE_SYSTEM]` info line is expected.
 
 ## Re-sync risks
 - Previews and `.design-sync/previews/` depend on upstream prop names (PromptInput.Tags `displayName`, Toaster object API); a component API change breaks them silently.
 - `stage-pkg.mjs` hardcodes the Monaco chunk filename `index-tNWUyI8F.js`; the hash changes with upstream builds, so a larger bundle means re-check it.
-- Needs-work cells (DiffViewer, ChatDiffViewer, PromptInput) were accepted as documented limits, not fixed.
+- `stage-pkg.mjs` `keep` hardcodes `wasm-DQxwEHae` (shiki onig engine); the hash changes with upstream builds, so re-check it.
+- DiffViewer's `DiffModeEnum` is not exported at runtime; the preview passes `4 as any` (Unified).
+- PromptInput previews: use `PromptInput.Button prefixIcon="attachment"` and an empty `PromptInput.Submit`; children and `text` hide the icon.
 - Requires `packages/ui/dist` built (`pnpm build` in packages/ui) before staging.

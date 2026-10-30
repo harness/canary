@@ -24,6 +24,9 @@ for (const f of readdirSync(dist).filter((n) => n.endsWith('.js'))) {
 // monaco core chunk is only statically imported by the lazy language chunks
 const monaco = readdirSync(dist).filter((n) => /^index-tNWUyI8F\.js$/.test(n))
 monaco.forEach((n) => lazy.add(n))
+// DiffViewer/ChatDiffViewer need the shiki onig engine, the github themes and the grammars their previews use
+const keep = /^(wasm-DQxwEHae|github-(light|dark)(-default)?-[A-Za-z0-9_-]+|go-[A-Za-z0-9_-]+|yaml-[A-Za-z0-9_-]+)\.js$/
+for (const n of [...lazy]) if (keep.test(n)) lazy.delete(n)
 
 for (const f of readdirSync(dist)) {
   const p = join(out, 'dist', f)

@@ -56,3 +56,10 @@ playwright-results/
 playwright/.cache/
 # Assist CLI error log
 .assist/
+
+# design-sync
+.ds-sync/
+ds-bundle/
+.design-sync/.cache/
+.design-sync/learnings/
+.design-sync/node_modules

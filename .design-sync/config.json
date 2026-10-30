@@ -1,0 +1,369 @@
+{
+  "projectId": "d7027915-eb54-4242-83c4-171e2fb6018e",
+  "shape": "package",
+  "pkg": "@harnessio/ui",
+  "globalName": "HarnessUI",
+  "buildCmd": "pnpm -F \"@harnessio/ui...\" build && node .design-sync/stage-pkg.mjs",
+  "extraEntries": [
+    "../../theme-root.jsx",
+    "./dist/context.js"
+  ],
+  "provider": {
+    "component": "ThemeRoot",
+    "props": {
+      "mode": "light"
+    },
+    "inner": {
+      "component": "TooltipProvider"
+    }
+  },
+  "extraFonts": [
+    "../../fonts.css"
+  ],
+  "componentSrcMap": {
+    "IconV2DisplayName": null,
+    "IllustrationsNameMap": null,
+    "IconNameMapV2": null,
+    "LogoNameMapV2": null,
+    "SymbolNameMap": null
+  },
+  "runtimeFontPrefixes": [
+    "Segoe WPC",
+    "Ubuntu Mono"
+  ],
+  "entry": "./.design-sync/.cache/pkg/dist/components.js",
+  "libOverrides": {
+    "dts.mjs": "emit per-member props for compound components (stock emits ComponentType<any>)",
+    "emit.mjs": "write compound member prop types from dts fork (memberTypes/namespaceOnly)"
+  },
+  "dtsPropsFor": {
+    "Text": "  style?: React.CSSProperties;\n  className?: string;\n  id?: string;\n  children?: React.ReactNode;\n  variant?: \"heading-hero\" | \"heading-section\" | \"heading-default\" | \"heading-subsection\" | \"heading-base\" | \"heading-small\" | \"body-normal\" | \"body-single-line-normal\" | \"body-strong\" | \"body-single-line-strong\" | \"body-code\" | \"caption-normal\" | \"caption-light\" | \"caption-strong\" | \"caption-code\" | \"caption-single-line-normal\";\n  color?: \"foreground-1\" | \"foreground-2\" | \"foreground-3\" | \"foreground-4\" | \"brand\" | \"success\" | \"danger\" | \"warning\" | \"merged\" | \"disabled\" | \"inherit\";\n  wrap?: \"wrap\" | \"nowrap\" | \"balance\" | \"pretty\";\n  align?: \"left\" | \"center\" | \"right\";\n  truncate?: boolean;\n  lineClamp?: 1 | 2 | 3 | 4 | 5 | 6 | \"default\";\n  /** Shorthand for changing the default rendered element into a semantically appropriate alternative. */\n  as?: \"span\" | \"div\" | \"p\" | \"h1\" | \"h2\" | \"h3\" | \"h4\" | \"h5\" | \"h6\" | \"label\" | \"li\" | \"code\" | \"blockquote\" | \"cite\" | \"abbr\" | \"address\" | \"caption\" | \"dd\" | \"del\" | \"dt\";\n  /** Change the default rendered element for the one passed as a child, merging their props and behavior. */\n  asChild?: boolean;"
+  },
+  "overrides": {
+    "Dialog": {
+      "cardMode": "single",
+      "viewport": "720x420"
+    },
+    "AlertDialog": {
+      "cardMode": "single",
+      "viewport": "720x420"
+    },
+    "CommandPalette": {
+      "cardMode": "single",
+      "viewport": "720x540"
+    },
+    "CommitSuggestionsDialog": {
+      "cardMode": "single",
+      "viewport": "720x720"
+    },
+    "DeleteAlertDialog": {
+      "cardMode": "single",
+      "viewport": "720x540"
+    },
+    "DateRangeV2": {
+      "cardMode": "single",
+      "viewport": "900x700"
+    },
+    "Drawer": {
+      "cardMode": "single",
+      "viewport": "900x600"
+    },
+    "ExitConfirmDialog": {
+      "cardMode": "single",
+      "viewport": "800x500"
+    },
+    "GitCommitDialog": {
+      "cardMode": "single",
+      "viewport": "700x540"
+    },
+    "LanguageDialog": {
+      "cardMode": "single",
+      "viewport": "700x540"
+    },
+    "ManageNavigation": {
+      "cardMode": "single",
+      "viewport": "720x560"
+    },
+    "Popover": {
+      "cardMode": "single",
+      "viewport": "420x240"
+    },
+    "Sheet": {
+      "cardMode": "single",
+      "viewport": "900x560"
+    },
+    "Sidebar": {
+      "cardMode": "single",
+      "viewport": "900x560"
+    },
+    "SideNav": {
+      "cardMode": "single",
+      "viewport": "900x560"
+    },
+    "SidebarLayout": {
+      "cardMode": "single",
+      "viewport": "900x560"
+    },
+    "ThemeDialog": {
+      "cardMode": "single",
+      "viewport": "760x600"
+    },
+    "Tooltip": {
+      "cardMode": "single",
+      "viewport": "420x220"
+    },
+    "Toaster": {
+      "cardMode": "single",
+      "viewport": "520x260"
+    },
+    "Textarea": {
+      "cardMode": "column"
+    },
+    "File": {
+      "cardMode": "column"
+    },
+    "Legend": {
+      "cardMode": "column"
+    },
+    "Chat": {
+      "cardMode": "column"
+    },
+    "DateRangeV2Content": {
+      "cardMode": "column"
+    },
+    "DraggableSidebarDivider": {
+      "cardMode": "column"
+    },
+    "Folder": {
+      "cardMode": "column"
+    },
+    "Tabs": {
+      "cardMode": "column"
+    },
+    "ScrollArea": {
+      "cardMode": "column"
+    },
+    "Topbar": {
+      "cardMode": "column"
+    },
+    "Alert": {
+      "cardMode": "column"
+    },
+    "AlertItem": {
+      "cardMode": "column"
+    },
+    "Caption": {
+      "cardMode": "column"
+    },
+    "StackedList": {
+      "cardMode": "column"
+    },
+    "Skeleton": {
+      "cardMode": "column"
+    },
+    "Input": {
+      "cardMode": "column"
+    },
+    "CustomToast": {
+      "cardMode": "column"
+    },
+    "Table": {
+      "cardMode": "column"
+    },
+    "FileEditorControlBar": {
+      "cardMode": "column"
+    },
+    "ToggleGroup": {
+      "cardMode": "column"
+    },
+    "DraggableCardList": {
+      "cardMode": "column"
+    },
+    "MultiSelect": {
+      "cardMode": "column"
+    },
+    "CheckboxTree": {
+      "cardMode": "column"
+    },
+    "EntityFormLayout": {
+      "cardMode": "column"
+    },
+    "FormInput": {
+      "cardMode": "column"
+    },
+    "CardSelect": {
+      "cardMode": "column"
+    },
+    "PathBreadcrumbs": {
+      "cardMode": "column"
+    },
+    "Reasoning": {
+      "cardMode": "column"
+    },
+    "ButtonLayout": {
+      "cardMode": "column"
+    },
+    "DualPaneStepper": {
+      "cardMode": "column"
+    },
+    "Page": {
+      "cardMode": "column"
+    },
+    "SearchInput": {
+      "cardMode": "column"
+    },
+    "MessageBubble": {
+      "cardMode": "column"
+    },
+    "SandboxLayout": {
+      "cardMode": "column"
+    },
+    "Card": {
+      "cardMode": "column"
+    },
+    "DraggableCard": {
+      "cardMode": "column"
+    },
+    "StudioCard": {
+      "cardMode": "column"
+    },
+    "FormCaption": {
+      "cardMode": "column"
+    },
+    "SeveritySlider": {
+      "cardMode": "column"
+    },
+    "Accordion": {
+      "cardMode": "column"
+    },
+    "SinglePaneStepperV2": {
+      "cardMode": "column"
+    },
+    "Layout": {
+      "cardMode": "column"
+    },
+    "PromptInput": {
+      "cardMode": "column"
+    },
+    "FormSeparator": {
+      "cardMode": "column"
+    },
+    "Progress": {
+      "cardMode": "column"
+    },
+    "ButtonGroup": {
+      "cardMode": "column"
+    },
+    "ContainerHeader": {
+      "cardMode": "column"
+    },
+    "WaterfallProgress": {
+      "cardMode": "column"
+    },
+    "TypingAnimation": {
+      "cardMode": "column"
+    },
+    "FileUpload": {
+      "cardMode": "column"
+    },
+    "StickyListSection": {
+      "cardMode": "column"
+    },
+    "Toggle": {
+      "cardMode": "column"
+    },
+    "ViewOnly": {
+      "cardMode": "column"
+    },
+    "DataTable": {
+      "cardMode": "column"
+    },
+    "SearchFiles": {
+      "cardMode": "column"
+    },
+    "Switch": {
+      "cardMode": "column"
+    },
+    "Widgets": {
+      "cardMode": "column"
+    },
+    "ViewOnlyItem": {
+      "cardMode": "column"
+    },
+    "ControlGroup": {
+      "cardMode": "column"
+    },
+    "Problems": {
+      "cardMode": "column"
+    },
+    "FileViewerControlBar": {
+      "cardMode": "column"
+    },
+    "FormWrapper": {
+      "cardMode": "column"
+    },
+    "Checkbox": {
+      "cardMode": "column"
+    },
+    "FilterField": {
+      "cardMode": "column"
+    },
+    "MarkdownViewer": {
+      "cardMode": "column"
+    },
+    "Stepper": {
+      "cardMode": "column"
+    },
+    "NoData": {
+      "cardMode": "column"
+    },
+    "TextInput": {
+      "cardMode": "column"
+    },
+    "MentionTextarea": {
+      "cardMode": "column"
+    },
+    "Separator": {
+      "cardMode": "column"
+    },
+    "Command": {
+      "cardMode": "column"
+    },
+    "DiffViewer": {
+      "cardMode": "column"
+    },
+    "Pagination": {
+      "cardMode": "column"
+    },
+    "StatsPanel": {
+      "cardMode": "column"
+    },
+    "Resizable": {
+      "cardMode": "column"
+    },
+    "Slider": {
+      "cardMode": "column"
+    },
+    "FilterBoxWrapper": {
+      "cardMode": "single",
+      "primaryStory": "Closed"
+    },
+    "FilterSelect": {
+      "cardMode": "single",
+      "primaryStory": "Menu"
+    },
+    "DropdownMenu": {
+      "cardMode": "single",
+      "primaryStory": "Actions"
+    },
+    "IconWithTooltip": {
+      "cardMode": "single",
+      "primaryStory": "Closed"
+    },
+    "ImageCarousel": {
+      "cardMode": "single",
+      "primaryStory": "Open"
+    }
+  },
+  "readmeHeader": ".design-sync/conventions.md"
+}

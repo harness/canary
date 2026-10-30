@@ -10,7 +10,7 @@ import {
   useState
 } from 'react'
 
-import { Button, ButtonThemedVariants, IconV2 } from '@/components'
+import { Button, IconV2 } from '@/components'
 import { cn } from '@/utils/cn'
 import useEmblaCarousel, { type UseEmblaCarouselType } from 'embla-carousel-react'
 
@@ -210,12 +210,7 @@ const CarouselPrevious = forwardRef<HTMLButtonElement, CarouselButtonProp>(
     return (
       <Button
         ref={ref}
-        /*
-         * The arrows always pass a theme, which Button only accepts alongside a theme-capable
-         * variant (BTN-003 in button.tsx). The public `variant` prop stays wide so callers are
-         * not broken; a themeless variant here leaves the theme inert, as it always has.
-         */
-        variant={variant as ButtonThemedVariants}
+        variant={variant}
         theme={theme}
         size={size}
         iconOnly
@@ -248,12 +243,7 @@ const CarouselNext = forwardRef<HTMLButtonElement, CarouselButtonProp>(
     return (
       <Button
         ref={ref}
-        /*
-         * The arrows always pass a theme, which Button only accepts alongside a theme-capable
-         * variant (BTN-003 in button.tsx). The public `variant` prop stays wide so callers are
-         * not broken; a themeless variant here leaves the theme inert, as it always has.
-         */
-        variant={variant as ButtonThemedVariants}
+        variant={variant}
         theme={theme}
         size={size}
         iconOnly

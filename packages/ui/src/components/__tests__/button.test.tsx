@@ -10,17 +10,10 @@ const TestWrapper = ({ children }: { children: React.ReactNode }) => (
   <TooltipPrimitive.Provider>{children}</TooltipPrimitive.Provider>
 )
 
-type TestButtonProps = Partial<React.ComponentProps<typeof Button>>
-
-const renderComponent = (props: TestButtonProps = {}): RenderResult => {
+const renderComponent = (props: Partial<React.ComponentProps<typeof Button>> = {}): RenderResult => {
   return render(
     <TestWrapper>
-      {/*
-       * Cast because Partial<> collapses Button's size/accessible-name union, and because some
-       * tests deliberately render a micro size with no name to assert the size classes. The
-       * rule itself is covered by the dedicated accessible-name tests below.
-       */}
-      <Button {...(props as React.ComponentProps<typeof Button>)}>Click Me</Button>
+      <Button {...props}>Click Me</Button>
     </TestWrapper>
   )
 }
@@ -756,8 +749,7 @@ describe('Button', () => {
         sizes.forEach(size => {
           const { container } = render(
             <TestWrapper>
-              {/* aria-label because the matrix includes the micro sizes, which demand a name */}
-              <Button variant={variant} size={size} aria-label="Button">
+              <Button variant={variant} size={size}>
                 Button
               </Button>
             </TestWrapper>

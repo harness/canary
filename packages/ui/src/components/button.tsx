@@ -69,10 +69,8 @@ const getNodeText = (node: ReactNode): string => {
 
 type ButtonTooltipProps = Pick<TooltipProps, 'title' | 'content' | 'side' | 'align' | 'open'>
 
-// `size`, `variant` and `theme` are intersected in separately below so the micro sizes can demand
-// an accessible name and the themeless variants can refuse a theme.
 type CommonButtonProps = Omit<ButtonHTMLAttributes<HTMLButtonElement>, 'onClick'> &
-  Omit<VariantProps<typeof buttonVariants>, 'variant' | 'theme'> & {
+  VariantProps<typeof buttonVariants> & {
     asChild?: boolean
     loading?: boolean
     rounded?: boolean
@@ -108,18 +106,16 @@ type ButtonSizes = VariantProps<typeof buttonVariants>['size']
 type ButtonThemelessVariants = Extract<NonNullable<ButtonVariants>, 'ai' | 'link' | 'transparent'>
 type ButtonThemedVariants = Exclude<NonNullable<ButtonVariants>, ButtonThemelessVariants>
 
-/**
- * The rule: pass no theme and any variant is fine, or pass a theme and the variant must be
- * provably theme-capable. A wrapper that forwards an arbitrary ButtonVariants alongside a theme
- * has to narrow its own variant prop, since it cannot know whether its caller will ask for link.
- * Null is kept because that is how CVA types an unset variant, and callers forward it verbatim.
- */
-type ButtonPropsThemeless = { variant?: ButtonVariants; theme?: never }
-type ButtonPropsThemed = { variant?: ButtonThemedVariants | null; theme?: ButtonThemes }
+type ButtonProps = CommonButtonProps & (ButtonPropsIconOnlyRequired | ButtonPropsIconOnlyIgnored | ButtonPropsRegular)
 
-type ButtonProps = CommonButtonProps &
-  (ButtonPropsIconOnlyRequired | ButtonPropsIconOnlyIgnored | ButtonPropsRegular) &
-  (ButtonPropsThemeless | ButtonPropsThemed)
+/**
+ * Opt-in compile-time enforcement of BTN-003: pass no theme and any variant is fine, or pass a
+ * theme and the variant must be theme-capable. Not applied to `Button` itself, because a union in
+ * `ButtonProps` stops wrappers that spread a wide props object from compiling. `ds-check` enforces
+ * the rule for the examples and manifests; use this type where you want the compiler to as well.
+ */
+type StrictButtonProps = Omit<ButtonProps, 'variant' | 'theme'> &
+  ({ variant?: ButtonVariants; theme?: never } | { variant?: ButtonThemedVariants | null; theme?: ButtonThemes })
 
 const Button = forwardRef<HTMLButtonElement, ButtonProps>(
   (
@@ -246,6 +242,7 @@ Button.displayName = 'Button'
 export { Button, buttonVariants }
 export type {
   ButtonProps,
+  StrictButtonProps,
   ButtonThemes,
   ButtonVariants,
   ButtonSizes,

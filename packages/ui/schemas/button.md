@@ -83,7 +83,7 @@ Three traps:
 
 | Trap                                       | What happens                                                                                     |
 | ------------------------------------------ | ------------------------------------------------------------------------------------------------ |
-| `theme` on `ai`, `link`, `transparent`     | **Hard rule.** Rejected by the type. These three are single-appearance by design and have no themes (BTN-003) |
+| `theme` on `ai`, `link`, `transparent`     | **Hard rule for new code.** Button's type still accepts it (the theme is ignored); `StrictButtonProps` rejects it. These three are single-appearance by design and have no themes (BTN-003) |
 | `theme="warning"`                          | Works in code and exists in Figma; Code Connect cannot map it yet (BTN-004)                       |
 | `variant="primary"` + `theme="default"`    | Resolves to the **brand** colour set, not gray. The default primary button is deliberately brand  |
 
@@ -174,8 +174,8 @@ by `ds-check`.
   order, so a keyboard user may never find it to learn why. Put the reason in visible text, or
   keep the button enabled and explain on click
 - **Don't put text in a `2xs`/`3xs` button** — it is dropped by design; name it instead (BTN-001)
-- **Don't pass `theme` to `ai`, `link` or `transparent`** — they take none, and the type
-  rejects it. This one is a hard rule (BTN-003)
+- **Don't pass `theme` to `ai`, `link` or `transparent`** — they take none, and the theme
+  is silently ignored. This one is a hard rule for new code (BTN-003)
 - **Don't assume `asChild` keeps the button's behaviour.** The child owns the semantics, so
   `disabled` and `type` stop applying and a disabled `asChild` button is still clickable
   (BTN-009)
@@ -228,7 +228,7 @@ by `ds-check`.
   <IconV2 name="trash" />
 </Button>
 
-// ❌ Don't: link takes no theme. This no longer compiles (BTN-003)
+// ❌ Don't: link takes no theme. The theme is ignored, and `StrictButtonProps` rejects it (BTN-003)
 <Button variant="link" theme="danger">Delete</Button>
 
 // ❌ Don't: navigation is not an action — use Link
@@ -278,13 +278,12 @@ What a consumer of this component must do:
       rather than a name. Text is read from string and simple ReactNode `content`. Remaining:
       content with no text of its own gives nothing to copy, so such a button still needs an
       explicit `aria-label`; development builds log a warning when one is left nameless
-- [x] **BTN-003:** CLOSED, and a hard rule. `ai`, `link` and `transparent` are single-appearance by design and
-      carry no themes, and the type now says so: pass a theme and the variant must be provably
-      theme-capable, so `<Button variant="link" theme="danger">` no longer compiles. A wrapper
-      that forwards an arbitrary `ButtonVariants` alongside a theme either narrows its own
-      variant prop or keeps it wide behind a documented cast. `MoreActionsTooltip`, `Carousel`,
-      `SidebarTrigger` and `SplitButton` keep theirs wide, because narrowing a published prop
-      would break its consumers
+- [ ] **BTN-003:** A design rule, not enforced by `Button`'s type. `ai`, `link` and `transparent` are
+      single-appearance by design and carry no themes, but `<Button variant="link" theme="danger">`
+      still compiles and the theme is ignored. A type that rejected it was withdrawn because it
+      broke wrappers that spread a wide props object; it ships as the opt-in `StrictButtonProps`
+      instead, with `ButtonThemedVariants` as the theme-capable set. `MoreActionsTooltip`,
+      `Carousel`, `SidebarTrigger` and `SplitButton` keep their `variant` wide behind a cast
 - [ ] **BTN-004:** `theme="warning"` exists in Figma and in code, but `button.figma.ts` does not
       map it yet, so Code Connect cannot produce it. A Code Connect lag, not a design gap
 - [ ] **BTN-005:** Figma models size, rounded and icon-only as twelve separate components rather

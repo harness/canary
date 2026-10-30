@@ -30,6 +30,8 @@ Global color token rules sourced from the Harness design-token architecture (LCH
 
 Note: `text.2` and `border.2` are unrelated despite sharing a number.
 
+**Upcoming change (target Oct '26):** `text.4` / `foreground-4` is slated to merge into `text.3` / `foreground-3` and be deprecated. Prefer `text.3` for new work.
+
 ---
 
 ## Global status colors: success, danger, warning only

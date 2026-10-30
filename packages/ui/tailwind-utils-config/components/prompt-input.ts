@@ -112,7 +112,7 @@ export default {
   '.cn-prompt-input-speech-ring': {
     position: 'absolute',
     inset: '-3px',
-    borderRadius: '9999px',
+    borderRadius: 'var(--cn-rounded-full)',
     border: '1px solid color-mix(in srgb, var(--cn-set-red-solid-bg) 55%, transparent)',
     pointerEvents: 'none',
     animation: 'cn-speech-pulse 1.6s ease-out infinite'

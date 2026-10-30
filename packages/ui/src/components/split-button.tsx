@@ -1,6 +1,6 @@
 import { ForwardedRef, forwardRef, MouseEvent, ReactNode, useCallback, useState } from 'react'
 
-import { Button, ButtonProps, ButtonThemedVariants, buttonVariants } from '@/components/button'
+import { Button, ButtonProps, buttonVariants } from '@/components/button'
 import { DropdownMenu } from '@components/dropdown-menu'
 import { cn } from '@utils/cn'
 
@@ -85,12 +85,7 @@ const SplitButtonInner = forwardRef(
           ref={ref}
           className={cn('rounded-r-cn-none border-r-0', buttonClassName)}
           theme={theme}
-          /*
-           * A theme needs a theme-capable variant (BTN-003 in button.tsx). The public `variant`
-           * prop stays wide so callers are not broken; a themeless variant here leaves the theme
-           * inert, as it always has.
-           */
-          variant={variant as ButtonThemedVariants}
+          variant={variant}
           size={size}
           onClick={handleButtonClick}
           type="button"

@@ -28,6 +28,28 @@ vi.mock('@components/tooltip', () => ({
   withTooltip: (Component: React.ComponentType<any>) => Component
 }))
 
+function mockCollapsiblePanelHeight(height: number) {
+  return vi.spyOn(HTMLElement.prototype, 'getBoundingClientRect').mockImplementation(function (this: HTMLElement) {
+    const isPanel =
+      this.classList?.contains('cn-stepper-step-panel-collapsible') ||
+      this.classList?.contains('cn-stepper-nested-step-panel-collapsible')
+    const value = isPanel ? height : 0
+    return {
+      x: 0,
+      y: 0,
+      top: 0,
+      left: 0,
+      right: value,
+      bottom: value,
+      width: value,
+      height: value,
+      toJSON() {
+        return {}
+      }
+    } as DOMRect
+  })
+}
+
 function BasicStepper({
   value = 'step1',
   onValueChange = vi.fn(),
@@ -604,6 +626,106 @@ describe('Stepper', () => {
 
       const groupItem = container.querySelector(':scope .cn-stepper-list > .cn-stepper-step-item')
       expect(groupItem).toHaveClass('cn-stepper-step-item-selected')
+    })
+
+    test('collapsible panel close uses the measured height at 200ms and keeps mounted-closed panels shut', () => {
+      for (const selector of [
+        '.cn-stepper-step-panel-collapsible',
+        '.cn-stepper-nested-step-panel-collapsible'
+      ] as const) {
+        const styles = stepperStyles[selector] as Record<string, Record<string, string>>
+        expect(styles['&[data-state="closed"]']).toEqual({ height: '0', opacity: '0' })
+        expect(styles['&[data-state="open"]'].animation).toBe('cnStepperCollapsibleDown 200ms ease-out')
+        expect(styles['&.cn-stepper-panel-closing[data-state="closed"]']).toMatchObject({
+          height: 'auto',
+          opacity: '1',
+          animation: 'cnStepperCollapsibleUp 200ms ease-out forwards'
+        })
+      }
+
+      const reduced = (
+        stepperStyles['@media (prefers-reduced-motion: reduce)'] as Record<
+          string,
+          Record<string, Record<string, string>>
+        >
+      )['.cn-stepper-step-panel-collapsible, .cn-stepper-nested-step-panel-collapsible']
+      expect(reduced['&[data-state="closed"], &.cn-stepper-panel-closing[data-state="closed"]']).toEqual({
+        height: '0',
+        opacity: '0'
+      })
+    })
+
+    test('completing a step closes from its current panel height', () => {
+      const heightSpy = mockCollapsiblePanelHeight(180)
+      const { container, rerender } = render(
+        <Stepper.Root value="step1" onValueChange={vi.fn()} collapsibleNestedSteps>
+          <Stepper.Step value="step1" title="Code analysis" state="active">
+            <div>Scan results</div>
+          </Stepper.Step>
+        </Stepper.Root>
+      )
+
+      const panel = container.querySelector('.cn-stepper-step-panel-collapsible')
+      expect(panel).toHaveAttribute('data-state', 'open')
+      expect(panel).not.toHaveClass('cn-stepper-panel-closing')
+
+      rerender(
+        <Stepper.Root value="step2" onValueChange={vi.fn()} collapsibleNestedSteps>
+          <Stepper.Step value="step1" title="Code analysis" state="completed">
+            <div>Scan results</div>
+          </Stepper.Step>
+        </Stepper.Root>
+      )
+
+      expect(panel).toHaveAttribute('data-state', 'closed')
+      expect(panel).toHaveClass('cn-stepper-panel-closing')
+      expect(panel).toHaveStyle({ '--radix-collapsible-content-height': '180px' })
+      heightSpy.mockRestore()
+    })
+
+    test('completing a nested step closes from its current panel height', () => {
+      const heightSpy = mockCollapsiblePanelHeight(220)
+      const { container, rerender } = render(
+        <Stepper.Root value="sub1" onValueChange={vi.fn()} collapsibleNestedSteps>
+          <Stepper.StepGroup value="step1" title="First" hasNestedSteps>
+            <Stepper.Step value="sub1" title="Sub One" state="active">
+              <div>Panel content</div>
+            </Stepper.Step>
+          </Stepper.StepGroup>
+        </Stepper.Root>
+      )
+
+      rerender(
+        <Stepper.Root value="sub2" onValueChange={vi.fn()} collapsibleNestedSteps>
+          <Stepper.StepGroup value="step1" title="First" hasNestedSteps>
+            <Stepper.Step value="sub1" title="Sub One" state="completed">
+              <div>Panel content</div>
+            </Stepper.Step>
+          </Stepper.StepGroup>
+        </Stepper.Root>
+      )
+
+      const panel = container.querySelector('.cn-stepper-nested-step-panel-collapsible')
+      expect(panel).toHaveAttribute('data-state', 'closed')
+      expect(panel).toHaveClass('cn-stepper-panel-closing')
+      expect(panel).toHaveStyle({ '--radix-collapsible-content-height': '220px' })
+      heightSpy.mockRestore()
+    })
+
+    test('a step that mounts completed does not play the close animation', () => {
+      const heightSpy = mockCollapsiblePanelHeight(180)
+      const { container } = render(
+        <Stepper.Root value="step2" onValueChange={vi.fn()} collapsibleNestedSteps>
+          <Stepper.Step value="step1" title="Code analysis" state="completed">
+            <div>Scan results</div>
+          </Stepper.Step>
+        </Stepper.Root>
+      )
+
+      const panel = container.querySelector('.cn-stepper-step-panel-collapsible')
+      expect(panel).toHaveAttribute('data-state', 'closed')
+      expect(panel).not.toHaveClass('cn-stepper-panel-closing')
+      heightSpy.mockRestore()
     })
   })
 

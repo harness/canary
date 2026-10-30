@@ -5,6 +5,30 @@ const BRANCH_ELBOW_RADIUS = 'var(--cn-rounded-5)'
 
 const indicatorBrandGlow = '0 0 20px color-mix(in srgb, var(--cn-border-brand) 30%, transparent)'
 
+// Match accordion close (200ms). Resting closed panels stay at height 0. An in-progress close
+// (.cn-stepper-panel-closing) must not pin height: Radix measures the panel with the animation
+// turned off, and a static height of 0 makes that measurement 0 so the body snaps shut.
+const COLLAPSIBLE_PANEL_MS = '200ms'
+
+const collapsiblePanelStyles = {
+  overflow: 'hidden',
+
+  '&[data-state="open"]': {
+    animation: `cnStepperCollapsibleDown ${COLLAPSIBLE_PANEL_MS} ease-out`
+  },
+
+  '&[data-state="closed"]': {
+    height: '0',
+    opacity: '0'
+  },
+
+  '&.cn-stepper-panel-closing[data-state="closed"]': {
+    height: 'auto',
+    opacity: '1',
+    animation: `cnStepperCollapsibleUp ${COLLAPSIBLE_PANEL_MS} ease-out forwards`
+  }
+}
+
 const nestedStepBranchWireBase = {
   position: 'relative',
   width: 'var(--cn-spacing-4)',
@@ -326,19 +350,7 @@ export default {
     transform: 'rotate(180deg)'
   },
 
-  '.cn-stepper-step-panel-collapsible': {
-    overflow: 'hidden',
-
-    '&[data-state="open"]': {
-      animation: 'cnStepperCollapsibleDown 150ms ease-out'
-    },
-
-    '&[data-state="closed"]': {
-      animation: 'cnStepperCollapsibleUp 150ms ease-out forwards',
-      height: '0',
-      opacity: '0'
-    }
-  },
+  '.cn-stepper-step-panel-collapsible': collapsiblePanelStyles,
 
   /* Connectors */
   '.cn-stepper-connector': {
@@ -584,19 +596,7 @@ export default {
     transform: 'rotate(180deg)'
   },
 
-  '.cn-stepper-nested-step-panel-collapsible': {
-    overflow: 'hidden',
-
-    '&[data-state="open"]': {
-      animation: 'cnStepperCollapsibleDown 150ms ease-out'
-    },
-
-    '&[data-state="closed"]': {
-      animation: 'cnStepperCollapsibleUp 150ms ease-out forwards',
-      height: '0',
-      opacity: '0'
-    }
-  },
+  '.cn-stepper-nested-step-panel-collapsible': collapsiblePanelStyles,
 
   '@keyframes cnStepperCollapsibleDown': {
     from: {
@@ -891,7 +891,7 @@ export default {
     '.cn-stepper-step-panel-collapsible, .cn-stepper-nested-step-panel-collapsible': {
       animation: 'none',
 
-      '&[data-state="closed"]': {
+      '&[data-state="closed"], &.cn-stepper-panel-closing[data-state="closed"]': {
         height: '0',
         opacity: '0'
       },

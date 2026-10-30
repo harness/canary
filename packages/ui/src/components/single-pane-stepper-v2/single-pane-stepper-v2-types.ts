@@ -22,7 +22,7 @@ export interface SinglePaneStepperV2RootProps {
   showRootHeader?: boolean
   hideHeader?: boolean
   reactivationPrompt?: ReactivationPrompt
-  /** When true, renders a "Step {n}/{total}" label next to each step title. Default true. */
+  /** When true, renders a "Step {n}/{total}" label next to each step title. Default false. */
   showStepBadge?: boolean
   /**
    * When true, upcoming steps stay in the timeline. When false, only visited steps render

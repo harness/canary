@@ -89,14 +89,15 @@ const testFlow: FlowConfig = {
 }
 
 describe('SinglePaneStepperV2', () => {
-  test('renders the active question and step badge', () => {
-    render(<SinglePaneStepperV2.Root flow={testFlow} title="Create a feature flag" />)
+  test('renders the active question without a step tag', () => {
+    const { container } = render(<SinglePaneStepperV2.Root flow={testFlow} title="Create a feature flag" />)
 
     expect(screen.getByText('What do you want your first flag to do?')).toBeInTheDocument()
     expect(
       screen.getByText('In a sentence or two, describe what functionality you want your first feature flag to control.')
     ).toBeInTheDocument()
-    expect(screen.getByText('Step 1/3')).toBeInTheDocument()
+    expect(screen.queryByText('Step 1/3')).not.toBeInTheDocument()
+    expect(container.querySelector('.cn-stepper-step-active .cn-stepper-indicator')).toHaveTextContent('1')
     expect(screen.getByText('Create a feature flag')).toBeInTheDocument()
     expect(screen.getByText('Continue')).toBeInTheDocument()
   })
@@ -330,7 +331,7 @@ describe('SinglePaneStepperV2', () => {
       initialStep: 'start'
     }
 
-    render(<SinglePaneStepperV2.Root flow={flow} />)
+    render(<SinglePaneStepperV2.Root flow={flow} showStepBadge />)
     expect(screen.getByText('Step 1/2')).toBeInTheDocument()
     expect(screen.queryByText('Other branch')).not.toBeInTheDocument()
   })

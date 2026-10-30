@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState, type KeyboardEvent } from 'react'
+import { useEffect, useRef, useState, type AnimationEvent, type CSSProperties, type KeyboardEvent } from 'react'
 
 import { IconV2 } from '@components/icon-v2'
 import { Text } from '@components/text'
@@ -20,6 +20,7 @@ function shouldAutoCollapseOnComplete(state: StepState, isSelected: boolean): bo
 
 function useCollapsibleStepExpanded(derivedState: StepState, isSelected: boolean) {
   const [expanded, setExpanded] = useState(() => isStepExpandedByDefault(derivedState, isSelected))
+  const panel = useAnimatedPanelClose(expanded, setExpanded)
   const prevDerivedStateRef = useRef(derivedState)
   const prevIsSelectedRef = useRef(isSelected)
 
@@ -31,13 +32,60 @@ function useCollapsibleStepExpanded(derivedState: StepState, isSelected: boolean
     if (!stateChanged && !selectionChanged) return
 
     if (derivedState === 'active' || derivedState === 'error') {
-      setExpanded(true)
+      panel.setPanelExpanded(true)
     } else if (shouldAutoCollapseOnComplete(derivedState, isSelected)) {
-      setExpanded(false)
+      panel.setPanelExpanded(false)
     }
-  }, [derivedState, isSelected])
+  }, [derivedState, isSelected]) // eslint-disable-line react-hooks/exhaustive-deps
 
-  return [expanded, setExpanded] as const
+  return { expanded, ...panel }
+}
+
+// Measure while the panel is still open. Height is forced to auto so a step whose body grew
+// (logs, scan results) is not recorded at the height Radix cached when it opened.
+function measureOpenPanelHeight(node: HTMLElement): number {
+  const previousHeight = node.style.height
+  node.style.height = 'auto'
+  const height = node.getBoundingClientRect().height
+  node.style.height = previousHeight
+  return height
+}
+
+function useAnimatedPanelClose(expanded: boolean, setExpanded: (open: boolean) => void) {
+  const panelRef = useRef<HTMLDivElement>(null)
+  const [closeHeight, setCloseHeight] = useState<number | null>(null)
+
+  const setPanelExpanded = (open: boolean) => {
+    if (open) {
+      setCloseHeight(null)
+      setExpanded(true)
+      return
+    }
+
+    if (expanded) {
+      const height = panelRef.current ? measureOpenPanelHeight(panelRef.current) : 0
+      setCloseHeight(height > 0 ? height : null)
+    }
+
+    setExpanded(false)
+  }
+
+  const onCloseAnimationEnd = (event: AnimationEvent<HTMLDivElement>) => {
+    if (event.target !== event.currentTarget) return
+    if (!event.animationName?.includes('cnStepperCollapsibleUp')) return
+    setCloseHeight(null)
+  }
+
+  const closeStyle: CSSProperties | undefined =
+    closeHeight != null ? ({ '--radix-collapsible-content-height': `${closeHeight}px` } as CSSProperties) : undefined
+
+  return {
+    panelRef,
+    closing: closeHeight != null,
+    closeStyle,
+    setPanelExpanded,
+    onCloseAnimationEnd
+  }
 }
 
 // Top-level Step: no ancestor StepGroup (ParentStepProvider). Registers/derives state exactly like
@@ -86,7 +134,10 @@ function TopLevelStep({
   const isCollapsible = ctx.collapsibleNestedSteps && Boolean(children)
 
   const isSelected = ctx.value === value
-  const [expanded, setExpanded] = useCollapsibleStepExpanded(derivedState, isSelected)
+  const { expanded, panelRef, closing, closeStyle, setPanelExpanded, onCloseAnimationEnd } = useCollapsibleStepExpanded(
+    derivedState,
+    isSelected
+  )
 
   const stateClass = `cn-stepper-step-${displayState}`
 
@@ -176,7 +227,7 @@ function TopLevelStep({
   }
 
   return (
-    <CollapsiblePrimitive.Root open={expanded} onOpenChange={setExpanded} asChild>
+    <CollapsiblePrimitive.Root open={expanded} onOpenChange={setPanelExpanded} asChild>
       <li className={stepItemClassName}>
         <div className="cn-stepper-step-header">
           {stepButton}
@@ -202,7 +253,10 @@ function TopLevelStep({
         {connector}
 
         <CollapsiblePrimitive.Content
-          className="cn-stepper-step-panel-collapsible"
+          ref={panelRef}
+          className={cn('cn-stepper-step-panel-collapsible', closing && 'cn-stepper-panel-closing')}
+          style={closeStyle}
+          onAnimationEnd={onCloseAnimationEnd}
           // Keep card children mounted while collapsed so local state (e.g. streamed logs) survives
           // expand/collapse. Radix Presence unmounts content by default when closed.
           forceMount
@@ -247,7 +301,10 @@ function NestedStep({
   const isCollapsible = ctx.collapsibleNestedSteps && Boolean(children)
 
   const isSelected = ctx.value === value
-  const [expanded, setExpanded] = useCollapsibleStepExpanded(derivedState, isSelected)
+  const { expanded, panelRef, closing, closeStyle, setPanelExpanded, onCloseAnimationEnd } = useCollapsibleStepExpanded(
+    derivedState,
+    isSelected
+  )
 
   const stateClass = `cn-stepper-nested-step-${displayState}`
 
@@ -255,7 +312,7 @@ function NestedStep({
     ctx.selectNestedStep(value)
     const isTerminal = derivedState === 'completed' || derivedState === 'skipped'
     if (isCollapsible && !isTerminal) {
-      setExpanded(true)
+      setPanelExpanded(true)
     }
   }
 
@@ -364,7 +421,7 @@ function NestedStep({
   }
 
   return (
-    <CollapsiblePrimitive.Root open={expanded} onOpenChange={setExpanded} asChild>
+    <CollapsiblePrimitive.Root open={expanded} onOpenChange={setPanelExpanded} asChild>
       <li className={cn('cn-stepper-nested-step-item', stateClass, 'cn-stepper-nested-step-item-collapsible')}>
         <div className="cn-stepper-nested-step-header">
           {nestedStepRow}
@@ -390,7 +447,10 @@ function NestedStep({
           </CollapsiblePrimitive.Trigger>
         </div>
         <CollapsiblePrimitive.Content
-          className="cn-stepper-nested-step-panel-collapsible"
+          ref={panelRef}
+          className={cn('cn-stepper-nested-step-panel-collapsible', closing && 'cn-stepper-panel-closing')}
+          style={closeStyle}
+          onAnimationEnd={onCloseAnimationEnd}
           // Keep card children mounted while collapsed so local state (e.g. streamed logs) survives
           // expand/collapse. Radix Presence unmounts content by default when closed.
           forceMount

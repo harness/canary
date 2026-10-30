@@ -26,7 +26,7 @@ function SinglePaneStepperV2Content({
   showRootHeader,
   hideHeader,
   reactivationPrompt,
-  showStepBadge = true,
+  showStepBadge = false,
   showInactiveSteps = true,
   className,
   style

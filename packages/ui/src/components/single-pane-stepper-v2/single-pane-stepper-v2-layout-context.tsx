@@ -7,7 +7,7 @@ interface SinglePaneStepperV2LayoutContextValue {
 }
 
 const SinglePaneStepperV2LayoutContext = createContext<SinglePaneStepperV2LayoutContextValue>({
-  showStepBadge: true,
+  showStepBadge: false,
   totalSteps: 0,
   showInactiveSteps: true
 })

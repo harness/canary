@@ -7,7 +7,7 @@ import { DocsPage } from "@/components/docs-page";
 import { Aside } from "@astrojs/starlight/components";
 import { FlagOnboardingDemo } from "@/components/single-pane-stepper-v2-demo";
 
-The Single Pane Chat Stepper (`SinglePaneStepperV2`) is a single-column guided flow for conversational setup. It keeps the vertical stepper timeline from the original [Single Pane Stepper](/growth-patterns/single-pane-stepper) — checkmarks, connectors, and step badges — but completed answers render as chat messages.
+The Single Pane Chat Stepper (`SinglePaneStepperV2`) is a single-column guided flow for conversational setup. It keeps the vertical stepper timeline from the original [Single Pane Stepper](/growth-patterns/single-pane-stepper) — numbered circles, checkmarks, and connectors, without step tags — but completed answers render as chat messages.
 
 After a step is completed, the form is not collapsed into an accordion. The question stays in the timeline as the step header, and the selection appears as a user `MessageBubble` with edit, copy, and a timestamp.
 
@@ -248,7 +248,7 @@ Completed messages include:
       required: false,
       value: "boolean",
       description:
-        "Show a Step n/total label next to each question. Default true.",
+        "Show a Step n/total label next to each question. Default false.",
     },
     {
       name: "showInactiveSteps",

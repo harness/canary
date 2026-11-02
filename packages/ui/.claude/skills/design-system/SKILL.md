@@ -24,33 +24,6 @@ them with `packages/ui/`.
 `component-architecture.md`, `design-to-code-flow.md`, `interaction-states.md`, `shadows.md`,
 `spacing.md`, `typography.md`, `visual-primitives.md`.
 
-## Not authoritative — do not cite these
-
-**`apps/portal/src/content/docs/**` (the docs site) is not a reference for design-system
-rules.** It is maintained on its own cadence, so it lags the code, and it is less detailed
-than the manifests and pattern docs. Where the portal and a manifest disagree, the
-**manifest is correct** — the portal is out of date.
-
-Never cite a portal path in a manifest's `governance.rulesDocs`, and never resolve a design
-question from the portal when a manifest or pattern doc covers it.
-
-Do not treat a `*.figma.ts` Code Connect file as evidence of what Figma exposes either; its
-lookups fail silently when a Figma property is renamed.
-
-## Before the first component renders — consumer app setup
-
-Installing the package is not enough to make components look right. A host app must import
-the stylesheet once, put a **theme class** and `cn-root` on an ancestor itself (the package
-applies neither), and route portaled overlays through a `cn-root` host. Get these wrong and
-the failure is quiet — half-themed surfaces, or `border-*` utilities drawing nothing.
-
-**Read `docs/system/app-setup.md` before diagnosing any "it renders but looks wrong" report,
-and before adding a stylesheet import or a wrapper class to anything.**
-
-This is app setup, not component usage. Do not work around a missing one from inside a
-component file, and if you cannot tell whether the host app already does it, say so rather
-than adding it.
-
 ## Workflow
 
 1. **Find the component.** Read `schemas/registry.json`. If the component has no manifest,
@@ -86,6 +59,33 @@ than adding it.
 Report the conflict; do not silently pick one. A manifest that no longer matches its
 component is either stale documentation or a real regression in the component, and the two
 need different fixes. `ds-check --source` catches this case.
+
+## Before the first component renders — consumer app setup
+
+Installing the package is not enough to make components look right. A host app must import
+the stylesheet once, put a **theme class** and `cn-root` on an ancestor itself (the package
+applies neither), and route portaled overlays through a `cn-root` host. Get these wrong and
+the failure is quiet — half-themed surfaces, or `border-*` utilities drawing nothing.
+
+**Read `docs/system/app-setup.md` before diagnosing any "it renders but looks wrong" report,
+and before adding a stylesheet import or a wrapper class to anything.**
+
+This is app setup, not component usage. Do not work around a missing one from inside a
+component file, and if you cannot tell whether the host app already does it, say so rather
+than adding it.
+
+## Not authoritative — do not cite these
+
+**`apps/portal/src/content/docs/**` (the docs site) is not a reference for design-system
+rules.** It is maintained on its own cadence, so it lags the code, and it is less detailed
+than the manifests and pattern docs. Where the portal and a manifest disagree, the
+**manifest is correct** — the portal is out of date.
+
+Never cite a portal path in a manifest's `governance.rulesDocs`, and never resolve a design
+question from the portal when a manifest or pattern doc covers it.
+
+Do not treat a `*.figma.ts` Code Connect file as evidence of what Figma exposes either; its
+lookups fail silently when a Figma property is renamed.
 
 ## Keeping this file small
 

@@ -817,7 +817,7 @@ const PullRequestPanel = ({
                     {shouldShowDisableAutoMerge && (
                       <Button
                         variant="primary"
-                        theme={buttonState.theme}
+                        theme="danger"
                         onClick={onDisableAutoMerge}
                         loading={isDisablingAutoMerge}
                       >

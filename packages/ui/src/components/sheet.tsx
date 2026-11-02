@@ -52,7 +52,7 @@ const SheetOverlay = forwardRef<ElementRef<typeof SheetPrimitive.Overlay>, Sheet
 )
 SheetOverlay.displayName = SheetPrimitive.Overlay.displayName
 
-const sheetVariants = cva('bg-cn-1 p-cn-xl gap-cn-md shadow-cn-4 fixed z-50 transition ease-in-out', {
+const sheetVariants = cva('fixed z-50 gap-cn-md bg-cn-1 p-cn-xl shadow-cn-4 transition ease-in-out', {
   variants: {
     side: {
       top: 'inset-x-0 top-0 border-b',
@@ -98,7 +98,7 @@ const SheetContent = forwardRef<ElementRef<typeof SheetPrimitive.Content>, Sheet
         {children}
         {!hideCloseButton && (
           <SheetPrimitive.Close
-            className="absolute right-1 top-2 flex items-center justify-center transition-colors disabled:pointer-events-none"
+            className="right-1 top-2 absolute flex items-center justify-center transition-colors disabled:pointer-events-none"
             asChild
           >
             <Button className={closeClassName} variant="ghost" size="sm" iconOnly ignoreIconOnlyTooltip>
@@ -148,7 +148,7 @@ const SheetTitle = forwardRef<
 >(({ className, ...props }, ref) => (
   <SheetPrimitive.Title
     ref={ref}
-    className={cn('text-cn-1 text-cn-size-3 [font-weight:var(--cn-font-weight-default-normal-heading)]', className)}
+    className={cn('text-cn-1 text-cn-size-3 [font-weight:var(--cn-font-weight-default-normal-500)]', className)}
     {...props}
   />
 ))

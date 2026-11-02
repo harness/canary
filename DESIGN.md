@@ -537,7 +537,7 @@ The color system has two layers and components only ever consume the second one.
 
 ## Typography
 
-**Families.** `Inter` for UI (`fontFamily.default`), `JetBrains Mono` for code. Both are variable fonts — Inter's weight axis maps the standard 100–900 ladder onto a tuned numeric scale (`400`/`530` for Regular/SemiBold) for optical balance.
+**Families.** `Inter` for UI (`fontFamily.default`), `JetBrains Mono` for code. Both are variable fonts — Inter's weight axis maps the standard 100–900 ladder onto a tuned numeric scale (`400`/`500` for Regular/Medium) for optical balance.
 
 **Size scale.** Fourteen steps (`fontSize.0`…`fontSize.15`), 0.55rem (8.8px) → 6rem (96px). The scale is consumed via the eleven semantic roles enumerated in the frontmatter — code should reach for `body-normal`, `heading-section`, `caption-strong`, etc., not raw size tokens.
 

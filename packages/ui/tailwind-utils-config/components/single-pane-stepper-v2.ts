@@ -210,7 +210,7 @@ export default {
     background: 'var(--cn-bg-2)',
     color: 'var(--cn-text-3)',
     fontSize: '11px',
-    fontWeight: 'var(--cn-font-weight-default-normal-heading)',
+    fontWeight: 'var(--cn-font-weight-default-normal-500)',
     lineHeight: '1.35'
   },
 

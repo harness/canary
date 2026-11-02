@@ -308,7 +308,7 @@ export default {
 
     '&-dual-pane-step-title': {
       font: 'var(--cn-body-strong)',
-      fontWeight: 'var(--cn-font-weight-default-normal-heading)',
+      fontWeight: 'var(--cn-font-weight-default-normal-500)',
       color: 'var(--cn-text-1)'
     },
 

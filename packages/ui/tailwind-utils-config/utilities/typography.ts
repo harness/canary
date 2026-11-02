@@ -2,9 +2,7 @@
  * Composite typography utilities (`.font-*`), also consumed by the `<Text>` component.
  *
  * Each variant declares the optical WEIGHT bucket it resolves to and its
- * letter-spacing (TRACKING). New work should use only the regular and semibold
- * buckets; the light/medium/bold buckets are DEPRECATED and retained for
- * backwards-compatibility only (see `deprecated` below).
+ * letter-spacing (TRACKING).
  *
  * NOTE: `weight` mirrors the composite token's `fontWeight` in
  * core-design-system/design-tokens/breakpoint/desktop.json. The CSS `font`
@@ -12,7 +10,7 @@
  * by the token — keep the two in sync.
  */
 
-type FontWeightBucket = 'light' | 'regular' | 'medium' | 'semibold' | 'bold'
+type FontWeightBucket = 'regular' | 'medium'
 type Tracking = 'tight' | 'normal' | 'wide'
 
 interface FontVariant {
@@ -24,37 +22,27 @@ interface FontVariant {
   weight: FontWeightBucket
   /** Letter-spacing. Omitted = none. */
   tracking?: Tracking
-  /**
-   * DEPRECATED variant — retained for backwards-compatibility only. Still emits
-   * its `.font-*` utility so existing consumers keep working; do not use in new
-   * work. Flagged by the deprecation lint rule in eslint/rules.js.
-   */
-  deprecated?: boolean
 }
 
 const FONT_VARIANTS: FontVariant[] = [
-  { name: 'heading-hero', weight: 'semibold', tracking: 'tight' },
-  { name: 'heading-section', weight: 'semibold', tracking: 'tight' },
-  { name: 'heading-default', weight: 'semibold', tracking: 'tight' },
-  { name: 'heading-subsection', weight: 'semibold', tracking: 'tight' },
-  { name: 'heading-base', weight: 'semibold', tracking: 'tight' },
-  { name: 'heading-small', weight: 'semibold', tracking: 'normal' },
+  { name: 'heading-hero', weight: 'medium', tracking: 'tight' },
+  { name: 'heading-section', weight: 'medium', tracking: 'tight' },
+  { name: 'heading-default', weight: 'medium', tracking: 'tight' },
+  { name: 'heading-subsection', weight: 'medium', tracking: 'tight' },
+  { name: 'heading-base', weight: 'medium', tracking: 'tight' },
+  { name: 'heading-small', weight: 'medium', tracking: 'normal' },
   { name: 'body-normal', weight: 'regular', tracking: 'normal' },
-  { name: 'body-strong', weight: 'semibold', tracking: 'normal' },
-  /** @deprecated Use `body-normal`. Light weight retained for backwards-compatibility only; flagged by the deprecation lint rule in eslint/rules.js. */
-  { name: 'body-light', weight: 'light', tracking: 'tight', deprecated: true },
+  { name: 'body-strong', weight: 'medium', tracking: 'normal' },
   { name: 'body-code', weight: 'regular', tracking: 'normal' },
   { name: 'caption-normal', weight: 'regular', tracking: 'normal' },
-  { name: 'caption-strong', weight: 'semibold', tracking: 'normal' },
-  /** @deprecated Use `caption-normal`. Light weight retained for backwards-compatibility only; flagged by the deprecation lint rule in eslint/rules.js. */
-  { name: 'caption-light', weight: 'light', tracking: 'normal', deprecated: true },
+  { name: 'caption-strong', weight: 'medium', tracking: 'normal' },
   { name: 'caption-code', weight: 'regular', tracking: 'normal' },
   { name: 'link-default', cssVar: 'comp-link-default', weight: 'regular' },
-  { name: 'link-sm', cssVar: 'comp-link-sm', weight: 'semibold' },
-  { name: 'body-single-line-strong', weight: 'semibold', tracking: 'tight' },
+  { name: 'link-sm', cssVar: 'comp-link-sm', weight: 'medium' },
+  { name: 'body-single-line-strong', weight: 'medium', tracking: 'tight' },
   { name: 'body-single-line-normal', weight: 'regular', tracking: 'tight' },
   { name: 'caption-single-line-normal', weight: 'regular', tracking: 'normal' },
-  { name: 'dialog-title', cssVar: 'comp-dialog-title', weight: 'semibold' },
+  { name: 'dialog-title', cssVar: 'comp-dialog-title', weight: 'medium' },
   { name: 'micro-normal', weight: 'regular', tracking: 'wide' }
 ]
 

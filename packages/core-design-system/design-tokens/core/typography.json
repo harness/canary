@@ -19,43 +19,19 @@
   "fontWeight": {
     "default": {
       "normal": {
-        "300": {
-          "$type": "fontWeights",
-          "$value": "310",
-          "$description": "DEPRECATED: light weight (optical 310). Retained for backwards-compatibility only — the design system now normalizes to 400 (regular) and 600 (semibold). Do not use in new work."
-        },
         "400": {
           "$type": "fontWeights",
           "$value": "400"
         },
         "500": {
           "$type": "fontWeights",
-          "$value": "440",
-          "$description": "DEPRECATED: medium weight (optical 440). Retained for backwards-compatibility only — normalize to 400 (regular) or 600 (semibold) instead."
-        },
-        "600": {
-          "$type": "fontWeights",
-          "$value": "530"
-        },
-        "heading": {
-          "$type": "fontWeights",
           "$value": "500",
-          "$description": "Heading weight (optical 500). Used by the heading typography variants — lighter than semibold (optical 530) while keeping clear hierarchy over body text."
-        },
-        "700": {
-          "$type": "fontWeights",
-          "$value": "Bold",
-          "$description": "DEPRECATED: bold weight. Retained for backwards-compatibility only — normalize to 600 (semibold) instead."
+          "$description": "Medium weight (optical 500). Used by the heading typography variants — keeps clear hierarchy over body text."
         }
       }
     },
     "mono": {
       "normal": {
-        "300": {
-          "$type": "fontWeights",
-          "$value": "Light",
-          "$description": "DEPRECATED: mono light weight. Retained for backwards-compatibility only — use 400 (regular) instead."
-        },
         "400": {
           "$type": "fontWeights",
           "$value": "Regular"

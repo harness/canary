@@ -12,17 +12,18 @@ Charts and graphs are **not part of the Canary repo**. The chart components are 
 If you need a chart, use the dashboard-ui library. Don't build a new chart component in Canary or in your own module.
 
 <Aside type="note" title="Tokens live here, components live there">
-  Change a chart token in Canary. Change chart behavior or add a chart type in dashboard-ui.
+  Change a chart token in Canary. Change chart behavior or add a chart type in
+  dashboard-ui.
 </Aside>
 
 ## Getting started
 
-| | |
-| --- | --- |
-| **Repo** | `dashboard-ui` on Harness Code, in the `PROD` org, `Data_Platform` project |
-| **Package** | `@harness/dashboard-visualization` |
-| **Library source** | `projects/visualization` in the dashboard-ui repo |
-| **Registry** | The Harness Artifact Registry npm registry (`Data_Platform`) |
+|                    |                                                                            |
+| ------------------ | -------------------------------------------------------------------------- |
+| **Repo**           | `dashboard-ui` on Harness Code, in the `PROD` org, `Data_Platform` project |
+| **Package**        | `@harness/dashboard-visualization`                                         |
+| **Library source** | `projects/visualization` in the dashboard-ui repo                          |
+| **Registry**       | The Harness Artifact Registry npm registry (`Data_Platform`)               |
 
 The package is published to the Harness Artifact Registry, not the public npm registry. Point your `~/.npmrc` at it with an access token, install the package, and import its stylesheet:
 

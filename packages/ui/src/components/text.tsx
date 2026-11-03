@@ -49,9 +49,11 @@ export const typographyVariantConfig = {
   'body-strong': 'font-body-strong',
   'body-single-line-strong': 'font-body-single-line-strong',
   'body-code': 'font-body-code',
+  'body-code-strong': 'font-body-code-strong',
   'caption-normal': 'font-caption-normal',
   'caption-strong': 'font-caption-strong',
   'caption-code': 'font-caption-code',
+  'caption-code-strong': 'font-caption-code-strong',
   'caption-single-line-normal': 'font-caption-single-line-normal'
 }
 
@@ -119,7 +121,9 @@ const textVariantToElement: Record<
   'body-strong': { element: 'p', color: 'foreground-2' },
   'body-single-line-strong': { element: 'p', color: 'foreground-2' },
   'body-code': { element: 'pre', color: 'foreground-2' },
+  'body-code-strong': { element: 'pre', color: 'foreground-2' },
   'caption-code': { element: 'span', color: 'foreground-2' },
+  'caption-code-strong': { element: 'span', color: 'foreground-2' },
   'caption-normal': { element: 'span', color: 'foreground-2' },
   'caption-strong': { element: 'span', color: 'foreground-2' },
   'caption-single-line-normal': { element: 'span', color: 'foreground-2' }

@@ -81,6 +81,10 @@ The `Text` component supports various typographic variants. The default variant 
     <div className="flex-1 min-w-0"><Text variant="body-code" wrap="wrap">dummyText</Text></div>
   </div>
   <div className="flex items-start gap-cn-md border-b border-cn-borders-3 pb-cn-sm">
+    <span className="text-cn-size-2 text-cn-3 w-56 shrink-0 font-mono pt-cn-3xs">body-code-strong</span>
+    <div className="flex-1 min-w-0"><Text variant="body-code-strong" wrap="wrap">dummyText</Text></div>
+  </div>
+  <div className="flex items-start gap-cn-md border-b border-cn-borders-3 pb-cn-sm">
     <span className="text-cn-size-2 text-cn-3 w-56 shrink-0 font-mono pt-cn-3xs">caption-normal</span>
     <div className="flex-1 min-w-0"><Text variant="caption-normal">dummyText</Text></div>
   </div>
@@ -247,7 +251,7 @@ import { Text } from "@harnessio/ui/components";
 
 `Text` renders a single typographic element chosen from the `variant`, with the color, alignment, wrapping, and truncation applied as classes.
 
-- Each variant maps to a default HTML element: `heading-*` and `body-*` variants render as `<p>`, `body-code` as `<pre>`, and `caption-*` as `<span>`.
+- Each variant maps to a default HTML element: `heading-*` and `body-*` variants render as `<p>`, `body-code` and `body-code-strong` as `<pre>`, and `caption-*` as `<span>`.
 - Heading variants render as `<p role="heading">` rather than a real `<h1>`–`<h6>`. Use `as` (e.g. `as="h2"`) when you need a true heading level in the document outline.
 - `as` overrides the element; `asChild` merges Text's props onto the single child you provide instead of rendering its own element.
 - `truncate` and `lineClamp` both add a native `title` tooltip carrying the full text; `lineClamp` wins when both are set.
@@ -293,7 +297,7 @@ import { Text } from "@harnessio/ui/components";
       defaultValue: "'body-normal'",
       required: false,
       value:
-        "'heading-hero' | 'heading-section' | 'heading-default' | 'heading-subsection' | 'heading-base' | 'heading-small' | 'body-normal' | 'body-single-line-normal' | 'body-strong' | 'body-single-line-strong' | 'body-code' | 'caption-normal' | 'caption-strong' | 'caption-code' | 'caption-single-line-normal'",
+        "'heading-hero' | 'heading-section' | 'heading-default' | 'heading-subsection' | 'heading-base' | 'heading-small' | 'body-normal' | 'body-single-line-normal' | 'body-strong' | 'body-single-line-strong' | 'body-code' | 'body-code-strong' | 'caption-normal' | 'caption-strong' | 'caption-code' | 'caption-code-strong' | 'caption-single-line-normal'",
     },
     {
       name: "color",
@@ -313,7 +317,7 @@ import { Text } from "@harnessio/ui/components";
     {
       name: "as",
       description:
-        "Override the rendered element. By default the element is derived from the variant (heading and body variants render as <p>, body-code as <pre>, caption variants as <span>). Use this to get a real heading level, for example as='h2'.",
+        "Override the rendered element. By default the element is derived from the variant (heading and body variants render as <p>, body-code and body-code-strong as <pre>, caption variants as <span>). Use this to get a real heading level, for example as='h2'.",
       defaultValue: "(derived from variant)",
       required: false,
       value:

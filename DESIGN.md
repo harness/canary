@@ -336,6 +336,11 @@ typography:
     fontSize: 0.813rem
     fontWeight: 400
     lineHeight: 1.428
+  body-code-strong:
+    fontFamily: JetBrains Mono
+    fontSize: 0.813rem
+    fontWeight: 700
+    lineHeight: 1.428
   caption-strong:
     fontFamily: Inter
     fontSize: 0.788rem
@@ -549,7 +554,7 @@ The color system has two layers and components only ever consume the second one.
 - Body copy: `body-normal` (14px / 400 weight / 20px line-height).
 - UI labels: `body-strong` (14px / 530).
 - Section headings: `heading-base` (16px / 530) or `heading-subsection` (18px / 530).
-- Code/identifiers: `body-code` (12px / JetBrains Mono).
+- Code/identifiers: `body-code` (12px / JetBrains Mono); emphasized: `body-code-strong` (700).
 - Eyebrow / metadata: `label-caps` (11.5px / uppercase / 0.1em tracked).
 
 Two weights per surface is the practical ceiling — mixing more than that reads as noise.

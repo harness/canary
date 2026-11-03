@@ -10,7 +10,7 @@
  * by the token — keep the two in sync.
  */
 
-type FontWeightBucket = 'regular' | 'medium'
+type FontWeightBucket = 'regular' | 'medium' | 'bold'
 type Tracking = 'tight' | 'normal' | 'wide'
 
 interface FontVariant {
@@ -34,9 +34,11 @@ const FONT_VARIANTS: FontVariant[] = [
   { name: 'body-normal', weight: 'regular', tracking: 'normal' },
   { name: 'body-strong', weight: 'medium', tracking: 'normal' },
   { name: 'body-code', weight: 'regular', tracking: 'normal' },
+  { name: 'body-code-strong', weight: 'bold', tracking: 'normal' },
   { name: 'caption-normal', weight: 'regular', tracking: 'normal' },
   { name: 'caption-strong', weight: 'medium', tracking: 'normal' },
   { name: 'caption-code', weight: 'regular', tracking: 'normal' },
+  { name: 'caption-code-strong', weight: 'bold', tracking: 'normal' },
   { name: 'link-default', cssVar: 'comp-link-default', weight: 'regular' },
   { name: 'link-sm', cssVar: 'comp-link-sm', weight: 'medium' },
   { name: 'body-single-line-strong', weight: 'medium', tracking: 'tight' },

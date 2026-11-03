@@ -898,7 +898,7 @@ button[aria-label="Search"] {
 }
 
 .pagination-links a > span {
-  color: var(--cn-text-4) !important;
+  color: var(--cn-text-3) !important;
   font-size: var(--cn-font-size-5) !important;
   line-height: 1.4 !important;
 }
@@ -915,7 +915,7 @@ button[aria-label="Search"] {
 .pagination-links a svg {
   width: 24px !important;
   height: 24px !important;
-  color: var(--cn-text-4) !important;
+  color: var(--cn-text-3) !important;
   transition: all 0.15s ease !important;
   flex-shrink: 0 !important;
 }

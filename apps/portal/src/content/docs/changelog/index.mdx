@@ -5,7 +5,7 @@ description: Recent changes to the Harness Design System
 
 import ChangelogEntry from "@/components/changelog-entry";
 
-<ChangelogEntry client:only="react" title="Text level 4 retired in favor of text level 3 (UUI-4439)" startDate="Nov 3, 2026" status="migrating">
+<ChangelogEntry client:only="react" title="Text level 4 retired in favor of text level 3 (UUI-4439)" startDate="Nov 3, 2026" status="migrating" version="1.7.0">
 
 `foreground-4` / `text-cn-4` is no longer used anywhere in the design system. Disabled states are expressed with the 60% disabled opacity rather than a dedicated text color, so the extra gray level was redundant.
 
@@ -57,7 +57,7 @@ The `600` bucket (optical `530`) is **no longer used** anywhere in the library. 
 
 The typography scale has been normalized to two optical weights: **Regular (400)** and **Semibold (600, which renders at optical 530)** for Inter, while JetBrains Mono keeps **Regular** and **Bold**. The in-between weights are no longer part of the recommended scale, and every `.font-*` utility and `<Text>` variant now resolves to one of these normalized weights.
 
-The previous **light (300)**, **medium (500)**, and **bold (700)** weights have **not been removed** — they are retained for backwards-compatibility and are now marked **deprecated** across every layer of the system: the `caption-light` Text variant, the `.font-body-light` and `.font-caption-light` utilities, the `body.light` and `caption.light` composite tokens, and the underlying weight primitives (Inter `300 / 500 / 700`, JetBrains Mono `300 / 500`). 
+The previous **light (300)**, **medium (500)**, and **bold (700)** weights have **not been removed** — they are retained for backwards-compatibility and are now marked **deprecated** across every layer of the system: the `caption-light` Text variant, the `.font-body-light` and `.font-caption-light` utilities, the `body.light` and `caption.light` composite tokens, and the underlying weight primitives (Inter `300 / 500 / 700`, JetBrains Mono `300 / 500`).
 
 Existing usage keeps working and the deprecated specimens remain on the [Typography foundations](/foundations/typography/) page for reference.
 

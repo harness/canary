@@ -192,15 +192,20 @@ const TextWithRef = forwardRef<HTMLElement, TextProps>(
     const fallback = textVariantToElement[variant ?? 'body-normal'] ?? textVariantToElement['body-normal']
     const color = _color ?? fallback.color
 
+    // Single-line variants are clamped to one line by their `.font-*` utility, so they
+    // always need the `title` fallback that `truncate` provides.
+    const isSingleLine = !!variant?.includes('single-line')
+    const shouldTruncate = truncate || isSingleLine
+
     useEffect(() => {
-      if (elementRef.current && (truncate || lineClamp)) {
+      if (elementRef.current && (shouldTruncate || lineClamp)) {
         setTitleText(elementRef.current.innerText || '')
       }
-    }, [children, truncate, lineClamp])
+    }, [children, shouldTruncate, lineClamp])
 
     const compRef = useMergeRefs<HTMLElement>([elementRef, ref])
 
-    const isTruncated = lineClamp ? false : truncate
+    const isTruncated = lineClamp ? false : shouldTruncate
 
     return (
       <Comp

@@ -22,6 +22,8 @@ interface FontVariant {
   weight: FontWeightBucket
   /** Letter-spacing. Omitted = none. */
   tracking?: Tracking
+  /** Single-line styles are clamped to one line with an ellipsis. */
+  singleLine?: boolean
 }
 
 const FONT_VARIANTS: FontVariant[] = [
@@ -41,9 +43,9 @@ const FONT_VARIANTS: FontVariant[] = [
   { name: 'caption-code-strong', weight: 'bold', tracking: 'normal' },
   { name: 'link-default', cssVar: 'comp-link-default', weight: 'regular' },
   { name: 'link-sm', cssVar: 'comp-link-sm', weight: 'medium' },
-  { name: 'body-single-line-strong', weight: 'medium', tracking: 'tight' },
-  { name: 'body-single-line-normal', weight: 'regular', tracking: 'tight' },
-  { name: 'caption-single-line-normal', weight: 'regular', tracking: 'normal' },
+  { name: 'body-single-line-strong', singleLine: true, weight: 'medium', tracking: 'tight' },
+  { name: 'body-single-line-normal', singleLine: true, weight: 'regular', tracking: 'tight' },
+  { name: 'caption-single-line-normal', singleLine: true, weight: 'regular', tracking: 'normal' },
   { name: 'dialog-title', cssVar: 'comp-dialog-title', weight: 'medium' },
   { name: 'micro-normal', weight: 'regular', tracking: 'wide' }
 ]
@@ -51,12 +53,18 @@ const FONT_VARIANTS: FontVariant[] = [
 const buildFontUtilities = (variants: FontVariant[]): Record<string, Record<string, string>> => {
   const utilities: Record<string, Record<string, string>> = {}
 
-  for (const { name, cssVar, tracking } of variants) {
+  for (const { name, cssVar, tracking, singleLine } of variants) {
     const style: Record<string, string> = {
       font: `var(--cn-${cssVar ?? name})`
     }
     if (tracking) {
       style.letterSpacing = `var(--cn-tracking-${tracking})`
+    }
+
+    if (singleLine) {
+      style.whiteSpace = 'nowrap'
+      style.overflow = 'hidden'
+      style.textOverflow = 'ellipsis'
     }
 
     utilities[`&-${name}`] = style

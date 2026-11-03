@@ -56,7 +56,7 @@ export default {
       '@apply opacity-cn-disabled': '',
 
       '.cn-select-indicator-icon': {
-        color: 'var(--cn-text-4)'
+        color: 'var(--cn-text-3)'
       }
     },
 

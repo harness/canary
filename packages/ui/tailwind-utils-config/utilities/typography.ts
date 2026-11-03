@@ -45,7 +45,8 @@ const FONT_VARIANTS: FontVariant[] = [
   { name: 'body-single-line-normal', weight: 'regular', tracking: 'tight' },
   { name: 'caption-single-line-normal', weight: 'regular', tracking: 'normal' },
   { name: 'dialog-title', cssVar: 'comp-dialog-title', weight: 'medium' },
-  { name: 'micro-normal', weight: 'regular', tracking: 'wide' }
+  { name: 'micro-normal', weight: 'regular', tracking: 'wide' },
+  { name: 'micro-regular', weight: 'regular', tracking: 'wide' }
 ]
 
 const buildFontUtilities = (variants: FontVariant[]): Record<string, Record<string, string>> => {

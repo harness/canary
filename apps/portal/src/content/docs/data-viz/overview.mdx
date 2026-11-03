@@ -1,6 +1,49 @@
 ---
 title: Data Viz
-description: Data visualization guidance and components
+description: Where charts and graphs live, and how they use the design system
 ---
 
-Coming soon.
+import { Aside } from "@astrojs/starlight/components";
+
+## About
+
+Charts and graphs are **not part of the Canary repo**. The chart components are built and maintained in the **dashboard-ui** repo. Canary owns the design foundations they use — the chart text, color and sizing tokens documented in this section — and dashboard-ui consumes them.
+
+If you need a chart, use the dashboard-ui library. Don't build a new chart component in Canary or in your own module.
+
+<Aside type="note" title="Tokens live here, components live there">
+  Change a chart token in Canary. Change chart behavior or add a chart type in dashboard-ui.
+</Aside>
+
+## Getting started
+
+| | |
+| --- | --- |
+| **Repo** | `dashboard-ui` on Harness Code, in the `PROD` org, `Data_Platform` project |
+| **Package** | `@harness/dashboard-visualization` |
+| **Library source** | `projects/visualization` in the dashboard-ui repo |
+| **Registry** | The Harness Artifact Registry npm registry (`Data_Platform`) |
+
+The package is published to the Harness Artifact Registry, not the public npm registry. Point your `~/.npmrc` at it with an access token, install the package, and import its stylesheet:
+
+```sh
+npm install @harness/dashboard-visualization
+```
+
+```css
+@import "@harness/dashboard-visualization/style.css";
+```
+
+Setup, props reference and examples for every chart are in the visualization README in the dashboard-ui repo. The README also lists who to contact with questions.
+
+## Chart types
+
+The library is built on D3 and includes cartesian (line, bar, column and area), donut, gauge, funnel, radar, sankey, topology and treemap charts, plus a shared legend and tooltip.
+
+## Foundations
+
+Use these pages for the design values behind every chart:
+
+- [Typography](/data-viz/typography) — chart text styles
+- [Color](/data-viz/color) — the 12-color data sequence
+- [Sizing and Strokes](/data-viz/sizing-and-strokes) — marks, grids, donuts and gauges

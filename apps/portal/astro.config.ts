@@ -442,6 +442,21 @@ export default defineConfig({
               label: "Overview",
               attrs: { "data-icon": "circle-with-sector" },
             },
+            {
+              slug: "data-viz/typography",
+              label: "Typography",
+              attrs: { "data-icon": "text-size" },
+            },
+            {
+              slug: "data-viz/color",
+              label: "Color",
+              attrs: { "data-icon": "palette" },
+            },
+            {
+              slug: "data-viz/sizing-and-strokes",
+              label: "Sizing and Strokes",
+              attrs: { "data-icon": "view-grid" },
+            },
           ],
         },
       ],

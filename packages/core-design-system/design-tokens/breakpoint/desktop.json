@@ -183,7 +183,7 @@
         "fontFamily": "{fontFamily.default}",
         "fontWeight": "{fontWeight.default.normal.400}",
         "fontSize": "0.75rem",
-        "lineHeight": "{lineHeight.20}",
+        "lineHeight": "{lineHeight.16}",
         "letterSpacing": "{tracking.normal}",
         "paragraphSpacing": "0.375rem"
       },
@@ -195,7 +195,7 @@
         "fontFamily": "{fontFamily.default}",
         "fontWeight": "{fontWeight.default.normal.500}",
         "fontSize": "0.75rem",
-        "lineHeight": "{lineHeight.20}",
+        "lineHeight": "{lineHeight.16}",
         "letterSpacing": "{tracking.normal}",
         "paragraphSpacing": "0.375rem"
       },
@@ -489,6 +489,17 @@
         "letterSpacing": "{tracking.wide}"
       },
       "$description": "The smallest service text (labels, signatures, technical information)"
+    },
+    "regular": {
+      "$type": "typography",
+      "$value": {
+        "fontFamily": "{fontFamily.default}",
+        "fontWeight": "{fontWeight.default.normal.400}",
+        "fontSize": "0.6875rem",
+        "lineHeight": "{lineHeight.16}",
+        "letterSpacing": "{tracking.wide}"
+      },
+      "$description": "Regular-weight variant of the smallest service text (axis labels, chart annotations)"
     }
   },
   "shell": {

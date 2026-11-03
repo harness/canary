@@ -6,8 +6,8 @@
         "$value": {
           "fontFamily": "{fontFamily.default}",
           "fontWeight": "{fontWeight.default.normal.400}",
-          "fontSize": "{fontSize.1}",
-          "lineHeight": "{lineHeight.chart.1.none}",
+          "fontSize": "0.6875rem",
+          "lineHeight": "{lineHeight.16}",
           "letterSpacing": "{tracking.normal}"
         },
         "$description": "Typography for axis labels"
@@ -135,17 +135,6 @@
       }
     },
     "legend": {
-      "font": {
-        "$type": "typography",
-        "$value": {
-          "fontFamily": "{fontFamily.mono}",
-          "fontWeight": "{fontWeight.mono.normal.700}",
-          "fontSize": "{fontSize.1}",
-          "lineHeight": "{lineHeight.chart.1.none}",
-          "letterSpacing": "{tracking.normal}"
-        },
-        "$description": "Typography for chart legend text"
-      },
       "marker": {
         "size": {
           "$type": "dimension",
@@ -227,8 +216,8 @@
           "$value": {
             "fontFamily": "{fontFamily.default}",
             "fontWeight": "{fontWeight.default.normal.400}",
-            "fontSize": "{fontSize.8}",
-            "lineHeight": "{lineHeight.chart.8.none}",
+            "fontSize": "{fontSize.6}",
+            "lineHeight": "{lineHeight.chart.6.none}",
             "letterSpacing": "{tracking.normal}"
           },
           "$description": "Typography for large donut label"
@@ -244,18 +233,7 @@
             "lineHeight": "{lineHeight.chart.10.none}",
             "letterSpacing": "{tracking.tight}"
           },
-          "$description": "Typography for small donut center value"
-        },
-        "lg": {
-          "$type": "typography",
-          "$value": {
-            "fontFamily": "{fontFamily.default}",
-            "fontWeight": "{fontWeight.default.normal.500}",
-            "fontSize": "{fontSize.15}",
-            "lineHeight": "{lineHeight.chart.15.none}",
-            "letterSpacing": "{tracking.tight}"
-          },
-          "$description": "Typography for large donut center value"
+          "$description": "Typography for small donut center value (reference size only). Intentional: dashboard-ui scales the center value continuously with chart size and text length (see data-viz/typography). Do not snap to a fixed size."
         }
       },
       "gap": {
@@ -301,7 +279,7 @@
             "lineHeight": "{lineHeight.chart.10.none}",
             "letterSpacing": "{tracking.tight}"
           },
-          "$description": "Typography for gauge numeric value"
+          "$description": "Typography for gauge numeric value (reference size only). Intentional: dashboard-ui scales the center value continuously with chart size and text length (see data-viz/typography). Do not snap to a fixed size."
         },
         "unit": {
           "$type": "typography",

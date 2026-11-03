@@ -460,32 +460,10 @@ Text colors help establish visual hierarchy and convey meaning.
             <code>text-cn-3</code>
           </td>
         </tr>
-        <tr className="cn-table-v2-row">
-          <td className="cn-table-v2-cell">
-            <code>foreground-4</code>
-          </td>
-          <td className="cn-table-v2-cell">
-            <span className="font-body-normal text-cn-4">
-              The quick brown fox
-            </span>
-          </td>
-          <td className="cn-table-v2-cell">
-            To be Deprecated, use foreground-3
-          </td>
-          <td className="cn-table-v2-cell">
-            <code>text-cn-4</code>
-          </td>
-        </tr>
       </tbody>
     </table>
   </div>
 </div>
-
-<Aside type="caution" title="Upcoming change — target Oct '26">
-  `foreground-4` will be merged into `foreground-3` and is slated for
-  deprecation. Prefer `foreground-3` (`text-cn-3`) for new work instead of
-  `foreground-4` (`text-cn-4`).
-</Aside>
 
 ### Semantic
 
@@ -1049,7 +1027,7 @@ import { Text } from '@harnessio/ui/components'
       defaultValue: "foreground-2",
       required: false,
       value:
-        "'inherit' | 'foreground-1' | 'foreground-2' | 'foreground-3' | 'foreground-4' | 'success' | 'warning' | 'danger' | 'merged' | 'brand'",
+        "'inherit' | 'foreground-1' | 'foreground-2' | 'foreground-3' | 'success' | 'warning' | 'danger' | 'merged' | 'brand'",
     },
     {
       name: "align",

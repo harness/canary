@@ -6,6 +6,19 @@ description: Recent changes to the Harness Design System, automatically updated 
 import ChangelogList from "@/components/changelog/ChangelogList";
 
 <div className="not-content">
+  <p className="font-caption-normal text-cn-3">November 3, 2026</p>
+  <h2 className="font-heading-default text-cn-1">
+    Text level 4 retired in favor of text level 3 (UUI-4439)
+  </h2>
+</div>
+
+`foreground-4` / `text-cn-4` is no longer used anywhere in the design system. Disabled states are expressed with the 60% disabled opacity rather than a dedicated text color, so the extra gray level was redundant. Every `text-cn-4` and `foreground-4` usage, plus the `--cn-text-4` placeholder, drawer and breadcrumb styles, now uses `text-3` (`foreground-3`), and `text-cn-disabled` now resolves to `text-3`. Visual change: disabled placeholders now share the enabled placeholder color, with opacity alone marking them disabled. `foreground-4` remains in the `Text` and `Shimmer` types so existing code still compiles, but it is deprecated and an ESLint rule now errors on `color="foreground-4"`. Migrate to `foreground-3`; the option will be removed in a later release. Docs and foundations no longer list text level 4.
+
+<hr
+  style={{ border: 0, height: "4px", backgroundColor: "var(--cn-border-2)" }}
+/>
+
+<div className="not-content">
   <p className="font-caption-normal text-cn-3">November 2, 2026</p>
   <h2 className="font-heading-default text-cn-1">
     Bold code typography variants

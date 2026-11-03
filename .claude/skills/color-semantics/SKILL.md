@@ -107,7 +107,7 @@ All colors are authored in LCH (Lightness, Chroma, Hue), not hex. Hex exists onl
 ## ICN-003 — Background, text, and border each have their own numbered hierarchy — don't cross them
 
 - `bg.0..3`: nav/sidebar → app background → cards/containers → popovers/tooltips (depth)
-- `text.1..4`: headings/max-contrast → body → secondary/metadata → disabled (emphasis). `text.4`/`foreground-4` is slated to merge into `text.3` (target Oct '26) — prefer `text.3` for new work.
+- `text.1..3`: headings/max-contrast → body → secondary/metadata (emphasis). Disabled is expressed with opacity, not a text color.
 - `border.1..3`: focus/hover outlines → cards/fields/dividers → subtle separators (strength)
 
 `text.2` and `border.2` are unrelated despite sharing a number.

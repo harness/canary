@@ -185,7 +185,7 @@ const tailwindDesignSystem: TailwindConfig = {
 
       // status
       'cn-merged': 'var(--cn-text-merged)',
-      'cn-disabled': 'var(--cn-text-4)',
+      'cn-disabled': 'var(--cn-text-3)',
 
       // logo colors
       'cn-logo-icon': 'var(--cn-logo-icon)',

@@ -25,7 +25,21 @@ function getClassNameRules() {
     }
   ])
 
-  return deprecatedCnRules
+  // `foreground-4` is being merged into `foreground-3`. Kept in the type so
+  // unmigrated consumers still compile, but new usage is blocked.
+  const foreground4Message = "color='foreground-4' is deprecated and not allowed. Use 'foreground-3' instead."
+  const deprecatedColorRules = [
+    {
+      selector: "JSXAttribute[name.name='color'][value.value='foreground-4']",
+      message: foreground4Message
+    },
+    {
+      selector: "JSXAttribute[name.name='color'] > JSXExpressionContainer > Literal[value='foreground-4']",
+      message: foreground4Message
+    }
+  ]
+
+  return [...deprecatedCnRules, ...deprecatedColorRules]
 }
 
 module.exports = {

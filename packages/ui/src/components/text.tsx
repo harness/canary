@@ -73,6 +73,7 @@ export const textVariants = cva('', {
       'foreground-1': 'text-cn-1',
       'foreground-2': 'text-cn-2',
       'foreground-3': 'text-cn-3',
+      'foreground-4': 'text-cn-4',
       disabled: 'text-cn-disabled',
       success: 'text-cn-success',
       warning: 'text-cn-warning',

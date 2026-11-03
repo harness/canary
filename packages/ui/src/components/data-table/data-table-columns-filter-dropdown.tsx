@@ -20,7 +20,7 @@ export const DataTableColumnFilterDropdown: FC<DataTableColumnFilterDropdownProp
       <DropdownMenu.Trigger asChild>
         <Button variant="outline">
           Columns
-          <Text color="foreground-4">
+          <Text color="foreground-3">
             {visibleColumns?.length || 0}/{columns?.length || 0}
           </Text>
           <IconV2 name="nav-arrow-down" />

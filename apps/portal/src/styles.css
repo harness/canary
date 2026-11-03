@@ -593,7 +593,7 @@ mobile-starlight-toc {
 }
 
 ul.top-level summary svg {
-  @apply font-normal text-cn-4 text-cn-size-5;
+  @apply font-normal text-cn-3 text-cn-size-5;
 }
 
 /* CONTENT COLUMN WIDTH — keep it consistent across pages.
@@ -628,7 +628,7 @@ div:has(> div[style*="1200px"] main[data-pagefind-body]) {
 }
 
 .right-sidebar-panel li a {
-  @apply m-0 p-0 py-cn-3xs text-cn-4 text-cn-size-3 transition-colors duration-150 hover:text-cn-1;
+  @apply m-0 p-0 py-cn-3xs text-cn-3 text-cn-size-3 transition-colors duration-150 hover:text-cn-1;
 }
 
 .right-sidebar-panel li a[aria-current="true"] {

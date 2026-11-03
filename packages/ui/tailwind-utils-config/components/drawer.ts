@@ -314,7 +314,7 @@ export default {
 
     '&-dual-pane-step-description': {
       font: 'var(--cn-body-normal)',
-      color: 'var(--cn-text-4)'
+      color: 'var(--cn-text-3)'
     },
 
     '&-dual-pane-step-active': {

@@ -89,7 +89,7 @@ export default {
   },
 
   '.cn-breadcrumb-separator': {
-    color: 'var(--cn-text-4)',
+    color: 'var(--cn-text-3)',
     '& > svg': {
       width: 'var(--cn-icon-size-sm)',
       height: 'var(--cn-icon-size-sm)'

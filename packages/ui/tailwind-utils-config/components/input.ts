@@ -42,7 +42,7 @@ export default {
       },
 
       '&::placeholder': {
-        color: 'var(--cn-text-4)',
+        color: 'var(--cn-text-3)',
         '@apply font-body-normal select-none': ''
       },
 

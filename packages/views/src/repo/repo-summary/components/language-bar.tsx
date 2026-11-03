@@ -58,7 +58,7 @@ export const LanguageBar: FC<LanguageBarProps> = ({ languages }) => {
             <Text variant="caption-single-line-normal" color="foreground-2">
               {lang.name}
             </Text>
-            <Text variant="caption-single-line-normal" color="foreground-4">
+            <Text variant="caption-single-line-normal" color="foreground-3">
               {formatPercentage(lang.percentage)}%
             </Text>
           </Layout.Horizontal>
@@ -69,7 +69,7 @@ export const LanguageBar: FC<LanguageBarProps> = ({ languages }) => {
             <Text variant="caption-single-line-normal" color="foreground-2">
               {t('views:repos.otherLanguages', 'Other')}
             </Text>
-            <Text variant="caption-single-line-normal" color="foreground-4">
+            <Text variant="caption-single-line-normal" color="foreground-3">
               {formatPercentage(otherPercent)}%
             </Text>
           </Layout.Horizontal>

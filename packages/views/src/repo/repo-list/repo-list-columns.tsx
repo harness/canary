@@ -67,7 +67,7 @@ export const getRepoListColumns = ({
           </Layout.Flex>
           {upstream && <ForkedFrom upstream={upstream} toUpstreamRepo={toUpstreamRepo} />}
           {importing && (
-            <Text color="foreground-4" truncate>
+            <Text color="foreground-3" truncate>
               {isLinked ? t('views:repos.linking', 'Linking…') : t('views:repos.importing', 'Importing…')}
             </Text>
           )}
@@ -85,7 +85,7 @@ export const getRepoListColumns = ({
     cell: ({ row }) => {
       if (row.original.importing) {
         return (
-          <Text color="foreground-4" truncate>
+          <Text color="foreground-3" truncate>
             {t('views:repos.importing', 'Importing…')}
           </Text>
         )

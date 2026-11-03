@@ -1458,3 +1458,12 @@ button[aria-label="Search"] {
   border-color: transparent !important;
   box-shadow: none !important;
 }
+
+/* Changelog accordion body: roomier reading rhythm than the default 20px line height */
+.changelog-entry-body p {
+  line-height: 1.7;
+}
+
+.changelog-entry-body p + p {
+  margin-top: 0.75rem;
+}

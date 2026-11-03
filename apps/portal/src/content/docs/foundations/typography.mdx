@@ -355,6 +355,10 @@ Captions are used for labels and metadata.
   </div>
 </div>
 
+<Aside type="note" title="Single-line styles">
+  `body-single-line-normal`, `body-single-line-strong` and `caption-single-line-normal` are clamped to one line. Their `.font-*` classes set `white-space: nowrap`, `overflow: hidden` and `text-overflow: ellipsis`, so long text ends with an ellipsis instead of wrapping. The `Text` component also adds a `title` so the full text shows on hover. The classes need a block-level or flex-item element with a width limit to clamp. Use the regular `body-*` and `caption-*` styles for text that should wrap.
+</Aside>
+
 ### Micro
 
 <div className="cn-table-v2 cn-table-v2-normal not-content ds-type-specimen">
@@ -387,6 +391,20 @@ Captions are used for labels and metadata.
           <td className="cn-table-v2-cell">11px · 500</td>
           <td className="cn-table-v2-cell">
             <code>font-micro-normal</code>
+          </td>
+        </tr>
+        <tr className="cn-table-v2-row">
+          <td className="cn-table-v2-cell">
+            <code>micro-regular</code>
+          </td>
+          <td className="cn-table-v2-cell">
+            <span className="font-micro-regular text-cn-2">
+              Axis labels, chart annotations
+            </span>
+          </td>
+          <td className="cn-table-v2-cell">11px · 400</td>
+          <td className="cn-table-v2-cell">
+            <code>font-micro-regular</code>
           </td>
         </tr>
       </tbody>

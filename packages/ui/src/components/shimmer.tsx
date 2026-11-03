@@ -12,6 +12,7 @@ export const shimmerVariants = cva('cn-shimmer', {
       'foreground-1': '[--shimmer-color:var(--cn-text-1)]',
       'foreground-2': '[--shimmer-color:var(--cn-text-2)]',
       'foreground-3': '[--shimmer-color:var(--cn-text-3)]',
+      'foreground-4': '[--shimmer-color:var(--cn-text-3)]',
       disabled: '[--shimmer-color:var(--cn-text-3)]',
       success: '[--shimmer-color:var(--cn-text-success)]',
       warning: '[--shimmer-color:var(--cn-text-warning)]',

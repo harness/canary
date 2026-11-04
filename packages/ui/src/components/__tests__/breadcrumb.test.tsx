@@ -244,13 +244,13 @@ describe('Breadcrumb', () => {
     })
   })
 
-  describe('Breadcrumb.RootInteractive', () => {
+  describe('Breadcrumb.ScopeLink', () => {
     test('renders the home link with href and fires onHomeClick', () => {
       const onHomeClick = vi.fn(e => e.preventDefault())
       render(
-        <Breadcrumb.RootInteractive href="/home" onHomeClick={onHomeClick}>
+        <Breadcrumb.ScopeLink href="/home" onHomeClick={onHomeClick}>
           Account
-        </Breadcrumb.RootInteractive>
+        </Breadcrumb.ScopeLink>
       )
 
       const link = screen.getByRole('link', { name: 'Account' })
@@ -259,40 +259,54 @@ describe('Breadcrumb', () => {
       expect(onHomeClick).toHaveBeenCalledTimes(1)
     })
 
-    test('falls back to a focusable button for home when no href is given', () => {
+    test('falls back to a focusable button for home when only onHomeClick is given', () => {
       const onHomeClick = vi.fn()
-      render(<Breadcrumb.RootInteractive onHomeClick={onHomeClick}>Account</Breadcrumb.RootInteractive>)
+      render(<Breadcrumb.ScopeLink onHomeClick={onHomeClick}>Account</Breadcrumb.ScopeLink>)
 
       expect(screen.queryByRole('link')).not.toBeInTheDocument()
       fireEvent.click(screen.getByRole('button', { name: 'Account' }))
       expect(onHomeClick).toHaveBeenCalledTimes(1)
     })
 
-    test('scope button fires onScopeClick and not onHomeClick', () => {
+    test('renders plain non-interactive text when the home is not built yet', () => {
+      render(<Breadcrumb.ScopeLink>Account</Breadcrumb.ScopeLink>)
+
+      expect(screen.getByText('Account')).toBeInTheDocument()
+      expect(screen.queryByRole('link')).not.toBeInTheDocument()
+      expect(screen.queryByRole('button')).not.toBeInTheDocument()
+    })
+
+    test('only renders the scope trigger when onScopeClick is provided', () => {
+      const { rerender } = render(<Breadcrumb.ScopeLink href="/home">Project</Breadcrumb.ScopeLink>)
+      expect(screen.queryByRole('button', { name: 'Select scope' })).not.toBeInTheDocument()
+
       const onScopeClick = vi.fn()
       const onHomeClick = vi.fn()
-      render(
-        <Breadcrumb.RootInteractive href="/home" onHomeClick={onHomeClick} onScopeClick={onScopeClick}>
-          Account
-        </Breadcrumb.RootInteractive>
+      rerender(
+        <Breadcrumb.ScopeLink href="/home" onHomeClick={onHomeClick} onScopeClick={onScopeClick}>
+          Project
+        </Breadcrumb.ScopeLink>
       )
-
       fireEvent.click(screen.getByRole('button', { name: 'Select scope' }))
       expect(onScopeClick).toHaveBeenCalledTimes(1)
       expect(onHomeClick).not.toHaveBeenCalled()
     })
 
     test('uses a custom scopeLabel', () => {
-      render(<Breadcrumb.RootInteractive scopeLabel="Switch scope">Account</Breadcrumb.RootInteractive>)
-      expect(screen.getByRole('button', { name: 'Switch scope' })).toBeInTheDocument()
+      render(
+        <Breadcrumb.ScopeLink onScopeClick={vi.fn()} scopeLabel="Switch project">
+          Project
+        </Breadcrumb.ScopeLink>
+      )
+      expect(screen.getByRole('button', { name: 'Switch project' })).toBeInTheDocument()
     })
 
-    test('shows the globe by default and a square avatar when avatar is given', () => {
-      const { container, rerender } = render(<Breadcrumb.RootInteractive>Account</Breadcrumb.RootInteractive>)
+    test('shows the given icon, or a square avatar when avatar is given', () => {
+      const { container, rerender } = render(<Breadcrumb.ScopeLink icon="globe">Account</Breadcrumb.ScopeLink>)
       expect(container.querySelector('.cn-breadcrumb-dropdown-icon')).toBeInTheDocument()
       expect(container.querySelector('.cn-avatar')).not.toBeInTheDocument()
 
-      rerender(<Breadcrumb.RootInteractive avatar={{ name: 'John Doe' }}>John Doe</Breadcrumb.RootInteractive>)
+      rerender(<Breadcrumb.ScopeLink avatar={{ name: 'John Doe' }}>John Doe</Breadcrumb.ScopeLink>)
       expect(container.querySelector('.cn-breadcrumb-dropdown-icon')).not.toBeInTheDocument()
       expect(container.querySelector('.cn-avatar')).toBeInTheDocument()
       expect(container.querySelector('.cn-avatar-rounded')).not.toBeInTheDocument()

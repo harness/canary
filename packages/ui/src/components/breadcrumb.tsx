@@ -4,6 +4,7 @@ import {
   ComponentPropsWithRef,
   forwardRef,
   Fragment,
+  MouseEventHandler,
   ReactNode,
   useState
 } from 'react'
@@ -278,30 +279,34 @@ const BreadcrumbCopy = ({ className, ...props }: BreadcrumbCopyProps) => (
 )
 BreadcrumbCopy.displayName = 'BreadcrumbCopy'
 
-type BreadcrumbRootInteractiveProps = Omit<ComponentPropsWithoutRef<'div'>, 'onClick'> & {
-  /** Size of the breadcrumb dropdown - determines avatar size (sm uses lg avatar, xs uses sm avatar) */
+type BreadcrumbScopeLinkProps = Omit<ComponentPropsWithoutRef<'div'>, 'onClick'> & {
+  /** Size of the breadcrumb - determines avatar size (sm uses lg avatar, xs uses sm avatar) */
   size?: 'sm' | 'xs'
-  /** Avatar props (src, icon, name). When provided, a square (non-rounded) avatar replaces the globe icon */
+  /** Avatar props (src, icon, name). When provided, a square (non-rounded) avatar replaces the icon */
   avatar?: Omit<AvatarProps, 'size' | 'rounded'>
-  /** Icon shown before the text when no avatar is given. Defaults to the globe */
+  /** Icon shown before the text when no avatar is given (e.g. `globe` for account, `folder` for project) */
   icon?: IconV2NamesType
-  /** Destination of the text link (home) */
+  /** Destination of the text link (the scope's home) */
   href?: string
-  /** Called when the text link is clicked (home) */
-  onHomeClick?: ComponentPropsWithoutRef<'a'>['onClick']
-  /** Called when the scope selector trigger (chevron) is clicked */
+  /** Called when the text is clicked (the scope's home) */
+  onHomeClick?: MouseEventHandler<HTMLElement>
+  /** When provided, a second hit target is rendered that calls this to open the scope selector */
   onScopeClick?: ComponentPropsWithoutRef<'button'>['onClick']
   /** Accessible label for the scope selector trigger */
   scopeLabel?: string
 }
 
-const BreadcrumbRootInteractive = forwardRef<HTMLDivElement, BreadcrumbRootInteractiveProps>(
+/**
+ * A breadcrumb for a scope level (account, organization or project). The text goes to that scope's home;
+ * an optional second hit target opens the scope selector to switch scope.
+ */
+const BreadcrumbScopeLink = forwardRef<HTMLDivElement, BreadcrumbScopeLinkProps>(
   (
     {
       className,
       size = 'sm',
       avatar,
-      icon = 'globe',
+      icon,
       href,
       onHomeClick,
       onScopeClick,
@@ -317,7 +322,7 @@ const BreadcrumbRootInteractive = forwardRef<HTMLDivElement, BreadcrumbRootInter
         {avatar ? (
           <Avatar size={avatarSize} {...avatar} />
         ) : (
-          <IconV2 name={icon} size="sm" className="cn-breadcrumb-dropdown-icon" />
+          icon && <IconV2 name={icon} size="sm" className="cn-breadcrumb-dropdown-icon" />
         )}
         <span className="cn-breadcrumb-dropdown-text">{children}</span>
       </>
@@ -325,28 +330,34 @@ const BreadcrumbRootInteractive = forwardRef<HTMLDivElement, BreadcrumbRootInter
 
     return (
       <div ref={ref} className={cn('cn-breadcrumb-dropdown', className)} {...props}>
-        {/* Without an href an <a> has no link role and isn't focusable, so fall back to a button */}
+        {/* An <a> without href has no link role and isn't focusable. Without a home destination
+            fall back to a button (handler only) or plain text (home not built yet). */}
         {href ? (
           <a href={href} onClick={onHomeClick} className="cn-breadcrumb-dropdown-link">
             {homeContent}
           </a>
-        ) : (
-          <button
-            type="button"
-            onClick={onHomeClick as ComponentPropsWithoutRef<'button'>['onClick']}
-            className="cn-breadcrumb-dropdown-link"
-          >
+        ) : onHomeClick ? (
+          <button type="button" onClick={onHomeClick} className="cn-breadcrumb-dropdown-link">
             {homeContent}
           </button>
+        ) : (
+          <span className="cn-breadcrumb-dropdown-link cn-breadcrumb-dropdown-link-static">{homeContent}</span>
         )}
-        <button type="button" aria-label={scopeLabel} onClick={onScopeClick} className="cn-breadcrumb-dropdown-trigger">
-          <IconV2 name="nav-arrow-up" size="sm" className="cn-breadcrumb-dropdown-chevron" />
-        </button>
+        {onScopeClick && (
+          <button
+            type="button"
+            aria-label={scopeLabel}
+            onClick={onScopeClick}
+            className="cn-breadcrumb-dropdown-trigger"
+          >
+            <IconV2 name="nav-arrow-up" size="sm" className="cn-breadcrumb-dropdown-chevron" />
+          </button>
+        )}
       </div>
     )
   }
 )
-BreadcrumbRootInteractive.displayName = 'BreadcrumbRootInteractive'
+BreadcrumbScopeLink.displayName = 'BreadcrumbScopeLink'
 
 const Breadcrumb = {
   Root: BreadcrumbRoot,
@@ -358,7 +369,7 @@ const Breadcrumb = {
   Copy: BreadcrumbCopy,
   Separator: BreadcrumbSeparator,
   Ellipsis: BreadcrumbEllipsis,
-  RootInteractive: BreadcrumbRootInteractive
+  ScopeLink: BreadcrumbScopeLink
 }
 
 export {
@@ -371,5 +382,5 @@ export {
   BreadcrumbSeparatorProps,
   BreadcrumbEllipsisProps,
   BreadcrumbEllipsisItem,
-  BreadcrumbRootInteractiveProps
+  BreadcrumbScopeLinkProps
 }

@@ -115,6 +115,10 @@ export default {
     }
   },
 
+  '.cn-breadcrumb-dropdown-link-static': {
+    '@apply cursor-default': ''
+  },
+
   '.cn-breadcrumb-dropdown-trigger': {
     '@apply inline-flex items-center bg-transparent border-0 cursor-pointer p-0': '',
 
@@ -127,7 +131,7 @@ export default {
     color: 'var(--cn-text-2)',
     '@apply transition-colors': '',
 
-    '.cn-breadcrumb-dropdown-link:hover &': {
+    '.cn-breadcrumb-dropdown-link:not(.cn-breadcrumb-dropdown-link-static):hover &': {
       color: 'var(--cn-text-1)'
     }
   },
@@ -136,7 +140,7 @@ export default {
     color: 'var(--cn-text-2)',
     '@apply transition-colors': '',
 
-    '.cn-breadcrumb-dropdown-link:hover &': {
+    '.cn-breadcrumb-dropdown-link:not(.cn-breadcrumb-dropdown-link-static):hover &': {
       color: 'var(--cn-text-1)'
     }
   },

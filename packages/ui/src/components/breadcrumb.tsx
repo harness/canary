@@ -7,6 +7,7 @@ import {
   MouseEventHandler,
   ReactNode,
   useEffect,
+  useRef,
   useState
 } from 'react'
 
@@ -192,6 +193,17 @@ type BreadcrumbEllipsisProps = Omit<ComponentPropsWithoutRef<'button'>, 'childre
 const BreadcrumbEllipsis = forwardRef<HTMLButtonElement, BreadcrumbEllipsisProps>(
   ({ className, items, onItemSelect, expandInline = false, ...props }, ref) => {
     const [expanded, setExpanded] = useState(false)
+    const firstItemRef = useRef<HTMLAnchorElement>(null)
+    const focusFirstItem = useRef(false)
+
+    // The ellipsis button unmounts when expanding, so move focus to the first revealed link
+    // (only after a user click) to keep keyboard and screen-reader users in place.
+    useEffect(() => {
+      if (expanded && focusFirstItem.current) {
+        focusFirstItem.current = false
+        firstItemRef.current?.focus()
+      }
+    }, [expanded])
 
     // Collapse again when the hidden path itself changes (e.g. the user navigated and this
     // instance stayed mounted). Keyed on content, not array identity, so re-renders don't reset it.
@@ -208,6 +220,7 @@ const BreadcrumbEllipsis = forwardRef<HTMLButtonElement, BreadcrumbEllipsisProps
               {index > 0 && <BreadcrumbSeparator />}
               <BreadcrumbItem>
                 <BreadcrumbLink
+                  ref={index === 0 ? firstItemRef : undefined}
                   href={item.href}
                   prefixIcon={item.icon}
                   onClick={
@@ -243,6 +256,7 @@ const BreadcrumbEllipsis = forwardRef<HTMLButtonElement, BreadcrumbEllipsisProps
           {...props}
           onClick={e => {
             props.onClick?.(e)
+            focusFirstItem.current = true
             setExpanded(true)
           }}
         >

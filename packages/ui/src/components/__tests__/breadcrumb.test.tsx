@@ -362,6 +362,20 @@ describe('Breadcrumb', () => {
       expect(screen.getByRole('link', { name: 'Hidden 2' })).toHaveAttribute('href', '/hidden-2')
     })
 
+    test('moves focus to the first revealed link after expanding', () => {
+      render(
+        <Breadcrumb.Root>
+          <Breadcrumb.List>
+            <Breadcrumb.Ellipsis expandInline items={mockEllipsisItems} />
+          </Breadcrumb.List>
+        </Breadcrumb.Root>
+      )
+
+      fireEvent.click(screen.getByRole('button', { name: 'Show full path' }))
+
+      expect(screen.getByRole('link', { name: 'Hidden 1' })).toHaveFocus()
+    })
+
     test('collapses again when the hidden path changes, but not on same-content re-render', () => {
       const ui = (items: typeof mockEllipsisItems) => (
         <Breadcrumb.Root>

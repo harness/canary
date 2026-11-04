@@ -621,13 +621,13 @@ All parts of the `Breadcrumb` can be imported and composed as required.
     },
     {
       name: "RootInteractive.isRootOnly",
-      description: "Show account icon when true, organizations when false",
+      description: "Show globe icon when true, organizations when false (plain icon, no avatar circle)",
       defaultValue: "false",
       value: "boolean",
     },
     {
       name: "RootInteractive.avatar",
-      description: "Avatar props (src, icon, name)",
+      description: "Avatar props (src, icon, name). With src or name, renders a square avatar",
       value: "Omit<AvatarProps, 'size' | 'rounded'>",
     },
     {

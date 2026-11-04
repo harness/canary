@@ -110,6 +110,15 @@ export default {
     }
   },
 
+  '.cn-breadcrumb-dropdown-icon': {
+    color: 'var(--cn-text-2)',
+    '@apply transition-colors': '',
+
+    '.cn-breadcrumb-dropdown:hover &': {
+      color: 'var(--cn-text-1)'
+    }
+  },
+
   '.cn-breadcrumb-dropdown-text': {
     color: 'var(--cn-text-2)',
     '@apply transition-colors': '',

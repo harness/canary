@@ -244,8 +244,8 @@ describe('Breadcrumb', () => {
     })
   })
 
-  describe('Breadcrumb.RootInteractive (unchanged)', () => {
-    test('still renders a single button with isRootOnly and onClick', () => {
+  describe('Breadcrumb.RootInteractive', () => {
+    test('renders a single button that fires onClick', () => {
       const onClick = vi.fn()
       render(
         <Breadcrumb.RootInteractive isRootOnly onClick={onClick}>
@@ -255,6 +255,23 @@ describe('Breadcrumb', () => {
 
       fireEvent.click(screen.getByRole('button', { name: 'Account' }))
       expect(onClick).toHaveBeenCalledTimes(1)
+    })
+
+    test('shows a plain icon (no avatar circle) by default', () => {
+      const { container } = render(<Breadcrumb.RootInteractive isRootOnly>Account</Breadcrumb.RootInteractive>)
+
+      expect(container.querySelector('.cn-breadcrumb-dropdown-icon')).toBeInTheDocument()
+      expect(container.querySelector('.cn-avatar')).not.toBeInTheDocument()
+    })
+
+    test('shows a square avatar when src or name is given', () => {
+      const { container } = render(
+        <Breadcrumb.RootInteractive avatar={{ name: 'John Doe' }}>John Doe</Breadcrumb.RootInteractive>
+      )
+
+      expect(container.querySelector('.cn-avatar')).toBeInTheDocument()
+      expect(container.querySelector('.cn-avatar-rounded')).not.toBeInTheDocument()
+      expect(container.querySelector('.cn-breadcrumb-dropdown-icon')).not.toBeInTheDocument()
     })
   })
 

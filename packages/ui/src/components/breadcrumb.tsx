@@ -291,7 +291,7 @@ type BreadcrumbRootInteractiveProps = ComponentPropsWithoutRef<'button'> & {
   size?: 'sm' | 'xs'
   /**
    * Whether this is the only visible root item (no other breadcrumb items after it).
-   * - `true`: Shows 'account' icon (user is at root level, no navigation deeper)
+   * - `true`: Shows 'globe' icon (user is at root level, no navigation deeper)
    * - `false`: Shows 'organizations' icon (user has navigated deeper)
    * Only applies when no custom icon/src/name is provided in avatar prop.
    */
@@ -303,17 +303,17 @@ type BreadcrumbRootInteractiveProps = ComponentPropsWithoutRef<'button'> & {
 const BreadcrumbRootInteractive = forwardRef<HTMLButtonElement, BreadcrumbRootInteractiveProps>(
   ({ className, size = 'sm', isRootOnly = false, avatar, children, ...props }, ref) => {
     const avatarSize: AvatarSize = size === 'sm' ? 'lg' : 'sm'
-    // Default icon: 'account' only when root is the only visible item, otherwise 'organizations'
-    const defaultIcon: IconV2NamesType = isRootOnly ? 'account' : 'organizations'
+    // Default icon: 'globe' only when root is the only visible item, otherwise 'organizations'
+    const defaultIcon: IconV2NamesType = isRootOnly ? 'globe' : 'organizations'
+    const hasAvatarImage = !!(avatar?.src || avatar?.name)
 
     return (
       <button ref={ref} type="button" className={cn('cn-breadcrumb-dropdown', className)} {...props}>
-        <Avatar
-          size={avatarSize}
-          rounded
-          icon={!avatar?.src && !avatar?.name ? (avatar?.icon ?? defaultIcon) : avatar?.icon}
-          {...avatar}
-        />
+        {hasAvatarImage ? (
+          <Avatar size={avatarSize} {...avatar} />
+        ) : (
+          <IconV2 name={avatar?.icon ?? defaultIcon} size="sm" className="cn-breadcrumb-dropdown-icon" />
+        )}
         <span className="cn-breadcrumb-dropdown-text">{children}</span>
         <IconV2 name="up-down" size="sm" className="cn-breadcrumb-dropdown-chevron" />
       </button>

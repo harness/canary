@@ -102,12 +102,7 @@ export default {
   },
 
   '.cn-breadcrumb-dropdown': {
-    '@apply inline-flex items-center': '',
-    gap: 'var(--cn-spacing-1)'
-  },
-
-  '.cn-breadcrumb-dropdown-link': {
-    '@apply inline-flex items-center cursor-pointer bg-transparent border-0 p-0': '',
+    '@apply inline-flex items-center bg-transparent border-0 cursor-pointer p-0': '',
     gap: 'var(--cn-spacing-1)',
 
     '&:focus-visible': {
@@ -115,32 +110,11 @@ export default {
     }
   },
 
-  '.cn-breadcrumb-dropdown-link-static': {
-    '@apply cursor-default': ''
-  },
-
-  '.cn-breadcrumb-dropdown-trigger': {
-    '@apply inline-flex items-center bg-transparent border-0 cursor-pointer p-0': '',
-
-    '&:focus-visible': {
-      outline: 'var(--cn-focus)'
-    }
-  },
-
-  '.cn-breadcrumb-dropdown-icon': {
-    color: 'var(--cn-text-2)',
-    '@apply transition-colors': '',
-
-    '.cn-breadcrumb-dropdown-link:not(.cn-breadcrumb-dropdown-link-static):hover &': {
-      color: 'var(--cn-text-1)'
-    }
-  },
-
   '.cn-breadcrumb-dropdown-text': {
     color: 'var(--cn-text-2)',
     '@apply transition-colors': '',
 
-    '.cn-breadcrumb-dropdown-link:not(.cn-breadcrumb-dropdown-link-static):hover &': {
+    '.cn-breadcrumb-dropdown:hover &': {
       color: 'var(--cn-text-1)'
     }
   },
@@ -149,7 +123,60 @@ export default {
     color: 'var(--cn-text-2)',
     '@apply transition-colors': '',
 
-    '.cn-breadcrumb-dropdown-trigger:hover &': {
+    '.cn-breadcrumb-dropdown:hover &': {
+      color: 'var(--cn-text-1)'
+    }
+  },
+
+  '.cn-breadcrumb-scope': {
+    '@apply inline-flex items-center': '',
+    gap: 'var(--cn-spacing-1)'
+  },
+
+  '.cn-breadcrumb-scope-link': {
+    '@apply inline-flex items-center cursor-pointer bg-transparent border-0 p-0': '',
+    gap: 'var(--cn-spacing-1)',
+
+    '&:focus-visible': {
+      outline: 'var(--cn-focus)'
+    }
+  },
+
+  '.cn-breadcrumb-scope-link-static': {
+    '@apply cursor-default': ''
+  },
+
+  '.cn-breadcrumb-scope-trigger': {
+    '@apply inline-flex items-center bg-transparent border-0 cursor-pointer p-0': '',
+
+    '&:focus-visible': {
+      outline: 'var(--cn-focus)'
+    }
+  },
+
+  '.cn-breadcrumb-scope-icon': {
+    color: 'var(--cn-text-2)',
+    '@apply transition-colors': '',
+
+    '.cn-breadcrumb-scope-link:not(.cn-breadcrumb-scope-link-static):hover &': {
+      color: 'var(--cn-text-1)'
+    }
+  },
+
+  '.cn-breadcrumb-scope-text': {
+    color: 'var(--cn-text-2)',
+    '@apply transition-colors': '',
+
+    '.cn-breadcrumb-scope-link:not(.cn-breadcrumb-scope-link-static):hover &': {
+      color: 'var(--cn-text-1)'
+    }
+  },
+
+  '.cn-breadcrumb-scope-chevron': {
+    color: 'var(--cn-text-2)',
+    '@apply transition-colors': '',
+
+    '.cn-breadcrumb-scope-trigger:hover &': {
       color: 'var(--cn-text-1)'
     }
   }

@@ -23,11 +23,11 @@ a site, it allows navigation up to any of the ancestors.
   code={`<Breadcrumb.Root>
   <Breadcrumb.List>
     <Breadcrumb.Item>
-      <Breadcrumb.ScopeLink icon="globe" href="#">Harness</Breadcrumb.ScopeLink>
+      <Breadcrumb.RootInteractive>Harness</Breadcrumb.RootInteractive>
     </Breadcrumb.Item>
     <Breadcrumb.Separator />
     <Breadcrumb.Item>
-      <Breadcrumb.ScopeLink icon="folder" href="#" onScopeClick={() => {}}>Project</Breadcrumb.ScopeLink>
+      <Breadcrumb.Link href="#" prefixIcon="folder">Project</Breadcrumb.Link>
     </Breadcrumb.Item>
     <Breadcrumb.Separator />
     <Breadcrumb.Page>Settings</Breadcrumb.Page>
@@ -88,11 +88,13 @@ a site, it allows navigation up to any of the ancestors.
   <Breadcrumb.Root>
     <Breadcrumb.List>
       <Breadcrumb.Item>
-        <Breadcrumb.ScopeLink icon="globe" href="#">Organization</Breadcrumb.ScopeLink>
+        <Breadcrumb.RootInteractive>Organization</Breadcrumb.RootInteractive>
       </Breadcrumb.Item>
       <Breadcrumb.Separator />
       <Breadcrumb.Item>
-        <Breadcrumb.ScopeLink icon="folder" href="#" onScopeClick={() => {}}>Project</Breadcrumb.ScopeLink>
+        <Breadcrumb.Link href="#" prefixIcon="folder">
+          Project
+        </Breadcrumb.Link>
       </Breadcrumb.Item>
       <Breadcrumb.Separator />
       <Breadcrumb.Page>Settings</Breadcrumb.Page>
@@ -149,11 +151,13 @@ a site, it allows navigation up to any of the ancestors.
     <Breadcrumb.Root size="sm">
       <Breadcrumb.List>
         <Breadcrumb.Item>
-          <Breadcrumb.ScopeLink icon="globe" href="#">Harness</Breadcrumb.ScopeLink>
+          <Breadcrumb.RootInteractive>Harness</Breadcrumb.RootInteractive>
         </Breadcrumb.Item>
         <Breadcrumb.Separator />
         <Breadcrumb.Item>
-          <Breadcrumb.ScopeLink icon="folder" href="#" onScopeClick={() => {}}>Project</Breadcrumb.ScopeLink>
+          <Breadcrumb.Link href="#" prefixIcon="folder">
+            Project
+          </Breadcrumb.Link>
         </Breadcrumb.Item>
         <Breadcrumb.Separator />
         <Breadcrumb.Page>Settings</Breadcrumb.Page>
@@ -169,11 +173,11 @@ a site, it allows navigation up to any of the ancestors.
       <Breadcrumb.Root size="xs">
         <Breadcrumb.List>
           <Breadcrumb.Item>
-            <Breadcrumb.ScopeLink icon="globe" href="#">Harness</Breadcrumb.ScopeLink>
+            <Breadcrumb.RootInteractive size="xs">Harness</Breadcrumb.RootInteractive>
           </Breadcrumb.Item>
           <Breadcrumb.Separator />
           <Breadcrumb.Item>
-            <Breadcrumb.ScopeLink icon="folder" href="#" onScopeClick={() => {}}>Project</Breadcrumb.ScopeLink>
+            <Breadcrumb.Link href="#" prefixIcon="folder">Project</Breadcrumb.Link>
           </Breadcrumb.Item>
           <Breadcrumb.Separator />
           <Breadcrumb.Page>Settings</Breadcrumb.Page>
@@ -350,9 +354,62 @@ The `Copy` component displays a copy button to copy the breadcrumb path.
 </Breadcrumb.Root>`}
 />
 
+### RootInteractive
+
+The `RootInteractive` component displays an interactive root element with an avatar and dropdown chevron. Useful for header navigation. To link a scope crumb to its home and open a scope selector from a separate arrow, use [`ScopeLink`](#scopelink) instead.
+
+<DocsPage.ComponentExample
+  client:only
+  hideCode
+  code={`<div className="space-y-cn-sm">
+  <div className="flex items-center gap-cn-md border-b border-cn-borders-3 pb-cn-sm">
+    <span className="text-cn-size-2 text-cn-3 w-32 shrink-0 font-mono">isRootOnly</span>
+    <Breadcrumb.Root>
+      <Breadcrumb.List>
+        <Breadcrumb.Item>
+          <Breadcrumb.RootInteractive isRootOnly>Account</Breadcrumb.RootInteractive>
+        </Breadcrumb.Item>
+      </Breadcrumb.List>
+    </Breadcrumb.Root>
+  </div>
+  <div className="flex items-center gap-cn-md border-b border-cn-borders-3 pb-cn-sm">
+    <span className="text-cn-size-2 text-cn-3 w-32 shrink-0 font-mono">default</span>
+    <Breadcrumb.Root>
+      <Breadcrumb.List>
+        <Breadcrumb.Item>
+          <Breadcrumb.RootInteractive>Organization</Breadcrumb.RootInteractive>
+        </Breadcrumb.Item>
+        <Breadcrumb.Separator />
+        <Breadcrumb.Item>
+          <Breadcrumb.Link href="#" prefixIcon="folder">Project</Breadcrumb.Link>
+        </Breadcrumb.Item>
+        <Breadcrumb.Separator />
+        <Breadcrumb.Page>Settings</Breadcrumb.Page>
+      </Breadcrumb.List>
+    </Breadcrumb.Root>
+  </div>
+  <div className="flex items-center gap-cn-md">
+    <span className="text-cn-size-2 text-cn-3 w-32 shrink-0 font-mono">with-avatar</span>
+    <Breadcrumb.Root>
+      <Breadcrumb.List>
+        <Breadcrumb.Item>
+          <Breadcrumb.RootInteractive avatar={{ src: "/avatar.png" }}>John Doe</Breadcrumb.RootInteractive>
+        </Breadcrumb.Item>
+        <Breadcrumb.Separator />
+        <Breadcrumb.Item>
+          <Breadcrumb.Link href="#" prefixIcon="folder">Project</Breadcrumb.Link>
+        </Breadcrumb.Item>
+        <Breadcrumb.Separator />
+        <Breadcrumb.Page>Settings</Breadcrumb.Page>
+      </Breadcrumb.List>
+    </Breadcrumb.Root>
+  </div>
+</div>`}
+/>
+
 ### ScopeLink
 
-The `ScopeLink` component is a breadcrumb for a scope level (account, organization or project). Its text is a link to that scope's home, and an optional second hit target (the arrow, shown when `onScopeClick` is passed) opens the scope selector so the user can switch scope. Put the arrow on the project crumb. Without an `href` or `onHomeClick` (a home that isn't built yet) the text renders as plain, non-interactive text.
+The `ScopeLink` component is a breadcrumb for a scope level (account, organization or project). Its text is a link to that scope's home, and an optional second hit target (the arrow, shown when `onScopeClick` is passed) opens the scope selector so the user can switch scope. Put the arrow on the project crumb. Without an `href` or `onHomeClick` (a home that isn't built yet) the text renders as plain, non-interactive text. Unlike `RootInteractive` (a single button), `ScopeLink` has two separate targets.
 
 <DocsPage.ComponentExample
   client:only
@@ -414,7 +471,7 @@ All parts of the `Breadcrumb` can be imported and composed as required.
 <Breadcrumb.Root>
   <Breadcrumb.List>
     <Breadcrumb.Item>
-      <Breadcrumb.ScopeLink icon="globe" href="/account" />  {/* Scope crumb: home link + optional scope selector trigger */}
+      <Breadcrumb.RootInteractive />  {/* Interactive root with avatar */}
     </Breadcrumb.Item>
     <Breadcrumb.Separator />
     <Breadcrumb.Item>
@@ -431,12 +488,13 @@ All parts of the `Breadcrumb` can be imported and composed as required.
 
 - **Root** — a `<nav aria-label="breadcrumb">` landmark that wraps the trail. `size` (`sm` or `xs`) scales the whole breadcrumb.
 - **List** — an ordered list (`<ol>`) holding the steps in order.
-- **Item** — a list item (`<li>`); it can carry a `prefixIcon` and holds a `Link`, `ScopeLink`, or plain content.
+- **Item** — a list item (`<li>`); it can carry a `prefixIcon` and holds a `Link`, `RootInteractive`, or plain content.
 - **Link** — a clickable `<a>` for an ancestor; supports a `prefixIcon`.
 - **Separator** — the divider between steps (a `/` by default); it's decorative and hidden from assistive tech.
 - **Ellipsis** — a truncation control that collapses middle steps into a dropdown of hidden `items`.
 - **Page** — the current location; non-clickable and marked as the current step.
 - **Copy** — an optional copy-path button, placed inside `Root` but outside `List`.
+- **RootInteractive** — a button-styled root with an avatar and a chevron, for header-style navigation.
 - **ScopeLink** — a scope crumb (account, organization or project): a home link plus an optional arrow button that opens the scope selector.
 
 ## Best practices
@@ -472,7 +530,8 @@ All parts of the `Breadcrumb` can be imported and composed as required.
 
 - Each `Link` is a native `<a>` and a tab stop, activated with **Enter**.
 - The `Ellipsis` is a button that opens a dropdown; open it with **Enter**/**Space**, then move through the hidden items with the arrow keys.
-- `Copy` and the `ScopeLink` arrow are native `<button>`s — tab stops activated with **Enter**/**Space**. The `ScopeLink` text is a separate tab stop (a link when `href` is set).
+- `Copy` and `RootInteractive` are native `<button>`s — tab stops activated with **Enter**/**Space**.
+- `ScopeLink` text is a link (a tab stop when `href` is set) and its optional arrow is a separate `<button>` tab stop.
 - The current `Page` is not focusable, since there's nowhere to navigate.
 
 ### Labeling
@@ -490,6 +549,7 @@ All parts of the `Breadcrumb` can be imported and composed as required.
 
 - **The `Ellipsis` button has no accessible name.** It's an icon-only ghost button rendered with `ignoreIconOnlyTooltip` and just a "…" icon, so screen readers announce an unlabeled button. Pass an `aria-label` (e.g. "Show hidden breadcrumbs") — it forwards to the underlying button.
 - **The current page is a disabled link, not plain text.** `Page` renders `role="link"` with `aria-disabled="true"`; it's announced as a link you can't follow. That's intentional, but don't place interactive content inside it.
+- **`RootInteractive` shows a chevron but doesn't provide the menu.** It's a styled `<button>` with an avatar and an up/down chevron that implies a dropdown; wiring the actual menu (and the matching `aria-haspopup`/`aria-expanded`) is up to you. Its avatar icon is decorative, so give the button clear text.
 - **`ScopeLink` triggers the scope selector but doesn't provide it.** The arrow only calls `onScopeClick`; opening the selector (and any `aria-haspopup`/`aria-expanded` state) is up to you. Give the arrow a clear `scopeLabel`.
 
 </TabItem>
@@ -554,16 +614,33 @@ All parts of the `Breadcrumb` can be imported and composed as required.
       value: "string",
     },
     {
-      name: "ScopeLink.size",
+      name: "RootInteractive.size",
       description: "Size (sm uses lg avatar, xs uses sm)",
       defaultValue: "'sm'",
       value: "'sm' | 'xs'",
+    },
+    {
+      name: "RootInteractive.isRootOnly",
+      description: "Show account icon when true, organizations when false",
+      defaultValue: "false",
+      value: "boolean",
+    },
+    {
+      name: "RootInteractive.avatar",
+      description: "Avatar props (src, icon, name)",
+      value: "Omit<AvatarProps, 'size' | 'rounded'>",
     },
     {
       name: "Ellipsis.expandInline",
       description: "Expand hidden items in place as breadcrumb links instead of opening a dropdown",
       defaultValue: "false",
       value: "boolean",
+    },
+    {
+      name: "ScopeLink.size",
+      description: "Size (sm uses lg avatar, xs uses sm)",
+      defaultValue: "'sm'",
+      value: "'sm' | 'xs'",
     },
     {
       name: "ScopeLink.avatar",

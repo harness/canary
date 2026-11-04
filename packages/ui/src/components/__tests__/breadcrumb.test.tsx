@@ -244,6 +244,20 @@ describe('Breadcrumb', () => {
     })
   })
 
+  describe('Breadcrumb.RootInteractive (unchanged)', () => {
+    test('still renders a single button with isRootOnly and onClick', () => {
+      const onClick = vi.fn()
+      render(
+        <Breadcrumb.RootInteractive isRootOnly onClick={onClick}>
+          Account
+        </Breadcrumb.RootInteractive>
+      )
+
+      fireEvent.click(screen.getByRole('button', { name: 'Account' }))
+      expect(onClick).toHaveBeenCalledTimes(1)
+    })
+  })
+
   describe('Breadcrumb.ScopeLink', () => {
     test('renders the home link with href and fires onHomeClick', () => {
       const onHomeClick = vi.fn(e => e.preventDefault())
@@ -303,11 +317,11 @@ describe('Breadcrumb', () => {
 
     test('shows the given icon, or a square avatar when avatar is given', () => {
       const { container, rerender } = render(<Breadcrumb.ScopeLink icon="globe">Account</Breadcrumb.ScopeLink>)
-      expect(container.querySelector('.cn-breadcrumb-dropdown-icon')).toBeInTheDocument()
+      expect(container.querySelector('.cn-breadcrumb-scope-icon')).toBeInTheDocument()
       expect(container.querySelector('.cn-avatar')).not.toBeInTheDocument()
 
       rerender(<Breadcrumb.ScopeLink avatar={{ name: 'John Doe' }}>John Doe</Breadcrumb.ScopeLink>)
-      expect(container.querySelector('.cn-breadcrumb-dropdown-icon')).not.toBeInTheDocument()
+      expect(container.querySelector('.cn-breadcrumb-scope-icon')).not.toBeInTheDocument()
       expect(container.querySelector('.cn-avatar')).toBeInTheDocument()
       expect(container.querySelector('.cn-avatar-rounded')).not.toBeInTheDocument()
     })

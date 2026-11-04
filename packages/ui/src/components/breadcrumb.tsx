@@ -287,6 +287,42 @@ const BreadcrumbCopy = ({ className, ...props }: BreadcrumbCopyProps) => (
 )
 BreadcrumbCopy.displayName = 'BreadcrumbCopy'
 
+type BreadcrumbRootInteractiveProps = ComponentPropsWithoutRef<'button'> & {
+  /** Size of the breadcrumb dropdown - determines avatar size (sm uses lg avatar, xs uses sm avatar) */
+  size?: 'sm' | 'xs'
+  /**
+   * Whether this is the only visible root item (no other breadcrumb items after it).
+   * - `true`: Shows 'account' icon (user is at root level, no navigation deeper)
+   * - `false`: Shows 'organizations' icon (user has navigated deeper)
+   * Only applies when no custom icon/src/name is provided in avatar prop.
+   */
+  isRootOnly?: boolean
+  /** Avatar props to customize the avatar appearance (src, icon, name, etc.) */
+  avatar?: Omit<AvatarProps, 'size' | 'rounded'>
+}
+
+const BreadcrumbRootInteractive = forwardRef<HTMLButtonElement, BreadcrumbRootInteractiveProps>(
+  ({ className, size = 'sm', isRootOnly = false, avatar, children, ...props }, ref) => {
+    const avatarSize: AvatarSize = size === 'sm' ? 'lg' : 'sm'
+    // Default icon: 'account' only when root is the only visible item, otherwise 'organizations'
+    const defaultIcon: IconV2NamesType = isRootOnly ? 'account' : 'organizations'
+
+    return (
+      <button ref={ref} type="button" className={cn('cn-breadcrumb-dropdown', className)} {...props}>
+        <Avatar
+          size={avatarSize}
+          rounded
+          icon={!avatar?.src && !avatar?.name ? (avatar?.icon ?? defaultIcon) : avatar?.icon}
+          {...avatar}
+        />
+        <span className="cn-breadcrumb-dropdown-text">{children}</span>
+        <IconV2 name="up-down" size="sm" className="cn-breadcrumb-dropdown-chevron" />
+      </button>
+    )
+  }
+)
+BreadcrumbRootInteractive.displayName = 'BreadcrumbRootInteractive'
+
 type BreadcrumbScopeLinkProps = Omit<ComponentPropsWithoutRef<'div'>, 'onClick'> & {
   /** Size of the breadcrumb - determines avatar size (sm uses lg avatar, xs uses sm avatar) */
   size?: 'sm' | 'xs'
@@ -330,35 +366,30 @@ const BreadcrumbScopeLink = forwardRef<HTMLDivElement, BreadcrumbScopeLinkProps>
         {avatar ? (
           <Avatar size={avatarSize} {...avatar} />
         ) : (
-          icon && <IconV2 name={icon} size="sm" className="cn-breadcrumb-dropdown-icon" />
+          icon && <IconV2 name={icon} size="sm" className="cn-breadcrumb-scope-icon" />
         )}
-        <span className="cn-breadcrumb-dropdown-text">{children}</span>
+        <span className="cn-breadcrumb-scope-text">{children}</span>
       </>
     )
 
     return (
-      <div ref={ref} className={cn('cn-breadcrumb-dropdown', className)} {...props}>
+      <div ref={ref} className={cn('cn-breadcrumb-scope', className)} {...props}>
         {/* An <a> without href has no link role and isn't focusable. Without a home destination
             fall back to a button (handler only) or plain text (home not built yet). */}
         {href ? (
-          <a href={href} onClick={onHomeClick} className="cn-breadcrumb-dropdown-link">
+          <a href={href} onClick={onHomeClick} className="cn-breadcrumb-scope-link">
             {homeContent}
           </a>
         ) : onHomeClick ? (
-          <button type="button" onClick={onHomeClick} className="cn-breadcrumb-dropdown-link">
+          <button type="button" onClick={onHomeClick} className="cn-breadcrumb-scope-link">
             {homeContent}
           </button>
         ) : (
-          <span className="cn-breadcrumb-dropdown-link cn-breadcrumb-dropdown-link-static">{homeContent}</span>
+          <span className="cn-breadcrumb-scope-link cn-breadcrumb-scope-link-static">{homeContent}</span>
         )}
         {onScopeClick && (
-          <button
-            type="button"
-            aria-label={scopeLabel}
-            onClick={onScopeClick}
-            className="cn-breadcrumb-dropdown-trigger"
-          >
-            <IconV2 name="nav-arrow-up" size="sm" className="cn-breadcrumb-dropdown-chevron" />
+          <button type="button" aria-label={scopeLabel} onClick={onScopeClick} className="cn-breadcrumb-scope-trigger">
+            <IconV2 name="nav-arrow-up" size="sm" className="cn-breadcrumb-scope-chevron" />
           </button>
         )}
       </div>
@@ -377,6 +408,7 @@ const Breadcrumb = {
   Copy: BreadcrumbCopy,
   Separator: BreadcrumbSeparator,
   Ellipsis: BreadcrumbEllipsis,
+  RootInteractive: BreadcrumbRootInteractive,
   ScopeLink: BreadcrumbScopeLink
 }
 
@@ -390,5 +422,6 @@ export {
   BreadcrumbSeparatorProps,
   BreadcrumbEllipsisProps,
   BreadcrumbEllipsisItem,
+  BreadcrumbRootInteractiveProps,
   BreadcrumbScopeLinkProps
 }

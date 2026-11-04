@@ -261,12 +261,12 @@ const BreadcrumbRootInteractive = forwardRef<HTMLDivElement, BreadcrumbRootInter
           {avatar ? (
             <Avatar size={avatarSize} {...avatar} />
           ) : (
-            <IconV2 name={icon} size="xs" className="cn-breadcrumb-dropdown-icon" />
+            <IconV2 name={icon} size="sm" className="cn-breadcrumb-dropdown-icon" />
           )}
           <span className="cn-breadcrumb-dropdown-text">{children}</span>
         </a>
         <button type="button" aria-label={scopeLabel} onClick={onScopeClick} className="cn-breadcrumb-dropdown-trigger">
-          <IconV2 name="up-down" size="sm" className="cn-breadcrumb-dropdown-chevron" />
+          <IconV2 name="nav-arrow-right" size="sm" className="cn-breadcrumb-dropdown-chevron" />
         </button>
       </div>
     )

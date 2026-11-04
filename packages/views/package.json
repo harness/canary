@@ -31,7 +31,8 @@
     "build": "NODE_OPTIONS=--max-old-space-size=8192 vite build",
     "build:ci": "NODE_OPTIONS=--max-old-space-size=8192 vite build",
     "prepublishOnly": "pnpm build",
-    "typecheck": "tsc -b"
+    "typecheck": "tsc -b",
+    "test": "vitest --run"
   },
   "repository": {
     "type": "git",
@@ -77,10 +78,12 @@
   },
   "devDependencies": {
     "@types/lodash-es": "^4.17.12",
+    "@testing-library/react": "^12.1.5",
     "@types/node": "^22.9.0",
     "@types/react": "^17.0.3",
     "@vitejs/plugin-react-swc": "^3.8.0",
     "autoprefixer": "^10.4.14",
+    "jsdom": "^25.0.1",
     "tailwindcss": "^3.4.14",
     "vite": "^6.1.1",
     "vite-plugin-dts": "^4.5.0",

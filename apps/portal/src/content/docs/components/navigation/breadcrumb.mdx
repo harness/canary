@@ -409,7 +409,7 @@ The `RootInteractive` component displays an interactive root element with an ava
 
 ### ScopeLink
 
-The `ScopeLink` component is a breadcrumb for a scope level (account, organization or project). Its text is a link to that scope's home, and an optional second hit target (the arrow, shown when `onScopeClick` is passed) opens the scope selector so the user can switch scope. Put the arrow on the project crumb. Without an `href` or `onHomeClick` (a home that isn't built yet) the text renders as plain, non-interactive text. Unlike `RootInteractive` (a single button), `ScopeLink` has two separate targets.
+The `ScopeLink` component is a breadcrumb for a scope level (account, organization or project). Its text is a link to that scope's home, and an optional second hit target (the arrow, shown when `onScopeClick` is passed) opens the scope selector so the user can switch scope. Set `scope` to get that level's default icon (globe, organization, folder). Put the arrow on the project crumb. For an Account > Organization > Project path, put account and organization in the `Ellipsis` `items` (with their `icon`) so only the project shows by default. Without an `href` or `onHomeClick` (a home that isn't built yet) the text renders as plain, non-interactive text. Unlike `RootInteractive` (a single button), `ScopeLink` has two separate targets.
 
 <DocsPage.ComponentExample
   client:only
@@ -422,15 +422,13 @@ The `ScopeLink` component is a breadcrumb for a scope level (account, organizati
         <Breadcrumb.Ellipsis
           expandInline
           items={[
-            { label: "Account ID", href: "#" },
-            { label: "Platform", href: "#" },
-            { label: "Engineering", href: "#" },
-            { label: "Design System", href: "#" },
+            { label: "Account ID", href: "#", icon: "globe" },
+            { label: "Organization", href: "#", icon: "organizations" },
           ]}
         />
         <Breadcrumb.Separator />
         <Breadcrumb.Item>
-          <Breadcrumb.ScopeLink icon="folder" href="#" onScopeClick={() => {}}>Canary</Breadcrumb.ScopeLink>
+          <Breadcrumb.ScopeLink scope="project" href="#" onScopeClick={() => {}}>Canary</Breadcrumb.ScopeLink>
         </Breadcrumb.Item>
         <Breadcrumb.Separator />
         <Breadcrumb.Page>Settings</Breadcrumb.Page>
@@ -446,7 +444,7 @@ The `ScopeLink` component is a breadcrumb for a scope level (account, organizati
         </Breadcrumb.Item>
         <Breadcrumb.Separator />
         <Breadcrumb.Item>
-          <Breadcrumb.ScopeLink icon="folder" href="#" onScopeClick={() => {}}>Project</Breadcrumb.ScopeLink>
+          <Breadcrumb.ScopeLink scope="project" href="#" onScopeClick={() => {}}>Project</Breadcrumb.ScopeLink>
         </Breadcrumb.Item>
         <Breadcrumb.Separator />
         <Breadcrumb.Page>Settings</Breadcrumb.Page>
@@ -645,8 +643,13 @@ All parts of the `Breadcrumb` can be imported and composed as required.
       value: "Omit<AvatarProps, 'size' | 'rounded'>",
     },
     {
+      name: "ScopeLink.scope",
+      description: "Scope level. Sets the default icon: 'globe' (account), 'organizations' (organization), 'folder' (project)",
+      value: "'account' | 'organization' | 'project'",
+    },
+    {
       name: "ScopeLink.icon",
-      description: "Icon shown when no avatar is given (e.g. 'globe' for account, 'folder' for project)",
+      description: "Icon shown when no avatar is given. Overrides the default icon from scope",
       value: "IconV2NamesType",
     },
     {

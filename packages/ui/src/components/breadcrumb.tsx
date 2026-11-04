@@ -345,12 +345,22 @@ const BreadcrumbRootInteractive = forwardRef<HTMLButtonElement, BreadcrumbRootIn
 )
 BreadcrumbRootInteractive.displayName = 'BreadcrumbRootInteractive'
 
+type BreadcrumbScope = 'account' | 'organization' | 'project'
+
+const SCOPE_DEFAULT_ICONS: Record<BreadcrumbScope, IconV2NamesType> = {
+  account: 'globe',
+  organization: 'organizations',
+  project: 'folder'
+}
+
 type BreadcrumbScopeLinkProps = Omit<ComponentPropsWithoutRef<'div'>, 'onClick'> & {
   /** Size of the breadcrumb - determines avatar size (sm uses lg avatar, xs uses sm avatar) */
   size?: 'sm' | 'xs'
   /** Avatar props (src, icon, name). When provided, a square (non-rounded) avatar replaces the icon */
   avatar?: Omit<AvatarProps, 'size' | 'rounded'>
-  /** Icon shown before the text when no avatar is given (e.g. `globe` for account, `folder` for project) */
+  /** Which scope level this crumb is. Sets the default icon: `globe` (account), `organizations` (organization), `folder` (project) */
+  scope?: BreadcrumbScope
+  /** Icon shown before the text when no avatar is given. Overrides the default icon from `scope` */
   icon?: IconV2NamesType
   /** Destination of the text link (the scope's home) */
   href?: string
@@ -372,6 +382,7 @@ const BreadcrumbScopeLink = forwardRef<HTMLDivElement, BreadcrumbScopeLinkProps>
       className,
       size = 'sm',
       avatar,
+      scope,
       icon,
       href,
       onHomeClick,
@@ -383,12 +394,13 @@ const BreadcrumbScopeLink = forwardRef<HTMLDivElement, BreadcrumbScopeLinkProps>
     ref
   ) => {
     const avatarSize: AvatarSize = size === 'sm' ? 'lg' : 'sm'
+    const resolvedIcon = icon ?? (scope ? SCOPE_DEFAULT_ICONS[scope] : undefined)
     const homeContent = (
       <>
         {avatar ? (
           <Avatar size={avatarSize} {...avatar} />
         ) : (
-          icon && <IconV2 name={icon} size="sm" className="cn-breadcrumb-scope-icon" />
+          resolvedIcon && <IconV2 name={resolvedIcon} size="sm" className="cn-breadcrumb-scope-icon" />
         )}
         <span className="cn-breadcrumb-scope-text">{children}</span>
       </>

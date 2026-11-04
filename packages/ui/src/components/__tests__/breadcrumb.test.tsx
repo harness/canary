@@ -342,6 +342,30 @@ describe('Breadcrumb', () => {
       expect(container.querySelector('.cn-avatar')).toBeInTheDocument()
       expect(container.querySelector('.cn-avatar-rounded')).not.toBeInTheDocument()
     })
+
+    test('scope sets the default icon; an explicit icon overrides it', () => {
+      const iconHtml = (node: React.ReactElement) =>
+        render(node).container.querySelector('.cn-breadcrumb-scope-icon')?.outerHTML
+      expect(iconHtml(<Breadcrumb.ScopeLink scope="account">A</Breadcrumb.ScopeLink>)).toBe(
+        iconHtml(<Breadcrumb.ScopeLink icon="globe">A</Breadcrumb.ScopeLink>)
+      )
+      expect(iconHtml(<Breadcrumb.ScopeLink scope="organization">O</Breadcrumb.ScopeLink>)).toBe(
+        iconHtml(<Breadcrumb.ScopeLink icon="organizations">O</Breadcrumb.ScopeLink>)
+      )
+      expect(iconHtml(<Breadcrumb.ScopeLink scope="project">P</Breadcrumb.ScopeLink>)).toBe(
+        iconHtml(<Breadcrumb.ScopeLink icon="folder">P</Breadcrumb.ScopeLink>)
+      )
+      expect(
+        iconHtml(
+          <Breadcrumb.ScopeLink scope="project" icon="globe">
+            P
+          </Breadcrumb.ScopeLink>
+        )
+      ).toBe(iconHtml(<Breadcrumb.ScopeLink icon="globe">P</Breadcrumb.ScopeLink>))
+      expect(iconHtml(<Breadcrumb.ScopeLink scope="account">A</Breadcrumb.ScopeLink>)).not.toBe(
+        iconHtml(<Breadcrumb.ScopeLink scope="project">A</Breadcrumb.ScopeLink>)
+      )
+    })
   })
 
   describe('Breadcrumb.Ellipsis expandInline', () => {

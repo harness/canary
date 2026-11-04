@@ -244,6 +244,61 @@ describe('Breadcrumb', () => {
     })
   })
 
+  describe('Breadcrumb.RootInteractive', () => {
+    test('renders the home link with href and fires onHomeClick', () => {
+      const onHomeClick = vi.fn(e => e.preventDefault())
+      render(
+        <Breadcrumb.RootInteractive href="/home" onHomeClick={onHomeClick}>
+          Account
+        </Breadcrumb.RootInteractive>
+      )
+
+      const link = screen.getByRole('link', { name: 'Account' })
+      expect(link).toHaveAttribute('href', '/home')
+      fireEvent.click(link)
+      expect(onHomeClick).toHaveBeenCalledTimes(1)
+    })
+
+    test('falls back to a focusable button for home when no href is given', () => {
+      const onHomeClick = vi.fn()
+      render(<Breadcrumb.RootInteractive onHomeClick={onHomeClick}>Account</Breadcrumb.RootInteractive>)
+
+      expect(screen.queryByRole('link')).not.toBeInTheDocument()
+      fireEvent.click(screen.getByRole('button', { name: 'Account' }))
+      expect(onHomeClick).toHaveBeenCalledTimes(1)
+    })
+
+    test('scope button fires onScopeClick and not onHomeClick', () => {
+      const onScopeClick = vi.fn()
+      const onHomeClick = vi.fn()
+      render(
+        <Breadcrumb.RootInteractive href="/home" onHomeClick={onHomeClick} onScopeClick={onScopeClick}>
+          Account
+        </Breadcrumb.RootInteractive>
+      )
+
+      fireEvent.click(screen.getByRole('button', { name: 'Select scope' }))
+      expect(onScopeClick).toHaveBeenCalledTimes(1)
+      expect(onHomeClick).not.toHaveBeenCalled()
+    })
+
+    test('uses a custom scopeLabel', () => {
+      render(<Breadcrumb.RootInteractive scopeLabel="Switch scope">Account</Breadcrumb.RootInteractive>)
+      expect(screen.getByRole('button', { name: 'Switch scope' })).toBeInTheDocument()
+    })
+
+    test('shows the globe by default and a square avatar when avatar is given', () => {
+      const { container, rerender } = render(<Breadcrumb.RootInteractive>Account</Breadcrumb.RootInteractive>)
+      expect(container.querySelector('.cn-breadcrumb-dropdown-icon')).toBeInTheDocument()
+      expect(container.querySelector('.cn-avatar')).not.toBeInTheDocument()
+
+      rerender(<Breadcrumb.RootInteractive avatar={{ name: 'John Doe' }}>John Doe</Breadcrumb.RootInteractive>)
+      expect(container.querySelector('.cn-breadcrumb-dropdown-icon')).not.toBeInTheDocument()
+      expect(container.querySelector('.cn-avatar')).toBeInTheDocument()
+      expect(container.querySelector('.cn-avatar-rounded')).not.toBeInTheDocument()
+    })
+  })
+
   describe('Breadcrumb.Ellipsis expandInline', () => {
     test('expands hidden items in place instead of opening a dropdown', () => {
       render(

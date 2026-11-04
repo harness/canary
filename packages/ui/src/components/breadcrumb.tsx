@@ -312,17 +312,33 @@ const BreadcrumbRootInteractive = forwardRef<HTMLDivElement, BreadcrumbRootInter
     ref
   ) => {
     const avatarSize: AvatarSize = size === 'sm' ? 'lg' : 'sm'
+    const homeContent = (
+      <>
+        {avatar ? (
+          <Avatar size={avatarSize} {...avatar} />
+        ) : (
+          <IconV2 name={icon} size="sm" className="cn-breadcrumb-dropdown-icon" />
+        )}
+        <span className="cn-breadcrumb-dropdown-text">{children}</span>
+      </>
+    )
 
     return (
       <div ref={ref} className={cn('cn-breadcrumb-dropdown', className)} {...props}>
-        <a href={href} onClick={onHomeClick} className="cn-breadcrumb-dropdown-link">
-          {avatar ? (
-            <Avatar size={avatarSize} {...avatar} />
-          ) : (
-            <IconV2 name={icon} size="sm" className="cn-breadcrumb-dropdown-icon" />
-          )}
-          <span className="cn-breadcrumb-dropdown-text">{children}</span>
-        </a>
+        {/* Without an href an <a> has no link role and isn't focusable, so fall back to a button */}
+        {href ? (
+          <a href={href} onClick={onHomeClick} className="cn-breadcrumb-dropdown-link">
+            {homeContent}
+          </a>
+        ) : (
+          <button
+            type="button"
+            onClick={onHomeClick as ComponentPropsWithoutRef<'button'>['onClick']}
+            className="cn-breadcrumb-dropdown-link"
+          >
+            {homeContent}
+          </button>
+        )}
         <button type="button" aria-label={scopeLabel} onClick={onScopeClick} className="cn-breadcrumb-dropdown-trigger">
           <IconV2 name="nav-arrow-up" size="sm" className="cn-breadcrumb-dropdown-chevron" />
         </button>

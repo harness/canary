@@ -107,7 +107,7 @@ export default {
   },
 
   '.cn-breadcrumb-dropdown-link': {
-    '@apply inline-flex items-center cursor-pointer': '',
+    '@apply inline-flex items-center cursor-pointer bg-transparent border-0 p-0': '',
     gap: 'var(--cn-spacing-1)',
 
     '&:focus-visible': {

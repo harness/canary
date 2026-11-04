@@ -24,6 +24,7 @@ import AwsElasticache from './symbols/aws-elasticache.svg'
 import AwsRds from './symbols/aws-rds.svg'
 import AwsRedshift from './symbols/aws-redshift.svg'
 import Aws from './symbols/aws.svg'
+import AzureVmScaleSet from './symbols/azure-vm-scale-set.svg'
 import AzureVm from './symbols/azure-vm.svg'
 import Azure from './symbols/azure.svg'
 import Background from './symbols/background.svg'
@@ -141,6 +142,7 @@ import Queue from './symbols/queue.svg'
 import Qwiet from './symbols/qwiet.svg'
 import Rancher from './symbols/rancher.svg'
 import Redhat from './symbols/redhat.svg'
+import RegistryApm from './symbols/registry-apm.svg'
 import RegistryGeneric from './symbols/registry-generic.svg'
 import RegistryRaw from './symbols/registry-raw.svg'
 import Ruby from './symbols/ruby.svg'
@@ -207,6 +209,7 @@ export const SymbolNameMap = {
   'aws-rds': AwsRds,
   'aws-redshift': AwsRedshift,
   aws: Aws,
+  'azure-vm-scale-set': AzureVmScaleSet,
   'azure-vm': AzureVm,
   azure: Azure,
   background: Background,
@@ -324,6 +327,7 @@ export const SymbolNameMap = {
   qwiet: Qwiet,
   rancher: Rancher,
   redhat: Redhat,
+  'registry-apm': RegistryApm,
   'registry-generic': RegistryGeneric,
   'registry-raw': RegistryRaw,
   ruby: Ruby,

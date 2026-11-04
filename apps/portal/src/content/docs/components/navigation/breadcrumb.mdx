@@ -371,6 +371,7 @@ The `RootInteractive` component displays an interactive root element with an glo
         </Breadcrumb.Item>
         <Breadcrumb.Separator />
         <Breadcrumb.Ellipsis
+          expandInline
           items={[
             { label: "Platform", href: "#" },
             { label: "Engineering", href: "#" },
@@ -561,6 +562,12 @@ All parts of the `Breadcrumb` can be imported and composed as required.
       description: "Size (sm uses lg avatar, xs uses sm)",
       defaultValue: "'sm'",
       value: "'sm' | 'xs'",
+    },
+    {
+      name: "Ellipsis.expandInline",
+      description: "Expand hidden items in place as breadcrumb links instead of opening a dropdown",
+      defaultValue: "false",
+      value: "boolean",
     },
     {
       name: "RootInteractive.avatar",

@@ -1,4 +1,12 @@
-import { ComponentProps, ComponentPropsWithoutRef, ComponentPropsWithRef, forwardRef, ReactNode } from 'react'
+import {
+  ComponentProps,
+  ComponentPropsWithoutRef,
+  ComponentPropsWithRef,
+  forwardRef,
+  Fragment,
+  ReactNode,
+  useState
+} from 'react'
 
 import { Slot } from '@radix-ui/react-slot'
 import { cn } from '@utils/cn'
@@ -172,10 +180,60 @@ type BreadcrumbEllipsisProps = Omit<ComponentPropsWithoutRef<'button'>, 'childre
   items: BreadcrumbEllipsisItem[]
   /** Callback when an item is selected */
   onItemSelect?: (item: BreadcrumbEllipsisItem) => void
+  /**
+   * Opt-in: instead of opening a dropdown, clicking the ellipsis expands the hidden items
+   * in place as regular breadcrumb links, replacing the ellipsis.
+   */
+  expandInline?: boolean
 }
 
 const BreadcrumbEllipsis = forwardRef<HTMLButtonElement, BreadcrumbEllipsisProps>(
-  ({ className, items, onItemSelect, ...props }, ref) => {
+  ({ className, items, onItemSelect, expandInline = false, ...props }, ref) => {
+    const [expanded, setExpanded] = useState(false)
+
+    if (expandInline && expanded) {
+      return (
+        <>
+          {items.map((item, index) => (
+            <Fragment key={index}>
+              {index > 0 && <BreadcrumbSeparator />}
+              <BreadcrumbItem>
+                <BreadcrumbLink
+                  href={item.href}
+                  prefixIcon={item.icon}
+                  onClick={onItemSelect ? () => onItemSelect(item) : undefined}
+                >
+                  {item.label}
+                </BreadcrumbLink>
+              </BreadcrumbItem>
+            </Fragment>
+          ))}
+        </>
+      )
+    }
+
+    if (expandInline) {
+      return (
+        <Button
+          ref={ref}
+          variant="ghost"
+          size="xs"
+          iconOnly
+          aria-label="Show full path"
+          aria-expanded={false}
+          tooltipProps={{ content: 'Show full path' }}
+          className={cn('cn-breadcrumb-ellipsis', className)}
+          {...props}
+          onClick={e => {
+            props.onClick?.(e)
+            setExpanded(true)
+          }}
+        >
+          <IconV2 name="more-horizontal" />
+        </Button>
+      )
+    }
+
     return (
       <DropdownMenu.Root>
         <DropdownMenu.Trigger asChild>

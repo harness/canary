@@ -1,5 +1,5 @@
 import * as TooltipPrimitive from '@radix-ui/react-tooltip'
-import { render as rtlRender, screen } from '@testing-library/react'
+import { fireEvent, render as rtlRender, screen } from '@testing-library/react'
 import { describe, expect, test, vi } from 'vitest'
 
 import { Breadcrumb } from '../breadcrumb'
@@ -241,6 +241,25 @@ describe('Breadcrumb', () => {
       )
       const separator = container.querySelector('.cn-breadcrumb-separator')
       expect(separator).toHaveClass('custom-separator')
+    })
+  })
+
+  describe('Breadcrumb.Ellipsis expandInline', () => {
+    test('expands hidden items in place instead of opening a dropdown', () => {
+      render(
+        <Breadcrumb.Root>
+          <Breadcrumb.List>
+            <Breadcrumb.Ellipsis expandInline items={mockEllipsisItems} />
+          </Breadcrumb.List>
+        </Breadcrumb.Root>
+      )
+
+      fireEvent.click(screen.getByRole('button', { name: 'Show full path' }))
+
+      expect(screen.queryByRole('button', { name: 'Show full path' })).not.toBeInTheDocument()
+      expect(screen.queryByRole('menu')).not.toBeInTheDocument()
+      expect(screen.getByRole('link', { name: 'Hidden 1' })).toHaveAttribute('href', '/hidden-1')
+      expect(screen.getByRole('link', { name: 'Hidden 2' })).toHaveAttribute('href', '/hidden-2')
     })
   })
 

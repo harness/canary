@@ -362,6 +362,25 @@ describe('Breadcrumb', () => {
       expect(screen.getByRole('link', { name: 'Hidden 2' })).toHaveAttribute('href', '/hidden-2')
     })
 
+    test('collapses again when the hidden path changes, but not on same-content re-render', () => {
+      const ui = (items: typeof mockEllipsisItems) => (
+        <Breadcrumb.Root>
+          <Breadcrumb.List>
+            <Breadcrumb.Ellipsis expandInline items={items} />
+          </Breadcrumb.List>
+        </Breadcrumb.Root>
+      )
+      const { rerender } = render(ui(mockEllipsisItems))
+
+      fireEvent.click(screen.getByRole('button', { name: 'Show full path' }))
+      rerender(ui([...mockEllipsisItems]))
+      expect(screen.getByRole('link', { name: 'Hidden 1' })).toBeInTheDocument()
+
+      rerender(ui([{ label: 'Elsewhere', href: '/elsewhere' }]))
+      expect(screen.getByRole('button', { name: 'Show full path' })).toBeInTheDocument()
+      expect(screen.queryByRole('link', { name: 'Elsewhere' })).not.toBeInTheDocument()
+    })
+
     test('calls onItemSelect and prevents native href navigation', () => {
       const onItemSelect = vi.fn()
       render(

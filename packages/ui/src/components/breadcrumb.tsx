@@ -6,6 +6,7 @@ import {
   Fragment,
   MouseEventHandler,
   ReactNode,
+  useEffect,
   useState
 } from 'react'
 
@@ -191,6 +192,13 @@ type BreadcrumbEllipsisProps = Omit<ComponentPropsWithoutRef<'button'>, 'childre
 const BreadcrumbEllipsis = forwardRef<HTMLButtonElement, BreadcrumbEllipsisProps>(
   ({ className, items, onItemSelect, expandInline = false, ...props }, ref) => {
     const [expanded, setExpanded] = useState(false)
+
+    // Collapse again when the hidden path itself changes (e.g. the user navigated and this
+    // instance stayed mounted). Keyed on content, not array identity, so re-renders don't reset it.
+    const itemsSignature = items.map(item => `${item.label}\u0000${item.href ?? ''}`).join('\u0001')
+    useEffect(() => {
+      setExpanded(false)
+    }, [itemsSignature])
 
     if (expandInline && expanded) {
       return (

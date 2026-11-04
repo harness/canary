@@ -450,6 +450,72 @@ export default {
     background: 'var(--cn-border-danger)'
   },
 
+  /* Horizontal Orientation — flat top-level Steps only; see README.md */
+  '.cn-stepper-horizontal': {
+    // Columns must stay equal width for the connector math below; a fixed track minimum stops
+    // long content from widening one column.
+    '& .cn-stepper-list': {
+      display: 'grid',
+      gridAutoFlow: 'column',
+      gridAutoColumns: 'minmax(var(--cn-size-24), 1fr)',
+      alignItems: 'start'
+    },
+
+    '& .cn-stepper-step-item': {
+      minWidth: '0',
+      paddingBottom: '0',
+      paddingInline: 'var(--cn-spacing-3)'
+    },
+
+    '& .cn-stepper-step': {
+      display: 'flex',
+      flexDirection: 'column',
+      alignItems: 'center',
+      textAlign: 'center'
+    },
+
+    '& .cn-stepper-step-content': {
+      display: 'flex',
+      flexDirection: 'column',
+      alignItems: 'center',
+      width: '100%',
+      marginTop: 'var(--cn-spacing-2)'
+    },
+
+    '& .cn-stepper-step-title': {
+      maxWidth: '100%'
+    },
+
+    '& .cn-stepper-step-title-row': {
+      justifyContent: 'center',
+      maxWidth: '100%'
+    },
+
+    // Center-to-next-center is one column width (100%). Inset by one indicator radius per end
+    // because the z-indexed connector would otherwise paint over the static indicator.
+    '& .cn-stepper-connector': {
+      top: 'calc(var(--cn-spacing-3) + var(--cn-size-5) / 2)',
+      left: 'calc(50% + var(--cn-size-5) / 2)',
+      bottom: 'auto',
+      width: 'calc(100% - var(--cn-size-5))',
+      height: 'var(--cn-spacing-px)'
+    },
+
+    '& .cn-stepper-skeleton-item': {
+      minWidth: '0',
+      flexDirection: 'column',
+      alignItems: 'center',
+      gap: 'var(--cn-spacing-2)',
+      paddingInline: 'var(--cn-spacing-3)'
+    },
+
+    '& .cn-stepper-skeleton-content': {
+      alignItems: 'center',
+      width: '100%',
+      paddingLeft: '0'
+    }
+  },
+
   /* Nested Step List */
   '.cn-stepper-nested-step-list': {
     listStyle: 'none',

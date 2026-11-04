@@ -1084,6 +1084,166 @@ describe('Stepper', () => {
     })
   })
 
+  describe('Orientation', () => {
+    test('defaults to vertical with no cn-stepper-horizontal class', () => {
+      const { container } = render(<BasicStepper />)
+      expect(container.querySelector('.cn-stepper')).not.toHaveClass('cn-stepper-horizontal')
+    })
+
+    test('orientation="horizontal" applies cn-stepper-horizontal class', () => {
+      const { container } = render(
+        <Stepper.Root value="step1" onValueChange={vi.fn()} orientation="horizontal">
+          <Stepper.Step value="step1" title="First" />
+          <Stepper.Step value="step2" title="Second" />
+        </Stepper.Root>
+      )
+      expect(container.querySelector('.cn-stepper')).toHaveClass('cn-stepper-horizontal')
+    })
+
+    test('ArrowRight/ArrowLeft navigate focus in horizontal mode', () => {
+      render(
+        <Stepper.Root value="step2" onValueChange={vi.fn()} orientation="horizontal">
+          <Stepper.Step value="step1" title="First" />
+          <Stepper.Step value="step2" title="Second" />
+          <Stepper.Step value="step3" title="Third" />
+        </Stepper.Root>
+      )
+      const buttons = screen.getAllByRole('button')
+      buttons[0].focus()
+      fireEvent.keyDown(buttons[0], { key: 'ArrowRight' })
+      expect(buttons[1]).toHaveFocus()
+
+      fireEvent.keyDown(buttons[1], { key: 'ArrowLeft' })
+      expect(buttons[0]).toHaveFocus()
+    })
+
+    test('ArrowDown/ArrowUp are no-ops in horizontal mode', () => {
+      render(
+        <Stepper.Root value="step2" onValueChange={vi.fn()} orientation="horizontal">
+          <Stepper.Step value="step1" title="First" />
+          <Stepper.Step value="step2" title="Second" />
+          <Stepper.Step value="step3" title="Third" />
+        </Stepper.Root>
+      )
+      const buttons = screen.getAllByRole('button')
+      buttons[0].focus()
+      fireEvent.keyDown(buttons[0], { key: 'ArrowDown' })
+      expect(buttons[0]).toHaveFocus()
+    })
+
+    test('ArrowRight/ArrowLeft are no-ops in default vertical mode', () => {
+      render(
+        <Stepper.Root value="step2" onValueChange={vi.fn()}>
+          <Stepper.Step value="step1" title="First" />
+          <Stepper.Step value="step2" title="Second" />
+          <Stepper.Step value="step3" title="Third" />
+        </Stepper.Root>
+      )
+      const buttons = screen.getAllByRole('button')
+      buttons[0].focus()
+      fireEvent.keyDown(buttons[0], { key: 'ArrowRight' })
+      expect(buttons[0]).toHaveFocus()
+    })
+
+    test('connectors still render with state classes in horizontal mode', () => {
+      const { container } = render(
+        <Stepper.Root value="step2" onValueChange={vi.fn()} orientation="horizontal" showConnectors>
+          <Stepper.Step value="step1" title="First" />
+          <Stepper.Step value="step2" title="Second" />
+          <Stepper.Step value="step3" title="Third" />
+        </Stepper.Root>
+      )
+      const connectors = container.querySelectorAll('.cn-stepper-connector')
+      expect(connectors).toHaveLength(3)
+      expect(connectors[0]).toHaveClass('cn-stepper-connector-completed')
+      // Last connector is hidden via :last-child CSS rule, not removed from the DOM
+      expect(connectors[2]).toHaveClass('cn-stepper-connector-upcoming')
+    })
+
+    test('horizontal connector CSS repositions to a horizontal line inset from the indicator edges', () => {
+      expect(stepperStyles['.cn-stepper-horizontal']['& .cn-stepper-connector']).toMatchObject({
+        left: 'calc(50% + var(--cn-size-5) / 2)',
+        bottom: 'auto',
+        width: 'calc(100% - var(--cn-size-5))',
+        height: 'var(--cn-spacing-px)'
+      })
+    })
+
+    test('horizontal list uses equal grid columns so content width cannot stretch one item', () => {
+      expect(stepperStyles['.cn-stepper-horizontal']['& .cn-stepper-list']).toMatchObject({
+        display: 'grid',
+        gridAutoFlow: 'column',
+        gridAutoColumns: 'minmax(var(--cn-size-24), 1fr)'
+      })
+    })
+
+    test('renders the skeleton inside the horizontal root when no steps are mounted', () => {
+      const { container } = render(
+        <Stepper.Root value="" onValueChange={vi.fn()} orientation="horizontal" skeletonCount={4} />
+      )
+      expect(container.querySelector('.cn-stepper')).toHaveClass('cn-stepper-horizontal')
+      expect(container.querySelectorAll('.cn-stepper-skeleton-item')).toHaveLength(4)
+      expect(stepperStyles['.cn-stepper-horizontal']).toHaveProperty('& .cn-stepper-skeleton-item')
+    })
+
+    test('ignores top-level Step children in horizontal mode', () => {
+      render(
+        <Stepper.Root value="step1" onValueChange={vi.fn()} orientation="horizontal">
+          <Stepper.Step value="step1" title="First">
+            <div>Step one content</div>
+          </Stepper.Step>
+          <Stepper.Step value="step2" title="Second" />
+        </Stepper.Root>
+      )
+      expect(screen.queryByText('Step one content')).not.toBeInTheDocument()
+    })
+
+    test('still renders top-level Step children in vertical mode', () => {
+      render(
+        <Stepper.Root value="step1" onValueChange={vi.fn()}>
+          <Stepper.Step value="step1" title="First">
+            <div>Step one content</div>
+          </Stepper.Step>
+        </Stepper.Root>
+      )
+      expect(screen.getByText('Step one content')).toBeInTheDocument()
+    })
+
+    test('clamps descriptions to two lines only in horizontal mode', () => {
+      const { container, rerender } = render(
+        <Stepper.Root value="step1" onValueChange={vi.fn()} orientation="horizontal">
+          <Stepper.Step value="step1" title="First" description="A long description" />
+        </Stepper.Root>
+      )
+      expect(container.querySelector('.cn-stepper-step-description')).toHaveClass('line-clamp-2')
+
+      rerender(
+        <Stepper.Root value="step1" onValueChange={vi.fn()}>
+          <Stepper.Step value="step1" title="First" description="A long description" />
+        </Stepper.Root>
+      )
+      expect(container.querySelector('.cn-stepper-step-description')).not.toHaveClass('line-clamp-2')
+    })
+
+    test('live region announces step changes in horizontal mode', () => {
+      const { container, rerender } = render(
+        <Stepper.Root value="step1" onValueChange={vi.fn()} orientation="horizontal">
+          <Stepper.Step value="step1" title="First" />
+          <Stepper.Step value="step2" title="Second" />
+        </Stepper.Root>
+      )
+
+      rerender(
+        <Stepper.Root value="step2" onValueChange={vi.fn()} orientation="horizontal">
+          <Stepper.Step value="step1" title="First" />
+          <Stepper.Step value="step2" title="Second" />
+        </Stepper.Root>
+      )
+
+      expect(container.querySelector('[aria-live="polite"]')).toHaveTextContent('Step 2 of 2')
+    })
+  })
+
   describe('Accessibility', () => {
     test('root nav has aria-label', () => {
       render(

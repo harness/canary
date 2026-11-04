@@ -10,7 +10,11 @@ import { StepperProvider, useStepperContext } from './stepper-context'
 import { StepperProps } from './stepper-types'
 
 function StepperList({ children }: { children: ReactNode }) {
-  const { transitioning } = useStepperContext()
+  const { transitioning, orientation } = useStepperContext()
+  // WAI-ARIA authoring practices: horizontal widgets navigate with Left/Right, vertical with
+  // Up/Down. Swapped rather than supporting both, so the unused axis doesn't silently no-op.
+  const nextKey = orientation === 'horizontal' ? 'ArrowRight' : 'ArrowDown'
+  const prevKey = orientation === 'horizontal' ? 'ArrowLeft' : 'ArrowUp'
 
   const handleKeyDown = (e: KeyboardEvent<HTMLOListElement>) => {
     const list = e.currentTarget
@@ -21,11 +25,11 @@ function StepperList({ children }: { children: ReactNode }) {
     let nextIndex: number | null = null
 
     switch (e.key) {
-      case 'ArrowDown':
+      case nextKey:
         e.preventDefault()
         nextIndex = currentIndex < buttons.length - 1 ? currentIndex + 1 : currentIndex
         break
-      case 'ArrowUp':
+      case prevKey:
         e.preventDefault()
         nextIndex = currentIndex > 0 ? currentIndex - 1 : currentIndex
         break
@@ -149,6 +153,7 @@ export function StepperRoot({
   onBeforeChange,
   showConnectors = true,
   completed = false,
+  orientation = 'vertical',
   disableCompletedFade = false,
   collapsibleNestedSteps = false,
   skeletonCount = 3,
@@ -162,6 +167,7 @@ export function StepperRoot({
       onBeforeChange={onBeforeChange}
       showConnectors={showConnectors}
       completed={completed}
+      orientation={orientation}
       collapsibleNestedSteps={collapsibleNestedSteps}
     >
       {/* TooltipProvider wraps the whole stepper as a general safety net for any Tooltip a
@@ -171,6 +177,7 @@ export function StepperRoot({
         <nav
           className={cn(
             'cn-stepper',
+            orientation === 'horizontal' && 'cn-stepper-horizontal',
             collapsibleNestedSteps && 'cn-stepper-collapsible-nested-steps',
             disableCompletedFade && 'cn-stepper-disable-completed-fade',
             className

@@ -57,9 +57,12 @@ function TopLevelStep({
   totalStepsOverride,
   headerActions,
   className,
-  children
+  children: childrenProp
 }: StepperStepProps) {
   const ctx = useStepperContext()
+  // A horizontal step is one narrow column, so step content is rendered by the layout instead.
+  const isHorizontal = ctx.orientation === 'horizontal'
+  const children = isHorizontal ? undefined : childrenProp
 
   useEffect(() => {
     const cleanup = ctx.registerStep(value)
@@ -140,7 +143,13 @@ function TopLevelStep({
           </Text>
         )}
         {description && (
-          <Text as="span" variant="body-normal" color="foreground-3" className="cn-stepper-step-description">
+          <Text
+            as="span"
+            variant="body-normal"
+            color="foreground-3"
+            lineClamp={isHorizontal ? 2 : undefined}
+            className="cn-stepper-step-description"
+          >
             {description}
           </Text>
         )}

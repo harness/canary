@@ -429,6 +429,17 @@ describe('Breadcrumb', () => {
       expect(ellipsis?.tagName).toBe('BUTTON')
     })
 
+    test('dropdown trigger has an accessible name', () => {
+      const { getByRole } = render(
+        <Breadcrumb.Root>
+          <Breadcrumb.List>
+            <Breadcrumb.Ellipsis items={mockEllipsisItems} />
+          </Breadcrumb.List>
+        </Breadcrumb.Root>
+      )
+      expect(getByRole('button', { name: 'Show full path' })).toBeInTheDocument()
+    })
+
     test('should apply custom className', () => {
       const { container } = render(
         <Breadcrumb.Root>

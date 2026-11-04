@@ -273,7 +273,8 @@ const BreadcrumbEllipsis = forwardRef<HTMLButtonElement, BreadcrumbEllipsisProps
             variant="ghost"
             size="xs"
             iconOnly
-            ignoreIconOnlyTooltip
+            aria-label="Show full path"
+            tooltipProps={{ content: 'Show full path' }}
             className={cn('cn-breadcrumb-ellipsis', className)}
             {...props}
           >

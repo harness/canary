@@ -4,6 +4,7 @@ import { Slot } from '@radix-ui/react-slot'
 import { cn } from '@utils/cn'
 import { cva, type VariantProps } from 'class-variance-authority'
 
+import { Avatar, AvatarProps, AvatarSize } from './avatar'
 import { Button } from './button'
 import { CopyButton } from './copy-button'
 import { DropdownMenu } from './dropdown-menu'
@@ -220,7 +221,11 @@ const BreadcrumbCopy = ({ className, ...props }: BreadcrumbCopyProps) => (
 BreadcrumbCopy.displayName = 'BreadcrumbCopy'
 
 type BreadcrumbRootInteractiveProps = Omit<ComponentPropsWithoutRef<'div'>, 'onClick'> & {
-  /** Icon shown before the text. Defaults to the globe */
+  /** Size of the breadcrumb dropdown - determines avatar size (sm uses lg avatar, xs uses sm avatar) */
+  size?: 'sm' | 'xs'
+  /** Avatar props (src, icon, name). When provided, a square (non-rounded) avatar replaces the globe icon */
+  avatar?: Omit<AvatarProps, 'size' | 'rounded'>
+  /** Icon shown before the text when no avatar is given. Defaults to the globe */
   icon?: IconV2NamesType
   /** Destination of the text link (home) */
   href?: string
@@ -234,19 +239,38 @@ type BreadcrumbRootInteractiveProps = Omit<ComponentPropsWithoutRef<'div'>, 'onC
 
 const BreadcrumbRootInteractive = forwardRef<HTMLDivElement, BreadcrumbRootInteractiveProps>(
   (
-    { className, icon = 'globe', href, onHomeClick, onScopeClick, scopeLabel = 'Select scope', children, ...props },
+    {
+      className,
+      size = 'sm',
+      avatar,
+      icon = 'globe',
+      href,
+      onHomeClick,
+      onScopeClick,
+      scopeLabel = 'Select scope',
+      children,
+      ...props
+    },
     ref
-  ) => (
-    <div ref={ref} className={cn('cn-breadcrumb-dropdown', className)} {...props}>
-      <a href={href} onClick={onHomeClick} className="cn-breadcrumb-dropdown-link">
-        <IconV2 name={icon} size="xs" className="cn-breadcrumb-dropdown-icon" />
-        <span className="cn-breadcrumb-dropdown-text">{children}</span>
-      </a>
-      <button type="button" aria-label={scopeLabel} onClick={onScopeClick} className="cn-breadcrumb-dropdown-trigger">
-        <IconV2 name="up-down" size="sm" className="cn-breadcrumb-dropdown-chevron" />
-      </button>
-    </div>
-  )
+  ) => {
+    const avatarSize: AvatarSize = size === 'sm' ? 'lg' : 'sm'
+
+    return (
+      <div ref={ref} className={cn('cn-breadcrumb-dropdown', className)} {...props}>
+        <a href={href} onClick={onHomeClick} className="cn-breadcrumb-dropdown-link">
+          {avatar ? (
+            <Avatar size={avatarSize} {...avatar} />
+          ) : (
+            <IconV2 name={icon} size="xs" className="cn-breadcrumb-dropdown-icon" />
+          )}
+          <span className="cn-breadcrumb-dropdown-text">{children}</span>
+        </a>
+        <button type="button" aria-label={scopeLabel} onClick={onScopeClick} className="cn-breadcrumb-dropdown-trigger">
+          <IconV2 name="up-down" size="sm" className="cn-breadcrumb-dropdown-chevron" />
+        </button>
+      </div>
+    )
+  }
 )
 BreadcrumbRootInteractive.displayName = 'BreadcrumbRootInteractive'
 

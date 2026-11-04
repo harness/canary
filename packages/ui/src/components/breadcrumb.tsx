@@ -202,7 +202,15 @@ const BreadcrumbEllipsis = forwardRef<HTMLButtonElement, BreadcrumbEllipsisProps
                 <BreadcrumbLink
                   href={item.href}
                   prefixIcon={item.icon}
-                  onClick={onItemSelect ? () => onItemSelect(item) : undefined}
+                  onClick={
+                    onItemSelect
+                      ? e => {
+                          // The consumer owns navigation (e.g. SPA routing); don't also follow the href
+                          e.preventDefault()
+                          onItemSelect(item)
+                        }
+                      : undefined
+                  }
                 >
                   {item.label}
                 </BreadcrumbLink>

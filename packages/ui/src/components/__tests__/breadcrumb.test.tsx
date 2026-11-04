@@ -330,6 +330,23 @@ describe('Breadcrumb', () => {
       expect(screen.getByRole('link', { name: 'Hidden 1' })).toHaveAttribute('href', '/hidden-1')
       expect(screen.getByRole('link', { name: 'Hidden 2' })).toHaveAttribute('href', '/hidden-2')
     })
+
+    test('calls onItemSelect and prevents native href navigation', () => {
+      const onItemSelect = vi.fn()
+      render(
+        <Breadcrumb.Root>
+          <Breadcrumb.List>
+            <Breadcrumb.Ellipsis expandInline items={mockEllipsisItems} onItemSelect={onItemSelect} />
+          </Breadcrumb.List>
+        </Breadcrumb.Root>
+      )
+
+      fireEvent.click(screen.getByRole('button', { name: 'Show full path' }))
+      const notPrevented = fireEvent.click(screen.getByRole('link', { name: 'Hidden 1' }))
+
+      expect(onItemSelect).toHaveBeenCalledWith(mockEllipsisItems[0])
+      expect(notPrevented).toBe(false)
+    })
   })
 
   describe('Breadcrumb.Ellipsis', () => {

@@ -419,13 +419,10 @@ The `ScopeLink` component is a breadcrumb for a scope level (account, organizati
     <span className="text-cn-size-2 text-cn-3 w-32 shrink-0 font-mono">default</span>
     <Breadcrumb.Root>
       <Breadcrumb.List>
-        <Breadcrumb.Item>
-          <Breadcrumb.ScopeLink icon="globe" href="#">Account ID</Breadcrumb.ScopeLink>
-        </Breadcrumb.Item>
-        <Breadcrumb.Separator />
         <Breadcrumb.Ellipsis
           expandInline
           items={[
+            { label: "Account ID", href: "#" },
             { label: "Platform", href: "#" },
             { label: "Engineering", href: "#" },
             { label: "Design System", href: "#" },

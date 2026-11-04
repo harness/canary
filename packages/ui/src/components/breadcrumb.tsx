@@ -4,7 +4,6 @@ import { Slot } from '@radix-ui/react-slot'
 import { cn } from '@utils/cn'
 import { cva, type VariantProps } from 'class-variance-authority'
 
-import { Avatar, AvatarProps, AvatarSize } from './avatar'
 import { Button } from './button'
 import { CopyButton } from './copy-button'
 import { DropdownMenu } from './dropdown-menu'
@@ -184,7 +183,8 @@ const BreadcrumbEllipsis = forwardRef<HTMLButtonElement, BreadcrumbEllipsisProps
             variant="ghost"
             size="xs"
             iconOnly
-            ignoreIconOnlyTooltip
+            aria-label="Show full path"
+            tooltipProps={{ content: 'Show full path' }}
             className={cn('cn-breadcrumb-ellipsis', className)}
             {...props}
           >
@@ -219,39 +219,34 @@ const BreadcrumbCopy = ({ className, ...props }: BreadcrumbCopyProps) => (
 )
 BreadcrumbCopy.displayName = 'BreadcrumbCopy'
 
-type BreadcrumbRootInteractiveProps = ComponentPropsWithoutRef<'button'> & {
-  /** Size of the breadcrumb dropdown - determines avatar size (sm uses lg avatar, xs uses sm avatar) */
-  size?: 'sm' | 'xs'
-  /**
-   * Whether this is the only visible root item (no other breadcrumb items after it).
-   * - `true`: Shows 'account' icon (user is at root level, no navigation deeper)
-   * - `false`: Shows 'organizations' icon (user has navigated deeper)
-   * Only applies when no custom icon/src/name is provided in avatar prop.
-   */
-  isRootOnly?: boolean
-  /** Avatar props to customize the avatar appearance (src, icon, name, etc.) */
-  avatar?: Omit<AvatarProps, 'size' | 'rounded'>
+type BreadcrumbRootInteractiveProps = Omit<ComponentPropsWithoutRef<'div'>, 'onClick'> & {
+  /** Icon shown before the text. Defaults to the globe */
+  icon?: IconV2NamesType
+  /** Destination of the text link (home) */
+  href?: string
+  /** Called when the text link is clicked (home) */
+  onHomeClick?: ComponentPropsWithoutRef<'a'>['onClick']
+  /** Called when the scope selector trigger (chevron) is clicked */
+  onScopeClick?: ComponentPropsWithoutRef<'button'>['onClick']
+  /** Accessible label for the scope selector trigger */
+  scopeLabel?: string
 }
 
-const BreadcrumbRootInteractive = forwardRef<HTMLButtonElement, BreadcrumbRootInteractiveProps>(
-  ({ className, size = 'sm', isRootOnly = false, avatar, children, ...props }, ref) => {
-    const avatarSize: AvatarSize = size === 'sm' ? 'lg' : 'sm'
-    // Default icon: 'account' only when root is the only visible item, otherwise 'organizations'
-    const defaultIcon: IconV2NamesType = isRootOnly ? 'account' : 'organizations'
-
-    return (
-      <button ref={ref} type="button" className={cn('cn-breadcrumb-dropdown', className)} {...props}>
-        <Avatar
-          size={avatarSize}
-          rounded
-          icon={!avatar?.src && !avatar?.name ? (avatar?.icon ?? defaultIcon) : avatar?.icon}
-          {...avatar}
-        />
+const BreadcrumbRootInteractive = forwardRef<HTMLDivElement, BreadcrumbRootInteractiveProps>(
+  (
+    { className, icon = 'globe', href, onHomeClick, onScopeClick, scopeLabel = 'Select scope', children, ...props },
+    ref
+  ) => (
+    <div ref={ref} className={cn('cn-breadcrumb-dropdown', className)} {...props}>
+      <a href={href} onClick={onHomeClick} className="cn-breadcrumb-dropdown-link">
+        <IconV2 name={icon} size="xs" className="cn-breadcrumb-dropdown-icon" />
         <span className="cn-breadcrumb-dropdown-text">{children}</span>
+      </a>
+      <button type="button" aria-label={scopeLabel} onClick={onScopeClick} className="cn-breadcrumb-dropdown-trigger">
         <IconV2 name="up-down" size="sm" className="cn-breadcrumb-dropdown-chevron" />
       </button>
-    )
-  }
+    </div>
+  )
 )
 BreadcrumbRootInteractive.displayName = 'BreadcrumbRootInteractive'
 

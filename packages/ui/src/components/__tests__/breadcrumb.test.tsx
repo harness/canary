@@ -1,7 +1,15 @@
-import { render, screen } from '@testing-library/react'
+import * as TooltipPrimitive from '@radix-ui/react-tooltip'
+import { render as rtlRender, screen } from '@testing-library/react'
 import { describe, expect, test, vi } from 'vitest'
 
 import { Breadcrumb } from '../breadcrumb'
+
+// Ellipsis renders a tooltip, which requires a provider
+const TestWrapper = ({ children }: { children: React.ReactNode }) => (
+  <TooltipPrimitive.Provider delayDuration={0}>{children}</TooltipPrimitive.Provider>
+)
+
+const render = (ui: React.ReactElement, options = {}) => rtlRender(ui, { wrapper: TestWrapper, ...options })
 
 const mockEllipsisItems = [
   { label: 'Hidden 1', href: '/hidden-1' },

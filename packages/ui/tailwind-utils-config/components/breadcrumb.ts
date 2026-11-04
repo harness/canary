@@ -102,7 +102,12 @@ export default {
   },
 
   '.cn-breadcrumb-dropdown': {
-    '@apply inline-flex items-center bg-transparent border-0 cursor-pointer p-0': '',
+    '@apply inline-flex items-center': '',
+    gap: 'var(--cn-spacing-1)'
+  },
+
+  '.cn-breadcrumb-dropdown-link': {
+    '@apply inline-flex items-center cursor-pointer': '',
     gap: 'var(--cn-spacing-1)',
 
     '&:focus-visible': {
@@ -110,11 +115,28 @@ export default {
     }
   },
 
+  '.cn-breadcrumb-dropdown-trigger': {
+    '@apply inline-flex items-center bg-transparent border-0 cursor-pointer p-0': '',
+
+    '&:focus-visible': {
+      outline: 'var(--cn-focus)'
+    }
+  },
+
+  '.cn-breadcrumb-dropdown-icon': {
+    color: 'var(--cn-text-2)',
+    '@apply transition-colors': '',
+
+    '.cn-breadcrumb-dropdown-link:hover &': {
+      color: 'var(--cn-text-1)'
+    }
+  },
+
   '.cn-breadcrumb-dropdown-text': {
     color: 'var(--cn-text-2)',
     '@apply transition-colors': '',
 
-    '.cn-breadcrumb-dropdown:hover &': {
+    '.cn-breadcrumb-dropdown-link:hover &': {
       color: 'var(--cn-text-1)'
     }
   },
@@ -123,7 +145,7 @@ export default {
     color: 'var(--cn-text-2)',
     '@apply transition-colors': '',
 
-    '.cn-breadcrumb-dropdown:hover &': {
+    '.cn-breadcrumb-dropdown-trigger:hover &': {
       color: 'var(--cn-text-1)'
     }
   }

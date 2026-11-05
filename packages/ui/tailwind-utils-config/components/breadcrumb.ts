@@ -135,41 +135,5 @@ export default {
     '.cn-breadcrumb-dropdown:hover &': {
       color: 'var(--cn-text-1)'
     }
-  },
-
-  '.cn-breadcrumb-scope': {
-    '@apply inline-flex items-center': '',
-    gap: 'var(--cn-spacing-1)'
-  },
-
-  '.cn-breadcrumb-scope-link': {
-    '@apply inline-flex items-center cursor-pointer bg-transparent border-0 p-0': '',
-    gap: 'var(--cn-spacing-1)',
-
-    '&:focus-visible': {
-      outline: 'var(--cn-focus)'
-    }
-  },
-
-  '.cn-breadcrumb-scope-link-static': {
-    '@apply cursor-default': ''
-  },
-
-  '.cn-breadcrumb-scope-icon': {
-    color: 'var(--cn-text-2)',
-    '@apply transition-colors': '',
-
-    '.cn-breadcrumb-scope-link:not(.cn-breadcrumb-scope-link-static):hover &': {
-      color: 'var(--cn-text-1)'
-    }
-  },
-
-  '.cn-breadcrumb-scope-text': {
-    color: 'var(--cn-text-2)',
-    '@apply transition-colors': '',
-
-    '.cn-breadcrumb-scope-link:not(.cn-breadcrumb-scope-link-static):hover &': {
-      color: 'var(--cn-text-1)'
-    }
   }
 }

@@ -4,7 +4,6 @@ import {
   ComponentPropsWithRef,
   forwardRef,
   Fragment,
-  MouseEventHandler,
   ReactNode,
   useEffect,
   useRef,
@@ -345,68 +344,6 @@ const BreadcrumbRootInteractive = forwardRef<HTMLButtonElement, BreadcrumbRootIn
 )
 BreadcrumbRootInteractive.displayName = 'BreadcrumbRootInteractive'
 
-type BreadcrumbScope = 'account' | 'organization' | 'project'
-
-const SCOPE_DEFAULT_ICONS: Record<BreadcrumbScope, IconV2NamesType> = {
-  account: 'globe',
-  organization: 'organizations',
-  project: 'folder'
-}
-
-type BreadcrumbScopeLinkProps = Omit<ComponentPropsWithoutRef<'div'>, 'onClick'> & {
-  /** Size of the breadcrumb - determines avatar size (sm uses lg avatar, xs uses sm avatar) */
-  size?: 'sm' | 'xs'
-  /** Avatar props (src, icon, name). When provided, a square (non-rounded) avatar replaces the icon */
-  avatar?: Omit<AvatarProps, 'size' | 'rounded'>
-  /** Which scope level this crumb is. Sets the default icon: `globe` (account), `organizations` (organization), `folder` (project) */
-  scope?: BreadcrumbScope
-  /** Icon shown before the text when no avatar is given. Overrides the default icon from `scope` */
-  icon?: IconV2NamesType
-  /** Destination of the text link (the scope's home) */
-  href?: string
-  /** Called when the text is clicked (the scope's home) */
-  onHomeClick?: MouseEventHandler<HTMLElement>
-}
-
-/**
- * A breadcrumb for a scope level (account, organization or project). The text goes to that scope's home;
- */
-const BreadcrumbScopeLink = forwardRef<HTMLDivElement, BreadcrumbScopeLinkProps>(
-  ({ className, size = 'sm', avatar, scope, icon, href, onHomeClick, children, ...props }, ref) => {
-    const avatarSize: AvatarSize = size === 'sm' ? 'lg' : 'sm'
-    const resolvedIcon = icon ?? (scope ? SCOPE_DEFAULT_ICONS[scope] : undefined)
-    const homeContent = (
-      <>
-        {avatar ? (
-          <Avatar size={avatarSize} {...avatar} />
-        ) : (
-          resolvedIcon && <IconV2 name={resolvedIcon} size="sm" className="cn-breadcrumb-scope-icon" />
-        )}
-        <span className="cn-breadcrumb-scope-text">{children}</span>
-      </>
-    )
-
-    return (
-      <div ref={ref} className={cn('cn-breadcrumb-scope', className)} {...props}>
-        {/* An <a> without href has no link role and isn't focusable. Without a home destination
-            fall back to a button (handler only) or plain text (home not built yet). */}
-        {href ? (
-          <a href={href} onClick={onHomeClick} className="cn-breadcrumb-scope-link">
-            {homeContent}
-          </a>
-        ) : onHomeClick ? (
-          <button type="button" onClick={onHomeClick} className="cn-breadcrumb-scope-link">
-            {homeContent}
-          </button>
-        ) : (
-          <span className="cn-breadcrumb-scope-link cn-breadcrumb-scope-link-static">{homeContent}</span>
-        )}
-      </div>
-    )
-  }
-)
-BreadcrumbScopeLink.displayName = 'BreadcrumbScopeLink'
-
 const Breadcrumb = {
   Root: BreadcrumbRoot,
   List: BreadcrumbList,
@@ -417,8 +354,7 @@ const Breadcrumb = {
   Copy: BreadcrumbCopy,
   Separator: BreadcrumbSeparator,
   Ellipsis: BreadcrumbEllipsis,
-  RootInteractive: BreadcrumbRootInteractive,
-  ScopeLink: BreadcrumbScopeLink
+  RootInteractive: BreadcrumbRootInteractive
 }
 
 export {
@@ -431,6 +367,5 @@ export {
   BreadcrumbSeparatorProps,
   BreadcrumbEllipsisProps,
   BreadcrumbEllipsisItem,
-  BreadcrumbRootInteractiveProps,
-  BreadcrumbScopeLinkProps
+  BreadcrumbRootInteractiveProps
 }

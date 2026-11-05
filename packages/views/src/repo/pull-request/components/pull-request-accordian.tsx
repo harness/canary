@@ -176,6 +176,7 @@ export const LineTitle: React.FC<LineTitleProps> = ({
           <button
             tabIndex={-1}
             onClick={e => {
+              e.preventDefault()
               e.stopPropagation()
               handleToggleViewed(!viewed)
             }}

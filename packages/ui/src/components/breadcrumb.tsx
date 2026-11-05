@@ -366,33 +366,13 @@ type BreadcrumbScopeLinkProps = Omit<ComponentPropsWithoutRef<'div'>, 'onClick'>
   href?: string
   /** Called when the text is clicked (the scope's home) */
   onHomeClick?: MouseEventHandler<HTMLElement>
-  /** When provided, a second hit target is rendered that calls this to open the scope selector */
-  onScopeClick?: ComponentPropsWithoutRef<'button'>['onClick']
-  /** Accessible label for the scope selector trigger */
-  scopeLabel?: string
 }
 
 /**
  * A breadcrumb for a scope level (account, organization or project). The text goes to that scope's home;
- * an optional second hit target opens the scope selector to switch scope.
  */
 const BreadcrumbScopeLink = forwardRef<HTMLDivElement, BreadcrumbScopeLinkProps>(
-  (
-    {
-      className,
-      size = 'sm',
-      avatar,
-      scope,
-      icon,
-      href,
-      onHomeClick,
-      onScopeClick,
-      scopeLabel = 'Select scope',
-      children,
-      ...props
-    },
-    ref
-  ) => {
+  ({ className, size = 'sm', avatar, scope, icon, href, onHomeClick, children, ...props }, ref) => {
     const avatarSize: AvatarSize = size === 'sm' ? 'lg' : 'sm'
     const resolvedIcon = icon ?? (scope ? SCOPE_DEFAULT_ICONS[scope] : undefined)
     const homeContent = (
@@ -420,11 +400,6 @@ const BreadcrumbScopeLink = forwardRef<HTMLDivElement, BreadcrumbScopeLinkProps>
           </button>
         ) : (
           <span className="cn-breadcrumb-scope-link cn-breadcrumb-scope-link-static">{homeContent}</span>
-        )}
-        {onScopeClick && (
-          <button type="button" aria-label={scopeLabel} onClick={onScopeClick} className="cn-breadcrumb-scope-trigger">
-            <IconV2 name="nav-arrow-up" size="sm" className="cn-breadcrumb-scope-chevron" />
-          </button>
         )}
       </div>
     )

@@ -356,7 +356,7 @@ The `Copy` component displays a copy button to copy the breadcrumb path.
 
 ### RootInteractive
 
-The `RootInteractive` component displays an interactive root element with an avatar and dropdown chevron. Useful for header navigation. To link a scope crumb to its home and open a scope selector from a separate arrow, use [`ScopeLink`](#scopelink) instead.
+The `RootInteractive` component displays an interactive root element with an avatar and dropdown chevron. Useful for header navigation. For a scope crumb (account, organization or project) that links to its home, use [`ScopeLink`](#scopelink) instead.
 
 <DocsPage.ComponentExample
   client:only
@@ -409,7 +409,7 @@ The `RootInteractive` component displays an interactive root element with an ava
 
 ### ScopeLink
 
-The `ScopeLink` component is a breadcrumb for a scope level (account, organization or project). Its text is a link to that scope's home, and an optional second hit target (the arrow, shown when `onScopeClick` is passed) opens the scope selector so the user can switch scope. Set `scope` to get that level's default icon (globe, organization, folder). Put the arrow on the project crumb. For an Account > Organization > Project path, put account and organization in the `Ellipsis` `items` (with their `icon`) so only the project shows by default. Without an `href` or `onHomeClick` (a home that isn't built yet) the text renders as plain, non-interactive text. Unlike `RootInteractive` (a single button), `ScopeLink` has two separate targets.
+The `ScopeLink` component is a breadcrumb for a scope level (account, organization or project). Its icon and text are a link to that scope's home. Set `scope` to get that level's default icon (globe, organization, folder). For an Account > Organization > Project path, put account and organization in the `Ellipsis` `items` (with their `icon`) so only the project shows by default. Without an `href` or `onHomeClick` (a home that isn't built yet) the text renders as plain, non-interactive text.
 
 <DocsPage.ComponentExample
   client:only
@@ -428,7 +428,7 @@ The `ScopeLink` component is a breadcrumb for a scope level (account, organizati
         />
         <Breadcrumb.Separator />
         <Breadcrumb.Item>
-          <Breadcrumb.ScopeLink scope="project" href="#" onScopeClick={() => {}}>Canary</Breadcrumb.ScopeLink>
+          <Breadcrumb.ScopeLink scope="project" href="#">Canary</Breadcrumb.ScopeLink>
         </Breadcrumb.Item>
         <Breadcrumb.Separator />
         <Breadcrumb.Page>Settings</Breadcrumb.Page>
@@ -444,7 +444,7 @@ The `ScopeLink` component is a breadcrumb for a scope level (account, organizati
         </Breadcrumb.Item>
         <Breadcrumb.Separator />
         <Breadcrumb.Item>
-          <Breadcrumb.ScopeLink scope="project" href="#" onScopeClick={() => {}}>Project</Breadcrumb.ScopeLink>
+          <Breadcrumb.ScopeLink scope="project" href="#">Project</Breadcrumb.ScopeLink>
         </Breadcrumb.Item>
         <Breadcrumb.Separator />
         <Breadcrumb.Page>Settings</Breadcrumb.Page>
@@ -490,7 +490,7 @@ All parts of the `Breadcrumb` can be imported and composed as required.
 - **Page** — the current location; non-clickable and marked as the current step.
 - **Copy** — an optional copy-path button, placed inside `Root` but outside `List`.
 - **RootInteractive** — a button-styled root with an avatar and a chevron, for header-style navigation.
-- **ScopeLink** — a scope crumb (account, organization or project): a home link plus an optional arrow button that opens the scope selector.
+- **ScopeLink** — a scope crumb (account, organization or project): an icon and a link to that scope's home.
 
 ## Best practices
 
@@ -526,7 +526,7 @@ All parts of the `Breadcrumb` can be imported and composed as required.
 - Each `Link` is a native `<a>` and a tab stop, activated with **Enter**.
 - The `Ellipsis` is a button that opens a dropdown; open it with **Enter**/**Space**, then move through the hidden items with the arrow keys.
 - `Copy` and `RootInteractive` are native `<button>`s — tab stops activated with **Enter**/**Space**.
-- `ScopeLink` text is a link (a tab stop when `href` is set) and its optional arrow is a separate `<button>` tab stop.
+- `ScopeLink` text is a link (a tab stop when `href` is set).
 - The current `Page` is not focusable, since there's nowhere to navigate.
 
 ### Labeling
@@ -545,7 +545,6 @@ All parts of the `Breadcrumb` can be imported and composed as required.
 - **The `Ellipsis` button has no accessible name.** It's an icon-only ghost button rendered with `ignoreIconOnlyTooltip` and just a "…" icon, so screen readers announce an unlabeled button. Pass an `aria-label` (e.g. "Show hidden breadcrumbs") — it forwards to the underlying button.
 - **The current page is a disabled link, not plain text.** `Page` renders `role="link"` with `aria-disabled="true"`; it's announced as a link you can't follow. That's intentional, but don't place interactive content inside it.
 - **`RootInteractive` shows a chevron but doesn't provide the menu.** It's a styled `<button>` with an avatar and an up/down chevron that implies a dropdown; wiring the actual menu (and the matching `aria-haspopup`/`aria-expanded`) is up to you. Its avatar icon is decorative, so give the button clear text.
-- **`ScopeLink` triggers the scope selector but doesn't provide it.** The arrow only calls `onScopeClick`; opening the selector (and any `aria-haspopup`/`aria-expanded` state) is up to you. Give the arrow a clear `scopeLabel`.
 
 </TabItem>
 
@@ -661,11 +660,6 @@ All parts of the `Breadcrumb` can be imported and composed as required.
       name: "ScopeLink.onHomeClick",
       description: "Called when the text link is clicked",
       value: "MouseEventHandler<HTMLElement>",
-    },
-    {
-      name: "ScopeLink.onScopeClick",
-      description: "Renders the arrow button when provided; called when it is clicked to open the scope selector",
-      value: "MouseEventHandler<HTMLButtonElement>",
     },
   ]}
 />

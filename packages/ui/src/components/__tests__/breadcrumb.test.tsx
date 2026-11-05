@@ -307,31 +307,6 @@ describe('Breadcrumb', () => {
       expect(screen.queryByRole('button')).not.toBeInTheDocument()
     })
 
-    test('only renders the scope trigger when onScopeClick is provided', () => {
-      const { rerender } = render(<Breadcrumb.ScopeLink href="/home">Project</Breadcrumb.ScopeLink>)
-      expect(screen.queryByRole('button', { name: 'Select scope' })).not.toBeInTheDocument()
-
-      const onScopeClick = vi.fn()
-      const onHomeClick = vi.fn()
-      rerender(
-        <Breadcrumb.ScopeLink href="/home" onHomeClick={onHomeClick} onScopeClick={onScopeClick}>
-          Project
-        </Breadcrumb.ScopeLink>
-      )
-      fireEvent.click(screen.getByRole('button', { name: 'Select scope' }))
-      expect(onScopeClick).toHaveBeenCalledTimes(1)
-      expect(onHomeClick).not.toHaveBeenCalled()
-    })
-
-    test('uses a custom scopeLabel', () => {
-      render(
-        <Breadcrumb.ScopeLink onScopeClick={vi.fn()} scopeLabel="Switch project">
-          Project
-        </Breadcrumb.ScopeLink>
-      )
-      expect(screen.getByRole('button', { name: 'Switch project' })).toBeInTheDocument()
-    })
-
     test('shows the given icon, or a square avatar when avatar is given', () => {
       const { container, rerender } = render(<Breadcrumb.ScopeLink icon="globe">Account</Breadcrumb.ScopeLink>)
       expect(container.querySelector('.cn-breadcrumb-scope-icon')).toBeInTheDocument()

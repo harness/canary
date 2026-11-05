@@ -155,14 +155,6 @@ export default {
     '@apply cursor-default': ''
   },
 
-  '.cn-breadcrumb-scope-trigger': {
-    '@apply inline-flex items-center bg-transparent border-0 cursor-pointer p-0': '',
-
-    '&:focus-visible': {
-      outline: 'var(--cn-focus)'
-    }
-  },
-
   '.cn-breadcrumb-scope-icon': {
     color: 'var(--cn-text-2)',
     '@apply transition-colors': '',
@@ -177,15 +169,6 @@ export default {
     '@apply transition-colors': '',
 
     '.cn-breadcrumb-scope-link:not(.cn-breadcrumb-scope-link-static):hover &': {
-      color: 'var(--cn-text-1)'
-    }
-  },
-
-  '.cn-breadcrumb-scope-chevron': {
-    color: 'var(--cn-text-2)',
-    '@apply transition-colors': '',
-
-    '.cn-breadcrumb-scope-trigger:hover &': {
       color: 'var(--cn-text-1)'
     }
   }

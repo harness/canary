@@ -31,14 +31,14 @@ A standalone, reusable stepper component for `@harnessio/ui` (canary) that visua
 
 ## Assumptions & Dependencies
 
-| Assumption                                                 | Risk if wrong                                                                                                                                                    |
-| ---------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| No current consumers of `DrawerSteps`                      | If consumers exist, we'd need migration support. Verified via codebase search — zero imports outside the component's own files.                                  |
-| `AlertDialog` API is stable                                | Our confirmation dialog delegates entirely to AlertDialog. If its API changes, our navigation guard UX breaks. Low risk — AlertDialog is mature and widely used. |
-| `IconV2` icons (`check`, `minus`, `xmark`, `loader`) exist | Build failure. Verified — all four exist in the icon set.                                                                                                        |
-| `SkeletonBase` shimmer animation works at arbitrary sizes  | Used for empty state. If it requires fixed dimensions, skeleton rows would need custom shimmer. Verified — it's flex-friendly.                                   |
-| `--cn-*` design tokens are stable across themes            | If tokens are renamed, colors break. Low risk — these are the foundational token layer, changes would be breaking across the entire system.                      |
-| No consumers need horizontal orientation                   | If a horizontal stepper is requested soon after ship, we'd need to add it. Acceptable — vertical covers all current known use cases.                             |
+| Assumption                                                 | Risk if wrong                                                                                                                                                                                                                                                                  |
+| ---------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| No current consumers of `DrawerSteps`                      | If consumers exist, we'd need migration support. Verified via codebase search — zero imports outside the component's own files.                                                                                                                                                |
+| `AlertDialog` API is stable                                | Our confirmation dialog delegates entirely to AlertDialog. If its API changes, our navigation guard UX breaks. Low risk — AlertDialog is mature and widely used.                                                                                                               |
+| `IconV2` icons (`check`, `minus`, `xmark`, `loader`) exist | Build failure. Verified — all four exist in the icon set.                                                                                                                                                                                                                      |
+| `SkeletonBase` shimmer animation works at arbitrary sizes  | Used for empty state. If it requires fixed dimensions, skeleton rows would need custom shimmer. Verified — it's flex-friendly.                                                                                                                                                 |
+| `--cn-*` design tokens are stable across themes            | If tokens are renamed, colors break. Low risk — these are the foundational token layer, changes would be breaking across the entire system.                                                                                                                                    |
+| Horizontal orientation only needs flat top-level Steps     | `orientation="horizontal"` (shipped later, see README.md) restyles only the flat top-level-Step path. If a consumer needs a horizontal `StepGroup`/nested-step flow, the vertical-only trunk/branch geometry in `stepper-group.tsx` would need a real rewrite, not a CSS pass. |
 
 ## Location
 
@@ -100,16 +100,17 @@ const [currentStep, setCurrentStep] = useState('version-control')
 
 #### `Stepper.Root`
 
-| Prop             | Type                                              | Required | Default | Description                                                                                            |
-| ---------------- | ------------------------------------------------- | -------- | ------- | ------------------------------------------------------------------------------------------------------ |
-| `value`          | `string`                                          | yes      | —       | Current active step or nested step value                                                               |
-| `onValueChange`  | `(value: string) => void`                         | yes      | —       | Callback when step changes                                                                             |
-| `title`          | `ReactNode`                                       | no       | —       | Header title (e.g., "Build pipeline setup")                                                            |
-| `onBeforeChange` | `(from: string, to: string) => boolean \| string` | no       | —       | Navigation guard. Return `true` to allow, `false` to block, string to show confirmation dialog         |
-| `showConnectors` | `boolean`                                         | no       | `true`  | Show connector lines between steps                                                                     |
-| `completed`      | `boolean`                                         | no       | `false` | Mark entire flow as completed. Active step flips to completed; skipped/error steps retain their state. |
-| `skeletonCount`  | `number`                                          | no       | `3`     | Number of skeleton step rows to show when no Step children are mounted                                 |
-| `className`      | `string`                                          | no       | —       | Additional CSS class                                                                                   |
+| Prop             | Type                                              | Required | Default      | Description                                                                                            |
+| ---------------- | ------------------------------------------------- | -------- | ------------ | ------------------------------------------------------------------------------------------------------ |
+| `value`          | `string`                                          | yes      | —            | Current active step or nested step value                                                               |
+| `onValueChange`  | `(value: string) => void`                         | yes      | —            | Callback when step changes                                                                             |
+| `title`          | `ReactNode`                                       | no       | —            | Header title (e.g., "Build pipeline setup")                                                            |
+| `onBeforeChange` | `(from: string, to: string) => boolean \| string` | no       | —            | Navigation guard. Return `true` to allow, `false` to block, string to show confirmation dialog         |
+| `showConnectors` | `boolean`                                         | no       | `true`       | Show connector lines between steps                                                                     |
+| `completed`      | `boolean`                                         | no       | `false`      | Mark entire flow as completed. Active step flips to completed; skipped/error steps retain their state. |
+| `orientation`    | `'vertical' \| 'horizontal'`                      | no       | `'vertical'` | Layout axis. `'horizontal'` is scoped to flat top-level Steps only — see README.md.                    |
+| `skeletonCount`  | `number`                                          | no       | `3`          | Number of skeleton step rows to show when no Step children are mounted                                 |
+| `className`      | `string`                                          | no       | —            | Additional CSS class                                                                                   |
 
 #### `Stepper.StepGroup`
 
@@ -739,6 +740,6 @@ Unit tests with React Testing Library. No visual regression tests — low mainte
 
 ## Out of Scope
 
-- Horizontal stepper orientation (vertical only for now)
+- Horizontal orientation for `StepGroup`/nested Steps (shipped for flat top-level Steps only — see README.md)
 - Step validation (consumer handles via `onBeforeChange`)
 - Non-linear navigation (step ordering is always linear; branching is handled by conditional rendering)

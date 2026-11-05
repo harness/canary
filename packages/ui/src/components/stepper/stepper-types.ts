@@ -2,6 +2,8 @@ import { type ReactNode } from 'react'
 
 export type StepState = 'completed' | 'active' | 'upcoming' | 'skipped' | 'error'
 
+export type StepperOrientation = 'vertical' | 'horizontal'
+
 export interface StepperProps {
   value: string
   onValueChange: (value: string) => void
@@ -9,6 +11,12 @@ export interface StepperProps {
   onBeforeChange?: (from: string, to: string) => boolean | string
   showConnectors?: boolean
   completed?: boolean
+  /**
+   * Layout axis. Default 'vertical'. 'horizontal' is scoped to a flat list of top-level Steps —
+   * StepGroup/nested Steps assume vertical trunk-and-branch geometry (see stepper-group.tsx's
+   * DOM-measured connector math) and are not supported in horizontal mode. See README.md.
+   */
+  orientation?: StepperOrientation
   /**
    * When true, completed steps stay at full opacity with no hover/focus restore.
    * Omit or false keeps the default 0.6 mute. UUI-3726.

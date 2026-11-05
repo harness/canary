@@ -274,6 +274,33 @@ Set `showConnectors={false}` to hide the vertical connector lines between steps.
 }`}
 />
 
+### Horizontal orientation
+
+Set `orientation="horizontal"` to lay top-level steps out in a row, with connectors running between the step indicators. Use it for short, flat flows that sit above the content they control, such as a full-width form.
+
+<DocsPage.ComponentExample
+  client:only
+  code={`() => {
+    const [step, setStep] = React.useState("auth");
+
+    return (
+        <Stepper.Root value={step} onValueChange={setStep} title="New Connection" orientation="horizontal">
+            <Stepper.Step value="details" title="Configuration" description="Name and scope" />
+            <Stepper.Step value="auth" title="Authentication" description="Credentials" />
+            <Stepper.Step value="actions" title="Actions" description="Enable actions" />
+        </Stepper.Root>
+    );
+
+}`}
+/>
+
+<Aside type="caution">
+  Horizontal orientation supports flat lists of top-level `Stepper.Step` only.
+  `Stepper.StepGroup` and nested steps are not supported, and `Stepper.Step`
+  children are ignored. Render the active step's content in your own layout
+  instead.
+</Aside>
+
 ### Skeleton loading
 
 When no children are passed, the stepper renders a skeleton placeholder. Control the number of skeleton items with `skeletonCount`.
@@ -333,12 +360,13 @@ All parts of the `Stepper` component can be imported and composed as required. A
 - **Navigation guards.** Use `onBeforeChange` to warn about data loss, not to enforce linear progression.
 - **Nested step cleanup.** When nested steps unmount (e.g., the provider changes), the stepper automatically falls back to the parent step-group value.
 - **Skeleton state.** Pass no children to show a skeleton — useful while step configuration loads asynchronously.
+- **Orientation.** Keep horizontal steppers short and flat (roughly 2–6 steps); use the default vertical orientation for nested or long flows.
 
 ## Accessibility
 
 ### Keyboard
 
-- The step list supports roving-tabindex navigation: `ArrowDown`/`ArrowUp` move to the next/previous focusable step, `Home` jumps to the first, and `End` to the last. Focus clamps at the ends (no wrap-around).
+- The step list supports roving-tabindex navigation: `ArrowDown`/`ArrowUp` move to the next/previous focusable step, `Home` jumps to the first, and `End` to the last. Focus clamps at the ends (no wrap-around). In horizontal orientation, `ArrowRight`/`ArrowLeft` replace `ArrowDown`/`ArrowUp`.
 - Only the active step is in the tab order (`tabIndex=0`); the others are reachable via the arrow keys. Collapsible step-content triggers activate with `Enter`/`Space`.
 
 ### Labeling
@@ -403,10 +431,18 @@ The root container that manages stepper state, provides context to children, and
     },
     {
       name: "showConnectors",
-      description: "Show vertical connector lines between steps.",
+      description: "Show connector lines between steps.",
       required: false,
       value: "boolean",
       defaultValue: "true",
+    },
+    {
+      name: "orientation",
+      description:
+        "Layout direction. Horizontal lays top-level steps out in a row and supports flat Stepper.Step lists only; StepGroup and Step children are not supported.",
+      required: false,
+      value: "'vertical' | 'horizontal'",
+      defaultValue: "'vertical'",
     },
     {
       name: "collapsibleNestedSteps",

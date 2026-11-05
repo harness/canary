@@ -1,6 +1,6 @@
 import { createContext, ReactNode, useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react'
 
-import { StepState } from './stepper-types'
+import { StepperOrientation, StepState } from './stepper-types'
 
 interface StepMeta {
   disabled?: boolean
@@ -20,6 +20,7 @@ interface StepperContextValue {
   onBeforeChange?: (from: string, to: string) => boolean | string
   showConnectors: boolean
   completed: boolean
+  orientation: StepperOrientation
   collapsibleNestedSteps: boolean
   orderedSteps: string[]
   nestedSteps: Map<string, string[]>
@@ -70,6 +71,7 @@ interface StepperProviderProps {
   onBeforeChange?: (from: string, to: string) => boolean | string
   showConnectors: boolean
   completed: boolean
+  orientation: StepperOrientation
   collapsibleNestedSteps: boolean
   children: ReactNode
 }
@@ -80,6 +82,7 @@ export function StepperProvider({
   onBeforeChange,
   showConnectors,
   completed,
+  orientation,
   collapsibleNestedSteps,
   children
 }: StepperProviderProps) {
@@ -393,6 +396,7 @@ export function StepperProvider({
       onBeforeChange,
       showConnectors,
       completed,
+      orientation,
       collapsibleNestedSteps,
       orderedSteps,
       nestedSteps,
@@ -418,6 +422,7 @@ export function StepperProvider({
       onBeforeChange,
       showConnectors,
       completed,
+      orientation,
       collapsibleNestedSteps,
       orderedSteps,
       nestedSteps,

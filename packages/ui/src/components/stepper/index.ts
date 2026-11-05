@@ -9,4 +9,4 @@ export const Stepper = {
 }
 
 export { ParentStepProvider } from './stepper-context'
-export type { StepperGroupProps, StepperProps, StepperStepProps, StepState } from './stepper-types'
+export type { StepperGroupProps, StepperProps, StepperStepProps, StepState, StepperOrientation } from './stepper-types'

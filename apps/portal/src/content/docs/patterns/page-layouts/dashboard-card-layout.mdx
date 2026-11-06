@@ -1,0 +1,47 @@
+---
+title: Dashboard Card Layout
+description: A grid of cards for dashboard displays.
+---
+
+import { DocsPage } from "@/components/docs-page";
+import { Text } from "@harnessio/ui/components";
+
+A grid of cards for dashboard displays.
+
+<DocsPage.ComponentExample
+  client:only
+  code={`<Layout.Grid columns="1fr 1fr 1fr" rows="auto" gap="md" className="p-cn-md border rounded-cn-3">
+  <div className="bg-cn-2 p-cn-md rounded-cn-3 shadow-sm">
+    <Text variant="heading-base" className="mb-cn-xs">Total Users</Text>
+    <Text variant="heading-section">1,234</Text>
+    <Text variant="caption-normal" color="success" className="mt-cn-xs">+12% from last month</Text>
+  </div>
+  
+  <div className="bg-cn-2 p-cn-md rounded-cn-3 shadow-sm">
+    <Text variant="heading-base" className="mb-cn-xs">Revenue</Text>
+    <Text variant="heading-section">$48,234</Text>
+    <Text variant="caption-normal" color="success" className="mt-cn-xs">+5% from last month</Text>
+  </div>
+  
+  <div className="bg-cn-2 p-cn-md rounded-cn-3 shadow-sm">
+    <Text variant="heading-base" className="mb-cn-xs">Active Deployments</Text>
+    <Text variant="heading-section">26</Text>
+    <Text variant="caption-normal" color="danger" className="mt-cn-xs">-3 from last month</Text>
+  </div>
+  
+  <div className="bg-cn-2 p-cn-md rounded-cn-3 shadow-sm col-span-2">
+    <Text variant="heading-base" className="mb-cn-xs">Monthly Activity</Text>
+    <div className="h-32 bg-cn-3 rounded-cn-3 flex items-center justify-center">
+      <Text variant="body-normal" color="foreground-2">[Chart]</Text>
+    </div>
+  </div>
+  
+  <div className="bg-cn-2 p-cn-md rounded-cn-3 shadow-sm">
+    <Text variant="heading-base" className="mb-cn-xs">Recent Updates</Text>
+    <Layout.Vertical gap="sm">
+      <Text variant="caption-normal" className="p-cn-xs bg-cn-3 rounded-cn-3">System update completed</Text>
+      <Text variant="caption-normal" className="p-cn-xs bg-cn-3 rounded-cn-3">New feature deployed</Text>
+    </Layout.Vertical>
+  </div>
+</Layout.Grid>`}
+/>

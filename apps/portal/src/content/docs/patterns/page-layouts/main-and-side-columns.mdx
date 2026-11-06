@@ -1,0 +1,339 @@
+---
+title: Main and Side Columns
+description: A wide main column next to a narrower side column for secondary details, such as a repository summary or a pull request conversation.
+tableOfContents: false
+---
+
+import { DocsPage } from "@/components/docs-page";
+import { Text } from "@harnessio/ui/components";
+import { Tabs, TabItem } from "@astrojs/starlight/components";
+import PageTabsToc from "@/components/page-tabs-toc.astro";
+
+<PageTabsToc />
+
+<div id="page-level-tabs">
+
+<Tabs>
+
+<TabItem label="Overview">
+
+A wide main column next to a narrower side column for secondary details. The main column carries the primary task and the side column carries metadata that supports it. In product code this is `SandboxLayout.Columns` with two `SandboxLayout.Column` children.
+
+## Example: repository summary
+
+A repository summary page inside the full application shell. The main column holds the file list and README; the 272px side column holds the summary, counts and languages.
+
+The app sidebar and the collapsed AI chat rail are boilerplate, rebuilt from the production shell and shown disabled for context only.
+
+:::note
+These demos are drawn on a 1440 × 900 screen and scaled down to fit the page, so they appear smaller than 100%. Sizes, spacing and text in the demos are reduced by the same percentage; the real values are listed in the Usage tab.
+:::
+
+<DocsPage.ComponentExample
+  client:only
+  padding={false}
+  code={`<div style={{ containerType: 'inline-size', width: '100%', aspectRatio: '1440 / 900', overflow: 'hidden', position: 'relative' }}>
+<div style={{ width: '1440px', height: '900px', transformOrigin: 'top left', transform: 'scale(tan(atan2(100cqw, 1440px)))' }}>
+<Sidebar.Provider style={{ '--cn-sidebar-min-height': '898px' }} className="!w-[1440px] !min-h-0 h-[900px] overflow-hidden border rounded-cn-3 bg-cn-1">
+  <div className="pointer-events-none select-none flex h-full shrink-0" aria-hidden="true">
+    <Sidebar.Root>
+      <Sidebar.Header className="pt-cn-xl pb-cn-md">
+        <div className="flex items-center justify-between gap-cn-xs px-cn-xs">
+          <div className="flex items-center gap-cn-xs min-w-0">
+            <IconV2 name="harness-plugins" size="md" className="text-[--cn-comp-sidebar-logo-icon]" />
+            <Text variant="body-single-line-strong" truncate>Harness / canary</Text>
+          </div>
+          <IconV2 name="nav-arrow-down" size="2xs" />
+        </div>
+      </Sidebar.Header>
+      <Sidebar.Content>
+        <Sidebar.Group>
+          <Sidebar.Item icon="dashboard" title="Home" />
+          <Sidebar.Item icon="menu-more-horizontal" title="More" />
+        </Sidebar.Group>
+        <Sidebar.Separator />
+        <Sidebar.Group label="Recent">
+          <Sidebar.Item icon="repository" title="Repositories" active />
+          <Sidebar.Item icon="pipeline" title="Pipelines" />
+          <Sidebar.Item icon="folder" title="Projects" />
+        </Sidebar.Group>
+      </Sidebar.Content>
+      <Sidebar.Footer>
+        <Sidebar.Item icon="bell" title="Alerts" />
+        <Sidebar.Item icon="help-circle" title="Help" />
+        <Sidebar.Item avatarFallback="JD" title="John Doe" />
+      </Sidebar.Footer>
+    </Sidebar.Root>
+  </div>
+
+  <Sidebar.Inset className="border-l border-cn-3 min-w-0">
+  <div className="flex h-full w-full min-w-0">
+  <div className="pointer-events-none select-none relative w-[20px] shrink-0 border-x border-cn-3 bg-cn-app-shell" aria-hidden="true" title="AI chat (collapsed)">
+    <Text className="absolute left-full top-1/2 -translate-x-1/2 -translate-y-1/2 text-cn-sidebar-toggle z-10">|</Text>
+  </div>
+  <div className="flex-1 min-w-0 overflow-auto px-cn-xl pt-cn-md pb-cn-xl">
+    <Tabs.Root defaultValue="summary">
+      <Page.HeaderV2
+        contentTabs
+        breadcrumbs={<Breadcrumb.Root><Breadcrumb.List><Breadcrumb.Item><Breadcrumb.Link href="#">Repositories</Breadcrumb.Link></Breadcrumb.Item><Breadcrumb.Separator /><Breadcrumb.Item><Breadcrumb.Page>canary</Breadcrumb.Page></Breadcrumb.Item></Breadcrumb.List></Breadcrumb.Root>}
+        title="canary"
+        description="Shared component libraries for the Harness Unified UI."
+        tabs={[
+          { label: 'Summary', value: 'summary' },
+          { label: 'Files', value: 'files' },
+          { label: 'Commits', value: 'commits' },
+          { label: 'Pull requests', value: 'pulls', counter: 14 },
+          { label: 'Settings', value: 'settings' }
+        ]}
+      />
+    </Tabs.Root>
+    <SandboxLayout.Columns columnWidths="1fr 272px" className="mt-cn-xl gap-cn-xl">
+      <SandboxLayout.Column className="w-full min-w-0">
+        <div className="flex items-center justify-between gap-cn-md pb-cn-md">
+          <div className="flex items-center gap-cn-xs">
+            <Button variant="outline"><IconV2 name="git-branch" />main</Button>
+            <div className="w-[240px]"><SearchInput placeholder="Search files" /></div>
+          </div>
+          <div className="flex items-center gap-cn-xs">
+            <Button variant="outline"><IconV2 name="plus" />Create file</Button>
+            <Button>Clone</Button>
+          </div>
+        </div>
+        <Table.Root>
+          <Table.Header>
+            <Table.Row>
+              <Table.Head>Name</Table.Head>
+              <Table.Head>Last commit</Table.Head>
+              <Table.Head>Updated</Table.Head>
+            </Table.Row>
+          </Table.Header>
+          <Table.Body>
+        <Table.Row>
+          <Table.Cell><div className="flex items-center gap-cn-xs"><IconV2 name="folder" size="sm" />apps</div></Table.Cell>
+          <Table.Cell>feat: add portal playgrounds</Table.Cell>
+          <Table.Cell>2 hours ago</Table.Cell>
+        </Table.Row>
+        <Table.Row>
+          <Table.Cell><div className="flex items-center gap-cn-xs"><IconV2 name="folder" size="sm" />packages</div></Table.Cell>
+          <Table.Cell>fix: breadcrumb overflow</Table.Cell>
+          <Table.Cell>Yesterday</Table.Cell>
+        </Table.Row>
+        <Table.Row>
+          <Table.Cell><div className="flex items-center gap-cn-xs"><IconV2 name="page" size="sm" />package.json</div></Table.Cell>
+          <Table.Cell>chore: bump dependencies</Table.Cell>
+          <Table.Cell>3 days ago</Table.Cell>
+        </Table.Row>
+        <Table.Row>
+          <Table.Cell><div className="flex items-center gap-cn-xs"><IconV2 name="page" size="sm" />README.md</div></Table.Cell>
+          <Table.Cell>docs: update contributing guide</Table.Cell>
+          <Table.Cell>Last week</Table.Cell>
+        </Table.Row>
+          </Table.Body>
+        </Table.Root>
+        <div className="mt-cn-lg rounded-cn-3 border">
+          <div className="border-b px-cn-md py-cn-sm"><Text variant="caption-single-line-normal" color="foreground-1">README</Text></div>
+          <div className="p-cn-md flex flex-col gap-cn-sm">
+            <Text variant="heading-section">Canary</Text>
+            <Text variant="body-normal" color="foreground-2">Shared component libraries and packages for the Harness Unified UI. Install dependencies with pnpm, then run the portal to browse the design system.</Text>
+          </div>
+        </div>
+      </SandboxLayout.Column>
+      <SandboxLayout.Column>
+        <div className="flex flex-col gap-cn-lg">
+          <div className="flex flex-col gap-cn-2xs">
+            <Text variant="heading-base" as="h5">Summary</Text>
+            <Text color="foreground-3">Created 8 months ago</Text>
+          </div>
+          <Separator />
+          <Text variant="body-normal" color="foreground-1">Component libraries and design tokens shared across Harness products.</Text>
+          <div className="flex flex-wrap gap-cn-3xs">
+            <Tag label="team" value="design-system" variant="outline" size="sm" theme="gray" />
+            <Tag label="tier" value="1" variant="outline" size="sm" theme="gray" />
+          </div>
+          <Separator />
+          <div className="flex flex-col gap-cn-sm">
+            <div className="flex items-center gap-cn-2xs"><IconV2 name="git-commit" size="xs" /><Text color="foreground-1">Commits</Text><CounterBadge>1,284</CounterBadge></div>
+            <div className="flex items-center gap-cn-2xs"><IconV2 name="git-branch" size="xs" /><Text color="foreground-1">Branches</Text><CounterBadge>23</CounterBadge></div>
+            <div className="flex items-center gap-cn-2xs"><IconV2 name="tag" size="xs" /><Text color="foreground-1">Tags</Text><CounterBadge>41</CounterBadge></div>
+            <div className="flex items-center gap-cn-2xs"><IconV2 name="git-pull-request" size="xs" /><Text color="foreground-1">Open pull requests</Text><CounterBadge>14</CounterBadge></div>
+          </div>
+          <Separator />
+          <div className="flex flex-col gap-cn-sm">
+            <Text variant="heading-base" as="h5">Languages</Text>
+            <div className="flex h-2 overflow-hidden rounded-cn-full gap-cn-3xs">
+              <div className="bg-cn-brand-primary" style={{ width: '78%' }} />
+              <div className="bg-cn-warning-primary" style={{ width: '14%' }} />
+              <div className="bg-cn-success-primary" style={{ width: '8%' }} />
+            </div>
+            <div className="flex flex-wrap gap-cn-md">
+              <Text variant="caption-single-line-normal" color="foreground-2">TypeScript 78.0%</Text>
+              <Text variant="caption-single-line-normal" color="foreground-2">CSS 14.0%</Text>
+              <Text variant="caption-single-line-normal" color="foreground-2">MDX 8.0%</Text>
+            </div>
+          </div>
+        </div>
+      </SandboxLayout.Column>
+    </SandboxLayout.Columns>
+  </div>
+
+  </div>
+  </Sidebar.Inset>
+</Sidebar.Provider>
+</div></div>`}
+/>
+
+## Example: pull request conversation
+
+A pull request conversation. The main column holds the merge status, the discussion and the comment box; the wider 334px side column holds reviewers, labels and assignees.
+
+<DocsPage.ComponentExample
+  client:only
+  padding={false}
+  code={`<div style={{ containerType: 'inline-size', width: '100%', aspectRatio: '1440 / 900', overflow: 'hidden', position: 'relative' }}>
+<div style={{ width: '1440px', height: '900px', transformOrigin: 'top left', transform: 'scale(tan(atan2(100cqw, 1440px)))' }}>
+<Sidebar.Provider style={{ '--cn-sidebar-min-height': '898px' }} className="!w-[1440px] !min-h-0 h-[900px] overflow-hidden border rounded-cn-3 bg-cn-1">
+  <div className="pointer-events-none select-none flex h-full shrink-0" aria-hidden="true">
+    <Sidebar.Root>
+      <Sidebar.Header className="pt-cn-xl pb-cn-md">
+        <div className="flex items-center justify-between gap-cn-xs px-cn-xs">
+          <div className="flex items-center gap-cn-xs min-w-0">
+            <IconV2 name="harness-plugins" size="md" className="text-[--cn-comp-sidebar-logo-icon]" />
+            <Text variant="body-single-line-strong" truncate>Harness / canary</Text>
+          </div>
+          <IconV2 name="nav-arrow-down" size="2xs" />
+        </div>
+      </Sidebar.Header>
+      <Sidebar.Content>
+        <Sidebar.Group>
+          <Sidebar.Item icon="dashboard" title="Home" />
+          <Sidebar.Item icon="menu-more-horizontal" title="More" />
+        </Sidebar.Group>
+        <Sidebar.Separator />
+        <Sidebar.Group label="Recent">
+          <Sidebar.Item icon="repository" title="Repositories" active />
+          <Sidebar.Item icon="pipeline" title="Pipelines" />
+          <Sidebar.Item icon="folder" title="Projects" />
+        </Sidebar.Group>
+      </Sidebar.Content>
+      <Sidebar.Footer>
+        <Sidebar.Item icon="bell" title="Alerts" />
+        <Sidebar.Item icon="help-circle" title="Help" />
+        <Sidebar.Item avatarFallback="JD" title="John Doe" />
+      </Sidebar.Footer>
+    </Sidebar.Root>
+  </div>
+
+  <Sidebar.Inset className="border-l border-cn-3 min-w-0">
+  <div className="flex h-full w-full min-w-0">
+  <div className="pointer-events-none select-none relative w-[20px] shrink-0 border-x border-cn-3 bg-cn-app-shell" aria-hidden="true" title="AI chat (collapsed)">
+    <Text className="absolute left-full top-1/2 -translate-x-1/2 -translate-y-1/2 text-cn-sidebar-toggle z-10">|</Text>
+  </div>
+  <div className="flex-1 min-w-0 overflow-auto px-cn-xl pt-cn-md pb-cn-xl">
+    <Tabs.Root defaultValue="conversation">
+      <Page.HeaderV2
+        contentTabs
+        breadcrumbs={<Breadcrumb.Root><Breadcrumb.List><Breadcrumb.Item><Breadcrumb.Link href="#">Repositories</Breadcrumb.Link></Breadcrumb.Item><Breadcrumb.Separator /><Breadcrumb.Item><Breadcrumb.Link href="#">canary</Breadcrumb.Link></Breadcrumb.Item><Breadcrumb.Separator /><Breadcrumb.Item><Breadcrumb.Page>Pull requests</Breadcrumb.Page></Breadcrumb.Item></Breadcrumb.List></Breadcrumb.Root>}
+        title="feat: add token docs #482"
+        description="Opened 2 days ago by Jane Doe · feature/token-docs into main"
+        tabs={[
+          { label: 'Conversation', value: 'conversation', counter: 6 },
+          { label: 'Changes', value: 'changes', counter: 12 },
+          { label: 'Commits', value: 'commits', counter: 3 },
+          { label: 'Checks', value: 'checks' }
+        ]}
+      />
+    </Tabs.Root>
+    <SandboxLayout.Columns columnWidths="minmax(calc(100% - 334px), 1fr) 334px" className="mt-cn-xl">
+      <SandboxLayout.Column>
+        <div className="flex flex-col gap-cn-lg pr-cn-xl">
+          <div className="flex items-center justify-between gap-cn-md rounded-cn-3 border p-cn-md">
+            <div className="flex items-center gap-cn-sm">
+              <StatusBadge variant="outline" theme="success" size="sm">Open</StatusBadge>
+              <Text color="foreground-1">All checks passed. This branch has no conflicts with main.</Text>
+            </div>
+            <Button>Merge pull request</Button>
+          </div>
+          <div className="rounded-cn-3 border">
+            <div className="flex items-center gap-cn-xs border-b bg-cn-2 px-cn-md py-cn-sm">
+              <Avatar name="Jane Doe" size="sm" rounded />
+              <Text variant="body-single-line-strong">Jane Doe</Text>
+              <Text color="foreground-3">2 days ago</Text>
+            </div>
+            <div className="p-cn-md"><Text variant="body-normal" color="foreground-1">Adds the token documentation pages and links them from the foundations section.</Text></div>
+          </div>
+          <div className="rounded-cn-3 border">
+            <div className="flex items-center gap-cn-xs border-b bg-cn-2 px-cn-md py-cn-sm">
+              <Avatar name="Sam Lee" size="sm" rounded />
+              <Text variant="body-single-line-strong">Sam Lee</Text>
+              <Text color="foreground-3">Yesterday</Text>
+            </div>
+            <div className="p-cn-md"><Text variant="body-normal" color="foreground-1">Looks good. Could we add a short note on dark mode values before merging?</Text></div>
+          </div>
+          <div className="rounded-cn-3 border p-cn-md flex flex-col gap-cn-sm">
+            <Text variant="body-single-line-strong">Add a comment</Text>
+            <div className="h-[72px] rounded-cn-3 border bg-cn-1 px-cn-sm py-cn-xs"><Text color="foreground-3">Write a comment…</Text></div>
+            <div className="flex justify-end"><Button>Comment</Button></div>
+          </div>
+        </div>
+      </SandboxLayout.Column>
+      <SandboxLayout.Column>
+        <div className="flex flex-col gap-cn-lg">
+          <div className="flex flex-col gap-cn-sm">
+            <Text variant="heading-base" as="h5">Reviewers</Text>
+            <div className="flex items-center justify-between gap-cn-xs">
+              <div className="flex items-center gap-cn-xs"><Avatar name="Sam Lee" size="sm" rounded /><Text color="foreground-1">Sam Lee</Text></div>
+              <StatusBadge variant="outline" theme="success" size="sm">Approved</StatusBadge>
+            </div>
+            <div className="flex items-center justify-between gap-cn-xs">
+              <div className="flex items-center gap-cn-xs"><Avatar name="Priya Patel" size="sm" rounded /><Text color="foreground-1">Priya Patel</Text></div>
+              <StatusBadge variant="outline" theme="warning" size="sm">Pending</StatusBadge>
+            </div>
+          </div>
+          <Separator />
+          <div className="flex flex-col gap-cn-sm">
+            <Text variant="heading-base" as="h5">Labels</Text>
+            <div className="flex flex-wrap gap-cn-3xs">
+              <Tag label="docs" variant="outline" size="sm" theme="blue" />
+              <Tag label="design-system" variant="outline" size="sm" theme="gray" />
+            </div>
+          </div>
+          <Separator />
+          <div className="flex flex-col gap-cn-sm">
+            <Text variant="heading-base" as="h5">Assignees</Text>
+            <div className="flex items-center gap-cn-xs"><Avatar name="Jane Doe" size="sm" rounded /><Text color="foreground-1">Jane Doe</Text></div>
+          </div>
+        </div>
+      </SandboxLayout.Column>
+    </SandboxLayout.Columns>
+  </div>
+
+  </div>
+  </Sidebar.Inset>
+</Sidebar.Provider>
+</div></div>`}
+/>
+
+</TabItem>
+
+<TabItem label="Usage">
+
+## Anatomy
+
+1. **Page header.** Breadcrumb, title, description and underlined tabs, shared with the other page layouts.
+2. **Main column.** Takes the remaining width (`1fr`) and holds the primary content: files, a conversation or a form. Give it `min-w-0` so long content can shrink instead of overflowing.
+3. **Side column.** A fixed width, 272px for a summary and 334px for a richer panel with reviewers and labels. It holds metadata and quick actions, never the primary task.
+4. **Gap.** Leave a gap of 24px (`xl`) between the columns, or pad the main column on its right.
+
+## Guidelines
+
+- Use `columnWidths="1fr 272px"` or `columnWidths="minmax(calc(100% - 334px), 1fr) 334px"` so only the main column flexes.
+- Keep the side column short. If it is longer than the main column, move some of it into the main column or into a tab.
+- Order the side column by importance, and separate groups with a divider.
+- Below the tablet breakpoint, stack the side column under the main column.
+- For a layout whose columns resize, use [resizable split](/patterns/page-layouts/resizable-split/).
+
+</TabItem>
+
+</Tabs>
+
+</div>

@@ -1,0 +1,34 @@
+---
+title: Header, Content, Footer Layout
+description: A traditional page layout with header, content, and footer sections.
+---
+
+import { DocsPage } from "@/components/docs-page";
+import { Text } from "@harnessio/ui/components";
+
+A traditional page layout with header, content, and footer sections.
+
+<DocsPage.ComponentExample
+  client:only
+  code={`<Layout.Vertical gap="md" className="border rounded-cn-3">
+  <div className="bg-cn-primary-1 text-cn-on-primary-1 p-cn-md">
+    <Text variant="heading-base" className="font-medium">Header</Text>
+  </div>
+  <div className="px-cn-md">
+    <Text variant="heading-base" className="mb-cn-sm">Main Content</Text>
+    <Text variant="body-normal">This is the main content area of the page.</Text>
+    <Spacer size={16} />
+    <Layout.Grid columns="1fr 1fr" gap="md">
+      <div className="bg-cn-2 p-cn-md rounded-cn-3">
+        <Text variant="body-normal">Section 1</Text>
+      </div>
+      <div className="bg-cn-2 p-cn-md rounded-cn-3">
+        <Text variant="body-normal">Section 2</Text>
+      </div>
+    </Layout.Grid>
+  </div>
+  <div className="bg-cn-2 p-cn-md mt-auto">
+    <Text variant="caption-normal" className="text-center">Footer content</Text>
+  </div>
+</Layout.Vertical>`}
+/>

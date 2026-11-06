@@ -1,0 +1,191 @@
+---
+title: Sidebar Layout
+description: The application shell, a navigation sidebar on the left of the page content, and the page content beside it. Every other page layout sits inside it.
+tableOfContents: false
+draft: true
+---
+
+import { DocsPage } from "@/components/docs-page";
+import { Text } from "@harnessio/ui/components";
+import { Tabs, TabItem } from "@astrojs/starlight/components";
+import PageTabsToc from "@/components/page-tabs-toc.astro";
+
+<PageTabsToc />
+
+<div id="page-level-tabs">
+
+<Tabs>
+
+<TabItem label="Overview">
+
+The application shell: a navigation sidebar on the left and the page content on the right. Every other page layout in this section sits inside the content area. In product code the sidebar is `Sidebar.Provider` with `Sidebar.Root`, and the page content goes in `Sidebar.Inset`.
+
+## Example: expanded sidebar
+
+The default state. The sidebar shows labels, groups and the account footer.
+
+:::note
+These demos are drawn on a 1440 × 900 screen and scaled down to fit the page, so they appear smaller than 100%. Sizes, spacing and text in the demos are reduced by the same percentage; the real values are listed in the Usage tab.
+:::
+
+<DocsPage.ComponentExample
+  client:only
+  padding={false}
+  code={`<div style={{ containerType: 'inline-size', width: '100%', aspectRatio: '1440 / 900', overflow: 'hidden', position: 'relative' }}>
+<div style={{ width: '1440px', height: '900px', transformOrigin: 'top left', transform: 'scale(tan(atan2(100cqw, 1440px)))' }}>
+<Sidebar.Provider style={{ '--cn-sidebar-min-height': '898px' }} className="!w-[1440px] !min-h-0 h-[900px] overflow-hidden border rounded-cn-3 bg-cn-1">
+  <div className="flex h-full shrink-0">
+    <Sidebar.Root>
+      <Sidebar.Header className="pt-cn-xl pb-cn-md">
+        <div className="flex items-center justify-between gap-cn-xs px-cn-xs">
+          <div className="flex items-center gap-cn-xs min-w-0">
+            <IconV2 name="harness-plugins" size="md" className="text-[--cn-comp-sidebar-logo-icon]" />
+            <Text variant="body-single-line-strong" truncate>Harness / canary</Text>
+          </div>
+          <IconV2 name="nav-arrow-down" size="2xs" />
+        </div>
+      </Sidebar.Header>
+      <Sidebar.Content>
+        <Sidebar.Group>
+          <Sidebar.Item icon="dashboard" title="Home" />
+          <Sidebar.Item icon="menu-more-horizontal" title="More" />
+        </Sidebar.Group>
+        <Sidebar.Separator />
+        <Sidebar.Group label="Recent">
+          <Sidebar.Item icon="repository" title="Repositories" />
+          <Sidebar.Item icon="pipeline" title="Pipelines" active />
+          <Sidebar.Item icon="folder" title="Projects" />
+        </Sidebar.Group>
+      </Sidebar.Content>
+      <Sidebar.Footer>
+        <Sidebar.Item icon="bell" title="Alerts" />
+        <Sidebar.Item icon="help-circle" title="Help" />
+        <Sidebar.Item avatarFallback="JD" title="John Doe" />
+      </Sidebar.Footer>
+    </Sidebar.Root>
+  </div>
+
+  <Sidebar.Inset className="border-l border-cn-3 min-w-0">
+  <div className="flex h-full w-full min-w-0">
+  <div className="flex-1 min-w-0 overflow-auto px-cn-xl pt-cn-md pb-cn-xl">
+    <Page.HeaderV2
+      breadcrumbs={<Breadcrumb.Root><Breadcrumb.List><Breadcrumb.Item><Breadcrumb.Link href="#">canary</Breadcrumb.Link></Breadcrumb.Item><Breadcrumb.Separator /><Breadcrumb.Item><Breadcrumb.Page>Pipelines</Breadcrumb.Page></Breadcrumb.Item></Breadcrumb.List></Breadcrumb.Root>}
+      title="Pipelines"
+      description="Build, test and deploy this repository."
+      actions={<Button>Create pipeline</Button>}
+    />
+    <div className="flex items-center justify-between gap-cn-md pb-cn-md">
+      <div className="w-[320px]"><SearchInput placeholder="Search pipelines" /></div>
+      <Text variant="body-normal" color="foreground-3">12 pipelines</Text>
+    </div>
+    <Table.Root disableHighlightOnHover>
+      <Table.Header>
+        <Table.Row><Table.Head>Name</Table.Head><Table.Head>Branch</Table.Head><Table.Head>Status</Table.Head><Table.Head>Last run</Table.Head></Table.Row>
+      </Table.Header>
+      <Table.Body>
+        <Table.Row><Table.Cell>build-and-test</Table.Cell><Table.Cell>main</Table.Cell><Table.Cell><StatusBadge variant="status" theme="success">Passed</StatusBadge></Table.Cell><Table.Cell>10 minutes ago</Table.Cell></Table.Row>
+        <Table.Row><Table.Cell>deploy-staging</Table.Cell><Table.Cell>main</Table.Cell><Table.Cell><StatusBadge variant="status" theme="danger">Failed</StatusBadge></Table.Cell><Table.Cell>1 hour ago</Table.Cell></Table.Row>
+        <Table.Row><Table.Cell>nightly-security-scan</Table.Cell><Table.Cell>main</Table.Cell><Table.Cell><StatusBadge variant="status" theme="success">Passed</StatusBadge></Table.Cell><Table.Cell>Yesterday</Table.Cell></Table.Row>
+      </Table.Body>
+    </Table.Root>
+  </div>
+  </div>
+  </Sidebar.Inset>
+</Sidebar.Provider>
+</div></div>`}
+/>
+
+## Example: collapsed sidebar
+
+People can collapse the sidebar to icons only to give the content more room. The content area grows to fill the space.
+
+<DocsPage.ComponentExample
+  client:only
+  padding={false}
+  code={`<div style={{ containerType: 'inline-size', width: '100%', aspectRatio: '1440 / 900', overflow: 'hidden', position: 'relative' }}>
+<div style={{ width: '1440px', height: '900px', transformOrigin: 'top left', transform: 'scale(tan(atan2(100cqw, 1440px)))' }}>
+<Sidebar.Provider defaultOpen={false} style={{ '--cn-sidebar-min-height': '898px' }} className="!w-[1440px] !min-h-0 h-[900px] overflow-hidden border rounded-cn-3 bg-cn-1">
+  <div className="flex h-full shrink-0">
+    <Sidebar.Root>
+      <Sidebar.Header className="pt-cn-xl pb-cn-md">
+        <div className="flex items-center justify-between gap-cn-xs px-cn-xs">
+          <div className="flex items-center gap-cn-xs min-w-0">
+            <IconV2 name="harness-plugins" size="md" className="text-[--cn-comp-sidebar-logo-icon]" />
+            <Text variant="body-single-line-strong" truncate>Harness / canary</Text>
+          </div>
+          <IconV2 name="nav-arrow-down" size="2xs" />
+        </div>
+      </Sidebar.Header>
+      <Sidebar.Content>
+        <Sidebar.Group>
+          <Sidebar.Item icon="dashboard" title="Home" />
+          <Sidebar.Item icon="menu-more-horizontal" title="More" />
+        </Sidebar.Group>
+        <Sidebar.Separator />
+        <Sidebar.Group label="Recent">
+          <Sidebar.Item icon="repository" title="Repositories" />
+          <Sidebar.Item icon="pipeline" title="Pipelines" active />
+          <Sidebar.Item icon="folder" title="Projects" />
+        </Sidebar.Group>
+      </Sidebar.Content>
+      <Sidebar.Footer>
+        <Sidebar.Item icon="bell" title="Alerts" />
+        <Sidebar.Item icon="help-circle" title="Help" />
+        <Sidebar.Item avatarFallback="JD" title="John Doe" />
+      </Sidebar.Footer>
+    </Sidebar.Root>
+  </div>
+
+  <Sidebar.Inset className="border-l border-cn-3 min-w-0">
+  <div className="flex h-full w-full min-w-0">
+  <div className="flex-1 min-w-0 overflow-auto px-cn-xl pt-cn-md pb-cn-xl">
+    <Page.HeaderV2
+      breadcrumbs={<Breadcrumb.Root><Breadcrumb.List><Breadcrumb.Item><Breadcrumb.Link href="#">canary</Breadcrumb.Link></Breadcrumb.Item><Breadcrumb.Separator /><Breadcrumb.Item><Breadcrumb.Page>Pipelines</Breadcrumb.Page></Breadcrumb.Item></Breadcrumb.List></Breadcrumb.Root>}
+      title="Pipelines"
+      description="Build, test and deploy this repository."
+      actions={<Button>Create pipeline</Button>}
+    />
+    <div className="flex items-center justify-between gap-cn-md pb-cn-md">
+      <div className="w-[320px]"><SearchInput placeholder="Search pipelines" /></div>
+      <Text variant="body-normal" color="foreground-3">12 pipelines</Text>
+    </div>
+    <Table.Root disableHighlightOnHover>
+      <Table.Header>
+        <Table.Row><Table.Head>Name</Table.Head><Table.Head>Branch</Table.Head><Table.Head>Status</Table.Head><Table.Head>Last run</Table.Head></Table.Row>
+      </Table.Header>
+      <Table.Body>
+        <Table.Row><Table.Cell>build-and-test</Table.Cell><Table.Cell>main</Table.Cell><Table.Cell><StatusBadge variant="status" theme="success">Passed</StatusBadge></Table.Cell><Table.Cell>10 minutes ago</Table.Cell></Table.Row>
+        <Table.Row><Table.Cell>deploy-staging</Table.Cell><Table.Cell>main</Table.Cell><Table.Cell><StatusBadge variant="status" theme="danger">Failed</StatusBadge></Table.Cell><Table.Cell>1 hour ago</Table.Cell></Table.Row>
+        <Table.Row><Table.Cell>nightly-security-scan</Table.Cell><Table.Cell>main</Table.Cell><Table.Cell><StatusBadge variant="status" theme="success">Passed</StatusBadge></Table.Cell><Table.Cell>Yesterday</Table.Cell></Table.Row>
+      </Table.Body>
+    </Table.Root>
+  </div>
+  </div>
+  </Sidebar.Inset>
+</Sidebar.Provider>
+</div></div>`}
+/>
+
+</TabItem>
+
+<TabItem label="Usage">
+
+## Anatomy
+
+1. **Sidebar.** `Sidebar.Root` with a header (the project or account switcher), content groups of `Sidebar.Item`, and a footer for alerts, help and the user. It is 240px wide when expanded and collapses to icons.
+2. **Content area.** `Sidebar.Inset` holds the page. It scrolls on its own, so the sidebar stays in place.
+3. **Page padding.** The content uses `px-cn-xl`, `pt-cn-md` and `pb-cn-xl`. Page layouts such as the standard page add their own header and content inside it.
+
+## Guidelines
+
+- Put the shell at the root of the app and render every page inside `Sidebar.Inset`. Do not rebuild the sidebar per page.
+- Mark the current area with the `active` prop on `Sidebar.Item`.
+- Keep the footer for global items: alerts, help and the account menu.
+- Below the tablet breakpoint, collapse the sidebar by default.
+- For secondary navigation inside a section, use [page with section menu](/patterns/page-layouts/page-with-section-menu/).
+
+</TabItem>
+
+</Tabs>
+
+</div>

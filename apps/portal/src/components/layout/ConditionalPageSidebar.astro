@@ -2,7 +2,10 @@
 import PageSidebar from "@astrojs/starlight/components/PageSidebar.astro";
 
 const headings = Astro.locals.starlightRoute?.headings ?? [];
-const hasEnoughHeadings = headings.filter((h: any) => h.depth <= 3).length >= 3;
+const tocDisabled =
+  Astro.locals.starlightRoute?.entry?.data?.tableOfContents === false;
+const hasEnoughHeadings =
+  !tocDisabled && headings.filter((h: any) => h.depth <= 3).length >= 3;
 ---
 
 {

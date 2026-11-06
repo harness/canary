@@ -28,6 +28,29 @@ const Code: FC<{ children: ReactNode }> = ({ children }) => (
 
 const ENTRIES: ChangelogEntry[] = [
   {
+    value: "uui-4247",
+    version: "1.6.5",
+    date: "November 6, 2026",
+    status: "Shipped",
+    statusTheme: "success",
+    title: "Component playgrounds and new component docs (UUI-4247)",
+    body: (
+      <>
+        <Text as="p" variant="body-normal" color="foreground-1">
+          Component pages now include an interactive playground with compact
+          prop controls, and the Overview / Usage / Properties page tabs.
+        </Text>
+        <Text as="p" variant="body-normal" color="foreground-1">
+          New docs: <Code>Gauge</Code> and <Code>Meter</Code> (Data Viz),{" "}
+          <Code>SearchableDropdown</Code> (Search Input),{" "}
+          <Code>MentionTextarea</Code> (Textarea), <Code>HighlightText</Code>{" "}
+          (Text), <Code>WaterfallProgress</Code> (Progress), plus Stepped Flow,
+          Steppers and PLG.
+        </Text>
+      </>
+    ),
+  },
+  {
     value: "bold-code-variants",
     version: "1.6.1",
     date: "November 2, 2026",

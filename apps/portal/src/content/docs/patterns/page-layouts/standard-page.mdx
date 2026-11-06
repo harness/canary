@@ -23,12 +23,6 @@ The baseline for almost every page: a header (title, breadcrumbs, actions) above
 
 A wireframe of a pipelines list page inside the full application shell, built from the same components production uses.
 
-The app sidebar and the collapsed AI chat rail are boilerplate, rebuilt from the production shell and shown disabled for context only.
-
-:::note
-These demos are drawn on a 1440 × 900 screen and scaled down to fit the page, so they appear smaller than 100%. Sizes, spacing and text in the demos are reduced by the same percentage; the real values are listed in the Usage tab.
-:::
-
 <DocsPage.ComponentExample
   client:only
   padding={false}
@@ -264,6 +258,98 @@ The same page with underlined tabs in the header. The tabs switch between relate
 </div></div>`}
 />
 
+## Example with a footer
+
+Full-height studio pages, such as the chaos experiment studio, end with a thin status footer. The canvas fills the height and scrolls inside itself, and the footer stays pinned below it. Actions stay in the header.
+
+<DocsPage.ComponentExample
+  client:only
+  padding={false}
+  code={`<div style={{ containerType: 'inline-size', width: '100%', aspectRatio: '1440 / 900', overflow: 'hidden', position: 'relative' }}>
+<div style={{ width: '1440px', height: '900px', transformOrigin: 'top left', transform: 'scale(tan(atan2(100cqw, 1440px)))' }}>
+<Sidebar.Provider style={{ '--cn-sidebar-min-height': '898px' }} className="!w-[1440px] !min-h-0 h-[900px] overflow-hidden border rounded-cn-3 bg-cn-1">
+  <div className="pointer-events-none select-none flex h-full shrink-0" aria-hidden="true">
+    <Sidebar.Root>
+      <Sidebar.Header className="pt-cn-xl pb-cn-md">
+        <div className="flex items-center justify-between gap-cn-xs px-cn-xs">
+          <div className="flex items-center gap-cn-xs min-w-0">
+            <IconV2 name="harness-plugins" size="md" className="text-[--cn-comp-sidebar-logo-icon]" />
+            <Text variant="body-single-line-strong" truncate>Harness / canary</Text>
+          </div>
+          <IconV2 name="nav-arrow-down" size="2xs" />
+        </div>
+      </Sidebar.Header>
+      <Sidebar.Content>
+        <Sidebar.Group>
+          <Sidebar.Item icon="dashboard" title="Home" />
+          <Sidebar.Item icon="menu-more-horizontal" title="More" />
+        </Sidebar.Group>
+        <Sidebar.Separator />
+        <Sidebar.Group label="Recent">
+          <Sidebar.Item icon="repository" title="Repositories" />
+          <Sidebar.Item icon="pipeline" title="Pipelines" active />
+          <Sidebar.Item icon="folder" title="Projects" />
+        </Sidebar.Group>
+      </Sidebar.Content>
+      <Sidebar.Footer>
+        <Sidebar.Item icon="bell" title="Alerts" />
+        <Sidebar.Item icon="help-circle" title="Help" />
+        <Sidebar.Item avatarFallback="JD" title="John Doe" />
+      </Sidebar.Footer>
+    </Sidebar.Root>
+  </div>
+
+  <Sidebar.Inset className="border-l border-cn-3 min-w-0">
+  <div className="flex h-full w-full min-w-0">
+  <div className="pointer-events-none select-none relative w-[20px] shrink-0 border-x border-cn-3 bg-cn-app-shell" aria-hidden="true" title="AI chat (collapsed)">
+    <Text className="absolute left-full top-1/2 -translate-x-1/2 -translate-y-1/2 text-cn-sidebar-toggle z-10">|</Text>
+  </div>
+
+  <div className="flex min-w-0 flex-1 flex-col">
+  <div className="shrink-0 px-cn-xl pt-cn-md">
+    <Tabs.Root defaultValue="studio">
+      <Page.HeaderV2
+        contentTabs
+        breadcrumbs={<Breadcrumb.Root><Breadcrumb.List><Breadcrumb.Item><Breadcrumb.Link href="#">Chaos Experiments</Breadcrumb.Link></Breadcrumb.Item><Breadcrumb.Separator /><Breadcrumb.Item><Breadcrumb.Page>pod-delete-checkout</Breadcrumb.Page></Breadcrumb.Item></Breadcrumb.List></Breadcrumb.Root>}
+        title="pod-delete-checkout"
+        actions={<ButtonLayout.Root><Button size="sm" variant="secondary">Save</Button><Button size="sm">Run</Button></ButtonLayout.Root>}
+        tabs={[
+          { label: 'Studio', value: 'studio' },
+          { label: 'Executions', value: 'executions' },
+          { label: 'Input Sets', value: 'input-sets' },
+          { label: 'Settings', value: 'settings' }
+        ]}
+      />
+    </Tabs.Root>
+  </div>
+  <div className="relative min-h-0 flex-1 overflow-hidden bg-cn-2">
+    <div className="absolute left-1/2 top-cn-md -translate-x-1/2 flex gap-cn-3xs rounded-cn-2 border border-cn-3 bg-cn-1 p-cn-4xs">
+      <Button size="sm" variant="secondary">Visual</Button>
+      <Button size="sm" variant="ghost">YAML</Button>
+    </div>
+    <div className="absolute inset-0 flex items-center justify-center gap-cn-3xl">
+      <div className="rounded-cn-3 border border-cn-3 bg-cn-1 px-cn-lg py-cn-md"><Text variant="body-strong">Pod delete</Text></div>
+      <IconV2 name="arrow-right" />
+      <div className="rounded-cn-3 border border-cn-3 bg-cn-1 px-cn-lg py-cn-md"><Text variant="body-strong">Probe: checkout health</Text></div>
+      <IconV2 name="arrow-right" />
+      <div className="rounded-cn-3 border border-cn-3 bg-cn-1 px-cn-lg py-cn-md"><Text variant="body-strong">Rollback</Text></div>
+    </div>
+  </div>
+  <div className="flex h-10 shrink-0 items-center justify-between border-t border-cn-3 bg-cn-1 px-cn-md">
+    <div className="flex items-center gap-cn-md">
+      <span className="flex items-center gap-cn-3xs"><IconV2 name="xmark-circle" size="sm" /><Text variant="body-normal" color="foreground-3">0</Text></span>
+      <span className="flex items-center gap-cn-3xs"><IconV2 name="warning-triangle" size="sm" /><Text variant="body-normal" color="foreground-3">2</Text></span>
+      <span className="flex items-center gap-cn-3xs"><IconV2 name="info-circle" size="sm" /><Text variant="body-normal" color="foreground-3">1</Text></span>
+    </div>
+    <Text variant="body-normal" color="foreground-3">Last edited 2 hours ago by Jane Doe</Text>
+  </div>
+  </div>
+  </div>
+  </Sidebar.Inset>
+</Sidebar.Provider>
+</div></div>`}
+/>
+
 </TabItem>
 
 <TabItem label="Usage">
@@ -274,6 +360,7 @@ The same page with underlined tabs in the header. The tabs switch between relate
 2. **Primary action.** One button at the end of the title row, such as "Create pipeline". Secondary actions go in a menu next to it.
 3. **Toolbar (optional).** Search and filters above the content, aligned to the content edges.
 4. **Content area.** Fills the width under the header: a table, a list or a set of cards.
+5. **Status footer (optional).** A thin bar pinned below a full-height studio or editor page. It shows status such as problem counts and when the page was last edited. It never holds actions.
 
 ## Guidelines
 
@@ -282,6 +369,14 @@ The same page with underlined tabs in the header. The tabs switch between relate
 - Studio-style pages override the scrolling so the content fills the height and scrolls inside itself.
 - Use header tabs for two or three related areas. For four or more sections of one subject, use the [page with section menu](/patterns/page-layouts/page-with-section-menu/).
 - Keep one primary action per page.
+
+### Footer
+
+- Use a footer only on full-height studio or editor pages, such as the pipeline studio and the chaos experiment studio. Do not add one to list, overview or form pages.
+- The footer holds status, not actions. Good content is problem counts, last edited time and author, or the current branch.
+- Keep primary actions in the header. Create and edit flows use a drawer, so they never need a footer for Cancel and Save.
+- Give the footer a fixed height, a top border and the same horizontal padding as the content. Put the most important status on the left and metadata on the right.
+- Pin it below the content. The canvas scrolls inside itself above the footer, never the footer and never the whole page.
 
 </TabItem>
 

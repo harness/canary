@@ -443,41 +443,52 @@ export default defineConfig({
                   label: "Resizable Split",
                 },
                 {
-                  slug: "patterns/page-layouts/stepped-flow",
-                  label: "Stepped Flow",
-                },
-                {
-                  slug: "patterns/page-layouts/header-content-footer-layout",
-                  label: "Header, Content, Footer Layout",
-                },
-                {
                   slug: "patterns/page-layouts/dashboard-card-layout",
                   label: "Dashboard Card Layout",
                 },
               ],
             },
             {
-              slug: "growth-patterns/overview",
-              label: "Overview",
-              attrs: { "data-icon": "light-bulb-on" },
-            },
-            "growth-patterns/single-pane-stepper",
-            {
-              slug: "growth-patterns/single-pane-stepper-v2",
-              label: "Single Pane Chat Stepper",
-            },
-            {
-              slug: "growth-patterns/dual-pane-stepper",
-              label: "Dual Pane Stepper",
-              attrs: {
-                "aria-disabled": "true",
-                tabindex: -1,
-                onclick: "event.preventDefault(); return false;",
-              },
+              label: "PLG",
+              collapsed: true,
+              items: [
+                {
+                  slug: "growth-patterns/overview",
+                  label: "Overview",
+                },
+                {
+                  slug: "growth-patterns/growth-box",
+                  label: "Growth Box [WIP]",
+                },
+              ],
             },
             {
-              slug: "growth-patterns/growth-box",
-              label: "Growth Box [WIP]",
+              label: "Steppers",
+              collapsed: true,
+              items: [
+                { slug: "patterns/steppers", label: "Overview" },
+                {
+                  slug: "patterns/page-layouts/stepped-flow",
+                  label: "Stepped Flow",
+                },
+                {
+                  slug: "growth-patterns/single-pane-stepper",
+                  label: "Single Pane",
+                },
+                {
+                  slug: "growth-patterns/single-pane-stepper-v2",
+                  label: "Single Pane Chat",
+                },
+                {
+                  slug: "growth-patterns/dual-pane-stepper",
+                  label: "Dual Pane",
+                  attrs: {
+                    "aria-disabled": "true",
+                    tabindex: -1,
+                    onclick: "event.preventDefault(); return false;",
+                  },
+                },
+              ],
             },
           ],
         },

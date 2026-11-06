@@ -173,7 +173,7 @@ const PromptInputPlayground: FC = () => {
               <PromptInput.Button
                 prefixIcon="plus"
                 prefixIconProps={{ size: "sm" }}
-                tooltipProps={{ title: "Add" }}
+                tooltipProps={{ content: "Add" }}
               />
             )}
           </PromptInput.Tools>

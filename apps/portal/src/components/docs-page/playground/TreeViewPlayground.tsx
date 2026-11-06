@@ -181,11 +181,7 @@ function codeForNode(node: TreeViewElement, level: number, s: State): string {
 
 // Serialize the sample tree to a JS literal. The Tree needs this `elements` array
 // to auto-expand the path to initialSelectedId (and CollapseButton uses it too).
-function serializeNode(
-  node: TreeViewElement,
-  depth: number,
-  s: State,
-): string {
+function serializeNode(node: TreeViewElement, depth: number, s: State): string {
   const folder = isFolder(node);
   const lines = [
     `${pad(depth)}{`,
@@ -229,7 +225,7 @@ ${SAMPLE_TREE.map((n) => serializeNode(n, 1, s)).join(",\n")}
   const body = SAMPLE_TREE.map((n) => codeForNode(n, 0, s)).join("\n");
 
   const collapse = s.collapseButton
-    ? `\n  <CollapseButton elements={treeElements}>\n    <IconV2 name="fold" size="xs" />\n  </CollapseButton>`
+    ? `\n  <CollapseButton elements={treeElements}>\n    <IconV2 name="collapse-code" size="xs" />\n  </CollapseButton>`
     : "";
 
   return `${elementsConst}<Tree
@@ -359,7 +355,7 @@ const TreeViewPlayground: FC = () => {
               {renderNodes(SAMPLE_TREE, 0)}
               {state.collapseButton && (
                 <CollapseButton elements={SAMPLE_TREE}>
-                  <IconV2 name="fold" size="xs" />
+                  <IconV2 name="collapse-code" size="xs" />
                 </CollapseButton>
               )}
             </Tree>

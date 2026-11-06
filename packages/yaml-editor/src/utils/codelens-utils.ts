@@ -61,6 +61,13 @@ export function getCodeLens<T>(props: GetCodeLensProps<T>) {
               const range = symbol.range
 
               actions.forEach(action => {
+                // Optional per-match visibility guard: lets callers discriminate on the matched symbol
+                // (e.g. a real steps `Array` vs a scalar `String` placeholder reference) — something a
+                // path-only selector cannot express, since both can share the same path.
+                if (action.shouldShow && !action.shouldShow({ path, symbol })) {
+                  return
+                }
+
                 const commandArg = {
                   range,
                   symbols: [symbol],

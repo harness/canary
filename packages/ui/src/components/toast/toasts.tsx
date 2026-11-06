@@ -12,7 +12,7 @@ import {
 const DEFAULT_DURATION = 10_000
 
 const defaultToast = ({ title, description, options = {} }: ToastParamsType) => {
-  const { dismissible, duration, action, onClose, onAutoClose } = options
+  const { dismissible, duration, action, id, onClose, onAutoClose } = options
   return sonnerToast.custom(
     t => (
       <CustomToast
@@ -30,13 +30,14 @@ const defaultToast = ({ title, description, options = {} }: ToastParamsType) => 
     {
       duration: duration || DEFAULT_DURATION,
       dismissible: dismissible !== false,
+      ...(id === undefined ? {} : { id }),
       onAutoClose: onAutoClose
     }
   )
 }
 
 const infoToast = ({ title, description, options = {} }: InfoToastParamsType) => {
-  const { dismissible, duration, action, secondaryAction, ctaPosition, severity, onClose, onAutoClose } = options
+  const { dismissible, duration, action, secondaryAction, ctaPosition, severity, id, onClose, onAutoClose } = options
   return sonnerToast.custom(
     t => (
       <CustomToast
@@ -58,13 +59,14 @@ const infoToast = ({ title, description, options = {} }: InfoToastParamsType) =>
     {
       duration: duration || DEFAULT_DURATION,
       dismissible: dismissible !== false,
+      ...(id === undefined ? {} : { id }),
       onAutoClose: onAutoClose
     }
   )
 }
 
 const successToast = ({ title, description, options = {} }: ToastParamsType) => {
-  const { dismissible, duration, action, onClose, onAutoClose } = options
+  const { dismissible, duration, action, id, onClose, onAutoClose } = options
   return sonnerToast.custom(
     t => (
       <CustomToast
@@ -83,13 +85,14 @@ const successToast = ({ title, description, options = {} }: ToastParamsType) => 
     {
       duration: duration || DEFAULT_DURATION,
       dismissible: dismissible !== false,
+      ...(id === undefined ? {} : { id }),
       onAutoClose: onAutoClose
     }
   )
 }
 
 const dangerToast = ({ title, description, options = {} }: ToastParamsType) => {
-  const { dismissible, duration, action, onClose, onAutoClose } = options
+  const { dismissible, duration, action, id, onClose, onAutoClose } = options
   return sonnerToast.custom(
     t => (
       <CustomToast
@@ -108,13 +111,14 @@ const dangerToast = ({ title, description, options = {} }: ToastParamsType) => {
     {
       duration: duration || DEFAULT_DURATION,
       dismissible: dismissible !== false,
+      ...(id === undefined ? {} : { id }),
       onAutoClose: onAutoClose
     }
   )
 }
 
 const loadingToast = ({ title, options = {} }: LoadingToastParamsType) => {
-  const { action, onClose } = options
+  const { action, id, onClose } = options
   return sonnerToast.custom(
     t => (
       <CustomToast
@@ -131,7 +135,8 @@ const loadingToast = ({ title, options = {} }: LoadingToastParamsType) => {
     ),
     {
       duration: Number.POSITIVE_INFINITY,
-      dismissible: false
+      dismissible: false,
+      ...(id === undefined ? {} : { id })
     }
   )
 }
@@ -140,7 +145,7 @@ const promiseToast = (
   promise: ToastPromiseType,
   { loadingMessage, successMessage, errorMessage, options = {} }: PromiseToastParamsType
 ) => {
-  const { dismissible, action, onClose } = options
+  const { dismissible, action, id, onClose } = options
   return sonnerToast.custom(
     t => (
       <CustomToast
@@ -160,7 +165,8 @@ const promiseToast = (
     ),
     {
       dismissible: dismissible !== false,
-      duration: Number.POSITIVE_INFINITY
+      duration: Number.POSITIVE_INFINITY,
+      ...(id === undefined ? {} : { id })
     }
   )
 }

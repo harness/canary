@@ -125,6 +125,7 @@ describe('toast helpers', () => {
       title: 'Vulnerability found',
       description: 'Review the dependency before merging.',
       options: {
+        id: 'vulnerability-found',
         duration: 5000,
         action,
         secondaryAction,
@@ -134,7 +135,7 @@ describe('toast helpers', () => {
     })
 
     const [, config] = customMock.mock.calls.at(-1)!
-    expect(config).toEqual({ duration: 5000, dismissible: true })
+    expect(config).toEqual({ duration: 5000, dismissible: true, id: 'vulnerability-found' })
 
     const props = invokeRenderWithId('info-toast')
     expect(props).toMatchObject({

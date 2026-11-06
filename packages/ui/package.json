@@ -1,7 +1,7 @@
 {
   "name": "@harnessio/ui",
   "description": "Harness Canary UI component library",
-  "version": "1.6.6",
+  "version": "1.6.5",
   "private": false,
   "type": "module",
   "main": "./dist/index.js",

@@ -7,6 +7,8 @@ import { Accordion, StatusBadge, Text } from "@harnessio/ui/components";
 // item is expanded.
 interface ChangelogEntry {
   value: string;
+  // First published @harnessio/ui version that includes the change.
+  version: string;
   date: string;
   status: string;
   // Intent color for the status chip: "info" for upcoming/planned work,
@@ -26,59 +28,84 @@ const Code: FC<{ children: ReactNode }> = ({ children }) => (
 
 const ENTRIES: ChangelogEntry[] = [
   {
-    value: "weight-bucket-cleanup",
-    date: "Planned",
-    status: "Upcoming",
-    statusTheme: "info",
-    title: "Retiring the 600 weight bucket and renaming heading → 500",
+    value: "bold-code-variants",
+    version: "1.6.1",
+    date: "November 2, 2026",
+    status: "Shipped",
+    statusTheme: "success",
+    title: "Bold code typography variants",
     body: (
       <>
-        <Text as="p" variant="body-normal" color="foreground-2">
-          An upcoming release will retire the deprecated weight buckets and align
-          the remaining bucket names with the optical weight they actually render.
-          The <Code>600</Code> bucket (optical <Code>530</Code>, the old semibold)
-          will be <strong>removed</strong> — it is already unused across the
-          library after the October 23 migration and is kept only for
-          backwards-compatibility. The deprecated <Code>500</Code> bucket (optical{" "}
-          <Code>440</Code>) will be retired in the same pass.
+        <Text as="p" variant="body-normal" color="foreground-1">
+          Added <Code>body-code-strong</Code> and{" "}
+          <Code>caption-code-strong</Code>: bold (mono <Code>700</Code>)
+          counterparts of <Code>body-code</Code> and <Code>caption-code</Code>,
+          with the same size and line-height.
         </Text>
-        <Text as="p" variant="body-normal" color="foreground-2">
-          With <Code>530</Code> and <Code>440</Code> gone, the <Code>heading</Code>{" "}
-          bucket (optical 500) will be <strong>renamed to <Code>500</Code></strong>
-          , so every bucket name finally matches the weight it renders and the one
-          “named for its role” exception disappears. In CSS-variable terms,{" "}
-          <Code>--cn-font-weight-default-normal-heading</Code> becomes{" "}
-          <Code>--cn-font-weight-default-normal-500</Code>, and{" "}
-          <Code>--cn-font-weight-default-normal-600</Code> goes away entirely.
+        <Text as="p" variant="body-normal" color="foreground-1">
+          Available as <Code>{'<Text variant="body-code-strong" />'}</Code> /{" "}
+          <Code>{'<Text variant="caption-code-strong" />'}</Code> and the{" "}
+          <Code>.font-body-code-strong</Code> /{" "}
+          <Code>.font-caption-code-strong</Code> utilities, backed by the new{" "}
+          <Code>--cn-body-code-strong</Code> and{" "}
+          <Code>--cn-caption-code-strong</Code> tokens.
         </Text>
-        <Text as="p" variant="body-normal" color="foreground-2">
-          <strong>Nothing changes</strong> for code that uses the{" "}
-          <Code>.font-*</Code> utilities or <Code>{"<Text>"}</Code> variants —
-          those resolve through the composite tokens automatically. Only code that
-          references the raw weight variables directly is affected. Before this
-          lands, migrate any direct use of{" "}
-          <Code>--cn-font-weight-default-normal-600</Code> onto the heading weight
-          (or a literal <Code>font-weight: 530</Code> if you specifically need the
-          old semibold), and expect{" "}
-          <Code>--cn-font-weight-default-normal-heading</Code> to be renamed to{" "}
+        <Text as="p" variant="body-normal" color="foreground-1">
+          Use them in place of raw bold weights on monospaced text.
+        </Text>
+      </>
+    ),
+  },
+  {
+    value: "uui-4416",
+    version: "1.6.0",
+    date: "November 2, 2026",
+    status: "Shipped",
+    statusTheme: "success",
+    title: "Font weight buckets renamed and retired (UUI-4416)",
+    body: (
+      <>
+        <Text as="p" variant="body-normal" color="foreground-1">
+          The <Code>heading</Code> weight bucket is now{" "}
+          <strong>
+            <Code>500</Code>
+          </strong>{" "}
+          (optical 500, “Medium”), so every bucket name matches the weight it
+          renders. <strong>Breaking:</strong>{" "}
+          <Code>--cn-font-weight-default-normal-heading</Code> is now{" "}
           <Code>--cn-font-weight-default-normal-500</Code>.
         </Text>
-        <Text as="p" variant="body-normal" color="foreground-2">
-          This will ship as one coordinated change across <Code>@harnessio/ui</Code>{" "}
-          and its consumers. A dated entry will replace this one once it lands.
+        <Text as="p" variant="body-normal" color="foreground-1">
+          The unused <Code>600</Code> bucket (optical 530) and the deprecated{" "}
+          <Code>500</Code> bucket (optical 440) are removed;{" "}
+          <Code>--cn-font-weight-default-normal-600</Code> no longer exists.
+        </Text>
+        <Text as="p" variant="body-normal" color="foreground-1">
+          The light and bold weights are removed as well: the <Code>300</Code>{" "}
+          and <Code>700</Code> buckets (and mono <Code>300</Code>), the{" "}
+          <Code>body-light</Code> and <Code>caption-light</Code> typography
+          variants (<Code>{"<Text>"}</Code> variants, <Code>.font-*</Code>{" "}
+          utilities, and their lint rule), while mono <Code>700</Code> (Bold)
+          stays.
+        </Text>
+        <Text as="p" variant="body-normal" color="foreground-1">
+          Use <Code>body-normal</Code> / <Code>caption-normal</Code> instead of
+          the light variants. Other <Code>.font-*</Code> utilities and{" "}
+          <Code>{"<Text>"}</Code> variants are unaffected.
         </Text>
       </>
     ),
   },
   {
     value: "uui-4286",
+    version: "1.5.6",
     date: "October 23, 2026",
     status: "In Progress",
     statusTheme: "warning",
     title: "Semibold weights migrated to the heading weight",
     body: (
       <>
-        <Text as="p" variant="body-normal" color="foreground-2">
+        <Text as="p" variant="body-normal" color="foreground-1">
           Every typographic style that previously rendered{" "}
           <strong>Semibold (optical 530)</strong> now renders at the{" "}
           <strong>
@@ -94,7 +121,7 @@ const ENTRIES: ChangelogEntry[] = [
           <Code>{"<Text>"}</Code> variants resolve to the new weight
           automatically.
         </Text>
-        <Text as="p" variant="body-normal" color="foreground-2">
+        <Text as="p" variant="body-normal" color="foreground-1">
           The <Code>600</Code> bucket (optical <Code>530</Code>) is{" "}
           <strong>no longer used</strong> anywhere in the library. It remains
           defined for backwards-compatibility, and a follow-up will retire it —
@@ -106,39 +133,40 @@ const ENTRIES: ChangelogEntry[] = [
   },
   {
     value: "uui-3467",
+    version: "1.4.0",
     date: "October 7, 2026",
     status: "In Progress",
     statusTheme: "warning",
     title: "Typography weight normalization",
     body: (
       <>
-        <Text as="p" variant="body-normal" color="foreground-2">
+        <Text as="p" variant="body-normal" color="foreground-1">
           The typography scale has been normalized to two optical weights:{" "}
           <strong>Regular (400)</strong> and{" "}
           <strong>Semibold (600, which renders at optical 530)</strong> for
           Inter, while JetBrains Mono keeps <strong>Regular</strong> and{" "}
-          <strong>Bold</strong>. The in-between weights are no longer part of the
-          recommended scale, and every <Code>.font-*</Code> utility and{" "}
+          <strong>Bold</strong>. The in-between weights are no longer part of
+          the recommended scale, and every <Code>.font-*</Code> utility and{" "}
           <Code>{"<Text>"}</Code> variant now resolves to one of these
           normalized weights.
         </Text>
-        <Text as="p" variant="body-normal" color="foreground-2">
-          The previous <strong>light (300)</strong>, <strong>medium (500)</strong>
-          , and <strong>bold (700)</strong> weights have{" "}
-          <strong>not been removed</strong> — they are retained for
+        <Text as="p" variant="body-normal" color="foreground-1">
+          The previous <strong>light (300)</strong>,{" "}
+          <strong>medium (500)</strong>, and <strong>bold (700)</strong> weights
+          have <strong>not been removed</strong> — they are retained for
           backwards-compatibility and are now marked <strong>deprecated</strong>{" "}
           across every layer of the system: the <Code>caption-light</Code> Text
           variant, the <Code>.font-body-light</Code> and{" "}
-          <Code>.font-caption-light</Code> utilities, the <Code>body.light</Code>{" "}
-          and <Code>caption.light</Code> composite tokens, and the underlying
-          weight primitives (Inter <Code>300 / 500 / 700</Code>, JetBrains Mono{" "}
-          <Code>300 / 500</Code>). Existing usage keeps working and the
-          deprecated specimens remain on the{" "}
-          <a href="/foundations/typography/">Typography foundations</a> page for
-          reference, but new adoption is blocked by an ESLint rule — migrate to
-          the <Code>-normal</Code> / <Code>-strong</Code> siblings instead.
+          <Code>.font-caption-light</Code> utilities, the{" "}
+          <Code>body.light</Code> and <Code>caption.light</Code> composite
+          tokens, and the underlying weight primitives (Inter{" "}
+          <Code>300 / 500 / 700</Code>, JetBrains Mono <Code>300 / 500</Code>).
+          Existing usage keeps working and the deprecated specimens remain on
+          the <a href="/foundations/typography/">Typography foundations</a> page
+          for reference, but new adoption is blocked by an ESLint rule — migrate
+          to the <Code>-normal</Code> / <Code>-strong</Code> siblings instead.
         </Text>
-        <Text as="p" variant="body-normal" color="foreground-2">
+        <Text as="p" variant="body-normal" color="foreground-1">
           <strong>
             Timeline — started October 7, 2026 · due October 30, 2026.
           </strong>{" "}
@@ -160,7 +188,14 @@ const ChangelogAccordions: FC = () => (
               <Text variant="caption-normal" color="foreground-3">
                 {entry.date}
               </Text>
-              <StatusBadge variant="outline" theme={entry.statusTheme} size="sm">
+              <Text variant="caption-code" color="foreground-3">
+                @harnessio/ui v{entry.version}
+              </Text>
+              <StatusBadge
+                variant="outline"
+                theme={entry.statusTheme}
+                size="sm"
+              >
                 {entry.status}
               </StatusBadge>
             </span>

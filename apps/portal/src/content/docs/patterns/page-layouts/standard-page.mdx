@@ -1,0 +1,290 @@
+---
+title: Standard Page
+description: The baseline for almost every page - a header (title, breadcrumbs, actions) above a content area.
+tableOfContents: false
+---
+
+import { DocsPage } from "@/components/docs-page";
+import { Text } from "@harnessio/ui/components";
+import { Tabs, TabItem } from "@astrojs/starlight/components";
+import PageTabsToc from "@/components/page-tabs-toc.astro";
+
+<PageTabsToc />
+
+<div id="page-level-tabs">
+
+<Tabs>
+
+<TabItem label="Overview">
+
+The baseline for almost every page: a header (title, breadcrumbs, actions) above a content area. In product code this is `Page.Root` with `Page.HeaderV2` and `Page.Content`.
+
+## Example
+
+A wireframe of a pipelines list page inside the full application shell, built from the same components production uses.
+
+The app sidebar and the collapsed AI chat rail are boilerplate, rebuilt from the production shell and shown disabled for context only.
+
+:::note
+These demos are drawn on a 1440 × 900 screen and scaled down to fit the page, so they appear smaller than 100%. Sizes, spacing and text in the demos are reduced by the same percentage; the real values are listed in the Usage tab.
+:::
+
+<DocsPage.ComponentExample
+  client:only
+  padding={false}
+  code={`<div style={{ containerType: 'inline-size', width: '100%', aspectRatio: '1440 / 900', overflow: 'hidden', position: 'relative' }}>
+<div style={{ width: '1440px', height: '900px', transformOrigin: 'top left', transform: 'scale(tan(atan2(100cqw, 1440px)))' }}>
+<Sidebar.Provider style={{ '--cn-sidebar-min-height': '898px' }} className="!w-[1440px] !min-h-0 h-[900px] overflow-hidden border rounded-cn-3 bg-cn-1">
+  <div className="pointer-events-none select-none flex h-full shrink-0" aria-hidden="true">
+    <Sidebar.Root>
+      <Sidebar.Header className="pt-cn-xl pb-cn-md">
+        <div className="flex items-center justify-between gap-cn-xs px-cn-xs">
+          <div className="flex items-center gap-cn-xs min-w-0">
+            <IconV2 name="harness-plugins" size="md" className="text-[--cn-comp-sidebar-logo-icon]" />
+            <Text variant="body-single-line-strong" truncate>Harness / canary</Text>
+          </div>
+          <IconV2 name="nav-arrow-down" size="2xs" />
+        </div>
+      </Sidebar.Header>
+      <Sidebar.Content>
+        <Sidebar.Group>
+          <Sidebar.Item icon="dashboard" title="Home" />
+          <Sidebar.Item icon="menu-more-horizontal" title="More" />
+        </Sidebar.Group>
+        <Sidebar.Separator />
+        <Sidebar.Group label="Recent">
+          <Sidebar.Item icon="repository" title="Repositories" />
+          <Sidebar.Item icon="pipeline" title="Pipelines" active />
+          <Sidebar.Item icon="folder" title="Projects" />
+        </Sidebar.Group>
+      </Sidebar.Content>
+      <Sidebar.Footer>
+        <Sidebar.Item icon="bell" title="Alerts" />
+        <Sidebar.Item icon="help-circle" title="Help" />
+        <Sidebar.Item avatarFallback="JD" title="John Doe" />
+      </Sidebar.Footer>
+    </Sidebar.Root>
+  </div>
+
+  <Sidebar.Inset className="border-l border-cn-3 min-w-0">
+  <div className="flex h-full w-full min-w-0">
+  <div className="pointer-events-none select-none relative w-[20px] shrink-0 border-x border-cn-3 bg-cn-app-shell" aria-hidden="true" title="AI chat (collapsed)">
+    <Text className="absolute left-full top-1/2 -translate-x-1/2 -translate-y-1/2 text-cn-sidebar-toggle z-10">|</Text>
+  </div>
+  <div className="flex-1 min-w-0 overflow-auto px-cn-xl pt-cn-md pb-cn-xl">
+    <Page.HeaderV2
+      breadcrumbs={<Breadcrumb.Root>
+            <Breadcrumb.List>
+              <Breadcrumb.Item><Breadcrumb.Link href="#">canary</Breadcrumb.Link></Breadcrumb.Item>
+              <Breadcrumb.Separator />
+              <Breadcrumb.Item><Breadcrumb.Page>Pipelines</Breadcrumb.Page></Breadcrumb.Item>
+            </Breadcrumb.List>
+          </Breadcrumb.Root>}
+      title="Pipelines"
+      description="Build, test and deploy this repository."
+      actions={<Button>Create pipeline</Button>}
+    />
+    <div className="flex items-center justify-between gap-cn-md pb-cn-md">
+      <div className="w-[320px]"><SearchInput placeholder="Search pipelines" /></div>
+      <Text variant="body-normal" color="foreground-3">175 pipelines</Text>
+    </div>
+    <Table.Root>
+      <Table.Header>
+        <Table.Row>
+          <Table.Head>Name</Table.Head>
+          <Table.Head>Branch</Table.Head>
+          <Table.Head>Status</Table.Head>
+          <Table.Head>Last run</Table.Head>
+        </Table.Row>
+      </Table.Header>
+      <Table.Body>
+        <Table.Row>
+          <Table.Cell>build-and-test</Table.Cell>
+          <Table.Cell>main</Table.Cell>
+          <Table.Cell><StatusBadge variant="outline" theme="success" size="sm">Succeeded</StatusBadge></Table.Cell>
+          <Table.Cell>2 hours ago</Table.Cell>
+        </Table.Row>
+        <Table.Row>
+          <Table.Cell>deploy-staging</Table.Cell>
+          <Table.Cell>release/1.6</Table.Cell>
+          <Table.Cell><StatusBadge variant="outline" theme="warning" size="sm">Running</StatusBadge></Table.Cell>
+          <Table.Cell>Just now</Table.Cell>
+        </Table.Row>
+        <Table.Row>
+          <Table.Cell>nightly-regression</Table.Cell>
+          <Table.Cell>main</Table.Cell>
+          <Table.Cell><StatusBadge variant="outline" theme="danger" size="sm">Failed</StatusBadge></Table.Cell>
+          <Table.Cell>Yesterday</Table.Cell>
+        </Table.Row>
+        <Table.Row>
+          <Table.Cell>publish-packages</Table.Cell>
+          <Table.Cell>main</Table.Cell>
+          <Table.Cell><StatusBadge variant="outline" theme="success" size="sm">Succeeded</StatusBadge></Table.Cell>
+          <Table.Cell>3 days ago</Table.Cell>
+        </Table.Row>
+      </Table.Body>
+      <Table.Footer>
+        <Table.Row>
+          <Table.Cell colSpan={4} className="!p-0">
+            <Pagination className="!mt-0 p-cn-sm" totalItems={175} pageSize={25} currentPage={1} pageSizeOptions={[10, 25, 50]} onPageSizeChange={() => {}} hasPrevious={false} hasNext onPrevious={() => {}} onNext={() => {}} goToPage={() => {}} />
+          </Table.Cell>
+        </Table.Row>
+      </Table.Footer>
+    </Table.Root>
+  </div>
+
+  </div>
+  </Sidebar.Inset>
+</Sidebar.Provider>
+</div></div>`}
+/>
+
+## Example with header tabs
+
+The same page with underlined tabs in the header. The tabs switch between related areas of the same subject, and each tab keeps the same page structure underneath.
+
+<DocsPage.ComponentExample
+  client:only
+  padding={false}
+  code={`<div style={{ containerType: 'inline-size', width: '100%', aspectRatio: '1440 / 900', overflow: 'hidden', position: 'relative' }}>
+<div style={{ width: '1440px', height: '900px', transformOrigin: 'top left', transform: 'scale(tan(atan2(100cqw, 1440px)))' }}>
+<Sidebar.Provider style={{ '--cn-sidebar-min-height': '898px' }} className="!w-[1440px] !min-h-0 h-[900px] overflow-hidden border rounded-cn-3 bg-cn-1">
+  <div className="pointer-events-none select-none flex h-full shrink-0" aria-hidden="true">
+    <Sidebar.Root>
+      <Sidebar.Header className="pt-cn-xl pb-cn-md">
+        <div className="flex items-center justify-between gap-cn-xs px-cn-xs">
+          <div className="flex items-center gap-cn-xs min-w-0">
+            <IconV2 name="harness-plugins" size="md" className="text-[--cn-comp-sidebar-logo-icon]" />
+            <Text variant="body-single-line-strong" truncate>Harness / canary</Text>
+          </div>
+          <IconV2 name="nav-arrow-down" size="2xs" />
+        </div>
+      </Sidebar.Header>
+      <Sidebar.Content>
+        <Sidebar.Group>
+          <Sidebar.Item icon="dashboard" title="Home" />
+          <Sidebar.Item icon="menu-more-horizontal" title="More" />
+        </Sidebar.Group>
+        <Sidebar.Separator />
+        <Sidebar.Group label="Recent">
+          <Sidebar.Item icon="repository" title="Repositories" />
+          <Sidebar.Item icon="pipeline" title="Pipelines" active />
+          <Sidebar.Item icon="folder" title="Projects" />
+        </Sidebar.Group>
+      </Sidebar.Content>
+      <Sidebar.Footer>
+        <Sidebar.Item icon="bell" title="Alerts" />
+        <Sidebar.Item icon="help-circle" title="Help" />
+        <Sidebar.Item avatarFallback="JD" title="John Doe" />
+      </Sidebar.Footer>
+    </Sidebar.Root>
+  </div>
+
+  <Sidebar.Inset className="border-l border-cn-3 min-w-0">
+  <div className="flex h-full w-full min-w-0">
+  <div className="pointer-events-none select-none relative w-[20px] shrink-0 border-x border-cn-3 bg-cn-app-shell" aria-hidden="true" title="AI chat (collapsed)">
+    <Text className="absolute left-full top-1/2 -translate-x-1/2 -translate-y-1/2 text-cn-sidebar-toggle z-10">|</Text>
+  </div>
+  <div className="flex-1 min-w-0 overflow-auto px-cn-xl pt-cn-md pb-cn-xl">
+    <Tabs.Root defaultValue="pipelines">
+      <Page.HeaderV2
+        contentTabs
+        breadcrumbs={<Breadcrumb.Root>
+            <Breadcrumb.List>
+              <Breadcrumb.Item><Breadcrumb.Link href="#">canary</Breadcrumb.Link></Breadcrumb.Item>
+              <Breadcrumb.Separator />
+              <Breadcrumb.Item><Breadcrumb.Page>Pipelines</Breadcrumb.Page></Breadcrumb.Item>
+            </Breadcrumb.List>
+          </Breadcrumb.Root>}
+        title="Pipelines"
+        description="Build, test and deploy this repository."
+        actions={<Button>Create pipeline</Button>}
+        tabs={[
+          { label: 'Pipelines', value: 'pipelines' },
+          { label: 'Executions', value: 'executions', counter: 12 },
+          { label: 'Triggers', value: 'triggers' },
+          { label: 'Settings', value: 'settings' }
+        ]}
+      />
+    </Tabs.Root>
+    <div className="mt-cn-xl">
+    <div className="flex items-center justify-between gap-cn-md pb-cn-md">
+      <div className="w-[320px]"><SearchInput placeholder="Search pipelines" /></div>
+      <Text variant="body-normal" color="foreground-3">175 pipelines</Text>
+    </div>
+    <Table.Root>
+      <Table.Header>
+        <Table.Row>
+          <Table.Head>Name</Table.Head>
+          <Table.Head>Branch</Table.Head>
+          <Table.Head>Status</Table.Head>
+          <Table.Head>Last run</Table.Head>
+        </Table.Row>
+      </Table.Header>
+      <Table.Body>
+        <Table.Row>
+          <Table.Cell>build-and-test</Table.Cell>
+          <Table.Cell>main</Table.Cell>
+          <Table.Cell><StatusBadge variant="outline" theme="success" size="sm">Succeeded</StatusBadge></Table.Cell>
+          <Table.Cell>2 hours ago</Table.Cell>
+        </Table.Row>
+        <Table.Row>
+          <Table.Cell>deploy-staging</Table.Cell>
+          <Table.Cell>release/1.6</Table.Cell>
+          <Table.Cell><StatusBadge variant="outline" theme="warning" size="sm">Running</StatusBadge></Table.Cell>
+          <Table.Cell>Just now</Table.Cell>
+        </Table.Row>
+        <Table.Row>
+          <Table.Cell>nightly-regression</Table.Cell>
+          <Table.Cell>main</Table.Cell>
+          <Table.Cell><StatusBadge variant="outline" theme="danger" size="sm">Failed</StatusBadge></Table.Cell>
+          <Table.Cell>Yesterday</Table.Cell>
+        </Table.Row>
+        <Table.Row>
+          <Table.Cell>publish-packages</Table.Cell>
+          <Table.Cell>main</Table.Cell>
+          <Table.Cell><StatusBadge variant="outline" theme="success" size="sm">Succeeded</StatusBadge></Table.Cell>
+          <Table.Cell>3 days ago</Table.Cell>
+        </Table.Row>
+      </Table.Body>
+      <Table.Footer>
+        <Table.Row>
+          <Table.Cell colSpan={4} className="!p-0">
+            <Pagination className="!mt-0 p-cn-sm" totalItems={175} pageSize={25} currentPage={1} pageSizeOptions={[10, 25, 50]} onPageSizeChange={() => {}} hasPrevious={false} hasNext onPrevious={() => {}} onNext={() => {}} goToPage={() => {}} />
+          </Table.Cell>
+        </Table.Row>
+      </Table.Footer>
+    </Table.Root>
+    </div>
+  </div>
+
+  </div>
+  </Sidebar.Inset>
+</Sidebar.Provider>
+</div></div>`}
+/>
+
+</TabItem>
+
+<TabItem label="Usage">
+
+## Anatomy
+
+1. **Page header.** Breadcrumb, page title, a short description and the page's primary action. Add underlined tabs when the page has related areas of the same subject.
+2. **Primary action.** One button at the end of the title row, such as "Create pipeline". Secondary actions go in a menu next to it.
+3. **Toolbar (optional).** Search and filters above the content, aligned to the content edges.
+4. **Content area.** Fills the width under the header: a table, a list or a set of cards.
+
+## Guidelines
+
+- Set `scrollable` on `Page.Root` so the whole page scrolls and the header sticks to the top.
+- Use `maxWidth` on the content to switch between a centered page width and full width. Tables and dashboards usually use full width; forms and reading content use the page width.
+- Studio-style pages override the scrolling so the content fills the height and scrolls inside itself.
+- Use header tabs for two or three related areas. For four or more sections of one subject, use the [page with section menu](/patterns/page-layouts/page-with-section-menu/).
+- Keep one primary action per page.
+
+</TabItem>
+
+</Tabs>
+
+</div>

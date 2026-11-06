@@ -42,8 +42,8 @@ export const NAV_CATEGORIES: NavCategory[] = [
     id: "patterns",
     label: "Patterns",
     href: "/growth-patterns/overview",
-    segments: ["growth-patterns"],
-    groups: ["PLG Patterns"],
+    segments: ["growth-patterns", "patterns"],
+    groups: ["Patterns"],
   },
   {
     id: "data-viz",

@@ -1,0 +1,297 @@
+---
+title: Page with Section Menu
+description: A vertical menu of grouped links on the left and the selected section on the right, with an optional back link above the menu.
+tableOfContents: false
+---
+
+import { DocsPage } from "@/components/docs-page";
+import { Text } from "@harnessio/ui/components";
+import { Tabs, TabItem } from "@astrojs/starlight/components";
+import PageTabsToc from "@/components/page-tabs-toc.astro";
+
+<PageTabsToc />
+
+<div id="page-level-tabs">
+
+<Tabs>
+
+<TabItem label="Overview">
+
+A vertical menu of grouped links on the left and the selected section on the right, with an optional back link above the menu. Use it for areas with several related sections, such as repository or webhook settings. In product code this is `ContentLayoutWithSidebar`.
+
+## Example
+
+A wireframe of a repository settings page inside the full application shell, built from the same components production uses.
+
+The app sidebar and the collapsed AI chat rail are boilerplate, rebuilt from the production shell and shown disabled for context only.
+
+:::note
+These demos are drawn on a 1440 × 900 screen and scaled down to fit the page, so they appear smaller than 100%. Sizes, spacing and text in the demos are reduced by the same percentage; the real values are listed in the Usage tab.
+:::
+
+<DocsPage.ComponentExample
+  client:only
+  padding={false}
+  code={`<div style={{ containerType: 'inline-size', width: '100%', aspectRatio: '1440 / 900', overflow: 'hidden', position: 'relative' }}>
+<div style={{ width: '1440px', height: '900px', transformOrigin: 'top left', transform: 'scale(tan(atan2(100cqw, 1440px)))' }}>
+<Sidebar.Provider style={{ '--cn-sidebar-min-height': '898px' }} className="!w-[1440px] !min-h-0 h-[900px] overflow-hidden border rounded-cn-3 bg-cn-1">
+  <div className="pointer-events-none select-none flex h-full shrink-0" aria-hidden="true">
+    <Sidebar.Root>
+      <Sidebar.Header className="pt-cn-xl pb-cn-md">
+        <div className="flex items-center justify-between gap-cn-xs px-cn-xs">
+          <div className="flex items-center gap-cn-xs min-w-0">
+            <IconV2 name="harness-plugins" size="md" className="text-[--cn-comp-sidebar-logo-icon]" />
+            <Text variant="body-single-line-strong" truncate>Harness / canary</Text>
+          </div>
+          <IconV2 name="nav-arrow-down" size="2xs" />
+        </div>
+      </Sidebar.Header>
+      <Sidebar.Content>
+        <Sidebar.Group>
+          <Sidebar.Item icon="dashboard" title="Home" active />
+          <Sidebar.Item icon="menu-more-horizontal" title="More" />
+        </Sidebar.Group>
+        <Sidebar.Separator />
+        <Sidebar.Group label="Recent">
+          <Sidebar.Item icon="repository" title="Repositories" />
+          <Sidebar.Item icon="pipeline" title="Pipelines" />
+          <Sidebar.Item icon="folder" title="Projects" />
+        </Sidebar.Group>
+      </Sidebar.Content>
+      <Sidebar.Footer>
+        <Sidebar.Item icon="bell" title="Alerts" />
+        <Sidebar.Item icon="help-circle" title="Help" />
+        <Sidebar.Item avatarFallback="JD" title="John Doe" />
+      </Sidebar.Footer>
+    </Sidebar.Root>
+  </div>
+
+  <Sidebar.Inset className="border-l border-cn-3 min-w-0">
+  <div className="flex h-full w-full min-w-0">
+  <div className="pointer-events-none select-none relative w-[20px] shrink-0 border-x border-cn-3 bg-cn-app-shell" aria-hidden="true" title="AI chat (collapsed)">
+    <Text className="absolute left-full top-1/2 -translate-x-1/2 -translate-y-1/2 text-cn-sidebar-toggle z-10">|</Text>
+  </div>
+  <div className="flex-1 min-w-0 overflow-auto px-cn-xl pt-cn-md pb-cn-xl">
+    <Breadcrumb.Root>
+      <Breadcrumb.List>
+        <Breadcrumb.Item><Breadcrumb.Link href="#">Repositories</Breadcrumb.Link></Breadcrumb.Item>
+        <Breadcrumb.Separator />
+        <Breadcrumb.Item><Breadcrumb.Link href="#">canary</Breadcrumb.Link></Breadcrumb.Item>
+        <Breadcrumb.Separator />
+        <Breadcrumb.Item><Breadcrumb.Page>Settings</Breadcrumb.Page></Breadcrumb.Item>
+      </Breadcrumb.List>
+    </Breadcrumb.Root>
+
+    <Layout.Vertical gap="xs" className="mt-cn-md mb-cn-xl">
+      <Text as="h1" variant="heading-hero">Repository settings</Text>
+      <Text variant="body-normal" color="foreground-3">Manage how this repository is configured, who can change it and how it is protected.</Text>
+    </Layout.Vertical>
+
+    <Layout.Horizontal gap="3xl" align="start">
+      <Layout.Grid gapY="lg" className="shrink-0" style={{ width: '228px', minWidth: '228px' }}>
+        <Layout.Grid gapY="3xs" className="w-full pb-cn-2xs">
+          <Text variant="body-single-line-strong" className="w-full rounded-cn-3 bg-cn-hover px-cn-sm py-cn-xs">General</Text>
+          <Text variant="body-single-line-normal" className="w-full rounded-cn-3 px-cn-sm py-cn-xs hover:bg-cn-hover">Labels</Text>
+          <Text variant="body-single-line-normal" className="w-full rounded-cn-3 px-cn-sm py-cn-xs hover:bg-cn-hover">Rules</Text>
+          <Text variant="body-single-line-normal" className="w-full rounded-cn-3 px-cn-sm py-cn-xs hover:bg-cn-hover">Webhooks</Text>
+        </Layout.Grid>
+        <Separator />
+        <Layout.Grid gapY="3xs" className="w-full pb-cn-2xs">
+          <Text variant="caption-single-line-normal" color="foreground-3" className="px-cn-sm">Security</Text>
+          <Text variant="body-single-line-normal" className="w-full rounded-cn-3 px-cn-sm py-cn-xs hover:bg-cn-hover">Access control</Text>
+          <Text variant="body-single-line-normal" className="w-full rounded-cn-3 px-cn-sm py-cn-xs hover:bg-cn-hover">Secret scanning</Text>
+        </Layout.Grid>
+      </Layout.Grid>
+
+      <Layout.Vertical gap="xl" className="min-w-0 flex-1 max-w-[640px]">
+        <Layout.Vertical gap="md">
+          <Text variant="heading-subsection">General</Text>
+          <TextInput label="Repository name" name="name" defaultValue="canary" />
+          <Textarea optional label="Description" name="description" placeholder="Describe what this repository is for" />
+          <ButtonLayout horizontalAlign="start">
+            <Button>Save</Button>
+            <Button variant="outline">Cancel</Button>
+          </ButtonLayout>
+        </Layout.Vertical>
+
+        <Separator />
+
+        <Layout.Vertical gap="md">
+          <Text variant="heading-subsection">Features</Text>
+          <Switch label="Enable issues" defaultChecked />
+          <Switch label="Enable wiki" />
+        </Layout.Vertical>
+
+        <Separator />
+
+        <Layout.Vertical gap="md">
+          <Text variant="heading-subsection">Danger zone</Text>
+          <Alert.Root theme="danger">
+            <Alert.Title>Delete this repository</Alert.Title>
+            <Alert.Description>Deleting a repository removes its code, history and settings. This cannot be undone.</Alert.Description>
+          </Alert.Root>
+          <ButtonLayout horizontalAlign="start">
+            <Button theme="danger">Delete repository</Button>
+          </ButtonLayout>
+        </Layout.Vertical>
+      </Layout.Vertical>
+    </Layout.Horizontal>
+  </div>
+
+  </div>
+  </Sidebar.Inset>
+</Sidebar.Provider>
+</div></div>`}
+/>
+
+## Example with header tabs
+
+The same layout under a page header with underlined tabs. The tabs switch between top-level areas of the repository, and the section menu navigates within the selected tab (here, Settings).
+
+<DocsPage.ComponentExample
+  client:only
+  padding={false}
+  code={`<div style={{ containerType: 'inline-size', width: '100%', aspectRatio: '1440 / 900', overflow: 'hidden', position: 'relative' }}>
+<div style={{ width: '1440px', height: '900px', transformOrigin: 'top left', transform: 'scale(tan(atan2(100cqw, 1440px)))' }}>
+<Sidebar.Provider style={{ '--cn-sidebar-min-height': '898px' }} className="!w-[1440px] !min-h-0 h-[900px] overflow-hidden border rounded-cn-3 bg-cn-1">
+  <div className="pointer-events-none select-none flex h-full shrink-0" aria-hidden="true">
+    <Sidebar.Root>
+      <Sidebar.Header className="pt-cn-xl pb-cn-md">
+        <div className="flex items-center justify-between gap-cn-xs px-cn-xs">
+          <div className="flex items-center gap-cn-xs min-w-0">
+            <IconV2 name="harness-plugins" size="md" className="text-[--cn-comp-sidebar-logo-icon]" />
+            <Text variant="body-single-line-strong" truncate>Harness / canary</Text>
+          </div>
+          <IconV2 name="nav-arrow-down" size="2xs" />
+        </div>
+      </Sidebar.Header>
+      <Sidebar.Content>
+        <Sidebar.Group>
+          <Sidebar.Item icon="dashboard" title="Home" active />
+          <Sidebar.Item icon="menu-more-horizontal" title="More" />
+        </Sidebar.Group>
+        <Sidebar.Separator />
+        <Sidebar.Group label="Recent">
+          <Sidebar.Item icon="repository" title="Repositories" />
+          <Sidebar.Item icon="pipeline" title="Pipelines" />
+          <Sidebar.Item icon="folder" title="Projects" />
+        </Sidebar.Group>
+      </Sidebar.Content>
+      <Sidebar.Footer>
+        <Sidebar.Item icon="bell" title="Alerts" />
+        <Sidebar.Item icon="help-circle" title="Help" />
+        <Sidebar.Item avatarFallback="JD" title="John Doe" />
+      </Sidebar.Footer>
+    </Sidebar.Root>
+  </div>
+
+  <Sidebar.Inset className="border-l border-cn-3 min-w-0">
+  <div className="flex h-full w-full min-w-0">
+  <div className="pointer-events-none select-none relative w-[20px] shrink-0 border-x border-cn-3 bg-cn-app-shell" aria-hidden="true" title="AI chat (collapsed)">
+    <Text className="absolute left-full top-1/2 -translate-x-1/2 -translate-y-1/2 text-cn-sidebar-toggle z-10">|</Text>
+  </div>
+  <div className="flex-1 min-w-0 overflow-auto px-cn-xl pt-cn-md pb-cn-xl">
+    <Tabs.Root defaultValue="settings">
+      <Page.HeaderV2
+        contentTabs
+        breadcrumbs={
+          <Breadcrumb.Root>
+            <Breadcrumb.List>
+              <Breadcrumb.Item><Breadcrumb.Link href="#">Repositories</Breadcrumb.Link></Breadcrumb.Item>
+              <Breadcrumb.Separator />
+              <Breadcrumb.Item><Breadcrumb.Page>canary</Breadcrumb.Page></Breadcrumb.Item>
+            </Breadcrumb.List>
+          </Breadcrumb.Root>
+        }
+        title="canary"
+        description="Manage how this repository is configured, who can change it and how it is protected."
+        tabs={[
+          { label: 'Code', value: 'code' },
+          { label: 'Pull requests', value: 'pulls', counter: 4 },
+          { label: 'Pipelines', value: 'pipelines' },
+          { label: 'Settings', value: 'settings' }
+        ]}
+      />
+    </Tabs.Root>
+
+    <Layout.Horizontal gap="3xl" align="start" className="mt-cn-xl">
+      <Layout.Grid gapY="lg" className="shrink-0" style={{ width: '228px', minWidth: '228px' }}>
+        <Layout.Grid gapY="3xs" className="w-full pb-cn-2xs">
+          <Text variant="body-single-line-strong" className="w-full rounded-cn-3 bg-cn-hover px-cn-sm py-cn-xs">General</Text>
+          <Text variant="body-single-line-normal" className="w-full rounded-cn-3 px-cn-sm py-cn-xs hover:bg-cn-hover">Labels</Text>
+          <Text variant="body-single-line-normal" className="w-full rounded-cn-3 px-cn-sm py-cn-xs hover:bg-cn-hover">Rules</Text>
+          <Text variant="body-single-line-normal" className="w-full rounded-cn-3 px-cn-sm py-cn-xs hover:bg-cn-hover">Webhooks</Text>
+        </Layout.Grid>
+        <Separator />
+        <Layout.Grid gapY="3xs" className="w-full pb-cn-2xs">
+          <Text variant="caption-single-line-normal" color="foreground-3" className="px-cn-sm">Security</Text>
+          <Text variant="body-single-line-normal" className="w-full rounded-cn-3 px-cn-sm py-cn-xs hover:bg-cn-hover">Access control</Text>
+          <Text variant="body-single-line-normal" className="w-full rounded-cn-3 px-cn-sm py-cn-xs hover:bg-cn-hover">Secret scanning</Text>
+        </Layout.Grid>
+      </Layout.Grid>
+
+      <Layout.Vertical gap="xl" className="min-w-0 flex-1 max-w-[640px]">
+        <Layout.Vertical gap="md">
+          <Text variant="heading-subsection">General</Text>
+          <TextInput label="Repository name" name="name" defaultValue="canary" />
+          <Textarea optional label="Description" name="description" placeholder="Describe what this repository is for" />
+          <ButtonLayout horizontalAlign="start">
+            <Button>Save</Button>
+            <Button variant="outline">Cancel</Button>
+          </ButtonLayout>
+        </Layout.Vertical>
+
+        <Separator />
+
+        <Layout.Vertical gap="md">
+          <Text variant="heading-subsection">Features</Text>
+          <Switch label="Enable issues" defaultChecked />
+          <Switch label="Enable wiki" />
+        </Layout.Vertical>
+
+        <Separator />
+
+        <Layout.Vertical gap="md">
+          <Text variant="heading-subsection">Danger zone</Text>
+          <Alert.Root theme="danger">
+            <Alert.Title>Delete this repository</Alert.Title>
+            <Alert.Description>Deleting a repository removes its code, history and settings. This cannot be undone.</Alert.Description>
+          </Alert.Root>
+          <ButtonLayout horizontalAlign="start">
+            <Button theme="danger">Delete repository</Button>
+          </ButtonLayout>
+        </Layout.Vertical>
+      </Layout.Vertical>
+    </Layout.Horizontal>
+  </div>
+
+  </div>
+  </Sidebar.Inset>
+</Sidebar.Provider>
+</div></div>`}
+/>
+
+</TabItem>
+
+<TabItem label="Usage">
+
+## Anatomy
+
+1. **Page header.** Breadcrumb, page title and a short description, as in the [standard page](/patterns/page-layouts/standard-page/).
+2. **Back link (optional).** Sits above the menu and returns to the parent list. Use it when the area was opened from a list, such as a single webhook.
+3. **Section menu.** A fixed 228px column of links. The active link is bold with a hover-colored background. Group related links and divide groups with a separator, with an optional small group title.
+4. **Section content.** Fills the remaining width. Each section starts with a subsection heading, and sections are divided by separators.
+
+## Guidelines
+
+- Use the section menu for **four or more** related sections. For two or three, use tabs in the page header.
+- The menu stays in view while the section content scrolls.
+- The section content has a **maximum width** (640px here), so forms stay readable. Empty space to the right of it is intentional; do not stretch fields to fill the page.
+- Keep link labels short enough to stay on one line; they are truncated, not wrapped.
+- Keep destructive actions in their own section at the bottom, separated from regular settings.
+
+</TabItem>
+
+</Tabs>
+
+</div>

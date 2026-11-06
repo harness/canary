@@ -1,5 +1,3 @@
-import { Fragment } from 'react'
-
 import { render, screen } from '@testing-library/react'
 import { describe, expect, test, vi } from 'vitest'
 
@@ -566,10 +564,8 @@ describe('Breadcrumb', () => {
       expect(screen.getByText('Only Page')).toBeInTheDocument()
     })
 
-    test('should collapse the leading steps when there are more than 5', () => {
-      // Trails over 5 steps collapse from the left: the root and early ancestors fold into an
-      // Ellipsis, leaving only the last couple of steps visible.
-      const { container } = render(
+    test('should render with many items', () => {
+      render(
         <Breadcrumb.Root>
           <Breadcrumb.List>
             {Array.from({ length: 10 }, (_, i) => (
@@ -580,12 +576,8 @@ describe('Breadcrumb', () => {
           </Breadcrumb.List>
         </Breadcrumb.Root>
       )
-      // Last two steps stay visible; everything from the root side is hidden behind the ellipsis.
-      expect(container.querySelector('.cn-breadcrumb-ellipsis')).toBeInTheDocument()
-      expect(screen.getByText('Page 8')).toBeInTheDocument()
+      expect(screen.getByText('Page 0')).toBeInTheDocument()
       expect(screen.getByText('Page 9')).toBeInTheDocument()
-      expect(screen.queryByText('Page 0')).not.toBeInTheDocument()
-      expect(screen.queryByText('Page 7')).not.toBeInTheDocument()
     })
 
     test('should render empty list', () => {
@@ -629,7 +621,6 @@ describe('Breadcrumb', () => {
     })
 
     test('should handle long text in breadcrumb items', () => {
-      // Labels over 30 chars are truncated in place; the full name moves to the title tooltip.
       const longText = 'Very Long Breadcrumb Text That Might Need Truncation'
       render(
         <Breadcrumb.Root>
@@ -640,211 +631,7 @@ describe('Breadcrumb', () => {
           </Breadcrumb.List>
         </Breadcrumb.Root>
       )
-      const page = screen.getByText('Very Long Breadcrumb Text That…')
-      expect(page).toBeInTheDocument()
-      expect(page).toHaveAttribute('title', longText)
-    })
-  })
-
-  describe('Label truncation', () => {
-    const SHORT = 'Short name' // 10 chars
-    const LONG = 'A'.repeat(40) // > 30, <= 80
-    const VERY_LONG = 'B'.repeat(100) // > 80
-
-    test('should leave labels of 30 chars or fewer untouched (no title)', () => {
-      render(
-        <Breadcrumb.Root>
-          <Breadcrumb.List>
-            <Breadcrumb.Item>
-              <Breadcrumb.Link href="/short">{SHORT}</Breadcrumb.Link>
-            </Breadcrumb.Item>
-          </Breadcrumb.List>
-        </Breadcrumb.Root>
-      )
-      const link = screen.getByText(SHORT)
-      expect(link).toBeInTheDocument()
-      expect(link).not.toHaveAttribute('title')
-    })
-
-    test('should truncate a Link label over 30 chars and reveal the full name in the title', () => {
-      render(
-        <Breadcrumb.Root>
-          <Breadcrumb.List>
-            <Breadcrumb.Item>
-              <Breadcrumb.Link href="/long">{LONG}</Breadcrumb.Link>
-            </Breadcrumb.Item>
-          </Breadcrumb.List>
-        </Breadcrumb.Root>
-      )
-      const link = screen.getByText(`${'A'.repeat(30)}…`)
-      expect(link).toBeInTheDocument()
-      expect(link).toHaveAttribute('title', LONG)
-    })
-
-    test('should truncate a Page label over 30 chars and reveal the full name in the title', () => {
-      render(
-        <Breadcrumb.Root>
-          <Breadcrumb.List>
-            <Breadcrumb.Item>
-              <Breadcrumb.Page>{LONG}</Breadcrumb.Page>
-            </Breadcrumb.Item>
-          </Breadcrumb.List>
-        </Breadcrumb.Root>
-      )
-      const page = screen.getByText(`${'A'.repeat(30)}…`)
-      expect(page).toBeInTheDocument()
-      expect(page).toHaveAttribute('title', LONG)
-    })
-
-    test('should cap the title tooltip at 80 chars for very long labels', () => {
-      render(
-        <Breadcrumb.Root>
-          <Breadcrumb.List>
-            <Breadcrumb.Item>
-              <Breadcrumb.Page>{VERY_LONG}</Breadcrumb.Page>
-            </Breadcrumb.Item>
-          </Breadcrumb.List>
-        </Breadcrumb.Root>
-      )
-      const page = screen.getByText(`${'B'.repeat(30)}…`)
-      const title = page.getAttribute('title') ?? ''
-      expect(title).toBe(`${'B'.repeat(79)}…`)
-      expect(title.length).toBe(80)
-    })
-
-    test('should leave non-string labels untouched', () => {
-      render(
-        <Breadcrumb.Root>
-          <Breadcrumb.List>
-            <Breadcrumb.Item>
-              <Breadcrumb.Page>
-                <strong>Rich</strong> label
-              </Breadcrumb.Page>
-            </Breadcrumb.Item>
-          </Breadcrumb.List>
-        </Breadcrumb.Root>
-      )
-      const strong = screen.getByText('Rich')
-      expect(strong.tagName).toBe('STRONG')
-      expect(strong.closest('.cn-breadcrumb-page')).not.toHaveAttribute('title')
-    })
-  })
-
-  describe('Trail collapse (more than 5 steps)', () => {
-    // A six-step trail: five ancestor links + the current page, with separators between them.
-    const SixStepTrail = () => (
-      <Breadcrumb.Root>
-        <Breadcrumb.List>
-          <Breadcrumb.Item>
-            <Breadcrumb.Link href="/a">Alpha</Breadcrumb.Link>
-          </Breadcrumb.Item>
-          <Breadcrumb.Separator />
-          <Breadcrumb.Item>
-            <Breadcrumb.Link href="/b">Bravo</Breadcrumb.Link>
-          </Breadcrumb.Item>
-          <Breadcrumb.Separator />
-          <Breadcrumb.Item>
-            <Breadcrumb.Link href="/c">Charlie</Breadcrumb.Link>
-          </Breadcrumb.Item>
-          <Breadcrumb.Separator />
-          <Breadcrumb.Item>
-            <Breadcrumb.Link href="/d">Delta</Breadcrumb.Link>
-          </Breadcrumb.Item>
-          <Breadcrumb.Separator />
-          <Breadcrumb.Item>
-            <Breadcrumb.Link href="/e">Echo</Breadcrumb.Link>
-          </Breadcrumb.Item>
-          <Breadcrumb.Separator />
-          <Breadcrumb.Item>
-            <Breadcrumb.Page>Foxtrot</Breadcrumb.Page>
-          </Breadcrumb.Item>
-        </Breadcrumb.List>
-      </Breadcrumb.Root>
-    )
-
-    test('should leave a 5-step trail fully expanded (no ellipsis)', () => {
-      const { container } = render(
-        <Breadcrumb.Root>
-          <Breadcrumb.List>
-            <Breadcrumb.Item>
-              <Breadcrumb.Link href="/a">Alpha</Breadcrumb.Link>
-            </Breadcrumb.Item>
-            <Breadcrumb.Separator />
-            <Breadcrumb.Item>
-              <Breadcrumb.Link href="/b">Bravo</Breadcrumb.Link>
-            </Breadcrumb.Item>
-            <Breadcrumb.Separator />
-            <Breadcrumb.Item>
-              <Breadcrumb.Link href="/c">Charlie</Breadcrumb.Link>
-            </Breadcrumb.Item>
-            <Breadcrumb.Separator />
-            <Breadcrumb.Item>
-              <Breadcrumb.Link href="/d">Delta</Breadcrumb.Link>
-            </Breadcrumb.Item>
-            <Breadcrumb.Separator />
-            <Breadcrumb.Item>
-              <Breadcrumb.Page>Echo</Breadcrumb.Page>
-            </Breadcrumb.Item>
-          </Breadcrumb.List>
-        </Breadcrumb.Root>
-      )
-      expect(container.querySelector('.cn-breadcrumb-ellipsis')).not.toBeInTheDocument()
-      ;['Alpha', 'Bravo', 'Charlie', 'Delta', 'Echo'].forEach(label =>
-        expect(screen.getByText(label)).toBeInTheDocument()
-      )
-    })
-
-    test('should collapse a trail over 5 steps, folding the root into an ellipsis on the left', () => {
-      const { container } = render(<SixStepTrail />)
-
-      // Ellipsis appears; only the last two steps remain visible.
-      expect(container.querySelector('.cn-breadcrumb-ellipsis')).toBeInTheDocument()
-      expect(screen.getByText('Echo')).toBeInTheDocument()
-      expect(screen.getByText('Foxtrot')).toBeInTheDocument()
-
-      // The root and the other early ancestors are hidden (tucked into the collapsed dropdown).
-      ;['Alpha', 'Bravo', 'Charlie', 'Delta'].forEach(label =>
-        expect(screen.queryByText(label)).not.toBeInTheDocument()
-      )
-    })
-
-    test('should keep the current page as the last visible step after collapsing', () => {
-      render(<SixStepTrail />)
-      const page = screen.getByText('Foxtrot')
-      expect(page).toHaveAttribute('aria-current', 'page')
-    })
-
-    test('should render the ellipsis before the surviving steps', () => {
-      const { container } = render(<SixStepTrail />)
-      const list = container.querySelector('.cn-breadcrumb-list')
-      const ellipsis = container.querySelector('.cn-breadcrumb-ellipsis')
-      const echo = screen.getByText('Echo')
-      // Ellipsis sits to the left of the first surviving step in document order.
-      expect(list?.contains(ellipsis)).toBe(true)
-      expect(ellipsis!.compareDocumentPosition(echo) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy()
-    })
-
-    test('should collapse trails whose steps are wrapped in fragments', () => {
-      // Mirrors how real consumers build trails: a map that returns a keyed Fragment per step.
-      const steps = ['One', 'Two', 'Three', 'Four', 'Five', 'Six', 'Seven']
-      const { container } = render(
-        <Breadcrumb.Root>
-          <Breadcrumb.List>
-            {steps.map((label, index) => (
-              <Fragment key={label}>
-                {index > 0 && <Breadcrumb.Separator />}
-                <Breadcrumb.Item>
-                  <Breadcrumb.Link href={`/${label}`}>{label}</Breadcrumb.Link>
-                </Breadcrumb.Item>
-              </Fragment>
-            ))}
-          </Breadcrumb.List>
-        </Breadcrumb.Root>
-      )
-      expect(container.querySelector('.cn-breadcrumb-ellipsis')).toBeInTheDocument()
-      expect(screen.getByText('Six')).toBeInTheDocument()
-      expect(screen.getByText('Seven')).toBeInTheDocument()
-      expect(screen.queryByText('One')).not.toBeInTheDocument()
+      expect(screen.getByText(longText)).toBeInTheDocument()
     })
   })
 

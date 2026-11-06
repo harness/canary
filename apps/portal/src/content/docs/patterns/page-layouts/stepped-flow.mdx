@@ -1,0 +1,28 @@
+---
+title: Stepped Flow
+description: A multi-step flow with a step indicator beside the current step's content, for setup and creation wizards.
+---
+
+import { DocsPage } from "@/components/docs-page";
+import { Text } from "@harnessio/ui/components";
+
+A multi-step flow with a step indicator beside the current step's content, for setup and creation wizards. In product code this is built with `Stepper`.
+
+<DocsPage.ComponentExample
+  client:only
+  code={`<Layout.Grid columns="200px 1fr" gap="md" className="p-cn-md border rounded-cn-3">
+  <Layout.Vertical gap="sm">
+    <Text variant="body-strong">1. Details</Text>
+    <Text variant="body-normal" color="foreground-3">2. Configuration</Text>
+    <Text variant="body-normal" color="foreground-3">3. Review</Text>
+  </Layout.Vertical>
+  <div className="bg-cn-2 p-cn-md rounded-cn-3">
+    <Text variant="heading-base" className="mb-cn-sm">Details</Text>
+    <Text variant="body-normal" className="mb-cn-md">Fields for the current step.</Text>
+    <Layout.Flex gap="sm" justify="end">
+      <Button variant="outline">Back</Button>
+      <Button>Next</Button>
+    </Layout.Flex>
+  </div>
+</Layout.Grid>`}
+/>

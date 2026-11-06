@@ -1,0 +1,353 @@
+---
+title: Resizable Split
+description: Two panels separated by a drag handle so people can adjust the space between them, such as an editor beside its test results or a request beside its response.
+tableOfContents: false
+---
+
+import { DocsPage } from "@/components/docs-page";
+import { Text } from "@harnessio/ui/components";
+import { Tabs, TabItem } from "@astrojs/starlight/components";
+import PageTabsToc from "@/components/page-tabs-toc.astro";
+
+<PageTabsToc />
+
+<div id="page-level-tabs">
+
+<Tabs>
+
+<TabItem label="Overview">
+
+Two panels separated by a drag handle so people can adjust the space between them. Use it when both panels hold working content and the right balance depends on the task, such as an editor beside its results. In product code this is `Resizable.PanelGroup`, `Resizable.Panel` and `Resizable.Handle`.
+
+## Example: rule editor and test panel
+
+A governance rule page inside the full application shell. The left panel holds the YAML editor and the right panel runs the rule against sample commits. The group sits in a bordered frame and starts at a 40 / 60 split.
+
+The app sidebar and the collapsed AI chat rail are boilerplate, rebuilt from the production shell and shown disabled for context only.
+
+:::note
+These demos are drawn on a 1440 × 900 screen and scaled down to fit the page, so they appear smaller than 100%. Sizes, spacing and text in the demos are reduced by the same percentage; the real values are listed in the Usage tab.
+:::
+
+<DocsPage.ComponentExample
+  client:only
+  padding={false}
+  code={`<div style={{ containerType: 'inline-size', width: '100%', aspectRatio: '1440 / 900', overflow: 'hidden', position: 'relative' }}>
+<div style={{ width: '1440px', height: '900px', transformOrigin: 'top left', transform: 'scale(tan(atan2(100cqw, 1440px)))' }}>
+<Sidebar.Provider style={{ '--cn-sidebar-min-height': '898px' }} className="!w-[1440px] !min-h-0 h-[900px] overflow-hidden border rounded-cn-3 bg-cn-1">
+  <div className="pointer-events-none select-none flex h-full shrink-0" aria-hidden="true">
+    <Sidebar.Root>
+      <Sidebar.Header className="pt-cn-xl pb-cn-md">
+        <div className="flex items-center justify-between gap-cn-xs px-cn-xs">
+          <div className="flex items-center gap-cn-xs min-w-0">
+            <IconV2 name="harness-plugins" size="md" className="text-[--cn-comp-sidebar-logo-icon]" />
+            <Text variant="body-single-line-strong" truncate>Harness / canary</Text>
+          </div>
+          <IconV2 name="nav-arrow-down" size="2xs" />
+        </div>
+      </Sidebar.Header>
+      <Sidebar.Content>
+        <Sidebar.Group>
+          <Sidebar.Item icon="dashboard" title="Home" />
+          <Sidebar.Item icon="menu-more-horizontal" title="More" />
+        </Sidebar.Group>
+        <Sidebar.Separator />
+        <Sidebar.Group label="Recent">
+          <Sidebar.Item icon="repository" title="Repositories" />
+          <Sidebar.Item icon="pipeline" title="Pipelines" />
+          <Sidebar.Item icon="folder" title="Projects" />
+        </Sidebar.Group>
+      </Sidebar.Content>
+      <Sidebar.Footer>
+        <Sidebar.Item icon="bell" title="Alerts" />
+        <Sidebar.Item icon="help-circle" title="Help" />
+        <Sidebar.Item avatarFallback="JD" title="John Doe" />
+      </Sidebar.Footer>
+    </Sidebar.Root>
+  </div>
+
+  <Sidebar.Inset className="border-l border-cn-3 min-w-0">
+  <div className="flex h-full w-full min-w-0">
+  <div className="pointer-events-none select-none relative w-[20px] shrink-0 border-x border-cn-3 bg-cn-app-shell" aria-hidden="true" title="AI chat (collapsed)">
+    <Text className="absolute left-full top-1/2 -translate-x-1/2 -translate-y-1/2 text-cn-sidebar-toggle z-10">|</Text>
+  </div>
+  <div className="flex-1 min-w-0 overflow-auto px-cn-xl pt-cn-md pb-cn-xl">
+    <Page.HeaderV2
+      breadcrumbs={<Breadcrumb.Root><Breadcrumb.List><Breadcrumb.Item><Breadcrumb.Link href="#">Governance</Breadcrumb.Link></Breadcrumb.Item><Breadcrumb.Separator /><Breadcrumb.Item><Breadcrumb.Link href="#">Rules</Breadcrumb.Link></Breadcrumb.Item><Breadcrumb.Separator /><Breadcrumb.Item><Breadcrumb.Page>Require signed commits</Breadcrumb.Page></Breadcrumb.Item></Breadcrumb.List></Breadcrumb.Root>}
+      title="Require signed commits"
+      description="Blocks pushes to protected branches when a commit is not signed."
+      actions={<Button variant="outline">Back to rules</Button>}
+    />
+    <Resizable.PanelGroup direction="horizontal" className="mt-cn-xl rounded-cn-3 border" style={{ height: '640px' }}>
+      <Resizable.Panel className="min-h-0" defaultSize={40} minSize={30}>
+        <div className="flex h-full flex-col">
+          <div className="flex items-center justify-between gap-cn-md border-b px-cn-md py-cn-sm">
+            <Text variant="body-strong">Rule definition</Text>
+            <div className="flex items-center gap-cn-xs">
+              <Button variant="outline" size="sm">Validate</Button>
+              <Button size="sm">Save</Button>
+            </div>
+          </div>
+          <pre className="flex-1 overflow-auto bg-cn-2 p-cn-md font-body-code text-cn-size-2 leading-6">{'name: require-signed-commits\\nenabled: true\\nscope:\\n  branches:\\n    - main\\n    - release/*\\nconditions:\\n  - field: commit.signature\\n    operator: equals\\n    value: verified\\nactions:\\n  - block'}</pre>
+          <div className="border-t px-cn-md py-cn-xs"><Text variant="caption-single-line-normal" color="foreground-3">Last updated 2 hours ago</Text></div>
+        </div>
+      </Resizable.Panel>
+      <Resizable.Handle withHandle />
+      <Resizable.Panel className="min-h-0" defaultSize={60} minSize={35}>
+        <div className="flex h-full flex-col">
+          <div className="flex items-center justify-between gap-cn-md border-b px-cn-md py-cn-sm">
+            <Text variant="body-strong">Test and run</Text>
+            <Button size="sm">Run test</Button>
+          </div>
+          <div className="flex flex-1 flex-col gap-cn-md overflow-auto p-cn-md">
+            <div className="flex flex-col gap-cn-3xs">
+              <Text variant="caption-single-line-normal" color="foreground-3">Repository</Text>
+              <Text>canary</Text>
+            </div>
+            <Separator />
+            <Text variant="body-strong">Results</Text>
+            <Table.Root disableHighlightOnHover>
+              <Table.Header>
+                <Table.Row>
+                  <Table.Head>Commit</Table.Head>
+                  <Table.Head>Branch</Table.Head>
+                  <Table.Head>Result</Table.Head>
+                </Table.Row>
+              </Table.Header>
+              <Table.Body>
+                <Table.Row><Table.Cell>a41f9c2</Table.Cell><Table.Cell>main</Table.Cell><Table.Cell><StatusBadge variant="status" theme="success">Allowed</StatusBadge></Table.Cell></Table.Row>
+                <Table.Row><Table.Cell>7be03d1</Table.Cell><Table.Cell>main</Table.Cell><Table.Cell><StatusBadge variant="status" theme="danger">Blocked</StatusBadge></Table.Cell></Table.Row>
+                <Table.Row><Table.Cell>c9d2e48</Table.Cell><Table.Cell>release/1.4</Table.Cell><Table.Cell><StatusBadge variant="status" theme="success">Allowed</StatusBadge></Table.Cell></Table.Row>
+              </Table.Body>
+            </Table.Root>
+          </div>
+        </div>
+      </Resizable.Panel>
+    </Resizable.PanelGroup>
+  </div>
+  </div>
+  </Sidebar.Inset>
+</Sidebar.Provider>
+</div></div>`}
+/>
+
+## Example: request and response
+
+An API testing page. The request builder takes the larger share at 55 / 45 because people spend most of their time editing it; the response panel can shrink to a 25% minimum. There is no frame, so the handle with grip sits directly on the page.
+
+<DocsPage.ComponentExample
+  client:only
+  padding={false}
+  code={`<div style={{ containerType: 'inline-size', width: '100%', aspectRatio: '1440 / 900', overflow: 'hidden', position: 'relative' }}>
+<div style={{ width: '1440px', height: '900px', transformOrigin: 'top left', transform: 'scale(tan(atan2(100cqw, 1440px)))' }}>
+<Sidebar.Provider style={{ '--cn-sidebar-min-height': '898px' }} className="!w-[1440px] !min-h-0 h-[900px] overflow-hidden border rounded-cn-3 bg-cn-1">
+  <div className="pointer-events-none select-none flex h-full shrink-0" aria-hidden="true">
+    <Sidebar.Root>
+      <Sidebar.Header className="pt-cn-xl pb-cn-md">
+        <div className="flex items-center justify-between gap-cn-xs px-cn-xs">
+          <div className="flex items-center gap-cn-xs min-w-0">
+            <IconV2 name="harness-plugins" size="md" className="text-[--cn-comp-sidebar-logo-icon]" />
+            <Text variant="body-single-line-strong" truncate>Harness / canary</Text>
+          </div>
+          <IconV2 name="nav-arrow-down" size="2xs" />
+        </div>
+      </Sidebar.Header>
+      <Sidebar.Content>
+        <Sidebar.Group>
+          <Sidebar.Item icon="dashboard" title="Home" />
+          <Sidebar.Item icon="menu-more-horizontal" title="More" />
+        </Sidebar.Group>
+        <Sidebar.Separator />
+        <Sidebar.Group label="Recent">
+          <Sidebar.Item icon="repository" title="Repositories" />
+          <Sidebar.Item icon="pipeline" title="Pipelines" />
+          <Sidebar.Item icon="folder" title="Projects" />
+        </Sidebar.Group>
+      </Sidebar.Content>
+      <Sidebar.Footer>
+        <Sidebar.Item icon="bell" title="Alerts" />
+        <Sidebar.Item icon="help-circle" title="Help" />
+        <Sidebar.Item avatarFallback="JD" title="John Doe" />
+      </Sidebar.Footer>
+    </Sidebar.Root>
+  </div>
+
+  <Sidebar.Inset className="border-l border-cn-3 min-w-0">
+  <div className="flex h-full w-full min-w-0">
+  <div className="pointer-events-none select-none relative w-[20px] shrink-0 border-x border-cn-3 bg-cn-app-shell" aria-hidden="true" title="AI chat (collapsed)">
+    <Text className="absolute left-full top-1/2 -translate-x-1/2 -translate-y-1/2 text-cn-sidebar-toggle z-10">|</Text>
+  </div>
+  <div className="flex-1 min-w-0 overflow-auto px-cn-xl pt-cn-md pb-cn-xl">
+    <Page.HeaderV2
+      breadcrumbs={<Breadcrumb.Root><Breadcrumb.List><Breadcrumb.Item><Breadcrumb.Link href="#">API testing</Breadcrumb.Link></Breadcrumb.Item><Breadcrumb.Separator /><Breadcrumb.Item><Breadcrumb.Link href="#">Requests</Breadcrumb.Link></Breadcrumb.Item><Breadcrumb.Separator /><Breadcrumb.Item><Breadcrumb.Page>Get user</Breadcrumb.Page></Breadcrumb.Item></Breadcrumb.List></Breadcrumb.Root>}
+      title="Get user"
+      description="Fetch a single user by id."
+    />
+    <Resizable.PanelGroup direction="horizontal" className="mt-cn-xl" style={{ height: '640px' }}>
+      <Resizable.Panel defaultSize={55} minSize={35}>
+        <div className="flex h-full flex-col gap-cn-md pr-cn-md">
+          <div className="flex items-center gap-cn-xs">
+            <div className="flex h-cn-8 w-[96px] shrink-0 items-center rounded-cn-3 border px-cn-sm"><Text variant="body-strong">GET</Text></div>
+            <div className="min-w-0 flex-1"><SearchInput placeholder="https://api.example.com/users/42" /></div>
+            <Button>Send</Button>
+          </div>
+          <Tabs.Root defaultValue="headers">
+            <Tabs.List>
+              <Tabs.Trigger value="headers">Headers</Tabs.Trigger>
+              <Tabs.Trigger value="body">Body</Tabs.Trigger>
+              <Tabs.Trigger value="params">Params</Tabs.Trigger>
+              <Tabs.Trigger value="scripts">Scripts</Tabs.Trigger>
+            </Tabs.List>
+            <Tabs.Content value="headers" className="pt-cn-md">
+              <Table.Root disableHighlightOnHover>
+                <Table.Header>
+                  <Table.Row><Table.Head>Key</Table.Head><Table.Head>Value</Table.Head></Table.Row>
+                </Table.Header>
+                <Table.Body>
+                  <Table.Row><Table.Cell>Accept</Table.Cell><Table.Cell>application/json</Table.Cell></Table.Row>
+                  <Table.Row><Table.Cell>Authorization</Table.Cell><Table.Cell>Bearer ••••••••</Table.Cell></Table.Row>
+                  <Table.Row><Table.Cell>X-Request-Id</Table.Cell><Table.Cell>9f2c61a0</Table.Cell></Table.Row>
+                </Table.Body>
+              </Table.Root>
+            </Tabs.Content>
+          </Tabs.Root>
+        </div>
+      </Resizable.Panel>
+      <Resizable.Handle withHandle />
+      <Resizable.Panel defaultSize={45} minSize={25}>
+        <div className="flex h-full flex-col gap-cn-md pl-cn-md">
+          <div className="flex items-center gap-cn-sm">
+            <Text variant="body-strong">Response</Text>
+            <StatusBadge variant="status" theme="success">200 OK</StatusBadge>
+            <Text color="foreground-3">142 ms · 1.2 KB</Text>
+          </div>
+          <pre className="flex-1 overflow-auto rounded-cn-3 border bg-cn-2 p-cn-md font-body-code text-cn-size-2 leading-6">{'{\\n  "id": 42,\\n  "name": "Ada Lovelace",\\n  "email": "ada@example.com",\\n  "role": "admin",\\n  "createdAt": "2026-03-14T09:21:00Z"\\n}'}</pre>
+        </div>
+      </Resizable.Panel>
+    </Resizable.PanelGroup>
+  </div>
+  </div>
+  </Sidebar.Inset>
+</Sidebar.Provider>
+</div></div>`}
+/>
+
+## Example: eval studio
+
+An evaluation studio with a canvas on the left and results on the right. This one uses a plain handle without the grip, because the divider between the two panels already reads as a boundary.
+
+<DocsPage.ComponentExample
+  client:only
+  padding={false}
+  code={`<div style={{ containerType: 'inline-size', width: '100%', aspectRatio: '1440 / 900', overflow: 'hidden', position: 'relative' }}>
+<div style={{ width: '1440px', height: '900px', transformOrigin: 'top left', transform: 'scale(tan(atan2(100cqw, 1440px)))' }}>
+<Sidebar.Provider style={{ '--cn-sidebar-min-height': '898px' }} className="!w-[1440px] !min-h-0 h-[900px] overflow-hidden border rounded-cn-3 bg-cn-1">
+  <div className="pointer-events-none select-none flex h-full shrink-0" aria-hidden="true">
+    <Sidebar.Root>
+      <Sidebar.Header className="pt-cn-xl pb-cn-md">
+        <div className="flex items-center justify-between gap-cn-xs px-cn-xs">
+          <div className="flex items-center gap-cn-xs min-w-0">
+            <IconV2 name="harness-plugins" size="md" className="text-[--cn-comp-sidebar-logo-icon]" />
+            <Text variant="body-single-line-strong" truncate>Harness / canary</Text>
+          </div>
+          <IconV2 name="nav-arrow-down" size="2xs" />
+        </div>
+      </Sidebar.Header>
+      <Sidebar.Content>
+        <Sidebar.Group>
+          <Sidebar.Item icon="dashboard" title="Home" />
+          <Sidebar.Item icon="menu-more-horizontal" title="More" />
+        </Sidebar.Group>
+        <Sidebar.Separator />
+        <Sidebar.Group label="Recent">
+          <Sidebar.Item icon="repository" title="Repositories" />
+          <Sidebar.Item icon="pipeline" title="Pipelines" />
+          <Sidebar.Item icon="folder" title="Projects" />
+        </Sidebar.Group>
+      </Sidebar.Content>
+      <Sidebar.Footer>
+        <Sidebar.Item icon="bell" title="Alerts" />
+        <Sidebar.Item icon="help-circle" title="Help" />
+        <Sidebar.Item avatarFallback="JD" title="John Doe" />
+      </Sidebar.Footer>
+    </Sidebar.Root>
+  </div>
+
+  <Sidebar.Inset className="border-l border-cn-3 min-w-0">
+  <div className="flex h-full w-full min-w-0">
+  <div className="pointer-events-none select-none relative w-[20px] shrink-0 border-x border-cn-3 bg-cn-app-shell" aria-hidden="true" title="AI chat (collapsed)">
+    <Text className="absolute left-full top-1/2 -translate-x-1/2 -translate-y-1/2 text-cn-sidebar-toggle z-10">|</Text>
+  </div>
+  <div className="flex-1 min-w-0 overflow-auto px-cn-xl pt-cn-md pb-cn-xl">
+    <div className="flex items-center justify-between gap-cn-md pb-cn-md">
+      <div className="flex items-center gap-cn-sm">
+        <Button variant="ghost" iconOnly aria-label="Back"><IconV2 name="nav-arrow-left" /></Button>
+        <Text variant="heading-section">Eval studio</Text>
+        <StatusBadge variant="status" theme="muted">Draft</StatusBadge>
+      </div>
+      <div className="flex items-center gap-cn-xs">
+        <Button variant="outline">View YAML</Button>
+        <Button>Run eval</Button>
+      </div>
+    </div>
+    <Resizable.PanelGroup direction="horizontal" className="rounded-cn-3 border" style={{ height: '720px' }}>
+      <Resizable.Panel defaultSize={40} minSize={25}>
+        <div className="flex h-full flex-col gap-cn-md overflow-auto p-cn-lg">
+          <Text variant="body-strong">Evaluators</Text>
+          <div className="flex flex-col gap-cn-sm">
+            <div className="rounded-cn-3 border p-cn-md"><Text variant="body-strong">Answer relevance</Text><Text color="foreground-3">Scores how well the answer addresses the question.</Text></div>
+            <div className="rounded-cn-3 border p-cn-md"><Text variant="body-strong">Faithfulness</Text><Text color="foreground-3">Checks the answer against the retrieved context.</Text></div>
+            <div className="rounded-cn-3 border p-cn-md"><Text variant="body-strong">Toxicity</Text><Text color="foreground-3">Flags unsafe or offensive output.</Text></div>
+          </div>
+          <Button variant="outline"><IconV2 name="plus" />Add evaluator</Button>
+        </div>
+      </Resizable.Panel>
+      <Resizable.Handle />
+      <Resizable.Panel defaultSize={60} minSize={25}>
+        <div className="flex h-full flex-col gap-cn-md overflow-auto p-cn-lg">
+          <Text variant="body-strong">Results</Text>
+          <Table.Root disableHighlightOnHover>
+            <Table.Header>
+              <Table.Row><Table.Head>Test case</Table.Head><Table.Head>Evaluator</Table.Head><Table.Head>Score</Table.Head><Table.Head>Result</Table.Head></Table.Row>
+            </Table.Header>
+            <Table.Body>
+              <Table.Row><Table.Cell>Refund policy</Table.Cell><Table.Cell>Answer relevance</Table.Cell><Table.Cell>0.92</Table.Cell><Table.Cell><StatusBadge variant="status" theme="success">Pass</StatusBadge></Table.Cell></Table.Row>
+              <Table.Row><Table.Cell>Shipping times</Table.Cell><Table.Cell>Faithfulness</Table.Cell><Table.Cell>0.48</Table.Cell><Table.Cell><StatusBadge variant="status" theme="danger">Fail</StatusBadge></Table.Cell></Table.Row>
+              <Table.Row><Table.Cell>Account reset</Table.Cell><Table.Cell>Toxicity</Table.Cell><Table.Cell>0.99</Table.Cell><Table.Cell><StatusBadge variant="status" theme="success">Pass</StatusBadge></Table.Cell></Table.Row>
+            </Table.Body>
+          </Table.Root>
+        </div>
+      </Resizable.Panel>
+    </Resizable.PanelGroup>
+  </div>
+  </div>
+  </Sidebar.Inset>
+</Sidebar.Provider>
+</div></div>`}
+/>
+
+</TabItem>
+
+<TabItem label="Usage">
+
+## Anatomy
+
+1. **Panel group.** `Resizable.PanelGroup` with `direction="horizontal"` for side-by-side panels. It needs a height, such as a fixed `height`, `min-h-[600px]` or a flex parent with `h-full`, otherwise the panels collapse.
+2. **Panels.** Each `Resizable.Panel` takes a `defaultSize` and a `minSize`, both as percentages. The sizes of all panels in a group should add up to 100.
+3. **Handle.** `Resizable.Handle` between panels. Add `withHandle` to show a grip so the drag target is easy to find.
+4. **Panel content.** Each panel fills its area and scrolls on its own. Give panels `min-h-0` and `overflow-auto` so long content scrolls inside the panel and not the page.
+
+## Guidelines
+
+- Always set `minSize` on every panel, typically 25 to 35, so neither panel can be dragged shut.
+- Give the panel people work in most the larger share: 55 / 45 for a builder and its output, 40 / 60 for an editor beside results.
+- Use `withHandle` when the groups are framed or dense. Use the plain handle when a border already separates the panels.
+- Give each panel its own header with a title and actions, so the split reads as two tools rather than one blank area.
+- Only split when both panels are useful at the same time. For primary content with supporting details, use [main and side columns](/patterns/page-layouts/main-and-side-columns/).
+- Below the tablet breakpoint, stack the panels or switch to tabs.
+
+</TabItem>
+
+</Tabs>
+
+</div>

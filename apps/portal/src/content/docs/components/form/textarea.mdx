@@ -51,6 +51,49 @@ The `Textarea` component is a multi-line text input with options for a label, ca
 `}
 />
 
+## Mention textarea
+
+`MentionTextarea` extends `Textarea` with an inline suggestion menu. Typing the `triggerChar` (default `@`) opens a list of `items` at the caret; selecting one inserts `formatMention(item)` (default `@[value]`). It is controlled through `value` / `onValueChange` and accepts all `Textarea` props.
+
+<DocsPage.ComponentExample
+  client:only
+  code={`
+  () => {
+    const [value, setValue] = React.useState('Ping @');
+    const people = [
+      { id: '1', value: 'alice', label: 'Alice Smith' },
+      { id: '2', value: 'bob', label: 'Bob Jones' },
+      { id: '3', value: 'carol', label: 'Carol White' }
+    ];
+    const [query, setQuery] = React.useState('');
+    const items = people.filter(p => p.value.includes(query.toLowerCase()));
+    return (
+      <div className="min-w-[400px]">
+        <MentionTextarea
+          label="Comment"
+          placeholder="Type @ to mention someone"
+          rows={4}
+          value={value}
+          onValueChange={setValue}
+          items={items}
+          onSearchChange={setQuery}
+        />
+      </div>
+    );
+  }
+`}
+/>
+
+```tsx
+import { MentionTextarea } from "@harnessio/ui/components";
+
+<MentionTextarea
+  value={value}
+  onValueChange={setValue}
+  items={[{ id: "1", value: "alice", label: "Alice Smith" }]}
+/>;
+```
+
 ## Installation
 
 ```tsx
@@ -312,6 +355,86 @@ import { Textarea } from "@harnessio/ui/components";
   `className`, `disabled` (when true, the tooltip is not shown), and
   `iconProps`.
 </Aside>
+
+### `MentionTextarea`
+
+Accepts every `Textarea` prop except `onChange`, plus:
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "value",
+      description: "Current textarea value.",
+      required: true,
+      value: "string",
+    },
+    {
+      name: "onValueChange",
+      description: "Called when the value changes.",
+      required: true,
+      value: "(value: string) => void",
+    },
+    {
+      name: "items",
+      description:
+        "Items shown in the suggestion menu. Filter them yourself using `onSearchChange`.",
+      required: true,
+      value: "{ id: string; value: string; label?: string }[]",
+    },
+    {
+      name: "triggerChar",
+      description: "Character that opens the suggestion menu.",
+      required: false,
+      defaultValue: "'@'",
+      value: "string",
+    },
+    {
+      name: "isLoading",
+      description: "Whether items are loading.",
+      required: false,
+      defaultValue: "false",
+      value: "boolean",
+    },
+    {
+      name: "loadingContent",
+      description: "Content shown while loading.",
+      required: false,
+      value: "ReactNode",
+    },
+    {
+      name: "emptyMessage",
+      description: "Message shown when no items match.",
+      required: false,
+      defaultValue: "'No results found'",
+      value: "ReactNode",
+    },
+    {
+      name: "onSearchChange",
+      description: "Called with the text typed after the trigger character.",
+      required: false,
+      value: "(query: string) => void",
+    },
+    {
+      name: "onItemSelect",
+      description: "Called when an item is selected.",
+      required: false,
+      value: "(item) => void",
+    },
+    {
+      name: "formatMention",
+      description: "Formats the text inserted for a selected item.",
+      required: false,
+      defaultValue: "`@[${item.value}]`",
+      value: "(item) => string",
+    },
+    {
+      name: "renderItem",
+      description: "Custom renderer for each item.",
+      required: false,
+      value: "(item) => ReactNode",
+    },
+  ]}
+/>
 
 </TabItem>
 

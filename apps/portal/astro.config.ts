@@ -500,6 +500,8 @@ export default defineConfig({
               label: "Overview",
               attrs: { "data-icon": "circle-with-sector" },
             },
+            { slug: "data-viz/gauge", label: "Gauge" },
+            { slug: "data-viz/meter", label: "Meter" },
           ],
         },
       ],

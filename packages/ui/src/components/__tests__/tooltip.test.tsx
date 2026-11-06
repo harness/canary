@@ -1,7 +1,7 @@
 import { forwardRef } from 'react'
 
 import { FullTheme, ThemeProvider } from '@/context'
-import { render, RenderResult, screen } from '@testing-library/react'
+import { act, fireEvent, render, RenderResult, screen, waitFor } from '@testing-library/react'
 import { vi } from 'vitest'
 
 import { Tooltip, TooltipProvider, withTooltip } from '../tooltip'
@@ -117,6 +117,87 @@ describe('Tooltip', () => {
     )
 
     expect(ref).toHaveBeenCalled()
+  })
+
+  test('should not open on focus when triggerOnFocus is false (default)', () => {
+    renderComponent({ content: 'Hover only' })
+
+    const trigger = screen.getByRole('button', { name: 'Hover me' })
+    trigger.focus()
+
+    expect(document.querySelector('.cn-tooltip')).toBeFalsy()
+  })
+
+  test('should open on pointer hover when triggerOnFocus is false (default)', () => {
+    renderComponent({ content: 'Hover only', delay: 0 })
+
+    const trigger = screen.getByRole('button', { name: 'Hover me' })
+    fireEvent.pointerEnter(trigger)
+
+    expect(document.querySelector('.cn-tooltip')).toBeTruthy()
+  })
+
+  test('should respect delay before opening on pointer hover in hover-only mode', () => {
+    vi.useFakeTimers()
+    renderComponent({ content: 'Hover only', delay: 400 })
+
+    const trigger = screen.getByRole('button', { name: 'Hover me' })
+    fireEvent.pointerEnter(trigger)
+    expect(document.querySelector('.cn-tooltip')).toBeFalsy()
+
+    act(() => {
+      vi.advanceTimersByTime(400)
+    })
+    expect(document.querySelector('.cn-tooltip')).toBeTruthy()
+    vi.useRealTimers()
+  })
+
+  test('should cancel delayed open when trigger blurs before hover delay completes', () => {
+    vi.useFakeTimers()
+    renderComponent({ content: 'Hover only', delay: 400 })
+
+    const trigger = screen.getByRole('button', { name: 'Hover me' })
+    fireEvent.pointerEnter(trigger)
+    fireEvent.blur(trigger)
+
+    act(() => {
+      vi.advanceTimersByTime(400)
+    })
+    expect(document.querySelector('.cn-tooltip')).toBeFalsy()
+    vi.useRealTimers()
+  })
+
+  test('should close on trigger click in hover-only mode', () => {
+    renderComponent({ content: 'Hover only', delay: 0 })
+
+    const trigger = screen.getByRole('button', { name: 'Hover me' })
+    fireEvent.pointerEnter(trigger)
+    expect(document.querySelector('.cn-tooltip')).toBeTruthy()
+
+    fireEvent.click(trigger)
+    expect(document.querySelector('.cn-tooltip')).toBeFalsy()
+  })
+
+  test('should close on window blur in hover-only mode', () => {
+    renderComponent({ content: 'Hover only', delay: 0 })
+
+    const trigger = screen.getByRole('button', { name: 'Hover me' })
+    fireEvent.pointerEnter(trigger)
+    expect(document.querySelector('.cn-tooltip')).toBeTruthy()
+
+    fireEvent.blur(window)
+    expect(document.querySelector('.cn-tooltip')).toBeFalsy()
+  })
+
+  test('should open on focus when triggerOnFocus is true', async () => {
+    renderComponent({ content: 'Focus tooltip', triggerOnFocus: true, delay: 0 })
+
+    const trigger = screen.getByRole('button', { name: 'Hover me' })
+    trigger.focus()
+
+    await waitFor(() => {
+      expect(document.querySelector('.cn-tooltip')).toBeTruthy()
+    })
   })
 })
 

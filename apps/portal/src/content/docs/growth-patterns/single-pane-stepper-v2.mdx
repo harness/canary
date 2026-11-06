@@ -1,11 +1,22 @@
 ---
 title: Single Pane Chat Stepper
 description: A single-column guided flow that keeps the stepper timeline and shows completed answers as chat messages instead of accordion cards.
+tableOfContents: false
 ---
 
 import { DocsPage } from "@/components/docs-page";
 import { Aside } from "@astrojs/starlight/components";
 import { FlagOnboardingDemo } from "@/components/single-pane-stepper-v2-demo";
+import { Tabs, TabItem } from "@astrojs/starlight/components";
+import PageTabsToc from "@/components/page-tabs-toc.astro";
+
+<PageTabsToc />
+
+<div id="page-level-tabs">
+
+<Tabs>
+
+<TabItem label="Overview">
 
 The Single Pane Chat Stepper (`SinglePaneStepperV2`) is a single-column guided flow for conversational setup. It keeps the vertical stepper timeline from the original [Single Pane Stepper](/growth-patterns/single-pane-stepper) — checkmarks, connectors, and step badges — but completed answers render as chat messages.
 
@@ -31,6 +42,10 @@ This example walks through creating a first feature flag. Complete a step to see
   Use the edit control on a completed message to go back. Subsequent answers are
   discarded after confirmation.
 </Aside>
+
+</TabItem>
+
+<TabItem label="Usage">
 
 ## Usage
 
@@ -327,3 +342,9 @@ Completed messages include:
 - Message edit is labeled `Edit this answer`
 - Copy uses the existing `CopyButton` control
 - The go-back confirmation dialog is the same warning `AlertDialog` used by the other steppers
+
+</TabItem>
+
+</Tabs>
+
+</div>

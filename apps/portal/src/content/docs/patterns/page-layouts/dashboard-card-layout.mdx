@@ -1,47 +1,218 @@
 ---
 title: Dashboard Card Layout
-description: A grid of cards for dashboard displays.
+description: A page of cards on a 12-column grid, used for dashboards, analytics and summary pages.
+tableOfContents: false
 ---
 
 import { DocsPage } from "@/components/docs-page";
 import { Text } from "@harnessio/ui/components";
+import { Tabs, TabItem } from "@astrojs/starlight/components";
+import PageTabsToc from "@/components/page-tabs-toc.astro";
 
-A grid of cards for dashboard displays.
+<PageTabsToc />
+
+<div id="page-level-tabs">
+
+<Tabs>
+
+<TabItem label="Overview">
+
+A page built from cards laid out on a 12-column grid. It is the layout behind dashboards, analytics and billing pages. In product code this is `Page.Root` with `Page.HeaderV2`, then `Layout.Grid columns={12}` holding `Card.Root` widgets.
+
+## Metrics, chart and table
+
+The most common dashboard. A row of KPI cards on top, a wide chart beside a ranked list, then a full-width table. Each KPI card spans 3 columns, the chart spans 8 and the list spans 4.
 
 <DocsPage.ComponentExample
   client:only
-  code={`<Layout.Grid columns="1fr 1fr 1fr" rows="auto" gap="md" className="p-cn-md border rounded-cn-3">
-  <div className="bg-cn-2 p-cn-md rounded-cn-3 shadow-sm">
-    <Text variant="heading-base" className="mb-cn-xs">Total Users</Text>
-    <Text variant="heading-section">1,234</Text>
-    <Text variant="caption-normal" color="success" className="mt-cn-xs">+12% from last month</Text>
+  padding={false}
+  code={`<div style={{ containerType: 'inline-size', width: '100%', aspectRatio: '1440 / 900', overflow: 'hidden', position: 'relative' }}>
+<div style={{ width: '1440px', height: '900px', transformOrigin: 'top left', transform: 'scale(tan(atan2(100cqw, 1440px)))' }}>
+<Sidebar.Provider style={{ '--cn-sidebar-min-height': '898px' }} className="!w-[1440px] !min-h-0 h-[900px] overflow-hidden border rounded-cn-3 bg-cn-1">
+  <div className="pointer-events-none select-none flex h-full shrink-0" aria-hidden="true">
+    <Sidebar.Root>
+      <Sidebar.Header className="pt-cn-xl pb-cn-md">
+        <div className="flex items-center justify-between gap-cn-xs px-cn-xs">
+          <div className="flex items-center gap-cn-xs min-w-0">
+            <IconV2 name="harness-plugins" size="md" className="text-[--cn-comp-sidebar-logo-icon]" />
+            <Text variant="body-single-line-strong" truncate>Harness / canary</Text>
+          </div>
+          <IconV2 name="nav-arrow-down" size="2xs" />
+        </div>
+      </Sidebar.Header>
+      <Sidebar.Content>
+        <Sidebar.Group>
+          <Sidebar.Item icon="dashboard" title="Home" />
+          <Sidebar.Item icon="menu-more-horizontal" title="More" />
+        </Sidebar.Group>
+        <Sidebar.Separator />
+        <Sidebar.Group label="Recent">
+          <Sidebar.Item icon="repository" title="Repositories" />
+          <Sidebar.Item icon="pipeline" title="Pipelines" active />
+          <Sidebar.Item icon="folder" title="Projects" />
+        </Sidebar.Group>
+      </Sidebar.Content>
+      <Sidebar.Footer>
+        <Sidebar.Item icon="bell" title="Alerts" />
+        <Sidebar.Item icon="help-circle" title="Help" />
+        <Sidebar.Item avatarFallback="JD" title="John Doe" />
+      </Sidebar.Footer>
+    </Sidebar.Root>
   </div>
-  
-  <div className="bg-cn-2 p-cn-md rounded-cn-3 shadow-sm">
-    <Text variant="heading-base" className="mb-cn-xs">Revenue</Text>
-    <Text variant="heading-section">$48,234</Text>
-    <Text variant="caption-normal" color="success" className="mt-cn-xs">+5% from last month</Text>
+
+  <Sidebar.Inset className="border-l border-cn-3 min-w-0">
+  <div className="flex h-full w-full min-w-0">
+  <div className="pointer-events-none select-none relative w-[20px] shrink-0 border-x border-cn-3 bg-cn-app-shell" aria-hidden="true" title="AI chat (collapsed)">
+    <Text className="absolute left-full top-1/2 -translate-x-1/2 -translate-y-1/2 text-cn-sidebar-toggle z-10">|</Text>
   </div>
-  
-  <div className="bg-cn-2 p-cn-md rounded-cn-3 shadow-sm">
-    <Text variant="heading-base" className="mb-cn-xs">Active Deployments</Text>
-    <Text variant="heading-section">26</Text>
-    <Text variant="caption-normal" color="danger" className="mt-cn-xs">-3 from last month</Text>
+  <div className="flex-1 min-w-0 overflow-auto px-cn-xl pt-cn-md pb-cn-xl">
+<Page.HeaderV2 breadcrumbs={<Breadcrumb.Root><Breadcrumb.List><Breadcrumb.Item><Breadcrumb.Link href="#">canary</Breadcrumb.Link></Breadcrumb.Item><Breadcrumb.Separator /><Breadcrumb.Item><Breadcrumb.Link href="#">Dashboards</Breadcrumb.Link></Breadcrumb.Item><Breadcrumb.Separator /><Breadcrumb.Item><Breadcrumb.Page>Delivery overview</Breadcrumb.Page></Breadcrumb.Item></Breadcrumb.List></Breadcrumb.Root>} title="Delivery overview" description="Pipeline activity across this project." actions={<ButtonLayout.Root><Button size="sm" variant="secondary">Refresh</Button><Button size="sm">Edit</Button></ButtonLayout.Root>} />
+<div className="mt-cn-xl"><Layout.Grid columns={12} gap="sm" className="w-full" style={{ gridAutoRows: 'minmax(60px, auto)' }}><div style={{ gridColumn: 'span 3' }} className="min-w-0"><Card.Root interactive={false} className="h-full border-cn-3 bg-cn-2"><Card.Content><Layout.Vertical gap="sm"><Layout.Vertical gap="3xs"><Text variant="body-strong">Total runs</Text></Layout.Vertical><Text variant="heading-section">12,480</Text><Text variant="caption-normal" color="success">+8% from last week</Text></Layout.Vertical></Card.Content></Card.Root></div><div style={{ gridColumn: 'span 3' }} className="min-w-0"><Card.Root interactive={false} className="h-full border-cn-3 bg-cn-2"><Card.Content><Layout.Vertical gap="sm"><Layout.Vertical gap="3xs"><Text variant="body-strong">Success rate</Text></Layout.Vertical><Text variant="heading-section">94.2%</Text><Text variant="caption-normal" color="success">+1.1% from last week</Text></Layout.Vertical></Card.Content></Card.Root></div><div style={{ gridColumn: 'span 3' }} className="min-w-0"><Card.Root interactive={false} className="h-full border-cn-3 bg-cn-2"><Card.Content><Layout.Vertical gap="sm"><Layout.Vertical gap="3xs"><Text variant="body-strong">Avg duration</Text></Layout.Vertical><Text variant="heading-section">6m 12s</Text><Text variant="caption-normal" color="success">-14s from last week</Text></Layout.Vertical></Card.Content></Card.Root></div><div style={{ gridColumn: 'span 3' }} className="min-w-0"><Card.Root interactive={false} className="h-full border-cn-3 bg-cn-2"><Card.Content><Layout.Vertical gap="sm"><Layout.Vertical gap="3xs"><Text variant="body-strong">Failed runs</Text></Layout.Vertical><Text variant="heading-section">724</Text><Text variant="caption-normal" color="danger">+3% from last week</Text></Layout.Vertical></Card.Content></Card.Root></div><div style={{ gridColumn: 'span 8' }} className="min-w-0"><Card.Root interactive={false} className="h-full border-cn-3 bg-cn-2"><Card.Content><Layout.Vertical gap="sm"><Layout.Vertical gap="3xs"><Text variant="body-strong">Runs per day</Text><Text variant="caption-normal" color="foreground-3">Last 14 days</Text></Layout.Vertical><div className="flex items-end gap-cn-3xs" style={{ height: 140 }}><div key="0" className="flex-1 rounded-cn-1 bg-cn-brand-primary" style={{ height: '40%' }} /><div key="1" className="flex-1 rounded-cn-1 bg-cn-brand-primary" style={{ height: '55%' }} /><div key="2" className="flex-1 rounded-cn-1 bg-cn-brand-primary" style={{ height: '35%' }} /><div key="3" className="flex-1 rounded-cn-1 bg-cn-brand-primary" style={{ height: '70%' }} /><div key="4" className="flex-1 rounded-cn-1 bg-cn-brand-primary" style={{ height: '60%' }} /><div key="5" className="flex-1 rounded-cn-1 bg-cn-brand-primary" style={{ height: '80%' }} /><div key="6" className="flex-1 rounded-cn-1 bg-cn-brand-primary" style={{ height: '50%' }} /><div key="7" className="flex-1 rounded-cn-1 bg-cn-brand-primary" style={{ height: '65%' }} /><div key="8" className="flex-1 rounded-cn-1 bg-cn-brand-primary" style={{ height: '90%' }} /><div key="9" className="flex-1 rounded-cn-1 bg-cn-brand-primary" style={{ height: '55%' }} /><div key="10" className="flex-1 rounded-cn-1 bg-cn-brand-primary" style={{ height: '75%' }} /><div key="11" className="flex-1 rounded-cn-1 bg-cn-brand-primary" style={{ height: '45%' }} /><div key="12" className="flex-1 rounded-cn-1 bg-cn-brand-primary" style={{ height: '85%' }} /><div key="13" className="flex-1 rounded-cn-1 bg-cn-brand-primary" style={{ height: '60%' }} /></div></Layout.Vertical></Card.Content></Card.Root></div><div style={{ gridColumn: 'span 4' }} className="min-w-0"><Card.Root interactive={false} className="h-full border-cn-3 bg-cn-2"><Card.Content><Layout.Vertical gap="sm"><Layout.Vertical gap="3xs"><Text variant="body-strong">Slowest pipelines</Text><Text variant="caption-normal" color="foreground-3">Average duration</Text></Layout.Vertical><Layout.Vertical gap="xs"><Layout.Horizontal justify="between"><Text variant="body-normal">build-and-test</Text><Text variant="body-normal" color="foreground-3">14m 02s</Text></Layout.Horizontal><Layout.Horizontal justify="between"><Text variant="body-normal">deploy-prod</Text><Text variant="body-normal" color="foreground-3">11m 40s</Text></Layout.Horizontal><Layout.Horizontal justify="between"><Text variant="body-normal">integration-suite</Text><Text variant="body-normal" color="foreground-3">9m 18s</Text></Layout.Horizontal><Layout.Horizontal justify="between"><Text variant="body-normal">lint-and-format</Text><Text variant="body-normal" color="foreground-3">2m 05s</Text></Layout.Horizontal></Layout.Vertical></Layout.Vertical></Card.Content></Card.Root></div><div style={{ gridColumn: 'span 12' }} className="min-w-0"><Card.Root interactive={false} className="h-full border-cn-3 bg-cn-2"><Card.Content><Layout.Vertical gap="sm"><Layout.Vertical gap="3xs"><Text variant="body-strong">Pipeline health</Text></Layout.Vertical><Table.Root><Table.Header><Table.Row><Table.Head>Pipeline</Table.Head><Table.Head>Runs</Table.Head><Table.Head>Success rate</Table.Head><Table.Head>Avg duration</Table.Head></Table.Row></Table.Header><Table.Body><Table.Row><Table.Cell>build-and-test</Table.Cell><Table.Cell>4,210</Table.Cell><Table.Cell>96.4%</Table.Cell><Table.Cell>5m 10s</Table.Cell></Table.Row><Table.Row><Table.Cell>deploy-prod</Table.Cell><Table.Cell>1,982</Table.Cell><Table.Cell>91.8%</Table.Cell><Table.Cell>11m 40s</Table.Cell></Table.Row><Table.Row><Table.Cell>integration-suite</Table.Cell><Table.Cell>3,044</Table.Cell><Table.Cell>93.0%</Table.Cell><Table.Cell>9m 18s</Table.Cell></Table.Row></Table.Body></Table.Root></Layout.Vertical></Card.Content></Card.Root></div></Layout.Grid></div>
   </div>
-  
-  <div className="bg-cn-2 p-cn-md rounded-cn-3 shadow-sm col-span-2">
-    <Text variant="heading-base" className="mb-cn-xs">Monthly Activity</Text>
-    <div className="h-32 bg-cn-3 rounded-cn-3 flex items-center justify-center">
-      <Text variant="body-normal" color="foreground-2">[Chart]</Text>
-    </div>
   </div>
-  
-  <div className="bg-cn-2 p-cn-md rounded-cn-3 shadow-sm">
-    <Text variant="heading-base" className="mb-cn-xs">Recent Updates</Text>
-    <Layout.Vertical gap="sm">
-      <Text variant="caption-normal" className="p-cn-xs bg-cn-3 rounded-cn-3">System update completed</Text>
-      <Text variant="caption-normal" className="p-cn-xs bg-cn-3 rounded-cn-3">New feature deployed</Text>
-    </Layout.Vertical>
-  </div>
-</Layout.Grid>`}
+  </Sidebar.Inset>
+</Sidebar.Provider>
+</div></div>`}
 />
+
+## Stacked and two-up cards
+
+For summary and settings pages such as billing. A full-width card carries the headline information and the action. Equal-width cards below split related details in half.
+
+<DocsPage.ComponentExample
+  client:only
+  padding={false}
+  code={`<div style={{ containerType: 'inline-size', width: '100%', aspectRatio: '1440 / 900', overflow: 'hidden', position: 'relative' }}>
+<div style={{ width: '1440px', height: '900px', transformOrigin: 'top left', transform: 'scale(tan(atan2(100cqw, 1440px)))' }}>
+<Sidebar.Provider style={{ '--cn-sidebar-min-height': '898px' }} className="!w-[1440px] !min-h-0 h-[900px] overflow-hidden border rounded-cn-3 bg-cn-1">
+  <div className="pointer-events-none select-none flex h-full shrink-0" aria-hidden="true">
+    <Sidebar.Root>
+      <Sidebar.Header className="pt-cn-xl pb-cn-md">
+        <div className="flex items-center justify-between gap-cn-xs px-cn-xs">
+          <div className="flex items-center gap-cn-xs min-w-0">
+            <IconV2 name="harness-plugins" size="md" className="text-[--cn-comp-sidebar-logo-icon]" />
+            <Text variant="body-single-line-strong" truncate>Harness / canary</Text>
+          </div>
+          <IconV2 name="nav-arrow-down" size="2xs" />
+        </div>
+      </Sidebar.Header>
+      <Sidebar.Content>
+        <Sidebar.Group>
+          <Sidebar.Item icon="dashboard" title="Home" />
+          <Sidebar.Item icon="menu-more-horizontal" title="More" />
+        </Sidebar.Group>
+        <Sidebar.Separator />
+        <Sidebar.Group label="Recent">
+          <Sidebar.Item icon="repository" title="Repositories" />
+          <Sidebar.Item icon="pipeline" title="Pipelines" active />
+          <Sidebar.Item icon="folder" title="Projects" />
+        </Sidebar.Group>
+      </Sidebar.Content>
+      <Sidebar.Footer>
+        <Sidebar.Item icon="bell" title="Alerts" />
+        <Sidebar.Item icon="help-circle" title="Help" />
+        <Sidebar.Item avatarFallback="JD" title="John Doe" />
+      </Sidebar.Footer>
+    </Sidebar.Root>
+  </div>
+
+  <Sidebar.Inset className="border-l border-cn-3 min-w-0">
+  <div className="flex h-full w-full min-w-0">
+  <div className="pointer-events-none select-none relative w-[20px] shrink-0 border-x border-cn-3 bg-cn-app-shell" aria-hidden="true" title="AI chat (collapsed)">
+    <Text className="absolute left-full top-1/2 -translate-x-1/2 -translate-y-1/2 text-cn-sidebar-toggle z-10">|</Text>
+  </div>
+  <div className="flex-1 min-w-0 overflow-auto px-cn-xl pt-cn-md pb-cn-xl">
+<Page.HeaderV2 breadcrumbs={<Breadcrumb.Root><Breadcrumb.List><Breadcrumb.Item><Breadcrumb.Link href="#">canary</Breadcrumb.Link></Breadcrumb.Item><Breadcrumb.Separator /><Breadcrumb.Item><Breadcrumb.Link href="#">Settings</Breadcrumb.Link></Breadcrumb.Item><Breadcrumb.Separator /><Breadcrumb.Item><Breadcrumb.Page>Billing</Breadcrumb.Page></Breadcrumb.Item></Breadcrumb.List></Breadcrumb.Root>} title="Billing" description="Plan, usage and invoices for this account." actions={<Button size="sm">Upgrade plan</Button>} />
+<div className="mt-cn-xl"><Layout.Grid columns={12} gap="sm" className="w-full" style={{ gridAutoRows: 'minmax(60px, auto)' }}><div style={{ gridColumn: 'span 12' }} className="min-w-0"><Card.Root interactive={false} className="h-full border-cn-3 bg-cn-2"><Card.Content><Layout.Vertical gap="sm"><Layout.Vertical gap="3xs"><Text variant="body-strong">Team plan</Text><Text variant="caption-normal" color="foreground-3">Current plan</Text></Layout.Vertical><Layout.Horizontal justify="between" align="center"><Text variant="body-normal" color="foreground-3">50 seats, billed annually. Renews on March 1.</Text><Button size="sm" variant="secondary">Manage plan</Button></Layout.Horizontal></Layout.Vertical></Card.Content></Card.Root></div><div style={{ gridColumn: 'span 6' }} className="min-w-0"><Card.Root interactive={false} className="h-full border-cn-3 bg-cn-2"><Card.Content><Layout.Vertical gap="sm"><Layout.Vertical gap="3xs"><Text variant="body-strong">Seats</Text><Text variant="caption-normal" color="foreground-3">This billing period</Text></Layout.Vertical><Layout.Vertical gap="xs"><Layout.Horizontal justify="between"><Text variant="body-normal">Used</Text><Text variant="body-normal" color="foreground-3">38</Text></Layout.Horizontal><Layout.Horizontal justify="between"><Text variant="body-normal">Available</Text><Text variant="body-normal" color="foreground-3">12</Text></Layout.Horizontal><Layout.Horizontal justify="between"><Text variant="body-normal">Total</Text><Text variant="body-normal" color="foreground-3">50</Text></Layout.Horizontal></Layout.Vertical></Layout.Vertical></Card.Content></Card.Root></div><div style={{ gridColumn: 'span 6' }} className="min-w-0"><Card.Root interactive={false} className="h-full border-cn-3 bg-cn-2"><Card.Content><Layout.Vertical gap="sm"><Layout.Vertical gap="3xs"><Text variant="body-strong">Next invoice</Text><Text variant="caption-normal" color="foreground-3">Upcoming</Text></Layout.Vertical><Layout.Vertical gap="xs"><Layout.Horizontal justify="between"><Text variant="body-normal">Amount</Text><Text variant="body-normal" color="foreground-3">$4,200.00</Text></Layout.Horizontal><Layout.Horizontal justify="between"><Text variant="body-normal">Due</Text><Text variant="body-normal" color="foreground-3">March 1</Text></Layout.Horizontal><Layout.Horizontal justify="between"><Text variant="body-normal">Payment method</Text><Text variant="body-normal" color="foreground-3">Visa ending 6411</Text></Layout.Horizontal></Layout.Vertical></Layout.Vertical></Card.Content></Card.Root></div></Layout.Grid></div>
+  </div>
+  </div>
+  </Sidebar.Inset>
+</Sidebar.Provider>
+</div></div>`}
+/>
+
+## Tabs and a filter bar
+
+For analytics pages with several areas and shared filters. Header tabs switch between areas, a filter bar sits above the grid and applies to every card, and the cards use halves and thirds.
+
+<DocsPage.ComponentExample
+  client:only
+  padding={false}
+  code={`<div style={{ containerType: 'inline-size', width: '100%', aspectRatio: '1440 / 900', overflow: 'hidden', position: 'relative' }}>
+<div style={{ width: '1440px', height: '900px', transformOrigin: 'top left', transform: 'scale(tan(atan2(100cqw, 1440px)))' }}>
+<Sidebar.Provider style={{ '--cn-sidebar-min-height': '898px' }} className="!w-[1440px] !min-h-0 h-[900px] overflow-hidden border rounded-cn-3 bg-cn-1">
+  <div className="pointer-events-none select-none flex h-full shrink-0" aria-hidden="true">
+    <Sidebar.Root>
+      <Sidebar.Header className="pt-cn-xl pb-cn-md">
+        <div className="flex items-center justify-between gap-cn-xs px-cn-xs">
+          <div className="flex items-center gap-cn-xs min-w-0">
+            <IconV2 name="harness-plugins" size="md" className="text-[--cn-comp-sidebar-logo-icon]" />
+            <Text variant="body-single-line-strong" truncate>Harness / canary</Text>
+          </div>
+          <IconV2 name="nav-arrow-down" size="2xs" />
+        </div>
+      </Sidebar.Header>
+      <Sidebar.Content>
+        <Sidebar.Group>
+          <Sidebar.Item icon="dashboard" title="Home" />
+          <Sidebar.Item icon="menu-more-horizontal" title="More" />
+        </Sidebar.Group>
+        <Sidebar.Separator />
+        <Sidebar.Group label="Recent">
+          <Sidebar.Item icon="repository" title="Repositories" />
+          <Sidebar.Item icon="pipeline" title="Pipelines" active />
+          <Sidebar.Item icon="folder" title="Projects" />
+        </Sidebar.Group>
+      </Sidebar.Content>
+      <Sidebar.Footer>
+        <Sidebar.Item icon="bell" title="Alerts" />
+        <Sidebar.Item icon="help-circle" title="Help" />
+        <Sidebar.Item avatarFallback="JD" title="John Doe" />
+      </Sidebar.Footer>
+    </Sidebar.Root>
+  </div>
+
+  <Sidebar.Inset className="border-l border-cn-3 min-w-0">
+  <div className="flex h-full w-full min-w-0">
+  <div className="pointer-events-none select-none relative w-[20px] shrink-0 border-x border-cn-3 bg-cn-app-shell" aria-hidden="true" title="AI chat (collapsed)">
+    <Text className="absolute left-full top-1/2 -translate-x-1/2 -translate-y-1/2 text-cn-sidebar-toggle z-10">|</Text>
+  </div>
+  <div className="flex-1 min-w-0 overflow-auto px-cn-xl pt-cn-md pb-cn-xl">
+<Tabs.Root defaultValue="ci"><Page.HeaderV2 contentTabs breadcrumbs={<Breadcrumb.Root><Breadcrumb.List><Breadcrumb.Item><Breadcrumb.Link href="#">canary</Breadcrumb.Link></Breadcrumb.Item><Breadcrumb.Separator /><Breadcrumb.Item><Breadcrumb.Link href="#">Analytics</Breadcrumb.Link></Breadcrumb.Item><Breadcrumb.Separator /><Breadcrumb.Item><Breadcrumb.Page>Usage</Breadcrumb.Page></Breadcrumb.Item></Breadcrumb.List></Breadcrumb.Root>} title="Usage analytics" description="Credits and builds across modules." actions={<ButtonLayout.Root><Button size="sm" variant="secondary">Refresh</Button><Button size="sm">Edit</Button></ButtonLayout.Root>} tabs={[{ label: 'CI', value: 'ci' }, { label: 'CD', value: 'cd' }, { label: 'Chaos', value: 'chaos' }]} /></Tabs.Root>
+<div className="mt-cn-xl"><Layout.Horizontal gap="sm" className="pb-cn-md"><Button size="sm" variant="secondary">Last 30 days</Button><Button size="sm" variant="secondary">All environments</Button><Button size="sm" variant="secondary">All projects</Button></Layout.Horizontal><Layout.Grid columns={12} gap="sm" className="w-full" style={{ gridAutoRows: 'minmax(60px, auto)' }}><div style={{ gridColumn: 'span 6' }} className="min-w-0"><Card.Root interactive={false} className="h-full border-cn-3 bg-cn-2"><Card.Content><Layout.Vertical gap="sm"><Layout.Vertical gap="3xs"><Text variant="body-strong">Builds per day</Text><Text variant="caption-normal" color="foreground-3">Last 30 days</Text></Layout.Vertical><div className="flex items-end gap-cn-3xs" style={{ height: 120 }}><div key="0" className="flex-1 rounded-cn-1 bg-cn-brand-primary" style={{ height: '40%' }} /><div key="1" className="flex-1 rounded-cn-1 bg-cn-brand-primary" style={{ height: '55%' }} /><div key="2" className="flex-1 rounded-cn-1 bg-cn-brand-primary" style={{ height: '35%' }} /><div key="3" className="flex-1 rounded-cn-1 bg-cn-brand-primary" style={{ height: '70%' }} /><div key="4" className="flex-1 rounded-cn-1 bg-cn-brand-primary" style={{ height: '60%' }} /><div key="5" className="flex-1 rounded-cn-1 bg-cn-brand-primary" style={{ height: '80%' }} /><div key="6" className="flex-1 rounded-cn-1 bg-cn-brand-primary" style={{ height: '50%' }} /><div key="7" className="flex-1 rounded-cn-1 bg-cn-brand-primary" style={{ height: '65%' }} /><div key="8" className="flex-1 rounded-cn-1 bg-cn-brand-primary" style={{ height: '90%' }} /><div key="9" className="flex-1 rounded-cn-1 bg-cn-brand-primary" style={{ height: '55%' }} /><div key="10" className="flex-1 rounded-cn-1 bg-cn-brand-primary" style={{ height: '75%' }} /><div key="11" className="flex-1 rounded-cn-1 bg-cn-brand-primary" style={{ height: '45%' }} /><div key="12" className="flex-1 rounded-cn-1 bg-cn-brand-primary" style={{ height: '85%' }} /><div key="13" className="flex-1 rounded-cn-1 bg-cn-brand-primary" style={{ height: '60%' }} /></div></Layout.Vertical></Card.Content></Card.Root></div><div style={{ gridColumn: 'span 6' }} className="min-w-0"><Card.Root interactive={false} className="h-full border-cn-3 bg-cn-2"><Card.Content><Layout.Vertical gap="sm"><Layout.Vertical gap="3xs"><Text variant="body-strong">Credits used</Text><Text variant="caption-normal" color="foreground-3">Last 30 days</Text></Layout.Vertical><div className="flex items-end gap-cn-3xs" style={{ height: 120 }}><div key="0" className="flex-1 rounded-cn-1 bg-cn-brand-primary" style={{ height: '40%' }} /><div key="1" className="flex-1 rounded-cn-1 bg-cn-brand-primary" style={{ height: '55%' }} /><div key="2" className="flex-1 rounded-cn-1 bg-cn-brand-primary" style={{ height: '35%' }} /><div key="3" className="flex-1 rounded-cn-1 bg-cn-brand-primary" style={{ height: '70%' }} /><div key="4" className="flex-1 rounded-cn-1 bg-cn-brand-primary" style={{ height: '60%' }} /><div key="5" className="flex-1 rounded-cn-1 bg-cn-brand-primary" style={{ height: '80%' }} /><div key="6" className="flex-1 rounded-cn-1 bg-cn-brand-primary" style={{ height: '50%' }} /><div key="7" className="flex-1 rounded-cn-1 bg-cn-brand-primary" style={{ height: '65%' }} /><div key="8" className="flex-1 rounded-cn-1 bg-cn-brand-primary" style={{ height: '90%' }} /><div key="9" className="flex-1 rounded-cn-1 bg-cn-brand-primary" style={{ height: '55%' }} /></div></Layout.Vertical></Card.Content></Card.Root></div><div style={{ gridColumn: 'span 4' }} className="min-w-0"><Card.Root interactive={false} className="h-full border-cn-3 bg-cn-2"><Card.Content><Layout.Vertical gap="sm"><Layout.Vertical gap="3xs"><Text variant="body-strong">Top projects</Text></Layout.Vertical><Layout.Vertical gap="xs"><Layout.Horizontal justify="between"><Text variant="body-normal">canary</Text><Text variant="body-normal" color="foreground-3">4,210</Text></Layout.Horizontal><Layout.Horizontal justify="between"><Text variant="body-normal">platform</Text><Text variant="body-normal" color="foreground-3">2,980</Text></Layout.Horizontal><Layout.Horizontal justify="between"><Text variant="body-normal">docs</Text><Text variant="body-normal" color="foreground-3">1,204</Text></Layout.Horizontal></Layout.Vertical></Layout.Vertical></Card.Content></Card.Root></div><div style={{ gridColumn: 'span 4' }} className="min-w-0"><Card.Root interactive={false} className="h-full border-cn-3 bg-cn-2"><Card.Content><Layout.Vertical gap="sm"><Layout.Vertical gap="3xs"><Text variant="body-strong">Top users</Text></Layout.Vertical><Layout.Vertical gap="xs"><Layout.Horizontal justify="between"><Text variant="body-normal">Jane Doe</Text><Text variant="body-normal" color="foreground-3">812</Text></Layout.Horizontal><Layout.Horizontal justify="between"><Text variant="body-normal">John Doe</Text><Text variant="body-normal" color="foreground-3">640</Text></Layout.Horizontal><Layout.Horizontal justify="between"><Text variant="body-normal">Sam Lee</Text><Text variant="body-normal" color="foreground-3">511</Text></Layout.Horizontal></Layout.Vertical></Layout.Vertical></Card.Content></Card.Root></div><div style={{ gridColumn: 'span 4' }} className="min-w-0"><Card.Root interactive={false} className="h-full border-cn-3 bg-cn-2"><Card.Content><Layout.Vertical gap="sm"><Layout.Vertical gap="3xs"><Text variant="body-strong">By environment</Text></Layout.Vertical><Layout.Vertical gap="xs"><Layout.Horizontal justify="between"><Text variant="body-normal">Production</Text><Text variant="body-normal" color="foreground-3">5,100</Text></Layout.Horizontal><Layout.Horizontal justify="between"><Text variant="body-normal">Staging</Text><Text variant="body-normal" color="foreground-3">2,300</Text></Layout.Horizontal><Layout.Horizontal justify="between"><Text variant="body-normal">Dev</Text><Text variant="body-normal" color="foreground-3">1,044</Text></Layout.Horizontal></Layout.Vertical></Layout.Vertical></Card.Content></Card.Root></div></Layout.Grid></div>
+  </div>
+  </div>
+  </Sidebar.Inset>
+</Sidebar.Provider>
+</div></div>`}
+/>
+
+</TabItem>
+
+<TabItem label="Usage">
+
+## Anatomy
+
+1. **Page header.** Breadcrumb, title, description and the page actions, such as Refresh and Edit. Add tabs when the page has several areas.
+2. **Filter bar (optional).** Time range and scope filters that apply to every card on the page.
+3. **Card grid.** A 12-column grid, `Layout.Grid columns={12} gap="sm"`. Cards span whole numbers of columns.
+4. **Card header.** A title, with an optional subtitle for scope such as "Last 14 days".
+5. **Card body.** A value, chart, list or table.
+
+## Guidelines
+
+- Use the 12-column grid for dashboards. Spans of 3, 4, 6, 8 and 12 cover almost every layout.
+- Make KPI cards span 3 or 4 columns so they sit in one row. Put charts at 6 or 8 columns and tables at 12.
+- Set `gridAutoRows` to a minimum height rather than a fixed one so cards grow with their content.
+- Use `gap="sm"` between cards so the grid reads as one surface.
+- Give every card a title. Add a subtitle only when it adds scope, such as the time range.
+- Keep page actions in the header, not inside cards. Card menus are for actions on that card.
+- Put filters that apply to the whole page in a filter bar above the grid. Do not repeat them inside cards.
+- On narrow screens the grid collapses to a single column, so order cards by importance.
+- Show empty and error states inside the card, so one failed card does not break the page.
+
+</TabItem>
+
+</Tabs>
+
+</div>

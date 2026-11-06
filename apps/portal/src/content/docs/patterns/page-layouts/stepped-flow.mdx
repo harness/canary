@@ -1,28 +1,102 @@
 ---
 title: Stepped Flow
-description: A multi-step flow with a step indicator beside the current step's content, for setup and creation wizards.
+description: A full page with a step rail beside the current step's content and a footer for Back and Continue, for setup and creation wizards.
+tableOfContents: false
 ---
 
 import { DocsPage } from "@/components/docs-page";
 import { Text } from "@harnessio/ui/components";
+import { Tabs, TabItem } from "@astrojs/starlight/components";
+import PageTabsToc from "@/components/page-tabs-toc.astro";
 
-A multi-step flow with a step indicator beside the current step's content, for setup and creation wizards. In product code this is built with `Stepper`.
+<PageTabsToc />
+
+<div id="page-level-tabs">
+
+<Tabs>
+
+<TabItem label="Overview">
+
+A full page that walks someone through a task one step at a time. A step rail on the left shows progress, the current step fills the content area, and a footer holds Cancel, Back and Continue. In product code this is `StepperWizard`, with a `Stepper` for the step rail beside the step content and a `Button` footer.
+
+## Example
+
+The step rail is a `Stepper`, with the current step filled. The first step has no Back button, so Cancel sits on the left of the footer and Continue on the right.
 
 <DocsPage.ComponentExample
   client:only
-  code={`<Layout.Grid columns="200px 1fr" gap="md" className="p-cn-md border rounded-cn-3">
-  <Layout.Vertical gap="sm">
-    <Text variant="body-strong">1. Details</Text>
-    <Text variant="body-normal" color="foreground-3">2. Configuration</Text>
-    <Text variant="body-normal" color="foreground-3">3. Review</Text>
-  </Layout.Vertical>
-  <div className="bg-cn-2 p-cn-md rounded-cn-3">
-    <Text variant="heading-base" className="mb-cn-sm">Details</Text>
-    <Text variant="body-normal" className="mb-cn-md">Fields for the current step.</Text>
-    <Layout.Flex gap="sm" justify="end">
-      <Button variant="outline">Back</Button>
-      <Button>Next</Button>
-    </Layout.Flex>
+  padding={false}
+  code={`<div style={{ containerType: 'inline-size', width: '100%', aspectRatio: '1440 / 900', overflow: 'hidden', position: 'relative' }}>
+<div style={{ width: '1440px', height: '900px', transformOrigin: 'top left', transform: 'scale(tan(atan2(100cqw, 1440px)))' }}>
+<Sidebar.Provider style={{ '--cn-sidebar-min-height': '898px' }} className="!w-[1440px] !min-h-0 h-[900px] overflow-hidden border rounded-cn-3 bg-cn-1">
+  <div className="pointer-events-none select-none flex h-full shrink-0" aria-hidden="true">
+    <Sidebar.Root>
+      <Sidebar.Header className="pt-cn-xl pb-cn-md">
+        <div className="flex items-center justify-between gap-cn-xs px-cn-xs">
+          <div className="flex items-center gap-cn-xs min-w-0">
+            <IconV2 name="harness-plugins" size="md" className="text-[--cn-comp-sidebar-logo-icon]" />
+            <Text variant="body-single-line-strong" truncate>Harness / canary</Text>
+          </div>
+          <IconV2 name="nav-arrow-down" size="2xs" />
+        </div>
+      </Sidebar.Header>
+      <Sidebar.Content>
+        <Sidebar.Group>
+          <Sidebar.Item icon="dashboard" title="Home" />
+          <Sidebar.Item icon="menu-more-horizontal" title="More" />
+        </Sidebar.Group>
+        <Sidebar.Separator />
+        <Sidebar.Group label="Recent">
+          <Sidebar.Item icon="repository" title="Repositories" />
+          <Sidebar.Item icon="pipeline" title="Pipelines" active />
+          <Sidebar.Item icon="folder" title="Projects" />
+        </Sidebar.Group>
+      </Sidebar.Content>
+      <Sidebar.Footer>
+        <Sidebar.Item icon="bell" title="Alerts" />
+        <Sidebar.Item icon="help-circle" title="Help" />
+        <Sidebar.Item avatarFallback="JD" title="John Doe" />
+      </Sidebar.Footer>
+    </Sidebar.Root>
   </div>
-</Layout.Grid>`}
+
+  <Sidebar.Inset className="border-l border-cn-3 min-w-0">
+  <div className="flex h-full w-full min-w-0">
+  <div className="pointer-events-none select-none relative w-[20px] shrink-0 border-x border-cn-3 bg-cn-app-shell" aria-hidden="true" title="AI chat (collapsed)">
+    <Text className="absolute left-full top-1/2 -translate-x-1/2 -translate-y-1/2 text-cn-sidebar-toggle z-10">|</Text>
+  </div>
+  <div className="flex-1 min-w-0 flex flex-col"><Layout.Horizontal className="size-full"><div className="w-cn-48 shrink-0 px-cn-lg py-cn-md"><Stepper.Root value="details" onValueChange={() => {}}><Stepper.Step value="details" title="Details" /><Stepper.Step value="configuration" title="Configuration" /><Stepper.Step value="delivery" title="Delivery" /><Stepper.Step value="review" title="Review" /></Stepper.Root></div><Separator orientation="vertical" /><Layout.Vertical className="h-full min-w-0 flex-1 overflow-hidden"><Layout.Vertical className="flex-1 overflow-auto p-cn-xl" gapY="lg"><Layout.Vertical gapY="xs"><Text variant="heading-section" as="h2">Details</Text><Text variant="body-normal" color="foreground-3">Name the service and choose the project it belongs to.</Text></Layout.Vertical><div className="max-w-[560px]"><Layout.Vertical gapY="md"><Layout.Vertical gapY="xs"><Text variant="body-strong">Name</Text><Input placeholder="e.g. checkout-service" /></Layout.Vertical><Layout.Vertical gapY="xs"><Text variant="body-strong">Description</Text><Input placeholder="What is this for?" /></Layout.Vertical><Layout.Vertical gapY="xs"><Text variant="body-strong">Project</Text><Input placeholder="Select a project" defaultValue="canary" /></Layout.Vertical></Layout.Vertical></div></Layout.Vertical><Separator /><Layout.Horizontal className="shrink-0 p-cn-md justify-between"><Button variant="secondary">Cancel</Button><ButtonLayout.Root><Button variant="primary">Continue</Button></ButtonLayout.Root></Layout.Horizontal></Layout.Vertical></Layout.Horizontal></div>
+  </div>
+  </Sidebar.Inset>
+</Sidebar.Provider>
+</div></div>`}
 />
+
+</TabItem>
+
+<TabItem label="Usage">
+
+## Anatomy
+
+1. **Step rail.** A vertical `Stepper` listing the steps in order. Done steps show a check, the current step is filled, and later steps are outlined.
+2. **Step header.** The step title and a one-line description of what to do.
+3. **Step content.** The fields for the step, kept to a readable width.
+4. **Footer.** Cancel on the left. Back and the primary button on the right, separated from the content by a divider.
+
+## Guidelines
+
+- Use a stepped flow for setup and creation tasks with several form-heavy steps. For one or two short steps, use a single page or a drawer.
+- Keep to 3 to 6 steps. Name each step with a short noun, such as Details or Review.
+- Always end with a Review step that summarises the choices before anything is created.
+- Show Back on every step except the first. Do not show it on the first step.
+- Label the primary button Continue on every step but the last. On the last step name the outcome, such as Create service.
+- Keep Cancel on the left of the footer on every step so exiting is always possible.
+- Validate a step before moving on, and show errors beside the fields. Show a loading state on the primary button while it advances.
+- Let people go back without losing what they entered.
+- Fill the page height. The step content scrolls inside itself while the rail and footer stay in place.
+
+</TabItem>
+
+</Tabs>
+
+</div>

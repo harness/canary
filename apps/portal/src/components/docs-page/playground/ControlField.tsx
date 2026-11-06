@@ -5,6 +5,7 @@ import {
   Select,
   Switch,
   TextInput,
+  Tooltip,
 } from "@harnessio/ui/components";
 import type { PropControl } from "./types";
 
@@ -16,21 +17,29 @@ export interface ControlFieldProps {
 
 const ControlField: FC<ControlFieldProps> = ({ prop, value, onChange }) => {
   switch (prop.type) {
-    case "boolean":
-      return (
+    case "boolean": {
+      const toggle = (
         <Switch
           label={prop.name}
-          caption={prop.description}
           checked={Boolean(value)}
           onCheckedChange={onChange}
         />
       );
+      return prop.description ? (
+        <Tooltip content={prop.description} side="right">
+          <div>{toggle}</div>
+        </Tooltip>
+      ) : (
+        toggle
+      );
+    }
 
     case "number":
       return (
         <NumberInput
+          size="sm"
           label={prop.name}
-          caption={prop.description}
+          tooltipContent={prop.description}
           optional={!prop.required}
           value={typeof value === "number" ? value : ""}
           onChange={(e) => onChange(Number(e.target.value))}
@@ -40,8 +49,9 @@ const ControlField: FC<ControlFieldProps> = ({ prop, value, onChange }) => {
     case "select":
       return (
         <Select
+          size="sm"
           label={prop.name}
-          caption={prop.description}
+          tooltipContent={prop.description}
           optional={!prop.required}
           value={typeof value === "string" ? value : undefined}
           onChange={(v) => onChange(v)}
@@ -55,8 +65,9 @@ const ControlField: FC<ControlFieldProps> = ({ prop, value, onChange }) => {
     case "color":
       return (
         <Input
+          size="sm"
           label={prop.name}
-          caption={prop.description}
+          tooltipContent={prop.description}
           optional={!prop.required}
           type="color"
           value={typeof value === "string" ? value : "#000000"}
@@ -67,8 +78,9 @@ const ControlField: FC<ControlFieldProps> = ({ prop, value, onChange }) => {
     default:
       return (
         <TextInput
+          size="sm"
           label={prop.name}
-          caption={prop.description}
+          tooltipContent={prop.description}
           optional={!prop.required}
           type="text"
           placeholder={prop.placeholder}

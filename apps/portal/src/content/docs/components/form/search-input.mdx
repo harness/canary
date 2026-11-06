@@ -109,6 +109,42 @@ return (
 </div>
 ) }`} />
 
+## Searchable dropdown
+
+`SearchableDropdown` is a ready-made dropdown for picking one option from a list. Pass `isSearchable` to add a search field that filters options by label, give options a `group` to render them under section labels, and pass `onReset` (with `buttonLabel`) to append a reset action.
+
+<DocsPage.ComponentExample
+  client:only
+  code={`
+  <SearchableDropdown
+    isSearchable
+    inputPlaceholder="Search branches"
+    displayLabel={<Button variant="outline">Select branch</Button>}
+    options={[
+      { label: 'main', value: 'main', group: 'Default' },
+      { label: 'develop', value: 'develop', group: 'Active' },
+      { label: 'feature/login', value: 'feature/login', group: 'Active' },
+      { label: 'feature/billing', value: 'feature/billing', group: 'Active' },
+      { label: 'release/1.0', value: 'release/1.0' }
+    ]}
+    onChange={() => {}}
+    onReset={() => {}}
+    buttonLabel="Clear selection"
+  />
+`}
+/>
+
+```tsx
+import { SearchableDropdown } from "@harnessio/ui/components";
+
+<SearchableDropdown
+  isSearchable
+  displayLabel={<Button variant="outline">Select branch</Button>}
+  options={[{ label: "main", value: "main" }]}
+  onChange={(option) => setBranch(option.value)}
+/>;
+```
+
 ## Installation
 
 ```typescript jsx
@@ -320,6 +356,67 @@ return (
 />
 
 The component forwards its `ref` to the underlying `<input>`, so you can call `ref.current?.focus()` (as the navigation example does).
+
+### `SearchableDropdown`
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "options",
+      description:
+        "Options to list. Options sharing the same `group` are rendered together under a group label.",
+      required: true,
+      value: "{ label: string; value: string; group?: string }[]",
+    },
+    {
+      name: "onChange",
+      description: "Called with the selected option.",
+      required: true,
+      value: "(option) => void",
+    },
+    {
+      name: "displayLabel",
+      description:
+        "The element that opens the dropdown (rendered as the trigger).",
+      required: false,
+      value: "ReactNode | string",
+    },
+    {
+      name: "isSearchable",
+      description:
+        "Shows a search field that filters options by label. The query resets each time the menu opens.",
+      required: false,
+      defaultValue: "false",
+      value: "boolean",
+    },
+    {
+      name: "inputPlaceholder",
+      description: "Placeholder for the search field.",
+      required: false,
+      value: "string",
+    },
+    {
+      name: "dropdownAlign",
+      description: "Alignment of the menu relative to the trigger.",
+      required: false,
+      defaultValue: "'end'",
+      value: "'start' | 'end'",
+    },
+    {
+      name: "onReset",
+      description:
+        "When set, adds a separator and a reset item at the bottom of the menu.",
+      required: false,
+      value: "() => void",
+    },
+    {
+      name: "buttonLabel",
+      description: "Label of the reset item.",
+      required: false,
+      value: "string",
+    },
+  ]}
+/>
 
 </TabItem>
 

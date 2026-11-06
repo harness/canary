@@ -62,18 +62,25 @@ const ControlField: FC<ControlFieldProps> = ({ prop, value, onChange }) => {
         />
       );
 
-    case "color":
-      return (
+    case "color": {
+      const colorInput = (
         <Input
           size="sm"
           label={prop.name}
-          tooltipContent={prop.description}
           optional={!prop.required}
           type="color"
           value={typeof value === "string" ? value : "#000000"}
           onChange={(e) => onChange(e.target.value)}
         />
       );
+      return prop.description ? (
+        <Tooltip content={prop.description} side="right">
+          <div>{colorInput}</div>
+        </Tooltip>
+      ) : (
+        colorInput
+      );
+    }
 
     default:
       return (

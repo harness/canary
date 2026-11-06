@@ -1,0 +1,155 @@
+---
+title: Meter
+description: A ten-segment bar showing a recent history of states, such as pass or fail runs.
+tableOfContents: false
+---
+
+import { DocsPage } from "@/components/docs-page";
+import { Tabs, TabItem } from "@astrojs/starlight/components";
+import PageTabsToc from "@/components/page-tabs-toc.astro";
+
+<PageTabsToc />
+
+<div id="page-level-tabs">
+
+<Tabs>
+
+<TabItem label="Overview">
+
+The `Meter` component renders ten segments. Each item in `data` fills a segment (right-aligned, so the newest is on the right) with a color for its `state`; unfilled segments stay empty. Segments can show a popover on hover.
+
+<DocsPage.ComponentExample
+  client:only
+  code={`
+  <Layout.Vertical gap="lg">
+    <Meter data={[
+      { state: MeterState.Success },
+      { state: MeterState.Success },
+      { state: MeterState.Error },
+      { state: MeterState.Success },
+      { state: MeterState.Warning },
+      { state: MeterState.Success },
+      { state: MeterState.Success }
+    ]} />
+    <Meter data={[
+      { state: MeterState.Info },
+      { state: MeterState.Info },
+      { state: MeterState.Error }
+    ]} />
+  </Layout.Vertical>
+`}
+/>
+
+## Variations
+
+### With tooltips
+
+Add `tooltip.content` to a segment to show a popover on hover.
+
+<DocsPage.ComponentExample
+  client:only
+  code={`
+  <Meter data={[
+    { id: 'a', state: MeterState.Success, tooltip: { content: 'Run #101 passed' } },
+    { id: 'b', state: MeterState.Error, tooltip: { content: 'Run #102 failed' } },
+    { id: 'c', state: MeterState.Success, tooltip: { content: 'Run #103 passed' } }
+  ]} />
+`}
+/>
+
+## Installation
+
+```tsx
+import { Meter, MeterState } from "@harnessio/ui/components";
+
+<Meter data={[{ state: MeterState.Success }, { state: MeterState.Error }]} />;
+```
+
+</TabItem>
+
+<TabItem label="Usage">
+
+## Anatomy
+
+- **Segments** — always ten. Items in `data` occupy the rightmost segments; the rest render as `Empty`.
+- **State** — `MeterState.Empty`, `Error`, `Warning`, `Success` or `Info` sets the segment color.
+- **Tooltip** — optional hover popover per segment.
+
+## Best practices
+
+**Do**
+
+- Order `data` oldest to newest so the latest result sits on the right.
+- Add tooltips so each segment is identifiable beyond its color.
+
+**Don't**
+
+- Don't pass more than ten items; the meter only has ten segments.
+- Don't use color as the only signal — expose the details in a tooltip or nearby text.
+
+## Accessibility
+
+Segments are not focusable and the popover opens on hover only, so surface the same information elsewhere (for example a table row or summary text).
+
+</TabItem>
+
+<TabItem label="Properties">
+
+## Properties
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "data",
+      description: "Segments to display, oldest first. Up to ten.",
+      required: false,
+      defaultValue: "[]",
+      value:
+        "{ id?: string; state: MeterState; tooltip?: { content: ReactNode } }[]",
+    },
+    {
+      name: "className",
+      description: "Additional class names for the container.",
+      required: false,
+      value: "string",
+    },
+  ]}
+/>
+
+### `MeterState`
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "Empty",
+      description: "Unfilled segment.",
+      required: false,
+      value: "0",
+    },
+    {
+      name: "Error",
+      description: "Danger color.",
+      required: false,
+      value: "1",
+    },
+    {
+      name: "Warning",
+      description: "Warning color.",
+      required: false,
+      value: "2",
+    },
+    {
+      name: "Success",
+      description: "Success color.",
+      required: false,
+      value: "3",
+    },
+    { name: "Info", description: "Brand color.", required: false, value: "4" },
+  ]}
+/>
+
+</TabItem>
+
+</Tabs>
+
+</div>

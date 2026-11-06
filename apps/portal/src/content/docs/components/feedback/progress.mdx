@@ -19,6 +19,28 @@ The `Progress` component provides a flexible UI element for displaying progress 
 
 <DocsPage.ProgressPlayground client:only />
 
+## Waterfall progress
+
+`WaterfallProgress` is a thin bar for showing where a task starts and ends within a larger timeline, such as steps in a pipeline run. `startOffset` and `value` are percentages (0–100) of the track; `theme` colors the fill and `inProgress` animates it.
+
+<DocsPage.ComponentExample
+  client:only
+  code={`
+  <Layout.Vertical gap="md" className="min-w-[400px]">
+    <WaterfallProgress value={30} theme="success" label="Checkout" />
+    <WaterfallProgress startOffset={30} value={40} theme="info" inProgress label="Build" />
+    <WaterfallProgress startOffset={70} value={20} theme="danger" label="Test" />
+    <WaterfallProgress startOffset={10} value={25} theme="warning" label="Lint" />
+  </Layout.Vertical>
+`}
+/>
+
+```tsx
+import { WaterfallProgress } from "@harnessio/ui/components";
+
+<WaterfallProgress startOffset={30} value={40} theme="info" inProgress />;
+```
+
 ## Installation
 
 ```typescript jsx
@@ -180,6 +202,65 @@ return (
     {
       name: "className",
       description: "Additional class names to apply to the root container.",
+      required: false,
+      value: "string",
+    },
+  ]}
+/>
+
+### WaterfallProgress
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "value",
+      description:
+        "Length of the bar as a percentage of the track (0–100, clamped with startOffset).",
+      required: true,
+      value: "number",
+    },
+    {
+      name: "startOffset",
+      description: "Where the bar starts, as a percentage of the track.",
+      required: false,
+      defaultValue: "0",
+      value: "number",
+    },
+    {
+      name: "theme",
+      description: "Color of the fill.",
+      required: false,
+      defaultValue: "'muted'",
+      value: "'muted' | 'info' | 'success' | 'warning' | 'danger'",
+    },
+    {
+      name: "inProgress",
+      description: "Animates the fill to show ongoing work.",
+      required: false,
+      defaultValue: "false",
+      value: "boolean",
+    },
+    {
+      name: "label",
+      description: "Text label for the bar.",
+      required: false,
+      value: "string",
+    },
+    {
+      name: "tooltipContent",
+      description: "Content of a tooltip shown on hover.",
+      required: false,
+      value: "ReactNode",
+    },
+    {
+      name: "tooltipProps",
+      description: "Extra props passed to the Tooltip.",
+      required: false,
+      value: "Partial<TooltipProps>",
+    },
+    {
+      name: "className",
+      description: "Class applied to the track.",
       required: false,
       value: "string",
     },

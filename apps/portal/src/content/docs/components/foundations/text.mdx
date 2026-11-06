@@ -22,6 +22,27 @@ Use `variant` to set the typographic style (headings, body, and caption scales) 
 
 <DocsPage.TextPlayground client:only />
 
+## Highlight text
+
+`HighlightText` renders a string with the characters matching `match` wrapped in `<mark>`. Matching is fuzzy (the same fuzzysort matching used by file search), so `match="rdm"` highlights the letters of "README". With no `match`, or no match found, it renders plain text.
+
+<DocsPage.ComponentExample
+  client:only
+  code={`
+  <Layout.Vertical gap="sm">
+    <HighlightText text="README.md" match="rdm" />
+    <HighlightText text="pipeline-graph.tsx" match="pipe" />
+    <HighlightText text="No match here" match="zzz" />
+  </Layout.Vertical>
+`}
+/>
+
+```tsx
+import { HighlightText } from "@harnessio/ui/components";
+
+<HighlightText text={file.name} match={searchQuery} />;
+```
+
 ## Installation
 
 ```tsx
@@ -168,6 +189,32 @@ import { Text } from "@harnessio/ui/components";
   `Text` also accepts the standard attributes of whatever element it renders
   (via `as`), such as `title`, `id`, or `dateTime` on `as="time"`.
 </Aside>
+
+### `HighlightText`
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "text",
+      description: "The string to render.",
+      required: true,
+      value: "string",
+    },
+    {
+      name: "match",
+      description:
+        "Fuzzy query whose matching characters are highlighted with <mark>.",
+      required: false,
+      value: "string | null",
+    },
+    {
+      name: "className",
+      description: "Class applied to the wrapping span.",
+      required: false,
+      value: "string",
+    },
+  ]}
+/>
 
 </TabItem>
 

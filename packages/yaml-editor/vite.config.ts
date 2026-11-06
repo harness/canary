@@ -22,7 +22,9 @@ export default defineConfig({
     react(),
     dts({
       outDir: 'dist',
-      tsconfigPath: './tsconfig.json'
+      tsconfigPath: './tsconfig.json',
+      // Keep tests and test mocks out of the published type declarations.
+      exclude: ['src/**/*.test.ts', 'src/**/*.test.tsx', 'src/**/__tests__/**', 'config/**', 'playground/**']
     }),
     monacoEditorPlugin.default({ customWorkers: [{ entry: 'monaco-yaml/yaml.worker', label: 'yaml' }] })
   ],

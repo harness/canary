@@ -426,13 +426,34 @@ export default defineConfig({
               collapsed: true,
               items: [
                 { slug: "patterns/page-layouts", label: "Overview" },
-                { slug: "patterns/page-layouts/standard-page", label: "Standard Page" },
-                { slug: "patterns/page-layouts/page-with-section-menu", label: "Page with Section Menu" },
-                { slug: "patterns/page-layouts/main-and-side-columns", label: "Main and Side Columns" },
-                { slug: "patterns/page-layouts/resizable-split", label: "Resizable Split" },
-                { slug: "patterns/page-layouts/stepped-flow", label: "Stepped Flow" },
-                { slug: "patterns/page-layouts/header-content-footer-layout", label: "Header, Content, Footer Layout" },
-                { slug: "patterns/page-layouts/dashboard-card-layout", label: "Dashboard Card Layout" },
+                {
+                  slug: "patterns/page-layouts/standard-page",
+                  label: "Standard Page",
+                },
+                {
+                  slug: "patterns/page-layouts/page-with-section-menu",
+                  label: "Page with Section Menu",
+                },
+                {
+                  slug: "patterns/page-layouts/main-and-side-columns",
+                  label: "Main and Side Columns",
+                },
+                {
+                  slug: "patterns/page-layouts/resizable-split",
+                  label: "Resizable Split",
+                },
+                {
+                  slug: "patterns/page-layouts/stepped-flow",
+                  label: "Stepped Flow",
+                },
+                {
+                  slug: "patterns/page-layouts/header-content-footer-layout",
+                  label: "Header, Content, Footer Layout",
+                },
+                {
+                  slug: "patterns/page-layouts/dashboard-card-layout",
+                  label: "Dashboard Card Layout",
+                },
               ],
             },
             {

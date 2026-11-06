@@ -139,7 +139,7 @@ const ShimmerPlayground: FC = () => {
   const preview = (
     <Shimmer
       key={state.as}
-      as={state.as}
+      as={state.as as React.ElementType}
       variant={state.variant as never}
       color={state.color as never}
       duration={state.duration}

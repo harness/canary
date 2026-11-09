@@ -90,7 +90,7 @@ import { StatsPanel, StatusBadge, TimeAgoCard } from "@harnessio/ui/components";
 
 `StatsPanel` takes a single `data` array and lays each entry out as a vertical label-over-value pair, arranging the pairs in a horizontal row.
 
-- Each entry is `{ label: string; value?: JSX.Element }`. The `label` is rendered as small secondary text above the `value`.
+- Each entry is `{ label: string; value?: JSX.Element }`. The `label` uses **text-1** (`foreground-1`) above the value, which uses **text-3** (`foreground-3`) for de-emphasized metadata.
 - The `value` must be a React element — wrap plain strings or numbers (e.g. `value: <span>jane.doe</span>`).
 - When a `value` is missing, the panel renders a `-` placeholder so the layout stays aligned.
 - `gap` controls the vertical spacing between each label and its value.

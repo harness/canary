@@ -178,24 +178,24 @@ describe('StatsPanel', () => {
       expect(valueText.tagName).toBe('SPAN')
     })
 
-    test('should apply foreground-1 color to value', () => {
+    test('should apply foreground-3 color to value', () => {
       renderComponent({
         data: [{ label: 'Total', value: <span>100</span> }]
       })
       const texts = screen.getAllByTestId('text')
       const valueText = texts.find(el => el.textContent === '100')
-      expect(valueText).toHaveAttribute('data-color', 'foreground-1')
+      expect(valueText).toHaveAttribute('data-color', 'foreground-3')
     })
   })
 
   describe('Label Rendering', () => {
-    test('should apply foreground-3 color to label', () => {
+    test('should apply foreground-1 color to label', () => {
       renderComponent({
         data: [{ label: 'Total', value: <span>100</span> }]
       })
       const texts = screen.getAllByTestId('text')
       const labelText = texts.find(el => el.textContent === 'Total')
-      expect(labelText).toHaveAttribute('data-color', 'foreground-3')
+      expect(labelText).toHaveAttribute('data-color', 'foreground-1')
     })
 
     test('should render all labels', () => {

@@ -30,13 +30,14 @@
     "./context": "./dist/context.js",
     "./types": "./dist/types.js",
     "./yaml-output": "./dist/yaml-output.js",
-    "./.claude/manifest.json": "./.claude/manifest.json"
+    "./docs/system/*": "./docs/system/*"
   },
   "files": [
     "dist",
     "src/shared-style-variables.css",
     "src/components/markdown-viewer/style.css",
-    ".claude"
+    ".claude/skills",
+    "docs/system"
   ],
   "scripts": {
     "dev": "vite",

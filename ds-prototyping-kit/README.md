@@ -102,10 +102,11 @@ Results, 15 prompts per pass, clean = zero lint violations:
 | Kit rules only | 11/15, 11/15 |
 | Plus component index and revised skill, hook not working | 13/15, 13/15 |
 | Plus working lint hook | 15/15, 15/15 |
+| Plus width ban and `cn-page-content` whitelist | 15/15 (one pass) |
 
-Baseline and hint ran once; kit stages ran twice. These results predate the width ban and the `cn-page-content` whitelist entry; rerun before quoting them for the current config.
+Baseline, hint and the width-ban stage ran once; the other kit stages ran twice.
 
-**Read these numbers with the caveats.** The lint config is both the enforcer and the judge, so 30/30 shows Claude satisfies the lint, not that the output renders or looks right. There is no `tsc` or screenshot check in the score. The prompts are written to tempt. Each prompt ran twice. One run satisfied the lint with `style={{ width: 720 }}`; the width ban closes that.
+**Read these numbers with the caveats.** The lint config is both the enforcer and the judge, so 30/30 shows Claude satisfies the lint, not that the output renders or looks right. There is no `tsc` or screenshot check in the score. The prompts are written to tempt. Each prompt ran twice. Before the width ban, one run satisfied the lint with `style={{ width: 720 }}`. In the width-ban pass, `arbitrary-spacing` used `w-full max-w-cn-page`, `p-cn-sm` and `gap="2xs"` and disclosed each substitution.
 
 ## Differences from canary
 

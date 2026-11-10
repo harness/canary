@@ -1,6 +1,6 @@
 ---
 title: Design-to-Code Flow Rules
-description: One-way dependency flow, package boundaries, and versioning
+description: One-way dependency flow, package boundaries, Code Connect, and versioning
 ---
 
 Global rules for how design decisions travel from this repo into consuming applications.
@@ -51,11 +51,11 @@ Global rules for how design decisions travel from this repo into consuming appli
 
 ## Code is the primary source; Figma is secondary
 
-**Rule:** Where Figma and the code disagree, the code is authoritative for what the system *is*.
+**Rule:** Where Figma and the code disagree, the code is authoritative for what the system *is*. Code Connect mappings (`{name}.figma.ts`) link a Figma component to its code counterpart so design hand-off resolves to real props.
 
 **Rule:** Don't infer a design decision from a gap in Figma. A component or variant missing from the Figma library usually means the library lags — it is not evidence that the pattern is disallowed.
 
-**Why:** The Figma library trails releases.
+**Why:** Code Connect coverage is incomplete and the Figma library trails releases.
 
 ---
 

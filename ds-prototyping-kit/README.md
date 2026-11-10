@@ -32,7 +32,7 @@ Run `tsc --noEmit` before finishing.
   with the registry, manifest, pattern-doc and `ds-check` steps removed and the installed
   types as the prop source.
 - `docs/system/*.md` are canary's files with references to manifests, pattern docs,
-  `packages/ui/AGENTS.md` and Code Connect removed (`design-to-code-flow.md`,
+  and `packages/ui/AGENTS.md` removed (`design-to-code-flow.md`,
   `component-architecture.md`). Everything else is verbatim.
 - `component-architecture.md` still has a "Follow the actual file structure" section that
   describes canary's own `src/components/` layout. It applies to library authors, not prototypers.

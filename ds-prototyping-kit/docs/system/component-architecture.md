@@ -63,7 +63,7 @@ The `cn-*` classes are defined in `tailwind-utils-config/` where they consume de
 
 **Rule:** Scale the structure to the component:
 
-- **Single-file:** `{name}.tsx` in `src/components/`
+- **Single-file:** `{name}.tsx` alongside optional `{name}.figma.ts` in `src/components/`
 - **Multi-file:** a `{name}/` directory with PascalCase part files (`AlertRoot.tsx`, `AlertTitle.tsx`) and an `index.ts` barrel that assembles the namespace export
 - **Tests:** centralized in `src/components/__tests__/{name}.test.tsx` — *not* beside the component
 - **Public export:** add to `src/components/index.ts`; consumers import from `@harnessio/ui/components`

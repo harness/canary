@@ -51,4 +51,5 @@ report. Do not work around a missing setup from inside a component file.
 
 ## Not authoritative
 
-The docs site (`apps/portal/**`) lags the code. Do not cite it.
+The docs site (`apps/portal/**`) lags the code. Do not cite it. Do not treat `*.figma.ts`
+Code Connect files as evidence of what Figma exposes.

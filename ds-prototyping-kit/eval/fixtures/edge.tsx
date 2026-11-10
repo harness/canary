@@ -6,3 +6,10 @@ export function Edge(): JSX.Element {
   )
 }
 export const T = <div className="light-std-std dark-high-contrast-protanopia">y</div>
+export function Dynamic({ pct, px }: { pct: number; px: number }): JSX.Element {
+  return (
+    <div className="cn-page-content cn-page-content-pt" style={{ width: `${pct}%`, height: px }}>
+      z
+    </div>
+  )
+}

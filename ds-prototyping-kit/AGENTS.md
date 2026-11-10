@@ -25,3 +25,8 @@ Every value is a token reference, never a literal hex or px. This ensures:
 - Design system changes propagate
 
 No hard-coded hex or px in components, ever. Token names and values are in `DESIGN.md`.
+
+This includes widths and heights. Prototypes may not use arbitrary values (`w-[720px]`,
+`style={{ width: 720 }}`), even though `docs/system/spacing.md` notes that canary's own
+components still do. Use `w-full`, fractions, `w-cn-1` to `w-cn-96`, `max-w-cn-page`, or a
+layout component. If no token fits, say so.

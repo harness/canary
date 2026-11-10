@@ -51,6 +51,13 @@ files it points to; they are the source of truth.
   be met with the component's props, use the nearest supported variant, say what you
   substituted and why, and offer to raise the gap with the design system team.
 - Local re-implementations of a component that exists in `@harnessio/ui`.
+- Arbitrary values of any kind, including widths and heights: no `w-[720px]`, no
+  `style={{ width: 720 }}`, no `maxWidth: '40rem'`. This overrides the "Arbitrary values for
+  sizing" note in `docs/system/spacing.md`, which describes how canary's own components are
+  built, not what prototypes may do. Use `w-full`, fractions, size tokens (`w-cn-1` to
+  `w-cn-96`, `max-w-cn-page`) or a layout component. If none fits, use the nearest and say
+  there is no token for the size you wanted. A size computed from data
+  (`style={{ width: progress }}`) is allowed.
 
 ## Before the first component renders
 

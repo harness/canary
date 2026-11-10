@@ -35,6 +35,8 @@ const PALETTE_MESSAGE =
 const STYLE_PROPS =
   'color|background|backgroundColor|borderColor|borderRadius|boxShadow|fill|stroke|outlineColor|fontFamily|fontSize|fontWeight|lineHeight|letterSpacing|padding|paddingTop|paddingRight|paddingBottom|paddingLeft|margin|marginTop|marginRight|marginBottom|marginLeft|gap|rowGap|columnGap'
 
+const SIZE_PROPS = 'width|height|minWidth|maxWidth|minHeight|maxHeight'
+
 const restrictedSyntax = [
   ...classNameRules,
   {
@@ -68,7 +70,12 @@ const restrictedSyntax = [
   {
     selector: `JSXAttribute[name.name='style'] Property[key.name=/^(${STYLE_PROPS})$/]`,
     message:
-      'Inline style for colour, type, spacing, radius or shadow. Use token classes or component props. `style` is for dynamic geometry only (transform, width from data).'
+      'Inline style for colour, type, spacing, radius or shadow. Use token classes or component props. `style` is for dynamic geometry only (transform, or a size computed from data).'
+  },
+  {
+    selector: `JSXAttribute[name.name='style'] Property[key.name=/^(${SIZE_PROPS})$/][value.type='Literal']`,
+    message:
+      'Fixed width or height in an inline style. Arbitrary sizes are not allowed. Use w-full, a layout component (Layout, Card, Container), or an existing size token class. If no token fits, say so instead of hard-coding a number. A size computed from data (not a literal) is allowed.'
   }
 ]
 
@@ -109,9 +116,10 @@ module.exports = {
     'tailwindcss/no-contradicting-classname': 'error',
     'tailwindcss/no-custom-classname': [
       'error',
-      // Host-app classes from docs/system/app-setup.md: the border reset and theme classes.
-      // Component classes such as `cn-button` are intentionally not whitelisted.
-      { whitelist: ['cn-root', '(light|dark)(-[a-z]+)*'] }
+      // Host-app classes from docs/system/app-setup.md and spacing.md: the border reset, theme
+      // classes, and the page-content padding wrapper. Component classes such as `cn-button`
+      // are intentionally not whitelisted.
+      { whitelist: ['cn-root', 'cn-page-content(-pt)?', '(light|dark)(-[a-z]+)*'] }
     ]
   }
 }

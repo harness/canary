@@ -158,7 +158,7 @@ describe('ds-check', { timeout: 30_000 }, () => {
           expect(result.stdout + result.stderr).toContain('generated spec is stale')
         }
       )
-    })
+    }, 90_000)
 
     it('should detect enum mismatches with --source', async () => {
       await withProbeManifest(

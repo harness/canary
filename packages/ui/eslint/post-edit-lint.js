@@ -46,8 +46,9 @@ async function main() {
     return
   }
 
-  // ESLint resolves a string `parser` relative to the config file, which in a consuming app is
-  // the copied kit folder with no node_modules. Resolve it from the eslint root instead.
+  // ESLint resolves a string `parser` relative to the config file, which lives inside the
+  // @harnessio/ui package and cannot see the app's own dependencies. Resolve it from the
+  // eslint root instead.
   let parser
   try {
     parser = require.resolve('@typescript-eslint/parser', { paths: [eslintRoot] })

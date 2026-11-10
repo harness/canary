@@ -14,7 +14,7 @@ async function main() {
     ignore: false,
     cwd: path.resolve(dir),
     resolvePluginsRelativeTo: root,
-    overrideConfigFile: path.join(__dirname, '..', 'eslint', 'ds-prototyping.js'),
+    overrideConfigFile: path.join(__dirname, '..', '..', 'eslint', 'ds-prototyping.js'),
     overrideConfig: tailwindConfig ? { settings: { tailwindcss: { config: path.resolve(tailwindConfig) } } } : {}
   })
   const results = await eslint.lintFiles([path.join(path.resolve(dir), '**/*.{ts,tsx}')])

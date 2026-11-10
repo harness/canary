@@ -1,14 +1,14 @@
 #!/usr/bin/env node
 // Builds docs/components-index.md: one line per component exported from @harnessio/ui/components.
 //
-//   node build-component-index.js <path-to-@harnessio/ui> <out.md> [portal-components-docs-dir]
+//   node build-component-index.cjs <path-to-@harnessio/ui> <out.md> [portal-components-docs-dir]
 //
 // Names come from dist/components.d.ts (the real export list). If a docs directory is given,
 // the one-line purpose comes from the matching <kebab-name>.mdx `description:` frontmatter.
 // Components with no doc get an empty purpose; the script reports the coverage.
 const fs = require('fs')
 const path = require('path')
-const { readTypes, componentNames } = require('./lib-exports')
+const { readTypes, componentNames } = require('./lib-exports.cjs')
 
 const [pkgDir, outFile, docsDir] = process.argv.slice(2)
 if (!pkgDir || !outFile) {

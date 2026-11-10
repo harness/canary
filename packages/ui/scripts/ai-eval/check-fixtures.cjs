@@ -35,7 +35,7 @@ async function main() {
     ignore: false,
     cwd: dir,
     resolvePluginsRelativeTo: root,
-    overrideConfigFile: path.join(__dirname, '..', 'eslint', 'ds-prototyping.js'),
+    overrideConfigFile: path.join(__dirname, '..', '..', 'eslint', 'ds-prototyping.js'),
     overrideConfig: { settings: { tailwindcss: { config: tailwind } } }
   })
   const results = await eslint.lintFiles(Object.keys(EXPECTED).map(f => path.join(dir, f)))

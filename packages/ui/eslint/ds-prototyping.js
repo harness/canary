@@ -7,7 +7,8 @@
  * failure loud.
  *
  * Usage in a consuming app's .eslintrc.js:
- *   module.exports = { root: true, extends: [require.resolve('./eslint/ds-prototyping.js')] }
+ *   module.exports = { root: true, extends: [require.resolve('@harnessio/ui/eslint')] }
+ * `npx harnessio-ui init-ai` wires the same config into a Claude Code hook; see README.md.
  *
  * Requires: eslint, eslint-plugin-react, eslint-plugin-tailwindcss, @typescript-eslint/parser.
  * The Tailwind plugin finds the app's own tailwind.config.{js,ts} (which must use the
@@ -28,7 +29,7 @@ const PALETTE_CLASS = `(^|[\\s:!])(${UTILITY_PREFIXES})-(${DEFAULT_PALETTE})-[0-
 const BW_CLASS = `(^|[\\s:!])(${UTILITY_PREFIXES})-(white|black)([\\s\\x2f]|$)`
 
 const COLOR_MESSAGE =
-  'Hard-coded colour. Use a semantic token class (e.g. bg-cn-1, text-cn-1, border-cn-2) or a component `theme`/`variant`/`color` prop. See DESIGN.md and docs/system/color-system.md.'
+  'Hard-coded colour. Use a semantic token class (e.g. bg-cn-1, text-cn-1, border-cn-2) or a component `theme`/`variant`/`color` prop. See DESIGN.md and docs/system/color-system.md in @harnessio/ui.'
 const PALETTE_MESSAGE =
   'Default Tailwind palette class. The design-system preset removes the default palette, so this generates no CSS. Use a semantic token class (bg-cn-*, text-cn-*, border-cn-*) or a component prop.'
 

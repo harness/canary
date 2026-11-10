@@ -1,4 +1,4 @@
-// Shared by build-component-index.js and sync.js: the value exports of @harnessio/ui/components.
+// Shared by build-component-index.cjs and the ai-kit test: the value exports of @harnessio/ui/components.
 const fs = require('fs')
 const path = require('path')
 

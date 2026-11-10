@@ -5,6 +5,9 @@
   "private": false,
   "type": "module",
   "main": "./dist/index.js",
+  "bin": {
+    "harnessio-ui": "./bin/harnessio-ui.cjs"
+  },
   "exports": {
     ".": "./dist/index.js",
     "./components": "./dist/components.js",
@@ -30,14 +33,19 @@
     "./context": "./dist/context.js",
     "./types": "./dist/types.js",
     "./yaml-output": "./dist/yaml-output.js",
-    "./docs/system/*": "./docs/system/*"
+    "./docs/system/*": "./docs/system/*",
+    "./eslint": "./eslint/ds-prototyping.js"
   },
   "files": [
     "dist",
     "src/shared-style-variables.css",
     "src/components/markdown-viewer/style.css",
     ".claude/skills",
-    "docs/system"
+    "docs/system",
+    "docs/components-index.md",
+    "docs/DESIGN.md",
+    "eslint",
+    "bin"
   ],
   "scripts": {
     "dev": "vite",

@@ -1,7 +1,8 @@
 # `@harnessio/ui` — Design rules for prototyping
 
-Extracted from canary's `packages/ui/AGENTS.md`. Only the parts that do not depend on
-component manifests are kept. For the workflow, read `.claude/skills/design-system/SKILL.md`.
+Index of the system rules in this folder. For the workflow, read the `design-system` skill
+that `npx harnessio-ui init-ai` installs (source: `.claude/skills/design-system/SKILL.md` in
+this package).
 
 ## System rules
 
@@ -24,7 +25,7 @@ Every value is a token reference, never a literal hex or px. This ensures:
 - Spacing is consistent
 - Design system changes propagate
 
-No hard-coded hex or px in components, ever. Token names and values are in `DESIGN.md`.
+No hard-coded hex or px in components, ever. Token names and values are in `../DESIGN.md`.
 
 This includes widths and heights. Prototypes may not use arbitrary values (`w-[720px]`,
 `style={{ width: 720 }}`), even though `docs/system/spacing.md` notes that canary's own

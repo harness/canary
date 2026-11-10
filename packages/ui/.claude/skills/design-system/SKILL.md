@@ -13,7 +13,7 @@ files it points to; they are the source of truth.
 1. **Installed types** — `node_modules/@harnessio/ui/dist/components.d.ts`. The real
    components, props, and allowed values. If a component or prop is not in this file, it
    does not exist. Import from `@harnessio/ui/components`.
-2. **System rules** — `docs/system/*.md`. Cross-cutting rules: `accessibility.md`,
+2. **System rules** — `docs/system/*.md` (index: `docs/system/README.md`). Token names and values: `docs/DESIGN.md`. Cross-cutting rules: `accessibility.md`,
    `app-setup.md`, `color-system.md`, `component-architecture.md`,
    `design-to-code-flow.md`, `interaction-states.md`, `shadows.md`, `spacing.md`,
    `typography.md`, `visual-primitives.md`.
@@ -38,7 +38,7 @@ files it points to; they are the source of truth.
    See "Documented-rule conflicts" in `docs/system/design-to-code-flow.md`. Always produce
    output.
 5. **Fix lint errors the hook returns.** Every `.ts`/`.tsx` write is linted with
-   `eslint/ds-prototyping.js`. A `decision: block` message lists the violations. Fix them by
+   `eslint/ds-prototyping.js` in this package. A `decision: block` message lists the violations. Fix them by
    changing the markup to use components and tokens; never silence a rule.
 6. **Validate.** Run `tsc --noEmit`. The shipped types enforce the prop contract.
 

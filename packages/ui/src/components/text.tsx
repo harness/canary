@@ -40,7 +40,6 @@ type TextElement =
 export const typographyVariantConfig = {
   'heading-hero': 'font-heading-hero',
   'heading-section': 'font-heading-section',
-  'heading-default': 'font-heading-default',
   'heading-subsection': 'font-heading-subsection',
   'heading-base': 'font-heading-base',
   'heading-small': 'font-heading-small',
@@ -112,7 +111,6 @@ const textVariantToElement: Record<
 > = {
   'heading-hero': { element: 'p', color: 'foreground-1' },
   'heading-section': { element: 'p', color: 'foreground-1' },
-  'heading-default': { element: 'p', color: 'foreground-1' },
   'heading-subsection': { element: 'p', color: 'foreground-1' },
   'heading-base': { element: 'p', color: 'foreground-1' },
   'heading-small': { element: 'p', color: 'foreground-1' },

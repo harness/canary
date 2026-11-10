@@ -27,7 +27,6 @@ interface FontVariant {
 const FONT_VARIANTS: FontVariant[] = [
   { name: 'heading-hero', weight: 'medium', tracking: 'tight' },
   { name: 'heading-section', weight: 'medium', tracking: 'tight' },
-  { name: 'heading-default', weight: 'medium', tracking: 'tight' },
   { name: 'heading-subsection', weight: 'medium', tracking: 'tight' },
   { name: 'heading-base', weight: 'medium', tracking: 'tight' },
   { name: 'heading-small', weight: 'medium', tracking: 'normal' },

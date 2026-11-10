@@ -26,10 +26,12 @@ files it points to; they are the source of truth.
    for layout, typography for text, accessibility for any interactive element).
 3. **Generate.** Use only components, props, and values that appear in the types. Use
    semantic tokens, never literal hex or px. Do not invent a prop, variant, or theme value.
-4. **Warn on any rule conflict.** If a request or your own code conflicts with a documented
-   rule, warn the user before changing anything. Follow "Warn on any documented-rule
-   conflict" in `docs/system/design-to-code-flow.md`: name the rule and file, say what you
-   would do instead, and wait. A skipped or unanswered warning means no change.
+4. **On a rule conflict, build the compliant version and disclose.** If a request or your
+   own code conflicts with a documented rule, do not write the non-compliant code and do
+   not stop to ask. Build the nearest compliant version and end with a short "Departures"
+   note: the rule and file, what was asked, what you built, and an offer to raise the gap.
+   See "Documented-rule conflicts" in `docs/system/design-to-code-flow.md`. Always produce
+   output.
 5. **Validate.** Run `tsc --noEmit`. The shipped types enforce the prop contract.
 
 ## Never

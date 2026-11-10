@@ -95,3 +95,4 @@ The `cn-*` classes are defined in `tailwind-utils-config/` where they consume de
 - **Accessibility** — ARIA, keyboard, accessible names
 - **Color System**, **Typography**, **Spacing**, **Shadows** — The token rules this doc defers to
 - **Design-to-Code Flow** — Package boundaries and versioning
+- `AGENTS.md` — System rules index and the token rule

@@ -6,13 +6,14 @@ registry, and per-component pattern docs.
 
 ## Install into a prototype repo
 
-1. Copy `.claude/` and `docs/` into the repo root, keeping the paths.
+1. Copy `.claude/`, `docs/`, `AGENTS.md`, `DESIGN.md` and `eslint/` into the repo root, keeping the paths.
 2. Add `@harnessio/ui` as a dependency (the skill reads `dist/components.d.ts`).
 3. Paste the block below into the repo's `CLAUDE.md`. A skill can fail to trigger; this
    line makes the check unconditional.
 
 ```md
 ## Design system
+@AGENTS.md
 Before writing or editing any UI, read `.claude/skills/design-system/SKILL.md`.
 Use only components and props that exist in `node_modules/@harnessio/ui/dist/components.d.ts`.
 No hard-coded colours, no className/style overrides on design-system components.
@@ -23,6 +24,7 @@ Run `tsc --noEmit` before finishing.
 
 - `.claude/skills/design-system/SKILL.md` — rewritten router (see below)
 - `docs/system/*.md` — 10 system rule files from canary
+- `AGENTS.md` — system rules index and token rule, extracted from canary's `packages/ui/AGENTS.md` (only the parts that do not depend on manifests; about 20 lines)
 - `DESIGN.md` — token spec
 - `eslint/rules.js` — class-name lint rules
 
@@ -31,9 +33,9 @@ Run `tsc --noEmit` before finishing.
 - `SKILL.md` is a merge of canary's root stub and `packages/ui/.claude/skills/design-system/SKILL.md`,
   with the registry, manifest, pattern-doc and `ds-check` steps removed and the installed
   types as the prop source.
-- `docs/system/*.md` are canary's files with references to manifests, pattern docs,
-  and `packages/ui/AGENTS.md` removed (`design-to-code-flow.md`,
-  `component-architecture.md`). Everything else is verbatim.
+- `docs/system/*.md` are canary's files with references to manifests and pattern docs removed,
+  and the `packages/ui/AGENTS.md` cross-reference repointed at the kit's `AGENTS.md`
+  (`design-to-code-flow.md`, `component-architecture.md`). Everything else is verbatim.
 - `component-architecture.md` still has a "Follow the actual file structure" section that
   describes canary's own `src/components/` layout. It applies to library authors, not prototypers.
 - `DESIGN.md` is verbatim and includes its COMPONENTS section (token-based style anchors).

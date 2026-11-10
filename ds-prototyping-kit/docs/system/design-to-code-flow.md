@@ -73,3 +73,4 @@ Global rules for how design decisions travel from this repo into consuming appli
 
 - **Component Architecture** — Export contracts, React 17 peer constraint
 - **Color System** — Why token names are the consumer-facing contract
+- `AGENTS.md` — System rules index and the token rule

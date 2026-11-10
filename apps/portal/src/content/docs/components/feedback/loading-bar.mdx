@@ -1,0 +1,853 @@
+---
+title: Loading Bar
+description: A thin top-of-page bar that signals page navigation or selected API activity without needing real progress data.
+---
+
+import { DocsPage } from "@/components/docs-page";
+import { Tabs, TabItem } from "@astrojs/starlight/components";
+import PageTabsToc from "@/components/page-tabs-toc.astro";
+
+<PageTabsToc />
+
+<div id="page-level-tabs">
+
+<Tabs>
+
+<TabItem label="Overview">
+
+The `LoadingBar` is a thin bar fixed to the top of the page. It tells people the app is busy, for example while a page navigates or while selected API calls are in flight.
+
+The progress is **simulated**. The bar jumps in quickly, slows down as it nears 95%, and only reaches 100% when the work really finishes. Because of that it needs no progress data from the backend and works for any request.
+
+Use it for page-level or background activity. For a measurable operation such as an upload or a pipeline run, use [Progress](/components/feedback/progress). For content placeholders, use [Skeleton](/components/feedback/skeleton).
+
+Press **Start** in the example, wait a moment, then press **Done**. The demo uses an `inline` bar so it stays inside the example; in an app the bar is fixed to the top of the viewport.
+
+<DocsPage.ComponentExample
+  client:only
+  code={`() => {
+    const bar = React.useMemo(() => createLoadingBarController(), []);
+
+    return (
+      <div className="w-[600px] grid gap-cn-md">
+        <div className="relative h-[3px] bg-cn-2 rounded-full">
+          <LoadingBar inline controller={bar} />
+        </div>
+        <Layout.Horizontal gap="sm">
+          <Button onClick={() => bar.start('demo')}>Start</Button>
+          <Button variant="outline" onClick={() => bar.done('demo')}>Done</Button>
+        </Layout.Horizontal>
+      </div>
+    );
+
+}`}
+/>
+
+## How it behaves
+
+| Behavior             | Default | What it does                                                                                |
+| -------------------- | ------- | ------------------------------------------------------------------------------------------- |
+| Show delay           | 120 ms  | Work that finishes faster never shows the bar, so quick requests do not flash it.           |
+| Minimum visible time | 300 ms  | Once shown, the bar stays at least this long so it does not blink.                          |
+| Initial progress     | 8%      | Where the bar starts when it appears.                                                       |
+| Trickle              | 250 ms  | Every step moves a small fraction of the remaining distance, so it slows down near the cap. |
+| Progress cap         | 95%     | Trickling never goes past this. Only finishing the work reaches 100%.                       |
+| Completion           | 200 ms  | The fill runs to 100%, then the bar fades out (200 ms) and rewinds while invisible.         |
+| Safety net           | 30 s    | If a task never calls `done`, the bar force-completes. Set `maxDuration: 0` to disable.     |
+
+All of these can be changed. See [Customizing the timings](#customizing-the-timings).
+
+## Installation
+
+```typescript jsx
+import { LoadingBar, loadingBar } from '@harnessio/ui/components'
+
+//...
+
+// 1. Mount once, near the root of your app
+return (
+  <>
+    <Outlet />
+    <LoadingBar />
+  </>
+)
+
+// 2. Start and stop it from anywhere
+const key = loadingBar.start()
+await doWork()
+loadingBar.done(key)
+```
+
+</TabItem>
+
+<TabItem label="Usage">
+
+## Core idea
+
+There is **one shared bar** for the whole app. You mount `<LoadingBar />` once, and any code can register work with it:
+
+- `loadingBar.start(key?)` registers a unit of work and returns its key.
+- `loadingBar.done(key?)` marks it finished.
+
+The bar completes only when **every** started task is done. A page navigation plus three API calls therefore appear as one continuous bar instead of four flickering ones.
+
+Keys make the calls safe. Starting a key that is already active does nothing, and `done` with an unknown key is ignored, so a duplicate or forgotten call cannot corrupt the count.
+
+Pick the scenario that matches what you need:
+
+| I want the bar to show for...                    | Use                                                                 |
+| ------------------------------------------------ | ------------------------------------------------------------------- |
+| Page navigation and route loaders                | [Page navigation](#page-navigation)                                 |
+| One specific query or mutation                   | [A specific API](#a-specific-api-call)                              |
+| A chosen set of queries, app-wide                | [Selected APIs by opt-in](#selected-apis-by-opt-in)                 |
+| A plain `fetch` or any async function            | [Plain fetch and async functions](#plain-fetch-and-async-functions) |
+| Lazy-loaded routes and `Suspense`                | [Lazy routes and Suspense](#lazy-routes-and-suspense)               |
+| Several things at once                           | [Concurrent work](#concurrent-work)                                 |
+| A bar inside a card or panel, not the whole page | [A bar inside a panel](#a-bar-inside-a-panel)                       |
+| Full manual control                              | [Manual start and stop](#manual-start-and-stop)                     |
+
+## Mount the bar once
+
+Place `LoadingBar` next to your root layout, for example beside the `Toaster`. It is fixed to the top of the viewport, sits above the app shell, never takes focus and ignores pointer events.
+
+```typescript jsx
+import { LoadingBar } from '@harnessio/ui/components'
+
+function AppShell() {
+  return (
+    <>
+      <Outlet />
+      <Toaster />
+      <LoadingBar />
+    </>
+  )
+}
+```
+
+Mount it only once. Two bars on the same page would draw on top of each other.
+
+## Page navigation
+
+`@harnessio/ui` does not depend on a router, so connect navigation in your app. With a React Router **data router**, `useNavigation` reports `loading` or `submitting` while a route loader or action runs, and `useLoadingBarTask` turns that into start and done.
+
+```typescript jsx
+import { useNavigation } from 'react-router-dom'
+import { LoadingBar, useLoadingBarTask } from '@harnessio/ui/components'
+
+export function AppLoadingBar() {
+  const navigation = useNavigation()
+
+  // Active for as long as a navigation is in progress
+  useLoadingBarTask(navigation.state !== 'idle', 'navigation')
+
+  return <LoadingBar />
+}
+```
+
+Render `AppLoadingBar` **inside** the router, because `useNavigation` needs the router context. Navigations that finish in under 120 ms never show the bar.
+
+`useNavigation` only reports state for data routers (`createBrowserRouter` with `RouterProvider`). With the legacy `BrowserRouter` there is no navigation state, so start the bar yourself from your own loading signal.
+
+## A specific API call
+
+When you already have a loading flag for one request, hand it to `useLoadingBarTask`. The bar starts when the flag becomes true and finishes when it becomes false or the component unmounts.
+
+```typescript jsx
+import { useLoadingBarTask } from '@harnessio/ui/components'
+
+function RepositoryPage() {
+  const { data, isLoading } = useGetRepositoryQuery({ repoRef })
+
+  // Initial load only. Use isFetching to include background refetches.
+  useLoadingBarTask(isLoading, 'repository')
+
+  return <RepositoryView data={data} />
+}
+```
+
+Mutations work the same way:
+
+```typescript jsx
+const { mutate, isLoading } = useDeleteBranchMutation();
+
+useLoadingBarTask(isLoading, "delete-branch");
+```
+
+Choose the flag on purpose. `isLoading` is true only for the first load, whereas `isFetching` is also true for refetches and polling. Polling queries should not drive the bar.
+
+<DocsPage.ComponentExample
+  client:only
+  code={`() => {
+    const bar = React.useMemo(() => createLoadingBarController(), []);
+    const [loading, setLoading] = React.useState(false);
+
+    useLoadingBarTask(loading, 'repository', bar);
+
+    const load = () => {
+      setLoading(true);
+      setTimeout(() => setLoading(false), 2500);
+    };
+
+    return (
+      <div className="w-[600px] grid gap-cn-md">
+        <div className="relative h-[3px] bg-cn-2 rounded-full">
+          <LoadingBar inline controller={bar} />
+        </div>
+        <Layout.Horizontal gap="sm">
+          <Button onClick={load} disabled={loading}>Load data (2.5 s)</Button>
+        </Layout.Horizontal>
+      </div>
+    );
+
+}`}
+/>
+
+## Selected APIs by opt-in
+
+Not every request deserves a bar. Polling and background refetches would keep it on screen all the time. A good pattern is to **opt in per query or mutation** using React Query's `meta`, and connect the caches to the bar once.
+
+**1. Connect the caches once**, where you create the query client. This is written for React Query v4. In v5 the mutation status is `'pending'` instead of `'loading'`.
+
+```typescript
+import { MutationCache, QueryCache, QueryClient } from "@tanstack/react-query";
+import { loadingBar } from "@harnessio/ui/components";
+
+const queryCache = new QueryCache();
+const mutationCache = new MutationCache();
+
+queryCache.subscribe((event) => {
+  const { query } = event;
+  if (query.meta?.loadingBar !== true) return;
+
+  const key = `query:${query.queryHash}`;
+  if (event.type !== "removed" && query.state.fetchStatus === "fetching") {
+    loadingBar.start(key);
+  } else {
+    loadingBar.done(key);
+  }
+});
+
+mutationCache.subscribe((event) => {
+  const { mutation } = event;
+  if (mutation.options.meta?.loadingBar !== true) return;
+
+  const key = `mutation:${mutation.mutationId}`;
+  if (mutation.state.status === "loading") {
+    loadingBar.start(key);
+  } else {
+    loadingBar.done(key);
+  }
+});
+
+export const queryClient = new QueryClient({ queryCache, mutationCache });
+```
+
+**2. Opt in** on the calls that should show the bar:
+
+```typescript jsx
+// Only this query drives the bar
+useGetRepositoryQuery({ repoRef }, { meta: { loadingBar: true } });
+
+// A mutation
+useMergePullRequestMutation({ meta: { loadingBar: true } });
+
+// A polling query: no meta, so no bar
+usePipelineStatusQuery({ id }, { refetchInterval: 5000 });
+```
+
+## Plain fetch and async functions
+
+For code outside React Query, `withLoadingBar` wraps a promise, or a function that returns one. The bar finishes whether the promise resolves or rejects, and the original result (or error) is passed through.
+
+```typescript jsx
+import { withLoadingBar } from "@harnessio/ui/components";
+
+// Pass a promise
+const blob = await withLoadingBar(
+  fetch(url).then((res) => res.blob()),
+  "download",
+);
+
+// Or a function. The bar starts first, then the function runs.
+const user = await withLoadingBar(() => api.getUser(id), "get-user");
+
+// Errors still reach your catch block, and the bar still completes
+try {
+  await withLoadingBar(() => api.saveSettings(values), "save-settings");
+} catch (error) {
+  toast({ title: "Could not save", variant: "destructive" });
+}
+```
+
+The second argument is the key. It is optional, but a descriptive key makes the work easy to find when debugging.
+
+<DocsPage.ComponentExample
+  client:only
+  code={`() => {
+    const bar = React.useMemo(() => createLoadingBarController(), []);
+    const [result, setResult] = React.useState('');
+
+    const run = (shouldFail) => {
+      setResult('');
+      withLoadingBar(
+        () => new Promise((resolve, reject) =>
+          setTimeout(() => (shouldFail ? reject(new Error('Request failed')) : resolve('Saved')), 1800)),
+        'save',
+        bar
+      ).then(setResult, (error) => setResult(error.message));
+    };
+
+    return (
+      <div className="w-[600px] grid gap-cn-md">
+        <div className="relative h-[3px] bg-cn-2 rounded-full">
+          <LoadingBar inline controller={bar} />
+        </div>
+        <Layout.Horizontal gap="sm" align="center">
+          <Button onClick={() => run(false)}>Succeed</Button>
+          <Button variant="outline" onClick={() => run(true)}>Fail</Button>
+          <Text color="foreground-3">{result}</Text>
+        </Layout.Horizontal>
+      </div>
+    );
+
+}`}
+/>
+
+## Lazy routes and Suspense
+
+A `Suspense` fallback mounts while a lazy chunk loads and unmounts when it is ready, which is exactly the lifetime of the work. Render a tiny component that holds the bar for as long as it is mounted.
+
+```typescript jsx
+import { Suspense } from 'react'
+import { useLoadingBarTask } from '@harnessio/ui/components'
+
+function LoadingBarFallback() {
+  useLoadingBarTask(true, 'suspense')
+  return null
+}
+
+<Suspense fallback={<LoadingBarFallback />}>
+  <LazyPage />
+</Suspense>
+```
+
+If you want a skeleton too, render it from the same fallback: `useLoadingBarTask(true, 'suspense')` then `return <PageSkeleton />`.
+
+## Concurrent work
+
+Start as many tasks as you need. The bar keeps going until the **longest** one finishes, and the final jump to 100% happens once, at the end. Give every task its own key.
+
+<DocsPage.ComponentExample
+  client:only
+  code={`() => {
+    const bar = React.useMemo(() => createLoadingBarController(), []);
+
+    const run = () => {
+      [1200, 2400, 3600].forEach((ms, i) => {
+        withLoadingBar(new Promise(resolve => setTimeout(resolve, ms)), 'request-' + i, bar);
+      });
+    };
+
+    return (
+      <div className="w-[600px] grid gap-cn-md">
+        <div className="relative h-[3px] bg-cn-2 rounded-full">
+          <LoadingBar inline controller={bar} />
+        </div>
+        <Button onClick={run}>Simulate 3 requests (1.2 s, 2.4 s, 3.6 s)</Button>
+      </div>
+    );
+
+}`}
+/>
+
+New work that arrives while the bar is already showing keeps the bar going instead of starting a second one. If it arrives while the bar is completing, the bar restarts from the beginning.
+
+## A bar inside a component
+
+The page-level bar is fixed to the top of the viewport. To show activity at the top of a **card, accordion item, tab panel, dialog or any other region**, give that region its own bar:
+
+1. Create a **scoped controller** with `useLoadingBarController()`. It is stable across renders and reset on unmount.
+2. Make the region `relative` (and usually `overflow-hidden`), then render `<LoadingBar inline controller={bar} />` as its first child. The inline bar is absolutely positioned at the top edge of that region.
+3. Drive it with `useLoadingBarTask(isLoading, key, bar)` or `withLoadingBar(promise, key, bar)`, passing the same controller.
+
+Scoped controllers share no state: a region's bar never reacts to page-level work, and the page-level bar never reacts to a region.
+
+```typescript jsx
+import { LoadingBar, useLoadingBarController, useLoadingBarTask } from '@harnessio/ui/components'
+
+function ActivityCard() {
+  const bar = useLoadingBarController()
+  const { isLoading } = useActivityQuery()
+
+  // The bar runs while the query is loading
+  useLoadingBarTask(isLoading, 'activity', bar)
+
+  return (
+    <Card.Root className="relative overflow-hidden">
+      <LoadingBar inline controller={bar} />
+      <Card.Content>...</Card.Content>
+    </Card.Root>
+  )
+}
+```
+
+### Accordion content
+
+Put the bar inside `Accordion.Content` so it only exists while the item is open. Mount the loading component inside the content and the work starts when the item opens.
+
+<DocsPage.ComponentExample
+  client:only
+  code={`() => {
+    const bar = useLoadingBarController();
+    const [loading, setLoading] = React.useState(false);
+    useLoadingBarTask(loading, 'accordion', bar);
+
+    const load = () => {
+      setLoading(true);
+      setTimeout(() => setLoading(false), 2500);
+    };
+
+    return (
+      <div className="w-[600px]">
+        <Accordion.Root type="single" collapsible>
+          <Accordion.Item value="details">
+            <Accordion.Trigger>Details</Accordion.Trigger>
+            <Accordion.Content>
+              <div className="relative overflow-hidden rounded-cn-2 border border-cn-borders-3 p-cn-md">
+                <LoadingBar inline controller={bar} />
+                <Layout.Vertical gap="sm">
+                  <p>{loading ? 'Loading details…' : 'Details are up to date.'}</p>
+                  <div><Button size="sm" onClick={load} disabled={loading}>Reload</Button></div>
+                </Layout.Vertical>
+              </div>
+            </Accordion.Content>
+          </Accordion.Item>
+        </Accordion.Root>
+      </div>
+    );
+
+}`}
+/>
+
+### Tab content
+
+Use one controller per tab panel so each tab shows only its own activity, even when several tabs load at the same time.
+
+<DocsPage.ComponentExample
+  client:only
+  code={`() => {
+    const overviewBar = useLoadingBarController();
+    const logsBar = useLoadingBarController();
+    const [tab, setTab] = React.useState('overview');
+
+    return (
+      <div className="w-[600px]">
+        <Tabs.Root value={tab} onValueChange={setTab}>
+          <Tabs.List variant="underlined">
+            <Tabs.Trigger value="overview">Overview</Tabs.Trigger>
+            <Tabs.Trigger value="logs">Logs</Tabs.Trigger>
+          </Tabs.List>
+          <Tabs.Content value="overview">
+            <div className="relative overflow-hidden p-cn-md">
+              <LoadingBar inline controller={overviewBar} />
+              <Button size="sm" onClick={() => withLoadingBar(new Promise(r => setTimeout(r, 2000)), 'overview', overviewBar)}>
+                Refresh overview
+              </Button>
+            </div>
+          </Tabs.Content>
+          <Tabs.Content value="logs">
+            <div className="relative overflow-hidden p-cn-md">
+              <LoadingBar inline controller={logsBar} />
+              <Button size="sm" onClick={() => withLoadingBar(new Promise(r => setTimeout(r, 2000)), 'logs', logsBar)}>
+                Refresh logs
+              </Button>
+            </div>
+          </Tabs.Content>
+        </Tabs.Root>
+      </div>
+    );
+
+}`}
+/>
+
+### Reusable wrapper
+
+If many regions need a bar, wrap the pattern once:
+
+```typescript jsx
+import { LoadingBar, useLoadingBarController, useLoadingBarTask } from '@harnessio/ui/components'
+
+function LoadingRegion({ loading, className, children }: { loading: boolean; className?: string; children: ReactNode }) {
+  const bar = useLoadingBarController()
+  useLoadingBarTask(loading, 'region', bar)
+
+  return (
+    <div className={cn('relative overflow-hidden', className)}>
+      <LoadingBar inline controller={bar} />
+      {children}
+    </div>
+  )
+}
+
+// <LoadingRegion loading={isFetching}>...</LoadingRegion>
+```
+
+### Tips
+
+- The parent must be `position: relative`, or the bar attaches to the nearest positioned ancestor (or the page).
+- Add `overflow-hidden` so the glow at the leading edge does not spill out of rounded corners.
+- The bar is 3px high and sits on top of the region's first row. Add a little top padding if it overlaps content.
+- Use a stable key per region. Reusing a key is idempotent, so a re-render never double-counts.
+
+## Manual start and stop
+
+When none of the helpers fit, use the imperative API. Always release the key in `finally`, so an error cannot leave the bar running.
+
+```typescript jsx
+import { loadingBar } from "@harnessio/ui/components";
+
+const key = loadingBar.start("export"); // or loadingBar.start() for an auto key
+try {
+  await exportReport();
+} finally {
+  loadingBar.done(key);
+}
+```
+
+- `loadingBar.done()` with no key finishes the most recently started task.
+- `loadingBar.reset()` forgets all active work and completes the bar immediately. Use it when you leave a context where in-flight requests no longer matter, such as a logout.
+
+## Controlled mode
+
+Pass `progress` (0 to 1), and optionally `visible`, to render an exact value instead of following a controller. It is useful for visual tests and for driving the bar from progress you do know. Out-of-range values are clamped.
+
+<DocsPage.ComponentExample
+  client:only
+  code={`() => {
+    const [value, setValue] = React.useState(0.4);
+
+    return (
+      <div className="w-[600px] grid gap-cn-md">
+        <div className="relative h-[3px] bg-cn-2 rounded-full">
+          <LoadingBar inline progress={value} visible />
+        </div>
+        <Layout.Horizontal gap="sm">
+          <Button variant="outline" onClick={() => setValue(v => Math.max(0, v - 0.2))}>-20%</Button>
+          <Button variant="outline" onClick={() => setValue(v => Math.min(1, v + 0.2))}>+20%</Button>
+        </Layout.Horizontal>
+      </div>
+    );
+
+}`}
+/>
+
+When only `progress` is set, the bar is visible whenever `progress > 0`. When `progress` or `visible` is set, the controller is ignored.
+
+## Customizing the timings
+
+Create a controller with your own options and pass it to both the bar and the helpers.
+
+```typescript jsx
+import { LoadingBar, createLoadingBarController, useLoadingBarTask } from '@harnessio/ui/components'
+
+// Module level, so it is created once
+const slowPageBar = createLoadingBarController({
+  showDelay: 300,        // only show for work longer than 300 ms
+  minVisibleTime: 500,
+  initialProgress: 0.15,
+  maxProgress: 0.9,
+  trickleInterval: 400,
+  maxDuration: 60_000,   // 0 disables the safety net
+})
+
+useLoadingBarTask(isLoading, 'report', slowPageBar)
+<LoadingBar controller={slowPageBar} />
+```
+
+Every option is listed in [Properties](#loadingbaroptions).
+
+## Testing code that uses the bar
+
+Create an isolated controller so tests do not share the global one, and use fake timers, because every phase is timer driven.
+
+```typescript
+import { createLoadingBarController } from "@harnessio/ui/components";
+
+vi.useFakeTimers();
+const bar = createLoadingBarController({ showDelay: 120, minVisibleTime: 0 });
+
+bar.start("a");
+vi.advanceTimersByTime(120);
+expect(bar.getSnapshot()).toEqual({ visible: true, progress: 0.08 });
+
+bar.done("a");
+expect(bar.getSnapshot().progress).toBe(1);
+```
+
+Pass `random: () => 0.5` for fully deterministic trickle steps. If you only need to assert that your code started and stopped the bar, spy on `loadingBar.start` and `loadingBar.done`.
+
+## Best practices
+
+**Do**
+
+- Mount one page-level `LoadingBar` and share it through `loadingBar`.
+- Use the bar for waits of roughly a quarter of a second or more. The show delay hides anything shorter.
+- Opt in the requests that matter to the user, such as navigation, saves and heavy loads.
+- Give tasks descriptive keys, and release them in `finally` when starting manually.
+
+**Don't**
+
+- Don't drive it from polling or background refetches. It would stay on screen constantly.
+- Don't show it for something you can measure. Use [Progress](/components/feedback/progress) with a real value.
+- Don't rely on the percentage. It is an estimate for orientation, not a measurement.
+- Don't create a new controller on every render. Use `useMemo` or a module-level constant.
+
+## Troubleshooting
+
+| Symptom                             | Likely cause                                                                                                                |
+| ----------------------------------- | --------------------------------------------------------------------------------------------------------------------------- |
+| The bar never appears               | No `<LoadingBar />` is mounted, the work finished within the show delay, or the bar and the code use different controllers. |
+| The bar never appears on navigation | Not a data router, or `AppLoadingBar` is rendered outside the router.                                                       |
+| The bar stays at about 95%          | A started task was never finished. Release keys in `finally`. The safety net completes it after 30 s.                       |
+| The bar is always on screen         | A polling or refetching query drives it. Use `isLoading` instead of `isFetching`, or remove the `loadingBar` meta.          |
+| Two bars draw on top of each other  | `<LoadingBar />` is mounted twice. Keep one page-level instance.                                                            |
+| An inline bar is invisible          | The parent is not `position: relative`, or it has no height and `overflow: hidden`.                                         |
+
+## Accessibility
+
+- The bar renders `role="progressbar"` with `aria-valuemin`, `aria-valuemax` and `aria-valuenow`, plus `aria-busy` while loading.
+- It has the accessible name "Loading". Override it with `aria-label` when the context needs a more specific name.
+- While idle it is `aria-hidden`, so assistive technology does not announce an empty progress bar.
+- It never receives focus and does not intercept pointer events.
+- With `prefers-reduced-motion: reduce`, transitions and the leading glow are turned off, so the bar changes without animating.
+- The value is an estimate, not a measurement. The bar does not announce progress changes on its own. If a long operation needs to be announced, also show a status message in a live region such as a toast.
+
+</TabItem>
+
+<TabItem label="Properties">
+
+{/* Visually hidden — anchors the section headings below in the TOC without showing a redundant title in the panel body (the tab already says "Properties"). Hidden via #page-level-tabs h2#properties in styles.css. */}
+
+## Properties
+
+### LoadingBar
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "controller",
+      description:
+        "Controller the bar follows. Defaults to the shared `loadingBar`.",
+      required: false,
+      defaultValue: "loadingBar",
+      value: "LoadingBarController",
+    },
+    {
+      name: "progress",
+      description:
+        "Controlled mode: progress from 0 to 1 (clamped). When set, the bar ignores the controller.",
+      required: false,
+      value: "number",
+    },
+    {
+      name: "visible",
+      description:
+        "Controlled mode: whether the bar is shown. When only `progress` is set, the bar is visible while `progress > 0`.",
+      required: false,
+      value: "boolean",
+    },
+    {
+      name: "inline",
+      description:
+        "Positions the bar absolutely inside a `position: relative` parent instead of fixing it to the top of the viewport.",
+      required: false,
+      defaultValue: "false",
+      value: "boolean",
+    },
+    {
+      name: "className",
+      description: "Additional class names for the root element.",
+      required: false,
+      value: "string",
+    },
+    {
+      name: "aria-label",
+      description: "Accessible name. Defaults to 'Loading'.",
+      required: false,
+      defaultValue: "'Loading'",
+      value: "string",
+    },
+  ]}
+/>
+
+All other `div` attributes are forwarded to the root element, and the ref points to it.
+
+### loadingBar and controllers
+
+`loadingBar` is the shared controller. `createLoadingBarController(options)` returns an isolated one with the same methods.
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "start",
+      description:
+        "Registers a unit of work and returns its key. Starting an already active key does nothing. Without a key a unique one is generated.",
+      required: false,
+      value: "(key?: string) => string",
+    },
+    {
+      name: "done",
+      description:
+        "Marks a unit of work as finished. Without a key it finishes the most recently started task. Unknown keys are ignored. The bar completes when no tasks remain.",
+      required: false,
+      value: "(key?: string) => void",
+    },
+    {
+      name: "reset",
+      description: "Forgets all active work and completes the bar immediately.",
+      required: false,
+      value: "() => void",
+    },
+    {
+      name: "subscribe",
+      description:
+        "Registers a listener that is called on every state change. Returns an unsubscribe function.",
+      required: false,
+      value: "(listener: () => void) => () => void",
+    },
+    {
+      name: "getSnapshot",
+      description:
+        "Returns the current state. The same object is returned until the state changes.",
+      required: false,
+      value: "() => { visible: boolean; progress: number }",
+    },
+  ]}
+/>
+
+### LoadingBarOptions
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "showDelay",
+      description:
+        "Milliseconds to wait before the bar appears. Work that finishes sooner never shows it.",
+      required: false,
+      defaultValue: "120",
+      value: "number",
+    },
+    {
+      name: "minVisibleTime",
+      description: "Minimum milliseconds the bar stays visible once shown.",
+      required: false,
+      defaultValue: "300",
+      value: "number",
+    },
+    {
+      name: "trickleInterval",
+      description: "Milliseconds between trickle steps.",
+      required: false,
+      defaultValue: "250",
+      value: "number",
+    },
+    {
+      name: "initialProgress",
+      description: "Progress (0 to 1) the bar shows when it appears.",
+      required: false,
+      defaultValue: "0.08",
+      value: "number",
+    },
+    {
+      name: "maxProgress",
+      description:
+        "Trickling stops here (0 to 1). Only finishing the work reaches 1.",
+      required: false,
+      defaultValue: "0.95",
+      value: "number",
+    },
+    {
+      name: "completeDuration",
+      description:
+        "Milliseconds given to the fill to reach 100% before the bar fades out.",
+      required: false,
+      defaultValue: "200",
+      value: "number",
+    },
+    {
+      name: "fadeDuration",
+      description:
+        "Milliseconds of the fade-out. The bar rewinds to 0 afterwards.",
+      required: false,
+      defaultValue: "200",
+      value: "number",
+    },
+    {
+      name: "maxDuration",
+      description:
+        "Safety net in milliseconds. If tasks are still active after this long, the bar force-completes. `0` disables it.",
+      required: false,
+      defaultValue: "30000",
+      value: "number",
+    },
+    {
+      name: "random",
+      description:
+        "Random source for trickle step sizes. Inject a constant function for deterministic tests.",
+      required: false,
+      defaultValue: "Math.random",
+      value: "() => number",
+    },
+  ]}
+/>
+
+### Hooks and helpers
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "useLoadingBarTask",
+      description:
+        "Keeps the bar running while `active` is true and finishes the task when it becomes false or the component unmounts. Changing the key moves the work to the new key.",
+      required: false,
+      value:
+        "(active: boolean, key?: string, controller?: LoadingBarController) => void",
+    },
+    {
+      name: "withLoadingBar",
+      description:
+        "Runs the bar until a promise, or a function returning one, settles. Resolves or rejects with the original outcome.",
+      required: false,
+      value:
+        "<T>(task: Promise<T> | (() => Promise<T>), key?: string, controller?: LoadingBarController) => Promise<T>",
+    },
+    {
+      name: "useLoadingBar",
+      description:
+        "Subscribes a component to a controller and returns its current state. Useful for building a custom indicator.",
+      required: false,
+      value:
+        "(controller?: LoadingBarController) => { visible: boolean; progress: number }",
+    },
+    {
+      name: "useLoadingBarController",
+      description:
+        "Creates a controller scoped to the calling component, stable across renders and reset on unmount. Use it with `<LoadingBar inline />` for a bar inside a card, tab or accordion item.",
+      required: false,
+      value: "(options?: LoadingBarOptions) => LoadingBarController",
+    },
+    {
+      name: "createLoadingBarController",
+      description:
+        "Creates an isolated controller with its own timings and state.",
+      required: false,
+      value: "(options?: LoadingBarOptions) => LoadingBarController",
+    },
+  ]}
+/>
+
+</TabItem>
+
+</Tabs>
+
+</div>

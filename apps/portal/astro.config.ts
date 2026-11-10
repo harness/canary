@@ -325,6 +325,7 @@ export default defineConfig({
             "components/form/label",
             "components/foundations/layout",
             "components/navigation/link",
+            "components/feedback/loading-bar",
             "components/visual/logo",
             "components/markdown-display/markdown-viewer",
             "components/chat/message-bubble",

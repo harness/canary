@@ -77,7 +77,8 @@ async function withProbeManifest(
   }
 }
 
-describe('ds-check', () => {
+// Each test spawns ds-check subprocesses (~2s each); the 5s default flakes under load
+describe('ds-check', { timeout: 30_000 }, () => {
   describe('parseArgs', () => {
     it('should run all checks with no flags', async () => {
       const result = await runDsCheck([])

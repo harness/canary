@@ -105,6 +105,42 @@ describe('DataTable', () => {
     })
   })
 
+  describe('hideHeader Prop', () => {
+    test('should render the thead by default', () => {
+      const { container } = render(
+        <TestWrapper>
+          <DataTable data={mockData} columns={mockColumns} />
+        </TestWrapper>
+      )
+
+      expect(container.querySelector('thead')).not.toBeNull()
+      expect(screen.getByText('Name')).toBeInTheDocument()
+    })
+
+    test('should not render the thead when hideHeader is true', () => {
+      const { container } = render(
+        <TestWrapper>
+          <DataTable data={mockData} columns={mockColumns} hideHeader />
+        </TestWrapper>
+      )
+
+      expect(container.querySelector('thead')).toBeNull()
+      expect(screen.queryByText('Name')).not.toBeInTheDocument()
+    })
+
+    test('should still render body rows when hideHeader is true', () => {
+      render(
+        <TestWrapper>
+          <DataTable data={mockData} columns={mockColumns} hideHeader />
+        </TestWrapper>
+      )
+
+      expect(screen.getByText('John Doe')).toBeInTheDocument()
+      expect(screen.getByText('Jane Smith')).toBeInTheDocument()
+      expect(screen.getByText('Bob Johnson')).toBeInTheDocument()
+    })
+  })
+
   describe('Size Prop', () => {
     test('should render with default size (normal)', () => {
       render(

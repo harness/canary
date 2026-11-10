@@ -163,6 +163,12 @@ export interface DataTableProps<TData> {
    * Whether rows can be pinned. See TanStack `enableRowPinning`.
    */
   enableRowPinning?: boolean | ((row: Row<TData>) => boolean)
+  /**
+   * When true, the `<thead>` is not rendered at all (not just visually hidden).
+   * Column headers, sorting toggles, and resize handles become unavailable
+   * while hidden. Defaults to false.
+   */
+  hideHeader?: boolean
 }
 
 export const DataTable = function DataTable<TData>({
@@ -199,7 +205,8 @@ export const DataTable = function DataTable<TData>({
   maxHeight,
   rowPinning,
   onRowPinningChange: externalOnRowPinningChange,
-  enableRowPinning
+  enableRowPinning,
+  hideHeader = false
 }: DataTableProps<TData>) {
   const tableColumns = useMemo(() => {
     // Start with the base columns
@@ -601,86 +608,88 @@ export const DataTable = function DataTable<TData>({
         ) : undefined
       }
     >
-      <Table.Header ref={enableColumnResizing ? setHeaderSectionEl : undefined}>
-        {(() => {
-          const headerGroups = table.getHeaderGroups()
-          const totalHeaderRows = headerGroups.length
-          const hasGroupedHeaders = totalHeaderRows > 1
+      {!hideHeader && (
+        <Table.Header ref={enableColumnResizing ? setHeaderSectionEl : undefined}>
+          {(() => {
+            const headerGroups = table.getHeaderGroups()
+            const totalHeaderRows = headerGroups.length
+            const hasGroupedHeaders = totalHeaderRows > 1
 
-          return headerGroups.map((headerGroup, rowIdx) => (
-            <Table.Row
-              key={headerGroup.id}
-              data-header-depth={rowIdx}
-              ref={stickyHeader && rowIdx === 0 ? setFirstHeaderRowEl : undefined}
-            >
-              {headerGroup.headers.map(header => {
-                const column = header.column
-                const meta = column.columnDef.meta
-                const isLeafColumn = column.columns.length === 0
-                /**
-                 * A top-level leaf column when other top-level columns are groups.
-                 * TanStack inserts a placeholder header for it at each shallower
-                 * depth, and renders the real header at the deepest depth.
-                 * We instead render the real header once at row 0 with a vertical
-                 * rowSpan, mirroring the typical grouped-header UI.
-                 */
-                const isFloatingTopLevelLeaf = hasGroupedHeaders && isLeafColumn && !column.parent
+            return headerGroups.map((headerGroup, rowIdx) => (
+              <Table.Row
+                key={headerGroup.id}
+                data-header-depth={rowIdx}
+                ref={stickyHeader && rowIdx === 0 ? setFirstHeaderRowEl : undefined}
+              >
+                {headerGroup.headers.map(header => {
+                  const column = header.column
+                  const meta = column.columnDef.meta
+                  const isLeafColumn = column.columns.length === 0
+                  /**
+                   * A top-level leaf column when other top-level columns are groups.
+                   * TanStack inserts a placeholder header for it at each shallower
+                   * depth, and renders the real header at the deepest depth.
+                   * We instead render the real header once at row 0 with a vertical
+                   * rowSpan, mirroring the typical grouped-header UI.
+                   */
+                  const isFloatingTopLevelLeaf = hasGroupedHeaders && isLeafColumn && !column.parent
 
-                if (isFloatingTopLevelLeaf) {
-                  if (rowIdx > 0) return null
-                } else if (header.isPlaceholder) {
-                  return null
-                }
+                  if (isFloatingTopLevelLeaf) {
+                    if (rowIdx > 0) return null
+                  } else if (header.isPlaceholder) {
+                    return null
+                  }
 
-                const rowSpan = isFloatingTopLevelLeaf ? totalHeaderRows : 1
-                const canSort = column.getCanSort()
-                const isGroupHeaderCell = meta?.isGroupHeader ?? !isLeafColumn
+                  const rowSpan = isFloatingTopLevelLeaf ? totalHeaderRows : 1
+                  const canSort = column.getCanSort()
+                  const isGroupHeaderCell = meta?.isGroupHeader ?? !isLeafColumn
 
-                return (
-                  <Table.Head
-                    colSpan={header.colSpan}
-                    rowSpan={rowSpan > 1 ? rowSpan : undefined}
-                    key={header.id}
-                    data-header-depth={rowIdx}
-                    data-sticky={stickyHeader ? 'top' : undefined}
-                    className={cn(
-                      // Temporary fix to prevent text bleeding in header when it is pinned
-                      { 'cn-table-v2-cell-pinned': header.column.getIsPinned() },
-                      meta?.headerClassName,
-                      isGroupHeaderCell && 'cn-table-v2-head-group',
-                      isLeafColumn && !isGroupHeaderCell && 'cn-table-v2-head-leaf'
-                    )}
-                    sortable={canSort}
-                    sortDirection={canSort ? column.getIsSorted() || false : undefined}
-                    onClick={canSort ? column.getToggleSortingHandler() : undefined}
-                    style={{
-                      width: header.getSize(),
-                      minWidth: column.columnDef.minSize ?? header.getSize(),
-                      maxWidth: column.columnDef.maxSize ?? header.getSize(),
-                      ...getStickyCellStyles<TData>({
-                        column,
-                        vertical: stickyHeader
-                          ? {
-                              edge: 'top',
-                              offset: rowIdx === 0 ? 0 : (firstHeaderRowHeight ?? 'var(--cn-table-header-row-h)')
-                            }
-                          : undefined
-                      })
-                    }}
-                    resizeHandle={
-                      enableColumnResizing && isLeafColumn && column.getCanResize() ? (
-                        <ColumnResizeHandle header={header} table={table} />
-                      ) : undefined
-                    }
-                  >
-                    {flexRender(column.columnDef.header, header.getContext())}
-                  </Table.Head>
-                )
-              })}
-            </Table.Row>
-          ))
-        })()}
-      </Table.Header>
+                  return (
+                    <Table.Head
+                      colSpan={header.colSpan}
+                      rowSpan={rowSpan > 1 ? rowSpan : undefined}
+                      key={header.id}
+                      data-header-depth={rowIdx}
+                      data-sticky={stickyHeader ? 'top' : undefined}
+                      className={cn(
+                        // Temporary fix to prevent text bleeding in header when it is pinned
+                        { 'cn-table-v2-cell-pinned': header.column.getIsPinned() },
+                        meta?.headerClassName,
+                        isGroupHeaderCell && 'cn-table-v2-head-group',
+                        isLeafColumn && !isGroupHeaderCell && 'cn-table-v2-head-leaf'
+                      )}
+                      sortable={canSort}
+                      sortDirection={canSort ? column.getIsSorted() || false : undefined}
+                      onClick={canSort ? column.getToggleSortingHandler() : undefined}
+                      style={{
+                        width: header.getSize(),
+                        minWidth: column.columnDef.minSize ?? header.getSize(),
+                        maxWidth: column.columnDef.maxSize ?? header.getSize(),
+                        ...getStickyCellStyles<TData>({
+                          column,
+                          vertical: stickyHeader
+                            ? {
+                                edge: 'top',
+                                offset: rowIdx === 0 ? 0 : (firstHeaderRowHeight ?? 'var(--cn-table-header-row-h)')
+                              }
+                            : undefined
+                        })
+                      }}
+                      resizeHandle={
+                        enableColumnResizing && isLeafColumn && column.getCanResize() ? (
+                          <ColumnResizeHandle header={header} table={table} />
+                        ) : undefined
+                      }
+                    >
+                      {flexRender(column.columnDef.header, header.getContext())}
+                    </Table.Head>
+                  )
+                })}
+              </Table.Row>
+            ))
+          })()}
+        </Table.Header>
+      )}
       <Table.Body>
         {bodyRows.map(row => renderRow(row))}
         {rowPinningEnabled && hasBottomRows && (

@@ -644,6 +644,55 @@ return (
 />
 ) }`} />
 
+### Hide header
+
+Set `hideHeader` to omit the `<thead>` entirely — useful when column labels are rendered elsewhere (e.g. a custom legend) or the table is embedded where headers would be redundant. Column headers, sorting toggles, and resize handles become unavailable while hidden.
+
+<DocsPage.ComponentExample
+  client:only
+  code={`() => {
+  const users = [
+    { name: 'John Doe', email: 'john@example.com', status: 'active' },
+    { name: 'Jane Smith', email: 'jane@example.com', status: 'active' },
+    { name: 'Bob Johnson', email: 'bob@example.com', status: 'inactive' }
+  ]
+
+const columns = [
+{ accessorKey: 'name', header: 'Name' },
+{ accessorKey: 'email', header: 'Email' },
+{
+accessorKey: 'status',
+header: 'Status',
+cell: (info) => (
+
+<StatusBadge
+  theme={info.getValue() === "active" ? "success" : "default"}
+  size="sm"
+>
+  {info.getValue()}
+</StatusBadge>
+) } ]
+
+const [hideHeader, setHideHeader] = React.useState(false)
+
+return (
+
+<Layout.Vertical gap="md">
+<Layout.Flex align="center" gap="sm">
+<Text variant="body-normal">
+hideHeader: <strong>{String(hideHeader)}</strong>
+</Text>
+<Button variant="outline" size="sm" onClick={() => setHideHeader((prev) => !prev)}>
+Toggle header
+</Button>
+</Layout.Flex>
+
+      <DataTable columns={columns} data={users} getRowId={(row) => row.email} size="compact" hideHeader={hideHeader} />
+    </Layout.Vertical>
+
+)
+}`} />
+
 ### Column pinning
 
 Pass a `columnPinning` state (`{ left, right }`) to pin columns to either side so they stay visible during horizontal scrolling. Pinned columns get a subtle shadow. Set explicit column `size` values for the best control, and avoid pinning so many columns that the scrollable area shrinks too far.
@@ -1141,6 +1190,14 @@ function MyTable() {
       description: "Disable row highlighting on hover",
       required: false,
       value: "boolean",
+    },
+    {
+      name: "hideHeader",
+      description:
+        "When true, the <thead> is not rendered at all (not just visually hidden). Column headers, sorting toggles, and resize handles become unavailable while hidden.",
+      required: false,
+      value: "boolean",
+      defaultValue: "false",
     },
     {
       name: "className",

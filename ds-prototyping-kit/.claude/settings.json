@@ -1,0 +1,17 @@
+{
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Write|Edit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node \"$CLAUDE_PROJECT_DIR/eslint/post-edit-lint.js\"",
+            "timeout": 60,
+            "statusMessage": "Checking design-system rules..."
+          }
+        ]
+      }
+    ]
+  }
+}

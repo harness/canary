@@ -20,8 +20,13 @@ files it points to; they are the source of truth.
 
 ## Workflow
 
-1. **Find the component** in `dist/components.d.ts`. Check the whole export list before
-   building anything custom. If nothing fits, say so; do not hand-roll a lookalike.
+1. **Find the component** in `docs/components-index.md`: every exported component, one line
+   each. Check the whole list before building anything custom. If nothing fits, say so and
+   build the closest layout from listed components; do not hand-roll a lookalike. Then get
+   props and allowed values for the one you picked with a single search in
+   `node_modules/@harnessio/ui/dist/components.d.ts` (`declare const <Name>` or
+   `<Name>Props`). Do not read that whole file. About 4 in 10 index rows have a purpose
+   line; for the rest, read the name and the types.
 2. **Read the rules that apply** in `docs/system/` (color for anything coloured, spacing
    for layout, typography for text, accessibility for any interactive element).
 3. **Generate.** Use only components, props, and values that appear in the types. Use
@@ -32,7 +37,10 @@ files it points to; they are the source of truth.
    note: the rule and file, what was asked, what you built, and an offer to raise the gap.
    See "Documented-rule conflicts" in `docs/system/design-to-code-flow.md`. Always produce
    output.
-5. **Validate.** Run `tsc --noEmit`. The shipped types enforce the prop contract.
+5. **Fix lint errors the hook returns.** Every `.ts`/`.tsx` write is linted with
+   `eslint/ds-prototyping.js`. A `decision: block` message lists the violations. Fix them by
+   changing the markup to use components and tokens; never silence a rule.
+6. **Validate.** Run `tsc --noEmit`. The shipped types enforce the prop contract.
 
 ## Never
 

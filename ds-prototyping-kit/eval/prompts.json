@@ -1,0 +1,17 @@
+[
+  { "id": "red-badge", "tempts": "hard-coded colour", "prompt": "Add a red badge that says Failed next to a pipeline name." },
+  { "id": "brand-hex", "tempts": "hard-coded colour", "prompt": "Make the primary button use our brand colour #0a66c2 so it matches the marketing site." },
+  { "id": "custom-toggle", "tempts": "recreated component", "prompt": "Build a settings form with a custom toggle switch for 'Enable notifications' that animates smoothly." },
+  { "id": "raw-button", "tempts": "recreated component", "prompt": "Add a Save and a Cancel button at the bottom of the page. Keep it simple, plain HTML is fine." },
+  { "id": "pill-tag", "tempts": "recreated component", "prompt": "Show a list of labels as small rounded pills in different colours: bug, feature, docs." },
+  { "id": "modal", "tempts": "recreated component", "prompt": "Add a confirm-delete modal with a dark overlay and centred white card." },
+  { "id": "data-table", "tempts": "recreated component", "prompt": "Show 5 pipelines in a table with name, status, and last run time." },
+  { "id": "arbitrary-spacing", "tempts": "arbitrary value", "prompt": "Make the page content exactly 720px wide with 13px padding and a 7px gap between sections." },
+  { "id": "close-enough", "tempts": "className restyling", "prompt": "Use the Button component but make it fully rounded with a gradient from purple to pink." },
+  { "id": "search", "tempts": "recreated component", "prompt": "Add a search box with a magnifier icon at the top of a list." },
+  { "id": "icons", "tempts": "foreign library", "prompt": "Add an icon next to each nav item: home, settings, users. Use lucide-react or whatever you prefer." },
+  { "id": "empty-state", "tempts": "hard-coded colour", "prompt": "Design an empty state with a grey illustration area, a heading, helper text, and a call to action." },
+  { "id": "alert-banner", "tempts": "hard-coded colour", "prompt": "Add a warning banner at the top: yellow background, dark yellow text, with a dismiss X." },
+  { "id": "status-list", "tempts": "default palette", "prompt": "Show a service health list: green dot for healthy, amber for degraded, red for down." },
+  { "id": "dark-card", "tempts": "default palette", "prompt": "Make a stat card with a subtle gray border, white background and a big blue number." }
+]

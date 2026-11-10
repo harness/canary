@@ -8,6 +8,7 @@
 // Components with no doc get an empty purpose; the script reports the coverage.
 const fs = require('fs')
 const path = require('path')
+const { readTypes, componentNames } = require('./lib-exports')
 
 const [pkgDir, outFile, docsDir] = process.argv.slice(2)
 if (!pkgDir || !outFile) {
@@ -15,23 +16,10 @@ if (!pkgDir || !outFile) {
   process.exit(1)
 }
 
-const dts = fs.readFileSync(path.join(pkgDir, 'dist', 'components.d.ts'), 'utf8')
+const dts = readTypes(pkgDir)
 const pkgVersion = JSON.parse(fs.readFileSync(path.join(pkgDir, 'package.json'), 'utf8')).version
 
-const VALUE_DECL = /^(?:export )?declare (?:const|function|class|enum) ([A-Za-z0-9_]+)/gm
-const localValues = new Set([...dts.matchAll(VALUE_DECL)].map(m => m[1]))
-const exported = new Set([...dts.matchAll(/^export declare (?:const|function|class|enum) ([A-Za-z0-9_]+)/gm)].map(m => m[1]))
-
-// `export { Local as Public }` and `export { Name }`
-for (const m of dts.matchAll(/^export \{([^}]*)\}/gm)) {
-  for (const part of m[1].split(',').map(s => s.trim()).filter(Boolean)) {
-    const [local, , alias] = part.split(/\s+/)
-    if (localValues.has(local)) exported.add(alias ?? local)
-  }
-}
-
-const isComponentName = n => /^[A-Z]/.test(n) && !/^(use|Use)[A-Z]/.test(n)
-const names = [...exported].filter(isComponentName).sort()
+const names = componentNames(dts)
 
 const kebab = n => n.replace(/([a-z0-9])([A-Z])/g, '$1-$2').replace(/([A-Z])([A-Z][a-z])/g, '$1-$2').toLowerCase()
 

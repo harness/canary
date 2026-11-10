@@ -46,6 +46,18 @@ async function main() {
     return
   }
 
+  // ESLint resolves a string `parser` relative to the config file, which in a consuming app is
+  // the copied kit folder with no node_modules. Resolve it from the eslint root instead.
+  let parser
+  try {
+    parser = require.resolve('@typescript-eslint/parser', { paths: [eslintRoot] })
+  } catch {
+    say({
+      systemMessage: `Design-system lint hook: @typescript-eslint/parser not found from ${eslintRoot}. Edits are NOT being checked.`
+    })
+    return
+  }
+
   const tailwindConfig = TAILWIND_CONFIGS.map(f => path.join(projectDir, f)).find(fs.existsSync)
   const eslint = new ESLint({
     useEslintrc: false,
@@ -53,7 +65,10 @@ async function main() {
     cwd: projectDir,
     resolvePluginsRelativeTo: eslintRoot,
     overrideConfigFile: path.join(__dirname, 'ds-prototyping.js'),
-    overrideConfig: tailwindConfig ? { settings: { tailwindcss: { config: tailwindConfig } } } : {}
+    overrideConfig: {
+      parser,
+      ...(tailwindConfig ? { settings: { tailwindcss: { config: tailwindConfig } } } : {})
+    }
   })
 
   let results

@@ -35,6 +35,11 @@ TW
   if [ "$condition" = "kit" ]; then
     cp -R "$kit/.claude" "$kit/docs" "$kit/AGENTS.md" "$kit/DESIGN.md" "$kit/eslint" "$work/"
     printf '@AGENTS.md\nBefore writing or editing any UI, read `.claude/skills/design-system/SKILL.md`.\nUse only components and props that exist in the installed @harnessio/ui types.\nNo hard-coded colours, no className/style overrides on design-system components.\n' > "$work/CLAUDE.md"
+    # The hook reports its own failures to the user, not the agent, so a broken hook looks like a
+    # working one. Prove it blocks a known-bad file in this exact layout before spending a run.
+    echo "{\"tool_input\":{\"file_path\":\"$kit/eval/fixtures/bad.tsx\"}}" \
+      | CLAUDE_PROJECT_DIR="$work" node "$work/eslint/post-edit-lint.js" 2>/dev/null | grep -q '"decision":"block"' \
+      || { echo "hook preflight failed: post-edit-lint.js did not block bad.tsx"; exit 1; }
   fi
 
   if [ "$condition" = "hint" ]; then

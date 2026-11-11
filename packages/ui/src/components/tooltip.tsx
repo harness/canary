@@ -1,22 +1,12 @@
 import {
-  Children,
-  cloneElement,
   ComponentProps,
   ComponentType,
-  FocusEvent,
   forwardRef,
   ForwardRefExoticComponent,
-  isValidElement,
-  MouseEvent,
-  PointerEvent,
   PropsWithoutRef,
   ReactNode,
   RefAttributes,
-  useCallback,
-  useEffect,
-  useMemo,
-  useRef,
-  useState
+  useMemo
 } from 'react'
 
 import { usePortal } from '@/context'
@@ -51,12 +41,6 @@ export type TooltipProps = {
   hideArrow?: boolean
   delay?: TooltipPrimitiveRootType['delayDuration']
   open?: boolean
-  /**
-   * When false (default), uncontrolled tooltips open on pointer hover only — not on focus.
-   * Prevents stale tooltips after click or when returning to the browser window (Radix default opens on focus).
-   * Ignored when `open` is set. Set true when tooltip content is essential for keyboard users (WCAG 1.4.13).
-   */
-  triggerOnFocus?: boolean
 } & Pick<TooltipPrimitiveContentType, 'side' | 'align' | 'className' | 'sideOffset'>
 
 export const Tooltip = forwardRef<HTMLDivElement, TooltipProps>(
@@ -71,7 +55,6 @@ export const Tooltip = forwardRef<HTMLDivElement, TooltipProps>(
       side = 'top',
       align = 'center',
       open,
-      triggerOnFocus = false,
       className,
       sideOffset
     },
@@ -79,89 +62,6 @@ export const Tooltip = forwardRef<HTMLDivElement, TooltipProps>(
   ) => {
     const { portalContainer } = usePortal()
     const { theme: currentTheme } = useTheme()
-    const isControlledOpen = open !== undefined
-    const hoverOnly = !isControlledOpen && !triggerOnFocus
-    const [hoverOpen, setHoverOpen] = useState(false)
-    const isPointerOverTriggerRef = useRef(false)
-    const openDelayTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null)
-
-    const clearOpenDelayTimer = useCallback(() => {
-      if (openDelayTimerRef.current !== null) {
-        clearTimeout(openDelayTimerRef.current)
-        openDelayTimerRef.current = null
-      }
-    }, [])
-
-    const setHoverOpenSafe = useCallback((next: boolean) => {
-      setHoverOpen(next)
-    }, [])
-
-    const handleOpenChange = useCallback(
-      (next: boolean) => {
-        if (!hoverOnly) return
-        // Radix opens on focus when the window is refocused; allow open only during pointer hover.
-        if (next && !isPointerOverTriggerRef.current) return
-        setHoverOpenSafe(next)
-      },
-      [hoverOnly, setHoverOpenSafe]
-    )
-
-    useEffect(() => {
-      if (!hoverOnly) return
-      const closeOnWindowBlur = () => {
-        isPointerOverTriggerRef.current = false
-        clearOpenDelayTimer()
-        setHoverOpenSafe(false)
-      }
-      window.addEventListener('blur', closeOnWindowBlur)
-      return () => {
-        window.removeEventListener('blur', closeOnWindowBlur)
-        clearOpenDelayTimer()
-      }
-    }, [hoverOnly, clearOpenDelayTimer, setHoverOpenSafe])
-
-    const rootOpen = isControlledOpen ? open : hoverOnly ? hoverOpen : undefined
-
-    const triggerChild = useMemo(() => {
-      if (!hoverOnly) return children
-      const child = Children.only(children)
-      if (!isValidElement(child)) return children
-
-      return cloneElement(child, {
-        onPointerEnter: (event: PointerEvent<HTMLElement>) => {
-          isPointerOverTriggerRef.current = true
-          clearOpenDelayTimer()
-          const delayMs = delay ?? 0
-          if (delayMs <= 0) {
-            setHoverOpenSafe(true)
-          } else {
-            openDelayTimerRef.current = setTimeout(() => {
-              openDelayTimerRef.current = null
-              if (isPointerOverTriggerRef.current) setHoverOpenSafe(true)
-            }, delayMs)
-          }
-          child.props.onPointerEnter?.(event)
-        },
-        onPointerLeave: (event: PointerEvent<HTMLElement>) => {
-          isPointerOverTriggerRef.current = false
-          clearOpenDelayTimer()
-          setHoverOpenSafe(false)
-          child.props.onPointerLeave?.(event)
-        },
-        onBlur: (event: FocusEvent<HTMLElement>) => {
-          isPointerOverTriggerRef.current = false
-          clearOpenDelayTimer()
-          setHoverOpenSafe(false)
-          child.props.onBlur?.(event)
-        },
-        onClick: (event: MouseEvent<HTMLElement>) => {
-          isPointerOverTriggerRef.current = false
-          clearOpenDelayTimer()
-          setHoverOpenSafe(false)
-          child.props.onClick?.(event)
-        }
-      })
-    }, [children, clearOpenDelayTimer, delay, hoverOnly, setHoverOpenSafe])
 
     // Automatically increase sideOffset when arrow is hidden
     const computedSideOffset = sideOffset ?? (hideArrow ? 6 : 2)
@@ -170,12 +70,8 @@ export const Tooltip = forwardRef<HTMLDivElement, TooltipProps>(
     const tooltipTheme = useMemo(() => toDarkMode(currentTheme ?? defaultTheme), [currentTheme])
 
     return (
-      <TooltipPrimitive.Root
-        delayDuration={delay}
-        open={rootOpen}
-        onOpenChange={hoverOnly ? handleOpenChange : undefined}
-      >
-        <TooltipPrimitive.Trigger asChild>{triggerChild}</TooltipPrimitive.Trigger>
+      <TooltipPrimitive.Root delayDuration={delay} open={open}>
+        <TooltipPrimitive.Trigger asChild>{children}</TooltipPrimitive.Trigger>
         <TooltipPrimitive.Portal container={portalContainer}>
           <TooltipPrimitive.Content
             ref={ref}

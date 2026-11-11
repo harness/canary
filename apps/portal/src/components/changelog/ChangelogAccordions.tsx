@@ -29,7 +29,7 @@ const Code: FC<{ children: ReactNode }> = ({ children }) => (
 const ENTRIES: ChangelogEntry[] = [
   {
     value: "uui-4247",
-    version: "1.6.5",
+    version: "1.6.10",
     date: "November 6, 2026",
     status: "Shipped",
     statusTheme: "success",

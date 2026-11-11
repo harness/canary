@@ -198,7 +198,7 @@
     },
     {
       "path": "docs/system/shared-rules.md",
-      "title": "Shared Rules for App Code",
+      "title": "Shared Rules for Product Module",
       "applies-to": ["all"]
     },
     {

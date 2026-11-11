@@ -1,5 +1,5 @@
 ---
-title: Shared Rules for App Code
+title: Shared Rules for Product Module
 description: Rules every page built from @harnessio/ui must follow, regardless of pattern; pattern docs inherit these
 checks:
   - public-imports

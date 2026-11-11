@@ -23,6 +23,7 @@ import iconsAndLogos from './icon-and-logo'
 import inputStyles from './input'
 import labelStyles from './label'
 import linkStyles from './link'
+import loadingBarStyles from './loading-bar'
 import messageBubbleStyles from './message-bubble'
 import meterStyles from './meter'
 import multiSelectStyles from './multi-select'
@@ -78,6 +79,7 @@ export const ComponentStyles = [
   cardSelectStyles,
   paginationStyles,
   progressStyles,
+  loadingBarStyles,
   gaugeStyles,
   drawerStyles,
   buttonLayoutStyles,

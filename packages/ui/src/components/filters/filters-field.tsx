@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react'
+import { useCallback, useMemo, useState } from 'react'
 
 import { Checkbox } from '@components/checkbox'
 import { Label } from '@components/form-primitives'
@@ -187,6 +187,17 @@ const FilterFieldInternal = <T extends string, V extends FilterValueTypes, Custo
   }
 }
 
+const resetFilterOptionSearch = <CustomValue,>(filterOption: FilterOptionConfig<string, CustomValue>) => {
+  if (!('filterFieldConfig' in filterOption) || !filterOption.filterFieldConfig) {
+    return
+  }
+
+  const { filterFieldConfig } = filterOption
+  if ('onSearch' in filterFieldConfig && filterFieldConfig.onSearch) {
+    filterFieldConfig.onSearch('')
+  }
+}
+
 const FiltersField = <T extends string, V extends FilterValueTypes, CustomValue = Record<string, unknown>>({
   filterOption,
   removeFilter,
@@ -202,6 +213,25 @@ const FiltersField = <T extends string, V extends FilterValueTypes, CustomValue 
     value
   }
   const [isOpen, setIsOpen] = useState(shouldOpenFilter)
+
+  const resetAsyncFilterSearch = useCallback(() => {
+    resetFilterOptionSearch(filterOption)
+  }, [filterOption])
+
+  const handleOpenChange = useCallback(
+    (open: boolean) => {
+      if (!open) {
+        resetAsyncFilterSearch()
+      }
+      onOpenChange?.(open)
+    },
+    [onOpenChange, resetAsyncFilterSearch]
+  )
+
+  const handleRemoveFilter = useCallback(() => {
+    resetAsyncFilterSearch()
+    removeFilter()
+  }, [removeFilter, resetAsyncFilterSearch])
 
   const onFilterValueChange = (selectedValues: V) => {
     onChange(selectedValues)
@@ -231,10 +261,10 @@ const FiltersField = <T extends string, V extends FilterValueTypes, CustomValue 
         filterOption.type === FilterFieldTypes.MultiTag ? 'cn-dropdown-menu-overflow-visible' : '',
         dropdownContentClassName
       )}
-      handleRemoveFilter={() => removeFilter()}
+      handleRemoveFilter={handleRemoveFilter}
       isOpen={isOpen}
       setIsOpen={setIsOpen}
-      onOpenChange={onOpenChange}
+      onOpenChange={handleOpenChange}
       defaultOpen={shouldOpenFilter}
       filterLabel={filterOption.label}
       valueLabel={valueLabel}

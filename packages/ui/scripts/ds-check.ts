@@ -345,6 +345,10 @@ function validateRegistry(): { valid: boolean; errors?: string[] } {
     if (!rule.title) {
       errors.push(`systemRules entry "${rulePath}" is missing a title`)
     }
+    // Agents find pattern docs through this index, so each one must say when to use it
+    if (/-patterns\.md$/.test(rulePath) && typeof rule['use-when'] !== 'string') {
+      errors.push(`systemRules entry "${rulePath}" is a pattern doc and needs a "use-when" string`)
+    }
   }
 
   // Skill entries point at a manifest + OpenAPI doc; a dangling path here fails

@@ -204,6 +204,7 @@
     {
       "path": "docs/system/page-patterns.md",
       "title": "Page Patterns",
+      "use-when": "Building a whole screen: a settings list page with a create action, or a create/edit drawer opened from a list",
       "applies-to": ["all"]
     }
   ],

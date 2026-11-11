@@ -18,17 +18,20 @@ them with `packages/ui/`.
 | Registry | `schemas/registry.json` | Which components exist as contracts; where each one's files are |
 | Manifest | `schemas/{component}.manifest.json` | The real props, allowed values, defaults, tokens, import path |
 | Pattern doc | `schemas/{component}.md` | When to use this component, when not to, known gaps |
-| System rules | `docs/system/*.md` | Cross-cutting rules (11 files, listed below) |
+| System rules | `docs/system/*.md` | Cross-cutting rules (12 files, listed below) |
 
 `docs/system/` contains: `accessibility.md`, `app-setup.md`, `color-system.md`,
 `component-architecture.md`, `design-to-code-flow.md`, `interaction-states.md`,
-`page-patterns.md`, `shadows.md`, `spacing.md`, `typography.md`, `visual-primitives.md`.
+`page-patterns.md`, `shadows.md`, `shared-rules.md`, `spacing.md`, `typography.md`, `visual-primitives.md`.
 
 ## Workflow
 
-0. **Building a whole screen?** If the request is a page, a list, or a create/edit flow
-   rather than one component, read `docs/system/page-patterns.md` first. It names the
-   components each pattern is built from; then look each one up below.
+0. **Building a page, layout, or flow?** If the request is larger than one component,
+   find the matching pattern in `schemas/registry.json`: every `docs/system/*-patterns.md`
+   entry in `systemRules` has a `use-when` line. Read that pattern doc first. It names the
+   components the pattern is built from; then look each one up below. If no pattern fits,
+   say so rather than improvising a layout. Every pattern also inherits
+   `docs/system/shared-rules.md`.
 1. **Find the component.** Read `schemas/registry.json`. If the component has no manifest,
    it has no contract yet — say so rather than guessing its API.
 2. **Read its manifest.** Take props, allowed enum values, and defaults from

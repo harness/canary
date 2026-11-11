@@ -1,0 +1,42 @@
+---
+title: Shared Rules for App Code
+description: Rules every page built from @harnessio/ui must follow, regardless of pattern; pattern docs inherit these
+checks:
+  - public-imports
+  - no-color-literals
+  - no-arbitrary-values
+  - no-palette-colors
+  - no-inline-style
+  - no-raw-elements
+  - known-cn-classes
+---
+
+These rules apply to every page or feature built on `@harnessio/ui`. Pattern docs
+(`page-patterns.md` and any `*-patterns.md` that follows it) inherit them and add only the
+rules specific to their pattern. Each name in `checks` above is enforced against app code by
+`pnpm ds-check:consumer <dir>`, which reports results by that name. A test fails if a name
+listed in a doc has no check, or a check exists that no doc lists.
+
+**Imports.** Import only from public `@harnessio/ui` entry points (for example
+`@harnessio/ui/components`), and only names that entry point exports. Never import from
+`src/` or `dist/` paths, and never invent a component. (`public-imports`)
+
+**Colors.** No hex, rgb, hsl, or oklch literals; colors come from the components. See
+`color-system.md`. (`no-color-literals`) No palette or fixed color utilities such as
+`bg-blue-500` or `text-white`; use semantic tokens and component props.
+(`no-palette-colors`)
+
+**Sizing and spacing.** No Tailwind arbitrary values such as `w-[420px]` or `text-[#333]`.
+Drawer width comes from `size`; spacing comes from `Layout` `gap` props or real `cn-*`
+spacing aliases. See `spacing.md`. (`no-arbitrary-values`) Every `cn-*` class must exist in
+the shipped stylesheet. (`known-cn-classes`)
+
+**Inline style.** No `style` attribute. (`no-inline-style`)
+
+**Raw elements.** Do not hand-build `<input>`, `<textarea>`, `<select>`, `<label>`,
+`<button>`, `<table>` or `<dialog>`. Use `FormInput.*`, `Button`, `Table.*` and `Drawer` or
+`Dialog`. (`no-raw-elements`)
+
+**Text and wrapping.** Text style comes from `Text variant`, not font or color utilities.
+See `typography.md`. Do not wrap components in a styled `div` to restyle them; if a
+component cannot do what the design needs, report the gap instead of overriding it.

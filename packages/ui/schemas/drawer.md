@@ -1,3 +1,10 @@
+---
+inherits:
+  - shared-rules
+checks:
+  - drawer-parts-unstyled
+---
+
 # Drawer Pattern Guide
 
 **Manifest ID:** `canary.drawer`
@@ -49,8 +56,10 @@ judgment calls around it.
 
 ## Do not
 
-- **Do not set width, padding, or background through `className`.** `w-[480px]` or `p-4` on
-  `Drawer.Content` breaks the stack animation and drifts from the tokens.
+- **Do not set width, padding, or background through `className` or `style`.**
+  `w-[480px]` or `p-4` on `Drawer.Content` breaks the stack animation and drifts from the
+  tokens. The same holds for `Drawer.Root`, `Header`, `Body` and `Footer`; the
+  `drawer-parts-unstyled` check enforces it.
 - **Do not put actions in the body.** A submit button that scrolls away with the form is
   easy to miss; the footer stays pinned.
 - **Do not add a second close button.** The header already has one.

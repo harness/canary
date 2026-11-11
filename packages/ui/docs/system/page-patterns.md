@@ -1,6 +1,11 @@
 ---
 title: Page Patterns
 description: Anatomy of the settings list page and the create/edit drawer, built only from @harnessio/ui components
+inherits:
+  - shared-rules
+checks:
+  - single-primary-button
+  - drawer-complete
 ---
 
 Page-level patterns compose existing components. They add no new components and no new
@@ -22,7 +27,7 @@ webhooks) and the user can create more.
    - the page title: `Text variant="heading-subsection"` (or `heading-section` when it is the
      only heading on the page);
    - one primary action: `Button variant="primary"` that opens the create drawer.
-     Exactly one primary button per page.
+     Exactly one primary button per page. The `single-primary-button` check counts per file.
 2. **List** — `Table.Root` with `Table.Header` / `Table.Row` / `Table.Head` and
    `Table.Body` / `Table.Row` / `Table.Cell`. Use `DataTable` instead when the list needs
    sorting, selection, or column visibility.
@@ -75,8 +80,10 @@ margin utilities between them.
 Use a `Dialog` instead for a short confirmation or a single field; use a full page for a
 multi-step flow.
 
-**Anatomy:** the drawer always has these four parts, in this order. Contract details are in
-`schemas/drawer.manifest.json` and `schemas/drawer.md`.
+**Anatomy:** the drawer always has these four parts, in this order (the `drawer-complete` check: a
+file that builds `Drawer.Root` must also build `Drawer.Content`, `Drawer.Header`,
+`Drawer.Body` and `Drawer.Footer`). Contract details are in `schemas/drawer.manifest.json` and
+`schemas/drawer.md`.
 
 1. `Drawer.Root` — controlled with `open` and `onOpenChange`. Opens from the right by default;
    do not change `direction` for a form drawer.
@@ -128,10 +135,8 @@ from the button's `onClick`.
 
 ## Styling rules for both patterns
 
-- No hex, rgb, or hsl literals and no Tailwind arbitrary values (`w-[420px]`,
-  `text-[#333]`). Drawer width comes from `size`; colors come from the components.
-  See `color-system.md`.
-- Spacing comes from `Layout` `gap` props or `cn-*` spacing aliases. See `spacing.md`.
-- Text style comes from `Text variant`, not font or color utilities. See `typography.md`.
-- Do not wrap these components in a styled `div` to restyle them. If a component cannot do
-  what the design needs, report the gap instead of overriding it.
+Both patterns inherit everything in `shared-rules.md`: public imports only, no color
+literals, palette colors, arbitrary values or inline `style`, no raw form, table or button
+elements, and only real `cn-*` classes. They add no styling rules of their own. The checks
+named in this file's frontmatter run alongside the shared ones; `pnpm ds-check:consumer <dir>`
+reports each by name.

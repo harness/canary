@@ -9,8 +9,10 @@
  *   pnpm ds-check:consumer <dir> [<dir>...]          # scan .ts/.tsx files, skipping tests
  *   pnpm ds-check:consumer <dir> --include-tests
  *
- * Exits 1 when any rule is violated. Rules are listed in RULES below; each has a stable id so a
- * report can be cited. The scan is syntactic (TypeScript AST + token patterns): it proves
+ * Exits 1 when any check fails. Checks are implemented in RULES below and named by readable slug.
+ * The checks to run are declared in the frontmatter `checks:` list of the pattern docs
+ * (docs/system/shared-rules.md, docs/system/*-patterns.md, schemas/*.md), so each rule's prose and
+ * its enforcement share one name. The scan is syntactic (TypeScript AST + token patterns): it proves
  * these rules hold, not that the design is good.
  */
 import * as fs from 'fs'
@@ -18,6 +20,7 @@ import * as path from 'path'
 import { fileURLToPath } from 'url'
 
 import * as ts from 'typescript'
+import { parse as parseYaml } from 'yaml'
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
 const PACKAGE_ROOT = path.resolve(__dirname, '..')
@@ -33,16 +36,46 @@ interface Violation {
 }
 
 const RULES: Record<string, string> = {
-  'DSC-001': 'Imports come from a public @harnessio/ui entry point and every imported name is exported there',
-  'DSC-002': 'No color literals (hex, rgb, hsl, oklch)',
-  'DSC-003': 'No Tailwind arbitrary values (w-[420px], text-[#333])',
-  'DSC-004': 'No raw palette or fixed colors (bg-blue-500, text-white); semantic tokens only',
-  'DSC-005': 'No inline style attribute',
-  'DSC-006': 'No hand-built form, table or button elements; use the design-system components',
-  'DSC-007': 'No className or style on Drawer parts; width and padding come from props',
-  'DSC-008': 'Drawer.Root is built with Content, Header, Body and Footer',
-  'DSC-009': 'At most one primary Button per file',
-  'DSC-010': 'Every cn-* class exists in the shipped stylesheet'
+  'public-imports': 'Imports come from a public @harnessio/ui entry point and every imported name is exported there',
+  'no-color-literals': 'No color literals (hex, rgb, hsl, oklch)',
+  'no-arbitrary-values': 'No Tailwind arbitrary values (w-[420px], text-[#333])',
+  'no-palette-colors': 'No raw palette or fixed colors (bg-blue-500, text-white); semantic tokens only',
+  'no-inline-style': 'No inline style attribute',
+  'no-raw-elements': 'No hand-built form, table or button elements; use the design-system components',
+  'drawer-parts-unstyled': 'No className or style on Drawer parts; width and padding come from props',
+  'drawer-complete': 'Drawer.Root is built with Content, Header, Body and Footer',
+  'single-primary-button': 'At most one primary Button per file',
+  'known-cn-classes': 'Every cn-* class exists in the shipped stylesheet'
+}
+
+function frontmatterChecks(file: string): string[] {
+  const match = /^---\n([\s\S]*?)\n---/.exec(fs.readFileSync(file, 'utf-8'))
+  if (!match) return []
+  const data = parseYaml(match[1]) as { checks?: unknown } | null
+  return Array.isArray(data?.checks) ? data.checks.map(String) : []
+}
+
+function patternDocs(): string[] {
+  const list = (dir: string, accept: (name: string) => boolean): string[] =>
+    fs.existsSync(dir)
+      ? fs
+          .readdirSync(dir)
+          .filter(accept)
+          .map(f => path.join(dir, f))
+      : []
+  return [
+    ...list(path.join(PACKAGE_ROOT, 'docs/system'), f => f === 'shared-rules.md' || f.endsWith('-patterns.md')),
+    ...list(path.join(PACKAGE_ROOT, 'schemas'), f => f.endsWith('.md'))
+  ]
+}
+
+/** Check names declared by pattern docs, mapped to the doc that declares them. */
+function loadDeclaredChecks(): Map<string, string> {
+  const declared = new Map<string, string>()
+  for (const doc of patternDocs()) {
+    for (const name of frontmatterChecks(doc)) declared.set(name, path.relative(PACKAGE_ROOT, doc))
+  }
+  return declared
 }
 
 const RAW_ELEMENTS = new Set([
@@ -156,11 +189,12 @@ function checkFile(
   const drawerParts = new Set<string>()
 
   const checkClassTokens = (node: ts.Node, text: string): void => {
-    if (ARBITRARY_VALUE.test(text)) add('DSC-003', node, `arbitrary value in "${text.trim().slice(0, 60)}"`)
-    if (PALETTE_COLOR.test(text)) add('DSC-004', node, `palette or fixed color in "${text.trim().slice(0, 60)}"`)
+    if (ARBITRARY_VALUE.test(text)) add('no-arbitrary-values', node, `arbitrary value in "${text.trim().slice(0, 60)}"`)
+    if (PALETTE_COLOR.test(text))
+      add('no-palette-colors', node, `palette or fixed color in "${text.trim().slice(0, 60)}"`)
     if (cnClasses) {
       for (const m of text.matchAll(CN_CLASS)) {
-        if (!cnClasses.has(m[1])) add('DSC-010', node, `unknown class ${m[1]}`)
+        if (!cnClasses.has(m[1])) add('known-cn-classes', node, `unknown class ${m[1]}`)
       }
     }
   }
@@ -170,13 +204,13 @@ function checkFile(
       const spec = node.moduleSpecifier.text
       if (spec.startsWith('@harnessio/ui')) {
         if (!publicEntries.has(spec)) {
-          add('DSC-001', node, `"${spec}" is not a public entry point`)
+          add('public-imports', node, `"${spec}" is not a public entry point`)
         } else if (spec === '@harnessio/ui/components' && componentExports) {
           const bindings = node.importClause?.namedBindings
           if (bindings && ts.isNamedImports(bindings)) {
             for (const el of bindings.elements) {
               const name = (el.propertyName ?? el.name).text
-              if (!componentExports.has(name)) add('DSC-001', el, `"${name}" is not exported by ${spec}`)
+              if (!componentExports.has(name)) add('public-imports', el, `"${name}" is not exported by ${spec}`)
             }
           }
         }
@@ -185,12 +219,12 @@ function checkFile(
 
     if (ts.isJsxOpeningElement(node) || ts.isJsxSelfClosingElement(node)) {
       const name = tagName(node.tagName)
-      if (RAW_ELEMENTS.has(name)) add('DSC-006', node, `raw <${name}>`)
+      if (RAW_ELEMENTS.has(name)) add('no-raw-elements', node, `raw <${name}>`)
       if (DRAWER_PARTS.has(name)) {
         drawerParts.add(name)
         for (const attr of node.attributes.properties) {
           if (ts.isJsxAttribute(attr) && ['className', 'style'].includes(attr.name.getText())) {
-            add('DSC-007', attr, `${attr.name.getText()} on <${name}>`)
+            add('drawer-parts-unstyled', attr, `${attr.name.getText()} on <${name}>`)
           }
         }
       }
@@ -208,7 +242,7 @@ function checkFile(
       for (const attr of node.attributes.properties) {
         if (!ts.isJsxAttribute(attr)) continue
         const attrName = attr.name.getText()
-        if (attrName === 'style') add('DSC-005', attr, 'inline style attribute')
+        if (attrName === 'style') add('no-inline-style', attr, 'inline style attribute')
         if (attrName === 'className' && attr.initializer) {
           for (const s of stringsIn(attr.initializer)) checkClassTokens(s, (s as ts.StringLiteral).text ?? '')
         }
@@ -216,7 +250,7 @@ function checkFile(
     }
 
     if (ts.isStringLiteral(node) || ts.isNoSubstitutionTemplateLiteral(node)) {
-      if (COLOR_LITERAL.test(node.text)) add('DSC-002', node, `color literal in "${node.text.slice(0, 40)}"`)
+      if (COLOR_LITERAL.test(node.text)) add('no-color-literals', node, `color literal in "${node.text.slice(0, 40)}"`)
     }
 
     ts.forEachChild(node, visit)
@@ -224,10 +258,11 @@ function checkFile(
   visit(source)
 
   if (primaryButtons > 1)
-    violations.push({ rule: 'DSC-009', file, line: 1, message: `${primaryButtons} primary Buttons` })
+    violations.push({ rule: 'single-primary-button', file, line: 1, message: `${primaryButtons} primary Buttons` })
   if (drawerParts.has('Drawer.Root')) {
     for (const part of ['Drawer.Content', 'Drawer.Header', 'Drawer.Body', 'Drawer.Footer']) {
-      if (!drawerParts.has(part)) violations.push({ rule: 'DSC-008', file, line: 1, message: `missing ${part}` })
+      if (!drawerParts.has(part))
+        violations.push({ rule: 'drawer-complete', file, line: 1, message: `missing ${part}` })
     }
   }
   return violations
@@ -242,6 +277,16 @@ function main(): void {
     process.exit(2)
   }
 
+  const declared = loadDeclaredChecks()
+  const unimplemented = [...declared.keys()].filter(name => !(name in RULES))
+  const undeclared = Object.keys(RULES).filter(name => !declared.has(name))
+  if (unimplemented.length > 0 || undeclared.length > 0) {
+    for (const name of unimplemented)
+      console.error(`Check "${name}" is declared in ${declared.get(name)} but not implemented`)
+    for (const name of undeclared) console.error(`Check "${name}" is implemented but declared in no pattern doc`)
+    process.exit(2)
+  }
+
   const publicEntries = loadPublicEntries()
   const componentExports = loadComponentExports()
   const cnClasses = loadCnClasses()
@@ -250,16 +295,17 @@ function main(): void {
 
   console.log(`Scanned ${files.length} file(s)`)
   if (!componentExports)
-    console.log('! dist/components.d.ts missing: export-name check (DSC-001) limited to entry points')
-  if (!cnClasses) console.log('! dist/styles.css missing: cn-* class check (DSC-010) skipped')
+    console.log('! dist/components.d.ts missing: export-name check (public-imports) limited to entry points')
+  if (!cnClasses) console.log('! dist/styles.css missing: cn-* class check (known-cn-classes) skipped')
   console.log('')
-  for (const [id, description] of Object.entries(RULES)) {
-    const hits = violations.filter(v => v.rule === id)
-    console.log(`${hits.length === 0 ? 'PASS' : 'FAIL'}  ${id}  ${description}`)
+  const width = Math.max(...Object.keys(RULES).map(n => n.length))
+  for (const [name, description] of Object.entries(RULES)) {
+    const hits = violations.filter(v => v.rule === name)
+    console.log(`${hits.length === 0 ? 'PASS' : 'FAIL'}  ${name.padEnd(width)}  ${description}`)
     for (const v of hits) console.log(`        ${path.relative(process.cwd(), v.file)}:${v.line}  ${v.message}`)
   }
   console.log('')
-  console.log(violations.length === 0 ? 'All rules passed.' : `${violations.length} violation(s).`)
+  console.log(violations.length === 0 ? 'All checks passed.' : `${violations.length} violation(s).`)
   process.exit(violations.length === 0 ? 0 : 1)
 }
 

@@ -197,6 +197,11 @@
       "applies-to": ["all"]
     },
     {
+      "path": "docs/system/shared-rules.md",
+      "title": "Shared Rules for App Code",
+      "applies-to": ["all"]
+    },
+    {
       "path": "docs/system/page-patterns.md",
       "title": "Page Patterns",
       "applies-to": ["all"]

@@ -36,6 +36,11 @@ const renderComponent = (props: Partial<IconWithTooltipProps> = {}) => {
 
 describe('IconWithTooltip', () => {
   describe('Basic Rendering', () => {
+    test('should have type="button" to prevent form submission', () => {
+      const { container } = renderComponent()
+      expect(container.querySelector('button')).toHaveAttribute('type', 'button')
+    })
+
     test('should render icon', () => {
       renderComponent()
       expect(screen.getByTestId('icon-v2')).toBeInTheDocument()

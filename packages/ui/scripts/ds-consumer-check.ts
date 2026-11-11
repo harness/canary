@@ -104,6 +104,14 @@ function loadPublicEntries(): Set<string> {
   return new Set(Object.keys(pkg.exports).map(key => (key === '.' ? pkg.name : `${pkg.name}/${key.slice(2)}`)))
 }
 
+function isPublicEntry(spec: string, publicEntries: Set<string>): boolean {
+  if (publicEntries.has(spec)) return true
+  for (const entry of publicEntries) {
+    if (entry.endsWith('/*') && spec.startsWith(entry.slice(0, -1)) && spec.length > entry.length - 1) return true
+  }
+  return false
+}
+
 function loadComponentExports(): Set<string> | null {
   if (!fs.existsSync(DIST_COMPONENTS)) return null
   const text = fs.readFileSync(DIST_COMPONENTS, 'utf-8')
@@ -203,7 +211,7 @@ function checkFile(
     if (ts.isImportDeclaration(node) && ts.isStringLiteral(node.moduleSpecifier)) {
       const spec = node.moduleSpecifier.text
       if (spec.startsWith('@harnessio/ui')) {
-        if (!publicEntries.has(spec)) {
+        if (!isPublicEntry(spec, publicEntries)) {
           add('public-imports', node, `"${spec}" is not a public entry point`)
         } else if (spec === '@harnessio/ui/components' && componentExports) {
           const bindings = node.importClause?.namedBindings

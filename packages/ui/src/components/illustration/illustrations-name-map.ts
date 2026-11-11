@@ -9,9 +9,14 @@ import CreateWorkspace from './images/create-workspace.svg'
 import HarnessLogoText from './images/harness-logo-text.svg'
 import NoDataBranches from './images/no-data-branches.svg'
 import NoDataCog from './images/no-data-cog.svg'
+import NoDataCollapsedItems from './images/no-data-collapsed-items.svg'
 import NoDataCommits from './images/no-data-commits.svg'
+import NoDataDashboard from './images/no-data-dashboard.svg'
+import NoDataDatabase from './images/no-data-database.svg'
 import NoDataDelegate from './images/no-data-delegate.svg'
+import NoDataDownload from './images/no-data-download.svg'
 import NoDataError from './images/no-data-error.svg'
+import NoDataFilter from './images/no-data-filter.svg'
 import NoDataFolder from './images/no-data-folder.svg'
 import NoDataLabels from './images/no-data-labels.svg'
 import NoDataMembers from './images/no-data-members.svg'
@@ -44,7 +49,12 @@ import WelcomeLight from './images/welcome-light.svg'
 export const IllustrationsNameMap = {
   'create-workspace': CreateWorkspace,
   'no-data-branches': NoDataBranches,
+  'no-data-collapsed-items': NoDataCollapsedItems,
   'no-data-cog': NoDataCog,
+  'no-data-dashboard': NoDataDashboard,
+  'no-data-database': NoDataDatabase,
+  'no-data-download': NoDataDownload,
+  'no-data-filter': NoDataFilter,
   'no-data-commits': NoDataCommits,
   'no-data-error': NoDataError,
   'no-data-folder': NoDataFolder,

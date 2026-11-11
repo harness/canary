@@ -285,7 +285,12 @@ describe('Illustration', () => {
       const illustrationNames: IllustrationsNameType[] = [
         'create-workspace',
         'no-data-branches',
+        'no-data-collapsed-items',
         'no-data-cog',
+        'no-data-dashboard',
+        'no-data-database',
+        'no-data-download',
+        'no-data-filter',
         'no-data-commits',
         'no-data-error',
         'no-data-folder',

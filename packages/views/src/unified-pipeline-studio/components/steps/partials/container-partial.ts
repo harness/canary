@@ -56,7 +56,8 @@ export const getContainerPartial = (stepIdentifier: 'run' | 'run-test' | 'backgr
         options: [
           { label: 'Always', value: 'always' },
           { label: 'Never', value: 'never' },
-          { label: 'If not exists', value: 'if-not-exists' }
+          { label: 'If not exists', value: 'if-not-exists' },
+          { label: 'If not present', value: 'if-not-present' }
         ]
       }
     },

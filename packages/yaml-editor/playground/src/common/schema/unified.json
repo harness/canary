@@ -342,7 +342,7 @@
           "type": "boolean"
         },
         "pull": {
-          "enum": ["always", "never", "if-not-exists"],
+          "enum": ["always", "never", "if-not-exists", "if-not-present"],
           "type": "string"
         },
         "shm-size": {

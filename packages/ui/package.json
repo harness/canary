@@ -65,7 +65,8 @@
     "ds-check": "tsx scripts/ds-check.ts",
     "ds-check:schema": "tsx scripts/ds-check.ts --schema",
     "ds-check:refs": "tsx scripts/ds-check.ts --refs",
-    "ds-check:code": "tsx scripts/ds-check.ts --code"
+    "ds-check:code": "tsx scripts/ds-check.ts --code",
+    "ds-check:consumer": "tsx scripts/ds-consumer-check.ts"
   },
   "types": "./dist/index.d.ts",
   "style": "./dist/styles.css",

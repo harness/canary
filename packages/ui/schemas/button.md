@@ -7,8 +7,7 @@
 > **This file is hand-written judgment only.**
 >
 > Prop names, enum values, defaults, and tokens live in
-> [`button.manifest.json`](./button.manifest.json) and are published to
-> [`button.openapi.json`](./button.openapi.json), which is **generated**.
+> [`button.manifest.json`](./button.manifest.json).
 > Don't copy them here.
 
 ---

@@ -7,8 +7,7 @@
 > **This file is hand-written judgment only.**
 >
 > Prop names, enum values, defaults, and tokens live in
-> [`layout.manifest.json`](./layout.manifest.json) and are published to
-> [`layout.openapi.json`](./layout.openapi.json), which is **generated**.
+> [`layout.manifest.json`](./layout.manifest.json).
 > Don't copy them here.
 
 ---

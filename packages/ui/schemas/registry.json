@@ -4,7 +4,6 @@
     "name": "@harnessio/design-system-skills",
     "description": "Harness Design System skills registry — portable component contracts for AI tools and agents",
     "version": "1.0.0",
-    "registry-format": "openapi-3.0.0",
     "last-updated": "2024-01-01T00:00:00Z",
     "maintainer": "design-systems@harness.io"
   },
@@ -14,7 +13,6 @@
       "name": "Button Component",
       "status": "stable",
       "description": "The library's only guaranteed-actionable control — seven emphasis variants, four semantic themes, five sizes, icon-only mode, and automatic loading from a promise-returning onClick",
-      "openapi": "schemas/button.openapi.json",
       "manifest": "schemas/button.manifest.json",
       "version": "1.5.5",
       "package": "@harnessio/ui",
@@ -29,10 +27,6 @@
         "cursor": {
           "method": "npm-import",
           "example": "import { Button } from '@harnessio/ui/components'"
-        },
-        "figma-make": {
-          "method": "http-openapi",
-          "endpoint": "/components/button"
         }
       }
     },
@@ -41,7 +35,6 @@
       "name": "Drawer Component",
       "status": "stable",
       "description": "Side panel for creating, editing, or inspecting one entity over the current page — Root, Content, Header, Body and Footer",
-      "openapi": "schemas/drawer.openapi.json",
       "manifest": "schemas/drawer.manifest.json",
       "version": "1.5.5",
       "package": "@harnessio/ui",
@@ -56,10 +49,6 @@
         "cursor": {
           "method": "npm-import",
           "example": "import { Drawer } from '@harnessio/ui/components'"
-        },
-        "figma-make": {
-          "method": "http-openapi",
-          "endpoint": "/components/drawer"
         }
       }
     },
@@ -68,7 +57,6 @@
       "name": "Layout Component",
       "status": "stable",
       "description": "Arrangement primitives — Horizontal, Vertical, Flex and Grid — and the only sanctioned way to put tokenised space between elements",
-      "openapi": "schemas/layout.openapi.json",
       "manifest": "schemas/layout.manifest.json",
       "version": "1.5.5",
       "package": "@harnessio/ui",
@@ -83,10 +71,6 @@
         "cursor": {
           "method": "npm-import",
           "example": "import { Layout } from '@harnessio/ui/components'"
-        },
-        "figma-make": {
-          "method": "http-openapi",
-          "endpoint": "/components/layout"
         }
       }
     },
@@ -95,7 +79,6 @@
       "name": "StatusBadge Component",
       "status": "stable",
       "description": "Status indicator badge with muted, success, warning, danger, info, merged, and risk themes",
-      "openapi": "schemas/status-badge.openapi.json",
       "manifest": "schemas/status-badge.manifest.json",
       "version": "1.5.5",
       "package": "@harnessio/ui",
@@ -110,10 +93,6 @@
         "cursor": {
           "method": "npm-import",
           "example": "import { StatusBadge } from '@harnessio/ui/components'"
-        },
-        "figma-make": {
-          "method": "http-openapi",
-          "endpoint": "/components/status-badge"
         }
       }
     },
@@ -122,7 +101,6 @@
       "name": "Tag Component",
       "status": "stable",
       "description": "Decorative-colour label for stable attributes, with optional icon, split label/value pair, and dismiss action",
-      "openapi": "schemas/tag.openapi.json",
       "manifest": "schemas/tag.manifest.json",
       "version": "1.5.5",
       "package": "@harnessio/ui",
@@ -137,10 +115,6 @@
         "cursor": {
           "method": "npm-import",
           "example": "import { Tag } from '@harnessio/ui/components'"
-        },
-        "figma-make": {
-          "method": "http-openapi",
-          "endpoint": "/components/tag"
         }
       }
     }
@@ -149,53 +123,73 @@
     {
       "path": "docs/system/accessibility.md",
       "title": "Accessibility",
-      "applies-to": ["all"]
+      "applies-to": [
+        "all"
+      ]
     },
     {
       "path": "docs/system/color-system.md",
       "title": "Color System",
-      "applies-to": ["all"]
+      "applies-to": [
+        "all"
+      ]
     },
     {
       "path": "docs/system/visual-primitives.md",
       "title": "Visual Primitives",
-      "applies-to": ["all"]
+      "applies-to": [
+        "all"
+      ]
     },
     {
       "path": "docs/system/typography.md",
       "title": "Typography",
-      "applies-to": ["all"]
+      "applies-to": [
+        "all"
+      ]
     },
     {
       "path": "docs/system/spacing.md",
       "title": "Spacing",
-      "applies-to": ["all"]
+      "applies-to": [
+        "all"
+      ]
     },
     {
       "path": "docs/system/shadows.md",
       "title": "Shadows & Elevation",
-      "applies-to": ["all"]
+      "applies-to": [
+        "all"
+      ]
     },
     {
       "path": "docs/system/design-to-code-flow.md",
       "title": "Design-to-Code Flow",
-      "applies-to": ["all"]
+      "applies-to": [
+        "all"
+      ]
     },
     {
       "path": "docs/system/app-setup.md",
       "title": "App Setup",
-      "applies-to": ["all"]
+      "applies-to": [
+        "all"
+      ]
     },
     {
       "path": "docs/system/shared-rules.md",
       "title": "Shared Rules for Product Module",
-      "applies-to": ["all"]
+      "applies-to": [
+        "all"
+      ]
     },
     {
       "path": "docs/system/page-patterns.md",
       "title": "Page Patterns",
       "use-when": "Building a whole screen: a settings list page with a create action, or a create/edit drawer opened from a list",
-      "applies-to": ["all"]
+      "applies-to": [
+        "all"
+      ]
     }
   ],
   "consumption-guide": {
@@ -212,10 +206,6 @@
       "scope": "@harness",
       "setup": "Auto-detected from .npmrc (already on VPN)",
       "usage": "import { Button } from '@harnessio/design-system-skills/button'"
-    },
-    "figma-make": {
-      "method": "http-api-openapi",
-      "note": "Optional: expose via HTTP server for automation; not required for basic usage"
     }
   }
 }

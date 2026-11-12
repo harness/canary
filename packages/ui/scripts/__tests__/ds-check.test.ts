@@ -50,8 +50,7 @@ const STATUS_BADGE_MANIFEST = path.resolve(PACKAGE_ROOT, 'schemas/status-badge.m
  *
  * The probe inherits status-badge's `code.path` and `governance.rulesDocs`, so
  * `--source` resolves a real component and `--refs` resolves real docs — only the
- * injected defect should fail. Both the probe manifest and any spec generated for
- * it are removed in a `finally`, so a failing assertion cannot leave the repo dirty.
+ * injected defect should fail. The probe manifest is removed in a `finally`, so a failing assertion cannot leave the repo dirty.
  */
 async function withProbeManifest(
   name: string,
@@ -59,7 +58,6 @@ async function withProbeManifest(
   body: (manifestPath: string) => Promise<void>
 ): Promise<void> {
   const manifestPath = path.resolve(PACKAGE_ROOT, `schemas/${name}.manifest.json`)
-  const specPath = path.resolve(PACKAGE_ROOT, `schemas/${name}.openapi.json`)
 
   const manifest = JSON.parse(fs.readFileSync(STATUS_BADGE_MANIFEST, 'utf-8'))
   manifest.id = `canary.${name}`
@@ -69,10 +67,8 @@ async function withProbeManifest(
   try {
     await body(manifestPath)
   } finally {
-    for (const file of [manifestPath, specPath]) {
-      if (fs.existsSync(file)) {
-        fs.unlinkSync(file)
-      }
+    if (fs.existsSync(manifestPath)) {
+      fs.unlinkSync(manifestPath)
     }
   }
 }
@@ -110,12 +106,6 @@ describe('ds-check', { timeout: 30_000 }, () => {
       expect(result.exitCode).toBe(0)
     })
 
-    it('should run only generated check with --generated flag', async () => {
-      const result = await runDsCheck(['--generated'])
-      expect(result.exitCode).toBe(0)
-      expect(result.stdout).toContain('status-badge')
-    })
-
     it('should combine multiple flags', async () => {
       const result = await runDsCheck(['--schema', '--refs', '--code'])
       expect(result.exitCode).toBe(0)
@@ -138,27 +128,6 @@ describe('ds-check', { timeout: 30_000 }, () => {
       expect(result.exitCode).toBe(0)
       expect(result.stdout).toContain('status-badge')
     })
-
-    it('should detect stale OpenAPI specs with --generated', async () => {
-      await withProbeManifest(
-        'drift-probe',
-        () => {},
-        async manifestPath => {
-          // Seed a spec that matches the probe manifest, and confirm it reads as fresh
-          expect((await runDsCheck(['--write'])).exitCode).toBe(0)
-          expect((await runDsCheck(['--generated'])).exitCode).toBe(0)
-
-          // Add a prop so the on-disk spec no longer matches the manifest
-          const manifest = JSON.parse(fs.readFileSync(manifestPath, 'utf-8'))
-          manifest.props.shared.push({ name: 'driftProbe', type: 'string', default: 'x' })
-          fs.writeFileSync(manifestPath, `${JSON.stringify(manifest, null, 2)}\n`)
-
-          const result = await runDsCheck(['--generated'])
-          expect(result.exitCode).toBe(1)
-          expect(result.stdout + result.stderr).toContain('generated spec is stale')
-        }
-      )
-    }, 90_000)
 
     it('should detect enum mismatches with --source', async () => {
       await withProbeManifest(
@@ -511,7 +480,7 @@ describe('ds-check', { timeout: 30_000 }, () => {
     })
 
     it('should pass when all checks succeed', async () => {
-      const result = await runDsCheck(['--schema', '--refs', '--code', '--source', '--generated'])
+      const result = await runDsCheck(['--schema', '--refs', '--code', '--source'])
       expect(result.exitCode).toBe(0)
       expect(result.stdout).toContain('✅ status-badge')
       expect(result.stdout).toContain('0 failed')
@@ -597,7 +566,7 @@ describe('ds-check', { timeout: 30_000 }, () => {
 
   describe('status-badge manifest', () => {
     it('should pass all checks for status-badge', async () => {
-      const result = await runDsCheck(['--schema', '--refs', '--code', '--source', '--generated'])
+      const result = await runDsCheck(['--schema', '--refs', '--code', '--source'])
       expect(result.exitCode).toBe(0)
       expect(result.stdout).toContain('✅ status-badge')
       expect(result.stdout).toContain('0 failed')
@@ -610,32 +579,14 @@ describe('ds-check', { timeout: 30_000 }, () => {
       const manifest = JSON.parse(fs.readFileSync(manifestPath, 'utf-8'))
       expect(manifest.id).toBe('canary.status-badge')
     })
-
-    it('should have fresh OpenAPI spec', async () => {
-      const specPath = path.resolve(PACKAGE_ROOT, 'schemas/status-badge.openapi.json')
-      expect(fs.existsSync(specPath)).toBe(true)
-
-      const result = await runDsCheck(['--generated'])
-      expect(result.exitCode).toBe(0)
-      expect(result.stdout).toContain('status-badge')
-    })
   })
 
   describe('tag manifest', () => {
     it('should pass all checks for tag', async () => {
-      const result = await runDsCheck(['--schema', '--refs', '--code', '--source', '--generated'])
+      const result = await runDsCheck(['--schema', '--refs', '--code', '--source'])
       expect(result.exitCode).toBe(0)
       expect(result.stdout).toContain('✅ tag')
       expect(result.stdout).toContain('0 failed')
-    })
-
-    it('should have fresh OpenAPI spec', async () => {
-      const specPath = path.resolve(PACKAGE_ROOT, 'schemas/tag.openapi.json')
-      expect(fs.existsSync(specPath)).toBe(true)
-
-      const result = await runDsCheck(['--generated'])
-      expect(result.exitCode).toBe(0)
-      expect(result.stdout).toContain('tag')
     })
   })
 })

@@ -7,8 +7,7 @@
 > **This file is hand-written judgment only.**
 >
 > Prop names, enum values, defaults, and tokens live in
-> [`status-badge.manifest.json`](./status-badge.manifest.json) and are published to
-> [`status-badge.openapi.json`](./status-badge.openapi.json), which is **generated**.
+> [`status-badge.manifest.json`](./status-badge.manifest.json).
 > Don't copy them here.
 
 ---

@@ -14,8 +14,7 @@ checks:
 > **This file is hand-written judgment only.**
 >
 > Prop names, enum values, defaults, and tokens live in
-> [`drawer.manifest.json`](./drawer.manifest.json) and are published to
-> [`drawer.openapi.json`](./drawer.openapi.json), which is **generated**.
+> [`drawer.manifest.json`](./drawer.manifest.json).
 > Don't copy them here.
 
 ---

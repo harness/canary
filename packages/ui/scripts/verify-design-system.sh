@@ -69,29 +69,12 @@ echo "🧪 Design System Verification (@harnessio/ui)"
 echo "============================================="
 
 echo -e "\n1️⃣  Running all validation checks..."
-expect_ok "all validation checks" pnpm ds-check --schema --refs --code --source --generated
+expect_ok "all validation checks" pnpm ds-check --schema --refs --code --source
 
 echo -e "\n2️⃣  Running individual validation checks..."
-for flag in schema refs code source generated; do
+for flag in schema refs code source; do
   expect_ok "--${flag} check" pnpm ds-check "--${flag}"
 done
-
-echo -e "\n3️⃣  Testing spec generation..."
-expect_ok "spec generation (--write)" pnpm ds-check --write
-if [ -f schemas/status-badge.openapi.json ]; then
-  echo "✅ spec file present"
-else
-  echo "❌ Spec missing: schemas/status-badge.openapi.json"
-  failures=$((failures + 1))
-fi
-# Regeneration must be a no-op; a diff here means a stale spec was committed.
-if git diff --quiet -- schemas/; then
-  echo "✅ regeneration left schemas/ unchanged"
-else
-  echo "❌ Regeneration modified schemas/ — the committed spec was stale:"
-  git diff --stat -- schemas/ | sed 's/^/    /'
-  failures=$((failures + 1))
-fi
 
 echo -e "\n4️⃣  Running ds-check tests..."
 expect_ok "ds-check unit tests" pnpm test scripts/__tests__/ds-check.test.ts

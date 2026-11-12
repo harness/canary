@@ -9,11 +9,6 @@
  *   pnpm ds-check --code       # Check code.export/path/import are present and well-formed
  *   pnpm ds-check --source     # Compare manifest enum values to the component's CVA variants
  *                              # or TypeScript string-literal union
- *   pnpm ds-check --generated  # Fail if a committed OpenAPI spec is stale
- *   pnpm ds-check --write      # Regenerate OpenAPI specs from manifests
- *
- * The OpenAPI specs in schemas/ are GENERATED from the manifests. Edit the
- * manifest and run --write; never hand-edit a spec.
  *
  * Manifests are read from schemas/ (hand-authored) and generated/manifests/
  * (generated, if present). Paths inside a manifest are resolved relative to the
@@ -26,7 +21,6 @@ import { fileURLToPath } from 'url'
 // The manifest schema declares draft 2020-12, so the matching Ajv entrypoint is required.
 // Plain 'ajv' defaults to draft-07 and throws on the $schema ref.
 import Ajv from 'ajv/dist/2020.js'
-import { format as prettierFormat, resolveConfig as prettierResolveConfig } from 'prettier'
 import * as ts from 'typescript'
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
@@ -41,8 +35,6 @@ interface CheckOptions {
   refs?: boolean
   code?: boolean
   source?: boolean
-  generated?: boolean
-  write?: boolean
   verbose?: boolean
 }
 
@@ -51,10 +43,8 @@ function parseArgs(): CheckOptions {
   const options: CheckOptions = {}
 
   options.verbose = args.includes('--verbose')
-  options.write = args.includes('--write')
-
-  const selectors = args.filter(a => a !== '--verbose' && a !== '--write')
-  const validSelectors = ['--schema', '--refs', '--code', '--source', '--generated']
+  const selectors = args.filter(a => a !== '--verbose')
+  const validSelectors = ['--schema', '--refs', '--code', '--source']
 
   // Validate all selector flags are recognized
   const unknownSelectors = selectors.filter(sel => !validSelectors.includes(sel))
@@ -64,25 +54,18 @@ function parseArgs(): CheckOptions {
     process.exit(1)
   }
 
-  // No selector flags (or --write alone) runs every check
+  // No selector flags runs every check
   if (selectors.length === 0) {
     options.schema = true
     options.refs = true
     options.code = true
     options.source = true
-    options.generated = true
   } else {
     if (selectors.includes('--schema')) options.schema = true
     if (selectors.includes('--refs')) options.refs = true
     if (selectors.includes('--code')) options.code = true
     if (selectors.includes('--source')) options.source = true
-    if (selectors.includes('--generated')) options.generated = true
   }
-
-  // Regeneration happens inside the generated check, so asking to write without it is a
-  // no-op: `--source --write` used to exit 0 having regenerated nothing. Writing implies
-  // the check that does the writing.
-  if (options.write) options.generated = true
 
   return options
 }
@@ -351,7 +334,7 @@ function validateRegistry(): { valid: boolean; errors?: string[] } {
     }
   }
 
-  // Skill entries point at a manifest + OpenAPI doc; a dangling path here fails
+  // Skill entries point at a manifest; a dangling path here fails
   // silently at consumption time, so treat it like any other broken reference.
   const skills = registry.skills
   if (skills !== undefined && !Array.isArray(skills)) {
@@ -359,7 +342,7 @@ function validateRegistry(): { valid: boolean; errors?: string[] } {
   } else if (Array.isArray(skills)) {
     for (const skill of skills as Array<Record<string, unknown>>) {
       const id = typeof skill?.id === 'string' ? skill.id : JSON.stringify(skill)
-      for (const field of ['manifest', 'openapi'] as const) {
+      for (const field of ['manifest'] as const) {
         const value = skill?.[field]
         if (typeof value !== 'string') {
           errors.push(`skills entry "${id}" is missing a string "${field}"`)
@@ -873,215 +856,6 @@ function validateSourceProps(manifest: Record<string, unknown>): {
   return { valid: errors.length === 0, errors: errors.length > 0 ? errors : undefined }
 }
 
-/** Map a manifest prop type to an OpenAPI property schema. */
-function openApiTypeFor(prop: Record<string, unknown>): Record<string, unknown> {
-  const type = String(prop.type)
-  const values = Array.isArray(prop.values) ? (prop.values as string[]) : undefined
-
-  switch (type) {
-    case 'enum':
-      return { type: 'string', ...(values ? { enum: values } : {}) }
-    case 'number':
-      return { type: 'number' }
-    case 'boolean':
-      return { type: 'boolean' }
-    case 'array':
-      return { type: 'array', items: { type: 'string' } }
-    case 'object':
-      // A props-bag (e.g. iconProps). Its members are the nested component's contract,
-      // not this one's, so record the shape without enumerating them here.
-      return { type: 'object', additionalProperties: true }
-    case 'node':
-      return { type: 'string', 'x-code-type': 'node' }
-    case 'function':
-      // No OpenAPI type covers a callback; record it without asserting a JSON type.
-      return { 'x-code-type': 'function' }
-    default:
-      return { type: 'string' }
-  }
-}
-
-/**
- * Build the OpenAPI spec for a component from its manifest.
- *
- * The spec is DERIVED, never hand-edited: a hand-written spec drifted from both
- * the manifest and the source within a single PR (inventing `label`/`closeable`,
- * omitting the required `variant`). Edit the manifest and regenerate instead.
- */
-function buildOpenApi(manifest: Record<string, unknown>, version: string): Record<string, unknown> {
-  const code = (manifest.code ?? {}) as Record<string, unknown>
-  const purpose = (manifest.purpose ?? {}) as Record<string, unknown>
-  const props = (manifest.props ?? {}) as Record<string, unknown>
-  const exportName = String(code.export ?? 'Component')
-  const slug =
-    String(manifest.id ?? '')
-      .split('.')
-      .pop() ?? 'component'
-
-  const properties: Record<string, unknown> = {}
-  const required: string[] = []
-
-  const buckets: Array<[string, Array<Record<string, unknown>>]> = [
-    ['shared', (props.shared ?? []) as Array<Record<string, unknown>>],
-    ['designOnly', (props.designOnly ?? []) as Array<Record<string, unknown>>],
-    ['codeOnly', (props.codeOnly ?? []) as Array<Record<string, unknown>>]
-  ]
-
-  for (const [provenance, list] of buckets) {
-    for (const prop of list) {
-      const name = String(prop.name)
-      const description = prop.codeNote ?? prop.notes
-      properties[name] = {
-        ...openApiTypeFor(prop),
-        ...(prop.default !== undefined ? { default: prop.default } : {}),
-        ...(description ? { description: String(description) } : {}),
-        'x-provenance': provenance,
-        ...(prop.trigger ? { 'x-trigger': String(prop.trigger) } : {}),
-        ...(prop.onlyWhen ? { 'x-only-when': prop.onlyWhen } : {}),
-        ...(prop.neverWhen ? { 'x-never-when': prop.neverWhen } : {}),
-        ...(prop.transform ? { 'x-transform': String(prop.transform) } : {})
-      }
-      if (prop.required === true) required.push(name)
-    }
-  }
-
-  const governance = (manifest.governance ?? {}) as Record<string, unknown>
-  const rulesDocs = (Array.isArray(governance.rulesDocs) ? governance.rulesDocs : []) as string[]
-
-  return {
-    openapi: '3.0.0',
-    info: {
-      title: `${exportName} Component Skill`,
-      description: String(purpose.summary ?? ''),
-      version,
-      'x-skill-id': manifest.id,
-      'x-skill-status': manifest.status,
-      'x-skill-package': code.package
-    },
-    servers: [],
-    paths: {
-      [`/components/${slug}`]: {
-        post: {
-          summary: `Create a ${exportName} component`,
-          description: `Generate or validate a ${exportName} component instance with specified props`,
-          operationId: `create${exportName}`,
-          requestBody: {
-            required: true,
-            content: {
-              'application/json': { schema: { $ref: `#/components/schemas/${exportName}Props` } }
-            }
-          },
-          responses: {
-            '200': {
-              description: `${exportName} component created successfully`,
-              content: {
-                'application/json': {
-                  schema: {
-                    type: 'object',
-                    properties: {
-                      componentId: { type: 'string', description: 'Unique identifier for the instance' },
-                      jsx: { type: 'string', description: 'Generated JSX/TSX code' },
-                      props: { type: 'object', description: 'Resolved prop values with defaults' }
-                    }
-                  }
-                }
-              }
-            },
-            '400': { description: `Invalid ${exportName} configuration` }
-          }
-        }
-      }
-    },
-    components: {
-      schemas: {
-        [`${exportName}Props`]: {
-          type: 'object',
-          description: `Props for the ${exportName} React component. Generated from the manifest — do not edit by hand.`,
-          properties,
-          ...(required.length > 0 ? { required } : {}),
-          additionalProperties: false
-        }
-      }
-    },
-    'x-generated-from': `schemas/${slug}.manifest.json — regenerate with \`pnpm ds-check --write\``,
-    'x-tokens': manifest.tokens ?? {},
-    'x-accessibility': manifest.accessibility ?? {},
-    'x-examples': manifest.examples ?? {},
-    'x-known-gaps': manifest.knownGaps ?? [],
-    'x-governance': {
-      systemRules: rulesDocs.filter(p => p.startsWith('docs/system/')),
-      componentRules: rulesDocs.filter(p => !p.startsWith('docs/system/'))
-    },
-    'x-internal-manifest': `schemas/${slug}.manifest.json`
-  }
-}
-
-/** Registry version for a skill, so the spec version has a single source. */
-function registryVersionFor(manifestId: unknown): string {
-  try {
-    const registry = JSON.parse(fs.readFileSync(REGISTRY_PATH, 'utf-8')) as Record<string, unknown>
-    const skills = (Array.isArray(registry.skills) ? registry.skills : []) as Array<Record<string, unknown>>
-    const match = skills.find(s => s.id === manifestId)
-    if (typeof match?.version === 'string') return match.version
-  } catch {
-    // Registry problems are reported by validateRegistry; fall through to the default.
-  }
-  return '1.0.0'
-}
-
-/**
- * Serialize generated JSON exactly as Prettier would write it.
- *
- * Without this the generator and Prettier disagree on array wrapping, and a
- * `pnpm format` run would leave the spec permanently "stale" — regenerating
- * reintroduces the diff Prettier just removed, and the check never goes green.
- */
-async function formatJson(value: unknown, filepath: string): Promise<string> {
-  const raw = JSON.stringify(value, null, 2) + '\n'
-  try {
-    const config = await prettierResolveConfig(filepath)
-    return await prettierFormat(raw, { ...config, filepath, parser: 'json' })
-  } catch {
-    // Prettier is a dev dependency; fall back to plain JSON rather than failing the run.
-    return raw
-  }
-}
-
-/**
- * Compare the committed OpenAPI spec to what the manifest generates.
- * Regeneration must be a no-op, so a stale spec cannot be committed.
- */
-async function validateOpenApiDrift(
-  manifest: Record<string, unknown>,
-  slug: string,
-  write: boolean
-): Promise<{ valid: boolean; errors?: string[]; wrote?: boolean }> {
-  const specPath = path.resolve(PACKAGE_ROOT, `schemas/${slug}.openapi.json`)
-  const expected = await formatJson(buildOpenApi(manifest, registryVersionFor(manifest.id)), specPath)
-
-  if (write) {
-    const changed = !fs.existsSync(specPath) || fs.readFileSync(specPath, 'utf-8') !== expected
-    if (changed) fs.writeFileSync(specPath, expected)
-    return { valid: true, wrote: changed }
-  }
-
-  if (!fs.existsSync(specPath)) {
-    return { valid: false, errors: [`${slug}.openapi.json is missing; run \`pnpm ds-check --write\``] }
-  }
-
-  if (fs.readFileSync(specPath, 'utf-8') !== expected) {
-    return {
-      valid: false,
-      errors: [
-        `${slug}.openapi.json is out of date with ${slug}.manifest.json.`,
-        `Run \`pnpm ds-check --write\` to regenerate. Do not edit the spec by hand.`
-      ]
-    }
-  }
-
-  return { valid: true }
-}
-
 function validateCodeExport(manifest: Record<string, unknown>): { valid: boolean; errors?: string[] } {
   const errors: string[] = []
 
@@ -1201,18 +975,6 @@ async function runChecks(options: CheckOptions): Promise<void> {
             typeResult.errors?.forEach(err => console.error(`   ${err}`))
             componentPassed = false
           }
-        }
-      }
-
-      // Generated OpenAPI spec must match the manifest
-      if (options.generated && componentPassed) {
-        const driftResult = await validateOpenApiDrift(manifest, componentName, options.write === true)
-        if (!driftResult.valid) {
-          console.error(`❌ ${componentName}: generated spec is stale`)
-          driftResult.errors?.forEach(err => console.error(`   ${err}`))
-          componentPassed = false
-        } else if (driftResult.wrote) {
-          console.log(`   ✏️  regenerated ${componentName}.openapi.json`)
         }
       }
 

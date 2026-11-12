@@ -54,7 +54,7 @@
     "pretty:fix": "prettier --write ./src",
     "shadcn:update": "npx shadcn-ui@latest add -a -o -y",
     "prepublishOnly": "pnpm build",
-    "pre-commit": "pnpm ds-check --schema --refs --code --source --generated && lint-staged",
+    "pre-commit": "pnpm ds-check --schema --refs --code --source && lint-staged",
     "test": "node --test scripts/build-agent-guidance.test.mjs && vitest --run",
     "test:coverage": "vitest --run --coverage",
     "test:watch": "vitest",

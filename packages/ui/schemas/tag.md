@@ -7,8 +7,7 @@
 > **This file is hand-written judgment only.**
 >
 > Prop names, enum values, defaults, and tokens live in
-> [`tag.manifest.json`](./tag.manifest.json) and are published to
-> [`tag.openapi.json`](./tag.openapi.json), which is **generated**.
+> [`tag.manifest.json`](./tag.manifest.json).
 > Don't copy them here.
 
 ---

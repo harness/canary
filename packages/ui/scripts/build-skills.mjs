@@ -126,10 +126,10 @@ for (const s of registry.skills) {
   write(`${name}/references/pattern.md`, consumer)
   if (maintainer) writeAuthoring(`components/${name}.md`, maintainer)
   write(
-    `${name}/skill.md`,
+    `${name}/SKILL.md`,
     `---\nname: ${name}\ndescription: ${s.description}\n---\n\n# ${s.name}\n\nImport: \`import { ${s.export} } from '${s.import}'\`\n\nRead in this order:\n\n1. [references/props.json](references/props.json): the contract. Props, values, rules. If a prop or value is not here, it does not exist.\n2. [references/pattern.md](references/pattern.md): when to use it, composition, judgment calls.\n\nThen check [../rules.md](../rules.md) before writing code.\n`
   )
-  rows.push(`| [${s.name}](${name}/skill.md) | \`${s.export}\` | ${s.description} |`)
+  rows.push(`| [${s.name}](${name}/SKILL.md) | \`${s.export}\` | ${s.description} |`)
 }
 write(
   'components.md',

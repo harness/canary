@@ -63,6 +63,7 @@ import BarHorizontal from './icons/bar-horizontal.svg'
 import BarVertical from './icons/bar-vertical.svg'
 import BaseImgSolid from './icons/base-img-solid.svg'
 import BaseImg from './icons/base-img.svg'
+import BellCustom from './icons/bell-custom.svg'
 import BellOff from './icons/bell-off.svg'
 import Bell from './icons/bell.svg'
 import Blocks from './icons/blocks.svg'
@@ -605,6 +606,7 @@ export const IconNameMapV2 = {
   'bar-vertical': BarVertical,
   'base-img-solid': BaseImgSolid,
   'base-img': BaseImg,
+  'bell-custom': BellCustom,
   'bell-off': BellOff,
   bell: Bell,
   blocks: Blocks,

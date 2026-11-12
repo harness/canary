@@ -15,7 +15,10 @@ const out = resolve(pkg, '../../skills/designsystem')
 const read = p => readFileSync(join(pkg, p), 'utf8')
 const write = (p, s) => {
   mkdirSync(dirname(join(out, p)), { recursive: true })
-  writeFileSync(join(out, p), s.endsWith('\n') ? s : s + '\n')
+  // Put the generated-file notice after any frontmatter so the frontmatter still parses.
+  const m = s.match(/^---\n[\s\S]*?\n---\n\n?/)
+  const body = m ? m[0] + header + s.slice(m[0].length) : header + s
+  writeFileSync(join(out, p), body.endsWith('\n') ? body : body + '\n')
 }
 const stripFrontmatter = s => s.replace(/^---\n[\s\S]*?\n---\n/, '')
 
@@ -33,21 +36,21 @@ for (const s of registry.skills) {
   cpSync(join(pkg, `schemas/${base}.md`), join(out, name, 'references/pattern.md'))
   write(
     `${name}/skill.md`,
-    `---\nname: ${name}\ndescription: ${s.description}\n---\n\n${header}# ${s.name}\n\nImport: \`import { ${s.export} } from '${s.import}'\`\n\nRead in this order:\n\n1. [references/props.json](references/props.json): the contract. Props, values, rules. If a prop or value is not here, it does not exist.\n2. [references/pattern.md](references/pattern.md): when to use it, composition, judgment calls.\n\nThen check [../rules.md](../rules.md) before writing code.\n`
+    `---\nname: ${name}\ndescription: ${s.description}\n---\n\n# ${s.name}\n\nImport: \`import { ${s.export} } from '${s.import}'\`\n\nRead in this order:\n\n1. [references/props.json](references/props.json): the contract. Props, values, rules. If a prop or value is not here, it does not exist.\n2. [references/pattern.md](references/pattern.md): when to use it, composition, judgment calls.\n\nThen check [../rules.md](../rules.md) before writing code.\n`
   )
   rows.push(`| [${s.name}](${name}/skill.md) | \`${s.export}\` | ${s.description} |`)
 }
 write(
   'components.md',
-  `${header}# Components\n\nIndex of components that have a contract. Open only the one you need. A component not listed has no contract: say so, then read its source.\n\n| Component | Export | Use for |\n| --- | --- | --- |\n${rows.join('\n')}\n\nPage and composition patterns: see [rules.md](rules.md).\n`
+  `# Components\n\nIndex of components that have a contract. Open only the one you need. A component not listed has no contract: say so, then read its source.\n\n| Component | Export | Use for |\n| --- | --- | --- |\n${rows.join('\n')}\n\nPage and composition patterns: see [rules.md](rules.md).\n`
 )
 
 // rules + foundations
 const foundations = readdirSync(join(pkg, 'docs/system')).filter(f => f !== 'shared-rules.md' && f !== 'page-patterns.md')
-for (const f of foundations) write(`foundations/${f}`, header + read(`docs/system/${f}`))
+for (const f of foundations) write(`foundations/${f}`, read(`docs/system/${f}`))
 write(
   'rules.md',
-  `${header}${read('docs/system/shared-rules.md')}\n## Patterns\n\n- [page-layout](patterns/page-layout.md): settings list page\n- [edit-drawer-pattern](patterns/edit-drawer-pattern.md): create/edit drawer\n\n## Foundations\n\n${foundations.map(f => `- [${f.replace(/\.md$/, '')}](foundations/${f})`).join('\n')}\n`
+  `${read('docs/system/shared-rules.md').replace('(`page-patterns.md` and any `*-patterns.md` that follows it)', '(the files in `patterns/`)')}\n## Patterns\n\n- [page-layout](patterns/page-layout.md): settings list page\n- [edit-drawer-pattern](patterns/edit-drawer-pattern.md): create/edit drawer\n\n## Foundations\n\n${foundations.map(f => `- [${f.replace(/\.md$/, '')}](foundations/${f})`).join('\n')}\n`
 )
 
 // patterns: split page-patterns.md on its "## " sections
@@ -59,7 +62,7 @@ const pick = title => {
 }
 const intro = sections[0].trim()
 const tail = 'Both patterns inherit everything in [rules.md](../rules.md).\n'
-write('patterns/page-layout.md', `${header}${intro}\n\n${pick('Settings list page')}\n${tail}`)
-write('patterns/edit-drawer-pattern.md', `${header}${intro}\n\n${pick('Create / edit drawer')}\n${tail}`)
+write('patterns/page-layout.md', `${intro}\n\n${pick('Settings list page')}\n${tail}`)
+write('patterns/edit-drawer-pattern.md', `${intro}\n\n${pick('Create / edit drawer')}\n${tail}`)
 
 console.log(`skills/designsystem built: ${registry.skills.length} components`)

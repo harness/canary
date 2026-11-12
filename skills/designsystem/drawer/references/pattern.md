@@ -54,8 +54,7 @@ judgment calls around it.
 
 - **Do not set width, padding, or background through `className` or `style`.**
   `w-[480px]` or `p-4` on `Drawer.Content` breaks the stack animation and drifts from the
-  tokens. The same holds for `Drawer.Root`, `Header`, `Body` and `Footer`; the
-  `drawer-parts-unstyled` check enforces it.
+  tokens. The same holds for `Drawer.Root`, `Header`, `Body` and `Footer`.
 - **Do not put actions in the body.** A submit button that scrolls away with the form is
   easy to miss; the footer stays pinned.
 - **Do not add a second close button.** The header already has one.
@@ -64,11 +63,6 @@ judgment calls around it.
 
 ## Known gaps
 
-See `knownGaps` in the manifest (DRW-002 to DRW-004). The two that matter most for agents:
-
-- **DRW-002:** only `Drawer.Content`'s props are machine-checked. For `Root`, `Header`,
-  `Body`, and `Footer`, read `composition` in the manifest and the shipped
-  `dist/components.d.ts`.
 - **DRW-004:** nothing enforces one primary button in the footer. Follow the convention.
 
 ## Consumer conventions

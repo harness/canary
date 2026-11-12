@@ -69,6 +69,7 @@
     "ds-check:refs": "tsx scripts/ds-check.ts --refs",
     "ds-check:code": "tsx scripts/ds-check.ts --code",
     "ds-check:consumer": "tsx scripts/ds-consumer-check.ts",
+    "skills:build": "node scripts/build-skills.mjs",
     "guidance:build": "node scripts/build-agent-guidance.mjs",
     "prepack": "node scripts/build-agent-guidance.mjs"
   },

@@ -32,7 +32,8 @@
     "./yaml-output": "./dist/yaml-output.js",
     "./docs/system/*": "./docs/system/*",
     "./schemas/registry.json": "./schemas/registry.json",
-    "./schemas/*": "./schemas/*"
+    "./schemas/*": "./schemas/*",
+    "./agent/manifest.json": "./agent/manifest.json"
   },
   "files": [
     "dist",
@@ -40,7 +41,8 @@
     "src/components/markdown-viewer/style.css",
     ".claude/skills",
     "docs/system",
-    "schemas"
+    "schemas",
+    "agent"
   ],
   "scripts": {
     "dev": "vite",
@@ -54,7 +56,7 @@
     "shadcn:update": "npx shadcn-ui@latest add -a -o -y",
     "prepublishOnly": "pnpm build",
     "pre-commit": "pnpm ds-check --schema --refs --code --source --generated && lint-staged",
-    "test": "vitest --run",
+    "test": "node --test scripts/build-agent-guidance.test.mjs && vitest --run",
     "test:coverage": "vitest --run --coverage",
     "test:watch": "vitest",
     "test:changed": "vitest --run --changed=origin/main",
@@ -66,7 +68,9 @@
     "ds-check:schema": "tsx scripts/ds-check.ts --schema",
     "ds-check:refs": "tsx scripts/ds-check.ts --refs",
     "ds-check:code": "tsx scripts/ds-check.ts --code",
-    "ds-check:consumer": "tsx scripts/ds-consumer-check.ts"
+    "ds-check:consumer": "tsx scripts/ds-consumer-check.ts",
+    "guidance:build": "node scripts/build-agent-guidance.mjs",
+    "prepack": "node scripts/build-agent-guidance.mjs"
   },
   "types": "./dist/index.d.ts",
   "style": "./dist/styles.css",
@@ -185,9 +189,12 @@
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-router-dom": "^6.26.0",
+    "remark-mdx": "3.1.0",
+    "remark-parse": "11.0.0",
     "rimraf": "^6.0.1",
     "svgo": "^3.3.2",
     "tailwindcss": "^3.4.14",
+    "unified": "11.0.5",
     "vite": "^6.1.1",
     "vite-bundle-analyzer": "^0.17.1",
     "vite-plugin-dts": "^4.5.0",

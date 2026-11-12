@@ -39,7 +39,6 @@
     "dist",
     "src/shared-style-variables.css",
     "src/components/markdown-viewer/style.css",
-    ".claude/skills",
     "docs/system",
     "schemas",
     "agent"

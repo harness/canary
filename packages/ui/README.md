@@ -27,8 +27,7 @@ Props, allowed values, defaults and tokens are defined per component, not in thi
 - `schemas/{component}.md` — when to use the component, when not to, known gaps
 - `docs/system/*.md` — cross-cutting design rules
 
-AI agents should start at `.claude/skills/design-system/SKILL.md`, which routes to these in
-priority order.
+AI agents should start at `skills/designsystem/components.md` and `skills/designsystem/rules.md`.
 
 ## Packaged documentation
 

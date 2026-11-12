@@ -2,8 +2,8 @@
 
 Page-level patterns compose existing components. They add no new components and no new
 tokens. Every name below is a real export from `@harnessio/ui/components`; check its props in
-the manifest (`schemas/{component}.manifest.json`) where one exists, otherwise in
-`dist/components.d.ts`.
+the component's `references/props.json` where one exists, otherwise in the installed
+package's `dist/components.d.ts`.
 
 Labels, copy, routing, and data fetching are the consuming app's decision. This file fixes
 structure and components, not wording.

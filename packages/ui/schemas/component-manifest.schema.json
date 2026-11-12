@@ -341,7 +341,7 @@
           "type": "array",
           "items": { "type": "string" },
           "minItems": 1,
-          "description": "Array of relative paths to shared system rules and component-specific pattern markdown files. Order matters: system rules first (accessibility, color-system, interaction-states, visual-primitives), then component-specific pattern rules. Architecture decisions (do's/do-nots), decision framework (SBD-001...), and known gaps live in these docs, not in the manifest."
+          "description": "Array of relative paths to shared system rules and component-specific pattern markdown files. Order matters: system rules first (accessibility, color-system, visual-primitives), then component-specific pattern rules. Architecture decisions (do's/do-nots), decision framework (SBD-001...), and known gaps live in these docs, not in the manifest."
         },
         "rulesDoc": {
           "type": "string",

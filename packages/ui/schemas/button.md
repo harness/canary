@@ -334,8 +334,7 @@ change.
 - **Manifest (authored):** [`button.manifest.json`](./button.manifest.json)
 - **OpenAPI spec (generated):** [`button.openapi.json`](./button.openapi.json)
 - **Related components:** `SplitButton`, `ButtonGroup`, `ButtonLayout`, `Link`, `Toggle`
-- **System rules:** `docs/system/` — see `component-architecture.md`, which uses `ButtonProps`
-  as the reference example for encoding invalid prop combinations in the type
+- **System rules:** `docs/system/`
 
 ---
 

@@ -30,7 +30,7 @@ Global spacing rules. Everything derives from a **4px base unit**.
 
 **Why:** The alias layer is the stable contract. The underlying numeric scale (`spacing.0`–`spacing.96`, plus `-half` steps) is a complete 4px ramp with far more steps than any layout needs — picking from it directly reintroduces the inconsistency the scale was meant to remove.
 
-**Note:** The full numeric scale exists for *token authoring* (defining a new component's internal metrics), not for application-level layout.
+**Note:** Don't use the numeric scale for application layout; use the aliases.
 
 ---
 

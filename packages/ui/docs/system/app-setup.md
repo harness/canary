@@ -57,25 +57,18 @@ loaded on demand. `light` and `dark` are aliases of the two bundled defaults. Tr
 
 ## 3. The package applies neither class
 
-`ThemeProvider` (`src/context/theme/theme-context.tsx`) is **React context only** — it
+`ThemeProvider` is **React context only** — it
 exposes `theme`, `setTheme` and `isLightTheme`, and writes nothing to the DOM. There is no
 component in this package that puts a theme class or `cn-root` on an element for you.
 
 > There is no `ThemeRoot` export. If you have seen one named in a snippet, it belongs to
 > something built on top of this package, not to `@harnessio/ui`.
 
-Both shipping consumers wire it by hand, and they do it at different levels:
-
-- **canary's own design-system app** — theme class on `document.body`, `cn-root` on a
-  wrapper `div` (`apps/design-system/src/pages/view-preview/view-preview.tsx`).
-- **platformUI** — theme class on `<html>` via its own `@harnessio/ui3-theme`, `cn-root` on
-  the MFE root `div`.
-
-Either level works. What matters is that `cn-root` is an ancestor of the components and a
+Apps wire it by hand, at either of two levels: the theme class on `<html>` or `document.body`, and `cn-root` on a wrapper `div` at the app root. Either level works. What matters is that `cn-root` is an ancestor of the components and a
 theme class is an ancestor of `cn-root` or on the same element.
 
 Also wrap the tree in `TooltipProvider` (inside the themed subtree). Tooltips are built on
-Radix and need a provider ancestor; canary's own app does this in `App.tsx`.
+Radix and need a provider ancestor.
 
 ---
 

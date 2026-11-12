@@ -36,7 +36,7 @@ Global accessibility rules sourced from WCAG 2.2 and WAI-ARIA Authoring Practice
 
 ## Disabled elements are exempt from contrast requirements
 
-**Rule:** Disabled/inactive controls don't need to meet the 3:1 contrast ratio. Using `opacity: 0.6` on a disabled element is WCAG-compliant by exemption.
+**Rule:** Disabled/inactive controls don't need to meet the 3:1 contrast ratio. All disabled/inactive elements use the single shared opacity token `opacity.60`; don't create per-component disabled opacity values. Using it is WCAG-compliant by exemption.
 
 **Why:** WCAG 2.2 SC 1.4.11 (Non-text Contrast)
 
@@ -47,7 +47,6 @@ Global accessibility rules sourced from WCAG 2.2 and WAI-ARIA Authoring Practice
 **Rule:** Keyboard focus must have a visible indicator. Harness uses a defined focus ring token (`border.brand` + `borderWidth.2`). Don't build custom outlines — use the system token so focus stays consistent.
 
 **Why:** WCAG 2.2 SC 2.4.7 (Focus Visible)  
-**Note:** The focus ring's contrast ratio (3:1 against adjacent background) hasn't been independently verified — treat as an open verification item.
 
 ---
 

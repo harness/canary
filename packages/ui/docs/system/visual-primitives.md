@@ -25,15 +25,10 @@ Review) may use `info`, `risk`, `merged` — these are NOT global rules and belo
 product-specific guidance (domain rules). Don't assume they're available in all Harness
 contexts. `merged` is the purple used for merged-state indicators.
 
-**Which product colors are actually exercised** (platformUI consumer telemetry, point-in-time
-late 2026 — a usage hint, not verifiable from this repo): `info` is widely used (~95+ call
-sites); `risk` has no call sites yet. Useful when judging which product colors to lean on,
-but confirm current usage before treating either as settled.
-
 **Why:** Keeps the global component lean; product-specific enums belong in domain-specific
 rules.
 
-**What the component actually accepts** (`src/components/icon-v2/icon-v2.tsx`, the
+**What the component actually accepts** (the
 authoritative list — the rule above is governance, not a technical limit):
 `inherit`, `danger`, `warning`, `success`, `info`, `neutral`, `merged`, `risk`.
 `neutral` renders via the `text-cn-disabled` class.
@@ -44,7 +39,7 @@ color `disabled` — the two components disagree on the name for one token. Know
 inconsistency, deliberately left alone for now; reach for `neutral` on icons and `disabled`
 on text.
 
-Because of that, `tag.tsx` greys a disabled icon by passing `className` rather than the
+Because of that, `Tag` greys a disabled icon by passing `className` rather than the
 `color` prop. Follow the existing pattern in a component rather than assuming
 `color="disabled"` exists.
 
@@ -105,4 +100,4 @@ want an `iconName` string. Don't guess which.
 
 - **Accessibility** — Rules for icon-only buttons, accessible names, decorative-vs-interactive graphics
 - **Color System** — Semantic color tokens
-- For component-specific details (sizing, API, fallback behavior, naming patterns), see the component documentation (icon.mdx, logo.mdx, illustration.mdx)
+- For component-specific details (sizing, API, fallback behavior, naming patterns), see the component documentation

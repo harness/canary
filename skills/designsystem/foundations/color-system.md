@@ -7,14 +7,6 @@ description: Semantic color tokens, color sets, and light/dark theme mapping
 
 Global color token rules sourced from the Harness design-token architecture (LCH primitives + semantic aliases).
 
-## LCH is the source of truth; hex is a fallback only
-
-**Rule:** All colors are authored in LCH (Lightness, Chroma, Hue), not hex. Hex exists only as a fallback for tooling/exports. Always derive new colors in LCH or reuse an existing token — never author hex as canonical.
-
-**Why:** LCH separates perceptual lightness from hue, making color changes predictable and theme-safe.
-
----
-
 ## Use semantic tokens, never raw primitives
 
 **Rule:** Don't use `gray.500`, `lime.700`, or other raw primitives directly. Always use a semantic token like `bg.0`, `text.1`, `border.2`, or a color set (`success-primary`, etc.). Semantic tokens resolve per theme (light/dark), so hardcoding a primitive breaks theme switching.
@@ -73,24 +65,15 @@ Note: `text.2` and `border.2` are unrelated despite sharing a number.
 
 ---
 
-## Interactive-state overlays use LCH alpha modifiers
+## Hover and selected states use alpha overlays, not flat colors
 
-**Rule:** Hover and selected states use alpha modifiers (e.g., `gray.850` @ 20% opacity), not flat standalone colors. Use Token Studio's `$extensions` to define these in LCH, so they scale across themes (dimmer, high-contrast, etc.) consistently.
+**Rule:** Hover and selected backgrounds use alpha modifiers (e.g., `gray.850` @ 20% opacity) applied to existing tokens, not flat standalone colors. Don't create a separate flat color per theme (for example `bg-hover-light` and `bg-hover-dark`).
 
 **Why:** Allows a single rule to drive all themes instead of maintaining separate flat colors per theme.
-
----
-
-## Known gaps & verifications needed
-
-**Contrast verification:** Color sets claim to be pre-verified for WCAG 4.5:1 (normal) / 3:1 (large), but this hasn't been independently spot-checked in this review. Treat as an open verification item.
-
-**Hex-vs-LCH drift:** The contrast-checking tool reads the hex fallback, not the LCH values actually rendered. `colors_lch.json` and `colors_hex.json` are maintained in parallel by hand — they can drift, so a reported contrast number may not match what's rendered. See the token documentation for conversion details.
 
 ---
 
 ## Cross-references
 
 - **Accessibility** — Contrast requirements, status-color usage rules
-- **Interaction States** — Alpha modifiers for hover/selected
 - **Visual Primitives** — Color roles for icons, logos

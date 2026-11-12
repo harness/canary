@@ -2,8 +2,8 @@
 
 Page-level patterns compose existing components. They add no new components and no new
 tokens. Every name below is a real export from `@harnessio/ui/components`; check its props in
-the manifest (`schemas/{component}.manifest.json`) where one exists, otherwise in
-`dist/components.d.ts`.
+the component's `references/props.json` where one exists, otherwise in the installed
+package's `dist/components.d.ts`.
 
 Labels, copy, routing, and data fetching are the consuming app's decision. This file fixes
 structure and components, not wording.
@@ -16,8 +16,8 @@ multi-step flow.
 
 **Anatomy:** the drawer always has these four parts, in this order (the `drawer-complete` check: a
 file that builds `Drawer.Root` must also build `Drawer.Content`, `Drawer.Header`,
-`Drawer.Body` and `Drawer.Footer`). Contract details are in `schemas/drawer.manifest.json` and
-`schemas/drawer.md`.
+`Drawer.Body` and `Drawer.Footer`). Contract details are in `drawer/references/props.json` and
+`drawer/references/pattern.md`.
 
 1. `Drawer.Root` — controlled with `open` and `onOpenChange`. Opens from the right by default;
    do not change `direction` for a form drawer.

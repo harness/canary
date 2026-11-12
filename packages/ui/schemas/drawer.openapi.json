@@ -153,8 +153,7 @@
       "docs/system/page-patterns.md",
       "docs/system/spacing.md",
       "docs/system/accessibility.md",
-      "docs/system/app-setup.md",
-      "docs/system/component-architecture.md"
+      "docs/system/app-setup.md"
     ],
     "componentRules": ["schemas/drawer.md"]
   },

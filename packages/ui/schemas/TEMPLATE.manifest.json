@@ -52,7 +52,6 @@
     "rulesDocs": [
       "docs/system/accessibility.md",
       "docs/system/color-system.md",
-      "docs/system/interaction-states.md",
       "docs/system/visual-primitives.md",
       "schemas/{component}.md"
     ],

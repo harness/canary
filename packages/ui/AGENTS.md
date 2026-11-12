@@ -86,7 +86,6 @@ Not required for basic skill usage; use only if Figma Make needs automation.
 3. **System rules:** `docs/system/` (published with @harnessio/ui package)
    - `accessibility.md` — WCAG rules, accessible names, decorative vs interactive
    - `color-system.md` — Semantic tokens, color sets, theme-switching
-   - `interaction-states.md` — Disabled, focus, hover/selected states
    - `visual-primitives.md` — Icon/logo/illustration decisions (when to use each)
 
 4. **Component-specific patterns:** `{component-name}.md` (e.g., `button.md`, `status-badge.md`)
@@ -126,7 +125,6 @@ File: packages/ui/schemas/button.manifest.json
     "rulesDocs": [
       "docs/system/accessibility.md",
       "docs/system/color-system.md",
-      "docs/system/interaction-states.md",
       "schemas/button.md"
     ]
   }

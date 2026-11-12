@@ -304,11 +304,9 @@
     "rulesDocs": [
       "docs/system/accessibility.md",
       "docs/system/color-system.md",
-      "docs/system/interaction-states.md",
       "docs/system/visual-primitives.md",
       "docs/system/typography.md",
       "docs/system/spacing.md",
-      "docs/system/component-architecture.md",
       "docs/system/design-to-code-flow.md",
       "schemas/tag.md"
     ],

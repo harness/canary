@@ -157,11 +157,6 @@
       "applies-to": ["all"]
     },
     {
-      "path": "docs/system/interaction-states.md",
-      "title": "Interaction States",
-      "applies-to": ["all"]
-    },
-    {
       "path": "docs/system/visual-primitives.md",
       "title": "Visual Primitives",
       "applies-to": ["all"]
@@ -179,11 +174,6 @@
     {
       "path": "docs/system/shadows.md",
       "title": "Shadows & Elevation",
-      "applies-to": ["all"]
-    },
-    {
-      "path": "docs/system/component-architecture.md",
-      "title": "Component Architecture",
       "applies-to": ["all"]
     },
     {

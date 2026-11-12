@@ -140,7 +140,6 @@
       "docs/system/spacing.md",
       "docs/system/accessibility.md",
       "docs/system/app-setup.md",
-      "docs/system/component-architecture.md",
       "schemas/drawer.md"
     ],
     "tokenStatus": "Width refs record the --cn-drawer-{size} variables the cn-drawer-content-{size} classes read. --cn-drawer-full is 100%. Colours, padding and borders come from the cn-drawer-* classes and are not set by any prop"

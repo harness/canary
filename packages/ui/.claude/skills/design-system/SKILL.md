@@ -18,10 +18,10 @@ them with `packages/ui/`.
 | Registry | `schemas/registry.json` | Which components exist as contracts; where each one's files are |
 | Manifest | `schemas/{component}.manifest.json` | The real props, allowed values, defaults, tokens, import path |
 | Pattern doc | `schemas/{component}.md` | When to use this component, when not to, known gaps |
-| System rules | `docs/system/*.md` | Cross-cutting rules (12 files, listed below) |
+| System rules | `docs/system/*.md` | Cross-cutting rules (10 files, listed below) |
 
 `docs/system/` contains: `accessibility.md`, `app-setup.md`, `color-system.md`,
-`component-architecture.md`, `design-to-code-flow.md`, `interaction-states.md`,
+`design-to-code-flow.md`,
 `page-patterns.md`, `shadows.md`, `shared-rules.md`, `spacing.md`, `typography.md`, `visual-primitives.md`.
 
 ## Workflow

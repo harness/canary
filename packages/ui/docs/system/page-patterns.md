@@ -138,5 +138,4 @@ from the button's `onClick`.
 Both patterns inherit everything in `shared-rules.md`: public imports only, no color
 literals, palette colors, arbitrary values or inline `style`, no raw form, table or button
 elements, and only real `cn-*` classes. They add no styling rules of their own. The checks
-named in this file's frontmatter run alongside the shared ones; `pnpm ds-check:consumer <dir>`
-reports each by name.
+named in this file's frontmatter apply alongside the shared ones.

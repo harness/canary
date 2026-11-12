@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useState } from 'react'
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { AnimatePresence, motion, Variants } from 'framer-motion'
 
 import { useContainerNodeContext } from '../../context/container-node-provider'
@@ -66,7 +66,8 @@ export default function ParallelNodeContainer(props: ContainerNodeProps<Parallel
 
   const myLevel = level + 1
 
-  const { isCollapsed, collapse, rerender, setShowSvg, isMounted } = useGraphContext()
+  const { isCollapsed, collapse, rerender, setShowSvg } = useGraphContext()
+  const isMounted = useRef(false)
   const collapsed = useMemo(() => isCollapsed(props.node.path!), [isCollapsed, props.node.path])
   const setCollapsed = useMemo(
     () => (collapsed: boolean) => {

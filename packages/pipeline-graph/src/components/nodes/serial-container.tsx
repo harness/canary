@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useState } from 'react'
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 
 import { AnimatePresence, motion, Variants } from 'framer-motion'
 import { useContainerNodeContext } from '../../context/container-node-provider'
@@ -66,7 +66,8 @@ export default function SerialNodeContainer(props: ContainerNodeProps<SerialNode
 
   const myLevel = level + 1
 
-  const { isCollapsed, collapse, setShowSvg, rerender, isMounted } = useGraphContext()
+  const { isCollapsed, collapse, setShowSvg, rerender } = useGraphContext()
+  const isMounted = useRef(false)
   const collapsed = useMemo(() => isCollapsed(props.node.path!), [isCollapsed, props.node.path])
 
   const [localCollapsed, setLocalCollapsed] = useState(collapsed)
@@ -90,8 +91,6 @@ export default function SerialNodeContainer(props: ContainerNodeProps<SerialNode
   }, [collapsed])
 
   const handleCollaspeLocalState = useCallback((collapsed: boolean) => {
-    setShowSvg(false)
-
     if (!collapsed) {
       setCollapsed(false)
     }
@@ -231,6 +230,7 @@ export default function SerialNodeContainer(props: ContainerNodeProps<SerialNode
               exit="exit"
               initial={!isMounted.current ? false : "hidden"}
               variants={containerVariants}
+              onAnimationStart={() => setShowSvg(false)}
               onAnimationComplete={handleAnimationComplete}
               style={{
                 transformOrigin: 'top left',

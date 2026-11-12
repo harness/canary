@@ -15,7 +15,6 @@ interface GraphContextProps {
   // rerenderConnections increments when when we call rerender
   rerenderConnections: number
   setShowSvg: (show: boolean) => void
-  isMounted: React.MutableRefObject<boolean>
 }
 
 const GraphContext = createContext<GraphContextProps>({
@@ -29,7 +28,6 @@ const GraphContext = createContext<GraphContextProps>({
   nodeToRemove: null,
   rerender: () => undefined,
   setShowSvg: (_show: boolean) => undefined,
-  isMounted: { current: false }
 })
 
 export interface GraphProviderProps {
@@ -53,7 +51,6 @@ const GraphProvider = ({
   const collapsedRef = useRef(collapsed)
   collapsedRef.current = collapsed
 
-  const isMounted = useRef(false)
 
   useEffect(() => {
     setRerenderConnections(prev => prev + 1)
@@ -135,7 +132,6 @@ const GraphProvider = ({
         // rerender connections
         rerender,
         setShowSvg,
-        isMounted,
       }}
     >
       {children}

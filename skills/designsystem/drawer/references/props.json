@@ -1,27 +1,10 @@
 {
-  "$schema": "https://your-org.com/schemas/component-manifest-v1.json",
   "id": "canary.drawer",
-  "status": "stable",
   "code": {
     "package": "@harnessio/ui",
     "export": "Drawer",
     "import": "import { Drawer } from '@harnessio/ui/components'",
     "path": "packages/ui/src/components/drawer/DrawerContent.tsx"
-  },
-  "purpose": {
-    "summary": "Side panel that slides over the page to create, edit, or inspect one entity without leaving the current view",
-    "useWhen": [
-      "The user creates or edits one entity from a list page — the create/edit drawer in docs/system/page-patterns.md",
-      "The user inspects details of a row while keeping the list visible behind the panel",
-      "A secondary task needs more room than a dialog but should not replace the page",
-      "A task inside a drawer opens a further step — drawers nest and stack (see Drawer.Root maxStackDepth)"
-    ],
-    "doNotUseWhen": [
-      "The user confirms or cancels a single decision — use Dialog (AlertDialog for destructive actions)",
-      "The flow has several pages or needs its own URL and back-button history — use a page",
-      "The content is a hint attached to one control — use Tooltip or Popover",
-      "You need a panel that stays open while the user works in the page behind it — a drawer is modal by default"
-    ]
   },
   "props": {
     "shared": [],
@@ -40,7 +23,7 @@
         ],
         "default": "sm",
         "trigger": "appearance-override",
-        "notes": "Drawer.Content only. Width of a left/right drawer, from the --cn-drawer-{size} tokens. Use 'sm' or 'md' for a form; 'lg' and above only when the body holds a table or side-by-side content. Never set a width through className — size is the only sanctioned width control."
+        "notes": "Drawer.Content only."
       },
       {
         "name": "direction",
@@ -53,27 +36,27 @@
         ],
         "default": "right",
         "trigger": "appearance-override",
-        "notes": "Set on Drawer.Root, not on Drawer.Content: Content reads it from context and applies the matching cn-drawer-content-{direction} class. Keep the default 'right' for create/edit drawers so every drawer in the product opens from the same edge."
+        "notes": "Set on Drawer.Root, not on Drawer.Content: Content reads it from context and applies the matching cn-drawer-content-{direction} class."
       },
       {
         "name": "overlayClassName",
         "type": "string",
         "trigger": "appearance-override",
-        "notes": "Drawer.Content only. Class merged onto the overlay behind the panel. An escape hatch; a form drawer does not need it."
+        "notes": "Drawer.Content only."
       },
       {
         "name": "forceWithOverlay",
         "type": "boolean",
         "default": "false",
         "trigger": "appearance-override",
-        "notes": "Drawer.Content only. Renders the overlay even when the drawer is non-modal (Drawer.Root modal={false}). Has no effect on a modal drawer, which always has one."
+        "notes": "Drawer.Content only."
       },
       {
         "name": "staticStackWidth",
         "type": "boolean",
         "default": "false",
         "trigger": "appearance-override",
-        "notes": "Drawer.Content only. When a nested drawer opens on top, this drawer keeps its declared width instead of being pushed and resized by the stack animation."
+        "notes": "Drawer.Content only."
       }
     ]
   },
@@ -86,7 +69,7 @@
       ],
       "cardinality": "one",
       "required": true,
-      "notes": "Outermost wrapper (wraps vaul). Control it with open and onOpenChange. Also takes direction (default 'right'), modal, and maxStackDepth (default DEFAULT_MAX_STACK_DEPTH, 7) for nested drawers. Renders no DOM of its own."
+      "notes": "Outermost wrapper (wraps vaul)."
     },
     {
       "slot": "Drawer.Content",
@@ -97,7 +80,7 @@
       ],
       "cardinality": "one",
       "required": true,
-      "notes": "The panel itself (root class cn-drawer-content). Portals into the cn-root host, renders the overlay, and owns size. Children go in the order Header, Body, Footer."
+      "notes": "The panel itself (root class cn-drawer-content)."
     },
     {
       "slot": "Drawer.Header",
@@ -106,7 +89,7 @@
       ],
       "cardinality": "one",
       "required": true,
-      "notes": "Pass title (and optionally description, tagline, icon, actions, tabs, isLoading) to get the structured header, which includes the close button. hideClose removes it — only do that when the footer offers another way out. The older composition form (Drawer.Title / Drawer.Tagline / Drawer.Description as children) still works; prefer the title prop in new code. Drawer.HeaderV2 is deprecated."
+      "notes": "Pass title (and optionally description, tagline, icon, actions, tabs, isLoading) to get the structured header, which includes the close button."
     },
     {
       "slot": "Drawer.Body",
@@ -115,7 +98,7 @@
       ],
       "cardinality": "one",
       "required": true,
-      "notes": "Scrollable content area (ScrollArea; set scrollable={false} to opt out). Holds the form: FormWrapper around Layout.Vertical gap='lg' of FormInput fields. Owns its padding — do not add padding utilities inside it."
+      "notes": "Scrollable content area (ScrollArea; set scrollable={false} to opt out)."
     },
     {
       "slot": "Drawer.Footer",
@@ -124,7 +107,7 @@
       ],
       "cardinality": "zero-or-one",
       "required": false,
-      "notes": "Plain div with class cn-drawer-footer, pinned below the body. Put the actions in a ButtonLayout with exactly one primary Button. Omit the footer for a read-only details drawer."
+      "notes": "Plain div with class cn-drawer-footer, pinned below the body."
     }
   ],
   "tokens": {
@@ -139,45 +122,5 @@
       "size.xl": "drawer.xl",
       "size.full": "drawer.full"
     }
-  },
-  "accessibility": {
-    "role": "dialog",
-    "keyboardSupport": [
-      "Escape closes the drawer",
-      "Focus moves into the drawer when it opens and is trapped there while it is modal",
-      "Focus returns to the trigger when it closes",
-      "The header close button is reachable with Tab"
-    ],
-    "notes": "The drawer is announced as a dialog named by its title, so every drawer needs a title — the structured header takes it as the title prop. With no description the header renders a visually hidden 'No description available' so the dialog still has a description reference; pass a real description when one helps. Do not remove the close button (hideClose) unless the footer has another way to dismiss."
-  },
-  "states": [],
-  "governance": {
-    "rulesDocs": [
-      "../../foundations/page-patterns.md",
-      "../../foundations/spacing.md",
-      "../../foundations/accessibility.md",
-      "../../foundations/app-setup.md",
-      "pattern.md"
-    ],
-    "tokenStatus": "Width refs record the --cn-drawer-{size} variables the cn-drawer-content-{size} classes read. --cn-drawer-full is 100%. Colours, padding and borders come from the cn-drawer-* classes and are not set by any prop"
-  },
-  "knownGaps": [
-    "DRW-002: ds-check --source reads one file, so this manifest's props are Drawer.Content's (plus direction, which Content applies from Root's context). Root, Header, Body and Footer props are described in composition, not checked prop-by-prop",
-    "DRW-003: Drawer.Header has two APIs — the structured title prop and the older Title/Tagline/Description children. Passing title selects the structured mode; nothing in the type stops a caller also passing Title/Tagline/Description children. Pick one mode per header",
-    "DRW-004: Drawer.Footer is a plain div with no action API, so nothing enforces one primary button or a consistent order. ButtonLayout inside it is the convention, not a constraint"
-  ],
-  "examples": {
-    "correct": [
-      "<Drawer.Root open={open} onOpenChange={setOpen}><Drawer.Content size='md'><Drawer.Header title='Create flag set' /><Drawer.Body><FormWrapper {...form}><Layout.Vertical gap='lg'><FormInput.Text name='name' label='Name' /></Layout.Vertical></FormWrapper></Drawer.Body><Drawer.Footer><ButtonLayout><Button variant='primary' type='submit'>Create</Button></ButtonLayout></Drawer.Footer></Drawer.Content></Drawer.Root>",
-      "<Drawer.Root open={open} onOpenChange={setOpen}><Drawer.Content><Drawer.Header title='Flag set details' description='Read-only' /><Drawer.Body>...</Drawer.Body></Drawer.Content></Drawer.Root>",
-      "<Drawer.Root direction='right' open={open} onOpenChange={setOpen}><Drawer.Content size='sm'>...</Drawer.Content></Drawer.Root>"
-    ],
-    "incorrect": [
-      "<Drawer.Content className='w-[480px]'>...</Drawer.Content>",
-      "<Drawer.Content><div className='p-4 bg-white'>...</div></Drawer.Content>",
-      "<Drawer.Header title='Create flag set'><Drawer.Title>Create flag set</Drawer.Title></Drawer.Header>",
-      "<Drawer.Footer><Button variant='primary'>Save</Button><Button variant='primary'>Save and close</Button></Drawer.Footer>",
-      "<Drawer.Content size='xl'><Drawer.Body><FormInput.Text name='name' label='Name' /></Drawer.Body></Drawer.Content>"
-    ]
   }
 }

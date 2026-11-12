@@ -1,25 +1,10 @@
 {
-  "$schema": "https://your-org.com/schemas/component-manifest-v1.json",
   "id": "canary.status-badge",
-  "status": "stable",
   "code": {
     "package": "@harnessio/ui",
     "export": "StatusBadge",
     "import": "import { StatusBadge } from '@harnessio/ui/components'",
     "path": "packages/ui/src/components/status-badge/status-badge.tsx"
-  },
-  "purpose": {
-    "summary": "Display a status indicator with a semantic theme (muted, success, warning, danger, info, merged, risk) and optional pulse animation on the 'status' variant",
-    "useWhen": [
-      "Communicating the state of a system, process, or entity (active, pending, error, warning)",
-      "Labeling a status alongside other metadata in tables, lists, or cards",
-      "Showing pulse animation for real-time status (e.g., 'currently processing')"
-    ],
-    "doNotUseWhen": [
-      "Showing count badges (use CounterBadge instead)",
-      "Displaying actionable tags or filters (use Tag component)",
-      "Showing progress or completion percentage (use Progress component)"
-    ]
   },
   "props": {
     "shared": [
@@ -34,7 +19,7 @@
           "status"
         ],
         "default": "outline",
-        "codeNote": "Component style variant. Defaults to 'outline' when omitted; pass another only when the design calls for it. 'status' (dot plus label) is the only variant that takes pulse, and the only one that cannot take an icon."
+        "codeNote": "Component style variant."
       },
       {
         "name": "theme",
@@ -78,7 +63,7 @@
             "status"
           ]
         },
-        "notes": "Optional IconV2 name (a key of IconNameMapV2). Agents must supply the name explicitly."
+        "notes": "Optional IconV2 name (a key of IconNameMapV2)."
       },
       {
         "name": "pulse",
@@ -89,7 +74,7 @@
             "status"
           ]
         },
-        "notes": "Animates the status indicator dot (CSS animate-pulse). Requires variant='status'; the discriminated union types it as never on every other variant."
+        "notes": "Animates the status indicator dot (CSS animate-pulse)."
       },
       {
         "name": "className",
@@ -119,53 +104,5 @@
       "size.md": "badge.size.md",
       "animation.pulse": "animation.pulse"
     }
-  },
-  "accessibility": {
-    "notes": "Badge is a passive status indicator; not interactive. It renders a plain div with no ARIA role, so it is not a live region and changes are not announced. Text is the only carrier of meaning. Icon (if present) should be decorative (aria-hidden)."
-  },
-  "states": [
-    {
-      "name": "base",
-      "triggeredBy": {
-        "source": "interaction",
-        "ref": "none"
-      },
-      "description": "Default badge appearance"
-    },
-    {
-      "name": "pulse",
-      "triggeredBy": {
-        "source": "prop",
-        "ref": "pulse"
-      },
-      "description": "Animated pulse on status indicator dot (variant='status' only)"
-    }
-  ],
-  "governance": {
-    "rulesDocs": [
-      "../../foundations/accessibility.md",
-      "../../foundations/color-system.md",
-      "../../foundations/visual-primitives.md",
-      "../../foundations/typography.md",
-      "../../foundations/spacing.md",
-      "../../foundations/shadows.md",
-      "../../foundations/design-to-code-flow.md",
-      "pattern.md"
-    ],
-    "tokenStatus": "All theme and animation color refs recorded and verified; size tokens pending audit"
-  },
-  "knownGaps": [
-    "No built-in close/dismiss action (use wrapper component if needed)"
-  ],
-  "examples": {
-    "correct": [
-      "<StatusBadge variant='status' theme='success' pulse>Active</StatusBadge>",
-      "<StatusBadge theme='warning' icon='warning-circle'>Attention needed</StatusBadge>",
-      "<StatusBadge variant='secondary' theme='muted'>Draft</StatusBadge>"
-    ],
-    "incorrect": [
-      "<StatusBadge variant='outline' pulse>Pulse is only allowed on variant='status' (rejected by the type)</StatusBadge>",
-      "<StatusBadge onClick={() => {}}>Status badges are not interactive</StatusBadge>"
-    ]
   }
 }

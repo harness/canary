@@ -51,44 +51,33 @@ function consumerPattern(doc) {
       .replace('`docs/system/visual-primitives.md`', '`foundations/visual-primitives.md`')
   return fix(trimRule(consumerHead + secs.join('')))
 }
-// props.json is the manifest minus the Figma side (figma, bindings, props.designOnly, figmaNote),
-// with rulesDocs paths rewritten to resolve inside this package.
-function toProps(json, base) {
-  const m = JSON.parse(rewriteRulesDocs(json, base))
-  delete m.figma
-  delete m.bindings
-  if (m.props) delete m.props.designOnly
-  const FIG = /figma|code connect/i
-  if (m.knownGaps) m.knownGaps = m.knownGaps.filter(g => !FIG.test(g))
-  const strip = o => {
-    if (Array.isArray(o)) o.forEach(strip)
+// props.json is the lean contract: id, code, props, composition, tokens. Everything else
+// (purpose, accessibility, states, gaps, examples, governance) lives in pattern.md or stays
+// internal. Per-prop and per-slot notes are cut to their first sentence; Figma wording is dropped.
+const FIG = /figma|code connect/i
+const firstSentence = t => {
+  const kept = t.split(/(?<=[.!?])\s+/).filter(x => !FIG.test(x))
+  return kept[0] ?? ''
+}
+function toProps(json) {
+  const m = JSON.parse(json)
+  const out = {}
+  for (const k of ['id', 'code', 'props', 'composition', 'tokens']) if (m[k] !== undefined) out[k] = m[k]
+  if (out.props) delete out.props.designOnly
+  const trim = o => {
+    if (Array.isArray(o)) o.forEach(trim)
     else if (o && typeof o === 'object') {
       delete o.figmaNote
-      if (o.trigger === 'no-figma-component') delete o.trigger
-      if (typeof o.notes === 'string' && FIG.test(o.notes))
-        o.notes = o.notes
-          .split(/(?<=\.)\s+/)
-          .filter(x => !FIG.test(x))
-          .join(' ')
-      Object.values(o).forEach(strip)
+      for (const k of ['codeNote', 'notes'])
+        if (typeof o[k] === 'string') {
+          o[k] = firstSentence(o[k])
+          if (!o[k]) delete o[k]
+        }
+      Object.values(o).forEach(trim)
     }
   }
-  strip(m)
-  return JSON.stringify(m, null, 2) + '\n'
-}
-function rewriteRulesDocs(json, base) {
-  const map = p =>
-    p === 'docs/system/shared-rules.md'
-      ? '../../rules.md'
-      : p.startsWith('docs/system/')
-        ? `../../foundations/${p.slice(12)}`
-        : p === `schemas/${base}.md`
-          ? 'pattern.md'
-          : p
-  return json.replace(
-    /("rulesDocs"\s*:\s*\[)([\s\S]*?)(\])/,
-    (_, a, list, c) => a + list.replace(/"([^"]+\.md)"/g, (_m, p) => `"${map(p)}"`) + c
-  )
+  trim(out)
+  return JSON.stringify(out, null, 2) + '\n'
 }
 
 // components + per-component folders
@@ -99,7 +88,7 @@ for (const s of registry.skills) {
   const base = s.manifest.replace(/^schemas\//, '').replace(/\.manifest\.json$/, '')
   mkdirSync(join(out, name, 'references'), { recursive: true })
   mkdirSync(join(out, name, 'references'), { recursive: true })
-  writeFileSync(join(out, name, 'references/props.json'), toProps(read(s.manifest), base))
+  writeFileSync(join(out, name, 'references/props.json'), toProps(read(s.manifest)))
   write(`${name}/references/pattern.md`, consumerPattern(read(`schemas/${base}.md`)))
   write(
     `${name}/SKILL.md`,

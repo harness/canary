@@ -3,8 +3,7 @@
   "code": {
     "package": "@harnessio/ui",
     "export": "Tag",
-    "import": "import { Tag } from '@harnessio/ui/components'",
-    "path": "packages/ui/src/components/tag.tsx"
+    "import": "import { Tag } from '@harnessio/ui/components'"
   },
   "props": {
     "shared": [

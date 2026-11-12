@@ -1,20 +1,11 @@
 ---
 title: Shared Rules for Product Module
 description: Rules every page built from @harnessio/ui must follow, regardless of pattern; pattern docs inherit these
-checks:
-  - public-imports
-  - no-color-literals
-  - no-arbitrary-values
-  - no-palette-colors
-  - no-inline-style
-  - no-raw-elements
-  - known-cn-classes
 ---
 
 These rules apply to every page or feature built on `@harnessio/ui`. Pattern docs
 (the files in `patterns/`) inherit them and add only the rules specific to their pattern.
-The name in parentheses after a rule is its check name; a checker that reports violations
-reports them by that name.
+The name in parentheses after a rule is its short identifier; cite it when you flag a violation.
 
 **Imports.** Import only from public `@harnessio/ui` entry points (for example
 `@harnessio/ui/components`), and only names that entry point exports. Never import from

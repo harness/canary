@@ -1,9 +1,5 @@
 # Layout Pattern Guide
 
-**Manifest ID:** `canary.layout`
-**Status:** stable
-**Last Updated:** 2026-10-27
-
 > Props, values, defaults and tokens are in [props.json](props.json). This file is judgment only:
 > when to use it, how to compose it, and known gaps.
 
@@ -241,12 +237,7 @@ Layout is presentational and contributes no semantics. Two things are still on y
 - [ ] **LYT-003:** `columns`, `rows` and `flow` are inline styles, so they beat any `className`,
       cannot be overridden by a consumer, and sit outside the token system —
       `columns="320px 1fr"` is accepted with no warning
-- [ ] **LYT-005:** Layout emits no class of its own, so there is no `cn-layout` hook to target
-      in a stylesheet or to find in the built CSS
 - [ ] **LYT-006:** `row-reverse` and `column-reverse` decouple visual order from DOM order, and
       nothing in the API warns about it
 - [ ] **LYT-007:** `grow` sets `flex-grow` on the container, not the children, and is routinely
       mistaken for the latter. There is no prop for growing children
-- [ ] **LYT-008:** The JSDoc gap table in the source maps each size straight to a
-      `--cn-spacing-*` value, skipping the `--cn-layout-*` alias the utilities actually
-      reference. Correct today, stale the moment the alias layer is retargeted

@@ -1,15 +1,4 @@
----
-inherits:
-  - shared-rules
-checks:
-  - drawer-parts-unstyled
----
-
 # Drawer Pattern Guide
-
-**Manifest ID:** `canary.drawer`
-**Status:** stable
-**Last Updated:** 2026-11-11
 
 > Props, values, defaults and tokens are in [props.json](props.json). This file is judgment only:
 > when to use it, how to compose it, and known gaps.

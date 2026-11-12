@@ -3,8 +3,7 @@
   "code": {
     "package": "@harnessio/ui",
     "export": "Layout",
-    "import": "import { Layout } from '@harnessio/ui/components'",
-    "path": "packages/ui/src/components/layout.tsx"
+    "import": "import { Layout } from '@harnessio/ui/components'"
   },
   "props": {
     "shared": [],

@@ -19,7 +19,6 @@
           "column-reverse"
         ],
         "default": "row",
-        "trigger": "no-figma-component",
         "notes": "Layout.Flex only."
       },
       {
@@ -33,7 +32,6 @@
           "stretch"
         ],
         "default": null,
-        "trigger": "no-figma-component",
         "notes": "Cross-axis alignment (align-items), on both Flex and Grid."
       },
       {
@@ -46,7 +44,6 @@
           "between"
         ],
         "default": null,
-        "trigger": "no-figma-component",
         "notes": "Main-axis distribution (justify-content), on both Flex and Grid."
       },
       {
@@ -58,7 +55,6 @@
           "wrap-reverse"
         ],
         "default": null,
-        "trigger": "no-figma-component",
         "notes": "Layout.Flex, Horizontal and Vertical only."
       },
       {
@@ -79,7 +75,6 @@
           "4xl"
         ],
         "default": null,
-        "trigger": "no-figma-component",
         "notes": "Space on both axes, from the layout token scale."
       },
       {
@@ -100,7 +95,6 @@
           "4xl"
         ],
         "default": null,
-        "trigger": "no-figma-component",
         "notes": "Horizontal gap only (column-gap)."
       },
       {
@@ -121,7 +115,6 @@
           "4xl"
         ],
         "default": null,
-        "trigger": "no-figma-component",
         "notes": "Vertical gap only (row-gap)."
       },
       {
@@ -135,25 +128,21 @@
           "column dense"
         ],
         "default": null,
-        "trigger": "no-figma-component",
         "notes": "Layout.Grid only (grid-auto-flow)."
       },
       {
         "name": "grow",
         "type": "boolean",
-        "trigger": "no-figma-component",
         "notes": "Layout.Flex, Horizontal and Vertical only."
       },
       {
         "name": "columns",
         "type": "string",
-        "trigger": "no-figma-component",
         "notes": "Layout.Grid only."
       },
       {
         "name": "rows",
         "type": "string",
-        "trigger": "no-figma-component",
         "notes": "Layout.Grid only, the grid-template-rows equivalent of columns, with the same inline-style mechanics and the same caution about raw lengths."
       },
       {

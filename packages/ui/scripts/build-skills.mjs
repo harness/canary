@@ -68,6 +68,7 @@ function toProps(json) {
     if (Array.isArray(o)) o.forEach(trim)
     else if (o && typeof o === 'object') {
       delete o.figmaNote
+      if (o.trigger === 'no-figma-component') delete o.trigger
       for (const k of ['codeNote', 'notes'])
         if (typeof o[k] === 'string') {
           o[k] = firstSentence(o[k])

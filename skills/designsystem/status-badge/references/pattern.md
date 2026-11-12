@@ -83,8 +83,9 @@ Code Repository, AI Code Review); the rule below still applies.
 
 - **Always pass text as `children`.** Text carries all semantic meaning; colour and icon
   are reinforcement only
-- **Leave `variant` off to get `outline`**, the default. Pass another variant only when the
-  design calls for it. `pulse` is optional and belongs to `variant="status"` (dot plus label) only
+- **Pass `variant` explicitly.** `outline` is the preferred choice when the design doesn't
+  call for something else. It is a design preference, not a component default. Use another
+  variant only when the design calls for it. `pulse` is optional and belongs to `variant="status"` (dot plus label) only
 - Wrap in `aria-live="polite"` when the status can change while on screen (connectivity,
   job progress)
 - Use the shared icon vocabulary so a status reads the same across products:
@@ -138,7 +139,7 @@ Code Repository, AI Code Review); the rule below still applies.
   </StatusBadge>
 </div>
 
-// No strong reason to pick a variant — outline is the sensible default
+// No strong reason to pick a variant — outline is the preferred choice
 <StatusBadge variant="outline" theme="muted">
   Draft
 </StatusBadge>

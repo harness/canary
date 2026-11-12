@@ -79,7 +79,7 @@ Three traps:
 
 | Trap                                    | What happens                                                                                                                                                                                |
 | --------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `theme` on `ai`, `link`, `transparent`  | **Hard rule for new code.** Button's type still accepts it (the theme is ignored); `StrictButtonProps` rejects it. These three are single-appearance by design and have no themes (BTN-003) |
+| `theme` on `ai`, `link`, `transparent`  | **Hard rule for new code.** Button's type still accepts it (the theme is ignored), so nothing stops you. These three are single-appearance by design and have no themes (BTN-003) |
 | `variant="primary"` + `theme="default"` | Resolves to the **brand** colour set, not gray. The default primary button is deliberately brand                                                                                            |
 
 Reach for `danger` only when the action destroys or cannot be undone. A `danger` button on a
@@ -93,15 +93,13 @@ An icon with no text has no accessible name unless you give it one. The type tri
 issue: writing the literal `iconOnly` makes `tooltipProps` required, unless you opt out with
 `ignoreIconOnlyTooltip`. That guard has three holes, and all three are on you to close:
 
-1. **A tooltip is not an accessible name** — Radix wires it as a description. The component
-   now copies the tooltip's own text onto `aria-label` to close that gap, reading the text out
-   of a string or simple ReactNode `content`; content with no text of its own still leaves the
-   button nameless, and development builds log a warning for it (BTN-002)
+1. **A tooltip is not an accessible name** — Radix wires it as a description. Don't rely on
+   `tooltipProps` to name the button; pass `aria-label` as well (BTN-002)
 2. **`tooltipProps={{}}` satisfies the type and renders nothing** (BTN-007)
 3. **`size="2xs"` and `size="3xs"` drop any text child**, deliberately — they are for very tight
    spaces and composite components. Because they can never carry a visible label, give them a
-   name with `aria-label` or `tooltipProps`. This is a suggestion, not a block: it still
-   compiles without one, and development builds log a warning (BTN-001)
+   name with `aria-label`. This is a recommendation, not a block: it still compiles without
+   one (BTN-001)
 
 Pass exactly one `IconV2` child. In icon-only mode the children are filtered by display name and
 only the first icon survives — a second icon, a count badge, or any text is discarded (BTN-008).
@@ -223,7 +221,7 @@ by tooling.
   <IconV2 name="trash" />
 </Button>
 
-// ❌ Don't: link takes no theme. The theme is ignored, and `StrictButtonProps` rejects it (BTN-003)
+// ❌ Don't: link takes no theme. The theme is ignored, so don't pass one (BTN-003)
 <Button variant="link" theme="danger">Delete</Button>
 
 // ❌ Don't: navigation is not an action — use Link
@@ -247,8 +245,8 @@ by tooling.
 
 What a consumer of this component must do:
 
-- **Give every icon-only button an `aria-label`.** The component sets none, and the source
-  still carries the unimplemented note to add one (BTN-002)
+- **Give every icon-only button an `aria-label`.** The component does not set one for you
+  (BTN-002)
 - **Write the label as the action.** "Delete repository" beats "Delete" when three things on
   the page are deletable
 - **Announce long async work yourself.** `loading` sets neither `aria-busy` nor
@@ -263,22 +261,15 @@ What a consumer of this component must do:
 
 ## Known Gaps
 
-- [ ] **BTN-001:** a suggestion, not a block. `size="2xs"` / `"3xs"` force icon-only rendering
+- [ ] **BTN-001:** a recommendation, not a block. `size="2xs"` / `"3xs"` force icon-only rendering
       and drop text children, so a micro button with no accessible name ships as an unlabelled
-      square. The type does not stop it. Development builds log a warning when no `aria-label`,
-      `aria-labelledby`, tooltip text or `ignoreIconOnlyTooltip` is present. Nothing enforces it
-      in production or in CI
-- [x] **BTN-002:** mostly closed. An icon-only button now derives its name from the tooltip's
-      `title`, or `content` when there is no title, since Radix wires a Tooltip as a description
-      rather than a name. Text is read from string and simple ReactNode `content`. Remaining:
-      content with no text of its own gives nothing to copy, so such a button still needs an
-      explicit `aria-label`; development builds log a warning when one is left nameless
+      square. The type does not stop it, so always pass `aria-label`
+- [ ] **BTN-002:** a tooltip is wired as a description, not a name, so an icon-only button with
+      only `tooltipProps` has no accessible name. Pass an explicit `aria-label`
 - [ ] **BTN-003:** A design rule, not enforced by `Button`'s type. `ai`, `link` and `transparent` are
       single-appearance by design and carry no themes, but `<Button variant="link" theme="danger">`
-      still compiles and the theme is ignored. A type that rejected it was withdrawn because it
-      broke wrappers that spread a wide props object; it ships as the opt-in `StrictButtonProps`
-      instead, with `ButtonThemedVariants` as the theme-capable set. `MoreActionsTooltip`,
-      `Carousel`, `SidebarTrigger` and `SplitButton` forward a wide `variant` with a theme, which is accepted and ignored
+      still compiles and the theme is ignored. Treat it as a hard rule for new code and don't pass
+      a theme to those variants
 - [ ] **BTN-006:** `loading` sets `data-loading` and disables the button but no `aria-busy` and
       no `aria-disabled`
 - [ ] **BTN-007:** `tooltipProps={{}}` satisfies the icon-only type requirement and renders no

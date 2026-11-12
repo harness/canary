@@ -18,8 +18,8 @@
           "ghost",
           "status"
         ],
-        "default": "outline",
-        "codeNote": "Component style variant."
+        "default": null,
+        "codeNote": "Component style variant. Pass it explicitly; outline is the preferred choice by design convention, not a component default."
       },
       {
         "name": "theme",

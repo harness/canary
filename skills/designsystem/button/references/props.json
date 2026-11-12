@@ -1,0 +1,182 @@
+{
+  "id": "canary.button",
+  "code": {
+    "package": "@harnessio/ui",
+    "export": "Button",
+    "import": "import { Button } from '@harnessio/ui/components'",
+    "path": "packages/ui/src/components/button.tsx"
+  },
+  "props": {
+    "shared": [
+      {
+        "name": "variant",
+        "type": "enum",
+        "values": [
+          "primary",
+          "secondary",
+          "outline",
+          "ai",
+          "ghost",
+          "link",
+          "transparent"
+        ],
+        "default": "primary",
+        "codeNote": "Emphasis level."
+      },
+      {
+        "name": "size",
+        "type": "enum",
+        "values": [
+          "md",
+          "sm",
+          "xs",
+          "2xs",
+          "3xs"
+        ],
+        "default": "md",
+        "codeNote": "Height, padding and gap."
+      },
+      {
+        "name": "theme",
+        "type": "enum",
+        "values": [
+          "default",
+          "success",
+          "danger",
+          "warning"
+        ],
+        "default": "default",
+        "codeNote": "Semantic intent of the action, not decoration."
+      },
+      {
+        "name": "rounded",
+        "type": "boolean",
+        "default": false,
+        "codeNote": "Swaps the corner radius from --cn-btn-default-radius to --cn-btn-rounded-radius (a full pill)."
+      },
+      {
+        "name": "iconOnly",
+        "type": "boolean",
+        "default": false,
+        "codeNote": "Renders a square button holding one icon and no text."
+      },
+      {
+        "name": "disabled",
+        "type": "boolean",
+        "default": false,
+        "codeNote": "Native button disabled."
+      },
+      {
+        "name": "loading",
+        "type": "boolean",
+        "default": false,
+        "codeNote": "Replaces the leading content with a spinning 'loader' icon, sets data-loading, and disables the button."
+      },
+      {
+        "name": "children",
+        "type": "node",
+        "default": null,
+        "codeNote": "The label, and any IconV2 elements shown beside it."
+      },
+      {
+        "name": "tooltipProps",
+        "type": "object",
+        "default": null,
+        "codeNote": "A Pick of TooltipProps — title, content, side, align, open."
+      }
+    ],
+    "codeOnly": [
+      {
+        "name": "onClick",
+        "type": "function",
+        "trigger": "event-handler",
+        "notes": "May return void or a promise."
+      },
+      {
+        "name": "ignoreIconOnlyTooltip",
+        "type": "boolean",
+        "trigger": "a11y-only",
+        "notes": "The explicit opt-out from the icon-only tooltip requirement, for a button whose meaning is already given nearby."
+      },
+      {
+        "name": "aria-label",
+        "type": "string",
+        "trigger": "a11y-only",
+        "notes": "Inherited from ButtonHTMLAttributes rather than declared."
+      },
+      {
+        "name": "asChild",
+        "type": "boolean",
+        "trigger": "native-behaviour",
+        "notes": "Renders through Radix Slot, merging the button's classes and props onto a single child element instead of emitting a <button>."
+      },
+      {
+        "name": "type",
+        "type": "string",
+        "trigger": "native-behaviour",
+        "notes": "Native button type, defaulted to 'button' rather than the HTML default of 'submit', so a Button inside a form does not submit by accident."
+      },
+      {
+        "name": "className",
+        "type": "string",
+        "trigger": "appearance-override",
+        "notes": "Merged through cn() after the variant classes, so it wins ties."
+      }
+    ]
+  },
+  "composition": [
+    {
+      "slot": "children",
+      "accepts": [
+        "IconV2",
+        "text"
+      ],
+      "cardinality": "many",
+      "required": false,
+      "notes": "Icons are children, not props."
+    }
+  ],
+  "tokens": {
+    "rootClass": "cn-button",
+    "rule": "semantic-only",
+    "refs": {
+      "radius.default": "btn.default-radius",
+      "radius.rounded": "btn.rounded-radius",
+      "layout.border": "btn.border",
+      "layout.ai-border": "btn.ai-border",
+      "size.md": "btn.size-md",
+      "size.sm": "btn.size-sm",
+      "size.xs": "btn.size-xs",
+      "size.2xs": "btn.size-2xs",
+      "size.3xs": "btn.size-3xs",
+      "px.md": "btn.px-md",
+      "px.sm": "btn.px-sm",
+      "px.xs": "btn.px-xs",
+      "px.2xs": "btn.px-2xs",
+      "px.3xs": "btn.px-3xs",
+      "py.md": "btn.py-md",
+      "py.sm": "btn.py-sm",
+      "py.xs": "btn.py-xs",
+      "py.2xs": "btn.py-2xs",
+      "py.3xs": "btn.py-3xs",
+      "gap.md": "btn.gap-md",
+      "gap.sm": "btn.gap-sm",
+      "gap.xs": "btn.gap-xs",
+      "gap.2xs": "btn.gap-2xs",
+      "gap.3xs": "btn.gap-3xs",
+      "theme.default": "set.gray",
+      "theme.default-primary": "set.brand",
+      "theme.success": "set.success",
+      "theme.danger": "set.danger",
+      "theme.warning": "set.warning",
+      "variant.ai": "set.ai",
+      "variant.link": "comp.link-text",
+      "variant.ghost-hover": "state.hover",
+      "variant.ghost-selected": "state.selected",
+      "separator.opacity": "opacity.20",
+      "focus.outline": "focus.ring",
+      "disabled.opacity": "disabled.opacity",
+      "shadow.ai-inner": "comp.shadow-ai-inner"
+    }
+  }
+}

@@ -1,0 +1,15 @@
+---
+name: layout
+description: Arrangement primitives — Horizontal, Vertical, Flex and Grid — and the only sanctioned way to put tokenised space between elements
+---
+
+# Layout Component
+
+Import: `import { Layout } from '@harnessio/ui/components'`
+
+Read in this order:
+
+1. [references/props.json](references/props.json): the contract. Props, values, rules. If a prop or value is not here, it does not exist.
+2. [references/pattern.md](references/pattern.md): when to use it, composition, judgment calls.
+
+Then check [../rules.md](../rules.md) before writing code.

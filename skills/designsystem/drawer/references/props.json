@@ -1,0 +1,126 @@
+{
+  "id": "canary.drawer",
+  "code": {
+    "package": "@harnessio/ui",
+    "export": "Drawer",
+    "import": "import { Drawer } from '@harnessio/ui/components'",
+    "path": "packages/ui/src/components/drawer/DrawerContent.tsx"
+  },
+  "props": {
+    "shared": [],
+    "codeOnly": [
+      {
+        "name": "size",
+        "type": "enum",
+        "values": [
+          "2xs",
+          "xs",
+          "sm",
+          "md",
+          "lg",
+          "xl",
+          "full"
+        ],
+        "default": "sm",
+        "trigger": "appearance-override",
+        "notes": "Drawer.Content only."
+      },
+      {
+        "name": "direction",
+        "type": "enum",
+        "values": [
+          "right",
+          "left",
+          "top",
+          "bottom"
+        ],
+        "default": "right",
+        "trigger": "appearance-override",
+        "notes": "Set on Drawer.Root, not on Drawer.Content: Content reads it from context and applies the matching cn-drawer-content-{direction} class."
+      },
+      {
+        "name": "overlayClassName",
+        "type": "string",
+        "trigger": "appearance-override",
+        "notes": "Drawer.Content only."
+      },
+      {
+        "name": "forceWithOverlay",
+        "type": "boolean",
+        "default": "false",
+        "trigger": "appearance-override",
+        "notes": "Drawer.Content only."
+      },
+      {
+        "name": "staticStackWidth",
+        "type": "boolean",
+        "default": "false",
+        "trigger": "appearance-override",
+        "notes": "Drawer.Content only."
+      }
+    ]
+  },
+  "composition": [
+    {
+      "slot": "Drawer.Root",
+      "accepts": [
+        "Drawer.Trigger",
+        "Drawer.Content"
+      ],
+      "cardinality": "one",
+      "required": true,
+      "notes": "Outermost wrapper (wraps vaul)."
+    },
+    {
+      "slot": "Drawer.Content",
+      "accepts": [
+        "Drawer.Header",
+        "Drawer.Body",
+        "Drawer.Footer"
+      ],
+      "cardinality": "one",
+      "required": true,
+      "notes": "The panel itself (root class cn-drawer-content)."
+    },
+    {
+      "slot": "Drawer.Header",
+      "accepts": [
+        "ReactNode"
+      ],
+      "cardinality": "one",
+      "required": true,
+      "notes": "Pass title (and optionally description, tagline, icon, actions, tabs, isLoading) to get the structured header, which includes the close button."
+    },
+    {
+      "slot": "Drawer.Body",
+      "accepts": [
+        "ReactNode"
+      ],
+      "cardinality": "one",
+      "required": true,
+      "notes": "Scrollable content area (ScrollArea; set scrollable={false} to opt out)."
+    },
+    {
+      "slot": "Drawer.Footer",
+      "accepts": [
+        "ButtonLayout"
+      ],
+      "cardinality": "zero-or-one",
+      "required": false,
+      "notes": "Plain div with class cn-drawer-footer, pinned below the body."
+    }
+  ],
+  "tokens": {
+    "rootClass": "cn-drawer-content",
+    "rule": "semantic-only",
+    "refs": {
+      "size.2xs": "drawer.2xs",
+      "size.xs": "drawer.xs",
+      "size.sm": "drawer.sm",
+      "size.md": "drawer.md",
+      "size.lg": "drawer.lg",
+      "size.xl": "drawer.xl",
+      "size.full": "drawer.full"
+    }
+  }
+}

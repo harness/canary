@@ -1,0 +1,198 @@
+{
+  "id": "canary.layout",
+  "code": {
+    "package": "@harnessio/ui",
+    "export": "Layout",
+    "import": "import { Layout } from '@harnessio/ui/components'",
+    "path": "packages/ui/src/components/layout.tsx"
+  },
+  "props": {
+    "shared": [],
+    "codeOnly": [
+      {
+        "name": "direction",
+        "type": "enum",
+        "values": [
+          "row",
+          "column",
+          "row-reverse",
+          "column-reverse"
+        ],
+        "default": "row",
+        "notes": "Layout.Flex only."
+      },
+      {
+        "name": "align",
+        "type": "enum",
+        "values": [
+          "start",
+          "center",
+          "end",
+          "baseline",
+          "stretch"
+        ],
+        "default": null,
+        "notes": "Cross-axis alignment (align-items), on both Flex and Grid."
+      },
+      {
+        "name": "justify",
+        "type": "enum",
+        "values": [
+          "start",
+          "center",
+          "end",
+          "between"
+        ],
+        "default": null,
+        "notes": "Main-axis distribution (justify-content), on both Flex and Grid."
+      },
+      {
+        "name": "wrap",
+        "type": "enum",
+        "values": [
+          "nowrap",
+          "wrap",
+          "wrap-reverse"
+        ],
+        "default": null,
+        "notes": "Layout.Flex, Horizontal and Vertical only."
+      },
+      {
+        "name": "gap",
+        "type": "enum",
+        "values": [
+          "none",
+          "4xs",
+          "3xs",
+          "2xs",
+          "xs",
+          "sm",
+          "md",
+          "lg",
+          "xl",
+          "2xl",
+          "3xl",
+          "4xl"
+        ],
+        "default": null,
+        "notes": "Space on both axes, from the layout token scale."
+      },
+      {
+        "name": "gapX",
+        "type": "enum",
+        "values": [
+          "none",
+          "4xs",
+          "3xs",
+          "2xs",
+          "xs",
+          "sm",
+          "md",
+          "lg",
+          "xl",
+          "2xl",
+          "3xl",
+          "4xl"
+        ],
+        "default": null,
+        "notes": "Horizontal gap only (column-gap)."
+      },
+      {
+        "name": "gapY",
+        "type": "enum",
+        "values": [
+          "none",
+          "4xs",
+          "3xs",
+          "2xs",
+          "xs",
+          "sm",
+          "md",
+          "lg",
+          "xl",
+          "2xl",
+          "3xl",
+          "4xl"
+        ],
+        "default": null,
+        "notes": "Vertical gap only (row-gap)."
+      },
+      {
+        "name": "flow",
+        "type": "enum",
+        "values": [
+          "row",
+          "column",
+          "dense",
+          "row dense",
+          "column dense"
+        ],
+        "default": null,
+        "notes": "Layout.Grid only (grid-auto-flow)."
+      },
+      {
+        "name": "grow",
+        "type": "boolean",
+        "notes": "Layout.Flex, Horizontal and Vertical only."
+      },
+      {
+        "name": "columns",
+        "type": "string",
+        "notes": "Layout.Grid only."
+      },
+      {
+        "name": "rows",
+        "type": "string",
+        "notes": "Layout.Grid only, the grid-template-rows equivalent of columns, with the same inline-style mechanics and the same caution about raw lengths."
+      },
+      {
+        "name": "as",
+        "type": "string",
+        "trigger": "native-behaviour",
+        "default": "div",
+        "notes": "The element the container renders as (an HTML tag name such as 'section' or 'ul', or a component)."
+      },
+      {
+        "name": "className",
+        "type": "string",
+        "trigger": "appearance-override",
+        "notes": "Merged through cn() after the variant classes."
+      },
+      {
+        "name": "children",
+        "type": "node",
+        "trigger": "content",
+        "notes": "The elements being arranged."
+      }
+    ]
+  },
+  "composition": [
+    {
+      "slot": "children",
+      "accepts": [
+        "ReactNode"
+      ],
+      "cardinality": "many",
+      "required": false,
+      "notes": "Anything."
+    }
+  ],
+  "tokens": {
+    "rootClass": null,
+    "rule": "semantic-only",
+    "refs": {
+      "gap.none": "spacing.0",
+      "gap.4xs": "layout.4xs",
+      "gap.3xs": "layout.3xs",
+      "gap.2xs": "layout.2xs",
+      "gap.xs": "layout.xs",
+      "gap.sm": "layout.sm",
+      "gap.md": "layout.md",
+      "gap.lg": "layout.lg",
+      "gap.xl": "layout.xl",
+      "gap.2xl": "layout.2xl",
+      "gap.3xl": "layout.3xl",
+      "gap.4xl": "layout.4xl"
+    }
+  }
+}

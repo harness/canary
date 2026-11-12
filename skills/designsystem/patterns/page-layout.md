@@ -17,7 +17,7 @@ webhooks) and the user can create more.
    - the page title: `Text variant="heading-subsection"` (or `heading-section` when it is the
      only heading on the page);
    - one primary action: `Button variant="primary"` that opens the create drawer.
-     Exactly one primary button per page. The `single-primary-button` check counts per file.
+     Exactly one primary button per page.
 2. **List** — `Table.Root` with `Table.Header` / `Table.Row` / `Table.Head` and
    `Table.Body` / `Table.Row` / `Table.Cell`. Use `DataTable` instead when the list needs
    sorting, selection, or column visibility.

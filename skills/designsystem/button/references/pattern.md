@@ -209,7 +209,7 @@ by tooling.
 ### ❌ Incorrect
 
 ```tsx
-// ❌ Don't: the text is dropped and nothing names the button. It compiles, but warns in development (BTN-001)
+// ❌ Don't: the text is dropped and nothing names the button. It compiles silently (BTN-001)
 <Button size="2xs">Save</Button>
 
 // ❌ Don't: satisfies the type, renders no tooltip, names nothing (BTN-007, BTN-002)

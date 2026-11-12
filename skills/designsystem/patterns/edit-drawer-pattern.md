@@ -12,9 +12,9 @@ structure and components, not wording.
 Use a `Dialog` instead for a short confirmation or a single field; use a full page for a
 multi-step flow.
 
-**Anatomy:** the drawer always has these four parts, in this order (the `drawer-complete` check: a
-file that builds `Drawer.Root` must also build `Drawer.Content`, `Drawer.Header`,
-`Drawer.Body` and `Drawer.Footer`). Contract details are in `drawer/references/props.json` and
+**Anatomy:** the drawer always has these four parts, in this order. A file that builds
+`Drawer.Root` must also build `Drawer.Content`, `Drawer.Header`, `Drawer.Body` and
+`Drawer.Footer`. Contract details are in `drawer/references/props.json` and
 `drawer/references/pattern.md`.
 
 1. `Drawer.Root` — controlled with `open` and `onOpenChange`. Opens from the right by default;

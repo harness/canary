@@ -1,4 +1,4 @@
-import { useEffect, useLayoutEffect, useRef, useState } from 'react'
+import { useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react'
 
 import cn from 'classnames'
 
@@ -36,7 +36,8 @@ export interface PipelineGraphInternalProps {
 }
 
 export function PipelineGraphInternal(props: PipelineGraphInternalProps) {
-  const { initialized, nodes: nodesBank, rerenderConnections, setInitialized, isCollapsed } = useGraphContext()
+  const { initialized, nodes: nodesBank, rerenderConnections, setInitialized, isCollapsed, setShowSvg } =
+    useGraphContext()
   const { setCanvasTransform, canvasTransformRef, config: canvasConfig, setTargetEl } = useCanvasContext()
   const { serialContainerConfig } = useContainerNodeContext()
 
@@ -170,6 +171,53 @@ export function PipelineGraphInternal(props: PipelineGraphInternalProps) {
       }
     }
   }, [dataInternal, rerenderConnections, initialized, graphSizeRef])
+
+  // Redraw the edges from the current DOM port positions, independent of any animation. Mirrors the
+  // draw step of the layout effect (scale to 1 so getBoundingClientRect is unscaled, draw, restore).
+  const redrawEdges = useCallback(() => {
+    const rootContainerEl = rootContainerRef.current
+    const svgGroupEl = svgGroupRef.current
+    if (!rootContainerEl || !svgGroupEl) return
+
+    rootContainerEl.style.transform = 'scale(1)'
+    drawEdges({
+      rootEl: rootContainerEl,
+      svgGroupEl,
+      data: dataInternalRef.current,
+      edgesConfig,
+      getPort,
+      customCreateSVGPath,
+      isCollapsed
+    })
+    rootContainerEl.style.transform = ''
+  }, [edgesConfig, getPort, customCreateSVGPath, isCollapsed])
+
+  // Safety net for edge rendering. Edge visibility (`showSvg`) and the post-animation redraw are
+  // otherwise driven solely by framer-motion's `onAnimationComplete`, which does not reliably fire for
+  // no-op, interrupted, or mid-flight-unmounted animations (e.g. a container remounted by an index
+  // shift). When it is skipped the SVG stays hidden (no lines) or keeps stale port coordinates (lines
+  // at the wrong position). A ResizeObserver on the nodes container redraws and re-reveals once the
+  // layout settles, regardless of whether the animation callback fired — the debounce resets on every
+  // frame of a running animation, so the redraw runs only after sizes stop changing.
+  useEffect(() => {
+    const el = nodesContainerRef.current
+    if (!el || typeof ResizeObserver === 'undefined') return
+
+    let settleTimer: ReturnType<typeof setTimeout> | undefined
+    const observer = new ResizeObserver(() => {
+      clearTimeout(settleTimer)
+      settleTimer = setTimeout(() => {
+        redrawEdges()
+        setShowSvg(true)
+      }, 150)
+    })
+    observer.observe(el)
+
+    return () => {
+      clearTimeout(settleTimer)
+      observer.disconnect()
+    }
+  }, [redrawEdges, setShowSvg])
 
   useEffect(() => {
     if (rootContainerRef.current) setTargetEl(rootContainerRef.current)

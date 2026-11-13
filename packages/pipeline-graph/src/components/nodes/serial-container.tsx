@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useState } from 'react'
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 
 import { AnimatePresence, motion, Variants } from 'framer-motion'
 import { useContainerNodeContext } from '../../context/container-node-provider'
@@ -71,6 +71,13 @@ export default function SerialNodeContainer(props: ContainerNodeProps<SerialNode
 
   const [localCollapsed, setLocalCollapsed] = useState(collapsed)
 
+  // Animate the expand/collapse only when a real collapse-state transition happens on THIS mounted
+  // instance (user toggle or programmatic expand), never on mount. A node is React-keyed by its index
+  // path, so inserting/removing a sibling before it remounts it with a new key; without this guard an
+  // already-expanded node would replay its expand animation on that remount. Stays `false` across the
+  // fresh mount (first paint and every re-key), so a mount renders straight to its target state.
+  const shouldAnimateRef = useRef(false)
+
   const setCollapsed = useMemo(
     () => (collapsed: boolean) => {
       collapse(props.node.path!, collapsed)
@@ -85,12 +92,17 @@ export default function SerialNodeContainer(props: ContainerNodeProps<SerialNode
    */
   useEffect(() => {
     if (!collapsed && localCollapsed) {
+      // Programmatic expand — a genuine transition on this live instance, so let it animate.
+      shouldAnimateRef.current = true
       setLocalCollapsed(false)
     }
   }, [collapsed])
 
   const handleCollaspeLocalState = useCallback((collapsed: boolean) => {
     setShowSvg(false)
+
+    // User toggle — a genuine transition on this live instance, so let it animate.
+    shouldAnimateRef.current = true
 
     if (!collapsed) {
       setCollapsed(false)
@@ -229,7 +241,7 @@ export default function SerialNodeContainer(props: ContainerNodeProps<SerialNode
             <motion.div
               animate="visible"
               exit="exit"
-              initial={!isMounted.current ? false : "hidden"}
+              initial={shouldAnimateRef.current ? "hidden" : false}
               variants={containerVariants}
               onAnimationComplete={handleAnimationComplete}
               style={{

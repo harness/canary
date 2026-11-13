@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useState } from 'react'
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { AnimatePresence, motion, Variants } from 'framer-motion'
 
 import { useContainerNodeContext } from '../../context/container-node-provider'
@@ -77,18 +77,30 @@ export default function ParallelNodeContainer(props: ContainerNodeProps<Parallel
 
   const [localCollapsed, setLocalCollapsed] = useState(collapsed)
 
+  // Animate the expand/collapse only when a real collapse-state transition happens on THIS mounted
+  // instance (user toggle or programmatic expand), never on mount. A node is React-keyed by its index
+  // path, so inserting/removing a sibling before it remounts it with a new key; without this guard an
+  // already-expanded node would replay its expand animation on that remount. Stays `false` across the
+  // fresh mount (first paint and every re-key), so a mount renders straight to its target state.
+  const shouldAnimateRef = useRef(false)
+
   /**
  * This is to sync the global collapsed state with the local collapsed state
- * 
+ *
  * Global collapsed state may change programmatically, so we need to sync it with the local collapsed state.
  */
   useEffect(() => {
     if (!collapsed && localCollapsed) {
+      // Programmatic expand — a genuine transition on this live instance, so let it animate.
+      shouldAnimateRef.current = true
       setLocalCollapsed(false)
     }
   }, [collapsed])
 
   const handleCollaspeLocalState = useCallback((collapsed: boolean) => {
+    // User toggle — a genuine transition on this live instance, so let it animate.
+    shouldAnimateRef.current = true
+
     if (!collapsed) {
       setCollapsed(false)
     }
@@ -226,7 +238,7 @@ export default function ParallelNodeContainer(props: ContainerNodeProps<Parallel
             <motion.div
               animate="visible"
               exit="exit"
-              initial={!isMounted.current ? false : "hidden"}
+              initial={shouldAnimateRef.current ? "hidden" : false}
               variants={containerVariants}
               onAnimationStart={() => {
                 setShowSvg(false)

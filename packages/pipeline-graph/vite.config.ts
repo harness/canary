@@ -15,7 +15,9 @@ export default defineConfig({
     dts({
       outDir: 'dist',
       tsconfigPath: './tsconfig.json',
-      rollupTypes: true
+      rollupTypes: true,
+      // Keep tests and test mocks out of the published type declarations (and the dts type-check).
+      exclude: ['src/**/*.test.ts', 'src/**/*.test.tsx', 'src/**/__tests__/**', 'config/**']
     })
   ],
   build: {

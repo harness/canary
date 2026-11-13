@@ -3,6 +3,17 @@
 > Props, values and defaults are in [props.json](./props.json). This file is judgment only:
 > when to use it, how to compose it, and known gaps.
 
+## Contents
+
+- [Overview](#overview): what Layout is and its four members
+- [Decision Framework: which member?](#decision-framework-which-member): pick Horizontal, Vertical, Flex or Grid
+- [The gap default trap](#the-gap-default-trap): which members default to a gap and which do not
+- [Grid escape hatches](#grid-escape-hatches): `columns`, `rows` and `flow` are inline styles outside the token system
+- [Do's and Don'ts](#dos-and-donts): quick rules
+- [Examples](#examples): correct and incorrect usage
+- [Accessibility](#accessibility): keep DOM order and add semantics yourself
+- [Known Gaps](#known-gaps): what Layout cannot do yet
+
 ---
 
 ## Overview

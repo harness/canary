@@ -3,6 +3,19 @@
 > Props, values and defaults are in [props.json](./props.json). This file is judgment only:
 > when to use it, how to compose it, and known gaps.
 
+## Contents
+
+- [Overview](#overview): what Button is and when it is the right control
+- [Decision Framework: which variant?](#decision-framework-which-variant): pick primary, outline, secondary, ghost, ai, link or transparent
+- [Theme: semantic, and only on four variants](#theme-semantic-and-only-on-four-variants): which themes exist and which variants take one
+- [Icon-only buttons](#icon-only-buttons): accessible name and tooltip requirements
+- [Async actions](#async-actions): loading state for promise-returning handlers
+- [Writing the label](#writing-the-label): content rules for button text
+- [Do's and Don'ts](#dos-and-donts): quick rules
+- [Examples](#examples): correct and incorrect usage
+- [Accessibility](#accessibility): aria-label, labels and announcing async work
+- [Known Gaps](#known-gaps): what Button cannot do yet
+
 ---
 
 ## Overview

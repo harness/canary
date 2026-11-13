@@ -3,6 +3,17 @@
 > Props, values and defaults are in [props.json](./props.json). This file is judgment only:
 > when to use it, how to compose it, and known gaps.
 
+## Contents
+
+- [Overview](#overview): what Tag is and when it is the right component
+- [Decision Framework: Tag vs StatusBadge](#decision-framework-tag-vs-statusbadge): choose between Tag and StatusBadge
+- [Theme vocabulary: decorative names, three semantic traps](#theme-vocabulary-decorative-names-three-semantic-traps): theme names and the three that mislead
+- [The split tag: `label` + `value`](#the-split-tag-label--value): two-part tags
+- [Do's and Don'ts](#dos-and-donts): quick rules
+- [Examples](#examples): correct and incorrect usage
+- [Accessibility](#accessibility): put meaning in the text and never make a Tag interactive
+- [Known Gaps](#known-gaps): what Tag cannot do yet
+
 ---
 
 ## Overview

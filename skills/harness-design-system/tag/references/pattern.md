@@ -1,6 +1,6 @@
 # Tag Pattern Guide
 
-> Props, values, defaults and tokens are in [props.json](props.json). This file is judgment only:
+> Props, values and defaults are in [props.json](./props.json). This file is judgment only:
 > when to use it, how to compose it, and known gaps.
 
 ---

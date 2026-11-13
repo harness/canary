@@ -1,6 +1,6 @@
 # StatusBadge Pattern Guide
 
-> Props, values, defaults and tokens are in [props.json](props.json). This file is judgment only:
+> Props, values and defaults are in [props.json](./props.json). This file is judgment only:
 > when to use it, how to compose it, and known gaps.
 
 ---
@@ -67,11 +67,10 @@ carries "this was merged" semantics, so it is the wrong answer for a decorative 
 request for purple that is not about a merge usually wants **Tag**, whose themes are
 decorative colour names and which also has a built-in dismiss action.
 
-`risk` has no established vocabulary and, per `foundations/visual-primitives.md`, no call
-sites yet — do not reach for it without product-specific guidance.
+`risk` has no established vocabulary yet, so no everyday word maps to it.
 
-Remember that `info`, `merged` and `risk` are product-specific rather than global (Pipelines,
-Code Repository, AI Code Review); the rule below still applies.
+`info`, `merged` and `risk` are for CI/CD and DevOps products (Pipelines, Code Repository,
+AI Code Review and similar), not global UI; the rule below still applies.
 
 ---
 
@@ -106,8 +105,8 @@ Code Repository, AI Code Review); the rule below still applies.
 - **Don't rely on colour or icon alone** — text is mandatory; colour-only fails colourblind
   users and greyscale rendering
 - **Don't restrict Pass/Fail/Pending to arbitrary themes** — use `success`, `warning`,
-  `danger`, `muted`. Reserve `info`, `merged`, and `risk` for named exceptions such as a
-  "Merged" pull-request badge
+  `danger`, `muted`. Use `info`, `merged` and `risk` only in CI/CD and DevOps products, such
+  as a "Merged" pull-request badge
 - **Don't stack multiple badges** on one object
 - **Don't combine `icon` with `variant="status"`** — the indicator dot already occupies
   that slot _(the type also rejects this)_

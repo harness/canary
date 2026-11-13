@@ -5,177 +5,162 @@
     "export": "Button",
     "import": "import { Button } from '@harnessio/ui/components'"
   },
-  "props": {
-    "shared": [
-      {
-        "name": "variant",
-        "type": "enum",
-        "values": [
-          "primary",
-          "secondary",
-          "outline",
-          "ai",
-          "ghost",
-          "link",
-          "transparent"
-        ],
-        "default": "primary",
-        "codeNote": "Emphasis level."
-      },
-      {
-        "name": "size",
-        "type": "enum",
-        "values": [
-          "md",
-          "sm",
-          "xs",
-          "2xs",
-          "3xs"
-        ],
-        "default": "md",
-        "codeNote": "Height, padding and gap."
-      },
-      {
-        "name": "theme",
-        "type": "enum",
-        "values": [
-          "default",
-          "success",
-          "danger",
-          "warning"
-        ],
-        "default": "default",
-        "codeNote": "Semantic intent of the action, not decoration."
-      },
-      {
-        "name": "rounded",
-        "type": "boolean",
-        "default": false,
-        "codeNote": "Swaps the corner radius from --cn-btn-default-radius to --cn-btn-rounded-radius (a full pill)."
-      },
-      {
-        "name": "iconOnly",
-        "type": "boolean",
-        "default": false,
-        "codeNote": "Renders a square button holding one icon and no text."
-      },
-      {
-        "name": "disabled",
-        "type": "boolean",
-        "default": false,
-        "codeNote": "Native button disabled."
-      },
-      {
-        "name": "loading",
-        "type": "boolean",
-        "default": false,
-        "codeNote": "Replaces the leading content with a spinning 'loader' icon, sets data-loading, and disables the button."
-      },
-      {
-        "name": "children",
-        "type": "node",
-        "default": null,
-        "codeNote": "The label, and any IconV2 elements shown beside it."
-      },
-      {
-        "name": "tooltipProps",
-        "type": "object",
-        "default": null,
-        "codeNote": "A Pick of TooltipProps — title, content, side, align, open."
-      }
-    ],
-    "codeOnly": [
-      {
-        "name": "onClick",
-        "type": "function",
-        "trigger": "event-handler",
-        "notes": "May return void or a promise."
-      },
-      {
-        "name": "ignoreIconOnlyTooltip",
-        "type": "boolean",
-        "trigger": "a11y-only",
-        "notes": "The explicit opt-out from the icon-only tooltip requirement, for a button whose meaning is already given nearby."
-      },
-      {
-        "name": "aria-label",
-        "type": "string",
-        "trigger": "a11y-only",
-        "notes": "Inherited from ButtonHTMLAttributes rather than declared."
-      },
-      {
-        "name": "asChild",
-        "type": "boolean",
-        "trigger": "native-behaviour",
-        "notes": "Renders through Radix Slot, merging the button's classes and props onto a single child element instead of emitting a <button>."
-      },
-      {
-        "name": "type",
-        "type": "string",
-        "trigger": "native-behaviour",
-        "notes": "Native button type, defaulted to 'button' rather than the HTML default of 'submit', so a Button inside a form does not submit by accident."
-      },
-      {
-        "name": "className",
-        "type": "string",
-        "trigger": "appearance-override",
-        "notes": "Merged through cn() after the variant classes, so it wins ties."
-      }
-    ]
-  },
-  "composition": [
+  "props": [
     {
-      "slot": "children",
-      "accepts": [
-        "IconV2",
-        "text"
-      ],
-      "cardinality": "many",
-      "required": false,
-      "notes": "Icons are children, not props."
+      "name": "variant",
+      "type": "enum",
+      "description": "Emphasis level of the action. Pick by the action's standing in the view, not decoration. Prefer primary, then outline, then secondary.",
+      "default": "primary",
+      "values": [
+        {
+          "name": "primary",
+          "whenToUse": "The one action the view exists for. Only one per view or dialog."
+        },
+        {
+          "name": "outline",
+          "whenToUse": "A real alternative beside the primary, such as Cancel."
+        },
+        {
+          "name": "secondary",
+          "whenToUse": "An alternative where outline genuinely cannot be used.",
+          "whenToNotUse": "As a default second button. Reach for outline first."
+        },
+        {
+          "name": "ghost",
+          "whenToUse": "Quiet actions in a toolbar, table row or card header."
+        },
+        {
+          "name": "ai",
+          "whenToUse": "An action initiated by or handing off to AI.",
+          "whenToNotUse": "With a theme. It takes none."
+        },
+        {
+          "name": "link",
+          "whenToUse": "An action that must read as inline text.",
+          "whenToNotUse": "For navigation, use Link. Takes no theme."
+        },
+        {
+          "name": "transparent",
+          "whenToUse": "Button behaviour with no chrome at all.",
+          "whenToNotUse": "With a theme. It takes none."
+        }
+      ]
+    },
+    {
+      "name": "theme",
+      "type": "enum",
+      "description": "Semantic meaning of the action, not decoration. Only applies to primary, secondary, outline and ghost. ai, link and transparent ignore it. primary with theme default renders the brand colour.",
+      "default": "default",
+      "values": [
+        {
+          "name": "default"
+        },
+        {
+          "name": "success",
+          "whenToUse": "A positive confirmation, such as Approve."
+        },
+        {
+          "name": "danger",
+          "whenToUse": "Destroys data or cannot be undone, such as Delete.",
+          "whenToNotUse": "Reversible actions. Overusing red teaches people to ignore it."
+        },
+        {
+          "name": "warning",
+          "whenToUse": "Pipelines only, for now.",
+          "whenToNotUse": "Anywhere outside pipelines."
+        }
+      ]
+    },
+    {
+      "name": "size",
+      "type": "enum",
+      "description": "Height, padding and gap. 2xs and 3xs always render icon-only and drop any text child, so pass aria-label.",
+      "default": "md",
+      "values": [
+        {
+          "name": "md"
+        },
+        {
+          "name": "sm"
+        },
+        {
+          "name": "xs"
+        },
+        {
+          "name": "2xs",
+          "whenToUse": "Very tight spaces and composite components.",
+          "whenToNotUse": "When the button needs a visible text label."
+        },
+        {
+          "name": "3xs",
+          "whenToUse": "Very tight spaces and composite components.",
+          "whenToNotUse": "When the button needs a visible text label."
+        }
+      ]
+    },
+    {
+      "name": "rounded",
+      "type": "boolean",
+      "description": "Renders a full pill shape instead of the default corner radius.",
+      "default": false
+    },
+    {
+      "name": "iconOnly",
+      "type": "boolean",
+      "description": "Renders a square button holding one icon and no text. Pass exactly one IconV2 child and an aria-label. Any other child is discarded.",
+      "default": false
+    },
+    {
+      "name": "disabled",
+      "type": "boolean",
+      "description": "Native disabled. A disabled button leaves the tab order, so explain why in visible text.",
+      "default": false
+    },
+    {
+      "name": "loading",
+      "type": "boolean",
+      "description": "Shows a spinner and disables the button. Don't set it for an async onClick, which handles it for you. Sets no aria-busy, so announce long waits yourself.",
+      "default": false
+    },
+    {
+      "name": "children",
+      "type": "node",
+      "description": "The label, plus any IconV2 elements shown beside it. Icons are children, not props."
+    },
+    {
+      "name": "tooltipProps",
+      "type": "object",
+      "description": "Tooltip title, content, side, align or open. Required with iconOnly unless ignoreIconOnlyTooltip is set. A tooltip does not name the button, so still pass aria-label."
+    },
+    {
+      "name": "onClick",
+      "type": "function",
+      "description": "Click handler. Return a promise and the button shows loading until it settles. Handle rejection inside the handler."
+    },
+    {
+      "name": "aria-label",
+      "type": "string",
+      "description": "Accessible name. Required for every icon-only button, including 2xs and 3xs."
+    },
+    {
+      "name": "ignoreIconOnlyTooltip",
+      "type": "boolean",
+      "description": "Opts out of the icon-only tooltip requirement, for a button whose meaning is clear from adjacent text. It does not remove the need for an accessible name."
+    },
+    {
+      "name": "asChild",
+      "type": "boolean",
+      "description": "Renders the single child (such as a router Link) instead of a <button>. The child owns the semantics, so disabled and type stop applying."
+    },
+    {
+      "name": "type",
+      "type": "string",
+      "description": "Native button type. Defaults to 'button', not 'submit'. Pass 'submit' deliberately for a form's submit control."
+    },
+    {
+      "name": "className",
+      "type": "string",
+      "description": "Layout only, such as width, margin or grid placement. Colour, radius and size have their own props."
     }
-  ],
-  "tokens": {
-    "rootClass": "cn-button",
-    "rule": "semantic-only",
-    "refs": {
-      "radius.default": "btn.default-radius",
-      "radius.rounded": "btn.rounded-radius",
-      "layout.border": "btn.border",
-      "layout.ai-border": "btn.ai-border",
-      "size.md": "btn.size-md",
-      "size.sm": "btn.size-sm",
-      "size.xs": "btn.size-xs",
-      "size.2xs": "btn.size-2xs",
-      "size.3xs": "btn.size-3xs",
-      "px.md": "btn.px-md",
-      "px.sm": "btn.px-sm",
-      "px.xs": "btn.px-xs",
-      "px.2xs": "btn.px-2xs",
-      "px.3xs": "btn.px-3xs",
-      "py.md": "btn.py-md",
-      "py.sm": "btn.py-sm",
-      "py.xs": "btn.py-xs",
-      "py.2xs": "btn.py-2xs",
-      "py.3xs": "btn.py-3xs",
-      "gap.md": "btn.gap-md",
-      "gap.sm": "btn.gap-sm",
-      "gap.xs": "btn.gap-xs",
-      "gap.2xs": "btn.gap-2xs",
-      "gap.3xs": "btn.gap-3xs",
-      "theme.default": "set.gray",
-      "theme.default-primary": "set.brand",
-      "theme.success": "set.success",
-      "theme.danger": "set.danger",
-      "theme.warning": "set.warning",
-      "variant.ai": "set.ai",
-      "variant.link": "comp.link-text",
-      "variant.ghost-hover": "state.hover",
-      "variant.ghost-selected": "state.selected",
-      "separator.opacity": "opacity.20",
-      "focus.outline": "focus.ring",
-      "disabled.opacity": "disabled.opacity",
-      "shadow.ai-inner": "comp.shadow-ai-inner"
-    }
-  }
+  ]
 }

@@ -26,8 +26,7 @@
     "view-preview:build": "pnpm -r -F './packages/*' build:ci && pnpm -r -F ./apps/design-system build",
     "view-preview:dev": "pnpm -r -F './packages/*' build && pnpm -r -F ./apps/design-system dev",
     "update:icons": "pnpm -r -F './packages/*' update:icons",
-    "update:logos": "pnpm -r -F './packages/*' update:logos",
-    "skills:index": "tsx scripts/skills/generate-index.ts"
+    "update:logos": "pnpm -r -F './packages/*' update:logos"
   },
   "engines": {
     "node": ">=18.17.1"

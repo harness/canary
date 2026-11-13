@@ -5,103 +5,102 @@
     "export": "StatusBadge",
     "import": "import { StatusBadge } from '@harnessio/ui/components'"
   },
-  "props": {
-    "shared": [
-      {
-        "name": "variant",
-        "type": "enum",
-        "values": [
-          "primary",
-          "secondary",
-          "outline",
-          "ghost",
-          "status"
-        ],
-        "default": null,
-        "codeNote": "Component style variant. Pass it explicitly; outline is the preferred choice by design convention, not a component default."
-      },
-      {
-        "name": "theme",
-        "type": "enum",
-        "values": [
-          "muted",
-          "success",
-          "warning",
-          "danger",
-          "info",
-          "merged",
-          "risk"
-        ],
-        "default": "muted",
-        "codeNote": "Semantic color theme indicating the status type"
-      },
-      {
-        "name": "size",
-        "type": "enum",
-        "values": [
-          "sm",
-          "md"
-        ],
-        "default": "md",
-        "codeNote": "Badge size"
-      },
-      {
-        "name": "children",
-        "type": "node",
-        "default": null,
-        "codeNote": "Badge label/text content"
-      }
-    ],
-    "codeOnly": [
-      {
-        "name": "icon",
-        "type": "string",
-        "trigger": "appearance-override",
-        "neverWhen": {
-          "variant": [
-            "status"
-          ]
+  "props": [
+    {
+      "name": "variant",
+      "type": "enum",
+      "description": "Visual style. Always pass it explicitly. outline is the preferred choice unless the design calls for another.",
+      "values": [
+        {
+          "name": "primary"
         },
-        "notes": "Optional IconV2 name (a key of IconNameMapV2)."
-      },
-      {
-        "name": "pulse",
-        "type": "boolean",
-        "trigger": "appearance-override",
-        "onlyWhen": {
-          "variant": [
-            "status"
-          ]
+        {
+          "name": "secondary"
         },
-        "notes": "Animates the status indicator dot (CSS animate-pulse)."
-      },
-      {
-        "name": "className",
-        "type": "string",
-        "trigger": "appearance-override",
-        "notes": "Additional CSS classes (Tailwind); should not override token-based styling"
-      }
-    ]
-  },
-  "tokens": {
-    "rootClass": "cn-badge",
-    "rule": "semantic-only",
-    "refs": {
-      "variant.primary": "badge.variant.primary",
-      "variant.secondary": "badge.variant.secondary",
-      "variant.outline": "badge.variant.outline",
-      "variant.ghost": "badge.variant.ghost",
-      "variant.status": "badge.variant.status",
-      "theme.muted": "badge.theme.muted",
-      "theme.success": "badge.theme.success",
-      "theme.warning": "badge.theme.warning",
-      "theme.danger": "badge.theme.danger",
-      "theme.info": "badge.theme.info",
-      "theme.merged": "badge.theme.merged",
-      "theme.risk": "badge.theme.risk",
-      "size.sm": "badge.size.sm",
-      "size.md": "badge.size.md",
-      "animation.pulse": "animation.pulse"
+        {
+          "name": "outline",
+          "whenToUse": "The default choice when the design doesn't specify."
+        },
+        {
+          "name": "ghost"
+        },
+        {
+          "name": "status"
+        }
+      ]
+    },
+    {
+      "name": "theme",
+      "type": "enum",
+      "description": "Meaning of the status. Translate requests to these values: error or failed is danger, passed or healthy is success, idle or unknown is muted. There is no purple or error theme. info, merged and risk are for CI/CD and DevOps products.",
+      "default": "muted",
+      "values": [
+        {
+          "name": "muted",
+          "whenToUse": "Neutral, inactive, unknown or not started."
+        },
+        {
+          "name": "success",
+          "whenToUse": "Passed, healthy or complete."
+        },
+        {
+          "name": "warning",
+          "whenToUse": "Degraded, unstable or needs attention."
+        },
+        {
+          "name": "danger",
+          "whenToUse": "Failed, broken or critical."
+        },
+        {
+          "name": "info",
+          "whenToUse": "An informational state in a CI/CD or DevOps product.",
+          "whenToNotUse": "Outside CI/CD and DevOps. Use muted, success, warning or danger."
+        },
+        {
+          "name": "merged",
+          "whenToUse": "A merged state, such as a merged pull request, in a CI/CD or DevOps product.",
+          "whenToNotUse": "Decorative purple. Use Tag instead."
+        },
+        {
+          "name": "risk",
+          "whenToUse": "A risk state in a CI/CD or DevOps product.",
+          "whenToNotUse": "Outside CI/CD and DevOps. Use warning or danger."
+        }
+      ]
+    },
+    {
+      "name": "size",
+      "type": "enum",
+      "description": "Badge size.",
+      "default": "md",
+      "values": [
+        {
+          "name": "sm"
+        },
+        {
+          "name": "md"
+        }
+      ]
+    },
+    {
+      "name": "children",
+      "type": "node",
+      "description": "The label. Always pass text: colour and icon only reinforce it, and colour alone fails colourblind users."
+    },
+    {
+      "name": "icon",
+      "type": "string",
+      "description": "An IconV2 name shown beside the text. Not allowed with variant status."
+    },
+    {
+      "name": "pulse",
+      "type": "boolean",
+      "description": "Animates the indicator dot. Only allowed with variant status."
+    },
+    {
+      "name": "className",
+      "type": "string",
+      "description": "Layout only. Don't override colour or size."
     }
-  }
+  ]
 }

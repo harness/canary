@@ -20,10 +20,10 @@ Three global design decisions for visual primitives (icons, logos, illustrations
 **Rule:** In global/shared UI, use only `inherit`, `danger`, `warning`, `success`. These map
 to global semantic tokens.
 
-**Product-specific colors:** Individual products (Pipelines, Code Repository, AI Code
-Review) may use `info`, `risk`, `merged` — these are NOT global rules and belong in
-product-specific guidance (domain rules). Don't assume they're available in all Harness
-contexts. `merged` is the purple used for merged-state indicators.
+**CI/CD and DevOps colors:** Products in the CI/CD and DevOps space (Pipelines, Code
+Repository, AI Code Review, and similar) use `info`, `risk`, `merged`. These are NOT global
+rules: don't use them in other kinds of product UI. `merged` is the purple used for
+merged-state indicators.
 
 **Why:** Keeps the global component lean; product-specific enums belong in domain-specific
 rules.

@@ -5,175 +5,161 @@
     "export": "Tag",
     "import": "import { Tag } from '@harnessio/ui/components'"
   },
-  "props": {
-    "shared": [
-      {
-        "name": "variant",
-        "type": "enum",
-        "values": [
-          "outline",
-          "secondary"
-        ],
-        "default": "outline",
-        "codeNote": "Fill treatment."
-      },
-      {
-        "name": "size",
-        "type": "enum",
-        "values": [
-          "md",
-          "sm"
-        ],
-        "default": "md",
-        "codeNote": "Tag height and type scale."
-      },
-      {
-        "name": "theme",
-        "type": "enum",
-        "values": [
-          "gray",
-          "blue",
-          "brown",
-          "cyan",
-          "green",
-          "forest-green",
-          "indigo",
-          "lime",
-          "mint",
-          "orange",
-          "pink",
-          "purple",
-          "red",
-          "violet",
-          "yellow"
-        ],
-        "default": "gray",
-        "codeNote": "Decorative colour name, not a semantic status."
-      },
-      {
-        "name": "value",
-        "type": "string",
-        "default": null,
-        "required": true,
-        "codeNote": "The tag's text, and the only required prop."
-      }
-    ],
-    "codeOnly": [
-      {
-        "name": "label",
-        "type": "string",
-        "trigger": "content",
-        "notes": "Passing label *and* value switches rendering to an internal two-tag split composite: label on the left, value on the right."
-      },
-      {
-        "name": "icon",
-        "type": "string",
-        "trigger": "appearance-override",
-        "notes": "An IconV2 name, rendered at size 'xs' before the text."
-      },
-      {
-        "name": "iconProps",
-        "type": "object",
-        "trigger": "appearance-override",
-        "notes": "An IconPropsV2 object passed through to IconV2, excluding name, size, fallback and ref."
-      },
-      {
-        "name": "actionIcon",
-        "type": "string",
-        "trigger": "appearance-override",
-        "notes": "An IconV2 name rendered inside a transparent icon-only Button after the text — the dismiss/remove affordance."
-      },
-      {
-        "name": "onActionClick",
-        "type": "function",
-        "trigger": "event-handler",
-        "notes": "Fires on the action button."
-      },
-      {
-        "name": "onClick",
-        "type": "function",
-        "trigger": "event-handler",
-        "notes": "Inherited from React.HTMLAttributes rather than declared, so it does not appear in TagProps' own members."
-      },
-      {
-        "name": "enableHover",
-        "type": "boolean",
-        "trigger": "appearance-override",
-        "notes": "Applies hover styling to a non-clickable tag."
-      },
-      {
-        "name": "rounded",
-        "type": "boolean",
-        "trigger": "appearance-override",
-        "notes": "Switches the corner radius from the default to a full pill."
-      },
-      {
-        "name": "disabled",
-        "type": "boolean",
-        "trigger": "runtime-state",
-        "notes": "Visual and cursor state only — it is not a CVA variant and sets no aria-disabled."
-      },
-      {
-        "name": "title",
-        "type": "string",
-        "trigger": "content",
-        "notes": "Native tooltip on the text span, defaulting to title || value || label so truncated text is always recoverable on hover."
-      },
-      {
-        "name": "className",
-        "type": "string",
-        "trigger": "appearance-override",
-        "notes": "Additional classes on the tag root, or on the split wrapper in split mode."
-      },
-      {
-        "name": "labelClassName",
-        "type": "string",
-        "trigger": "appearance-override",
-        "notes": "Classes for the left half of a split tag."
-      },
-      {
-        "name": "valueClassName",
-        "type": "string",
-        "trigger": "appearance-override",
-        "notes": "Classes for the right half of a split tag."
-      }
-    ]
-  },
-  "tokens": {
-    "rootClass": "cn-tag",
-    "rule": "semantic-only",
-    "refs": {
-      "layout.px": "tag.px",
-      "layout.py": "tag.py",
-      "layout.gap": "tag.gap",
-      "layout.border": "tag.border",
-      "layout.max-width": "tag.max-width",
-      "radius.default": "tag.radius-default",
-      "radius.full": "tag.radius-full",
-      "size.md": "tag.size-md",
-      "size.sm": "tag.size-sm",
-      "split.max-width": "tag.split-max-width",
-      "split.left-radius-l": "tag.split-left-radius-l",
-      "split.left-radius-r": "tag.split-left-radius-r",
-      "split.right-radius-l": "tag.split-right-radius-l",
-      "split.right-radius-r": "tag.split-right-radius-r",
-      "action.opacity-rest": "opacity.70",
-      "action.opacity-hover": "opacity.100",
-      "theme.gray": "set.gray",
-      "theme.blue": "set.blue",
-      "theme.brown": "set.brown",
-      "theme.cyan": "set.cyan",
-      "theme.green": "set.success",
-      "theme.forest-green": "set.forest-green",
-      "theme.indigo": "set.indigo",
-      "theme.lime": "set.lime",
-      "theme.mint": "set.mint",
-      "theme.orange": "set.orange",
-      "theme.pink": "set.pink",
-      "theme.purple": "set.purple",
-      "theme.red": "set.danger",
-      "theme.violet": "set.violet",
-      "theme.yellow": "set.warning"
+  "props": [
+    {
+      "name": "value",
+      "type": "string",
+      "required": true,
+      "description": "The tag's text and the only required prop. Keep it short, since long text truncates and shows in a native tooltip."
+    },
+    {
+      "name": "label",
+      "type": "string",
+      "description": "With value, renders a key/value pair as one split tag: label on the left, value on the right. In split mode title, iconProps and DOM attributes (id, data-*, aria-*) are dropped. Compose two Tags yourself if you need them."
+    },
+    {
+      "name": "variant",
+      "type": "enum",
+      "description": "Fill style.",
+      "default": "outline",
+      "values": [
+        {
+          "name": "outline"
+        },
+        {
+          "name": "secondary"
+        }
+      ]
+    },
+    {
+      "name": "size",
+      "type": "enum",
+      "description": "Tag height and type scale.",
+      "default": "md",
+      "values": [
+        {
+          "name": "md"
+        },
+        {
+          "name": "sm"
+        }
+      ]
+    },
+    {
+      "name": "theme",
+      "type": "enum",
+      "description": "Decorative colour name, not a status. Pass the colour, never success, danger, warning or error, which don't compile.",
+      "default": "gray",
+      "values": [
+        {
+          "name": "gray"
+        },
+        {
+          "name": "blue"
+        },
+        {
+          "name": "brown"
+        },
+        {
+          "name": "cyan"
+        },
+        {
+          "name": "green",
+          "whenToNotUse": "A stable attribute. It looks identical to a success state."
+        },
+        {
+          "name": "forest-green"
+        },
+        {
+          "name": "indigo"
+        },
+        {
+          "name": "lime"
+        },
+        {
+          "name": "mint"
+        },
+        {
+          "name": "orange"
+        },
+        {
+          "name": "pink"
+        },
+        {
+          "name": "purple"
+        },
+        {
+          "name": "violet"
+        },
+        {
+          "name": "red",
+          "whenToNotUse": "A stable attribute. It looks identical to a failure state."
+        },
+        {
+          "name": "yellow",
+          "whenToNotUse": "A stable attribute. It looks identical to a warning."
+        }
+      ]
+    },
+    {
+      "name": "icon",
+      "type": "string",
+      "description": "An IconV2 name shown before the text."
+    },
+    {
+      "name": "iconProps",
+      "type": "object",
+      "description": "Extra props passed to the icon, except name, size, fallback and ref. Dropped in split mode."
+    },
+    {
+      "name": "actionIcon",
+      "type": "string",
+      "description": "An IconV2 name for a dismiss or remove button after the text. Use it with onActionClick."
+    },
+    {
+      "name": "onActionClick",
+      "type": "function",
+      "description": "Fires when the action icon is clicked. It stops propagation, so the tag's onClick doesn't also fire."
+    },
+    {
+      "name": "onClick",
+      "type": "function",
+      "description": "Click handler. The tag renders a div with no role or tabIndex, so keyboard and screen reader users can't reach it. Use Button when the tag must be activated."
+    },
+    {
+      "name": "enableHover",
+      "type": "boolean",
+      "description": "Applies hover styling to a non-clickable tag. Overwritten in split mode."
+    },
+    {
+      "name": "rounded",
+      "type": "boolean",
+      "description": "Renders a full pill shape instead of the default corner radius."
+    },
+    {
+      "name": "disabled",
+      "type": "boolean",
+      "description": "Visual state only. It sets no aria-disabled and doesn't stop onClick, so stop passing the handler instead."
+    },
+    {
+      "name": "title",
+      "type": "string",
+      "description": "Native tooltip. Falls back to value then label, so don't pass an empty string. Dropped in split mode."
+    },
+    {
+      "name": "className",
+      "type": "string",
+      "description": "Layout only. On a split tag it applies to the wrapper."
+    },
+    {
+      "name": "labelClassName",
+      "type": "string",
+      "description": "Classes for the left half of a split tag."
+    },
+    {
+      "name": "valueClassName",
+      "type": "string",
+      "description": "Classes for the right half of a split tag."
     }
-  }
+  ]
 }

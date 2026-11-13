@@ -5,193 +5,272 @@
     "export": "Layout",
     "import": "import { Layout } from '@harnessio/ui/components'"
   },
-  "props": {
-    "shared": [],
-    "codeOnly": [
-      {
-        "name": "direction",
-        "type": "enum",
-        "values": [
-          "row",
-          "column",
-          "row-reverse",
-          "column-reverse"
-        ],
-        "default": "row",
-        "notes": "Layout.Flex only."
-      },
-      {
-        "name": "align",
-        "type": "enum",
-        "values": [
-          "start",
-          "center",
-          "end",
-          "baseline",
-          "stretch"
-        ],
-        "default": null,
-        "notes": "Cross-axis alignment (align-items), on both Flex and Grid."
-      },
-      {
-        "name": "justify",
-        "type": "enum",
-        "values": [
-          "start",
-          "center",
-          "end",
-          "between"
-        ],
-        "default": null,
-        "notes": "Main-axis distribution (justify-content), on both Flex and Grid."
-      },
-      {
-        "name": "wrap",
-        "type": "enum",
-        "values": [
-          "nowrap",
-          "wrap",
-          "wrap-reverse"
-        ],
-        "default": null,
-        "notes": "Layout.Flex, Horizontal and Vertical only."
-      },
-      {
-        "name": "gap",
-        "type": "enum",
-        "values": [
-          "none",
-          "4xs",
-          "3xs",
-          "2xs",
-          "xs",
-          "sm",
-          "md",
-          "lg",
-          "xl",
-          "2xl",
-          "3xl",
-          "4xl"
-        ],
-        "default": null,
-        "notes": "Space on both axes, from the layout token scale."
-      },
-      {
-        "name": "gapX",
-        "type": "enum",
-        "values": [
-          "none",
-          "4xs",
-          "3xs",
-          "2xs",
-          "xs",
-          "sm",
-          "md",
-          "lg",
-          "xl",
-          "2xl",
-          "3xl",
-          "4xl"
-        ],
-        "default": null,
-        "notes": "Horizontal gap only (column-gap)."
-      },
-      {
-        "name": "gapY",
-        "type": "enum",
-        "values": [
-          "none",
-          "4xs",
-          "3xs",
-          "2xs",
-          "xs",
-          "sm",
-          "md",
-          "lg",
-          "xl",
-          "2xl",
-          "3xl",
-          "4xl"
-        ],
-        "default": null,
-        "notes": "Vertical gap only (row-gap)."
-      },
-      {
-        "name": "flow",
-        "type": "enum",
-        "values": [
-          "row",
-          "column",
-          "dense",
-          "row dense",
-          "column dense"
-        ],
-        "default": null,
-        "notes": "Layout.Grid only (grid-auto-flow)."
-      },
-      {
-        "name": "grow",
-        "type": "boolean",
-        "notes": "Layout.Flex, Horizontal and Vertical only."
-      },
-      {
-        "name": "columns",
-        "type": "string",
-        "notes": "Layout.Grid only."
-      },
-      {
-        "name": "rows",
-        "type": "string",
-        "notes": "Layout.Grid only, the grid-template-rows equivalent of columns, with the same inline-style mechanics and the same caution about raw lengths."
-      },
-      {
-        "name": "as",
-        "type": "string",
-        "trigger": "native-behaviour",
-        "default": "div",
-        "notes": "The element the container renders as (an HTML tag name such as 'section' or 'ul', or a component)."
-      },
-      {
-        "name": "className",
-        "type": "string",
-        "trigger": "appearance-override",
-        "notes": "Merged through cn() after the variant classes."
-      },
-      {
-        "name": "children",
-        "type": "node",
-        "trigger": "content",
-        "notes": "The elements being arranged."
-      }
-    ]
-  },
-  "composition": [
+  "props": [
     {
-      "slot": "children",
-      "accepts": [
-        "ReactNode"
-      ],
-      "cardinality": "many",
-      "required": false,
-      "notes": "Anything."
+      "name": "direction",
+      "type": "enum",
+      "description": "Flow direction. Layout.Flex only. Use Horizontal or Vertical unless you need a reversed direction.",
+      "default": "row",
+      "values": [
+        {
+          "name": "row",
+          "whenToNotUse": "Use Layout.Horizontal instead. Flex row has no default gap."
+        },
+        {
+          "name": "column",
+          "whenToNotUse": "Use Layout.Vertical instead. Flex column has no default gap."
+        },
+        {
+          "name": "row-reverse",
+          "whenToUse": "A reversed row. The reason to use Layout.Flex."
+        },
+        {
+          "name": "column-reverse",
+          "whenToUse": "A reversed column. The reason to use Layout.Flex."
+        }
+      ]
+    },
+    {
+      "name": "align",
+      "type": "enum",
+      "description": "Cross-axis alignment, on Flex and Grid. Pass center on a row of mixed-height items, such as a label beside a control.",
+      "values": [
+        {
+          "name": "start"
+        },
+        {
+          "name": "center"
+        },
+        {
+          "name": "end"
+        },
+        {
+          "name": "baseline"
+        },
+        {
+          "name": "stretch"
+        }
+      ]
+    },
+    {
+      "name": "justify",
+      "type": "enum",
+      "description": "Main-axis distribution, on Flex and Grid. Use between to push two groups apart in a toolbar.",
+      "values": [
+        {
+          "name": "start"
+        },
+        {
+          "name": "center"
+        },
+        {
+          "name": "end"
+        },
+        {
+          "name": "between"
+        }
+      ]
+    },
+    {
+      "name": "wrap",
+      "type": "enum",
+      "description": "Wrapping. Layout.Flex, Horizontal and Vertical only. A wrapping row also needs gapY, or the wrapped lines touch.",
+      "values": [
+        {
+          "name": "nowrap"
+        },
+        {
+          "name": "wrap"
+        },
+        {
+          "name": "wrap-reverse"
+        }
+      ]
+    },
+    {
+      "name": "gap",
+      "type": "enum",
+      "description": "Space between children on both axes. Horizontal and Vertical default to md. Flex and Grid default to none, so always pass it. Use gap or gapX/gapY, never both. Don't put a gap in className.",
+      "values": [
+        {
+          "name": "none",
+          "whenToUse": "Flush on purpose. Pass it explicitly on Flex and Grid so the intent is visible."
+        },
+        {
+          "name": "4xs"
+        },
+        {
+          "name": "3xs"
+        },
+        {
+          "name": "2xs"
+        },
+        {
+          "name": "xs"
+        },
+        {
+          "name": "sm"
+        },
+        {
+          "name": "md"
+        },
+        {
+          "name": "lg"
+        },
+        {
+          "name": "xl"
+        },
+        {
+          "name": "2xl"
+        },
+        {
+          "name": "3xl"
+        },
+        {
+          "name": "4xl"
+        }
+      ]
+    },
+    {
+      "name": "gapX",
+      "type": "enum",
+      "description": "Horizontal gap only. Use instead of gap, never with it.",
+      "values": [
+        {
+          "name": "none",
+          "whenToUse": "Flush on purpose. Pass it explicitly on Flex and Grid so the intent is visible."
+        },
+        {
+          "name": "4xs"
+        },
+        {
+          "name": "3xs"
+        },
+        {
+          "name": "2xs"
+        },
+        {
+          "name": "xs"
+        },
+        {
+          "name": "sm"
+        },
+        {
+          "name": "md"
+        },
+        {
+          "name": "lg"
+        },
+        {
+          "name": "xl"
+        },
+        {
+          "name": "2xl"
+        },
+        {
+          "name": "3xl"
+        },
+        {
+          "name": "4xl"
+        }
+      ]
+    },
+    {
+      "name": "gapY",
+      "type": "enum",
+      "description": "Vertical gap only. Use instead of gap, never with it. Required on a wrapping row.",
+      "values": [
+        {
+          "name": "none",
+          "whenToUse": "Flush on purpose. Pass it explicitly on Flex and Grid so the intent is visible."
+        },
+        {
+          "name": "4xs"
+        },
+        {
+          "name": "3xs"
+        },
+        {
+          "name": "2xs"
+        },
+        {
+          "name": "xs"
+        },
+        {
+          "name": "sm"
+        },
+        {
+          "name": "md"
+        },
+        {
+          "name": "lg"
+        },
+        {
+          "name": "xl"
+        },
+        {
+          "name": "2xl"
+        },
+        {
+          "name": "3xl"
+        },
+        {
+          "name": "4xl"
+        }
+      ]
+    },
+    {
+      "name": "flow",
+      "type": "enum",
+      "description": "Grid auto-flow. Layout.Grid only.",
+      "values": [
+        {
+          "name": "row"
+        },
+        {
+          "name": "column"
+        },
+        {
+          "name": "dense"
+        },
+        {
+          "name": "row dense"
+        },
+        {
+          "name": "column dense"
+        }
+      ]
+    },
+    {
+      "name": "grow",
+      "type": "boolean",
+      "description": "Lets the container fill remaining space. Layout.Flex, Horizontal and Vertical only."
+    },
+    {
+      "name": "columns",
+      "type": "string",
+      "description": "Grid column template. Layout.Grid only. A number gives that many equal columns. For a string, use rem or fr, not px. For a responsive gallery use repeat(auto-fit, minmax(16rem, 1fr))."
+    },
+    {
+      "name": "rows",
+      "type": "string",
+      "description": "Grid row template. Layout.Grid only. Same rules as columns."
+    },
+    {
+      "name": "as",
+      "type": "string",
+      "description": "The element to render, such as 'section' or 'ul', or a component.",
+      "default": "div"
+    },
+    {
+      "name": "className",
+      "type": "string",
+      "description": "Positioning, sizing and overflow only. Layout emits none of these. Never a gap."
+    },
+    {
+      "name": "children",
+      "type": "node",
+      "description": "The elements being arranged."
     }
-  ],
-  "tokens": {
-    "rootClass": null,
-    "rule": "semantic-only",
-    "refs": {
-      "gap.none": "spacing.0",
-      "gap.4xs": "layout.4xs",
-      "gap.3xs": "layout.3xs",
-      "gap.2xs": "layout.2xs",
-      "gap.xs": "layout.xs",
-      "gap.sm": "layout.sm",
-      "gap.md": "layout.md",
-      "gap.lg": "layout.lg",
-      "gap.xl": "layout.xl",
-      "gap.2xl": "layout.2xl",
-      "gap.3xl": "layout.3xl",
-      "gap.4xl": "layout.4xl"
-    }
-  }
+  ]
 }

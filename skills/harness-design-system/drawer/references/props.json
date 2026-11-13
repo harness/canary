@@ -5,121 +5,75 @@
     "export": "Drawer",
     "import": "import { Drawer } from '@harnessio/ui/components'"
   },
-  "props": {
-    "shared": [],
-    "codeOnly": [
-      {
-        "name": "size",
-        "type": "enum",
-        "values": [
-          "2xs",
-          "xs",
-          "sm",
-          "md",
-          "lg",
-          "xl",
-          "full"
-        ],
-        "default": "sm",
-        "trigger": "appearance-override",
-        "notes": "Drawer.Content only."
-      },
-      {
-        "name": "direction",
-        "type": "enum",
-        "values": [
-          "right",
-          "left",
-          "top",
-          "bottom"
-        ],
-        "default": "right",
-        "trigger": "appearance-override",
-        "notes": "Set on Drawer.Root, not on Drawer.Content: Content reads it from context and applies the matching cn-drawer-content-{direction} class."
-      },
-      {
-        "name": "overlayClassName",
-        "type": "string",
-        "trigger": "appearance-override",
-        "notes": "Drawer.Content only."
-      },
-      {
-        "name": "forceWithOverlay",
-        "type": "boolean",
-        "default": "false",
-        "trigger": "appearance-override",
-        "notes": "Drawer.Content only."
-      },
-      {
-        "name": "staticStackWidth",
-        "type": "boolean",
-        "default": "false",
-        "trigger": "appearance-override",
-        "notes": "Drawer.Content only."
-      }
-    ]
-  },
-  "composition": [
+  "props": [
     {
-      "slot": "Drawer.Root",
-      "accepts": [
-        "Drawer.Trigger",
-        "Drawer.Content"
-      ],
-      "cardinality": "one",
-      "required": true,
-      "notes": "Outermost wrapper (wraps vaul)."
+      "name": "size",
+      "type": "enum",
+      "description": "Panel width, set on Drawer.Content. Pick the smallest size that fits the widest field. Don't set width through className or style.",
+      "default": "sm",
+      "values": [
+        {
+          "name": "2xs"
+        },
+        {
+          "name": "xs"
+        },
+        {
+          "name": "sm",
+          "whenToUse": "Forms."
+        },
+        {
+          "name": "md",
+          "whenToUse": "Forms with wider fields."
+        },
+        {
+          "name": "lg"
+        },
+        {
+          "name": "xl"
+        },
+        {
+          "name": "full"
+        }
+      ]
     },
     {
-      "slot": "Drawer.Content",
-      "accepts": [
-        "Drawer.Header",
-        "Drawer.Body",
-        "Drawer.Footer"
-      ],
-      "cardinality": "one",
-      "required": true,
-      "notes": "The panel itself (root class cn-drawer-content)."
+      "name": "direction",
+      "type": "enum",
+      "description": "Edge the drawer opens from. Set on Drawer.Root, not Drawer.Content.",
+      "default": "right",
+      "values": [
+        {
+          "name": "right",
+          "whenToUse": "Every create and edit drawer."
+        },
+        {
+          "name": "left"
+        },
+        {
+          "name": "top"
+        },
+        {
+          "name": "bottom"
+        }
+      ]
     },
     {
-      "slot": "Drawer.Header",
-      "accepts": [
-        "ReactNode"
-      ],
-      "cardinality": "one",
-      "required": true,
-      "notes": "Pass title (and optionally description, tagline, icon, actions, tabs, isLoading) to get the structured header, which includes the close button."
+      "name": "overlayClassName",
+      "type": "string",
+      "description": "Classes for the backdrop overlay. Drawer.Content only."
     },
     {
-      "slot": "Drawer.Body",
-      "accepts": [
-        "ReactNode"
-      ],
-      "cardinality": "one",
-      "required": true,
-      "notes": "Scrollable content area (ScrollArea; set scrollable={false} to opt out)."
+      "name": "forceWithOverlay",
+      "type": "boolean",
+      "description": "Shows the backdrop overlay on a non-modal drawer. Drawer.Content only.",
+      "default": false
     },
     {
-      "slot": "Drawer.Footer",
-      "accepts": [
-        "ButtonLayout"
-      ],
-      "cardinality": "zero-or-one",
-      "required": false,
-      "notes": "Plain div with class cn-drawer-footer, pinned below the body."
+      "name": "staticStackWidth",
+      "type": "boolean",
+      "description": "Keeps this drawer at its own width when another drawer opens on top, instead of shrinking. Drawer.Content only.",
+      "default": false
     }
-  ],
-  "tokens": {
-    "rootClass": "cn-drawer-content",
-    "rule": "semantic-only",
-    "refs": {
-      "size.2xs": "drawer.2xs",
-      "size.xs": "drawer.xs",
-      "size.sm": "drawer.sm",
-      "size.md": "drawer.md",
-      "size.lg": "drawer.lg",
-      "size.xl": "drawer.xl",
-      "size.full": "drawer.full"
-    }
-  }
+  ]
 }

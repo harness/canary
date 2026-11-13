@@ -1,6 +1,6 @@
 /**
- * Builds the indexes in skills/designsystem/ from the frontmatter of each guide in
- * skills/designsystem/<name>/SKILL.md. Only skills/designsystem/ is a skill for npx skills;
+ * Builds the indexes in skills/harness-design-system/ from the frontmatter of each guide in
+ * skills/harness-design-system/<name>/SKILL.md. Only skills/harness-design-system/ is a skill for npx skills;
  * the nested folders install with it and are reached through these indexes.
  *
  *   pnpm skills:index           write components.md (and patterns.md once pattern skills exist)
@@ -21,7 +21,7 @@
 import { existsSync, readdirSync, readFileSync, writeFileSync } from 'node:fs'
 import { join, resolve } from 'node:path'
 
-const INDEX_DIR: string = resolve(__dirname, '../../skills/designsystem')
+const INDEX_DIR: string = resolve(__dirname, '../../skills/harness-design-system')
 const UNCATEGORISED: string = 'Other'
 
 type SkillType = 'component' | 'pattern'

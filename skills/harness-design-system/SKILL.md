@@ -1,5 +1,5 @@
 ---
-name: designsystem
+name: harness-design-system
 description: Rules and component guides for building UI with @harnessio/ui, the Harness design system. Use before writing or reviewing any page or component that imports @harnessio/ui, including questions about which components have usage guidance, their props and variants. Indexes the component guides, page patterns and foundations.
 ---
 

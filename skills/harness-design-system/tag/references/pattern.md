@@ -158,7 +158,8 @@ than fighting the split path.
 // Reinforcing icon, pill shape
 <Tag variant="outline" theme="mint" icon="sparks" value="Beta" rounded />
 
-// A clickable key/value pair — hover comes from onClick, not enableHover
+// A clickable key/value pair — hover comes from onClick, not enableHover.
+// A Tag with onClick is mouse-only (TAG-001): also offer the same action through a real control
 <Tag theme="indigo" label="repo" value="canary" onClick={openRepo} />
 ```
 

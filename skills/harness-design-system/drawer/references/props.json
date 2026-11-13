@@ -7,6 +7,65 @@
   },
   "props": [
     {
+      "name": "open",
+      "type": "boolean",
+      "description": "Whether the drawer is shown. Set on Drawer.Root. Hold it in state and pass onOpenChange so the list can close the drawer."
+    },
+    {
+      "name": "onOpenChange",
+      "type": "function",
+      "description": "Called with the new open state when the drawer asks to open or close, for example on overlay click or Escape. Set on Drawer.Root and use it to update the state behind open."
+    },
+    {
+      "name": "modal",
+      "type": "boolean",
+      "description": "Whether the drawer blocks the page behind it. Set on Drawer.Root. Set it to false for a drawer that sits beside the page; forceWithOverlay then adds the backdrop back.",
+      "default": true
+    },
+    {
+      "name": "title",
+      "type": "string",
+      "description": "Heading of the drawer, set on Drawer.Header. It also names the drawer for assistive technology, so always pass it."
+    },
+    {
+      "name": "description",
+      "type": "string",
+      "description": "Supporting line under the title, set on Drawer.Header. Add it when it helps the person understand the drawer."
+    },
+    {
+      "name": "tagline",
+      "type": "node",
+      "description": "Small line above the title, such as a breadcrumb or category. Set on Drawer.Header."
+    },
+    {
+      "name": "icon",
+      "type": "string",
+      "description": "Icon shown beside the title, set on Drawer.Header. Pass an IconV2 name, or { logo: name } for a logo."
+    },
+    {
+      "name": "actions",
+      "type": "node",
+      "description": "Buttons shown in the header, set on Drawer.Header. Put the form's own actions in Drawer.Footer, not here."
+    },
+    {
+      "name": "hideClose",
+      "type": "boolean",
+      "description": "Hides the header's close button. Set on Drawer.Header. Do this instead of adding a second close button.",
+      "default": false
+    },
+    {
+      "name": "isLoading",
+      "type": "boolean",
+      "description": "Shows a loading placeholder in the header while the entity loads. Set on Drawer.Header.",
+      "default": false
+    },
+    {
+      "name": "scrollable",
+      "type": "boolean",
+      "description": "Whether Drawer.Body scrolls its own content. Set it to false only when the content manages its own scrolling.",
+      "default": true
+    },
+    {
       "name": "size",
       "type": "enum",
       "description": "Panel width, set on Drawer.Content. Pick the smallest size that fits the widest field. Don't set width through className or style.",

@@ -10,6 +10,7 @@ Global typography rules. The system is **composite-first**: you pick a named var
 **Rule:** Typography is applied as a single named variant that bundles font-size, weight, line-height, and letter-spacing together. Use the `font-*` utility (or the `Text` component's `variant` prop) — don't compose type from `text-*` + `font-semibold` + `leading-*` by hand.
 
 The variants are three families:
+
 - **Headings:** `heading-hero`, `heading-section`, `heading-default`, `heading-subsection`, `heading-base`, `heading-small`
 - **Body:** `body-normal`, `body-strong`, `body-single-line-normal`, `body-single-line-strong`, `body-code`
 - **Captions:** `caption-normal`, `caption-strong`, `caption-single-line-normal`, `caption-code`
@@ -32,7 +33,7 @@ The variants are three families:
 <h2 className="text-[20px] font-semibold leading-7">{title}</h2>
 ```
 
-**Important:** The default element is *not* a heading tag. Document structure is your responsibility — pass `as="h1".."h6"` when the text is a real heading, or screen-reader users get no outline.
+**Important:** The default element is _not_ a heading tag. Document structure is your responsibility — pass `as="h1".."h6"` when the text is a real heading, or screen-reader users get no outline.
 
 ---
 
@@ -50,15 +51,15 @@ The variants are three families:
 
 **Rule:** Text color comes from the foreground hierarchy, via `Text`'s `color` prop or the `text-cn-*` utilities — never a raw color. The levels are emphasis, not decoration:
 
-| Level | Use for |
-|---|---|
-| `foreground-1` | Headings, max-emphasis text |
-| `foreground-2` | Body text (default) |
+| Level          | Use for                              |
+| -------------- | ------------------------------------ |
+| `foreground-1` | Headings, max-emphasis text          |
+| `foreground-2` | Body text (default)                  |
 | `foreground-3` | Secondary text, metadata, timestamps |
-| `foreground-4` | Lowest-emphasis supporting text |
-| `disabled` | Disabled controls only |
+| `foreground-4` | Lowest-emphasis supporting text      |
+| `disabled`     | Disabled controls only               |
 
-Status colors (`success`, `warning`, `danger`) are for text that *conveys status* — not for emphasis or branding.
+Status colors (`success`, `warning`, `danger`) are for text that _conveys status_ — not for emphasis or branding.
 
 **Why:** See Color System — these resolve per theme, so a raw color breaks light/dark switching.
 

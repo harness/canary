@@ -35,12 +35,12 @@ frozen into a class name: it cannot move when the scale moves, and nothing can a
 
 ## Decision Framework: which member?
 
-| Question                                                         | Answer | Member             |
-| ---------------------------------------------------------------- | ------ | ------------------ |
-| Is it a row?                                                     | Yes    | `Layout.Horizontal` |
-| Is it a column?                                                  | Yes    | `Layout.Vertical`   |
-| Does it need `row-reverse` / `column-reverse`?                   | Yes    | `Layout.Flex`       |
-| Do items need to line up in **both** directions?                 | Yes    | `Layout.Grid`       |
+| Question                                         | Answer | Member              |
+| ------------------------------------------------ | ------ | ------------------- |
+| Is it a row?                                     | Yes    | `Layout.Horizontal` |
+| Is it a column?                                  | Yes    | `Layout.Vertical`   |
+| Does it need `row-reverse` / `column-reverse`?   | Yes    | `Layout.Flex`       |
+| Do items need to line up in **both** directions? | Yes    | `Layout.Grid`       |
 
 **Reach for `Horizontal` and `Vertical` first.** They cover nearly every case, they read as
 what they are at the call site, and they are the only two that default to a sensible gap.
@@ -70,12 +70,12 @@ hard way.
 
 This is the single thing to remember about this component:
 
-| Member              | Default gap        |
-| ------------------- | ------------------ |
-| `Layout.Horizontal` | `md`               |
-| `Layout.Vertical`   | `md`               |
-| `Layout.Flex`       | **none at all**    |
-| `Layout.Grid`       | **none at all**    |
+| Member              | Default gap     |
+| ------------------- | --------------- |
+| `Layout.Horizontal` | `md`            |
+| `Layout.Vertical`   | `md`            |
+| `Layout.Flex`       | **none at all** |
+| `Layout.Grid`       | **none at all** |
 
 `Flex` and `Grid` render flush unless you pass a gap, and nothing warns you (LYT-001). Two
 consequences:

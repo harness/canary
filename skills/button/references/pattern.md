@@ -73,10 +73,10 @@ two, one of them is a `secondary`.
 `theme` states what the action _means_ — success, danger, warning — and is not a palette.
 Three traps:
 
-| Trap                                    | What happens                                                                                                                                                                                |
-| --------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Trap                                    | What happens                                                                                                                                                                      |
+| --------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `theme` on `ai`, `link`, `transparent`  | **Hard rule for new code.** Button's type still accepts it (the theme is ignored), so nothing stops you. These three are single-appearance by design and have no themes (BTN-003) |
-| `variant="primary"` + `theme="default"` | Resolves to the **brand** colour set, not gray. The default primary button is deliberately brand                                                                                            |
+| `variant="primary"` + `theme="default"` | Resolves to the **brand** colour set, not gray. The default primary button is deliberately brand                                                                                  |
 
 Reach for `danger` only when the action destroys or cannot be undone. A `danger` button on a
 reversible action teaches people to ignore red.

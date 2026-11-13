@@ -25,7 +25,7 @@ Global accessibility rules sourced from WCAG 2.2 and WAI-ARIA Authoring Practice
 
 ## Tooltips provide descriptions, not accessible names
 
-**Rule:** A tooltip only supplies an accessible *description* (via `aria-describedby`), never an accessible *name* (via `aria-labelledby`). A tooltip alone cannot give a control its required accessible name.
+**Rule:** A tooltip only supplies an accessible _description_ (via `aria-describedby`), never an accessible _name_ (via `aria-labelledby`). A tooltip alone cannot give a control its required accessible name.
 
 **Why:** WCAG 2.2 + WAI-ARIA Tooltip Pattern  
 **Known gap:** IconWithTooltip renders a `<button>` with no `aria-label` and no visible text — the button has no accessible name. Add an `aria-label` prop to the button itself.
@@ -44,7 +44,7 @@ Global accessibility rules sourced from WCAG 2.2 and WAI-ARIA Authoring Practice
 
 **Rule:** Keyboard focus must have a visible indicator. Harness uses a defined focus ring token (`border.brand` + `borderWidth.2`). Don't build custom outlines — use the system token so focus stays consistent.
 
-**Why:** WCAG 2.2 SC 2.4.7 (Focus Visible)  
+**Why:** WCAG 2.2 SC 2.4.7 (Focus Visible)
 
 ---
 

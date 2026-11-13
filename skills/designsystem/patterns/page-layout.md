@@ -64,5 +64,4 @@ margin utilities between them.
 </Layout.Vertical>
 ```
 
-
 Both patterns inherit everything in [rules.md](../rules.md).

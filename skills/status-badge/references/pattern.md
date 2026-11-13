@@ -7,16 +7,18 @@
 
 ## Overview
 
-StatusBadge displays *transient, system-driven state* that changes on its own
+StatusBadge displays _transient, system-driven state_ that changes on its own
 (pending → active → closed). Reach for it when a value is **evaluative** — the colour
 implies good, bad, or waiting — and is backed by a system process.
 
 **Use when:**
+
 - A system process drives the value (execution state, connectivity, job progress)
 - The colour carries meaning (success / warning / failure / neutral)
 - The value has a real lifecycle, not a fixed label
 
 **Do not use when:**
+
 - The value is a stable attribute (account tier, scope, marketing label) → use **Tag**
 - You need a count → use **CounterBadge**
 - You need completion percentage → use **Progress**
@@ -25,12 +27,12 @@ implies good, bad, or waiting — and is backed by a system process.
 
 ## Decision Framework: StatusBadge vs Tag
 
-| Question | Answer | Component |
-|----------|--------|-----------|
-| Does this value change automatically via a system process? | Yes | StatusBadge |
-| Does the colour choice imply good/bad/waiting? | Yes | StatusBadge |
-| Does it describe what something *is*, not how it changes? | Yes | Tag |
-| Is it stable, with no lifecycle? | Yes | Tag |
+| Question                                                   | Answer | Component   |
+| ---------------------------------------------------------- | ------ | ----------- |
+| Does this value change automatically via a system process? | Yes    | StatusBadge |
+| Does the colour choice imply good/bad/waiting?             | Yes    | StatusBadge |
+| Does it describe what something _is_, not how it changes?  | Yes    | Tag         |
+| Is it stable, with no lifecycle?                           | Yes    | Tag         |
 
 ### Ambiguous cases
 
@@ -49,18 +51,18 @@ error state" or "mark it failed" all mean `theme="danger"` — the word `error` 
 anywhere in this system, as a prop value, a token, or a CSS class. Translate the request;
 never pass the word you were given.
 
-| If the request says… | Use |
-|---|---|
-| error, failed, failure, broken, critical, fatal, red | `danger` |
-| passed, succeeded, healthy, complete, approved, green | `success` |
-| warning, warn, caution, degraded, unstable, flaky, amber, yellow | `warning` |
-| neutral, inactive, idle, unknown, not started, n/a, draft, grey | `muted` |
-| informational, note, notice, blue | `info` |
-| merged, purple | `merged` — merged-state indicators only (see below) |
+| If the request says…                                             | Use                                                 |
+| ---------------------------------------------------------------- | --------------------------------------------------- |
+| error, failed, failure, broken, critical, fatal, red             | `danger`                                            |
+| passed, succeeded, healthy, complete, approved, green            | `success`                                           |
+| warning, warn, caution, degraded, unstable, flaky, amber, yellow | `warning`                                           |
+| neutral, inactive, idle, unknown, not started, n/a, draft, grey  | `muted`                                             |
+| informational, note, notice, blue                                | `info`                                              |
+| merged, purple                                                   | `merged` — merged-state indicators only (see below) |
 
 **These six plus `risk` are the complete set.** If a request maps to nothing here, it has no
 theme — say so rather than inventing one. In particular there is no `purple` theme: `merged`
-*is* the purple (`--cn-text-merged` resolves to `--cn-set-purple-secondary-text`), but it
+_is_ the purple (`--cn-text-merged` resolves to `--cn-set-purple-secondary-text`), but it
 carries "this was merged" semantics, so it is the wrong answer for a decorative purple. A
 request for purple that is not about a merge usually wants **Tag**, whose themes are
 decorative colour names and which also has a built-in dismiss action.
@@ -86,15 +88,15 @@ Code Repository, AI Code Review); the rule below still applies.
   job progress)
 - Use the shared icon vocabulary so a status reads the same across products:
 
-  | Meaning | Icon |
-  |---|---|
-  | Pass / Success | `check-circle` |
-  | Fail | `xmark-circle` |
-  | Pending | `timer` |
-  | Queued / Paused | `pause` |
-  | Rejected | `prohibition` |
+  | Meaning         | Icon             |
+  | --------------- | ---------------- |
+  | Pass / Success  | `check-circle`   |
+  | Fail            | `xmark-circle`   |
+  | Pending         | `timer`          |
+  | Queued / Paused | `pause`          |
+  | Rejected        | `prohibition`    |
   | Expired / Error | `warning-circle` |
-  | Merged | `git-merge` |
+  | Merged          | `git-merge`      |
 
 - Render **one** badge per object — if several statuses apply, show the most urgent
 
@@ -108,8 +110,8 @@ Code Repository, AI Code Review); the rule below still applies.
   "Merged" pull-request badge
 - **Don't stack multiple badges** on one object
 - **Don't combine `icon` with `variant="status"`** — the indicator dot already occupies
-  that slot *(the type also rejects this)*
-- **Don't pass `pulse` on any variant except `status`** *(the type also rejects this)*
+  that slot _(the type also rejects this)_
+- **Don't pass `pulse` on any variant except `status`** _(the type also rejects this)_
 
 ---
 

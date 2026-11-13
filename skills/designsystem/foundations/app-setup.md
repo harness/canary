@@ -32,14 +32,14 @@ Only if the app writes its own Tailwind utility classes, add the preset
 The stylesheet does **not** put the design tokens on `:root`. They are split across two
 selectors, and a host app has to supply both class names itself.
 
-| Class | What it carries | Symptom when missing |
-|---|---|---|
+| Class                                             | What it carries                                                  | Symptom when missing                                           |
+| ------------------------------------------------- | ---------------------------------------------------------------- | -------------------------------------------------------------- |
 | A **theme class** — `light`, `dark`, or a variant | The semantic tokens: `--cn-text-*`, `--cn-bg-*`, `--cn-border-*` | Semantic colors do not resolve; text and surfaces are unthemed |
-| `cn-root` | The border reset: `border-style: solid; border-width: 0` | Every `border-*` utility draws **nothing** |
+| `cn-root`                                         | The border reset: `border-style: solid; border-width: 0`         | Every `border-*` utility draws **nothing**                     |
 
 `:root, :host` does hold the theme-independent primitives — breakpoints, the raw ramp
 (`--cn-gray-*`, `--cn-pure-white`), typography tracking, component sizing. That is why a
-missing theme class looks *partially* working: the raw values still resolve, so you get a
+missing theme class looks _partially_ working: the raw values still resolve, so you get a
 half-styled result rather than an obviously dead one.
 
 The border reset is scoped `:where(.cn-root)`, so it applies to the subtree, not the element

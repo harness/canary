@@ -9,14 +9,14 @@ Global spacing rules. Everything derives from a **4px base unit**.
 
 **Rule:** Padding, margin, and gap use the `cn-*` t-shirt aliases, not raw numeric spacing tokens and never raw pixels:
 
-| Alias | Value | Alias | Value |
-|---|---|---|---|
-| `cn-4xs` | 2px | `cn-lg` | 20px |
-| `cn-3xs` | 4px | `cn-xl` | 24px |
-| `cn-2xs` | 6px | `cn-2xl` | 32px |
-| `cn-xs` | 8px | `cn-3xl` | 40px |
-| `cn-sm` | 12px | `cn-4xl` | 80px |
-| `cn-md` | 16px | | |
+| Alias    | Value | Alias    | Value |
+| -------- | ----- | -------- | ----- |
+| `cn-4xs` | 2px   | `cn-lg`  | 20px  |
+| `cn-3xs` | 4px   | `cn-xl`  | 24px  |
+| `cn-2xs` | 6px   | `cn-2xl` | 32px  |
+| `cn-xs`  | 8px   | `cn-3xl` | 40px  |
+| `cn-sm`  | 12px  | `cn-4xl` | 80px  |
+| `cn-md`  | 16px  |          |       |
 
 ```tsx
 // ✓ Token aliases
@@ -51,6 +51,7 @@ Global spacing rules. Everything derives from a **4px base unit**.
 ## Page and shell spacing come from dedicated tokens
 
 **Rule:** Don't hand-pad page-level containers. The framing metrics are tokens:
+
 - Page container padding — 16px both axes, applied via `.cn-page-content` / `.cn-page-content-pt`
 - Shell outer padding (`--cn-shell-container`) — 8px
 - Gap between shell panels (`--cn-shell-gap`) — 12px

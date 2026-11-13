@@ -37,11 +37,32 @@ takes `name` and `label`. Mark fields that may be left empty with `optional`; re
 and validation messages come from the form's schema (zod or yup resolver), not from the
 HTML `required` attribute. Do not hand-build a label and an input from primitives.
 
+**Form state:** the exception to "every name is an export of `@harnessio/ui/components`".
+`useForm` comes from `react-hook-form`, `zodResolver` from `@hookform/resolvers/zod`, and `z`
+from `zod`. `@harnessio/ui` depends on these but does not re-export them, so the app installs
+them itself: `react-hook-form` 7, `@hookform/resolvers` 5, `zod` 4, the majors
+`@harnessio/ui` uses. If they are not installed, say so rather than writing a validator by
+hand.
+
 **Submitting:** the footer sits outside the `<form>` element. Either give the form an `id`
 and set `type="submit" form={id}` on the primary button, or call `handleSubmit(onSubmit)`
 from the button's `onClick`.
 
 ```tsx
+import { useForm } from 'react-hook-form'
+import { zodResolver } from '@hookform/resolvers/zod'
+import { z } from 'zod'
+import { Button, ButtonLayout, Drawer, FormInput, FormWrapper, Layout } from '@harnessio/ui/components'
+
+const schema = z.object({
+  name: z.string().min(1, 'Name is required'),
+  description: z.string().optional(),
+  environments: z.array(z.string())
+})
+
+const formMethods = useForm<z.infer<typeof schema>>({ resolver: zodResolver(schema) })
+const { isSubmitting } = formMethods.formState
+
 <Drawer.Root open={open} onOpenChange={setOpen}>
   <Drawer.Content size="md">
     <Drawer.Header title="Create flag set" description="Group flags to target them together." />
@@ -64,6 +85,5 @@ from the button's `onClick`.
   </Drawer.Content>
 </Drawer.Root>
 ```
-
 
 Both patterns inherit everything in [rules.md](../rules.md).

@@ -7,17 +7,17 @@ Global rules for shadows and elevation. Shadow communicates **layer**, not decor
 
 ## Elevation is a 0–6 scale; pick by layer, not by taste
 
-**Rule:** Use the `shadow-cn-*` tokens. Each step corresponds to a UI layer — choose by what the element *is*, not by how prominent you want it to look:
+**Rule:** Use the `shadow-cn-*` tokens. Each step corresponds to a UI layer — choose by what the element _is_, not by how prominent you want it to look:
 
-| Token | Layer |
-|---|---|
-| `shadow-cn-none` (0) | Flat — no elevation |
-| `shadow-cn-1` | Resting controls: buttons at rest, form inputs, tooltips |
-| `shadow-cn-2` | Default surfaces: cards, resting dropdowns and popovers |
-| `shadow-cn-3` | Raised/interactive: hover-elevated cards, toasts |
-| `shadow-cn-4` | Floating layers: popovers, dropdown menus, sheets |
-| `shadow-cn-5` | Modals and large overlays |
-| `shadow-cn-6` | Maximum emphasis — rarely justified |
+| Token                | Layer                                                    |
+| -------------------- | -------------------------------------------------------- |
+| `shadow-cn-none` (0) | Flat — no elevation                                      |
+| `shadow-cn-1`        | Resting controls: buttons at rest, form inputs, tooltips |
+| `shadow-cn-2`        | Default surfaces: cards, resting dropdowns and popovers  |
+| `shadow-cn-3`        | Raised/interactive: hover-elevated cards, toasts         |
+| `shadow-cn-4`        | Floating layers: popovers, dropdown menus, sheets        |
+| `shadow-cn-5`        | Modals and large overlays                                |
+| `shadow-cn-6`        | Maximum emphasis — rarely justified                      |
 
 There is also `inner-canvas`, an inset shadow for recessed canvas areas, not part of the elevation ramp.
 

@@ -64,18 +64,3 @@ rule it departs from.
 **A skipped or unanswered warning means no change.** Skipping, dismissing, or saying "no
 preference" is not permission. Make no edit, say that nothing was changed, and leave the choice
 open.
-
-## Patterns
-
-- [page-layout](./patterns/page-layout.md): settings list page
-- [edit-drawer-pattern](./patterns/edit-drawer-pattern.md): create/edit drawer
-
-## Foundations
-
-- [accessibility](./foundations/accessibility.md)
-- [app-setup](./foundations/app-setup.md)
-- [color-system](./foundations/color-system.md)
-- [shadows](./foundations/shadows.md)
-- [spacing](./foundations/spacing.md)
-- [typography](./foundations/typography.md)
-- [visual-primitives](./foundations/visual-primitives.md)

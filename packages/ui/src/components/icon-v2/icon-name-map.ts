@@ -94,6 +94,7 @@ import CalendarXmark from './icons/calendar-xmark.svg'
 import Calendar from './icons/calendar.svg'
 import Canary from './icons/canary.svg'
 import Cell2x2 from './icons/cell2x2.svg'
+import Change from './icons/change.svg'
 import ChaosExperiment from './icons/chaos-experiment.svg'
 import ChaosFault from './icons/chaos-fault.svg'
 import ChaosTestsSolid from './icons/chaos-tests-solid.svg'
@@ -258,6 +259,8 @@ import Globe from './icons/globe.svg'
 import GripDots from './icons/grip-dots.svg'
 import Group1 from './icons/group-1.svg'
 import HalfMoon from './icons/half-moon.svg'
+import HardenedImagesSolid from './icons/hardened-images-solid.svg'
+import HardenedImages from './icons/hardened-images.svg'
 import HarnessPlugins from './icons/harness-plugins.svg'
 import HarnessVibe from './icons/harness-vibe.svg'
 import Hashtag from './icons/hashtag.svg'
@@ -637,6 +640,7 @@ export const IconNameMapV2 = {
   calendar: Calendar,
   canary: Canary,
   cell2x2: Cell2x2,
+  change: Change,
   'chaos-experiment': ChaosExperiment,
   'chaos-fault': ChaosFault,
   'chaos-tests-solid': ChaosTestsSolid,
@@ -801,6 +805,8 @@ export const IconNameMapV2 = {
   'grip-dots': GripDots,
   'group-1': Group1,
   'half-moon': HalfMoon,
+  'hardened-images-solid': HardenedImagesSolid,
+  'hardened-images': HardenedImages,
   'harness-plugins': HarnessPlugins,
   'harness-vibe': HarnessVibe,
   hashtag: Hashtag,

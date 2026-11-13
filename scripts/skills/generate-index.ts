@@ -1,10 +1,12 @@
 /**
- * Builds the skill indexes in skills/designsystem/ from each skill's SKILL.md frontmatter.
+ * Builds the indexes in skills/designsystem/ from the frontmatter of each guide in
+ * skills/designsystem/<name>/SKILL.md. Only skills/designsystem/ is a skill for npx skills;
+ * the nested folders install with it and are reached through these indexes.
  *
  *   pnpm skills:index           write components.md (and patterns.md once pattern skills exist)
  *   pnpm skills:index --check   exit 1 if the files on disk are out of date
  *
- * Frontmatter each skill needs:
+ * Frontmatter each guide needs:
  *
  *   ---
  *   name: button
@@ -19,8 +21,7 @@
 import { existsSync, readdirSync, readFileSync, writeFileSync } from 'node:fs'
 import { join, resolve } from 'node:path'
 
-const SKILLS_DIR: string = resolve(__dirname, '../../skills')
-const INDEX_SKILL: string = 'designsystem'
+const INDEX_DIR: string = resolve(__dirname, '../../skills/designsystem')
 const UNCATEGORISED: string = 'Other'
 
 type SkillType = 'component' | 'pattern'
@@ -39,7 +40,7 @@ const readValue = (raw: string, file: string, key: string): string => {
   if (value.startsWith("'") && value.endsWith("'") && value.length > 1) return value.slice(1, -1).replace(/''/g, "'")
   if (/: |\s#/.test(value)) {
     throw new Error(
-      `${file}: "${key}" contains ": " or " #", which breaks YAML and makes npx skills skip the skill. Wrap it in quotes.`
+      `${file}: "${key}" contains ": " or " #", which breaks YAML and makes npx skills skip it. Wrap it in quotes.`
     )
   }
   return value
@@ -75,7 +76,7 @@ const readTitle = (source: string, fallback: string): string => {
 }
 
 const readSkill = (folder: string): SkillEntry | null => {
-  const file = join(SKILLS_DIR, folder, 'SKILL.md')
+  const file = join(INDEX_DIR, folder, 'SKILL.md')
   if (!existsSync(file)) return null
 
   const source = readFileSync(file, 'utf8')
@@ -112,7 +113,7 @@ const renderIndex = (heading: string, intro: string, entries: SkillEntry[], foot
     const lines = byCategory
       .get(category)!
       .sort((a, b) => a.title.localeCompare(b.title))
-      .map(entry => `- [${entry.title}](../${entry.folder}/SKILL.md): ${entry.useWhen}`)
+      .map(entry => `- [${entry.title}](${entry.folder}/SKILL.md): ${entry.useWhen}`)
     return `## ${category}\n\n${lines.join('\n')}`
   })
 
@@ -130,17 +131,17 @@ const renderIndex = (heading: string, intro: string, entries: SkillEntry[], foot
 const main = (): void => {
   const check = process.argv.includes('--check')
 
-  const skills = readdirSync(SKILLS_DIR, { withFileTypes: true })
-    .filter(entry => entry.isDirectory() && entry.name !== INDEX_SKILL)
+  const skills = readdirSync(INDEX_DIR, { withFileTypes: true })
+    .filter(entry => entry.isDirectory())
     .map(entry => readSkill(entry.name))
     .filter((entry): entry is SkillEntry => entry !== null)
 
   const outputs: Array<{ path: string; content: string }> = [
     {
-      path: join(SKILLS_DIR, INDEX_SKILL, 'components.md'),
+      path: join(INDEX_DIR, 'components.md'),
       content: renderIndex(
         'Components',
-        'Components that have a skill, grouped by purpose. Open only the one you need. A component not listed here has no skill: say so rather than guessing its props.',
+        'Components that have a guide, grouped by purpose. Open only the one you need. A component not listed here has no guide: say so rather than guessing its props.',
         skills.filter(skill => skill.type === 'component'),
         'Page and composition patterns: see [rules.md](rules.md).'
       )
@@ -150,10 +151,10 @@ const main = (): void => {
   const patterns = skills.filter(skill => skill.type === 'pattern')
   if (patterns.length > 0) {
     outputs.push({
-      path: join(SKILLS_DIR, INDEX_SKILL, 'patterns.md'),
+      path: join(INDEX_DIR, 'patterns.md'),
       content: renderIndex(
         'Patterns',
-        'Page and composition patterns that have a skill, grouped by purpose. Open only the one you need.',
+        'Page and composition patterns that have a guide, grouped by purpose. Open only the one you need.',
         patterns,
         'Components: see [components.md](components.md).'
       )

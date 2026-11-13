@@ -2,23 +2,23 @@
 
 # Components
 
-Components that have a skill, grouped by purpose. Open only the one you need. A component not listed here has no skill: say so rather than guessing its props.
+Components that have a guide, grouped by purpose. Open only the one you need. A component not listed here has no guide: say so rather than guessing its props.
 
 ## Actions
 
-- [Button](../button/SKILL.md): A person activates something: submit, save, cancel, delete, open a menu. For a route or external address, use Link.
+- [Button](button/SKILL.md): A person activates something: submit, save, cancel, delete, open a menu. For a route or external address, use Link.
 
 ## Labels and status
 
-- [StatusBadge](../status-badge/SKILL.md): A system process drives the value and the colour means good, bad or waiting. For a stable attribute, use Tag.
-- [Tag](../tag/SKILL.md): A stable attribute such as a category, scope, tier or environment, or a removable chip. For system-driven state, use StatusBadge; for anything clickable, use Button.
+- [StatusBadge](status-badge/SKILL.md): A system process drives the value and the colour means good, bad or waiting. For a stable attribute, use Tag.
+- [Tag](tag/SKILL.md): A stable attribute such as a category, scope, tier or environment, or a removable chip. For system-driven state, use StatusBadge; for anything clickable, use Button.
 
 ## Layout
 
-- [Layout](../layout/SKILL.md): Two or more elements need space between them. Not for components that arrange their own children, or for positioning and scroll containers.
+- [Layout](layout/SKILL.md): Two or more elements need space between them. Not for components that arrange their own children, or for positioning and scroll containers.
 
 ## Overlays
 
-- [Drawer](../drawer/SKILL.md): Create, edit or inspect one entity without leaving the list. For confirming one decision, use Dialog; for several steps or its own URL, use a page.
+- [Drawer](drawer/SKILL.md): Create, edit or inspect one entity without leaving the list. For confirming one decision, use Dialog; for several steps or its own URL, use a page.
 
 Page and composition patterns: see [rules.md](rules.md).

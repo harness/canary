@@ -14,7 +14,7 @@ are not optional decoration: the header carries the dialog's accessible name and
 button, the body owns scrolling and padding, the footer pins the actions.
 
 The full create-drawer anatomy, with the form inside it, is in
-[the edit-drawer pattern](../../designsystem/patterns/edit-drawer-pattern.md). This file covers the
+[the edit-drawer pattern](../../patterns/edit-drawer-pattern.md). This file covers the
 judgment calls around it.
 
 ## Drawer, dialog, or page

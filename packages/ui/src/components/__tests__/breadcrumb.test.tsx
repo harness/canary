@@ -1,7 +1,15 @@
-import { render, screen } from '@testing-library/react'
+import * as TooltipPrimitive from '@radix-ui/react-tooltip'
+import { fireEvent, render as rtlRender, screen } from '@testing-library/react'
 import { describe, expect, test, vi } from 'vitest'
 
 import { Breadcrumb } from '../breadcrumb'
+
+// Ellipsis renders a tooltip, which requires a provider
+const TestWrapper = ({ children }: { children: React.ReactNode }) => (
+  <TooltipPrimitive.Provider delayDuration={0}>{children}</TooltipPrimitive.Provider>
+)
+
+const render = (ui: React.ReactElement, options = {}) => rtlRender(ui, { wrapper: TestWrapper, ...options })
 
 const mockEllipsisItems = [
   { label: 'Hidden 1', href: '/hidden-1' },
@@ -236,6 +244,172 @@ describe('Breadcrumb', () => {
     })
   })
 
+  describe('Breadcrumb.RootInteractive', () => {
+    test('renders a single button that fires onClick', () => {
+      const onClick = vi.fn()
+      render(
+        <Breadcrumb.RootInteractive isRootOnly onClick={onClick}>
+          Account
+        </Breadcrumb.RootInteractive>
+      )
+
+      fireEvent.click(screen.getByRole('button', { name: 'Account' }))
+      expect(onClick).toHaveBeenCalledTimes(1)
+    })
+
+    test('keeps the rounded avatar-wrapped icon by default (unchanged)', () => {
+      const { container } = render(<Breadcrumb.RootInteractive isRootOnly>Account</Breadcrumb.RootInteractive>)
+
+      expect(container.querySelector('.cn-avatar-rounded')).toBeInTheDocument()
+      expect(container.querySelector('.cn-breadcrumb-dropdown-icon')).not.toBeInTheDocument()
+    })
+
+    test('variant="plain" shows a plain icon (no avatar circle)', () => {
+      const { container } = render(
+        <Breadcrumb.RootInteractive variant="plain" isRootOnly>
+          Account
+        </Breadcrumb.RootInteractive>
+      )
+
+      expect(container.querySelector('.cn-breadcrumb-dropdown-icon')).toBeInTheDocument()
+      expect(container.querySelector('.cn-avatar')).not.toBeInTheDocument()
+    })
+
+    test('variant="plain" shows a square avatar when src or name is given', () => {
+      const { container } = render(
+        <Breadcrumb.RootInteractive variant="plain" avatar={{ name: 'John Doe' }}>
+          John Doe
+        </Breadcrumb.RootInteractive>
+      )
+
+      expect(container.querySelector('.cn-avatar')).toBeInTheDocument()
+      expect(container.querySelector('.cn-avatar-rounded')).not.toBeInTheDocument()
+      expect(container.querySelector('.cn-breadcrumb-dropdown-icon')).not.toBeInTheDocument()
+    })
+  })
+
+  describe('Breadcrumb.Ellipsis default dropdown (unchanged)', () => {
+    test('renders without a TooltipProvider and adds no label or tooltip', () => {
+      // rtlRender: deliberately no TooltipProvider wrapper
+      rtlRender(
+        <Breadcrumb.Root>
+          <Breadcrumb.List>
+            <Breadcrumb.Ellipsis items={mockEllipsisItems} />
+          </Breadcrumb.List>
+        </Breadcrumb.Root>
+      )
+
+      expect(screen.queryByRole('button', { name: 'Show full path' })).not.toBeInTheDocument()
+      expect(screen.getByRole('button')).not.toHaveAttribute('aria-label')
+    })
+
+    test('showTooltip opts the dropdown trigger into the label and tooltip (needs a provider)', () => {
+      render(
+        <Breadcrumb.Root>
+          <Breadcrumb.List>
+            <Breadcrumb.Ellipsis showTooltip items={mockEllipsisItems} />
+          </Breadcrumb.List>
+        </Breadcrumb.Root>
+      )
+
+      expect(screen.getByRole('button', { name: 'Show full path' })).toBeInTheDocument()
+    })
+  })
+
+  describe('Breadcrumb.Ellipsis expandInline', () => {
+    test('renders without a TooltipProvider: labelled, no tooltip, no aria-expanded', () => {
+      rtlRender(
+        <Breadcrumb.Root>
+          <Breadcrumb.List>
+            <Breadcrumb.Ellipsis expandInline items={mockEllipsisItems} />
+          </Breadcrumb.List>
+        </Breadcrumb.Root>
+      )
+
+      const button = screen.getByRole('button', { name: 'Show full path' })
+      expect(button).not.toHaveAttribute('aria-expanded')
+    })
+
+    test('showTooltip adds the tooltip on top of expandInline (needs a provider)', () => {
+      render(
+        <Breadcrumb.Root>
+          <Breadcrumb.List>
+            <Breadcrumb.Ellipsis expandInline showTooltip items={mockEllipsisItems} />
+          </Breadcrumb.List>
+        </Breadcrumb.Root>
+      )
+
+      expect(screen.getByRole('button', { name: 'Show full path' })).toBeInTheDocument()
+    })
+
+    test('expands hidden items in place instead of opening a dropdown', () => {
+      render(
+        <Breadcrumb.Root>
+          <Breadcrumb.List>
+            <Breadcrumb.Ellipsis expandInline items={mockEllipsisItems} />
+          </Breadcrumb.List>
+        </Breadcrumb.Root>
+      )
+
+      fireEvent.click(screen.getByRole('button', { name: 'Show full path' }))
+
+      expect(screen.queryByRole('button', { name: 'Show full path' })).not.toBeInTheDocument()
+      expect(screen.queryByRole('menu')).not.toBeInTheDocument()
+      expect(screen.getByRole('link', { name: 'Hidden 1' })).toHaveAttribute('href', '/hidden-1')
+      expect(screen.getByRole('link', { name: 'Hidden 2' })).toHaveAttribute('href', '/hidden-2')
+    })
+
+    test('moves focus to the first revealed link after expanding', () => {
+      render(
+        <Breadcrumb.Root>
+          <Breadcrumb.List>
+            <Breadcrumb.Ellipsis expandInline items={mockEllipsisItems} />
+          </Breadcrumb.List>
+        </Breadcrumb.Root>
+      )
+
+      fireEvent.click(screen.getByRole('button', { name: 'Show full path' }))
+
+      expect(screen.getByRole('link', { name: 'Hidden 1' })).toHaveFocus()
+    })
+
+    test('collapses again when the hidden path changes, but not on same-content re-render', () => {
+      const ui = (items: typeof mockEllipsisItems) => (
+        <Breadcrumb.Root>
+          <Breadcrumb.List>
+            <Breadcrumb.Ellipsis expandInline items={items} />
+          </Breadcrumb.List>
+        </Breadcrumb.Root>
+      )
+      const { rerender } = render(ui(mockEllipsisItems))
+
+      fireEvent.click(screen.getByRole('button', { name: 'Show full path' }))
+      rerender(ui([...mockEllipsisItems]))
+      expect(screen.getByRole('link', { name: 'Hidden 1' })).toBeInTheDocument()
+
+      rerender(ui([{ label: 'Elsewhere', href: '/elsewhere' }]))
+      expect(screen.getByRole('button', { name: 'Show full path' })).toBeInTheDocument()
+      expect(screen.queryByRole('link', { name: 'Elsewhere' })).not.toBeInTheDocument()
+    })
+
+    test('calls onItemSelect and prevents native href navigation', () => {
+      const onItemSelect = vi.fn()
+      render(
+        <Breadcrumb.Root>
+          <Breadcrumb.List>
+            <Breadcrumb.Ellipsis expandInline items={mockEllipsisItems} onItemSelect={onItemSelect} />
+          </Breadcrumb.List>
+        </Breadcrumb.Root>
+      )
+
+      fireEvent.click(screen.getByRole('button', { name: 'Show full path' }))
+      const notPrevented = fireEvent.click(screen.getByRole('link', { name: 'Hidden 1' }))
+
+      expect(onItemSelect).toHaveBeenCalledWith(mockEllipsisItems[0])
+      expect(notPrevented).toBe(false)
+    })
+  })
+
   describe('Breadcrumb.Ellipsis', () => {
     test('should render ellipsis as button with icon', () => {
       const { container } = render(
@@ -250,6 +424,17 @@ describe('Breadcrumb', () => {
       const ellipsis = container.querySelector('.cn-breadcrumb-ellipsis')
       expect(ellipsis).toBeInTheDocument()
       expect(ellipsis?.tagName).toBe('BUTTON')
+    })
+
+    test('dropdown trigger has an accessible name when showTooltip is set', () => {
+      const { getByRole } = render(
+        <Breadcrumb.Root>
+          <Breadcrumb.List>
+            <Breadcrumb.Ellipsis items={mockEllipsisItems} showTooltip />
+          </Breadcrumb.List>
+        </Breadcrumb.Root>
+      )
+      expect(getByRole('button', { name: 'Show full path' })).toBeInTheDocument()
     })
 
     test('should apply custom className', () => {

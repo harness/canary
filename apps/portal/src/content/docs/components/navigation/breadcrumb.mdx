@@ -23,7 +23,7 @@ a site, it allows navigation up to any of the ancestors.
   code={`<Breadcrumb.Root>
   <Breadcrumb.List>
     <Breadcrumb.Item>
-      <Breadcrumb.RootInteractive>Harness</Breadcrumb.RootInteractive>
+      <Breadcrumb.RootInteractive variant="plain">Harness</Breadcrumb.RootInteractive>
     </Breadcrumb.Item>
     <Breadcrumb.Separator />
     <Breadcrumb.Item>
@@ -88,7 +88,9 @@ a site, it allows navigation up to any of the ancestors.
   <Breadcrumb.Root>
     <Breadcrumb.List>
       <Breadcrumb.Item>
-        <Breadcrumb.RootInteractive>Organization</Breadcrumb.RootInteractive>
+        <Breadcrumb.RootInteractive variant="plain">
+          Organization
+        </Breadcrumb.RootInteractive>
       </Breadcrumb.Item>
       <Breadcrumb.Separator />
       <Breadcrumb.Item>
@@ -151,7 +153,9 @@ a site, it allows navigation up to any of the ancestors.
     <Breadcrumb.Root size="sm">
       <Breadcrumb.List>
         <Breadcrumb.Item>
-          <Breadcrumb.RootInteractive>Harness</Breadcrumb.RootInteractive>
+          <Breadcrumb.RootInteractive variant="plain">
+            Harness
+          </Breadcrumb.RootInteractive>
         </Breadcrumb.Item>
         <Breadcrumb.Separator />
         <Breadcrumb.Item>
@@ -173,7 +177,7 @@ a site, it allows navigation up to any of the ancestors.
       <Breadcrumb.Root size="xs">
         <Breadcrumb.List>
           <Breadcrumb.Item>
-            <Breadcrumb.RootInteractive size="xs">Harness</Breadcrumb.RootInteractive>
+            <Breadcrumb.RootInteractive size="xs" variant="plain">Harness</Breadcrumb.RootInteractive>
           </Breadcrumb.Item>
           <Breadcrumb.Separator />
           <Breadcrumb.Item>
@@ -319,6 +323,7 @@ The `Ellipsis` component displays a truncation indicator. Click to show a dropdo
     </Breadcrumb.Item>
     <Breadcrumb.Separator />
     <Breadcrumb.Ellipsis
+      showTooltip
       items={[
         { label: 'Hidden 1', href: '#' },
         { label: 'Hidden 2', href: '#' },
@@ -367,7 +372,7 @@ The `RootInteractive` component displays an interactive root element with an ava
     <Breadcrumb.Root>
       <Breadcrumb.List>
         <Breadcrumb.Item>
-          <Breadcrumb.RootInteractive isRootOnly>Account</Breadcrumb.RootInteractive>
+          <Breadcrumb.RootInteractive variant="plain" isRootOnly>Account</Breadcrumb.RootInteractive>
         </Breadcrumb.Item>
       </Breadcrumb.List>
     </Breadcrumb.Root>
@@ -377,7 +382,7 @@ The `RootInteractive` component displays an interactive root element with an ava
     <Breadcrumb.Root>
       <Breadcrumb.List>
         <Breadcrumb.Item>
-          <Breadcrumb.RootInteractive>Organization</Breadcrumb.RootInteractive>
+          <Breadcrumb.RootInteractive variant="plain">Organization</Breadcrumb.RootInteractive>
         </Breadcrumb.Item>
         <Breadcrumb.Separator />
         <Breadcrumb.Item>
@@ -393,7 +398,7 @@ The `RootInteractive` component displays an interactive root element with an ava
     <Breadcrumb.Root>
       <Breadcrumb.List>
         <Breadcrumb.Item>
-          <Breadcrumb.RootInteractive avatar={{ src: "/avatar.png" }}>John Doe</Breadcrumb.RootInteractive>
+          <Breadcrumb.RootInteractive variant="plain" avatar={{ src: "/avatar.png" }}>John Doe</Breadcrumb.RootInteractive>
         </Breadcrumb.Item>
         <Breadcrumb.Separator />
         <Breadcrumb.Item>
@@ -405,6 +410,33 @@ The `RootInteractive` component displays an interactive root element with an ava
     </Breadcrumb.Root>
   </div>
 </div>`}
+/>
+
+### Inline expand
+
+Pass `expandInline` to `Ellipsis` to reveal the hidden items in place, as regular links, instead of opening a dropdown. Each item can carry an `icon`. For an Account > Organization > Project path, put account and organization in the `items` so only the project shows by default; each link goes to that level's home.
+
+<DocsPage.ComponentExample
+  client:only
+  hideCode
+  code={`<Breadcrumb.Root>
+  <Breadcrumb.List>
+    <Breadcrumb.Ellipsis
+      expandInline
+      showTooltip
+      items={[
+        { label: "Account ID", href: "#", icon: "globe" },
+        { label: "Organization", href: "#", icon: "organizations" },
+      ]}
+    />
+    <Breadcrumb.Separator />
+    <Breadcrumb.Item>
+      <Breadcrumb.Link href="#" prefixIcon="folder">Canary</Breadcrumb.Link>
+    </Breadcrumb.Item>
+    <Breadcrumb.Separator />
+    <Breadcrumb.Page>Settings</Breadcrumb.Page>
+  </Breadcrumb.List>
+</Breadcrumb.Root>`}
 />
 
 </TabItem>
@@ -493,7 +525,7 @@ All parts of the `Breadcrumb` can be imported and composed as required.
 
 ### Known limitations
 
-- **The `Ellipsis` button has no accessible name.** It's an icon-only ghost button rendered with `ignoreIconOnlyTooltip` and just a "…" icon, so screen readers announce an unlabeled button. Pass an `aria-label` (e.g. "Show hidden breadcrumbs") — it forwards to the underlying button.
+- **Label the `Ellipsis` button.** The default dropdown `…` has no accessible name, so pass `showTooltip` (labels it "Show full path" and adds a tooltip) or your own `aria-label`. The `expandInline` variant is labelled automatically; add `showTooltip` for the tooltip too. `showTooltip` needs a `TooltipProvider` ancestor.
 - **The current page is a disabled link, not plain text.** `Page` renders `role="link"` with `aria-disabled="true"`; it's announced as a link you can't follow. That's intentional, but don't place interactive content inside it.
 - **`RootInteractive` shows a chevron but doesn't provide the menu.** It's a styled `<button>` with an avatar and an up/down chevron that implies a dropdown; wiring the actual menu (and the matching `aria-haspopup`/`aria-expanded`) is up to you. Its avatar icon is decorative, so give the button clear text.
 
@@ -566,14 +598,37 @@ All parts of the `Breadcrumb` can be imported and composed as required.
     },
     {
       name: "RootInteractive.isRootOnly",
-      description: "Show account icon when true, organizations when false",
+      description:
+        "Root-only icon when true (account by default, globe with variant=plain), organizations when false",
       defaultValue: "false",
       value: "boolean",
     },
     {
+      name: "RootInteractive.variant",
+      description:
+        "Opt-in 'plain' shows a bare icon (no avatar circle), globe for root-only, and a square avatar when src or name is given. 'default' keeps the rounded avatar",
+      defaultValue: "'default'",
+      value: "'default' | 'plain'",
+    },
+    {
       name: "RootInteractive.avatar",
-      description: "Avatar props (src, icon, name)",
+      description:
+        "Avatar props (src, icon, name). With variant=plain and src or name, renders a square avatar",
       value: "Omit<AvatarProps, 'size' | 'rounded'>",
+    },
+    {
+      name: "Ellipsis.showTooltip",
+      description:
+        "Label the ellipsis button 'Show full path' (aria-label and tooltip). Requires a TooltipProvider ancestor. With expandInline the button is always labelled; this adds the tooltip",
+      defaultValue: "false",
+      value: "boolean",
+    },
+    {
+      name: "Ellipsis.expandInline",
+      description:
+        "Expand hidden items in place as breadcrumb links instead of opening a dropdown. Focus moves to the first revealed link. Collapses again if the hidden items change. Once expanded it renders links instead of the button, so a ref on it is null",
+      defaultValue: "false",
+      value: "boolean",
     },
   ]}
 />

@@ -1,4 +1,14 @@
-import { ComponentProps, ComponentPropsWithoutRef, ComponentPropsWithRef, forwardRef, ReactNode } from 'react'
+import {
+  ComponentProps,
+  ComponentPropsWithoutRef,
+  ComponentPropsWithRef,
+  forwardRef,
+  Fragment,
+  ReactNode,
+  useEffect,
+  useRef,
+  useState
+} from 'react'
 
 import { Slot } from '@radix-ui/react-slot'
 import { cn } from '@utils/cn'
@@ -172,10 +182,98 @@ type BreadcrumbEllipsisProps = Omit<ComponentPropsWithoutRef<'button'>, 'childre
   items: BreadcrumbEllipsisItem[]
   /** Callback when an item is selected */
   onItemSelect?: (item: BreadcrumbEllipsisItem) => void
+  /**
+   * Opt-in: instead of opening a dropdown, clicking the ellipsis expands the hidden items
+   * in place as regular breadcrumb links, replacing the ellipsis. The button is labelled
+   * "Show full path" automatically.
+   *
+   * Note: once expanded, `Ellipsis` renders a Fragment of links instead of the button, so a
+   * `ref` passed to it is `null` while expanded.
+   */
+  expandInline?: boolean
+  /**
+   * Opt-in: label the ellipsis button "Show full path" (`aria-label` + tooltip). Requires a
+   * `TooltipProvider` ancestor. Defaults to `false`, so existing dropdown ellipses are
+   * unchanged (no label, no tooltip). With `expandInline` the button is always labelled, and
+   * this only adds the tooltip.
+   */
+  showTooltip?: boolean
 }
 
 const BreadcrumbEllipsis = forwardRef<HTMLButtonElement, BreadcrumbEllipsisProps>(
-  ({ className, items, onItemSelect, ...props }, ref) => {
+  ({ className, items, onItemSelect, expandInline = false, showTooltip = false, ...props }, ref) => {
+    const [expanded, setExpanded] = useState(false)
+    const firstItemRef = useRef<HTMLAnchorElement>(null)
+    const focusFirstItem = useRef(false)
+
+    // The ellipsis button unmounts when expanding, so move focus to the first revealed link
+    // (only after a user click) to keep keyboard and screen-reader users in place.
+    useEffect(() => {
+      if (expanded && focusFirstItem.current) {
+        focusFirstItem.current = false
+        firstItemRef.current?.focus()
+      }
+    }, [expanded])
+
+    // Collapse again when the hidden path itself changes (e.g. the user navigated and this
+    // instance stayed mounted). Keyed on content, not array identity, so re-renders don't reset it.
+    const itemsSignature = items.map(item => `${item.label}\u0000${item.href ?? ''}`).join('\u0001')
+    useEffect(() => {
+      if (expandInline) setExpanded(false)
+    }, [expandInline, itemsSignature])
+
+    if (expandInline && expanded) {
+      return (
+        <>
+          {items.map((item, index) => (
+            <Fragment key={index}>
+              {index > 0 && <BreadcrumbSeparator />}
+              <BreadcrumbItem>
+                <BreadcrumbLink
+                  ref={index === 0 ? firstItemRef : undefined}
+                  href={item.href}
+                  prefixIcon={item.icon}
+                  onClick={
+                    onItemSelect
+                      ? e => {
+                          // The consumer owns navigation (e.g. SPA routing); don't also follow the href
+                          e.preventDefault()
+                          onItemSelect(item)
+                        }
+                      : undefined
+                  }
+                >
+                  {item.label}
+                </BreadcrumbLink>
+              </BreadcrumbItem>
+            </Fragment>
+          ))}
+        </>
+      )
+    }
+
+    if (expandInline) {
+      return (
+        <Button
+          ref={ref}
+          variant="ghost"
+          size="xs"
+          iconOnly
+          aria-label="Show full path"
+          {...(showTooltip ? { tooltipProps: { content: 'Show full path' } } : { ignoreIconOnlyTooltip: true })}
+          className={cn('cn-breadcrumb-ellipsis', className)}
+          {...props}
+          onClick={e => {
+            props.onClick?.(e)
+            focusFirstItem.current = true
+            setExpanded(true)
+          }}
+        >
+          <IconV2 name="more-horizontal" />
+        </Button>
+      )
+    }
+
     return (
       <DropdownMenu.Root>
         <DropdownMenu.Trigger asChild>
@@ -184,7 +282,9 @@ const BreadcrumbEllipsis = forwardRef<HTMLButtonElement, BreadcrumbEllipsisProps
             variant="ghost"
             size="xs"
             iconOnly
-            ignoreIconOnlyTooltip
+            {...(showTooltip
+              ? { 'aria-label': 'Show full path', tooltipProps: { content: 'Show full path' } }
+              : { ignoreIconOnlyTooltip: true })}
             className={cn('cn-breadcrumb-ellipsis', className)}
             {...props}
           >
@@ -224,29 +324,46 @@ type BreadcrumbRootInteractiveProps = ComponentPropsWithoutRef<'button'> & {
   size?: 'sm' | 'xs'
   /**
    * Whether this is the only visible root item (no other breadcrumb items after it).
-   * - `true`: Shows 'account' icon (user is at root level, no navigation deeper)
+   * - `true`: Shows the root icon (user is at root level, no navigation deeper)
    * - `false`: Shows 'organizations' icon (user has navigated deeper)
    * Only applies when no custom icon/src/name is provided in avatar prop.
    */
   isRootOnly?: boolean
+  /**
+   * Visual style of the leading icon/avatar.
+   * - `default`: rounded avatar holding the icon; root-only icon is 'account'
+   * - `plain` (opt-in): bare icon with no avatar circle; root-only icon is 'globe';
+   *   `src`/`name` render a square avatar
+   */
+  variant?: 'default' | 'plain'
   /** Avatar props to customize the avatar appearance (src, icon, name, etc.) */
   avatar?: Omit<AvatarProps, 'size' | 'rounded'>
 }
 
 const BreadcrumbRootInteractive = forwardRef<HTMLButtonElement, BreadcrumbRootInteractiveProps>(
-  ({ className, size = 'sm', isRootOnly = false, avatar, children, ...props }, ref) => {
+  ({ className, size = 'sm', isRootOnly = false, variant = 'default', avatar, children, ...props }, ref) => {
     const avatarSize: AvatarSize = size === 'sm' ? 'lg' : 'sm'
-    // Default icon: 'account' only when root is the only visible item, otherwise 'organizations'
-    const defaultIcon: IconV2NamesType = isRootOnly ? 'account' : 'organizations'
+    const isPlain = variant === 'plain'
+    // Default icon: the root icon only when root is the only visible item, otherwise 'organizations'
+    const defaultIcon: IconV2NamesType = isRootOnly ? (isPlain ? 'globe' : 'account') : 'organizations'
+    const hasAvatarImage = !!(avatar?.src || avatar?.name)
 
     return (
       <button ref={ref} type="button" className={cn('cn-breadcrumb-dropdown', className)} {...props}>
-        <Avatar
-          size={avatarSize}
-          rounded
-          icon={!avatar?.src && !avatar?.name ? (avatar?.icon ?? defaultIcon) : avatar?.icon}
-          {...avatar}
-        />
+        {isPlain ? (
+          hasAvatarImage ? (
+            <Avatar size={avatarSize} {...avatar} />
+          ) : (
+            <IconV2 name={avatar?.icon ?? defaultIcon} size="sm" className="cn-breadcrumb-dropdown-icon" />
+          )
+        ) : (
+          <Avatar
+            size={avatarSize}
+            rounded
+            icon={!avatar?.src && !avatar?.name ? (avatar?.icon ?? defaultIcon) : avatar?.icon}
+            {...avatar}
+          />
+        )}
         <span className="cn-breadcrumb-dropdown-text">{children}</span>
         <IconV2 name="up-down" size="sm" className="cn-breadcrumb-dropdown-chevron" />
       </button>

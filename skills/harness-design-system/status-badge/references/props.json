@@ -1,0 +1,106 @@
+{
+  "id": "canary.status-badge",
+  "code": {
+    "package": "@harnessio/ui",
+    "export": "StatusBadge",
+    "import": "import { StatusBadge } from '@harnessio/ui/components'"
+  },
+  "props": [
+    {
+      "name": "variant",
+      "type": "enum",
+      "description": "Visual style. Always pass it explicitly. outline is the preferred choice unless the design calls for another.",
+      "values": [
+        {
+          "name": "primary"
+        },
+        {
+          "name": "secondary"
+        },
+        {
+          "name": "outline",
+          "whenToUse": "The default choice when the design doesn't specify."
+        },
+        {
+          "name": "ghost"
+        },
+        {
+          "name": "status"
+        }
+      ]
+    },
+    {
+      "name": "theme",
+      "type": "enum",
+      "description": "Meaning of the status. Translate requests to these values: error or failed is danger, passed or healthy is success, idle or unknown is muted. There is no purple or error theme. info, merged and risk are for CI/CD and DevOps products.",
+      "default": "muted",
+      "values": [
+        {
+          "name": "muted",
+          "whenToUse": "Neutral, inactive, unknown or not started."
+        },
+        {
+          "name": "success",
+          "whenToUse": "Passed, healthy or complete."
+        },
+        {
+          "name": "warning",
+          "whenToUse": "Degraded, unstable or needs attention."
+        },
+        {
+          "name": "danger",
+          "whenToUse": "Failed, broken or critical."
+        },
+        {
+          "name": "info",
+          "whenToUse": "An informational state in a CI/CD or DevOps product.",
+          "whenToNotUse": "Outside CI/CD and DevOps. Use muted, success, warning or danger."
+        },
+        {
+          "name": "merged",
+          "whenToUse": "A merged state, such as a merged pull request, in a CI/CD or DevOps product.",
+          "whenToNotUse": "Decorative purple. Use Tag instead."
+        },
+        {
+          "name": "risk",
+          "whenToUse": "A risk state in a CI/CD or DevOps product.",
+          "whenToNotUse": "Outside CI/CD and DevOps. Use warning or danger."
+        }
+      ]
+    },
+    {
+      "name": "size",
+      "type": "enum",
+      "description": "Badge size.",
+      "default": "md",
+      "values": [
+        {
+          "name": "sm"
+        },
+        {
+          "name": "md"
+        }
+      ]
+    },
+    {
+      "name": "children",
+      "type": "node",
+      "description": "The label. Always pass text: colour and icon only reinforce it, and colour alone fails colourblind users."
+    },
+    {
+      "name": "icon",
+      "type": "string",
+      "description": "An IconV2 name shown beside the text. Not allowed with variant status."
+    },
+    {
+      "name": "pulse",
+      "type": "boolean",
+      "description": "Animates the indicator dot. Only allowed with variant status."
+    },
+    {
+      "name": "className",
+      "type": "string",
+      "description": "Layout only. Don't override colour or size."
+    }
+  ]
+}

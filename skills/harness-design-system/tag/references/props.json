@@ -1,0 +1,165 @@
+{
+  "id": "canary.tag",
+  "code": {
+    "package": "@harnessio/ui",
+    "export": "Tag",
+    "import": "import { Tag } from '@harnessio/ui/components'"
+  },
+  "props": [
+    {
+      "name": "value",
+      "type": "string",
+      "required": true,
+      "description": "The tag's text and the only required prop. Keep it short, since long text truncates and shows in a native tooltip."
+    },
+    {
+      "name": "label",
+      "type": "string",
+      "description": "With value, renders a key/value pair as one split tag: label on the left, value on the right. In split mode title, iconProps and DOM attributes (id, data-*, aria-*) are dropped. Compose two Tags yourself if you need them."
+    },
+    {
+      "name": "variant",
+      "type": "enum",
+      "description": "Fill style.",
+      "default": "outline",
+      "values": [
+        {
+          "name": "outline"
+        },
+        {
+          "name": "secondary"
+        }
+      ]
+    },
+    {
+      "name": "size",
+      "type": "enum",
+      "description": "Tag height and type scale.",
+      "default": "md",
+      "values": [
+        {
+          "name": "md"
+        },
+        {
+          "name": "sm"
+        }
+      ]
+    },
+    {
+      "name": "theme",
+      "type": "enum",
+      "description": "Decorative colour name, not a status. Pass the colour, never success, danger, warning or error, which don't compile.",
+      "default": "gray",
+      "values": [
+        {
+          "name": "gray"
+        },
+        {
+          "name": "blue"
+        },
+        {
+          "name": "brown"
+        },
+        {
+          "name": "cyan"
+        },
+        {
+          "name": "green",
+          "whenToNotUse": "A stable attribute. It looks identical to a success state."
+        },
+        {
+          "name": "forest-green"
+        },
+        {
+          "name": "indigo"
+        },
+        {
+          "name": "lime"
+        },
+        {
+          "name": "mint"
+        },
+        {
+          "name": "orange"
+        },
+        {
+          "name": "pink"
+        },
+        {
+          "name": "purple"
+        },
+        {
+          "name": "violet"
+        },
+        {
+          "name": "red",
+          "whenToNotUse": "A stable attribute. It looks identical to a failure state."
+        },
+        {
+          "name": "yellow",
+          "whenToNotUse": "A stable attribute. It looks identical to a warning."
+        }
+      ]
+    },
+    {
+      "name": "icon",
+      "type": "string",
+      "description": "An IconV2 name shown before the text."
+    },
+    {
+      "name": "iconProps",
+      "type": "object",
+      "description": "Extra props passed to the icon, except name, size, fallback and ref. Dropped in split mode."
+    },
+    {
+      "name": "actionIcon",
+      "type": "string",
+      "description": "An IconV2 name for a dismiss or remove button after the text. Use it with onActionClick."
+    },
+    {
+      "name": "onActionClick",
+      "type": "function",
+      "description": "Fires when the action icon is clicked. It stops propagation, so the tag's onClick doesn't also fire."
+    },
+    {
+      "name": "onClick",
+      "type": "function",
+      "description": "Click handler. The tag renders a div with no role or tabIndex, so keyboard and screen reader users can't reach it. Use Button when the tag must be activated."
+    },
+    {
+      "name": "enableHover",
+      "type": "boolean",
+      "description": "Applies hover styling to a non-clickable tag. Overwritten in split mode."
+    },
+    {
+      "name": "rounded",
+      "type": "boolean",
+      "description": "Renders a full pill shape instead of the default corner radius."
+    },
+    {
+      "name": "disabled",
+      "type": "boolean",
+      "description": "Visual state only. It sets no aria-disabled and doesn't stop onClick, so stop passing the handler instead."
+    },
+    {
+      "name": "title",
+      "type": "string",
+      "description": "Native tooltip. Falls back to value then label, so don't pass an empty string. Dropped in split mode."
+    },
+    {
+      "name": "className",
+      "type": "string",
+      "description": "Layout only. On a split tag it applies to the wrapper."
+    },
+    {
+      "name": "labelClassName",
+      "type": "string",
+      "description": "Classes for the left half of a split tag."
+    },
+    {
+      "name": "valueClassName",
+      "type": "string",
+      "description": "Classes for the right half of a split tag."
+    }
+  ]
+}

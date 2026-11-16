@@ -1,0 +1,15 @@
+{
+  "name": "figma-icon-lint",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Figma plugin that lints new HDS icon/logo components. Rules are shared with the publish-ds-icon-logo skill.",
+  "type": "module",
+  "scripts": {
+    "gen:shipped": "node scripts/gen-shipped-names.mjs",
+    "build": "node scripts/gen-shipped-names.mjs && node build.mjs",
+    "test": "node test/parity.test.mjs && node test/plugin-logic.test.mjs"
+  },
+  "devDependencies": {
+    "esbuild": "^0.25.0"
+  }
+}

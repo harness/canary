@@ -1,0 +1,10 @@
+{
+  "name": "HDS Icon & Logo Lint",
+  "id": "1704214996504051569",
+  "api": "1.0.0",
+  "main": "dist/code.js",
+  "ui": "dist/ui.html",
+  "editorType": ["figma"],
+  "documentAccess": "dynamic-page",
+  "networkAccess": { "allowedDomains": ["none"] }
+}

@@ -1,0 +1,76 @@
+<!doctype html>
+<meta charset="utf-8" />
+<style>
+  body { font: 12px/1.45 Inter, system-ui, sans-serif; margin: 12px; color: #1b1b1f; }
+  button { font: inherit; padding: 6px 10px; margin-right: 6px; cursor: pointer; }
+  .sum { margin: 12px 0; font-weight: 600; }
+  .ok { color: #1a7f37; } .bad { color: #cf222e; }
+  .item { border: 1px solid #ddd; border-radius: 6px; padding: 8px; margin-bottom: 8px; cursor: pointer; }
+  .item b { display: block; margin-bottom: 4px; }
+  .e { color: #cf222e; } .w { color: #9a6700; }
+  pre { white-space: pre-wrap; margin: 2px 0; font: inherit; }
+</style>
+<button id="sel">Lint selection</button><button id="page">Lint whole page</button><button id="copy" hidden>Copy summary</button>
+<p class="w">Before linting, update this branch from main so every shipped name is on the page.</p>
+<label id="legacyRow" hidden><input type="checkbox" id="legacy"> Show <span id="legacyN">0</span> warnings on already-shipped assets</label>
+<div id="out"></div>
+<details id="review" hidden>
+  <summary><b>Admin review (by eye)</b></summary>
+  <ul>
+    <li>On the correct page (<code>icons-to-dev</code> icons, <code>brands-to-dev</code> logos)</li>
+    <li>Name: dot-prefixed, kebab-case, noun-first, right family prefix</li>
+    <li>A COMPONENT, 16x16 (icon) or 22x22 (logo)</li>
+    <li>Reads at actual size; stroke weight and optical size match its neighbours</li>
+    <li>Logos: description holds the brand hex and the mark is visible on it</li>
+    <li>No existing component was deleted or renamed on the branch</li>
+  </ul>
+</details>
+<script>
+  const out = document.getElementById('out')
+  const send = mode => parent.postMessage({ pluginMessage: { kind: 'lint', mode } }, '*')
+  document.getElementById('sel').onclick = () => send('selection')
+  document.getElementById('page').onclick = () => send('page')
+  let last = null
+  document.getElementById('copy').onclick = () => {
+    if (!last) return
+    const lines = [(last.errorCount ? 'Lint: ' + last.errorCount + ' error(s), ' : 'Lint clean, ') + last.warnCount + ' warning(s)']
+    if (last.missing && last.missing.length) lines.push('- Branch may be out of date: ' + last.missing.length + ' shipped name(s) missing from the page (' + last.missing.slice(0, 8).join(', ') + '). Update from main.')
+    last.collisions.forEach(c => lines.push('- ' + c))
+    last.items.filter(visible).forEach(i => { i.errors.forEach(e => lines.push('- ' + i.name + ': ' + e)); i.warnings.forEach(w => lines.push('- ' + i.name + ' (warn): ' + w)) })
+    const t = document.createElement('textarea'); t.value = lines.join('\n'); document.body.appendChild(t); t.select(); document.execCommand('copy'); t.remove()
+  }
+  const showLegacy = () => document.getElementById('legacy').checked
+  const visible = i => !i.legacy || showLegacy()
+  const esc = s => String(s).replace(/[&<>]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;' }[c]))
+  onmessage = ev => {
+    const m = ev.data.pluginMessage
+    if (m.kind === 'notice') { out.innerHTML = '<p>' + esc(m.text) + '</p>'; return }
+    last = m
+    document.getElementById('copy').hidden = false
+    document.getElementById('review').hidden = false
+    render()
+  }
+  document.getElementById('legacy').onchange = () => last && render()
+  function render() {
+    const m = last
+    const hidden = m.items.filter(i => !visible(i))
+    const hiddenWarns = hidden.reduce((n, i) => n + i.warnings.length, 0)
+    document.getElementById('legacyRow').hidden = !m.items.some(i => i.legacy)
+    document.getElementById('legacyN').textContent = m.items.filter(i => i.legacy).reduce((n, i) => n + i.warnings.length, 0)
+    const ok = !m.errorCount
+    let h = '<div class="sum ' + (ok ? 'ok' : 'bad') + '">' + (ok ? '✅ Clean' : '❌ ' + m.errorCount + ' error(s)') +
+      ', ' + (m.warnCount - hiddenWarns) + ' warning(s)' + (hiddenWarns ? ' (' + hiddenWarns + ' on shipped assets hidden)' : '') + ' across ' + m.checked + ' component(s) (' + esc(m.scope) + ')</div>'
+    if (m.onMain) h += '<p class="w">You are on the MAIN file. Lint on the branch before merging.</p>'
+    if (m.missing && m.missing.length) h += '<p class="w">Branch may be out of date: ' + m.missing.length + ' shipped name(s) are missing from this page (' + esc(m.missing.slice(0, 8).join(', ')) + (m.missing.length > 8 ? ', …' : '') + '). Update the branch from main and re-run, or check that nothing was deleted or renamed.</p>'
+    m.collisions.forEach(c => { h += '<div class="item e">' + esc(c) + '</div>' })
+    m.items.filter(visible).forEach(i => {
+      h += '<div class="item" data-id="' + esc(i.id) + '"><b>' + esc(i.name) + '</b>' +
+        i.errors.map(e => '<pre class="e">ERROR: ' + esc(e) + '</pre>').join('') +
+        i.warnings.map(w => '<pre class="w">warn: ' + esc(w) + '</pre>').join('') + '</div>'
+    })
+    out.innerHTML = h
+    out.querySelectorAll('.item[data-id]').forEach(el => {
+      el.onclick = () => parent.postMessage({ pluginMessage: { kind: 'select', id: el.dataset.id } }, '*')
+    })
+  }
+</script>

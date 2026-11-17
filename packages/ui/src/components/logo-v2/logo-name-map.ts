@@ -49,6 +49,7 @@ import Conan from './logos/conan.svg'
 import Conda from './logos/conda.svg'
 import Confluence from './logos/confluence.svg'
 import Connector from './logos/connector.svg'
+import Cosmos from './logos/cosmos.svg'
 import Cran from './logos/cran.svg'
 import Cursor from './logos/cursor.svg'
 import CustomDeployment from './logos/custom-deployment.svg'
@@ -234,6 +235,7 @@ export const LogoNameMapV2 = {
   conda: Conda,
   confluence: Confluence,
   connector: Connector,
+  cosmos: Cosmos,
   cran: Cran,
   cursor: Cursor,
   'custom-deployment': CustomDeployment,

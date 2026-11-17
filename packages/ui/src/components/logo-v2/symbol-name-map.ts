@@ -49,6 +49,7 @@ import Conan from './symbols/conan.svg'
 import Conda from './symbols/conda.svg'
 import Confluence from './symbols/confluence.svg'
 import Connector from './symbols/connector.svg'
+import Cosmos from './symbols/cosmos.svg'
 import Cran from './symbols/cran.svg'
 import Cursor from './symbols/cursor.svg'
 import CustomDeployment from './symbols/custom-deployment.svg'
@@ -234,6 +235,7 @@ export const SymbolNameMap = {
   conda: Conda,
   confluence: Confluence,
   connector: Connector,
+  cosmos: Cosmos,
   cran: Cran,
   cursor: Cursor,
   'custom-deployment': CustomDeployment,

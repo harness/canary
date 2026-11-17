@@ -492,6 +492,7 @@ import TableRows from './icons/table-rows.svg'
 import TagCheck from './icons/tag-check.svg'
 import TagSolid from './icons/tag-solid.svg'
 import Tag from './icons/tag.svg'
+import TargetTest from './icons/target-test.svg'
 import Target from './icons/target.svg'
 import TasVars from './icons/tas-vars.svg'
 import Tas from './icons/tas.svg'
@@ -1038,6 +1039,7 @@ export const IconNameMapV2 = {
   'tag-check': TagCheck,
   'tag-solid': TagSolid,
   tag: Tag,
+  'target-test': TargetTest,
   target: Target,
   'tas-vars': TasVars,
   tas: Tas,

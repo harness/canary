@@ -133,6 +133,7 @@ import Cloud from './icons/cloud.svg'
 import Cluster from './icons/cluster.svg'
 import CodeBracketsSquare from './icons/code-brackets-square.svg'
 import CodeBrackets from './icons/code-brackets.svg'
+import CodeCoverage from './icons/code-coverage.svg'
 import CodeDown from './icons/code-down.svg'
 import CodeUp from './icons/code-up.svg'
 import Code from './icons/code.svg'
@@ -282,6 +283,7 @@ import InfrastructureSolid from './icons/infrastructure-solid.svg'
 import Infrastructure from './icons/infrastructure.svg'
 import InputSet from './icons/input-set.svg'
 import Instances from './icons/instances.svg'
+import Integration from './icons/integration.svg'
 import Internet from './icons/internet.svg'
 import ItalicSquare from './icons/italic-square.svg'
 import Italic from './icons/italic.svg'
@@ -497,6 +499,7 @@ import TasVars from './icons/tas-vars.svg'
 import Tas from './icons/tas.svg'
 import TaskList from './icons/task-list.svg'
 import Tasks from './icons/tasks.svg'
+import Team from './icons/team.svg'
 import Templates from './icons/templates.svg'
 import TerminalTag from './icons/terminal-tag.svg'
 import Terminal from './icons/terminal.svg'
@@ -679,6 +682,7 @@ export const IconNameMapV2 = {
   cluster: Cluster,
   'code-brackets-square': CodeBracketsSquare,
   'code-brackets': CodeBrackets,
+  'code-coverage': CodeCoverage,
   'code-down': CodeDown,
   'code-up': CodeUp,
   code: Code,
@@ -828,6 +832,7 @@ export const IconNameMapV2 = {
   infrastructure: Infrastructure,
   'input-set': InputSet,
   instances: Instances,
+  integration: Integration,
   internet: Internet,
   'italic-square': ItalicSquare,
   italic: Italic,
@@ -1043,6 +1048,7 @@ export const IconNameMapV2 = {
   tas: Tas,
   'task-list': TaskList,
   tasks: Tasks,
+  team: Team,
   templates: Templates,
   'terminal-tag': TerminalTag,
   terminal: Terminal,

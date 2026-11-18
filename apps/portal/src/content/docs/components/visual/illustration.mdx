@@ -6,7 +6,6 @@ description: Illustration component
 import { DocsPage } from "@/components/docs-page";
 import { Tabs, TabItem } from "@astrojs/starlight/components";
 import PageTabsToc from "@/components/page-tabs-toc.astro";
-import { Illustration, IllustrationsNameMap } from "@harnessio/ui/components";
 
 <PageTabsToc />
 
@@ -16,40 +15,11 @@ import { Illustration, IllustrationsNameMap } from "@harnessio/ui/components";
 
 <TabItem label="Overview">
 
-The `Illustration` component displays various illustrations and graphics used throughout the Harness UI. It has built-in support for theme-specific variants.
+The `Illustration` component displays various illustrations and graphics used throughout the Harness UI. It is sized with the `size` prop (width and height, default 112px), and has built-in support for theme-specific variants: with `themeDependent`, illustrations with a dedicated light variant use it automatically in light mode, while those without one are inverted so the artwork stays legible.
 
-<DocsPage.ComponentExample
-  client:only
-  code={`<Illustration name="no-data-folder" size={112} />`}
-/>
+## Playground
 
-## Variations
-
-### Sizing
-
-The `Illustration` component can be sized using the `size` prop which sets both width and height (default is 112px).
-
-<DocsPage.ComponentExample
-  client:only
-  code={`
-  <Layout.Flex gap="xl" justify="center" align="center" className="min-w-[400px]">
-    <Illustration name="no-data-folder" size={150} />
-    <Illustration name="no-data-folder" size={112} />
-    <Illustration name="no-data-folder" size={80} />
-  </Layout.Flex>
-  `}
-/>
-
-### Theme support
-
-Some illustrations have theme-specific variants. Use the `themeDependent` prop to enable theme-sensitive rendering.
-
-<DocsPage.ComponentExample
-  client:only
-  code={`<Illustration name="no-data-folder" themeDependent />`}
-/>
-
-Illustrations with specific light theme variants will use them automatically when the theme is set to light. For illustrations without a light variant, enabling `themeDependent` will apply an invert filter in light mode.
+<DocsPage.IllustrationPlayground client:only />
 
 ## Installation
 

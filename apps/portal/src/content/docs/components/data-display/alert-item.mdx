@@ -18,68 +18,11 @@ import PageTabsToc from "@/components/page-tabs-toc.astro";
 
 The `AlertItem` component renders a single alert or notification row: a theme-colored left accent, title, relative timestamp, optional unread indicator, metadata line, and optional action link. Rows support full-row navigation via `to`/`onClick` while keeping nested action links independently clickable.
 
-`AlertItem` deliberately ships without a list container. Render items inside any container you already use — a `Card`, a plain `Layout.Vertical`, or your own wrapper — and the row handles its own accent and corner rounding based on its position.
+`AlertItem` deliberately ships without a list container. Render items inside any container you already use — a `Card`, a plain `Layout.Vertical`, or your own wrapper — and the row handles its own accent and corner rounding based on its position. To show several alerts, render multiple `AlertItem`s inside any container of your choice.
 
-<DocsPage.ComponentExample
-  client:only
-  contentClassName={"!block ![place-items:normal]"}
-  code={`<div className="space-y-cn-sm w-full">
-  <div className="flex items-start gap-cn-md border-b border-cn-borders-3 pb-cn-sm">
-    <span className="text-cn-size-2 text-cn-3 w-32 shrink-0 font-mono pt-cn-xs">warning</span>
-    <div className="flex-1 min-w-0">
-      <AlertItem theme="warning" read={false} timestamp={Date.now() - 3 * 60 * 60 * 1000} to="/alerts/1">
-        <AlertItem.Title>Pipeline Failed</AlertItem.Title>
-        <AlertItem.Description>
-          build #2481 failed at the integration stage due to an authentication error.
-        </AlertItem.Description>
-        <AlertItem.Link to="/subscription">View subscription</AlertItem.Link>
-      </AlertItem>
-    </div>
-  </div>
-  <div className="flex items-start gap-cn-md border-b border-cn-borders-3 pb-cn-sm">
-    <span className="text-cn-size-2 text-cn-3 w-32 shrink-0 font-mono pt-cn-xs">danger</span>
-    <div className="flex-1 min-w-0">
-      <AlertItem theme="danger" read={false} timestamp={Date.now() - 5 * 60 * 1000} to="/alerts/critical">
-        <AlertItem.Title>System Outage Imminent</AlertItem.Title>
-        <AlertItem.Description>
-          All services will be unavailable in 5 minutes due to a critical system update.
-        </AlertItem.Description>
-        <AlertItem.Link to="/status">View Status Page</AlertItem.Link>
-      </AlertItem>
-    </div>
-  </div>
-  <div className="flex items-start gap-cn-md border-b border-cn-borders-3 pb-cn-sm">
-    <span className="text-cn-size-2 text-cn-3 w-32 shrink-0 font-mono pt-cn-xs">read</span>
-    <div className="flex-1 min-w-0">
-      <AlertItem theme="warning" read={true} timestamp={Date.now() - 24 * 60 * 60 * 1000}>
-        <AlertItem.Title>Security Vulnerability Detected</AlertItem.Title>
-        <AlertItem.Description>
-          A high-severity vulnerability was found in module 'X'. Patch has been deployed.
-        </AlertItem.Description>
-      </AlertItem>
-    </div>
-  </div>
-  <div className="flex items-start gap-cn-md border-b border-cn-borders-3 pb-cn-sm">
-    <span className="text-cn-size-2 text-cn-3 w-32 shrink-0 font-mono pt-cn-xs">success</span>
-    <div className="flex-1 min-w-0">
-      <AlertItem theme="success" read={false} timestamp={Date.now() - 2 * 24 * 60 * 60 * 1000} onClick={() => alert('Medium alert clicked!')}>
-        <AlertItem.Title>New Feature Release</AlertItem.Title>
-      </AlertItem>
-    </div>
-  </div>
-  <div className="flex items-start gap-cn-md">
-    <span className="text-cn-size-2 text-cn-3 w-32 shrink-0 font-mono pt-cn-xs">info</span>
-    <div className="flex-1 min-w-0">
-      <AlertItem theme="info" read={true} timestamp={Date.now() - 7 * 24 * 60 * 60 * 1000}>
-        <AlertItem.Title>Weekly Newsletter</AlertItem.Title>
-        <AlertItem.Description>
-          Check out the latest updates from our team this week!
-        </AlertItem.Description>
-      </AlertItem>
-    </div>
-  </div>
-</div>`}
-/>
+## Playground
+
+<DocsPage.AlertItemPlayground client:only />
 
 ## Installation
 
@@ -98,8 +41,6 @@ return (
   </AlertItem>
 )
 ```
-
-To show several alerts, render multiple `AlertItem`s inside any container of your choice.
 
 </TabItem>
 

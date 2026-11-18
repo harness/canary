@@ -3,6 +3,12 @@ import CategorySidebar from "./CategorySidebar.astro";
 import ComponentSidebarSearch from "./ComponentSidebarSearch.astro";
 import ConditionalPageSidebar from "./ConditionalPageSidebar.astro";
 import TopNav from "./TopNav.astro";
+
+// Page-layout examples are full app-shell wireframes, so let them use the whole
+// content width instead of the 1200px reading column.
+const isWide = Astro.locals.starlightRoute.id.startsWith(
+  "patterns/page-layouts/",
+);
 ---
 
 <!-- App shell: pinned to the viewport height so the rails stay fixed and only
@@ -34,7 +40,7 @@ import TopNav from "./TopNav.astro";
       <div class="flex justify-center" style="padding-top: 20px;">
         <div
           class="flex gap-cn-xl w-full"
-          style="max-width: 1200px; padding: 0 40px;"
+          style={`max-width: ${isWide ? "none" : "1200px"}; padding: 0 40px;`}
         >
           <!-- Main Content -->
           <div class="flex-1 min-w-0">

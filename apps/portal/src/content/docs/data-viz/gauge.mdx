@@ -1,0 +1,212 @@
+---
+title: Gauge
+description: A circular indicator showing a value against a maximum, with automatic status coloring.
+tableOfContents: false
+---
+
+import { DocsPage } from "@/components/docs-page";
+import { Tabs, TabItem } from "@astrojs/starlight/components";
+import PageTabsToc from "@/components/page-tabs-toc.astro";
+
+<PageTabsToc />
+
+<div id="page-level-tabs">
+
+<Tabs>
+
+<TabItem label="Overview">
+
+The `Gauge` component renders a ring that fills in proportion to `value / max`. By default the ring is colored by status — `poor`, `fair` or `good` — derived from `thresholds`, and a descriptor label is shown below it.
+
+<DocsPage.ComponentExample
+  client:only
+  code={`
+  <Layout.Horizontal gap="2xl">
+    <Gauge value={20} label="Coverage" />
+    <Gauge value={55} label="Coverage" />
+    <Gauge value={90} label="Coverage" />
+  </Layout.Horizontal>
+`}
+/>
+
+## Variations
+
+### Value formats
+
+`valueFormat` controls the text in the center: `percent` (default), `fraction` (`value / max`) or `score`.
+
+<DocsPage.ComponentExample
+  client:only
+  code={`
+  <Layout.Horizontal gap="2xl">
+    <Gauge value={72} valueFormat="percent" label="Percent" />
+    <Gauge value={36} max={50} valueFormat="fraction" label="Fraction" />
+    <Gauge value={8.4} max={10} valueFormat="score" precision={1} label="Score" />
+  </Layout.Horizontal>
+`}
+/>
+
+### Sizes
+
+<DocsPage.ComponentExample
+  client:only
+  code={`
+  <Layout.Horizontal gap="xl" align="center">
+    <Gauge value={70} size="3xs" />
+    <Gauge value={70} size="2xs" />
+    <Gauge value={70} size="xs" />
+    <Gauge value={70} size="sm" />
+    <Gauge value={70} size="md" />
+    <Gauge value={70} size="lg" />
+  </Layout.Horizontal>
+`}
+/>
+
+### Status and description
+
+Set `status` to force a level (or `none` for the neutral brand color). `description` replaces the derived status label; pass `null` to hide it.
+
+<DocsPage.ComponentExample
+  client:only
+  code={`
+  <Layout.Horizontal gap="2xl">
+    <Gauge value={40} status="none" description="Custom note" />
+    <Gauge value={40} status="good" />
+    <Gauge value={40} description={null} />
+  </Layout.Horizontal>
+`}
+/>
+
+## Installation
+
+```tsx
+import { Gauge } from "@harnessio/ui/components";
+
+<Gauge value={72} label="Coverage" />;
+```
+
+</TabItem>
+
+<TabItem label="Usage">
+
+## Anatomy
+
+- **Ring** — track plus an indicator arc sized by `value / max`.
+- **Value** — centered text, formatted by `valueFormat` and `precision` (hide with `showValue={false}`).
+- **Label** — optional caption via `label` (hide with `showLabel={false}`).
+- **Descriptor** — text below the ring; defaults to the status label (Poor / Fair / Good).
+
+## Best practices
+
+**Do**
+
+- Use a gauge for a single bounded metric (coverage, health score) where the status matters at a glance.
+- Tune `thresholds` and `statusLabelMap` so colors and words match what the metric means.
+
+**Don't**
+
+- Don't use a gauge to compare many values — use a chart instead.
+- Don't rely on color alone; keep the descriptor or value visible.
+
+## Accessibility
+
+The ring is decorative (`aria-hidden`); the value and descriptor text carry the meaning. Always provide a `label` so the metric is named.
+
+</TabItem>
+
+<TabItem label="Properties">
+
+## Properties
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "value",
+      description: "Current value.",
+      required: true,
+      value: "number",
+    },
+    {
+      name: "max",
+      description: "Maximum value; value is clamped between 0 and max.",
+      required: false,
+      defaultValue: "100",
+      value: "number",
+    },
+    {
+      name: "size",
+      description: "Size of the gauge.",
+      required: false,
+      defaultValue: "'md'",
+      value: "'3xs' | '2xs' | 'xs' | 'sm' | 'md' | 'lg'",
+    },
+    {
+      name: "label",
+      description: "Caption for the gauge.",
+      required: false,
+      value: "string",
+    },
+    {
+      name: "showLabel",
+      description: "Whether to show the label.",
+      required: false,
+      defaultValue: "true",
+      value: "boolean",
+    },
+    {
+      name: "showValue",
+      description: "Whether to show the formatted value in the center.",
+      required: false,
+      defaultValue: "true",
+      value: "boolean",
+    },
+    {
+      name: "valueFormat",
+      description: "How the center value is formatted.",
+      required: false,
+      defaultValue: "'percent'",
+      value: "'percent' | 'fraction' | 'score'",
+    },
+    {
+      name: "precision",
+      description: "Decimal places for the formatted value.",
+      required: false,
+      value: "number",
+    },
+    {
+      name: "status",
+      description: "Status level. 'auto' derives it from thresholds.",
+      required: false,
+      defaultValue: "'auto'",
+      value: "'auto' | 'poor' | 'fair' | 'good' | 'none'",
+    },
+    {
+      name: "thresholds",
+      description:
+        "Percent cut-offs: at or below poor is Poor, at or below fair is Fair, otherwise Good.",
+      required: false,
+      defaultValue: "{ poor: 33, fair: 66 }",
+      value: "{ poor: number; fair: number }",
+    },
+    {
+      name: "statusLabelMap",
+      description: "Custom descriptor text per status.",
+      required: false,
+      defaultValue: "{ poor: 'Poor', fair: 'Fair', good: 'Good' }",
+      value: "{ poor: string; fair: string; good: string }",
+    },
+    {
+      name: "description",
+      description:
+        "Content below the ring. Falls back to the status label; pass null to hide.",
+      required: false,
+      value: "ReactNode",
+    },
+  ]}
+/>
+
+</TabItem>
+
+</Tabs>
+
+</div>

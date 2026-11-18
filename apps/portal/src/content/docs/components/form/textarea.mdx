@@ -18,174 +18,20 @@ import PageTabsToc from "@/components/page-tabs-toc.astro";
 
 The `Textarea` component is a multi-line text input with options for a label, caption, character counter, resizing behaviour, validation states, and an info tooltip.
 
-<DocsPage.ComponentExample
-  client:only
-  code={`
-  <Layout.Vertical gap="xl" className="min-w-[400px]">
-    <Textarea
-      id="1"
-      name="default"
-      label="Default"
-      placeholder="Placeholder"
-      caption="Caption text"
-      rows={4}
-    />
-  </Layout.Vertical>
-  `}
-/>
+`label`, `placeholder`, and `caption` cover the text around the field, while `error` and `warning` show a validation message and switch the theme (otherwise set `theme` directly). `rows` sets the starting height, `resizable` lets the user drag to resize, and `autoResize` grows the field to fit its content. `maxCharacters` shows a used / max counter, and `orientation` places the label above or beside the field. Try them in the playground below.
+
+<DocsPage.TextareaPlayground client:only />
 
 ## Variations
 
-### Disabled
-
-<DocsPage.ComponentExample
-  client:only
-  code={`
-  <Layout.Vertical gap="xl" className="min-w-[400px]">
-    <Textarea
-      id="disabled"
-      name="disabled"
-      label="Disabled"
-      disabled
-      placeholder="Placeholder"
-      rows={4}
-    />
-  </Layout.Vertical>
-`}
-/>
-
-### Resizable
-
-<DocsPage.ComponentExample
-  client:only
-  code={`
-  <Layout.Vertical gap="xl" className="min-w-[400px]">
-    <Textarea
-      id="2"
-      name="resizable"
-      label="Resizable"
-      placeholder="Placeholder"
-      resizable
-      rows={4}
-    />
-  </Layout.Vertical>
-`}
-/>
-
-### Auto resize
-
-The `Textarea` component supports automatic height adjustment based on content with the `autoResize` prop. When enabled, the textarea grows and shrinks to fit its content, eliminating the need for manual scrolling.
-
-<DocsPage.ComponentExample
-  client:only
-  code={`
-  <Layout.Vertical gap="xl" className="min-w-[400px]">
-    <Textarea
-      id="auto-resize"
-      name="auto-resize"
-      label="Auto Resize"
-      placeholder="Start typing and watch the textarea grow automatically..."
-      autoResize
-    />
-  </Layout.Vertical>
-`}
-/>
-
-`autoResize` uses the native CSS `field-sizing: content` when the browser supports it, and respects a maximum height limit to prevent excessive growth. It may not work as expected in Firefox, which does not yet support `field-sizing: content`.
-
-### Theme
-
-`Textarea` derives its visual state from `error` and `warning`: passing an `error` message applies the `danger` theme, and passing a `warning` message applies the `warning` theme. You can also set `theme` directly (`warning`) to colour the field without a message.
-
-<DocsPage.ComponentExample
-  client:only
-  code={`
-  <Layout.Vertical gap="xl" className="min-w-[400px]">
-    <Textarea
-      id="error"
-      name="error"
-      label="This component in error state"
-      placeholder="Placeholder"
-      error="Error message"
-      optional
-      rows={4}
-    />
-    <Textarea
-      id="warning"
-      name="warning"
-      label="This component in warning state"
-      placeholder="Placeholder"
-      warning="Warning message"
-      optional
-      rows={4}
-    />
-  </Layout.Vertical>
-`}
-/>
-
-### Character limit
-
-The `Textarea` component supports a `maxCharacters` prop, which shows a live `used / max` counter beside the label. The counter is informational — it does not block typing past the limit.
-
-<DocsPage.ComponentExample
-  client:only
-  code={`
-  <Layout.Vertical gap="xl" className="min-w-[400px]">
-    <Textarea
-      id="max-characters"
-      name="max-characters"
-      label="Character Limit"
-      placeholder="Placeholder"
-      maxCharacters={200}
-      rows={4}
-    />
-  </Layout.Vertical>
-`}
-/>
-
-### Sizes
-
-The `Textarea` component supports the sizes `sm` and `md`. The default size is `md`.
-
-<DocsPage.ComponentExample
-  client:only
-  code={`
-  <Layout.Vertical gap="xl" className="min-w-[400px]">
-    <Textarea
-      id="1"
-      name="md"
-      label="Size md"
-      placeholder="Placeholder"
-      rows={4}
-    />
-    <Textarea
-      id="2"
-      name="sm"
-      label="Size sm"
-      placeholder="Placeholder"
-      rows={4}
-      size="sm"
-    />
-  </Layout.Vertical>
-`}
-/>
-
 ### With tooltip
 
-`tooltipContent` sets the content of the label's info tooltip. `tooltipProps` passes additional props to the tooltip.
+`tooltipContent` sets the content of the label's info tooltip (available as a control in the playground above). Pass `tooltipProps` to customise the tooltip — for example, swapping its icon:
 
 <DocsPage.ComponentExample
   client:only
   code={`
   <Layout.Vertical gap="xl" className="min-w-[400px]">
-    <Textarea
-      id="with-tooltip"
-      name="with-tooltip"
-      label="With default Tooltip"
-      placeholder="Placeholder"
-      tooltipContent="Tooltip content"
-      rows={4}
-    />
     <Textarea
       id="with-tooltip-custom-icon"
       name="with-tooltip-custom-icon"
@@ -205,36 +51,48 @@ The `Textarea` component supports the sizes `sm` and `md`. The default size is `
 `}
 />
 
-### Orientation
+## Mention textarea
 
-The `Textarea` component accepts an optional `orientation` prop, which defines the layout direction of the textarea and its label. Available options are `horizontal` and `vertical` (default).
+`MentionTextarea` extends `Textarea` with an inline suggestion menu. Typing the `triggerChar` (default `@`) opens a list of `items` at the caret; selecting one inserts `formatMention(item)` (default `@[value]`). It is controlled through `value` / `onValueChange` and accepts all `Textarea` props.
 
 <DocsPage.ComponentExample
   client:only
   code={`
-  <Layout.Vertical gap="xl" className="min-w-[400px]">
-    <Textarea
-      id="vertical"
-      name="vertical"
-      label="Vertical"
-      placeholder="Placeholder"
-      rows={4}
-      caption="Caption text"
-      maxCharacters={200}
-    />
-    <Textarea
-      id="horizontal"
-      name="horizontal"
-      label="Horizontal"
-      placeholder="Placeholder"
-      rows={4}
-      orientation="horizontal"
-      caption="Caption text"
-      maxCharacters={200}
-    />
-  </Layout.Vertical>
+  () => {
+    const [value, setValue] = React.useState('Ping @');
+    const people = [
+      { id: '1', value: 'alice', label: 'Alice Smith' },
+      { id: '2', value: 'bob', label: 'Bob Jones' },
+      { id: '3', value: 'carol', label: 'Carol White' }
+    ];
+    const [query, setQuery] = React.useState('');
+    const items = people.filter(p => p.value.includes(query.toLowerCase()));
+    return (
+      <div className="min-w-[400px]">
+        <MentionTextarea
+          label="Comment"
+          placeholder="Type @ to mention someone"
+          rows={4}
+          value={value}
+          onValueChange={setValue}
+          items={items}
+          onSearchChange={setQuery}
+        />
+      </div>
+    );
+  }
 `}
 />
+
+```tsx
+import { MentionTextarea } from "@harnessio/ui/components";
+
+<MentionTextarea
+  value={value}
+  onValueChange={setValue}
+  items={[{ id: "1", value: "alice", label: "Alice Smith" }]}
+/>;
+```
 
 ## Installation
 
@@ -290,6 +148,13 @@ import { Textarea } from "@harnessio/ui/components";
 
 - Don't rely on `maxCharacters` to enforce a limit — pair it with your own validation.
 - Don't set both `resizable` and `autoResize` expecting them to combine cleanly; `autoResize` already manages height.
+
+<Aside type="caution">
+  `autoResize` uses the native CSS `field-sizing: content` when the browser
+  supports it, and respects a maximum height limit to prevent excessive growth.
+  It may not work as expected in Firefox, which does not yet support
+  `field-sizing: content`.
+</Aside>
 
 ## Content
 
@@ -490,6 +355,86 @@ import { Textarea } from "@harnessio/ui/components";
   `className`, `disabled` (when true, the tooltip is not shown), and
   `iconProps`.
 </Aside>
+
+### `MentionTextarea`
+
+Accepts every `Textarea` prop except `onChange`, plus:
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "value",
+      description: "Current textarea value.",
+      required: true,
+      value: "string",
+    },
+    {
+      name: "onValueChange",
+      description: "Called when the value changes.",
+      required: true,
+      value: "(value: string) => void",
+    },
+    {
+      name: "items",
+      description:
+        "Items shown in the suggestion menu. Filter them yourself using `onSearchChange`.",
+      required: true,
+      value: "{ id: string; value: string; label?: string }[]",
+    },
+    {
+      name: "triggerChar",
+      description: "Character that opens the suggestion menu.",
+      required: false,
+      defaultValue: "'@'",
+      value: "string",
+    },
+    {
+      name: "isLoading",
+      description: "Whether items are loading.",
+      required: false,
+      defaultValue: "false",
+      value: "boolean",
+    },
+    {
+      name: "loadingContent",
+      description: "Content shown while loading.",
+      required: false,
+      value: "ReactNode",
+    },
+    {
+      name: "emptyMessage",
+      description: "Message shown when no items match.",
+      required: false,
+      defaultValue: "'No results found'",
+      value: "ReactNode",
+    },
+    {
+      name: "onSearchChange",
+      description: "Called with the text typed after the trigger character.",
+      required: false,
+      value: "(query: string) => void",
+    },
+    {
+      name: "onItemSelect",
+      description: "Called when an item is selected.",
+      required: false,
+      value: "(item) => void",
+    },
+    {
+      name: "formatMention",
+      description: "Formats the text inserted for a selected item.",
+      required: false,
+      defaultValue: "`@[${item.value}]`",
+      value: "(item) => string",
+    },
+    {
+      name: "renderItem",
+      description: "Custom renderer for each item.",
+      required: false,
+      value: "(item) => ReactNode",
+    },
+  ]}
+/>
 
 </TabItem>
 

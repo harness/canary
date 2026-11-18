@@ -1,0 +1,23 @@
+---
+title: Floating Single Column
+draft: true
+description: A narrow, centered column with a maximum width, for focused standalone pages such as onboarding, empty states or confirmations.
+---
+
+import { DocsPage } from "@/components/docs-page";
+import { Text } from "@harnessio/ui/components";
+
+A narrow, centered column with a maximum width, for focused standalone pages such as onboarding, empty states or confirmations. Keep it to one task. In product code this is `Floating1ColumnLayout`, which can also center the content vertically.
+
+<DocsPage.ComponentExample
+  client:only
+  code={`<div className="p-cn-xl border rounded-cn-3 bg-cn-2">
+  <div className="mx-auto max-w-md bg-cn-1 border rounded-cn-3 p-cn-lg">
+    <Layout.Vertical gap="sm">
+      <Text variant="heading-subsection">Get started</Text>
+      <Text variant="body-normal">A single focused task with a clear primary action.</Text>
+      <Button>Continue</Button>
+    </Layout.Vertical>
+  </div>
+</div>`}
+/>

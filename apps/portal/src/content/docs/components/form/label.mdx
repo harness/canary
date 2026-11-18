@@ -17,93 +17,9 @@ import PageTabsToc from "@/components/page-tabs-toc.astro";
 
 The `Label` component is a customizable label for form elements. It shows a required indicator by default, supports an optional tooltip and suffix, and follows consistent styling across the design system.
 
-<DocsPage.ComponentExample
-  client:only
-  code={`
-    <div className="flex flex-col gap-cn-md">
-      <Label htmlFor="name">Name</Label>
-      <TextInput id="name" type="text" />
-    </div>
-`}
-/>
+## Playground
 
-## Variations
-
-### Optional
-
-By default a label shows a required indicator (`*`). Set `optional` to mark the field as not required — this hides the indicator.
-
-<DocsPage.ComponentExample
-  client:only
-  code={`
-    <div className="flex flex-col gap-cn-md">
-      <Label htmlFor="email" optional>Email</Label>
-      <TextInput id="email" type="email" />
-    </div>
-  `}
-/>
-
-### With tooltip (Informer)
-
-The `Label` component supports displaying a tooltip with additional information.
-Use the `tooltipContent` prop to provide the tooltip content, and pass additional configuration via the `tooltipProps` prop.
-
-<DocsPage.ComponentExample
-  client:only
-  code={`
-  <Layout.Vertical gap="xl">
-    <div className="flex flex-col gap-cn-md">
-      <Label
-        htmlFor="2"
-        tooltipContent="Content here"
-      >
-        Default icon
-      </Label>
-      <TextInput id="2" type="text" />
-    </div>
-    <div className="flex flex-col gap-cn-md">
-      <Label
-        htmlFor="3"
-        tooltipContent="Content here"
-        tooltipProps={{
-          disabled: false,
-          iconProps: {
-            name: 'warning-triangle',
-            color: 'warning'
-          },
-        }}
-      >
-        Custom icon
-      </Label>
-      <TextInput id="3" type="text" />
-    </div>
-  </Layout.Vertical>
-`}
-/>
-
-### Suffix
-
-Use the `suffix` prop to place an element — such as an action button — on the right side of the label.
-
-<DocsPage.ComponentExample
-  client:only
-  code={`
-    <div className="flex flex-col gap-cn-md">
-      <Label
-        htmlFor="2"
-        tooltipContent="Content here"
-        suffix={
-          <Button size="2xs" iconOnly>
-            <IconV2 name="plus" skipSize />
-          </Button>
-        }
-      >
-        Description
-      </Label>
-      <TextInput id="2" type="text" />
-    </div>
-  `}
-/>
+<DocsPage.LabelPlayground client:only />
 
 ## Installation
 

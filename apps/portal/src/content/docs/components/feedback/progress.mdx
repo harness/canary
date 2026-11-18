@@ -17,221 +17,29 @@ import PageTabsToc from "@/components/page-tabs-toc.astro";
 
 The `Progress` component provides a flexible UI element for displaying progress indicators — either a measurable (determinate) bar or an ongoing (indeterminate) loading state.
 
-<DocsPage.ComponentExample
-  client:only
-  code={`<div className="w-[600px]">
-    <Progress value={0.75} state="processing" />
-</div>`}
-/>
+<DocsPage.ProgressPlayground client:only />
 
-## Variations
+## Waterfall progress
 
-### Variants
-
-The `variant` prop indicates the type of progress. It accepts `default` and `indeterminate` — whether the progress is measurable or ongoing without a known completion percentage.
+`WaterfallProgress` is a thin bar for showing where a task starts and ends within a larger timeline, such as steps in a pipeline run. `startOffset` and `value` are percentages (0–100) of the track; `theme` colors the fill and `inProgress` animates it.
 
 <DocsPage.ComponentExample
   client:only
-  code={`<div className="space-y-cn-sm w-full">
-  <div className="flex items-start gap-cn-md border-b border-cn-borders-3 pb-cn-sm">
-    <span className="text-cn-size-2 text-cn-3 w-40 shrink-0 font-mono pt-cn-xs">default</span>
-    <div className="flex-1 min-w-0 max-w-[600px]">
-      <Progress value={0.75} state="processing" />
-    </div>
-  </div>
-  <div className="flex items-start gap-cn-md">
-    <span className="text-cn-size-2 text-cn-3 w-40 shrink-0 font-mono pt-cn-xs">indeterminate</span>
-    <div className="flex-1 min-w-0 max-w-[600px]">
-      <Progress variant="indeterminate" />
-    </div>
-  </div>
-</div>`}
+  code={`
+  <Layout.Vertical gap="md" className="min-w-[400px]">
+    <WaterfallProgress value={30} theme="success" label="Checkout" />
+    <WaterfallProgress startOffset={30} value={40} theme="info" inProgress label="Build" />
+    <WaterfallProgress startOffset={70} value={20} theme="danger" label="Test" />
+    <WaterfallProgress startOffset={10} value={25} theme="warning" label="Lint" />
+  </Layout.Vertical>
+`}
 />
 
-### States
+```tsx
+import { WaterfallProgress } from "@harnessio/ui/components";
 
-The `state` prop reflects the current status of the operation. It accepts `completed`, `paused`, `failed`, `processing`, and `default`, controlling the visual feedback based on the progress state.
-
-<DocsPage.ComponentExample
-  client:only
-  code={`<div className="space-y-cn-sm w-full">
-  <div className="flex items-start gap-cn-md border-b border-cn-borders-3 pb-cn-sm">
-    <span className="text-cn-size-2 text-cn-3 w-40 shrink-0 font-mono pt-cn-xs">completed</span>
-    <div className="flex-1 min-w-0 max-w-[600px]">
-      <Progress
-        value={1}
-        subtitle="Completed"
-        label="Analytics_Report_March.csv"
-        state="completed"
-      />
-    </div>
-  </div>
-  <div className="flex items-start gap-cn-md border-b border-cn-borders-3 pb-cn-sm">
-    <span className="text-cn-size-2 text-cn-3 w-40 shrink-0 font-mono pt-cn-xs">paused</span>
-    <div className="flex-1 min-w-0 max-w-[600px]">
-      <Progress
-        value={0.5}
-        label="Analytics_Report_March.csv"
-        subtitle="Paused"
-        state="paused"
-      />
-    </div>
-  </div>
-  <div className="flex items-start gap-cn-md border-b border-cn-borders-3 pb-cn-sm">
-    <span className="text-cn-size-2 text-cn-3 w-40 shrink-0 font-mono pt-cn-xs">failed</span>
-    <div className="flex-1 min-w-0 max-w-[600px]">
-      <Progress
-        value={0.5}
-        label="Analytics_Report_March.csv"
-        subtitle="Failed"
-        description="Upload process failed due to connection issues."
-        state="failed"
-      />
-    </div>
-  </div>
-  <div className="flex items-start gap-cn-md border-b border-cn-borders-3 pb-cn-sm">
-    <span className="text-cn-size-2 text-cn-3 w-40 shrink-0 font-mono pt-cn-xs">processing</span>
-    <div className="flex-1 min-w-0 max-w-[600px]">
-      <Progress
-        value={0.5}
-        label="Analytics_Report_March.csv"
-        subtitle="5 min left"
-        state="processing"
-      />
-    </div>
-  </div>
-  <div className="flex items-start gap-cn-md">
-    <span className="text-cn-size-2 text-cn-3 w-40 shrink-0 font-mono pt-cn-xs">default</span>
-    <div className="flex-1 min-w-0 max-w-[600px]">
-      <Progress
-        value={0.5}
-        label="Analytics_Report_March.csv"
-        subtitle="Subtitle"
-        description="This is a description text"
-      />
-    </div>
-  </div>
-</div>`}
-/>
-
-### Colors
-
-The `color` prop accepts a closed enum of palette themes — `gray`, `blue`, `brown`, `cyan`, `green`, `forest-green`, `indigo`, `lime`, `mint`, `orange`, `pink`, `purple`, `red`, `violet`, and `yellow` — matching the `Tag` theme set. The bar fill resolves to the corresponding design-system token (e.g. `--cn-set-blue-primary-bg`).
-
-`color` and `state` are mutually exclusive — pass one or the other, never both. When `color` is set, the bar uses the chosen theme color while the status icon falls back to the neutral default; use `hideIcon` to remove the icon entirely. `color` works with both the `default` and `indeterminate` variants.
-
-<DocsPage.ComponentExample
-  client:only
-  code={`<div className="space-y-cn-sm w-full">
-  <div className="flex items-start gap-cn-md border-b border-cn-borders-3 pb-cn-sm">
-    <span className="text-cn-size-2 text-cn-3 w-40 shrink-0 font-mono pt-cn-xs">blue</span>
-    <div className="flex-1 min-w-0 max-w-[600px]">
-      <Progress
-        value={0.6}
-        color="blue"
-        label="Analytics_Report_March.csv"
-        subtitle="60%"
-      />
-    </div>
-  </div>
-  <div className="flex items-start gap-cn-md border-b border-cn-borders-3 pb-cn-sm">
-    <span className="text-cn-size-2 text-cn-3 w-40 shrink-0 font-mono pt-cn-xs">purple</span>
-    <div className="flex-1 min-w-0 max-w-[600px]">
-      <Progress
-        value={0.4}
-        color="purple"
-        label="Analytics_Report_March.csv"
-        subtitle="40%"
-      />
-    </div>
-  </div>
-  <div className="flex items-start gap-cn-md border-b border-cn-borders-3 pb-cn-sm">
-    <span className="text-cn-size-2 text-cn-3 w-40 shrink-0 font-mono pt-cn-xs">forest-green</span>
-    <div className="flex-1 min-w-0 max-w-[600px]">
-      <Progress
-        value={0.8}
-        color="forest-green"
-        label="Analytics_Report_March.csv"
-        subtitle="80%"
-      />
-    </div>
-  </div>
-  <div className="flex items-start gap-cn-md">
-    <span className="text-cn-size-2 text-cn-3 w-40 shrink-0 font-mono pt-cn-xs">indeterminate + cyan</span>
-    <div className="flex-1 min-w-0 max-w-[600px]">
-      <Progress
-        variant="indeterminate"
-        color="cyan"
-        label="Loading"
-      />
-    </div>
-  </div>
-</div>`}
-/>
-
-### Sizes
-
-The `size` prop adjusts the height of the progress bar. It accepts `sm`, `md`, and `lg` to fit different UI contexts.
-
-<DocsPage.ComponentExample
-  client:only
-  code={`<div className="space-y-cn-sm w-full">
-  <div className="flex items-start gap-cn-md border-b border-cn-borders-3 pb-cn-sm">
-    <span className="text-cn-size-2 text-cn-3 w-40 shrink-0 font-mono pt-cn-xs">small</span>
-    <div className="flex-1 min-w-0 max-w-[600px]">
-      <Progress
-        size="sm"
-        value={0.5}
-        label="Title"
-        subtitle="Subtitle"
-        description="This is a description text"
-      />
-    </div>
-  </div>
-  <div className="flex items-start gap-cn-md border-b border-cn-borders-3 pb-cn-sm">
-    <span className="text-cn-size-2 text-cn-3 w-40 shrink-0 font-mono pt-cn-xs">medium</span>
-    <div className="flex-1 min-w-0 max-w-[600px]">
-      <Progress
-        size="md"
-        value={0.5}
-        label="Title"
-        subtitle="Subtitle"
-        description="This is a description text"
-      />
-    </div>
-  </div>
-  <div className="flex items-start gap-cn-md border-b border-cn-borders-3 pb-cn-sm">
-    <span className="text-cn-size-2 text-cn-3 w-40 shrink-0 font-mono pt-cn-xs">large</span>
-    <div className="flex-1 min-w-0 max-w-[600px]">
-      <Progress
-        size="lg"
-        value={0.5}
-        label="Title"
-        subtitle="Subtitle"
-        description="This is a description text"
-      />
-    </div>
-  </div>
-  <div className="flex items-center gap-cn-md border-b border-cn-borders-3 pb-cn-sm">
-    <span className="text-cn-size-2 text-cn-3 w-40 shrink-0 font-mono">sm · processing</span>
-    <div className="flex-1 min-w-0 max-w-[600px]">
-      <Progress size="sm" value={0.75} state="processing" />
-    </div>
-  </div>
-  <div className="flex items-center gap-cn-md border-b border-cn-borders-3 pb-cn-sm">
-    <span className="text-cn-size-2 text-cn-3 w-40 shrink-0 font-mono">md · processing</span>
-    <div className="flex-1 min-w-0 max-w-[600px]">
-      <Progress size="md" value={0.75} state="processing" />
-    </div>
-  </div>
-  <div className="flex items-center gap-cn-md">
-    <span className="text-cn-size-2 text-cn-3 w-40 shrink-0 font-mono">lg · processing</span>
-    <div className="flex-1 min-w-0 max-w-[600px]">
-      <Progress size="lg" value={0.75} state="processing" />
-    </div>
-  </div>
-</div>`}
-/>
+<WaterfallProgress startOffset={30} value={40} theme="info" inProgress />;
+```
 
 ## Installation
 
@@ -394,6 +202,65 @@ return (
     {
       name: "className",
       description: "Additional class names to apply to the root container.",
+      required: false,
+      value: "string",
+    },
+  ]}
+/>
+
+### WaterfallProgress
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "value",
+      description:
+        "Length of the bar as a percentage of the track (0–100, clamped with startOffset).",
+      required: true,
+      value: "number",
+    },
+    {
+      name: "startOffset",
+      description: "Where the bar starts, as a percentage of the track.",
+      required: false,
+      defaultValue: "0",
+      value: "number",
+    },
+    {
+      name: "theme",
+      description: "Color of the fill.",
+      required: false,
+      defaultValue: "'muted'",
+      value: "'muted' | 'info' | 'success' | 'warning' | 'danger'",
+    },
+    {
+      name: "inProgress",
+      description: "Animates the fill to show ongoing work.",
+      required: false,
+      defaultValue: "false",
+      value: "boolean",
+    },
+    {
+      name: "label",
+      description: "Text label for the bar.",
+      required: false,
+      value: "string",
+    },
+    {
+      name: "tooltipContent",
+      description: "Content of a tooltip shown on hover.",
+      required: false,
+      value: "ReactNode",
+    },
+    {
+      name: "tooltipProps",
+      description: "Extra props passed to the Tooltip.",
+      required: false,
+      value: "Partial<TooltipProps>",
+    },
+    {
+      name: "className",
+      description: "Class applied to the track.",
       required: false,
       value: "string",
     },

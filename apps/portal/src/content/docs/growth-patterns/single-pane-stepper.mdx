@@ -1,6 +1,7 @@
 ---
 title: Single Pane Stepper
 description: A single-column guided flow component with an integrated stepper timeline and inline card stack.
+tableOfContents: false
 ---
 
 import { DocsPage } from "@/components/docs-page";
@@ -9,6 +10,16 @@ import {
   FullFlowDemo,
   StatesDemo,
 } from "@/components/single-pane-stepper-demo";
+import { Tabs, TabItem } from "@astrojs/starlight/components";
+import PageTabsToc from "@/components/page-tabs-toc.astro";
+
+<PageTabsToc />
+
+<div id="page-level-tabs">
+
+<Tabs>
+
+<TabItem label="Overview">
 
 The `SinglePaneStepper` is a single-column flow component for multi-step guided processes. It combines a vertical stepper timeline with cards rendered inline within each step — all in one scrollable column.
 
@@ -48,6 +59,10 @@ This example demonstrates a full CI pipeline onboarding flow with connector draw
   Click through the flow to see card navigation, drawer interactions, dynamic
   steps, and back-navigation working together.
 </Aside>
+
+</TabItem>
+
+<TabItem label="Usage">
 
 ## Usage
 
@@ -646,3 +661,9 @@ The Single Pane Stepper implements the following accessibility features:
 - **Reduced Motion**: Respects `prefers-reduced-motion` for card transitions and stepper animations
 - **Focus Management**: Scrolls the active card into view when navigating forward
 - **Semantic HTML**: Uses `<nav>` for the stepper and proper heading hierarchy in cards
+
+</TabItem>
+
+</Tabs>
+
+</div>

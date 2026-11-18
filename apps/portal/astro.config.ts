@@ -153,6 +153,20 @@ export default defineConfig({
             "components/feedback/alert",
             "components/overlays/alert-dialog",
             "components/visual/avatar",
+            {
+              label: "Badge",
+              collapsed: true,
+              items: [
+                {
+                  slug: "components/feedback/counter-badge",
+                  label: "Counter Badge",
+                },
+                {
+                  slug: "components/feedback/status-badge",
+                  label: "Status Badge",
+                },
+              ],
+            },
             "components/navigation/breadcrumb",
             {
               label: "Button",
@@ -230,7 +244,6 @@ export default defineConfig({
                 },
               ],
             },
-            "components/feedback/counter-badge",
             {
               label: "Date Range Filter",
               collapsed: true,
@@ -364,7 +377,6 @@ export default defineConfig({
             "components/data-display/stats-panel",
             "components/navigation/stepper",
             "components/utilities/sticky-list-section",
-            "components/feedback/status-badge",
             "components/form/switch",
             "components/navigation/tabs",
             {
@@ -408,30 +420,76 @@ export default defineConfig({
           ],
         },
         {
-          label: "PLG Patterns",
+          label: "Patterns",
           items: [
             {
-              slug: "growth-patterns/overview",
-              label: "Overview",
-              attrs: { "data-icon": "light-bulb-on" },
+              label: "Page Layouts",
+              collapsed: true,
+              items: [
+                { slug: "patterns/page-layouts", label: "Overview" },
+                {
+                  slug: "patterns/page-layouts/standard-page",
+                  label: "Standard Page",
+                },
+                {
+                  slug: "patterns/page-layouts/page-with-section-menu",
+                  label: "Page with Section Menu",
+                },
+                {
+                  slug: "patterns/page-layouts/main-and-side-columns",
+                  label: "Main and Side Columns",
+                },
+                {
+                  slug: "patterns/page-layouts/resizable-split",
+                  label: "Resizable Split",
+                },
+                {
+                  slug: "patterns/page-layouts/dashboard-card-layout",
+                  label: "Dashboard Card Layout",
+                },
+              ],
             },
-            "growth-patterns/single-pane-stepper",
             {
-              slug: "growth-patterns/single-pane-stepper-v2",
-              label: "Single Pane Chat Stepper",
+              label: "PLG",
+              collapsed: true,
+              items: [
+                {
+                  slug: "growth-patterns/overview",
+                  label: "Overview",
+                },
+                {
+                  slug: "growth-patterns/growth-box",
+                  label: "Growth Box [WIP]",
+                },
+              ],
             },
             {
-              slug: "growth-patterns/dual-pane-stepper",
-              label: "Dual Pane Stepper",
-              attrs: {
-                "aria-disabled": "true",
-                tabindex: -1,
-                onclick: "event.preventDefault(); return false;",
-              },
-            },
-            {
-              slug: "growth-patterns/growth-box",
-              label: "Growth Box [WIP]",
+              label: "Steppers",
+              collapsed: true,
+              items: [
+                { slug: "patterns/steppers", label: "Overview" },
+                {
+                  slug: "patterns/page-layouts/stepped-flow",
+                  label: "Stepped Flow",
+                },
+                {
+                  slug: "growth-patterns/single-pane-stepper",
+                  label: "Single Pane",
+                },
+                {
+                  slug: "growth-patterns/single-pane-stepper-v2",
+                  label: "Single Pane Chat",
+                },
+                {
+                  slug: "growth-patterns/dual-pane-stepper",
+                  label: "Dual Pane",
+                  attrs: {
+                    "aria-disabled": "true",
+                    tabindex: -1,
+                    onclick: "event.preventDefault(); return false;",
+                  },
+                },
+              ],
             },
           ],
         },
@@ -443,6 +501,8 @@ export default defineConfig({
               label: "Overview",
               attrs: { "data-icon": "circle-with-sector" },
             },
+            { slug: "data-viz/gauge", label: "Gauge" },
+            { slug: "data-viz/meter", label: "Meter" },
           ],
         },
       ],

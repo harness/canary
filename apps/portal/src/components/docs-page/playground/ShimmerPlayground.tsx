@@ -30,7 +30,6 @@ const COLOR_OPTIONS = [
   "foreground-1",
   "foreground-2",
   "foreground-3",
-  "foreground-4",
   "disabled",
   "success",
   "warning",

@@ -28,6 +28,43 @@ const Code: FC<{ children: ReactNode }> = ({ children }) => (
 
 const ENTRIES: ChangelogEntry[] = [
   {
+    value: "uui-4439",
+    version: "1.8.1",
+    date: "November 18, 2026",
+    status: "Migrating",
+    statusTheme: "warning",
+    title: "Text level 4 retired in favor of text level 3 (UUI-4439)",
+    body: (
+      <>
+        <Text as="p" variant="body-normal" color="foreground-1">
+          <Code>foreground-4</Code> / <Code>text-cn-4</Code> is no longer used
+          anywhere in the design system. Disabled states are expressed with the
+          60% disabled opacity rather than a dedicated text color, so the extra
+          gray level was redundant.
+        </Text>
+        <Text as="p" variant="body-normal" color="foreground-1">
+          Every <Code>text-cn-4</Code> and <Code>foreground-4</Code> usage, plus
+          the <Code>--cn-text-4</Code> placeholder, drawer and breadcrumb
+          styles, now uses <Code>text-3</Code> (<Code>foreground-3</Code>), and{" "}
+          <Code>text-cn-disabled</Code> now resolves to <Code>text-3</Code>.
+          Visual change: disabled placeholders now share the enabled placeholder
+          color, with opacity alone marking them disabled.
+        </Text>
+        <Text as="p" variant="body-normal" color="foreground-1">
+          <Code>foreground-4</Code> remains in the <Code>Text</Code> and{" "}
+          <Code>Shimmer</Code> types so existing code still compiles, but it is
+          deprecated and an ESLint rule now errors on{" "}
+          <Code>{'color="foreground-4"'}</Code>. Migrate to{" "}
+          <Code>foreground-3</Code>; the option will be removed in a later
+          release.
+        </Text>
+        <Text as="p" variant="body-normal" color="foreground-1">
+          Docs and foundations no longer list text level 4.
+        </Text>
+      </>
+    ),
+  },
+  {
     value: "uui-4247",
     version: "1.6.10",
     date: "November 6, 2026",

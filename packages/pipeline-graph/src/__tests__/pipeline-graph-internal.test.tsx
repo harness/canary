@@ -9,6 +9,7 @@ import PipelineGraphInternal from '../pipeline-graph-internal'
 const h = vi.hoisted(() => ({
   drawEdges: vi.fn(),
   setShowSvg: vi.fn(),
+  pendingRevealRef: { current: 0 },
   setInitialized: vi.fn(),
   setCanvasTransform: vi.fn(),
   setTargetEl: vi.fn(),
@@ -28,7 +29,8 @@ vi.mock('../context/graph-provider', () => ({
     rerenderConnections: 0,
     setInitialized: h.setInitialized,
     isCollapsed: () => false,
-    setShowSvg: h.setShowSvg
+    setShowSvg: h.setShowSvg,
+    pendingRevealRef: h.pendingRevealRef
   })
 }))
 
@@ -56,6 +58,7 @@ describe('PipelineGraphInternal', () => {
   beforeEach(() => {
     h.drawEdges.mockClear()
     h.setShowSvg.mockClear()
+    h.pendingRevealRef = { current: 0 }
     h.setInitialized.mockClear()
     h.setCanvasTransform.mockClear()
     h.setTargetEl.mockClear()
@@ -148,6 +151,62 @@ describe('PipelineGraphInternal', () => {
 
       expect(h.drawEdges).toHaveBeenCalledTimes(1)
       expect(h.setShowSvg).toHaveBeenCalledTimes(1)
+    })
+
+    it('redraws but does NOT reveal while a user expand is still pending its animation', () => {
+      // A user-initiated expand sets this; the expanded node's children may still be loading, so the
+      // settle must not paint edges yet — otherwise lines show during the async gap before the nodes
+      // animate in. The redraw still runs so positions stay correct once the reveal is allowed.
+      h.pendingRevealRef.current = 1
+      renderGraph()
+      h.drawEdges.mockClear()
+
+      triggerResize()
+      vi.advanceTimersByTime(150)
+
+      expect(h.drawEdges).toHaveBeenCalledTimes(1)
+      expect(h.setShowSvg).not.toHaveBeenCalled()
+    })
+
+    it('reveals once on a fallback timer when ResizeObserver is unavailable', () => {
+      // Without ResizeObserver (jsdom/older envs) there is no settle signal and the first-load layout
+      // effect never reveals, so the SVG would stay hidden forever. A one-shot fallback must redraw and
+      // reveal instead. Remove the global RO mock for this render only.
+      const savedRO = global.ResizeObserver
+      // @ts-expect-error — intentionally simulating an environment without ResizeObserver.
+      delete global.ResizeObserver
+      try {
+        renderGraph()
+        h.drawEdges.mockClear()
+
+        expect(h.setShowSvg).not.toHaveBeenCalled() // nothing until the fallback window elapses
+
+        vi.advanceTimersByTime(150)
+
+        expect(h.drawEdges).toHaveBeenCalledTimes(1)
+        expect(h.setShowSvg).toHaveBeenCalledWith(true)
+      } finally {
+        global.ResizeObserver = savedRO
+      }
+    })
+
+    it('does NOT reveal on the RO-absent fallback while a user expand is still pending', () => {
+      const savedRO = global.ResizeObserver
+      // @ts-expect-error — intentionally simulating an environment without ResizeObserver.
+      delete global.ResizeObserver
+      try {
+        h.pendingRevealRef.current = 1
+        renderGraph()
+        h.drawEdges.mockClear()
+
+        vi.advanceTimersByTime(150)
+
+        // Redraw keeps positions current, but the reveal is withheld during the async expand gap.
+        expect(h.drawEdges).toHaveBeenCalledTimes(1)
+        expect(h.setShowSvg).not.toHaveBeenCalled()
+      } finally {
+        global.ResizeObserver = savedRO
+      }
     })
   })
 })

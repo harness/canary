@@ -16,6 +16,14 @@ interface GraphContextProps {
   rerenderConnections: number
   setShowSvg: (show: boolean) => void
   isMounted: React.MutableRefObject<boolean>
+  // Count of containers currently between a user-initiated expand and the moment their animation
+  // starts. It is a COUNTER, not a boolean, because the ref is shared across every container in the
+  // graph: with a boolean, one container finishing its expand (onAnimationStart/Complete) would clear
+  // the flag another container had set for its own still-loading expand, letting the ResizeObserver
+  // reveal edges mid-gap. Each container adds exactly 1 while its own reveal is pending and removes it
+  // on animation start/complete (or a fallback timer / unmount); the ResizeObserver reveals only while
+  // the count is 0 — i.e. no expand anywhere is still waiting for its children to load and animate in.
+  pendingRevealRef: React.MutableRefObject<number>
 }
 
 const GraphContext = createContext<GraphContextProps>({
@@ -29,7 +37,8 @@ const GraphContext = createContext<GraphContextProps>({
   nodeToRemove: null,
   rerender: () => undefined,
   setShowSvg: (_show: boolean) => undefined,
-  isMounted: { current: false }
+  isMounted: { current: false },
+  pendingRevealRef: { current: 0 }
 })
 
 export interface GraphProviderProps {
@@ -54,6 +63,7 @@ const GraphProvider = ({
   collapsedRef.current = collapsed
 
   const isMounted = useRef(false)
+  const pendingRevealRef = useRef(0)
 
   useEffect(() => {
     setRerenderConnections(prev => prev + 1)
@@ -136,6 +146,7 @@ const GraphProvider = ({
         rerender,
         setShowSvg,
         isMounted,
+        pendingRevealRef
       }}
     >
       {children}

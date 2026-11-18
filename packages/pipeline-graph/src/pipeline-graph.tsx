@@ -35,8 +35,13 @@ export function PipelineGraph(props: PipelineGraphProps) {
     collapse = () => undefined
   } = props
 
-  const [showSvg, setShowSvg] = useState(true)
-
+  // Start hidden so edges never paint before the nodes have settled. On an API-driven first load the
+  // layout effect draws edges as soon as data arrives, and a plain mount (no collapse transition,
+  // `initial={false}`) fires neither the container's setShowSvg(false) nor framer's animation
+  // callbacks — so a `true` default would leave lines visible at preliminary port positions before
+  // the nodes mount/animate in. The ResizeObserver safety net in pipeline-graph-internal reveals the
+  // SVG (and redraws) once the layout settles, so lines appear only after the nodes are in place.
+  const [showSvg, setShowSvg] = useState(false)
 
   return (
     <GraphProvider nodes={nodes} collapsed={collapsed} collapse={collapse} setShowSvg={setShowSvg}>

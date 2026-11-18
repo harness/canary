@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 
-import { AnimatePresence, motion, Variants } from 'framer-motion'
+import { AnimatePresence, motion } from 'framer-motion'
 import { useContainerNodeContext } from '../../context/container-node-provider'
 import { useGraphContext } from '../../context/graph-provider'
 import { renderNode } from '../../render/render-node'
@@ -9,56 +9,8 @@ import { ContainerNodeProps } from '../../types/container-node'
 import { AnyNodeInternal, SerialNodeInternalType } from '../../types/nodes-internal'
 import { findAdjustmentForHarnessLayout } from '../../utils/harness-layout-utils'
 import { findAdjustment, getFlexAlign } from '../../utils/layout-utils'
+import { containerVariants, itemVariants } from './animation-variants'
 import Port from './port'
-
-const containerVariants: Variants = {
-  hidden: {
-    height: 0,
-    width: 0,
-    opacity: 1,
-    scale: 1,
-    x: 0,
-  },
-  visible: {
-    height: 'auto',
-    width: 'auto',
-    opacity: 1,
-    transition: {
-      height: {
-        duration: 0.3,
-        ease: "easeOut"
-      },
-      width: {
-        duration: 0.3,
-        ease: "easeOut"
-      },
-      opacity: {
-        duration: 0.2
-      },
-      staggerChildren: 0.05,
-      delayChildren: 0.3
-    }
-  },
-  exit: {
-    opacity: 0,
-    height: 0,
-    width: 0,
-    transformOrigin: 'top left',
-    scale: 0,
-    transition: {
-      when: "afterChildren",
-      ease: "easeOut",
-      height: {
-        duration: 0.3
-      },
-      width: {
-        duration: 0.3
-      },
-      staggerChildren: 0.05,
-      staggerDirection: -1
-    }
-  }
-}
 
 export default function SerialNodeContainer(props: ContainerNodeProps<SerialNodeInternalType>) {
   const { node, level, parentNode, isFirst, isLast, parentNodeType, mode } = props
@@ -66,10 +18,33 @@ export default function SerialNodeContainer(props: ContainerNodeProps<SerialNode
 
   const myLevel = level + 1
 
-  const { isCollapsed, collapse, setShowSvg, rerender, isMounted } = useGraphContext()
+  const { isCollapsed, collapse, setShowSvg, rerender, isMounted, pendingRevealRef } = useGraphContext()
   const collapsed = useMemo(() => isCollapsed(props.node.path!), [isCollapsed, props.node.path])
 
   const [localCollapsed, setLocalCollapsed] = useState(collapsed)
+
+  // This instance's contribution (0 or 1) to the graph-wide `pendingRevealRef` counter. Tracked
+  // locally so we add/remove exactly once per expand and never clear a sibling's pending reveal — the
+  // ref is shared across every container, so a bare `= false` here would wipe out another container's
+  // still-loading expand.
+  const hasPendingRef = useRef(false)
+  // Fallback so the SVG can't stay hidden forever if a user-initiated expand never produces an
+  // animation (e.g. children never load). Cleared once the animation starts or completes.
+  const revealFallbackRef = useRef<ReturnType<typeof setTimeout>>()
+  const markPendingReveal = useCallback(() => {
+    if (hasPendingRef.current) return
+    hasPendingRef.current = true
+    pendingRevealRef.current += 1
+  }, [pendingRevealRef])
+  const clearPendingReveal = useCallback(() => {
+    clearTimeout(revealFallbackRef.current)
+    if (!hasPendingRef.current) return
+    hasPendingRef.current = false
+    pendingRevealRef.current = Math.max(0, pendingRevealRef.current - 1)
+  }, [pendingRevealRef])
+  // Drop this instance's pending contribution (and its fallback timer) if it unmounts mid-expand, so a
+  // never-settling count can't keep the whole graph's edges hidden.
+  useEffect(() => () => clearPendingReveal(), [clearPendingReveal])
 
   // Animate the expand/collapse only when a real collapse-state transition happens on THIS mounted
   // instance (user toggle or programmatic expand), never on mount. A node is React-keyed by its index
@@ -91,27 +66,54 @@ export default function SerialNodeContainer(props: ContainerNodeProps<SerialNode
    * Global collapsed state may change programmatically, so we need to sync it with the local collapsed state
    */
   useEffect(() => {
-    if (!collapsed && localCollapsed) {
-      // Programmatic expand — a genuine transition on this live instance, so let it animate.
-      shouldAnimateRef.current = true
-      setLocalCollapsed(false)
-    }
+    // A prop-driven change the local flag hasn't caught up to is never a live transition on this
+    // instance: nodes are keyed by their index path, so deleting/inserting a sibling reuses this
+    // instance to render a *different* node, leaving its local state stale. Snap to the prop (the
+    // source of truth) and clear any animate flag a prior user toggle left on this reused instance,
+    // so the snap can't replay a stale open/close animation. Only user toggles (handleCollaspeLocalState) animate.
+    if (collapsed === localCollapsed) return
+    shouldAnimateRef.current = false
+    // Hide the edges until the new layout settles. A programmatic expand (e.g. an execution stage
+    // whose steps just finished lazy-loading) snaps open with no framer animation, so neither
+    // onAnimationStart nor onAnimationComplete fires — without this the SVG stays visible and the
+    // edges are drawn at preliminary port positions before the freshly-mounted children settle,
+    // showing lines before the nodes. The ResizeObserver safety net in pipeline-graph-internal
+    // redraws and re-reveals once the container has resized. Mirrors the user-toggle path.
+    setShowSvg(false)
+    setLocalCollapsed(collapsed)
   }, [collapsed])
 
   const handleCollaspeLocalState = useCallback((collapsed: boolean) => {
-    setShowSvg(false)
-
     // User toggle — a genuine transition on this live instance, so let it animate.
     shouldAnimateRef.current = true
 
     if (!collapsed) {
       setCollapsed(false)
+      // Expanding: do NOT hide the edges now. The children may load asynchronously, leaving the node
+      // collapsed-and-static for up to ~1s; hiding at click makes the connectors vanish and the user
+      // stares at a graph with no lines through that gap. The current edges are valid for the still-
+      // collapsed layout, so keep them until the expand animation actually starts (onAnimationStart
+      // hides them right before the layout changes). Mark a reveal pending so the ResizeObserver
+      // settle can't paint edges at preliminary positions during the gap; onAnimationStart/Complete
+      // clears it, and the fallback guards a never-loading expand.
+      markPendingReveal()
+      clearTimeout(revealFallbackRef.current)
+      revealFallbackRef.current = setTimeout(() => {
+        clearPendingReveal()
+        // Reveal only if no OTHER container is still waiting for its own expand to animate in.
+        if (pendingRevealRef.current === 0) setShowSvg(true)
+      }, 3000)
+    } else {
+      // Collapsing: hide immediately. The exit animation runs now (no async gap), so the edges would
+      // otherwise linger over the shrinking node.
+      setShowSvg(false)
     }
     setLocalCollapsed(collapsed)
-  }, [setCollapsed])
+  }, [setCollapsed, setShowSvg, markPendingReveal, clearPendingReveal, pendingRevealRef])
 
 
   const handleAnimationComplete = useCallback((animationType) => {
+    clearPendingReveal()
     rerender()
 
     setShowSvg(true)
@@ -177,7 +179,14 @@ export default function SerialNodeContainer(props: ContainerNodeProps<SerialNode
   }, [collapsed, node.type, portComponent])
 
   return (
-    <div
+    <motion.div
+      // Participate in a parent container's staggered enter/exit exactly like a leaf node: when this
+      // group is a child of another group's row (or of the nested preview's NodesContainer), it inherits
+      // the parent's variant label and is sequenced by its `staggerChildren` / `when: afterChildren`, so
+      // the group fades/slides out with its siblings before the box collapses — instead of snapping away
+      // (a plain <div> is invisible to framer's stagger). At the top level of the main graph the parent
+      // container is a plain div (no variant context), so this renders statically with no mount animation.
+      variants={itemVariants}
       className={'node serial-node'}
       key={node.type + '-' + node.path}
       style={{
@@ -241,8 +250,15 @@ export default function SerialNodeContainer(props: ContainerNodeProps<SerialNode
             <motion.div
               animate="visible"
               exit="exit"
-              initial={shouldAnimateRef.current ? "hidden" : false}
+              initial={shouldAnimateRef.current ? 'hidden' : false}
               variants={containerVariants}
+              onAnimationStart={() => {
+                // The animation is now driving the layout: hide the edges for its duration, and clear
+                // the pending guard so the ResizeObserver settle after the animation (or
+                // onAnimationComplete) reveals them.
+                setShowSvg(false)
+                clearPendingReveal()
+              }}
               onAnimationComplete={handleAnimationComplete}
               style={{
                 transformOrigin: 'top left',
@@ -270,6 +286,6 @@ export default function SerialNodeContainer(props: ContainerNodeProps<SerialNode
           ) : undefined}
         </AnimatePresence>
       </RenderNodeContent>
-    </div >
+    </motion.div>
   )
 }

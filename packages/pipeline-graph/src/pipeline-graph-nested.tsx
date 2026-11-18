@@ -1,7 +1,9 @@
 import { useEffect, useLayoutEffect, useRef, useState } from 'react'
 
 import cn from 'classnames'
+import { AnimatePresence, motion } from 'framer-motion'
 
+import { containerVariants } from './components/nodes/animation-variants'
 import ContainerNodeProvider, {
   ContainerNodeProviderProps,
   useContainerNodeContext
@@ -47,6 +49,23 @@ export interface PipelineGraphNestedProps extends Pick<ContainerNodeProviderProp
    * graph redraw its own edges, since the top-level graph has no ResizeObserver of its own.
    */
   onResize?: () => void
+  /**
+   * When true, the nested sub-graph's top-level node row animates open (grow + staggered child fade)
+   * each time it mounts via the internal {@link AnimatePresence}, using the SAME
+   * `containerVariants`/`itemVariants` as a regular stage's children row. Pair with {@link open} to get
+   * the matching staggered collapse. Defaults to false (renders straight to its final state, no anim).
+   */
+  animateOnMount?: boolean
+  /**
+   * Presence toggle for the top-level node row. Driven by the embedding preview card's expand state:
+   * flipping it false animates the row closed (children stagger out, then the box shrinks) exactly like
+   * collapsing a regular group, and only then unmounts the row. The sub-graph host stays mounted so the
+   * close can animate. Defaults to true (always shown). Only meaningful together with
+   * {@link animateOnMount}.
+   */
+  open?: boolean
+  /** Called once the row has finished animating closed (open -> false). E.g. to scroll the card back. */
+  onExitComplete?: () => void
 }
 
 /**
@@ -69,11 +88,18 @@ export function PipelineGraphNested(props: PipelineGraphNestedProps) {
     collapsed,
     collapse,
     pathPrefix,
-    onResize
+    onResize,
+    animateOnMount = false,
+    open = true,
+    onExitComplete
   } = props
 
   const [internalCollapsed, setInternalCollapsed] = useState<Record<string, boolean>>({})
-  const [, setShowSvg] = useState(true)
+  // Edge visibility for this nested sub-graph. Mirrors the root graph (pipeline-graph.tsx): the
+  // serial/parallel containers inside call setShowSvg(false) on collapse / onAnimationStart and
+  // setShowSvg(true) on onAnimationComplete, so honoring the value here hides the connectors while a
+  // nested node collapses/expands instead of leaving them painted over the animating layout.
+  const [showSvg, setShowSvg] = useState(true)
 
   const collapsedState = collapsed ?? internalCollapsed
   const collapseFn =
@@ -95,6 +121,10 @@ export function PipelineGraphNested(props: PipelineGraphNestedProps) {
           layout={layout}
           pathPrefix={pathPrefix}
           onResize={onResize}
+          showSvg={showSvg}
+          animateOnMount={animateOnMount}
+          open={open}
+          onExitComplete={onExitComplete}
         />
       </ContainerNodeProvider>
     </GraphProvider>
@@ -109,13 +139,37 @@ interface PipelineGraphNestedInternalProps {
   layout?: LayoutConfig
   pathPrefix?: string
   onResize?: () => void
+  showSvg?: boolean
+  animateOnMount?: boolean
+  open?: boolean
+  onExitComplete?: () => void
 }
 
 function PipelineGraphNestedInternal(props: PipelineGraphNestedInternalProps) {
-  const { data, edgesConfig, getPort, customCreateSVGPath, layout = { type: 'center' }, pathPrefix, onResize } = props
+  const {
+    data,
+    edgesConfig,
+    getPort,
+    customCreateSVGPath,
+    layout = { type: 'center' },
+    pathPrefix,
+    onResize,
+    showSvg = true,
+    animateOnMount = false,
+    open = true,
+    onExitComplete
+  } = props
 
-  const { nodes: nodesBank, rerenderConnections, isCollapsed } = useGraphContext()
+  const { nodes: nodesBank, rerenderConnections, isCollapsed, setShowSvg, rerender } = useGraphContext()
   const { serialContainerConfig } = useContainerNodeContext()
+
+  // Clip the row only while it animates open/closed. At rest it must be `visible` so ports and floating
+  // add buttons at a node's edge aren't cut off — but during the grow/shrink the still-mounted children
+  // keep their full intrinsic width (they only fade via itemVariants, they don't unmount), which pins the
+  // ancestor's `width: max-content` to the full size and makes the width SNAP while the height animates.
+  // Hiding overflow for the animation's duration lets the box's definite animated width win, so the card
+  // tracks the width shrink/grow fluidly. Safe: the edges are hidden (showSvg=false) during the animation.
+  const [isAnimating, setIsAnimating] = useState(false)
 
   const rootRef = useRef<HTMLDivElement | null>(null)
   const nodesContainerRef = useRef<HTMLDivElement | null>(null)
@@ -189,30 +243,80 @@ function PipelineGraphNestedInternal(props: PipelineGraphNestedInternalProps) {
         className="PipelineGraph-SvgContainer"
         style={{ position: 'absolute', top: 0, left: 0, pointerEvents: 'none' }}
       >
-        <svg ref={svgRef} width="1" height="1" className={cn('PipelineGraph-Svg')} style={{ overflow: 'visible' }}>
+        <svg
+          ref={svgRef}
+          width="1"
+          height="1"
+          className={cn('PipelineGraph-Svg')}
+          // Opacity is driven inline (not via Tailwind opacity-0/opacity-100 utilities, which aren't
+          // shipped in the library CSS): fade in on reveal, hide instantly so edges never linger over
+          // a nested node as it collapses/expands.
+          style={{
+            overflow: 'visible',
+            opacity: showSvg ? 1 : 0,
+            transition: showSvg ? 'opacity 150ms' : undefined
+          }}
+        >
           <g ref={svgGroupRef} className="PipelineGraph-SvgGroup"></g>
         </svg>
       </div>
-      <div
-        className="PipelineGraphNested-NodesContainer"
-        ref={nodesContainerRef}
-        style={{
-          display: 'flex',
-          alignItems: getFlexAlign(layout.type),
-          columnGap: `${serialContainerConfig.nodeGap}px`
-        }}
-      >
-        {dataInternal?.map((node, index) =>
-          renderNode({
-            node,
-            level: 0,
-            parentNodeType: 'serial',
-            relativeIndex: index,
-            isFirst: index === 0,
-            isLast: index === dataInternal.length - 1
-          })
+      {/* The AnimatePresence lives HERE, directly around the animating node row — NOT in the embedding
+          preview card. In framer-motion v6 `exit` only fires on the component the nearest
+          AnimatePresence directly wraps; it does not reliably propagate down to a deeply nested
+          motion.div (which is why driving collapse from the host card's AnimatePresence made the row
+          snap away without animating). Keeping the boundary local mirrors serial-container.tsx exactly.
+          `open` is the presence toggle: flipping it false plays the staggered-children-out + shrink
+          exit, then unmounts the row and fires onExitComplete. */}
+      <AnimatePresence onExitComplete={onExitComplete}>
+        {open && (
+          <motion.div
+            className="PipelineGraphNested-NodesContainer"
+            ref={nodesContainerRef}
+            // This is the SINGLE element that animates the preview open/closed, using the exact same
+            // `containerVariants` (+ child `itemVariants` stagger) as a regular stage's children row in
+            // serial-container.tsx — so a chained/template preview grows, staggers its top-level leaf
+            // stages in, and staggers them out + shrinks on collapse identically to a normal group.
+            // When animateOnMount is false the row renders straight to `visible` (no mount animation)
+            // for any non-preview nested usage.
+            variants={containerVariants}
+            initial={animateOnMount ? 'hidden' : false}
+            animate="visible"
+            exit="exit"
+            onAnimationStart={() => {
+              // Hide the edges while the box grows/shrinks; they get redrawn + revealed on complete.
+              setShowSvg(false)
+              // Clip for the animation so the width tracks the shrink/grow (see isAnimating note above).
+              setIsAnimating(true)
+            }}
+            onAnimationComplete={() => {
+              setShowSvg(true)
+              setIsAnimating(false)
+              rerender()
+            }}
+            // Redraw this sub-graph's edges (and bubble onResize to the host) on every animation frame so
+            // ports stay aligned as the box resizes; the ResizeObserver is the settle-time safety net.
+            onUpdate={redraw}
+            style={{
+              transformOrigin: 'top left',
+              display: 'flex',
+              alignItems: getFlexAlign(layout.type),
+              columnGap: `${serialContainerConfig.nodeGap}px`,
+              overflow: isAnimating ? 'hidden' : 'visible'
+            }}
+          >
+            {dataInternal?.map((node, index) =>
+              renderNode({
+                node,
+                level: 0,
+                parentNodeType: 'serial',
+                relativeIndex: index,
+                isFirst: index === 0,
+                isLast: index === dataInternal.length - 1
+              })
+            )}
+          </motion.div>
         )}
-      </div>
+      </AnimatePresence>
     </div>
   )
 }

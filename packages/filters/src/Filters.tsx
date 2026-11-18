@@ -31,6 +31,11 @@ interface FiltersContextType<T extends Record<string, unknown>> {
    * `true` otherwise.
    */
   isFilterDirty: boolean
+  /**
+   * Marks the current filters as saved (e.g. after successfully saving them as a new saved filter),
+   * so `isFilterDirty` is `false` until the user changes the filters again.
+   */
+  markFiltersSaved: () => void
   getFilterValue: (filterKey: keyof T) => any
   updateFilter: (filterKey: keyof T, parsedValue: any, value: any) => void
   addInitialFilters: (filtersConfig: Record<keyof T, InitializeFiltersConfigType<T>>) => void
@@ -454,6 +459,7 @@ const Filters = forwardRef(function Filters<T extends Record<string, unknown>>(
           updateFilter,
           applySavedFilter,
           isFilterDirty,
+          markFiltersSaved: () => setIsFilterDirty(false),
           addInitialFilters: initializeFilters
         } as any
       }

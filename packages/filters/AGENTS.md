@@ -20,6 +20,7 @@ URL-driven filter state management for React. Keeps filter values in sync with t
 ```bash
 pnpm build         # Production build
 pnpm build:watch   # Watch mode
+pnpm test          # Run Vitest tests (jsdom + Testing Library)
 ```
 
 ---

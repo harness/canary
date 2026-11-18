@@ -65,12 +65,19 @@ interface FilterGroupProps<
 }
 
 /**
- * Disables the Save button while the applied filters match the last applied saved filter.
- * Must be rendered within a Filters provider.
+ * Disables the Save button while the current filters are already saved: either they match the applied saved filter,
+ * or they were just saved successfully. Must be rendered within a Filters provider.
  */
 const SaveFiltersDialogWithDirtyState = ({ onSubmit }: Pick<SaveFiltersDialogProps, 'onSubmit'>) => {
-  const { isFilterDirty } = useFiltersContext()
-  return <SaveFiltersDialog onSubmit={onSubmit} disabled={!isFilterDirty} />
+  const { isFilterDirty, markFiltersSaved } = useFiltersContext()
+
+  const handleSubmit: SaveFiltersDialogProps['onSubmit'] = async data => {
+    // Errors thrown by onSubmit propagate to the dialog and skip marking the filters as saved.
+    await onSubmit?.(data)
+    markFiltersSaved()
+  }
+
+  return <SaveFiltersDialog onSubmit={handleSubmit} disabled={!isFilterDirty} />
 }
 
 export type FilterGroupRef = {

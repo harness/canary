@@ -1,7 +1,9 @@
-import React, {
+import {
+  Context,
   createContext,
   forwardRef,
   ReactNode,
+  Ref,
   useContext,
   useEffect,
   useImperativeHandle,
@@ -24,6 +26,11 @@ interface FiltersContextType<T extends Record<string, unknown>> {
   resetFilters: () => void
   addFilter: (filterKey: keyof T) => void
   applySavedFilter: (savedFilterId: string) => void
+  /**
+   * `false` when the current filters exactly match the last applied saved filter (nothing new to save),
+   * `true` otherwise.
+   */
+  isFilterDirty: boolean
   getFilterValue: (filterKey: keyof T) => any
   updateFilter: (filterKey: keyof T, parsedValue: any, value: any) => void
   addInitialFilters: (filtersConfig: Record<keyof T, InitializeFiltersConfigType<T>>) => void
@@ -44,7 +51,7 @@ interface FiltersProps<T extends Record<string, unknown>> {
 
 const Filters = forwardRef(function Filters<T extends Record<string, unknown>>(
   { children, allFiltersSticky, onChange, onFilterSelectionChange, savedFiltersConfig }: FiltersProps<T>,
-  ref: React.Ref<FilterRefType<T>>
+  ref: Ref<FilterRefType<T>>
 ) {
   type FilterKeys = keyof T
   const [filtersOrder, setFiltersOrder] = useState<FilterKeys[]>([])
@@ -55,6 +62,8 @@ const Filters = forwardRef(function Filters<T extends Record<string, unknown>>(
   const { searchParams, updateURL: routerUpdateURL } = useRouter()
   const { savedFilterKey, getSavedFilters } = savedFiltersConfig || {}
   const initialFiltersRef = useRef<Record<FilterKeys, FilterType> | undefined>(undefined)
+  // Defaults to true so that manually built filters can always be saved.
+  const [isFilterDirty, setIsFilterDirty] = useState(true)
 
   // merge params into search params
   const updateFilterParams = (params: URLSearchParams) => {
@@ -99,6 +108,7 @@ const Filters = forwardRef(function Filters<T extends Record<string, unknown>>(
 
   const addFilter = (filterKey: FilterKeys) => {
     debug('Adding filter with key: %s', filterKey)
+    setIsFilterDirty(true)
     setFiltersMap(prev => ({
       ...prev,
       [filterKey]: createNewFilter()
@@ -120,6 +130,7 @@ const Filters = forwardRef(function Filters<T extends Record<string, unknown>>(
    */
   const removeFilter = (filterKey: FilterKeys) => {
     debug('Removing filter with key: %s', filterKey)
+    setIsFilterDirty(true)
     const isSticky = filtersConfig[filterKey]?.isSticky
     const updatedFiltersMap = {
       ...filtersMap,
@@ -137,6 +148,7 @@ const Filters = forwardRef(function Filters<T extends Record<string, unknown>>(
 
   const updateFilter = (filterKey: FilterKeys, parsedValue: any, value: any) => {
     debug('Updating filter: %s with value: %O', filterKey, value)
+    setIsFilterDirty(true)
     const updatedFiltersMap = { ...filtersMap, [filterKey]: getUpdatedFilter(parsedValue, value) }
     setFiltersMapTrigger(updatedFiltersMap)
 
@@ -197,6 +209,8 @@ const Filters = forwardRef(function Filters<T extends Record<string, unknown>>(
       updatedSearchParams.set(savedFilterKey, savedFilterId)
       updateURL(updatedSearchParams)
     }
+    // Filters now match the saved filter, so there is nothing new to save until the user changes them.
+    setIsFilterDirty(false)
   }
 
   const initializeFilters = (initialFiltersConfig: Record<FilterKeys, InitializeFiltersConfigType<T>>) => {
@@ -397,6 +411,9 @@ const Filters = forwardRef(function Filters<T extends Record<string, unknown>>(
       filter => updatedFiltersMap[filter as FilterKeys].state !== FilterStatus.HIDDEN
     ) as FilterKeys[]
 
+    if (shouldResetSavedFilter) {
+      setIsFilterDirty(true)
+    }
     setFiltersMapTrigger(updatedFiltersMap)
     setFiltersOrderTrigger({ updatedFiltersOrder: newFiltersOrder })
 
@@ -411,7 +428,7 @@ const Filters = forwardRef(function Filters<T extends Record<string, unknown>>(
   }
 
   useImperativeHandle(ref, () => ({
-    // @ts-ignore
+    // @ts-expect-error getValues generic type does not match FilterRefType<T>
     getValues,
     reset: resetFilters
   }))
@@ -436,6 +453,7 @@ const Filters = forwardRef(function Filters<T extends Record<string, unknown>>(
           addFilter,
           updateFilter,
           applySavedFilter,
+          isFilterDirty,
           addInitialFilters: initializeFilters
         } as any
       }
@@ -446,7 +464,7 @@ const Filters = forwardRef(function Filters<T extends Record<string, unknown>>(
 })
 
 export const useFiltersContext = <T extends Record<string, unknown>>() => {
-  const context = useContext(FiltersContext as React.Context<FiltersContextType<T> | null>)
+  const context = useContext(FiltersContext as Context<FiltersContextType<T> | null>)
   if (!context) {
     warn('FiltersContext is missing. Ensure this is used within a FiltersProvider.') // Warn if context is missing
     throw new Error('FiltersDropdown, FiltersRow, and Filter must be used within a FiltersAdapter.')
@@ -464,7 +482,7 @@ interface FiltersWrapperProps<T extends Record<string, unknown>> extends Filters
 
 const FiltersWrapper = forwardRef(function FiltersWrapper<T extends Record<string, unknown>>(
   { view = 'row', ...props },
-  ref: React.Ref<FilterRefType<T>>
+  ref: Ref<FilterRefType<T>>
 ) {
   if (view === 'row') {
     return <Filters {...props} ref={ref} allFiltersSticky />
@@ -487,7 +505,7 @@ export const createFilters = <T extends Record<string, unknown>>() => {
   }
 
   FiltersWithStatics.Dropdown = function filtersDropdown<K extends keyof T>(props: FiltersDropdownProps<T, K>) {
-    // @ts-ignore
+    // @ts-expect-error FiltersDropdown generic props are not inferred from the statics signature
     return <FiltersDropdown {...props} />
   }
 

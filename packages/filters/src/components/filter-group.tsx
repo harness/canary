@@ -25,7 +25,7 @@ import {
 } from '@harnessio/ui/components'
 import { useTranslation } from '@harnessio/ui/context'
 
-import { createFilters } from '../Filters'
+import { createFilters, useFiltersContext } from '../Filters'
 import { FilterRefType } from '../types'
 import ListControlBar from './list-control-bar'
 import SaveFiltersDialog, { SaveFiltersDialogProps } from './save-filters-dialog'
@@ -62,6 +62,15 @@ interface FilterGroupProps<
     getSavedFiltersValues: (savedFilterId: string) => Promise<T>
     onDeleteSavedFilter?: (savedFilterId: string) => Promise<void> | void
   }
+}
+
+/**
+ * Disables the Save button while the applied filters match the last applied saved filter.
+ * Must be rendered within a Filters provider.
+ */
+const SaveFiltersDialogWithDirtyState = ({ onSubmit }: Pick<SaveFiltersDialogProps, 'onSubmit'>) => {
+  const { isFilterDirty } = useFiltersContext()
+  return <SaveFiltersDialog onSubmit={onSubmit} disabled={!isFilterDirty} />
 }
 
 export type FilterGroupRef = {
@@ -259,7 +268,7 @@ const FilterGroupInner = <
                   {(addFilter, availableFilters: Extract<keyof T, string>[], resetFilters) => (
                     <div className="gap-x-cn-md flex items-center">
                       {filterOptionsRenderer({ addFilter, resetFilters, availableFilters })}
-                      {onSaveFilters && <SaveFiltersDialog onSubmit={onSaveFilters} />}
+                      {onSaveFilters && <SaveFiltersDialogWithDirtyState onSubmit={onSaveFilters} />}
                     </div>
                   )}
                 </FilterHandler.Dropdown>

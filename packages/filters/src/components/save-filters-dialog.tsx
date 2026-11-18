@@ -23,6 +23,7 @@ function isSavedFilterError(obj: unknown): obj is SavedFilterError {
 
 export interface SaveFiltersDialogProps {
   onSubmit?: (data: FormValuesType) => Promise<void> | void
+  disabled?: boolean
 }
 
 const formSchema = z.object({
@@ -32,7 +33,7 @@ const formSchema = z.object({
 
 type FormValuesType = z.infer<typeof formSchema>
 
-export function SaveFiltersDialog({ onSubmit }: SaveFiltersDialogProps) {
+export function SaveFiltersDialog({ onSubmit, disabled }: SaveFiltersDialogProps) {
   const { t } = useTranslation()
   const [errorMsg, setErrorMsg] = useState<string | null>(null)
   const [isLoading, setIsLoading] = useState(false)
@@ -74,7 +75,7 @@ export function SaveFiltersDialog({ onSubmit }: SaveFiltersDialogProps) {
       }}
     >
       <Dialog.Trigger>
-        <Button size="sm" variant="transparent">
+        <Button size="sm" variant="transparent" disabled={disabled}>
           Save
         </Button>
       </Dialog.Trigger>

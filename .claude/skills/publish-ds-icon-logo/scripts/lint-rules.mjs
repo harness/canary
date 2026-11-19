@@ -23,6 +23,33 @@ function contrastRatio(a, b) {
   return (l1 + 0.05) / (l2 + 0.05)
 }
 
+/**
+ * True for a vector whose network is ONE closed outline (every vertex has degree >= 2) but whose
+ * fill regions leave at least one segment out. Figma then exports the fill as a closed path and
+ * the stroke as an open one, so the outline is missing an edge.
+ *
+ * Open geometry (any vertex of degree 1) never qualifies: 18 shipped icons are fill + stroke on
+ * purpose that way (supply-chain, organizations, infrastructure, artifacts, ai-test, webhook...).
+ * That also covers the .ai-verify case below: closed filled subpaths beside an open stroked one
+ * leave degree-1 vertices, so this stays quiet there.
+ *
+ * Needs the dump's `segments` ([start, end] pairs) and `regions` (loops of segment indexes per
+ * region). A dump without them (older snippet) is skipped, not guessed at.
+ */
+export function hasOpenStrokeOnClosedShape(k) {
+  if (!k.fillVisible || !k.strokeVisible) return false
+  if (!Array.isArray(k.segments) || !k.segments.length) return false
+  if (!Array.isArray(k.regions) || !k.regions.length) return false
+  const degree = new Map()
+  for (const [a, b] of k.segments) {
+    degree.set(a, (degree.get(a) || 0) + 1)
+    degree.set(b, (degree.get(b) || 0) + 1) // a self-loop (a === b) counts twice, as it should
+  }
+  if (![...degree.values()].every(d => d >= 2)) return false
+  const covered = new Set(k.regions.flatMap(r => r.flat()))
+  return k.segments.some((_, i) => !covered.has(i))
+}
+
 export function lintComponent(c, type, opts = {}) {
   const errors = []
   const warnings = []
@@ -133,6 +160,22 @@ export function lintComponent(c, type, opts = {}) {
       `mixed fill+stroke icon reports MIXED legitimately. **Confirm from the export**: if the ` +
       `component has strokes but the exported SVG has no stroke= attribute, the stroke was ` +
       `outlined — set the cap and join uniformly to ROUND and re-export`)
+  }
+
+  // ── Closed shape whose fill region skips an edge ────────────────────────
+  // Seen on solid-arrow-up / solid-arrow-down after a re-export. See hasOpenStrokeOnClosedShape.
+  const openStroke = kids.filter(hasOpenStrokeOnClosedShape)
+  if (openStroke.length) {
+    E(`"${openStroke[0].name}": Closed shape exports with an open stroke (the fill region skips an ` +
+      `edge). Fix: set the fill region to cover every segment.`)
+  }
+
+  // ── Dashed strokes: Figma's SVG export drops stroke-dasharray ───────────
+  // Seen on square-dashed. The export outlines each dash as its own segment instead.
+  const dashed = kids.filter(k => Array.isArray(k.dashPattern) && k.dashPattern.length)
+  if (dashed.length) {
+    W(`"${dashed[0].name}" has a dashed stroke. Figma's SVG export drops stroke-dasharray and ` +
+      `outlines the dashes as separate segments, so the exported dashes will differ from what you drew.`)
   }
 
   // The colour-mask layer appears as a RECTANGLE on some older components and as

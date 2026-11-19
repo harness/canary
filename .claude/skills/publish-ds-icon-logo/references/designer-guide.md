@@ -45,7 +45,9 @@ Set these up once before your first icon or logo:
    - strokes have mixed caps or joins
    - a logo's description is missing its brand hex (for example `#4A154B`)
    - the mark is invisible on its own background
-5. Never delete or rename an existing component on these pages. They are the permanent catalogue.
+5. If an icon has both a fill and a stroke, close the fill region so it covers every segment. Otherwise the exported stroke has a gap on one edge.
+6. Avoid dashed strokes if the exact dash pattern matters. Figma's SVG export drops the dash setting and outlines the dashes as separate segments, so they can look different in code.
+7. Never delete or rename an existing component on these pages. They are the permanent catalogue.
 
 ## Part 2: Lint it with the plugin
 
@@ -65,7 +67,7 @@ Run this before you ask for review.
 2. The admin does the following:
    - updates your branch from main
    - runs **Lint whole page** as the gate
-   - ticks the plugin's **Admin review** checklist by eye (correct page, name, size, reads well at actual size, no deleted or renamed components)
+   - ticks the plugin's **Review checklist** by eye (correct page, name, size, reads well at actual size, no deleted or renamed components)
 3. If there are issues, the admin clicks **Copy summary** and pastes the note to you. Fix them, re-lint and ask again.
 4. When it is clean, the admin **merges the branch into main**.
 5. Wait for the admin to confirm the merge before you continue. The publish skill reads main only, and it will stop if your component is not there yet.
@@ -82,6 +84,7 @@ You need Claude Code open in the canary repo, with the official **Figma MCP** co
    - exports the SVG and a screenshot, read-only
    - runs the parity check
    - adds the asset and updates the name maps (it stops, and undoes its changes, if the name already exists)
+   - bumps the `@harnessio/ui` minor version (for example 1.7.1 to 1.8.0) in `packages/ui/package.json`. You do not need to do this yourself or ask for it
    - runs the checks and commits locally
 5. If it reports that the component is not on main, stop and go back to Part 3.
 
@@ -93,7 +96,7 @@ The skill stops here and shows you drafts. **Nothing is created until you approv
 2. Check:
    - the title looks like `feat: [UUI-1234]: Add <name> icon`
    - the Figma source and the screenshot are right
-   - only the expected files changed
+   - only the expected files changed: the SVG(s), the name map(s), and the `packages/ui/package.json` version bump
 3. Reply with your approval, or ask for changes.
 4. The skill creates the Jira ticket, pushes the branch and opens the PR. Canary adds the design lead as a reviewer automatically.
 

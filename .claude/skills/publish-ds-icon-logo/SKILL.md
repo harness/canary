@@ -203,12 +203,31 @@ const firstStroke = ch => {
   const p = s.find(x => x.type === 'SOLID') || s[0]
   return { strokeHex: hex(p.color), strokeType: p.type, ...caps }
 }
+// Paints that actually render (Figma keeps hidden / 0-opacity paints in the array).
+const shows = p => p.visible !== false && (p.opacity === undefined || p.opacity > 0)
+// Dashes: Figma's SVG export drops stroke-dasharray, so the linter warns on any dashPattern.
+const dashOf = ch => (Array.isArray(ch.dashPattern) && ch.dashPattern.length ? [...ch.dashPattern] : null)
+// Geometry for the open-stroke rule: segment endpoints + each fill region's loops (segment indexes).
+const vectorGeometry = ch => {
+  if (ch.type !== 'VECTOR') return {}
+  const out = {
+    fillVisible: Array.isArray(ch.fills) ? ch.fills.some(shows) : ch.fills === figma.mixed,
+    strokeVisible: Array.isArray(ch.strokes) && ch.strokes.some(shows)
+  }
+  try {
+    const n = ch.vectorNetwork
+    out.segments = n.segments.map(s => [s.start, s.end])
+    out.regions = (n.regions || []).map(r => (r.loops || []).map(l => [...l]))
+  } catch (e) { /* unreadable: the rule skips this node */ }
+  return out
+}
 const components = page.findAllWithCriteria({ types: ['COMPONENT'] }).map(c => ({
   name: c.name, type: c.type,
   width: Math.round(c.width), height: Math.round(c.height),
   description: c.description || '',
   children: c.children.map(ch => ({
-    name: ch.name, type: ch.type, isMask: ch.isMask === true, ...firstFill(ch), ...firstStroke(ch)
+    name: ch.name, type: ch.type, isMask: ch.isMask === true, ...firstFill(ch), ...firstStroke(ch),
+    dashPattern: dashOf(ch), ...vectorGeometry(ch)
   }))
 }))
 return JSON.stringify({ page: PAGE, type: TYPE, components })
@@ -223,6 +242,11 @@ node .claude/skills/publish-ds-icon-logo/scripts/lint-page.mjs --in /tmp/page.js
 # or lint the whole page (also detects name collisions, which --only cannot)
 node .claude/skills/publish-ds-icon-logo/scripts/lint-page.mjs --in /tmp/page.json --quiet
 ```
+
+Two checks come from geometry in that dump: an **error** for a closed shape with fill + stroke
+whose fill region skips an edge (it exports with an open stroke; fix by setting the fill region to
+cover every segment), and a **warning** for any dashed stroke (the export drops `stroke-dasharray`).
+Open fill + stroke geometry is deliberate on 18 shipped icons and is not flagged.
 
 Errors block shipping. Warnings are judgement calls — read them and decide.
 
@@ -477,6 +501,9 @@ Expected, and nothing else:
 | Icon | `icons/<name>.svg` + `icon-name-map.ts` |
 | Logo | `logos/<name>.svg`, `symbols/<name>.svg` + `logo-name-map.ts`, `symbol-name-map.ts` |
 
+Step 6 also adds `packages/ui/package.json` (the version bump), so expect that one extra file in the
+final commit.
+
 Each map should be a net +2 lines. A net +3/−1 is also correct when the asset sorts last — the
 previously-final entry gains a trailing comma. Anything beyond that needs explaining before you
 commit.
@@ -493,12 +520,37 @@ so a flagged icon is a genuine outlier — a too-complex glyph that should be si
 candidate for an optimised PNG (there is no PNG pipeline yet, so raise it with a human). A few
 intricate brand marks legitimately run larger, so for logos this is advisory, not a blocker.
 
+## Fixing an EXISTING icon
+
+Use this when a shipped icon is wrong (for example an open stroke or a lost dasharray) and the
+fix is already made in the main Figma file. Use **Route A (bridge)** with `add-asset.mjs --force`:
+
+1. Export **only that icon** with `exportAsync`. Never run a full export.
+2. Re-run it through `add-asset.mjs --force` so only that SVG is replaced:
+   `node ../../.claude/skills/publish-ds-icon-logo/scripts/add-asset.mjs ... --force`
+3. Confirm with `git status` that exactly one SVG changed, then run
+   `node ../../.claude/skills/publish-ds-icon-logo/scripts/check-regressions.mjs --expect <name>`.
+
+Do not use the old `pnpm update:icons` route for this. It overwrote every icon, so one fix could
+silently rewrite hundreds of unrelated files, which is why it is not a good path.
+
 ## Step 6 — Commit
+
+Bump the `@harnessio/ui` **minor** version first. Every asset PR ships a new package version, and the
+script computes it from `origin/main` rather than the working tree, so re-running it is safe and a
+rebase onto a newer `main` just needs one more run:
+
+```bash
+node .claude/skills/publish-ds-icon-logo/scripts/bump-ui-version.mjs   # e.g. 1.7.1 -> 1.8.0
+```
+
+If it cannot read `origin/main`, run `git fetch origin` (VPN required). Do this automatically; do not
+ask the user whether to bump.
 
 Stage by explicit path. Never `git add .`, so `.env` cannot slip in.
 
 ```bash
-git add <the exact paths add-asset.mjs printed>
+git add <the exact paths add-asset.mjs printed> packages/ui/package.json
 git commit -m "feat: [<TICKET-KEY>]: Add <name> <icon|logo>"
 ```
 
@@ -627,6 +679,7 @@ After merge:
 | `scripts/lint-page.mjs` | **Guard A** — catch malformed Figma components before exporting |
 | `scripts/check-regressions.mjs` | **Guard B** — catch clobbered or vanished assets after exporting |
 | `scripts/check-typecheck.mjs` | Run typecheck and prove any failure is pre-existing, not yours |
+| `scripts/bump-ui-version.mjs` | Minor-bump `@harnessio/ui` relative to `origin/main` (idempotent) |
 | `scripts/prepare-submission.mjs` | Draft + validate the Jira ticket and PR title/body (never submits) |
 | `references/figma-spec.md` | Figma component spec and naming rules to verify before export |
 | `references/troubleshooting.md` | CI, Jira, export and merge-conflict failure modes |

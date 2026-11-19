@@ -7,7 +7,8 @@ import { dump as dumpComponent, isLegacy, missingShipped } from './plugin-logic.
 const PAGES = { 'icons-to-dev': 'icon', 'brands-to-dev': 'logo' }
 const MAIN_FILE_KEY = 'NYeN8I4D3anR9it8ds0lyr'
 
-figma.showUI(__html__, { width: 420, height: 520 })
+// themeColors adds .figma-light / .figma-dark to the UI so the tokens follow Figma's theme.
+figma.showUI(__html__, { width: 420, height: 520, themeColors: true })
 
 const dump = c => dumpComponent(c, figma.mixed)
 

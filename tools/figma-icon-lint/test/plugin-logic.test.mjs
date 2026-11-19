@@ -51,3 +51,41 @@ assert.strictEqual(isLegacy({ name: '.new', errors: [] }, shipped, 'page'), fals
 assert.strictEqual(isLegacy({ name: '.a', errors: [] }, shipped, 'selection'), false, 'selection runs never hide')
 
 console.log('✅ plugin-logic tests passed')
+
+// ── open stroke on a closed shape + dashed stroke ──
+{
+  const vec = (segments, loops, extra = {}) => ({
+    id: '1', type: 'VECTOR', name: 'v', fills: [solid(0, 0, 0)], strokes: [solid(0, 0, 0)],
+    vectorNetwork: { segments: segments.map(([start, end]) => ({ start, end })), regions: [{ loops }] }, ...extra
+  })
+  const lintKid = ch => lintPage(
+    { page: 'icons-to-dev', type: 'icon', components: [{ ...dump({ id: 'c', name: '.x', type: 'COMPONENT', width: 16, height: 16, children: [ch] }, MIXED) }] }
+  ).results[0]
+  const tri = [[0, 1], [1, 2], [2, 0]]
+
+  // closed triangle, fill region skips segment 2 -> error
+  let r = lintKid(vec(tri, [[0, 1]]))
+  assert.ok(r.errors.some(e => e.includes('open stroke')), 'closed + skipped edge errors')
+  // the verified fix: region covers every segment -> clean
+  r = lintKid(vec(tri, [[0, 1, 2]]))
+  assert.ok(!r.errors.some(e => e.includes('open stroke')), 'full region passes')
+  // open geometry (vertex of degree 1) with fill + stroke is deliberate -> no error
+  r = lintKid(vec([[0, 1], [1, 2]], [[0]]))
+  assert.ok(!r.errors.some(e => e.includes('open stroke')), 'open geometry not flagged')
+  // closed triangle + a dangling open edge (the .ai-verify shape) -> no error
+  r = lintKid(vec([...tri, [2, 3]], [[0, 1, 2]]))
+  assert.ok(!r.errors.some(e => e.includes('open stroke')), 'closed + open subpath not flagged')
+  // no stroke -> no error
+  r = lintKid(vec(tri, [[0, 1]], { strokes: [] }))
+  assert.ok(!r.errors.some(e => e.includes('open stroke')), 'fill only not flagged')
+  // hidden stroke -> no error
+  r = lintKid(vec(tri, [[0, 1]], { strokes: [solid(0, 0, 0, { visible: false })] }))
+  assert.ok(!r.errors.some(e => e.includes('open stroke')), 'hidden stroke not flagged')
+
+  // dashes warn; solid strokes do not
+  r = lintKid(vec(tri, [[0, 1, 2]], { dashPattern: [2, 2] }))
+  assert.ok(r.warnings.some(w => w.includes('stroke-dasharray')), 'dash warns')
+  r = lintKid(vec(tri, [[0, 1, 2]], { dashPattern: [] }))
+  assert.ok(!r.warnings.some(w => w.includes('stroke-dasharray')), 'empty dash silent')
+}
+console.log('open-stroke and dash checks ok')

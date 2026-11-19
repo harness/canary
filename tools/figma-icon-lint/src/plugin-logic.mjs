@@ -28,6 +28,35 @@ export function firstStroke(ch, mixed) {
   return { strokeHex: hex(p.color), strokeType: p.type, ...caps }
 }
 
+// Paints that actually render: Figma keeps hidden (visible:false) and 0-opacity paints in the array.
+const shows = p => p.visible !== false && (p.opacity === undefined || p.opacity > 0)
+
+// Geometry for the open-stroke rule: segment endpoints and each fill region's loops (segment indexes).
+// Only VECTORs carry a vectorNetwork. Kept compact so a whole-page dump stays small.
+export function vectorGeometry(ch, mixed) {
+  if (ch.type !== 'VECTOR') return {}
+  const out = {}
+  const fills = ch.fills === mixed ? null : ch.fills
+  const strokes = ch.strokes
+  out.fillVisible = Array.isArray(fills) ? fills.some(shows) : ch.fills === mixed
+  out.strokeVisible = Array.isArray(strokes) && strokes.some(shows)
+  try {
+    const n = ch.vectorNetwork
+    if (n && Array.isArray(n.segments)) {
+      out.segments = n.segments.map(s => [s.start, s.end])
+      out.regions = (n.regions || []).map(r => (r.loops || []).map(l => [...l]))
+    }
+  } catch (e) {
+    // vectorNetwork unreadable: the rule skips this node rather than guessing
+  }
+  return out
+}
+
+const dashOf = (ch, mixed) => {
+  const d = ch.dashPattern
+  return Array.isArray(d) && d.length && d !== mixed ? [...d] : null
+}
+
 export const dump = (c, mixed) => ({
   id: c.id,
   name: c.name,
@@ -36,7 +65,8 @@ export const dump = (c, mixed) => ({
   height: Math.round(c.height),
   description: c.description || '',
   children: (c.children || []).map(ch => ({
-    name: ch.name, type: ch.type, isMask: ch.isMask === true, ...firstFill(ch, mixed), ...firstStroke(ch, mixed)
+    name: ch.name, type: ch.type, isMask: ch.isMask === true, ...firstFill(ch, mixed), ...firstStroke(ch, mixed),
+    dashPattern: dashOf(ch, mixed), ...vectorGeometry(ch, mixed)
   }))
 })
 

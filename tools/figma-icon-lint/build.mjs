@@ -1,6 +1,6 @@
 // Bundles src/code.js (+ the shared rules from the publish skill) into dist/code.js and copies the UI.
 import { build } from 'esbuild'
-import { mkdirSync, copyFileSync } from 'fs'
+import { mkdirSync, readFileSync, writeFileSync } from 'fs'
 
 mkdirSync('dist', { recursive: true })
 await build({
@@ -10,5 +10,6 @@ await build({
   target: 'es2017', // Figma's plugin sandbox
   outfile: 'dist/code.js'
 })
-copyFileSync('src/ui.html', 'dist/ui.html')
+// Inline the extracted design tokens (gen-tokens.mjs) into the UI; Figma loads one self-contained file.
+writeFileSync('dist/ui.html', readFileSync('src/ui.html', 'utf8').replace('/*TOKENS*/', readFileSync('src/tokens.css', 'utf8')))
 console.log('built dist/code.js, dist/ui.html')

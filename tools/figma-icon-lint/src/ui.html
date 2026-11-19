@@ -1,21 +1,38 @@
 <!doctype html>
 <meta charset="utf-8" />
 <style>
-  body { font: 12px/1.45 Inter, system-ui, sans-serif; margin: 12px; color: #1b1b1f; }
-  button { font: inherit; padding: 6px 10px; margin-right: 6px; cursor: pointer; }
-  .sum { margin: 12px 0; font-weight: 600; }
-  .ok { color: #1a7f37; } .bad { color: #cf222e; }
-  .item { border: 1px solid #ddd; border-radius: 6px; padding: 8px; margin-bottom: 8px; cursor: pointer; }
-  .item b { display: block; margin-bottom: 4px; }
-  .e { color: #cf222e; } .w { color: #9a6700; }
+/*TOKENS*/
+  body { font: var(--cn-font-size-3)/1.5 var(--cn-font-family-default); margin: var(--cn-spacing-3); color: var(--cn-text-2); background: var(--cn-bg-1); }
+  button { font: inherit; font-weight: 500; padding: 6px var(--cn-spacing-3); margin: 0 6px 6px 0; cursor: pointer; border-radius: var(--cn-rounded-3); border: 1px solid var(--cn-border-2); background: var(--cn-bg-1); color: var(--cn-text-1); }
+  button:hover { background: var(--cn-bg-2); }
+  button.icon { display: inline-flex; align-items: center; justify-content: center; padding: 6px; vertical-align: top; }
+  button.primary { background: var(--cn-set-brand-primary-bg); color: var(--cn-set-brand-primary-text); border-color: transparent; }
+  button.primary:hover { background: var(--cn-set-brand-primary-bg); filter: brightness(1.12); }
+  button:focus-visible { outline: 2px solid var(--cn-set-brand-primary-bg); outline-offset: 2px; }
+  [hidden] { display: none !important; }
+  .sum { margin: var(--cn-spacing-3) 0; font-weight: 600; color: var(--cn-text-1); }
+  .ok { color: var(--cn-text-success); } .bad { color: var(--cn-text-danger); }
+  .item { border: 1px solid var(--cn-border-2); background: var(--cn-bg-1); border-radius: var(--cn-rounded-4); padding: var(--cn-spacing-2); margin-bottom: var(--cn-spacing-2); cursor: pointer; }
+  .item:hover { background: var(--cn-bg-2); }
+  .item b { display: block; margin-bottom: var(--cn-spacing-1); color: var(--cn-text-1); }
+  .e { color: var(--cn-text-danger); } .w { color: var(--cn-text-warning); }
   pre { white-space: pre-wrap; margin: 2px 0; font: inherit; }
+  code { font-family: var(--cn-font-family-mono, monospace); }
+  summary { cursor: pointer; color: var(--cn-text-1); }
+  #review { margin-top: var(--cn-spacing-3); }
+  #review ul { margin: var(--cn-spacing-1) 0; padding-left: 18px; }
+  #about .next { margin: var(--cn-spacing-3) 0 0; padding: var(--cn-spacing-3); border: 1px solid var(--cn-border-2); border-radius: var(--cn-rounded-4); background: var(--cn-bg-2); }
+  #about { margin-top: var(--cn-spacing-4); padding-top: var(--cn-spacing-3); border-top: 1px solid var(--cn-border-3); }
+  #review h3, #about h3 { margin: 0 0 var(--cn-spacing-1); font-size: inherit; color: var(--cn-text-1); }
+  #about p, #about ol { margin: var(--cn-spacing-1) 0; }
+  #about ol { padding-left: 18px; }
 </style>
-<button id="sel">Lint selection</button><button id="page">Lint whole page</button><button id="copy" hidden>Copy summary</button>
+<button id="sel" class="primary">Lint selection</button><button id="page" class="primary">Lint whole page</button><button id="refresh" class="icon" hidden aria-label="Refresh" title="Refresh: clear the results and start over"><svg width="16" height="16" fill="none" viewBox="0 0 16 16" aria-hidden="true"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" d="M13.933 8.9A6.002 6.002 0 0 1 2 8a6 6 0 0 1 11.5-2.4m-2.5 0h2.64a.36.36 0 0 0 .36-.36V2.6"/></svg></button><button id="copy" hidden>Copy summary</button>
 <p class="w">Before linting, update this branch from main so every shipped name is on the page.</p>
 <label id="legacyRow" hidden><input type="checkbox" id="legacy"> Show <span id="legacyN">0</span> warnings on already-shipped assets</label>
 <div id="out"></div>
-<details id="review" hidden>
-  <summary><b>Admin review (by eye)</b></summary>
+<section id="review" hidden>
+  <h3>✅ Review checklist</h3>
   <ul>
     <li>On the correct page (<code>icons-to-dev</code> icons, <code>brands-to-dev</code> logos)</li>
     <li>Name: dot-prefixed, kebab-case, noun-first, right family prefix</li>
@@ -24,13 +41,36 @@
     <li>Logos: description holds the brand hex and the mark is visible on it</li>
     <li>No existing component was deleted or renamed on the branch</li>
   </ul>
-</details>
+</section>
+<section id="about">
+  <h3>💡 About this plugin</h3>
+  <p>Checks new icons and logos <b>before</b> they are merged into the main <b>HDS Icons 3.0 Figma file</b>. Developers publish from that Figma file into the canary code repo (<code>@harnessio/ui</code>), so problems get fixed here in Figma instead of after they have shipped in code.</p>
+  <ol>
+    <li>Work on your Figma branch, on the <code>icons-to-dev</code> (icons) or <code>brands-to-dev</code> (logos) page.</li>
+    <li>Select your component and click <b>Lint selection</b>, or click <b>Lint whole page</b> to also catch name clashes.</li>
+    <li>Fix every <span class="e">error</span>. <span class="w">Warnings</span> are worth a look but do not block you.</li>
+    <li>Re-run until it is clean, then ask an admin to review and merge your branch.</li>
+  </ol>
+  <p>It only reads your file. It never changes your design and sends nothing anywhere.</p>
+  <p class="next">⭐ <b>Next step:</b> once an admin has merged your branch into main, open Claude Code or Cursor in the canary repo and ask it to publish your icon or logo (for example, &ldquo;Publish the &lt;name&gt; icon to canary&rdquo;). The publish skill exports it, adds it to the code, and drafts the Jira ticket and pull request for your approval.</p>
+</section>
 <script>
   const out = document.getElementById('out')
+  let last = null
   const send = mode => parent.postMessage({ pluginMessage: { kind: 'lint', mode } }, '*')
+  const refresh = document.getElementById('refresh')
+  // Back to the blank, just-opened state: no results, no review checklist, no legacy toggle.
+  refresh.onclick = () => {
+    last = null
+    out.innerHTML = ''
+    refresh.hidden = true
+    document.getElementById('copy').hidden = true
+    document.getElementById('review').hidden = true
+    document.getElementById('legacyRow').hidden = true
+    document.getElementById('legacy').checked = false
+  }
   document.getElementById('sel').onclick = () => send('selection')
   document.getElementById('page').onclick = () => send('page')
-  let last = null
   document.getElementById('copy').onclick = () => {
     if (!last) return
     const lines = [(last.errorCount ? 'Lint: ' + last.errorCount + ' error(s), ' : 'Lint clean, ') + last.warnCount + ' warning(s)']
@@ -46,6 +86,7 @@
     const m = ev.data.pluginMessage
     if (m.kind === 'notice') { out.innerHTML = '<p>' + esc(m.text) + '</p>'; return }
     last = m
+    refresh.hidden = false
     document.getElementById('copy').hidden = false
     document.getElementById('review').hidden = false
     render()

@@ -6,6 +6,7 @@
   "type": "module",
   "scripts": {
     "gen:shipped": "node scripts/gen-shipped-names.mjs",
+    "gen:tokens": "node scripts/gen-tokens.mjs",
     "build": "node scripts/gen-shipped-names.mjs && node build.mjs",
     "test": "node test/parity.test.mjs && node test/plugin-logic.test.mjs"
   },

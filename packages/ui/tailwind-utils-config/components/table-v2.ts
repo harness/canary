@@ -351,6 +351,15 @@ export default {
       borderBottomColor: 'var(--cn-border-3)'
     },
 
+    // border-collapse: separate (sticky) does not paint <tr> borders — draw on cells.
+    '&:not(.cn-table-v2-transparent) .cn-table-v2-body .cn-table-v2-row': {
+      borderBottom: 'none',
+      '&:last-child .cn-table-v2-cell': { borderBottom: 'none' },
+      '.cn-table-v2-cell': {
+        borderBottom: 'var(--cn-table-border) solid var(--cn-border-3)'
+      }
+    },
+
     // Sortable head hover must stay opaque when sticky: composite the
     // translucent state token over the opaque pinned-base instead of
     // replacing the background. Transparent variant keeps its own hover.

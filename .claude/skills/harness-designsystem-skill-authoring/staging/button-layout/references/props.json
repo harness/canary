@@ -1,0 +1,47 @@
+{
+  "id": "canary.button-layout",
+  "code": {
+    "package": "@harnessio/ui",
+    "export": "ButtonLayout",
+    "import": "import { ButtonLayout } from '@harnessio/ui/components'"
+  },
+  "props": [
+    {
+      "name": "className",
+      "type": "string",
+      "description": "TODO(designer): describe what this prop is for and how to choose its value."
+    },
+    {
+      "name": "orientation",
+      "type": "enum",
+      "description": "TODO(designer): describe what this prop is for and how to choose its value.",
+      "values": [
+        {
+          "name": "horizontal",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "vertical",
+          "whenToUse": "TODO(designer): when to pick this value."
+        }
+      ],
+      "default": "horizontal"
+    },
+    {
+      "name": "horizontalAlign",
+      "type": "enum",
+      "description": "TODO(designer): describe what this prop is for and how to choose its value.",
+      "values": [
+        {
+          "name": "start",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "end",
+          "whenToUse": "TODO(designer): when to pick this value."
+        }
+      ],
+      "default": "end"
+    }
+  ]
+}

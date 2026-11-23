@@ -1,0 +1,185 @@
+{
+  "id": "canary.multi-select",
+  "code": {
+    "package": "@harnessio/ui",
+    "export": "MultiSelect",
+    "import": "import { MultiSelect } from '@harnessio/ui/components'"
+  },
+  "props": [
+    {
+      "name": "value",
+      "type": "object",
+      "description": "TODO(designer): describe what this prop is for and how to choose its value."
+    },
+    {
+      "name": "defaultValue",
+      "type": "object",
+      "description": "TODO(designer): describe what this prop is for and how to choose its value.",
+      "default": "[]"
+    },
+    {
+      "name": "options",
+      "type": "object",
+      "description": "TODO(designer): describe what this prop is for and how to choose its value."
+    },
+    {
+      "name": "placeholder",
+      "type": "string",
+      "description": "TODO(designer): describe what this prop is for and how to choose its value."
+    },
+    {
+      "name": "searchQuery",
+      "type": "string",
+      "description": "TODO(designer): describe what this prop is for and how to choose its value."
+    },
+    {
+      "name": "setSearchQuery",
+      "type": "function",
+      "description": "TODO(designer): describe what this prop is for and how to choose its value."
+    },
+    {
+      "name": "onChange",
+      "type": "function",
+      "description": "TODO(designer): describe what this prop is for and how to choose its value."
+    },
+    {
+      "name": "disabled",
+      "type": "boolean",
+      "description": "TODO(designer): describe what this prop is for and how to choose its value."
+    },
+    {
+      "name": "className",
+      "type": "string",
+      "description": "TODO(designer): describe what this prop is for and how to choose its value."
+    },
+    {
+      "name": "disallowCreation",
+      "type": "boolean",
+      "description": "TODO(designer): describe what this prop is for and how to choose its value.",
+      "default": "false"
+    },
+    {
+      "name": "creationValueMode",
+      "type": "enum",
+      "description": "Controls how typed input becomes tags on Enter. Comma-separated values are supported. - `keyValue` — splits on `:` (e.g. `env:prod`, `app:web`) - `literal` — no split on `:` (e.g. `https://example.com`, `image:latest`, `host:8080`)",
+      "values": [
+        {
+          "name": "keyValue",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "literal",
+          "whenToUse": "TODO(designer): when to pick this value."
+        }
+      ],
+      "default": "keyValue"
+    },
+    {
+      "name": "creationLabel",
+      "type": "string",
+      "description": "TODO(designer): describe what this prop is for and how to choose its value.",
+      "default": "Press Enter to create"
+    },
+    {
+      "name": "isLoading",
+      "type": "boolean",
+      "description": "TODO(designer): describe what this prop is for and how to choose its value.",
+      "default": "false"
+    },
+    {
+      "name": "theme",
+      "type": "enum",
+      "description": "TODO(designer): describe what this prop is for and how to choose its value.",
+      "values": [
+        {
+          "name": "default",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "danger",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "warning",
+          "whenToUse": "TODO(designer): when to pick this value."
+        }
+      ],
+      "default": "default"
+    },
+    {
+      "name": "commandProps",
+      "type": "object",
+      "description": "Props of `Command`"
+    },
+    {
+      "name": "inputProps",
+      "type": "object",
+      "description": "Props of `CommandInput`"
+    },
+    {
+      "name": "prefix",
+      "type": "node",
+      "description": "TODO(designer): describe what this prop is for and how to choose its value."
+    },
+    {
+      "name": "label",
+      "type": "string",
+      "description": "TODO(designer): describe what this prop is for and how to choose its value."
+    },
+    {
+      "name": "wrapperClassName",
+      "type": "string",
+      "description": "TODO(designer): describe what this prop is for and how to choose its value."
+    },
+    {
+      "name": "caption",
+      "type": "string",
+      "description": "TODO(designer): describe what this prop is for and how to choose its value."
+    },
+    {
+      "name": "error",
+      "type": "string",
+      "description": "TODO(designer): describe what this prop is for and how to choose its value."
+    },
+    {
+      "name": "warning",
+      "type": "string",
+      "description": "TODO(designer): describe what this prop is for and how to choose its value."
+    },
+    {
+      "name": "labelSuffix",
+      "type": "node",
+      "description": "TODO(designer): describe what this prop is for and how to choose its value."
+    },
+    {
+      "name": "orientation",
+      "type": "enum",
+      "description": "TODO(designer): describe what this prop is for and how to choose its value.",
+      "values": [
+        {
+          "name": "vertical",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "horizontal",
+          "whenToUse": "TODO(designer): when to pick this value."
+        }
+      ]
+    },
+    {
+      "name": "optional",
+      "type": "boolean",
+      "description": "TODO(designer): describe what this prop is for and how to choose its value."
+    },
+    {
+      "name": "tooltipProps",
+      "type": "object",
+      "description": "TODO(designer): describe what this prop is for and how to choose its value."
+    },
+    {
+      "name": "tooltipContent",
+      "type": "string",
+      "description": "TODO(designer): describe what this prop is for and how to choose its value."
+    }
+  ]
+}

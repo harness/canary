@@ -1,0 +1,68 @@
+{
+  "id": "canary.avatar",
+  "code": {
+    "package": "@harnessio/ui",
+    "export": "Avatar",
+    "import": "import { Avatar } from '@harnessio/ui/components'"
+  },
+  "props": [
+    {
+      "name": "name",
+      "type": "string",
+      "description": "TODO(designer): describe what this prop is for and how to choose its value.",
+      "default": ""
+    },
+    {
+      "name": "src",
+      "type": "string",
+      "description": "TODO(designer): describe what this prop is for and how to choose its value."
+    },
+    {
+      "name": "size",
+      "type": "enum",
+      "description": "TODO(designer): describe what this prop is for and how to choose its value.",
+      "values": [
+        {
+          "name": "xs",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "sm",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "md",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "lg",
+          "whenToUse": "TODO(designer): when to pick this value."
+        }
+      ],
+      "default": "sm"
+    },
+    {
+      "name": "rounded",
+      "type": "boolean",
+      "description": "TODO(designer): describe what this prop is for and how to choose its value.",
+      "default": "false"
+    },
+    {
+      "name": "noInitials",
+      "type": "boolean",
+      "description": "TODO(designer): describe what this prop is for and how to choose its value.",
+      "default": "false"
+    },
+    {
+      "name": "isGroup",
+      "type": "boolean",
+      "description": "TODO(designer): describe what this prop is for and how to choose its value.",
+      "default": "false"
+    },
+    {
+      "name": "icon",
+      "type": "string",
+      "description": "Custom icon to display instead of initials or default user icon"
+    }
+  ]
+}

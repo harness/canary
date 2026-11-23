@@ -1,0 +1,31 @@
+{
+  "id": "canary.file-upload",
+  "code": {
+    "package": "@harnessio/ui",
+    "export": "FileUpload",
+    "import": "import { FileUpload } from '@harnessio/ui/components'"
+  },
+  "props": [
+    {
+      "name": "selectedFile",
+      "type": "object",
+      "description": "TODO(designer): describe what this prop is for and how to choose its value."
+    },
+    {
+      "name": "onFileChange",
+      "type": "function",
+      "description": "TODO(designer): describe what this prop is for and how to choose its value.",
+      "required": true
+    },
+    {
+      "name": "error",
+      "type": "string",
+      "description": "TODO(designer): describe what this prop is for and how to choose its value."
+    },
+    {
+      "name": "accept",
+      "type": "string",
+      "description": "TODO(designer): describe what this prop is for and how to choose its value."
+    }
+  ]
+}

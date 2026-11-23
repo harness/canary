@@ -1,0 +1,78 @@
+{
+  "id": "canary.scroll-area",
+  "code": {
+    "package": "@harnessio/ui",
+    "export": "ScrollArea",
+    "import": "import { ScrollArea } from '@harnessio/ui/components'"
+  },
+  "props": [
+    {
+      "name": "direction",
+      "type": "enum",
+      "description": "TODO(designer): describe what this prop is for and how to choose its value.",
+      "values": [
+        {
+          "name": "ltr",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "rtl",
+          "whenToUse": "TODO(designer): when to pick this value."
+        }
+      ]
+    },
+    {
+      "name": "className",
+      "type": "string",
+      "description": "TODO(designer): describe what this prop is for and how to choose its value."
+    },
+    {
+      "name": "classNameContent",
+      "type": "string",
+      "description": "TODO(designer): describe what this prop is for and how to choose its value."
+    },
+    {
+      "name": "preserveScrollPosition",
+      "type": "boolean",
+      "description": "TODO(designer): describe what this prop is for and how to choose its value.",
+      "default": "false"
+    },
+    {
+      "name": "storageKey",
+      "type": "string",
+      "description": "TODO(designer): describe what this prop is for and how to choose its value."
+    },
+    {
+      "name": "onScrollTop",
+      "type": "function",
+      "description": "TODO(designer): describe what this prop is for and how to choose its value."
+    },
+    {
+      "name": "onScrollBottom",
+      "type": "function",
+      "description": "TODO(designer): describe what this prop is for and how to choose its value."
+    },
+    {
+      "name": "onScrollLeft",
+      "type": "function",
+      "description": "TODO(designer): describe what this prop is for and how to choose its value."
+    },
+    {
+      "name": "onScrollRight",
+      "type": "function",
+      "description": "TODO(designer): describe what this prop is for and how to choose its value."
+    },
+    {
+      "name": "rootMargin",
+      "type": "string",
+      "description": "TODO(designer): describe what this prop is for and how to choose its value.",
+      "default": "0px"
+    },
+    {
+      "name": "threshold",
+      "type": "object",
+      "description": "TODO(designer): describe what this prop is for and how to choose its value.",
+      "default": "0.1"
+    }
+  ]
+}

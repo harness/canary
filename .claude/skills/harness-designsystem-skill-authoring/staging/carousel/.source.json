@@ -1,0 +1,12 @@
+{
+  "export": "Carousel",
+  "source": "/Users/kathryngrantier/projects/canary/packages/ui/src/components/carousel.tsx",
+  "slug": "carousel",
+  "parts": [
+    "Root",
+    "Content",
+    "Item",
+    "Previous",
+    "Next"
+  ]
+}

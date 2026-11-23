@@ -1,0 +1,51 @@
+{
+  "id": "canary.radio-root",
+  "code": {
+    "package": "@harnessio/ui",
+    "export": "Radio.Root",
+    "import": "import { Radio } from '@harnessio/ui/components'"
+  },
+  "props": [
+    {
+      "name": "error",
+      "type": "boolean",
+      "description": "Set on Radio.Root. TODO(designer): describe what this prop is for and how to choose its value.",
+      "default": "false"
+    },
+    {
+      "name": "label",
+      "type": "string",
+      "description": "Set on Radio.Root. TODO(designer): describe what this prop is for and how to choose its value."
+    },
+    {
+      "name": "caption",
+      "type": "string",
+      "description": "Set on Radio.Root. TODO(designer): describe what this prop is for and how to choose its value."
+    },
+    {
+      "name": "optional",
+      "type": "boolean",
+      "description": "Set on Radio.Root. TODO(designer): describe what this prop is for and how to choose its value."
+    },
+    {
+      "name": "tooltipProps",
+      "type": "object",
+      "description": "Set on Radio.Root. TODO(designer): describe what this prop is for and how to choose its value."
+    },
+    {
+      "name": "tooltipContent",
+      "type": "string",
+      "description": "Set on Radio.Root. TODO(designer): describe what this prop is for and how to choose its value."
+    },
+    {
+      "name": "wrapperClassName",
+      "type": "string",
+      "description": "Set on Radio.Root. TODO(designer): describe what this prop is for and how to choose its value."
+    },
+    {
+      "name": "labelSuffix",
+      "type": "node",
+      "description": "Set on Radio.Root. TODO(designer): describe what this prop is for and how to choose its value."
+    }
+  ]
+}

@@ -1,0 +1,14 @@
+{
+  "export": "Sheet",
+  "source": "/Users/kathryngrantier/projects/canary/packages/ui/src/components/sheet.tsx",
+  "slug": "sheet",
+  "parts": [
+    "Root",
+    "Trigger",
+    "Content",
+    "Header",
+    "Footer",
+    "Title",
+    "Description"
+  ]
+}

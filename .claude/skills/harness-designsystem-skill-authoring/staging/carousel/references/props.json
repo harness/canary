@@ -1,0 +1,159 @@
+{
+  "id": "canary.carousel",
+  "code": {
+    "package": "@harnessio/ui",
+    "export": "Carousel",
+    "import": "import { Carousel } from '@harnessio/ui/components'"
+  },
+  "props": [
+    {
+      "name": "opts",
+      "type": "object",
+      "description": "Set on Carousel.Root. TODO(designer): describe what this prop is for and how to choose its value."
+    },
+    {
+      "name": "plugins",
+      "type": "object",
+      "description": "Set on Carousel.Root. TODO(designer): describe what this prop is for and how to choose its value."
+    },
+    {
+      "name": "orientation",
+      "type": "enum",
+      "description": "Set on Carousel.Root. TODO(designer): describe what this prop is for and how to choose its value.",
+      "values": [
+        {
+          "name": "horizontal",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "vertical",
+          "whenToUse": "TODO(designer): when to pick this value."
+        }
+      ],
+      "default": "horizontal"
+    },
+    {
+      "name": "setApi",
+      "type": "function",
+      "description": "Set on Carousel.Root. TODO(designer): describe what this prop is for and how to choose its value."
+    },
+    {
+      "name": "initialSlide",
+      "type": "number",
+      "description": "Set on Carousel.Root. TODO(designer): describe what this prop is for and how to choose its value."
+    },
+    {
+      "name": "carouselBlockClassName",
+      "type": "string",
+      "description": "Set on Carousel.Content. TODO(designer): describe what this prop is for and how to choose its value."
+    },
+    {
+      "name": "onClick",
+      "type": "function",
+      "description": "Set on Carousel.Previous or Carousel.Next. TODO(designer): describe what this prop is for and how to choose its value."
+    },
+    {
+      "name": "variant",
+      "type": "enum",
+      "description": "Set on Carousel.Previous or Carousel.Next. TODO(designer): describe what this prop is for and how to choose its value.",
+      "values": [
+        {
+          "name": "primary",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "secondary",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "outline",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "ai",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "ghost",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "link",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "transparent",
+          "whenToUse": "TODO(designer): when to pick this value."
+        }
+      ],
+      "default": "outline"
+    },
+    {
+      "name": "size",
+      "type": "enum",
+      "description": "Set on Carousel.Previous or Carousel.Next. TODO(designer): describe what this prop is for and how to choose its value.",
+      "values": [
+        {
+          "name": "md",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "sm",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "xs",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "2xs",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "3xs",
+          "whenToUse": "TODO(designer): when to pick this value."
+        }
+      ],
+      "default": "sm"
+    },
+    {
+      "name": "rounded",
+      "type": "boolean",
+      "description": "Set on Carousel.Previous or Carousel.Next. TODO(designer): describe what this prop is for and how to choose its value."
+    },
+    {
+      "name": "theme",
+      "type": "enum",
+      "description": "Set on Carousel.Previous or Carousel.Next. TODO(designer): describe what this prop is for and how to choose its value.",
+      "values": [
+        {
+          "name": "default",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "success",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "danger",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "warning",
+          "whenToUse": "TODO(designer): when to pick this value."
+        }
+      ],
+      "default": "default"
+    },
+    {
+      "name": "asChild",
+      "type": "boolean",
+      "description": "Set on Carousel.Previous or Carousel.Next. TODO(designer): describe what this prop is for and how to choose its value."
+    },
+    {
+      "name": "loading",
+      "type": "boolean",
+      "description": "Set on Carousel.Previous or Carousel.Next. TODO(designer): describe what this prop is for and how to choose its value."
+    }
+  ]
+}

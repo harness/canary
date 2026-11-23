@@ -1,0 +1,9 @@
+{
+  "id": "canary.separator",
+  "code": {
+    "package": "@harnessio/ui",
+    "export": "Separator",
+    "import": "import { Separator } from '@harnessio/ui/components'"
+  },
+  "props": []
+}

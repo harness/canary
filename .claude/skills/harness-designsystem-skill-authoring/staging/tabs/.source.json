@@ -1,0 +1,11 @@
+{
+  "export": "Tabs",
+  "source": "/Users/kathryngrantier/projects/canary/packages/ui/src/components/tabs.tsx",
+  "slug": "tabs",
+  "parts": [
+    "Root",
+    "NavRoot",
+    "List",
+    "Content"
+  ]
+}

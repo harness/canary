@@ -1,0 +1,20 @@
+{
+  "id": "canary.input-caption",
+  "code": {
+    "package": "@harnessio/ui",
+    "export": "InputCaption",
+    "import": "import { InputCaption } from '@harnessio/ui/components'"
+  },
+  "props": [
+    {
+      "name": "error",
+      "type": "string",
+      "description": "TODO(designer): describe what this prop is for and how to choose its value."
+    },
+    {
+      "name": "caption",
+      "type": "string",
+      "description": "TODO(designer): describe what this prop is for and how to choose its value."
+    }
+  ]
+}

@@ -1,0 +1,15 @@
+{
+  "export": "Dialog",
+  "source": "/Users/kathryngrantier/projects/canary/packages/ui/src/components/dialog.tsx",
+  "slug": "dialog",
+  "parts": [
+    "Root",
+    "Trigger",
+    "Content",
+    "Header",
+    "Title",
+    "Description",
+    "Body",
+    "Footer"
+  ]
+}

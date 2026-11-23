@@ -1,0 +1,141 @@
+{
+  "id": "canary.gauge",
+  "code": {
+    "package": "@harnessio/ui",
+    "export": "Gauge",
+    "import": "import { Gauge } from '@harnessio/ui/components'"
+  },
+  "props": [
+    {
+      "name": "value",
+      "type": "number",
+      "description": "TODO(designer): describe what this prop is for and how to choose its value.",
+      "required": true
+    },
+    {
+      "name": "max",
+      "type": "number",
+      "description": "TODO(designer): describe what this prop is for and how to choose its value.",
+      "default": "DEFAULT_MAX"
+    },
+    {
+      "name": "size",
+      "type": "enum",
+      "description": "TODO(designer): describe what this prop is for and how to choose its value.",
+      "values": [
+        {
+          "name": "3xs",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "2xs",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "xs",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "sm",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "md",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "lg",
+          "whenToUse": "TODO(designer): when to pick this value."
+        }
+      ],
+      "default": "md"
+    },
+    {
+      "name": "label",
+      "type": "string",
+      "description": "TODO(designer): describe what this prop is for and how to choose its value."
+    },
+    {
+      "name": "showLabel",
+      "type": "boolean",
+      "description": "TODO(designer): describe what this prop is for and how to choose its value.",
+      "default": "true"
+    },
+    {
+      "name": "showValue",
+      "type": "boolean",
+      "description": "TODO(designer): describe what this prop is for and how to choose its value.",
+      "default": "true"
+    },
+    {
+      "name": "valueFormat",
+      "type": "enum",
+      "description": "TODO(designer): describe what this prop is for and how to choose its value.",
+      "values": [
+        {
+          "name": "percent",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "fraction",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "score",
+          "whenToUse": "TODO(designer): when to pick this value."
+        }
+      ],
+      "default": "percent"
+    },
+    {
+      "name": "precision",
+      "type": "number",
+      "description": "TODO(designer): describe what this prop is for and how to choose its value."
+    },
+    {
+      "name": "status",
+      "type": "enum",
+      "description": "TODO(designer): describe what this prop is for and how to choose its value.",
+      "values": [
+        {
+          "name": "auto",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "poor",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "fair",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "good",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "none",
+          "whenToUse": "TODO(designer): when to pick this value."
+        }
+      ],
+      "default": "auto"
+    },
+    {
+      "name": "thresholds",
+      "type": "object",
+      "description": "TODO(designer): describe what this prop is for and how to choose its value.",
+      "default": "DEFAULT_THRESHOLDS"
+    },
+    {
+      "name": "statusLabelMap",
+      "type": "object",
+      "description": "TODO(designer): describe what this prop is for and how to choose its value.",
+      "default": "DEFAULT_STATUS_LABELS"
+    },
+    {
+      "name": "description",
+      "type": "node",
+      "description": "Content below the gauge ring. Pass any ReactNode (text, popover trigger, etc.). Falls back to the derived status label when omitted. Pass `null` to hide."
+    }
+  ]
+}

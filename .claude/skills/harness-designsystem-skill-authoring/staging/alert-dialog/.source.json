@@ -1,0 +1,12 @@
+{
+  "export": "AlertDialog",
+  "source": "/Users/kathryngrantier/projects/canary/packages/ui/src/components/alert-dialog.tsx",
+  "slug": "alert-dialog",
+  "parts": [
+    "Root",
+    "Trigger",
+    "Content",
+    "Cancel",
+    "Confirm"
+  ]
+}

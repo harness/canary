@@ -1,0 +1,65 @@
+{
+  "id": "canary.slider",
+  "code": {
+    "package": "@harnessio/ui",
+    "export": "Slider",
+    "import": "import { Slider } from '@harnessio/ui/components'"
+  },
+  "props": [
+    {
+      "name": "label",
+      "type": "string",
+      "description": "TODO(designer): describe what this prop is for and how to choose its value."
+    },
+    {
+      "name": "caption",
+      "type": "enum",
+      "description": "TODO(designer): describe what this prop is for and how to choose its value.",
+      "values": [
+        {
+          "name": "description",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "min-max",
+          "whenToUse": "TODO(designer): when to pick this value."
+        }
+      ],
+      "default": "description"
+    },
+    {
+      "name": "description",
+      "type": "string",
+      "description": "TODO(designer): describe what this prop is for and how to choose its value."
+    },
+    {
+      "name": "minLabel",
+      "type": "string",
+      "description": "TODO(designer): describe what this prop is for and how to choose its value.",
+      "default": "0"
+    },
+    {
+      "name": "maxLabel",
+      "type": "string",
+      "description": "TODO(designer): describe what this prop is for and how to choose its value.",
+      "default": "100"
+    },
+    {
+      "name": "showValue",
+      "type": "boolean",
+      "description": "TODO(designer): describe what this prop is for and how to choose its value.",
+      "default": "false"
+    },
+    {
+      "name": "formatValue",
+      "type": "function",
+      "description": "TODO(designer): describe what this prop is for and how to choose its value.",
+      "default": "defaultFormatValue"
+    },
+    {
+      "name": "className",
+      "type": "string",
+      "description": "TODO(designer): describe what this prop is for and how to choose its value."
+    }
+  ]
+}

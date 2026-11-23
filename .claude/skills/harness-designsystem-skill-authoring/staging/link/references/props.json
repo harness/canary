@@ -1,0 +1,69 @@
+{
+  "id": "canary.link",
+  "code": {
+    "package": "@harnessio/ui",
+    "export": "Link",
+    "import": "import { Link } from '@harnessio/ui/components'"
+  },
+  "props": [
+    {
+      "name": "external",
+      "type": "boolean",
+      "description": "TODO(designer): describe what this prop is for and how to choose its value."
+    },
+    {
+      "name": "prefixIcon",
+      "type": "string",
+      "description": "If true, the 'chevron-left' icon will be displayed before the link text. If a string, that string will be used as the icon name."
+    },
+    {
+      "name": "suffixIcon",
+      "type": "string",
+      "description": "If true, the 'arrow-to-top-right' icon will be displayed before the link text. If a string, that string will be used as the icon name."
+    },
+    {
+      "name": "disabled",
+      "type": "boolean",
+      "description": "If true, the link will be disabled and not clickable. The default value is false.",
+      "default": "false"
+    },
+    {
+      "name": "noHoverUnderline",
+      "type": "boolean",
+      "description": "If true, the underline on hover will be disabled. The default value is false.",
+      "default": "false"
+    },
+    {
+      "name": "variant",
+      "type": "enum",
+      "description": "TODO(designer): describe what this prop is for and how to choose its value.",
+      "values": [
+        {
+          "name": "default",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "secondary",
+          "whenToUse": "TODO(designer): when to pick this value."
+        }
+      ],
+      "default": "default"
+    },
+    {
+      "name": "size",
+      "type": "enum",
+      "description": "TODO(designer): describe what this prop is for and how to choose its value.",
+      "values": [
+        {
+          "name": "md",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "sm",
+          "whenToUse": "TODO(designer): when to pick this value."
+        }
+      ],
+      "default": "md"
+    }
+  ]
+}

@@ -1,0 +1,61 @@
+{
+  "id": "canary.sheet",
+  "code": {
+    "package": "@harnessio/ui",
+    "export": "Sheet",
+    "import": "import { Sheet } from '@harnessio/ui/components'"
+  },
+  "props": [
+    {
+      "name": "hideCloseButton",
+      "type": "boolean",
+      "description": "Set on Sheet.Content. TODO(designer): describe what this prop is for and how to choose its value.",
+      "default": "false"
+    },
+    {
+      "name": "handleClose",
+      "type": "function",
+      "description": "Set on Sheet.Content. TODO(designer): describe what this prop is for and how to choose its value."
+    },
+    {
+      "name": "modal",
+      "type": "boolean",
+      "description": "Set on Sheet.Content. TODO(designer): describe what this prop is for and how to choose its value.",
+      "default": "true"
+    },
+    {
+      "name": "overlayClassName",
+      "type": "string",
+      "description": "Set on Sheet.Content. TODO(designer): describe what this prop is for and how to choose its value."
+    },
+    {
+      "name": "closeClassName",
+      "type": "string",
+      "description": "Set on Sheet.Content. TODO(designer): describe what this prop is for and how to choose its value."
+    },
+    {
+      "name": "side",
+      "type": "enum",
+      "description": "Set on Sheet.Content. TODO(designer): describe what this prop is for and how to choose its value.",
+      "values": [
+        {
+          "name": "top",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "bottom",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "left",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "right",
+          "whenToUse": "TODO(designer): when to pick this value."
+        }
+      ],
+      "default": "right"
+    }
+  ]
+}

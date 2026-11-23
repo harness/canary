@@ -1,7 +1,7 @@
 /**
  * Scaffold a component guide into staging/<slug>/.
  * Usage: tsx scaffold.ts --export Text --source <component.tsx> --category "Typography" \
- *          [--slug text] [--description "..."] [--use-when "..."] [--parts Root,Head,Row,Cell]
+ *          [--slug text] [--description "..."] [--use-when "..."] [--parts Root,Head,Row,Cell] [--include-from cmdk,input-otp]  (use "." for the bare component itself, e.g. --parts .,Content)
  * --parts: compound component. Each part is extracted from <Name>.<Part> and merged into one props.json.
  * Never touches canary. Output: SKILL.md, references/{props.json,pattern.md}, intake.md,
  * components-entry.md, .source.json
@@ -29,8 +29,8 @@ if (fs.existsSync(out) && !('force' in a)) {
 fs.mkdirSync(path.join(out, 'references'), { recursive: true })
 
 const tsx = path.join(process.env.CANARY_ROOT ?? path.resolve(root, '../../..'), 'node_modules/.bin/tsx')
-const spec = a.parts ? a.parts.split(',').map(p => `${Name}.${p.trim()}`).join(',') : Name
-const props = JSON.parse(execFileSync(tsx, [path.join(root, 'scripts/extract-props.ts'), spec, a.source], { encoding: 'utf8' }))
+const spec = a.parts ? a.parts.split(',').map(p => (p.trim() === '.' ? Name : `${Name}.${p.trim()}`)).join(',') : Name
+const props = JSON.parse(execFileSync(tsx, [path.join(root, 'scripts/extract-props.ts'), spec, a.source, ...(a['include-from'] ? ['--include-from', a['include-from']] : [])], { encoding: 'utf8' }))
 // Compound components keep one flat list; each description names the part(s) the prop is set on (the drawer guide's convention).
 for (const p of props.props) {
   if (!p.parts) continue
@@ -62,5 +62,5 @@ fs.writeFileSync(
   path.join(out, 'components-entry.md'),
   `<!-- add under "## ${a.category}" in components.md -->\n- [${Name}](./${slug}/SKILL.md): ${vars.useWhen.replace(/''/g, "'")}\n`
 )
-fs.writeFileSync(path.join(out, '.source.json'), JSON.stringify({ export: Name, source: path.resolve(a.source), slug, ...(a.parts ? { parts: a.parts.split(',').map(x => x.trim()) } : {}) }, null, 2))
+fs.writeFileSync(path.join(out, '.source.json'), JSON.stringify({ export: Name, source: path.resolve(a.source), slug, ...(a.parts ? { parts: a.parts.split(',').map(x => x.trim()) } : {}), ...(a['include-from'] ? { includeFrom: a['include-from'].split(',') } : {}) }, null, 2))
 console.log(`scaffolded ${out}\n  props extracted: ${props.props.length}\n  next: have a designer fill intake.md, then ask Claude to draft from it`)

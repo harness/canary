@@ -1,0 +1,144 @@
+{
+  "id": "canary.toggle-group",
+  "code": {
+    "package": "@harnessio/ui",
+    "export": "ToggleGroup",
+    "import": "import { ToggleGroup } from '@harnessio/ui/components'"
+  },
+  "props": [
+    {
+      "name": "type",
+      "type": "enum",
+      "description": "Set on ToggleGroup.Root. TODO(designer): describe what this prop is for and how to choose its value.",
+      "values": [
+        {
+          "name": "multiple",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "single",
+          "whenToUse": "TODO(designer): when to pick this value."
+        }
+      ],
+      "default": "single"
+    },
+    {
+      "name": "variant",
+      "type": "enum",
+      "description": "Set on ToggleGroup.Root. TODO(designer): describe what this prop is for and how to choose its value.",
+      "values": [
+        {
+          "name": "outline",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "ghost",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "transparent",
+          "whenToUse": "TODO(designer): when to pick this value."
+        }
+      ],
+      "default": "outline"
+    },
+    {
+      "name": "selectedVariant",
+      "type": "enum",
+      "description": "Set on ToggleGroup.Root. TODO(designer): describe what this prop is for and how to choose its value.",
+      "values": [
+        {
+          "name": "primary",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "secondary",
+          "whenToUse": "TODO(designer): when to pick this value."
+        }
+      ]
+    },
+    {
+      "name": "size",
+      "type": "enum",
+      "description": "Set on ToggleGroup.Root. TODO(designer): describe what this prop is for and how to choose its value.",
+      "values": [
+        {
+          "name": "md",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "sm",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "xs",
+          "whenToUse": "TODO(designer): when to pick this value."
+        }
+      ],
+      "default": "md"
+    },
+    {
+      "name": "disabled",
+      "type": "boolean",
+      "description": "Set on ToggleGroup.Root or ToggleGroup.Item. Whether the group is disabled from user interaction.",
+      "default": "false"
+    },
+    {
+      "name": "className",
+      "type": "string",
+      "description": "Set on ToggleGroup.Root. TODO(designer): describe what this prop is for and how to choose its value."
+    },
+    {
+      "name": "unselectable",
+      "type": "boolean",
+      "description": "Set on ToggleGroup.Root. TODO(designer): describe what this prop is for and how to choose its value.",
+      "default": "false"
+    },
+    {
+      "name": "onChange",
+      "type": "function",
+      "description": "Set on ToggleGroup.Root. TODO(designer): describe what this prop is for and how to choose its value."
+    },
+    {
+      "name": "value",
+      "type": "string",
+      "description": "Set on ToggleGroup.Item. A string value for the toggle group item. All items within a toggle group should use a unique value.",
+      "required": true
+    },
+    {
+      "name": "suffixIcon",
+      "type": "string",
+      "description": "Set on ToggleGroup.Item. TODO(designer): describe what this prop is for and how to choose its value."
+    },
+    {
+      "name": "suffixIconProps",
+      "type": "object",
+      "description": "Set on ToggleGroup.Item. TODO(designer): describe what this prop is for and how to choose its value."
+    },
+    {
+      "name": "text",
+      "type": "string",
+      "description": "Set on ToggleGroup.Item. TODO(designer): describe what this prop is for and how to choose its value."
+    },
+    {
+      "name": "iconOnly",
+      "type": "boolean",
+      "description": "Set on ToggleGroup.Item. TODO(designer): describe what this prop is for and how to choose its value."
+    },
+    {
+      "name": "tooltipProps",
+      "type": "object",
+      "description": "Set on ToggleGroup.Item. TODO(designer): describe what this prop is for and how to choose its value."
+    },
+    {
+      "name": "prefixIcon",
+      "type": "string",
+      "description": "Set on ToggleGroup.Item. TODO(designer): describe what this prop is for and how to choose its value."
+    },
+    {
+      "name": "prefixIconProps",
+      "type": "object",
+      "description": "Set on ToggleGroup.Item. TODO(designer): describe what this prop is for and how to choose its value."
+    }
+  ]
+}

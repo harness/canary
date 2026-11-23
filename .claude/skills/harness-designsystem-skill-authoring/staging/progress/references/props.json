@@ -1,0 +1,190 @@
+{
+  "id": "canary.progress",
+  "code": {
+    "package": "@harnessio/ui",
+    "export": "Progress",
+    "import": "import { Progress } from '@harnessio/ui/components'"
+  },
+  "props": [
+    {
+      "name": "value",
+      "type": "number",
+      "description": "TODO(designer): describe what this prop is for and how to choose its value.",
+      "default": "0"
+    },
+    {
+      "name": "hidePercentage",
+      "type": "boolean",
+      "description": "TODO(designer): describe what this prop is for and how to choose its value.",
+      "default": "false"
+    },
+    {
+      "name": "hideIcon",
+      "type": "boolean",
+      "description": "TODO(designer): describe what this prop is for and how to choose its value.",
+      "default": "false"
+    },
+    {
+      "name": "variant",
+      "type": "enum",
+      "description": "TODO(designer): describe what this prop is for and how to choose its value.",
+      "values": [
+        {
+          "name": "default",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "indeterminate",
+          "whenToUse": "TODO(designer): when to pick this value."
+        }
+      ],
+      "default": "default"
+    },
+    {
+      "name": "state",
+      "type": "enum",
+      "description": "Visual state of the progress. Mutually exclusive with `color`.",
+      "values": [
+        {
+          "name": "default",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "processing",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "completed",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "paused",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "failed",
+          "whenToUse": "TODO(designer): when to pick this value."
+        }
+      ],
+      "default": "default"
+    },
+    {
+      "name": "color",
+      "type": "enum",
+      "description": "Theme color for the bar fill. Mutually exclusive with `state`.",
+      "values": [
+        {
+          "name": "gray",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "blue",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "brown",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "cyan",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "green",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "forest-green",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "indigo",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "lime",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "mint",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "orange",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "pink",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "purple",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "red",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "violet",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "yellow",
+          "whenToUse": "TODO(designer): when to pick this value."
+        }
+      ]
+    },
+    {
+      "name": "id",
+      "type": "string",
+      "description": "TODO(designer): describe what this prop is for and how to choose its value."
+    },
+    {
+      "name": "size",
+      "type": "enum",
+      "description": "TODO(designer): describe what this prop is for and how to choose its value.",
+      "values": [
+        {
+          "name": "sm",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "md",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "lg",
+          "whenToUse": "TODO(designer): when to pick this value."
+        }
+      ],
+      "default": "md"
+    },
+    {
+      "name": "label",
+      "type": "string",
+      "description": "TODO(designer): describe what this prop is for and how to choose its value."
+    },
+    {
+      "name": "description",
+      "type": "string",
+      "description": "TODO(designer): describe what this prop is for and how to choose its value."
+    },
+    {
+      "name": "subtitle",
+      "type": "string",
+      "description": "TODO(designer): describe what this prop is for and how to choose its value."
+    },
+    {
+      "name": "className",
+      "type": "string",
+      "description": "TODO(designer): describe what this prop is for and how to choose its value."
+    },
+    {
+      "name": "hideContainer",
+      "type": "boolean",
+      "description": "TODO(designer): describe what this prop is for and how to choose its value.",
+      "default": "false"
+    }
+  ]
+}

@@ -1,0 +1,373 @@
+{
+  "id": "canary.typing-animation",
+  "code": {
+    "package": "@harnessio/ui",
+    "export": "TypingAnimation",
+    "import": "import { TypingAnimation } from '@harnessio/ui/components'"
+  },
+  "props": [
+    {
+      "name": "text",
+      "type": "string",
+      "description": "TODO(designer): describe what this prop is for and how to choose its value.",
+      "required": true
+    },
+    {
+      "name": "typingSpeed",
+      "type": "number",
+      "description": "TODO(designer): describe what this prop is for and how to choose its value.",
+      "default": "50"
+    },
+    {
+      "name": "delay",
+      "type": "number",
+      "description": "TODO(designer): describe what this prop is for and how to choose its value.",
+      "default": "0"
+    },
+    {
+      "name": "onComplete",
+      "type": "function",
+      "description": "TODO(designer): describe what this prop is for and how to choose its value."
+    },
+    {
+      "name": "color",
+      "type": "enum",
+      "description": "TODO(designer): describe what this prop is for and how to choose its value.",
+      "values": [
+        {
+          "name": "inherit",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "foreground-1",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "foreground-2",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "foreground-3",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "foreground-4",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "disabled",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "success",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "warning",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "merged",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "danger",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "brand",
+          "whenToUse": "TODO(designer): when to pick this value."
+        }
+      ]
+    },
+    {
+      "name": "variant",
+      "type": "enum",
+      "description": "TODO(designer): describe what this prop is for and how to choose its value.",
+      "values": [
+        {
+          "name": "body-normal",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "heading-hero",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "heading-section",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "heading-default",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "heading-subsection",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "heading-base",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "heading-small",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "body-single-line-normal",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "body-strong",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "body-single-line-strong",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "body-code",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "body-code-strong",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "caption-normal",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "caption-strong",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "caption-code",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "caption-code-strong",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "caption-single-line-normal",
+          "whenToUse": "TODO(designer): when to pick this value."
+        }
+      ]
+    },
+    {
+      "name": "align",
+      "type": "enum",
+      "description": "TODO(designer): describe what this prop is for and how to choose its value.",
+      "values": [
+        {
+          "name": "left",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "center",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "right",
+          "whenToUse": "TODO(designer): when to pick this value."
+        }
+      ]
+    },
+    {
+      "name": "truncate",
+      "type": "boolean",
+      "description": "TODO(designer): describe what this prop is for and how to choose its value."
+    },
+    {
+      "name": "lineClamp",
+      "type": "enum",
+      "description": "TODO(designer): describe what this prop is for and how to choose its value.",
+      "values": [
+        {
+          "name": "default",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "1",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "2",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "3",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "4",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "5",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "6",
+          "whenToUse": "TODO(designer): when to pick this value."
+        }
+      ]
+    },
+    {
+      "name": "wrap",
+      "type": "enum",
+      "description": "TODO(designer): describe what this prop is for and how to choose its value.",
+      "values": [
+        {
+          "name": "wrap",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "nowrap",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "pretty",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "balance",
+          "whenToUse": "TODO(designer): when to pick this value."
+        }
+      ]
+    },
+    {
+      "name": "as",
+      "type": "enum",
+      "description": "Shorthand for changing the default rendered element into a semantically appropriate alternative.",
+      "values": [
+        {
+          "name": "span",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "abbr",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "address",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "blockquote",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "caption",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "cite",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "code",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "dd",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "del",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "div",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "dt",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "em",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "figcaption",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "h1",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "h2",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "h3",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "h4",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "h5",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "h6",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "ins",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "kbd",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "label",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "legend",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "li",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "p",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "pre",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "samp",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "strong",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "time",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "var",
+          "whenToUse": "TODO(designer): when to pick this value."
+        }
+      ]
+    },
+    {
+      "name": "asChild",
+      "type": "boolean",
+      "description": "Change the default rendered element for the one passed as a child, merging their props and behavior."
+    }
+  ]
+}

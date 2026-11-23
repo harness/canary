@@ -1,0 +1,11 @@
+{
+  "export": "Card",
+  "source": "/Users/kathryngrantier/projects/canary/packages/ui/src/components/card.tsx",
+  "slug": "card",
+  "parts": [
+    "Root",
+    "Title",
+    "Content",
+    "Image"
+  ]
+}

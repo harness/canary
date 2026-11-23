@@ -1,0 +1,112 @@
+{
+  "id": "canary.checkbox",
+  "code": {
+    "package": "@harnessio/ui",
+    "export": "Checkbox",
+    "import": "import { Checkbox } from '@harnessio/ui/components'"
+  },
+  "props": [
+    {
+      "name": "label",
+      "type": "string",
+      "description": "TODO(designer): describe what this prop is for and how to choose its value."
+    },
+    {
+      "name": "caption",
+      "type": "string",
+      "description": "TODO(designer): describe what this prop is for and how to choose its value."
+    },
+    {
+      "name": "error",
+      "type": "boolean",
+      "description": "TODO(designer): describe what this prop is for and how to choose its value.",
+      "default": "false"
+    },
+    {
+      "name": "showOptionalLabel",
+      "type": "boolean",
+      "description": "TODO(designer): describe what this prop is for and how to choose its value."
+    },
+    {
+      "name": "truncateLabel",
+      "type": "boolean",
+      "description": "TODO(designer): describe what this prop is for and how to choose its value.",
+      "default": "true"
+    },
+    {
+      "name": "captionVariant",
+      "type": "enum",
+      "description": "TODO(designer): describe what this prop is for and how to choose its value.",
+      "values": [
+        {
+          "name": "body-normal",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "heading-hero",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "heading-section",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "heading-default",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "heading-subsection",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "heading-base",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "heading-small",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "body-single-line-normal",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "body-strong",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "body-single-line-strong",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "body-code",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "body-code-strong",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "caption-normal",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "caption-strong",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "caption-code",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "caption-code-strong",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "caption-single-line-normal",
+          "whenToUse": "TODO(designer): when to pick this value."
+        }
+      ]
+    }
+  ]
+}

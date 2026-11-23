@@ -1,0 +1,20 @@
+{
+  "id": "canary.meter",
+  "code": {
+    "package": "@harnessio/ui",
+    "export": "Meter",
+    "import": "import { Meter } from '@harnessio/ui/components'"
+  },
+  "props": [
+    {
+      "name": "data",
+      "type": "node",
+      "description": "TODO(designer): describe what this prop is for and how to choose its value."
+    },
+    {
+      "name": "className",
+      "type": "string",
+      "description": "TODO(designer): describe what this prop is for and how to choose its value."
+    }
+  ]
+}

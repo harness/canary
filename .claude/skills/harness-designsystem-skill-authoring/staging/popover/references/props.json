@@ -1,0 +1,93 @@
+{
+  "id": "canary.popover",
+  "code": {
+    "package": "@harnessio/ui",
+    "export": "Popover",
+    "import": "import { Popover } from '@harnessio/ui/components'"
+  },
+  "props": [
+    {
+      "name": "content",
+      "type": "node",
+      "description": "Set on Popover. TODO(designer): describe what this prop is for and how to choose its value.",
+      "required": true
+    },
+    {
+      "name": "triggerType",
+      "type": "enum",
+      "description": "Set on Popover. TODO(designer): describe what this prop is for and how to choose its value.",
+      "values": [
+        {
+          "name": "click",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "hover",
+          "whenToUse": "TODO(designer): when to pick this value."
+        }
+      ],
+      "default": "click"
+    },
+    {
+      "name": "hoverDelay",
+      "type": "number",
+      "description": "Set on Popover. TODO(designer): describe what this prop is for and how to choose its value.",
+      "default": "200"
+    },
+    {
+      "name": "closeDelay",
+      "type": "number",
+      "description": "Set on Popover. TODO(designer): describe what this prop is for and how to choose its value.",
+      "default": "300"
+    },
+    {
+      "name": "noMaxWidth",
+      "type": "boolean",
+      "description": "Set on Popover or Popover.Content. TODO(designer): describe what this prop is for and how to choose its value.",
+      "default": "false"
+    },
+    {
+      "name": "title",
+      "type": "string",
+      "description": "Set on Popover or Popover.Content. TODO(designer): describe what this prop is for and how to choose its value."
+    },
+    {
+      "name": "description",
+      "type": "string",
+      "description": "Set on Popover or Popover.Content. TODO(designer): describe what this prop is for and how to choose its value."
+    },
+    {
+      "name": "linkProps",
+      "type": "object",
+      "description": "Set on Popover or Popover.Content. TODO(designer): describe what this prop is for and how to choose its value."
+    },
+    {
+      "name": "hideArrow",
+      "type": "boolean",
+      "description": "Set on Popover or Popover.Content. TODO(designer): describe what this prop is for and how to choose its value.",
+      "default": "false"
+    },
+    {
+      "name": "theme",
+      "type": "enum",
+      "description": "Set on Popover or Popover.Content. Theme variant of the popover - 'default': High-contrast appearance with fixed colors - 'themed': Follows the current theme's color palette",
+      "values": [
+        {
+          "name": "default",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "themed",
+          "whenToUse": "TODO(designer): when to pick this value."
+        }
+      ],
+      "default": "themed"
+    },
+    {
+      "name": "custom",
+      "type": "boolean",
+      "description": "Set on Popover or Popover.Content. Custom content mode - removes padding and min-width",
+      "default": "false"
+    }
+  ]
+}

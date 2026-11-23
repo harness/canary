@@ -1,0 +1,9 @@
+{
+  "export": "ToggleGroup",
+  "source": "/Users/kathryngrantier/projects/canary/packages/ui/src/components/toggle-group.tsx",
+  "slug": "toggle-group",
+  "parts": [
+    "Root",
+    "Item"
+  ]
+}

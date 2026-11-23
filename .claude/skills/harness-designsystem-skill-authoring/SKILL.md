@@ -23,6 +23,7 @@ Run from this skill's folder. Writes into `staging/<slug>/` here, never into the
 ## Limits (v1)
 - Call-signature components (`Text`, `Tag`, `Button`) work directly. Compound components work with dotted exports: `--export Table --parts Root,Header,Row,...` (scaffold) or `--export DataTable.ColumnFilter`. Parts merge into one flat props.json, each description starting "Set on <Part>."; same-named props with different types across parts fail, so split those into separate guides.
 - Canary's root is three levels up from this folder, or `$CANARY_ROOT`. Tooling (`tsx`, `typescript`) comes from canary's `node_modules`.
+- Props from outside libraries are excluded by default. For thin wrappers (Command over `cmdk`, InputOTP over `input-otp`), opt in with `--include-from <package>` on scaffold; it is saved in `.source.json` so the lint uses it too. A designer still decides which of those props consumers may use.
 - Inherited HTML attributes (`className`, `title`, `aria-*`) are not extracted. Existing guides document a few by hand; the lint only warns about them.
 - A cva default can be overridden at runtime (Text's `color` default depends on `variant`). The extractor reports the static default: review it.
 - Huge unions (icon names) are typed `string`.

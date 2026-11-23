@@ -1,0 +1,91 @@
+{
+  "id": "canary.input-otp",
+  "code": {
+    "package": "@harnessio/ui",
+    "export": "InputOTP",
+    "import": "import { InputOTP } from '@harnessio/ui/components'"
+  },
+  "props": [
+    {
+      "name": "maxLength",
+      "type": "number",
+      "description": "Set on InputOTP.Root. TODO(designer): describe what this prop is for and how to choose its value.",
+      "required": true
+    },
+    {
+      "name": "value",
+      "type": "string",
+      "description": "Set on InputOTP.Root. TODO(designer): describe what this prop is for and how to choose its value."
+    },
+    {
+      "name": "onChange",
+      "type": "function",
+      "description": "Set on InputOTP.Root. TODO(designer): describe what this prop is for and how to choose its value."
+    },
+    {
+      "name": "textAlign",
+      "type": "enum",
+      "description": "Set on InputOTP.Root. TODO(designer): describe what this prop is for and how to choose its value.",
+      "values": [
+        {
+          "name": "left",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "center",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "right",
+          "whenToUse": "TODO(designer): when to pick this value."
+        }
+      ]
+    },
+    {
+      "name": "onComplete",
+      "type": "function",
+      "description": "Set on InputOTP.Root. TODO(designer): describe what this prop is for and how to choose its value."
+    },
+    {
+      "name": "pushPasswordManagerStrategy",
+      "type": "enum",
+      "description": "Set on InputOTP.Root. TODO(designer): describe what this prop is for and how to choose its value.",
+      "values": [
+        {
+          "name": "none",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "increase-width",
+          "whenToUse": "TODO(designer): when to pick this value."
+        }
+      ]
+    },
+    {
+      "name": "pasteTransformer",
+      "type": "function",
+      "description": "Set on InputOTP.Root. TODO(designer): describe what this prop is for and how to choose its value."
+    },
+    {
+      "name": "containerClassName",
+      "type": "string",
+      "description": "Set on InputOTP.Root. TODO(designer): describe what this prop is for and how to choose its value."
+    },
+    {
+      "name": "noScriptCSSFallback",
+      "type": "string",
+      "description": "Set on InputOTP.Root. TODO(designer): describe what this prop is for and how to choose its value."
+    },
+    {
+      "name": "render",
+      "type": "function",
+      "description": "Set on InputOTP.Root. TODO(designer): describe what this prop is for and how to choose its value."
+    },
+    {
+      "name": "index",
+      "type": "number",
+      "description": "Set on InputOTP.Slot. TODO(designer): describe what this prop is for and how to choose its value.",
+      "required": true
+    }
+  ]
+}

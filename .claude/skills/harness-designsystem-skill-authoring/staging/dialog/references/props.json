@@ -1,0 +1,84 @@
+{
+  "id": "canary.dialog",
+  "code": {
+    "package": "@harnessio/ui",
+    "export": "Dialog",
+    "import": "import { Dialog } from '@harnessio/ui/components'"
+  },
+  "props": [
+    {
+      "name": "size",
+      "type": "enum",
+      "description": "Set on Dialog.Content. TODO(designer): describe what this prop is for and how to choose its value.",
+      "values": [
+        {
+          "name": "sm",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "md",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "lg",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "max",
+          "whenToUse": "TODO(designer): when to pick this value."
+        }
+      ],
+      "default": "sm"
+    },
+    {
+      "name": "hideClose",
+      "type": "boolean",
+      "description": "Set on Dialog.Content. TODO(designer): describe what this prop is for and how to choose its value."
+    },
+    {
+      "name": "icon",
+      "type": "string",
+      "description": "Set on Dialog.Header. TODO(designer): describe what this prop is for and how to choose its value."
+    },
+    {
+      "name": "logo",
+      "type": "string",
+      "description": "Set on Dialog.Header. TODO(designer): describe what this prop is for and how to choose its value."
+    },
+    {
+      "name": "theme",
+      "type": "enum",
+      "description": "Set on Dialog.Header. TODO(designer): describe what this prop is for and how to choose its value.",
+      "values": [
+        {
+          "name": "default",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "danger",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "warning",
+          "whenToUse": "TODO(designer): when to pick this value."
+        }
+      ],
+      "default": "default"
+    },
+    {
+      "name": "className",
+      "type": "string",
+      "description": "Set on Dialog.Body. TODO(designer): describe what this prop is for and how to choose its value."
+    },
+    {
+      "name": "classNameContent",
+      "type": "string",
+      "description": "Set on Dialog.Body. TODO(designer): describe what this prop is for and how to choose its value."
+    },
+    {
+      "name": "scrollable",
+      "type": "boolean",
+      "description": "Set on Dialog.Body. TODO(designer): describe what this prop is for and how to choose its value."
+    }
+  ]
+}

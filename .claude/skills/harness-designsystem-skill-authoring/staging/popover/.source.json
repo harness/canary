@@ -1,0 +1,9 @@
+{
+  "export": "Popover",
+  "source": "/Users/kathryngrantier/projects/canary/packages/ui/src/components/popover.tsx",
+  "slug": "popover",
+  "parts": [
+    ".",
+    "Content"
+  ]
+}

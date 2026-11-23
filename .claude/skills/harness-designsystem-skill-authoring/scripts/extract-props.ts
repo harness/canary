@@ -3,13 +3,19 @@
  * Usage: tsx extract-props.ts <ExportName> <path/to/component.tsx> [canaryRoot]
  * Compound components: pass dotted parts, comma separated (Table.Root,Table.Row). Props are merged by name; each
  * prop carries `parts` (where it is set) so descriptions and the lint can name the part.
+ * --include-from pkg,pkg: keep props declared in those packages (thin wrappers like Command over cmdk). Default excludes all node_modules props.
  * Writes JSON to stdout. Judgment fields are emitted as "TODO(designer): ..." and fail the lint until filled.
  */
 import path from 'node:path'
 import { createRequire } from 'node:module'
 import { fileURLToPath } from 'node:url'
 
-const [exportName, componentFile, canaryRootArg] = process.argv.slice(2)
+// --include-from pkg1,pkg2 (opt-in): also treat props declared in these node_modules packages as the component's own.
+const rawArgs = process.argv.slice(2)
+const incIdx = rawArgs.indexOf('--include-from')
+const includeFrom = incIdx >= 0 ? (rawArgs[incIdx + 1] ?? '').split(',').filter(Boolean) : []
+if (incIdx >= 0) rawArgs.splice(incIdx, 2)
+const [exportName, componentFile, canaryRootArg] = rawArgs
 if (!exportName || !componentFile) {
   console.error('usage: extract-props <ExportName> <component.tsx> [canaryRoot]')
   process.exit(1)
@@ -42,7 +48,7 @@ const extractOne = (spec: string): any[] => {
 
   // Props type = first parameter of the first call signature.
   const sig = expType.getCallSignatures()[0]
-  if (!sig) throw new Error('no call signature (compound components not supported yet; run per subcomponent)')
+  if (!sig) throw new Error('no call signature: this is a compound component. Pass dotted parts, e.g. --parts Root,Item (scaffold) or --export Name.Part')
   const paramSym = sig.getParameters()[0]
   let propsType = checker.getTypeOfSymbolAtLocation(paramSym, sf)
   propsType = checker.getApparentType(checker.getBaseConstraintOfType(propsType) ?? propsType)
@@ -66,13 +72,14 @@ const extractOne = (spec: string): any[] => {
     ts.forEachChild(n, walkBindings)
   }
   dsf.forEachChild(function find(n) {
-    if (ts.isVariableDeclaration(n) && ts.isIdentifier(n.name) && [declName, `${declName}WithRef`].includes(n.name.text)) walkBindings(n)
+    if (ts.isVariableDeclaration(n) && ts.isIdentifier(n.name) && [declName, `${declName}WithRef`, `${declName}Component`].includes(n.name.text)) walkBindings(n)
     else ts.forEachChild(n, find)
   })
 
   const isOwn = (s: import('typescript').Symbol) =>
     (s.declarations ?? []).some(d => {
       const f = d.getSourceFile().fileName
+      if (includeFrom.some(pkg => f.includes(`/node_modules/${pkg}/`))) return true
       return !f.includes('node_modules') && !/typescript\/lib\//.test(f)
     })
 
@@ -115,9 +122,12 @@ for (const spec of specs)
     const prev = byName.get(prop.name)
     if (prev) {
       // Same name on two parts is one prop only if it is the same prop. Otherwise one flat list cannot describe both.
-      const sig = (x: any) => JSON.stringify([x.type, !!x.required, x.default ?? null, (x.values ?? []).map((v: any) => v.name)])
-      if (sig(prev) !== sig(prop))
+      // A default set on only one side is not a conflict: a wrapper that spreads props into a part declares none, and the part's applies.
+      const sig = (x: any) => JSON.stringify([x.type, !!x.required, (x.values ?? []).map((v: any) => v.name)])
+      const bothDefaults = prev.default != null && prop.default != null && prev.default !== prop.default
+      if (sig(prev) !== sig(prop) || bothDefaults)
         throw new Error(`prop "${prop.name}" differs between ${prev.parts.join(', ')} and ${spec}; extract those parts into separate guides`)
+      prev.default ??= prop.default
       prev.parts.push(spec)
     }
     else byName.set(prop.name, { ...prop, ...(specs.length > 1 || spec.includes('.') ? { parts: [spec] } : {}) })

@@ -1,0 +1,20 @@
+{
+  "export": "Command",
+  "source": "/Users/kathryngrantier/projects/canary/packages/ui/src/components/command.tsx",
+  "slug": "command",
+  "parts": [
+    "Root",
+    "Dialog",
+    "Input",
+    "List",
+    "Empty",
+    "Group",
+    "Item",
+    "Shortcut",
+    "Separator",
+    "Loading"
+  ],
+  "includeFrom": [
+    "cmdk"
+  ]
+}

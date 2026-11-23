@@ -1,0 +1,156 @@
+{
+  "id": "canary.shimmer",
+  "code": {
+    "package": "@harnessio/ui",
+    "export": "Shimmer",
+    "import": "import { Shimmer } from '@harnessio/ui/components'"
+  },
+  "props": [
+    {
+      "name": "variant",
+      "type": "enum",
+      "description": "TODO(designer): describe what this prop is for and how to choose its value.",
+      "values": [
+        {
+          "name": "body-normal",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "heading-hero",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "heading-section",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "heading-default",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "heading-subsection",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "heading-base",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "heading-small",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "body-single-line-normal",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "body-strong",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "body-single-line-strong",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "body-code",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "body-code-strong",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "caption-normal",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "caption-strong",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "caption-code",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "caption-code-strong",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "caption-single-line-normal",
+          "whenToUse": "TODO(designer): when to pick this value."
+        }
+      ],
+      "default": "body-normal"
+    },
+    {
+      "name": "color",
+      "type": "enum",
+      "description": "TODO(designer): describe what this prop is for and how to choose its value.",
+      "values": [
+        {
+          "name": "foreground-1",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "foreground-2",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "foreground-3",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "foreground-4",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "disabled",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "success",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "warning",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "danger",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "brand",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "merged",
+          "whenToUse": "TODO(designer): when to pick this value."
+        }
+      ],
+      "default": "foreground-2"
+    },
+    {
+      "name": "as",
+      "type": "string",
+      "description": "TODO(designer): describe what this prop is for and how to choose its value."
+    },
+    {
+      "name": "className",
+      "type": "string",
+      "description": "TODO(designer): describe what this prop is for and how to choose its value."
+    },
+    {
+      "name": "duration",
+      "type": "number",
+      "description": "TODO(designer): describe what this prop is for and how to choose its value.",
+      "default": "2"
+    },
+    {
+      "name": "spread",
+      "type": "number",
+      "description": "TODO(designer): describe what this prop is for and how to choose its value.",
+      "default": "2"
+    }
+  ]
+}

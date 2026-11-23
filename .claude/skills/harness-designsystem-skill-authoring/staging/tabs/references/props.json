@@ -1,0 +1,75 @@
+{
+  "id": "canary.tabs",
+  "code": {
+    "package": "@harnessio/ui",
+    "export": "Tabs",
+    "import": "import { Tabs } from '@harnessio/ui/components'"
+  },
+  "props": [
+    {
+      "name": "onValueChange",
+      "type": "function",
+      "description": "Set on Tabs.Root or Tabs.NavRoot. TODO(designer): describe what this prop is for and how to choose its value."
+    },
+    {
+      "name": "value",
+      "type": "string",
+      "description": "Set on Tabs.Root or Tabs.NavRoot. TODO(designer): describe what this prop is for and how to choose its value."
+    },
+    {
+      "name": "defaultValue",
+      "type": "string",
+      "description": "Set on Tabs.Root or Tabs.NavRoot. TODO(designer): describe what this prop is for and how to choose its value."
+    },
+    {
+      "name": "className",
+      "type": "string",
+      "description": "Set on Tabs.Root or Tabs.NavRoot. TODO(designer): describe what this prop is for and how to choose its value."
+    },
+    {
+      "name": "orientation",
+      "type": "enum",
+      "description": "Set on Tabs.Root or Tabs.NavRoot or Tabs.List. TODO(designer): describe what this prop is for and how to choose its value.",
+      "values": [
+        {
+          "name": "horizontal",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "vertical",
+          "whenToUse": "TODO(designer): when to pick this value."
+        }
+      ],
+      "default": "horizontal"
+    },
+    {
+      "name": "activeClassName",
+      "type": "string",
+      "description": "Set on Tabs.List. TODO(designer): describe what this prop is for and how to choose its value."
+    },
+    {
+      "name": "variant",
+      "type": "enum",
+      "description": "Set on Tabs.List. TODO(designer): describe what this prop is for and how to choose its value.",
+      "values": [
+        {
+          "name": "underlined",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "overlined",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "ghost",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "outlined",
+          "whenToUse": "TODO(designer): when to pick this value."
+        }
+      ],
+      "default": "underlined"
+    }
+  ]
+}

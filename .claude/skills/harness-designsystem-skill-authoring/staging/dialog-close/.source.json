@@ -1,0 +1,8 @@
+{
+  "export": "Dialog",
+  "source": "/Users/kathryngrantier/projects/canary/packages/ui/src/components/dialog.tsx",
+  "slug": "dialog-close",
+  "parts": [
+    "Close"
+  ]
+}

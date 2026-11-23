@@ -1,0 +1,9 @@
+{
+  "id": "canary.calendar",
+  "code": {
+    "package": "@harnessio/ui",
+    "export": "Calendar",
+    "import": "import { Calendar } from '@harnessio/ui/components'"
+  },
+  "props": []
+}

@@ -1,0 +1,78 @@
+{
+  "id": "canary.stats-panel",
+  "code": {
+    "package": "@harnessio/ui",
+    "export": "StatsPanel",
+    "import": "import { StatsPanel } from '@harnessio/ui/components'"
+  },
+  "props": [
+    {
+      "name": "data",
+      "type": "object",
+      "description": "TODO(designer): describe what this prop is for and how to choose its value.",
+      "required": true
+    },
+    {
+      "name": "isLoading",
+      "type": "boolean",
+      "description": "TODO(designer): describe what this prop is for and how to choose its value.",
+      "default": "false"
+    },
+    {
+      "name": "gap",
+      "type": "enum",
+      "description": "TODO(designer): describe what this prop is for and how to choose its value.",
+      "values": [
+        {
+          "name": "none",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "4xs",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "3xs",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "2xs",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "xs",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "sm",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "md",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "lg",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "xl",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "2xl",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "3xl",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "4xl",
+          "whenToUse": "TODO(designer): when to pick this value."
+        }
+      ],
+      "default": "3xs"
+    }
+  ]
+}

@@ -1,0 +1,126 @@
+{
+  "id": "canary.card",
+  "code": {
+    "package": "@harnessio/ui",
+    "export": "Card",
+    "import": "import { Card } from '@harnessio/ui/components'"
+  },
+  "props": [
+    {
+      "name": "wrapperClassname",
+      "type": "string",
+      "description": "Set on Card.Root. TODO(designer): describe what this prop is for and how to choose its value."
+    },
+    {
+      "name": "size",
+      "type": "enum",
+      "description": "Set on Card.Root. TODO(designer): describe what this prop is for and how to choose its value.",
+      "values": [
+        {
+          "name": "sm",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "md",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "lg",
+          "whenToUse": "TODO(designer): when to pick this value."
+        }
+      ],
+      "default": "md"
+    },
+    {
+      "name": "orientation",
+      "type": "enum",
+      "description": "Set on Card.Root. TODO(designer): describe what this prop is for and how to choose its value.",
+      "values": [
+        {
+          "name": "vertical",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "horizontal",
+          "whenToUse": "TODO(designer): when to pick this value."
+        }
+      ],
+      "default": "vertical"
+    },
+    {
+      "name": "position",
+      "type": "enum",
+      "description": "Set on Card.Root. TODO(designer): describe what this prop is for and how to choose its value.",
+      "values": [
+        {
+          "name": "start",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "end",
+          "whenToUse": "TODO(designer): when to pick this value."
+        }
+      ],
+      "default": "start"
+    },
+    {
+      "name": "selected",
+      "type": "boolean",
+      "description": "Set on Card.Root. TODO(designer): describe what this prop is for and how to choose its value.",
+      "default": "false"
+    },
+    {
+      "name": "disabled",
+      "type": "boolean",
+      "description": "Set on Card.Root. TODO(designer): describe what this prop is for and how to choose its value.",
+      "default": "false"
+    },
+    {
+      "name": "interactive",
+      "type": "boolean",
+      "description": "Set on Card.Root. TODO(designer): describe what this prop is for and how to choose its value.",
+      "default": "true"
+    },
+    {
+      "name": "as",
+      "type": "enum",
+      "description": "Set on Card.Title. TODO(designer): describe what this prop is for and how to choose its value.",
+      "values": [
+        {
+          "name": "h1",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "h2",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "h3",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "h4",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "h5",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "h6",
+          "whenToUse": "TODO(designer): when to pick this value."
+        }
+      ]
+    },
+    {
+      "name": "width",
+      "type": "string",
+      "description": "Set on Card.Image. TODO(designer): describe what this prop is for and how to choose its value."
+    },
+    {
+      "name": "height",
+      "type": "string",
+      "description": "Set on Card.Image. TODO(designer): describe what this prop is for and how to choose its value."
+    }
+  ]
+}

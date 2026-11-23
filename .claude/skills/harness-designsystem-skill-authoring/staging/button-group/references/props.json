@@ -1,0 +1,70 @@
+{
+  "id": "canary.button-group",
+  "code": {
+    "package": "@harnessio/ui",
+    "export": "ButtonGroup",
+    "import": "import { ButtonGroup } from '@harnessio/ui/components'"
+  },
+  "props": [
+    {
+      "name": "orientation",
+      "type": "enum",
+      "description": "TODO(designer): describe what this prop is for and how to choose its value.",
+      "values": [
+        {
+          "name": "horizontal",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "vertical",
+          "whenToUse": "TODO(designer): when to pick this value."
+        }
+      ],
+      "default": "horizontal"
+    },
+    {
+      "name": "buttonsProps",
+      "type": "object",
+      "description": "TODO(designer): describe what this prop is for and how to choose its value.",
+      "required": true
+    },
+    {
+      "name": "className",
+      "type": "string",
+      "description": "TODO(designer): describe what this prop is for and how to choose its value."
+    },
+    {
+      "name": "iconOnly",
+      "type": "boolean",
+      "description": "TODO(designer): describe what this prop is for and how to choose its value."
+    },
+    {
+      "name": "size",
+      "type": "enum",
+      "description": "TODO(designer): describe what this prop is for and how to choose its value.",
+      "values": [
+        {
+          "name": "md",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "sm",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "xs",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "2xs",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "3xs",
+          "whenToUse": "TODO(designer): when to pick this value."
+        }
+      ],
+      "default": "md"
+    }
+  ]
+}

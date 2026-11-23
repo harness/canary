@@ -1,0 +1,66 @@
+{
+  "id": "canary.alert-dialog",
+  "code": {
+    "package": "@harnessio/ui",
+    "export": "AlertDialog",
+    "import": "import { AlertDialog } from '@harnessio/ui/components'"
+  },
+  "props": [
+    {
+      "name": "open",
+      "type": "boolean",
+      "description": "Set on AlertDialog.Root. TODO(designer): describe what this prop is for and how to choose its value."
+    },
+    {
+      "name": "onOpenChange",
+      "type": "function",
+      "description": "Set on AlertDialog.Root. TODO(designer): describe what this prop is for and how to choose its value."
+    },
+    {
+      "name": "onCancel",
+      "type": "function",
+      "description": "Set on AlertDialog.Root. TODO(designer): describe what this prop is for and how to choose its value."
+    },
+    {
+      "name": "onConfirm",
+      "type": "function",
+      "description": "Set on AlertDialog.Root. TODO(designer): describe what this prop is for and how to choose its value.",
+      "required": true
+    },
+    {
+      "name": "theme",
+      "type": "enum",
+      "description": "Set on AlertDialog.Root. TODO(designer): describe what this prop is for and how to choose its value.",
+      "values": [
+        {
+          "name": "default",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "warning",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "danger",
+          "whenToUse": "TODO(designer): when to pick this value."
+        }
+      ]
+    },
+    {
+      "name": "loading",
+      "type": "boolean",
+      "description": "Set on AlertDialog.Root. TODO(designer): describe what this prop is for and how to choose its value."
+    },
+    {
+      "name": "title",
+      "type": "string",
+      "description": "Set on AlertDialog.Content. TODO(designer): describe what this prop is for and how to choose its value.",
+      "required": true
+    },
+    {
+      "name": "disabled",
+      "type": "boolean",
+      "description": "Set on AlertDialog.Confirm. TODO(designer): describe what this prop is for and how to choose its value."
+    }
+  ]
+}

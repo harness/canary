@@ -19,7 +19,7 @@ const err = (f: string, m: string) => errors.push(`${f}: ${m}`)
 const warn = (f: string, m: string) => warns.push(`${f}: ${m}`)
 
 const srcMeta = argv.includes('--export')
-  ? { export: flag('export'), source: path.resolve(flag('source')), ...(argv.includes('--parts') ? { parts: flag('parts').split(',') } : {}) }
+  ? { export: flag('export'), source: path.resolve(flag('source')), ...(argv.includes('--parts') ? { parts: flag('parts').split(',') } : {}), ...(argv.includes('--include-from') ? { includeFrom: flag('include-from').split(',') } : {}) }
   : JSON.parse(fs.readFileSync(path.join(dir, '.source.json'), 'utf8'))
 
 const skillPath = path.join(dir, 'SKILL.md')
@@ -39,9 +39,9 @@ for (const s of ['references/props.json', 'references/pattern.md', '../rules.md'
 if (!skill.includes(doc.code.import)) err('SKILL.md', `import line does not match props.json (${doc.code.import})`)
 
 // 2. props.json vs source (the cross-exam)
-const spec = srcMeta.parts ? srcMeta.parts.map((p: string) => `${srcMeta.export}.${p}`).join(',') : srcMeta.export
+const spec = srcMeta.parts ? srcMeta.parts.map((p: string) => (p === '.' ? srcMeta.export : `${srcMeta.export}.${p}`)).join(',') : srcMeta.export
 const truth = JSON.parse(
-  execFileSync(path.join(process.env.CANARY_ROOT ?? path.resolve(root, '../../..'), 'node_modules/.bin/tsx'), [path.join(root, 'scripts/extract-props.ts'), spec, srcMeta.source], { encoding: 'utf8' })
+  execFileSync(path.join(process.env.CANARY_ROOT ?? path.resolve(root, '../../..'), 'node_modules/.bin/tsx'), [path.join(root, 'scripts/extract-props.ts'), spec, srcMeta.source, ...(srcMeta.includeFrom?.length ? ['--include-from', srcMeta.includeFrom.join(',')] : [])], { encoding: 'utf8' })
 )
 const truthByName = new Map<string, any>(truth.props.map((p: any) => [p.name, p]))
 const docByName = new Map<string, any>(doc.props.map((p: any) => [p.name, p]))

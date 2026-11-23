@@ -1,0 +1,93 @@
+{
+  "id": "canary.spacer",
+  "code": {
+    "package": "@harnessio/ui",
+    "export": "Spacer",
+    "import": "import { Spacer } from '@harnessio/ui/components'"
+  },
+  "props": [
+    {
+      "name": "size",
+      "type": "enum",
+      "description": "TODO(designer): describe what this prop is for and how to choose its value.",
+      "values": [
+        {
+          "name": "1",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "1.5",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "2",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "2.5",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "3",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "4",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "4.5",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "5",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "6",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "7",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "8",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "9",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "10",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "11",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "12",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "14",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "15",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "16",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "20",
+          "whenToUse": "TODO(designer): when to pick this value."
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,14 @@
+{
+  "export": "InputOTP",
+  "source": "/Users/kathryngrantier/projects/canary/packages/ui/src/components/input-otp.tsx",
+  "slug": "input-otp",
+  "parts": [
+    "Root",
+    "Group",
+    "Slot",
+    "Separator"
+  ],
+  "includeFrom": [
+    "input-otp"
+  ]
+}

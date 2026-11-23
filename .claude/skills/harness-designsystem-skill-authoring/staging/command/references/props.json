@@ -1,0 +1,100 @@
+{
+  "id": "canary.command",
+  "code": {
+    "package": "@harnessio/ui",
+    "export": "Command",
+    "import": "import { Command } from '@harnessio/ui/components'"
+  },
+  "props": [
+    {
+      "name": "defaultValue",
+      "type": "string",
+      "description": "Set on Command.Root. Optional default item value when it is initially rendered."
+    },
+    {
+      "name": "asChild",
+      "type": "boolean",
+      "description": "Set on Command.Root or Command.Input or Command.List or Command.Empty or Command.Group or Command.Item or Command.Separator or Command.Loading. TODO(designer): describe what this prop is for and how to choose its value."
+    },
+    {
+      "name": "label",
+      "type": "string",
+      "description": "Set on Command.Root or Command.List or Command.Loading. Accessible label for this command menu. Not shown visibly."
+    },
+    {
+      "name": "shouldFilter",
+      "type": "boolean",
+      "description": "Set on Command.Root. Optionally set to `false` to turn off the automatic filtering and sorting. If `false`, you must conditionally render valid items based on the search query yourself."
+    },
+    {
+      "name": "filter",
+      "type": "function",
+      "description": "Set on Command.Root. Custom filter function for whether each command menu item should matches the given search query. It should return a number between 0 and 1, with 1 being the best match and 0 being hidden entirely. By default, uses the `command-score` library."
+    },
+    {
+      "name": "value",
+      "type": "string",
+      "description": "Set on Command.Root or Command.Input or Command.Group or Command.Item. Optional controlled state of the selected command menu item."
+    },
+    {
+      "name": "onValueChange",
+      "type": "function",
+      "description": "Set on Command.Root or Command.Input. Event handler called when the selected item of the menu changes."
+    },
+    {
+      "name": "loop",
+      "type": "boolean",
+      "description": "Set on Command.Root. Optionally set to `true` to turn on looping around when using the arrow keys."
+    },
+    {
+      "name": "disablePointerSelection",
+      "type": "boolean",
+      "description": "Set on Command.Root. Optionally set to `true` to disable selection via pointer events."
+    },
+    {
+      "name": "vimBindings",
+      "type": "boolean",
+      "description": "Set on Command.Root. Set to `false` to disable ctrl+n/j/p/k shortcuts. Defaults to `true`."
+    },
+    {
+      "name": "scrollAreaProps",
+      "type": "object",
+      "description": "Set on Command.List. TODO(designer): describe what this prop is for and how to choose its value."
+    },
+    {
+      "name": "heading",
+      "type": "node",
+      "description": "Set on Command.Group. Optional heading to render for this group."
+    },
+    {
+      "name": "forceMount",
+      "type": "boolean",
+      "description": "Set on Command.Group or Command.Item. Whether this group is forcibly rendered regardless of filtering."
+    },
+    {
+      "name": "onSelect",
+      "type": "function",
+      "description": "Set on Command.Item. Event handler for when this item is selected, either via click or keyboard selection."
+    },
+    {
+      "name": "disabled",
+      "type": "boolean",
+      "description": "Set on Command.Item. Whether this item is currently disabled."
+    },
+    {
+      "name": "keywords",
+      "type": "object",
+      "description": "Set on Command.Item. Optional keywords to match against when filtering."
+    },
+    {
+      "name": "alwaysRender",
+      "type": "boolean",
+      "description": "Set on Command.Separator. Whether this separator should always be rendered. Useful if you disable automatic filtering."
+    },
+    {
+      "name": "progress",
+      "type": "number",
+      "description": "Set on Command.Loading. Estimated progress of loading asynchronous options."
+    }
+  ]
+}

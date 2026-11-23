@@ -1,0 +1,26 @@
+{
+  "id": "canary.highlight-text",
+  "code": {
+    "package": "@harnessio/ui",
+    "export": "HighlightText",
+    "import": "import { HighlightText } from '@harnessio/ui/components'"
+  },
+  "props": [
+    {
+      "name": "text",
+      "type": "string",
+      "description": "TODO(designer): describe what this prop is for and how to choose its value.",
+      "required": true
+    },
+    {
+      "name": "match",
+      "type": "string",
+      "description": "TODO(designer): describe what this prop is for and how to choose its value."
+    },
+    {
+      "name": "className",
+      "type": "string",
+      "description": "TODO(designer): describe what this prop is for and how to choose its value."
+    }
+  ]
+}

@@ -1,5 +1,7 @@
 import { ChangeEvent, useRef, useState } from 'react'
 
+import { formatBytes } from '@/utils'
+
 import { Button } from './button'
 import { Card } from './card'
 import { IconV2 } from './icon-v2'
@@ -7,14 +9,24 @@ import { Input } from './input'
 import { Layout } from './layout'
 import { Text } from './text'
 
+const DEFAULT_MAX_SIZE_BYTES = 50 * 1024 * 1024
+
 export interface FileUploadProps {
   selectedFile?: File
   onFileChange: (file?: File) => void
   error?: string
   accept?: string
+  /** Max size hint in bytes. Defaults to 50 MiB ("Up to 50 MB"). */
+  maxSizeBytes?: number
 }
 
-export function FileUpload({ selectedFile, onFileChange, error, accept }: FileUploadProps) {
+export function FileUpload({
+  selectedFile,
+  onFileChange,
+  error,
+  accept,
+  maxSizeBytes = DEFAULT_MAX_SIZE_BYTES
+}: FileUploadProps) {
   const fileInputRef = useRef<HTMLInputElement>(null)
   const [isLoading, setIsLoading] = useState<boolean>(false)
 
@@ -62,20 +74,20 @@ export function FileUpload({ selectedFile, onFileChange, error, accept }: FileUp
     <div>
       {!selectedFile ? (
         <div
-          className="rounded-cn-3 border-cn-2 p-cn-xl border-2 border-dashed"
+          className="rounded-cn-3 border-2 border-dashed border-cn-2 p-cn-xl"
           onDragOver={handleDragOver}
           onDrop={handleDrop}
         >
           {isLoading ? (
-            <div className="gap-cn-xs flex flex-col items-center">
+            <div className="flex flex-col items-center gap-cn-xs">
               <IconV2 className="mb-cn-md animate-spin" name="loader" size="xl" />
               <Text variant="heading-base">Loading...</Text>
             </div>
           ) : (
-            <div className="gap-cn-xs flex flex-col items-center" onClick={openFileInput} role="button" tabIndex={0}>
+            <div className="flex flex-col items-center gap-cn-xs" onClick={openFileInput} role="button" tabIndex={0}>
               <IconV2 name="cloud-upload" size="xl" className="mb-cn-md" />
               <Text variant="heading-base">Click to browse or drag and drop a file</Text>
-              <Text variant="body-single-line-normal">Up to 50MB</Text>
+              <Text variant="body-single-line-normal">Up to {formatBytes(maxSizeBytes)}</Text>
             </div>
           )}
         </div>
@@ -84,7 +96,7 @@ export function FileUpload({ selectedFile, onFileChange, error, accept }: FileUp
           <Card.Content className="w-full">
             <Layout.Flex direction="row" align="center" justify="between" className="w-full">
               <Layout.Flex direction="row" gap="xs" align="center">
-                <div className="p-cn-xs bg-cn-1 rounded border">
+                <div className="rounded border bg-cn-1 p-cn-xs">
                   <IconV2 name="empty-page" size="lg" />
                 </div>
                 <Layout.Vertical align="start" gap="none">
@@ -92,7 +104,7 @@ export function FileUpload({ selectedFile, onFileChange, error, accept }: FileUp
                     {selectedFile?.name}
                   </Text>
                   <Text variant="body-normal" color="foreground-3">
-                    {Math.round(selectedFile?.size / 1024)} KB
+                    {formatBytes(selectedFile.size)}
                   </Text>
                 </Layout.Vertical>
               </Layout.Flex>

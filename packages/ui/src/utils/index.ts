@@ -1,5 +1,6 @@
 export * from './utils'
 export * from './stringUtils'
+export * from './format-bytes'
 export * from './cn'
 export * from './typeUtils'
 export * from './mergeUtils'

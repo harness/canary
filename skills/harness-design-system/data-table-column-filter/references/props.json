@@ -1,0 +1,33 @@
+{
+  "id": "canary.data-table-column-filter",
+  "code": {
+    "package": "@harnessio/ui",
+    "export": "DataTable.ColumnFilter",
+    "import": "import { DataTable } from '@harnessio/ui/components'"
+  },
+  "props": [
+    {
+      "name": "columns",
+      "type": "object",
+      "description": "Set on DataTable.ColumnFilter. TODO(designer): describe what this prop is for and how to choose its value.",
+      "required": true
+    },
+    {
+      "name": "visibleColumns",
+      "type": "object",
+      "description": "Set on DataTable.ColumnFilter. TODO(designer): describe what this prop is for and how to choose its value.",
+      "required": true
+    },
+    {
+      "name": "onCheckedChange",
+      "type": "function",
+      "description": "Set on DataTable.ColumnFilter. TODO(designer): describe what this prop is for and how to choose its value.",
+      "required": true
+    },
+    {
+      "name": "onReset",
+      "type": "function",
+      "description": "Set on DataTable.ColumnFilter. TODO(designer): describe what this prop is for and how to choose its value."
+    }
+  ]
+}

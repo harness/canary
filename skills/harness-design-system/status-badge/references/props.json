@@ -9,6 +9,7 @@
     {
       "name": "variant",
       "type": "enum",
+      "required": true,
       "description": "Visual style. Always pass it explicitly. outline is the preferred choice unless the design calls for another.",
       "values": [
         {

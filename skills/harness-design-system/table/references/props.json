@@ -1,0 +1,160 @@
+{
+  "id": "canary.table",
+  "code": {
+    "package": "@harnessio/ui",
+    "export": "Table",
+    "import": "import { Table } from '@harnessio/ui/components'"
+  },
+  "props": [
+    {
+      "name": "tableClassName",
+      "type": "string",
+      "description": "Set on Table.Root. TODO(designer): describe what this prop is for and how to choose its value."
+    },
+    {
+      "name": "disableHighlightOnHover",
+      "type": "boolean",
+      "description": "Set on Table.Root. TODO(designer): describe what this prop is for and how to choose its value.",
+      "default": "false"
+    },
+    {
+      "name": "paginationProps",
+      "type": "object",
+      "description": "Set on Table.Root. TODO(designer): describe what this prop is for and how to choose its value."
+    },
+    {
+      "name": "stickyHeader",
+      "type": "boolean",
+      "description": "Set on Table.Root. Opt-in sticky mode. Renders a single, well-defined scroll viewport (`cn-table-v2-viewport`) so sticky-positioned cells (e.g. sticky headers) resolve against one deterministic scroll container. When unset, the DOM structure and overflow behavior are unchanged.",
+      "default": "false"
+    },
+    {
+      "name": "maxHeight",
+      "type": "string",
+      "description": "Set on Table.Root. Maximum height of the scroll viewport. Only applies in sticky mode."
+    },
+    {
+      "name": "viewportRef",
+      "type": "object",
+      "description": "Set on Table.Root. Ref forwarded to the scroll viewport element. Only applies in sticky mode."
+    },
+    {
+      "name": "overlay",
+      "type": "node",
+      "description": "Set on Table.Root. Optional overlay rendered as a sibling of `<table>` inside the scroll viewport. Used by DataTable for a column-resize indicator that is not clipped by header cells."
+    },
+    {
+      "name": "size",
+      "type": "enum",
+      "description": "Set on Table.Root. TODO(designer): describe what this prop is for and how to choose its value.",
+      "values": [
+        {
+          "name": "normal",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "relaxed",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "compact",
+          "whenToUse": "TODO(designer): when to pick this value."
+        }
+      ],
+      "default": "normal"
+    },
+    {
+      "name": "variant",
+      "type": "enum",
+      "description": "Set on Table.Root. TODO(designer): describe what this prop is for and how to choose its value.",
+      "values": [
+        {
+          "name": "default",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "transparent",
+          "whenToUse": "TODO(designer): when to pick this value."
+        }
+      ],
+      "default": "default"
+    },
+    {
+      "name": "sortDirection",
+      "type": "enum",
+      "description": "Set on Table.Head. Sort direction",
+      "values": [
+        {
+          "name": "asc",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "desc",
+          "whenToUse": "TODO(designer): when to pick this value."
+        }
+      ]
+    },
+    {
+      "name": "sortable",
+      "type": "boolean",
+      "description": "Set on Table.Head. Whether the column is sortable"
+    },
+    {
+      "name": "tooltipProps",
+      "type": "object",
+      "description": "Set on Table.Head. Props for the tooltip component"
+    },
+    {
+      "name": "containerProps",
+      "type": "object",
+      "description": "Set on Table.Head. TODO(designer): describe what this prop is for and how to choose its value."
+    },
+    {
+      "name": "hideDivider",
+      "type": "boolean",
+      "description": "Set on Table.Head. TODO(designer): describe what this prop is for and how to choose its value.",
+      "default": "false"
+    },
+    {
+      "name": "contentClassName",
+      "type": "string",
+      "description": "Set on Table.Head. TODO(designer): describe what this prop is for and how to choose its value."
+    },
+    {
+      "name": "resizeHandle",
+      "type": "node",
+      "description": "Set on Table.Head. Optional chrome rendered as a direct child of the `<th>`, outside the label/sort layout. Used by DataTable for column resize handles so they can be positioned against the cell boundary."
+    },
+    {
+      "name": "selected",
+      "type": "boolean",
+      "description": "Set on Table.Row. TODO(designer): describe what this prop is for and how to choose its value."
+    },
+    {
+      "name": "disabled",
+      "type": "boolean",
+      "description": "Set on Table.Row. TODO(designer): describe what this prop is for and how to choose its value."
+    },
+    {
+      "name": "to",
+      "type": "string",
+      "description": "Set on Table.Row or Table.Cell. TODO(designer): describe what this prop is for and how to choose its value."
+    },
+    {
+      "name": "linkProps",
+      "type": "object",
+      "description": "Set on Table.Row or Table.Cell. TODO(designer): describe what this prop is for and how to choose its value."
+    },
+    {
+      "name": "disableLink",
+      "type": "boolean",
+      "description": "Set on Table.Cell. TODO(designer): describe what this prop is for and how to choose its value.",
+      "default": "false"
+    },
+    {
+      "name": "onClick",
+      "type": "function",
+      "description": "Set on Table.Cell, and on Table.Row (an inherited HTML attribute the extractor cannot see; added by hand). TODO(designer): describe what this prop is for and how to choose its value."
+    }
+  ]
+}

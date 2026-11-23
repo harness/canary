@@ -1,0 +1,363 @@
+{
+  "id": "canary.text",
+  "code": {
+    "package": "@harnessio/ui",
+    "export": "Text",
+    "import": "import { Text } from '@harnessio/ui/components'"
+  },
+  "props": [
+    {
+      "name": "color",
+      "type": "enum",
+      "description": "Text color from the foreground hierarchy. Emphasis, not decoration. Defaults to foreground-2, except heading variants, which default to foreground-1.",
+      "values": [
+        {
+          "name": "inherit",
+          "whenToUse": "Text sits inside a coloured container and must take its color. TODO(review): confirm."
+        },
+        {
+          "name": "foreground-1",
+          "whenToUse": "Headings and maximum-emphasis text. Default for heading variants."
+        },
+        {
+          "name": "foreground-2",
+          "whenToUse": "Body text. Default for non-heading variants."
+        },
+        {
+          "name": "foreground-3",
+          "whenToUse": "Secondary text, metadata and timestamps. The usual choice for supporting copy."
+        },
+        {
+          "name": "foreground-4",
+          "whenToUse": "Lowest-emphasis supporting text only.",
+          "whenToNotUse": "Required information: confirm contrast first."
+        },
+        {
+          "name": "disabled",
+          "whenToUse": "Text inside a disabled control.",
+          "whenToNotUse": "Anything that is not a disabled control."
+        },
+        {
+          "name": "success",
+          "whenToUse": "Text that reports a good outcome, paired with words or an icon.",
+          "whenToNotUse": "Emphasis or branding. For a label, use Tag or StatusBadge."
+        },
+        {
+          "name": "warning",
+          "whenToUse": "Text that reports a warning, paired with words or an icon.",
+          "whenToNotUse": "Emphasis or branding. For a label, use Tag or StatusBadge."
+        },
+        {
+          "name": "merged",
+          "whenToUse": "TODO(review): when to use merged."
+        },
+        {
+          "name": "danger",
+          "whenToUse": "Text that reports a failure or error, paired with words or an icon.",
+          "whenToNotUse": "Emphasis or branding. For a label, use Tag or StatusBadge."
+        },
+        {
+          "name": "brand",
+          "whenToUse": "TODO(review): when to use brand."
+        }
+      ],
+      "default": "foreground-2"
+    },
+    {
+      "name": "variant",
+      "type": "enum",
+      "description": "Type style. Always a named variant: never compose type from text, font and leading classes. Defaults to body-normal.",
+      "values": [
+        {
+          "name": "body-normal",
+          "whenToUse": "Default body copy: paragraphs and descriptions."
+        },
+        {
+          "name": "heading-hero",
+          "whenToUse": "The largest title. At most one per page. TODO(review): confirm."
+        },
+        {
+          "name": "heading-section",
+          "whenToUse": "A page or major section title. TODO(review): confirm."
+        },
+        {
+          "name": "heading-default",
+          "whenToUse": "TODO(review): when to use heading-default."
+        },
+        {
+          "name": "heading-subsection",
+          "whenToUse": "A subsection or card title. The most used heading. TODO(review): confirm."
+        },
+        {
+          "name": "heading-base",
+          "whenToUse": "A smaller heading below subsection. TODO(review): confirm."
+        },
+        {
+          "name": "heading-small",
+          "whenToUse": "The smallest heading. TODO(review): confirm."
+        },
+        {
+          "name": "body-single-line-normal",
+          "whenToUse": "Body text that must not wrap: table cells, labels, chips.",
+          "whenToNotUse": "Text that should wrap. Use body-normal."
+        },
+        {
+          "name": "body-strong",
+          "whenToUse": "Emphasis within body copy, or a small title in a dense layout. TODO(review): confirm."
+        },
+        {
+          "name": "body-single-line-strong",
+          "whenToUse": "Strong body text that must not wrap.",
+          "whenToNotUse": "Text that should wrap. Use body-strong."
+        },
+        {
+          "name": "body-code",
+          "whenToUse": "Code, IDs, hashes and log output in the monospace family. Renders as pre."
+        },
+        {
+          "name": "body-code-strong",
+          "whenToUse": "TODO(review): when to use body-code-strong."
+        },
+        {
+          "name": "caption-normal",
+          "whenToUse": "Metadata, timestamps and secondary information. The most used variant."
+        },
+        {
+          "name": "caption-strong",
+          "whenToUse": "A caption that needs emphasis, such as a small label. TODO(review): confirm."
+        },
+        {
+          "name": "caption-code",
+          "whenToUse": "TODO(review): when to use caption-code."
+        },
+        {
+          "name": "caption-code-strong",
+          "whenToUse": "TODO(review): when to use caption-code-strong."
+        },
+        {
+          "name": "caption-single-line-normal",
+          "whenToUse": "A caption that must not wrap.",
+          "whenToNotUse": "Text that should wrap. Use caption-normal."
+        }
+      ],
+      "default": "body-normal"
+    },
+    {
+      "name": "align",
+      "type": "enum",
+      "description": "Horizontal text alignment. Not set by default, so the element's natural alignment applies.",
+      "values": [
+        {
+          "name": "left",
+          "whenToUse": "Left-align text inside a centred or right-aligned parent."
+        },
+        {
+          "name": "center",
+          "whenToUse": "Short centred copy such as an empty state.",
+          "whenToNotUse": "Long paragraphs: centred long text is hard to read."
+        },
+        {
+          "name": "right",
+          "whenToUse": "Numeric or trailing cell content."
+        }
+      ]
+    },
+    {
+      "name": "truncate",
+      "type": "boolean",
+      "description": "Single line with an ellipsis. Ignored when lineClamp is set. Sets a native title with the full text unless you pass your own. Pair with a tooltip so the full text stays recoverable.",
+      "default": "false"
+    },
+    {
+      "name": "lineClamp",
+      "type": "enum",
+      "description": "Clamp to a number of lines with an ellipsis. Wins over truncate. Sets a native title with the full text unless you pass your own.",
+      "values": [
+        {
+          "name": "default",
+          "whenToUse": "TODO(review): when to use default."
+        },
+        {
+          "name": "1",
+          "whenToUse": "Clamp to one line."
+        },
+        {
+          "name": "2",
+          "whenToUse": "Clamp to two lines."
+        },
+        {
+          "name": "3",
+          "whenToUse": "Clamp to three lines."
+        },
+        {
+          "name": "4",
+          "whenToUse": "Clamp to four lines."
+        },
+        {
+          "name": "5",
+          "whenToUse": "Clamp to five lines."
+        },
+        {
+          "name": "6",
+          "whenToUse": "Clamp to six lines."
+        }
+      ]
+    },
+    {
+      "name": "wrap",
+      "type": "enum",
+      "description": "How text wraps. Prefer a -single-line- variant over nowrap.",
+      "values": [
+        {
+          "name": "wrap",
+          "whenToUse": "Normal wrapping."
+        },
+        {
+          "name": "nowrap",
+          "whenToUse": "Rarely.",
+          "whenToNotUse": "A wrapping variant that must stay on one line. Use a -single-line- variant."
+        },
+        {
+          "name": "pretty",
+          "whenToUse": "Long body copy, to avoid a lone last word. TODO(review): confirm."
+        },
+        {
+          "name": "balance",
+          "whenToUse": "Short multi-line headings, to even out the lines. TODO(review): confirm."
+        }
+      ]
+    },
+    {
+      "name": "as",
+      "type": "enum",
+      "description": "Changes the rendered HTML element to match what the content is. Use h1 to h6 for real headings, since the default element is not a heading tag. Changes meaning, not appearance.",
+      "values": [
+        {
+          "name": "div",
+          "whenToUse": "TODO(review): when to use div."
+        },
+        {
+          "name": "p",
+          "whenToUse": "TODO(review): when to use p."
+        },
+        {
+          "name": "h1",
+          "whenToUse": "A page's single top-level heading."
+        },
+        {
+          "name": "h2",
+          "whenToUse": "A major section heading."
+        },
+        {
+          "name": "h3",
+          "whenToUse": "A subsection heading."
+        },
+        {
+          "name": "h4",
+          "whenToUse": "A sub-subsection heading."
+        },
+        {
+          "name": "h5",
+          "whenToUse": "A fifth-level heading."
+        },
+        {
+          "name": "h6",
+          "whenToUse": "A sixth-level heading."
+        },
+        {
+          "name": "span",
+          "whenToUse": "Default for caption variants and inline text."
+        },
+        {
+          "name": "label",
+          "whenToUse": "TODO(review): when to use label."
+        },
+        {
+          "name": "legend",
+          "whenToUse": "TODO(review): when to use legend."
+        },
+        {
+          "name": "caption",
+          "whenToUse": "TODO(review): when to use caption."
+        },
+        {
+          "name": "figcaption",
+          "whenToUse": "TODO(review): when to use figcaption."
+        },
+        {
+          "name": "blockquote",
+          "whenToUse": "TODO(review): when to use blockquote."
+        },
+        {
+          "name": "pre",
+          "whenToUse": "TODO(review): when to use pre."
+        },
+        {
+          "name": "kbd",
+          "whenToUse": "TODO(review): when to use kbd."
+        },
+        {
+          "name": "var",
+          "whenToUse": "TODO(review): when to use var."
+        },
+        {
+          "name": "code",
+          "whenToUse": "TODO(review): when to use code."
+        },
+        {
+          "name": "samp",
+          "whenToUse": "TODO(review): when to use samp."
+        },
+        {
+          "name": "cite",
+          "whenToUse": "TODO(review): when to use cite."
+        },
+        {
+          "name": "time",
+          "whenToUse": "TODO(review): when to use time."
+        },
+        {
+          "name": "address",
+          "whenToUse": "TODO(review): when to use address."
+        },
+        {
+          "name": "strong",
+          "whenToUse": "TODO(review): when to use strong."
+        },
+        {
+          "name": "abbr",
+          "whenToUse": "TODO(review): when to use abbr."
+        },
+        {
+          "name": "em",
+          "whenToUse": "TODO(review): when to use em."
+        },
+        {
+          "name": "li",
+          "whenToUse": "TODO(review): when to use li."
+        },
+        {
+          "name": "dt",
+          "whenToUse": "TODO(review): when to use dt."
+        },
+        {
+          "name": "dd",
+          "whenToUse": "TODO(review): when to use dd."
+        },
+        {
+          "name": "del",
+          "whenToUse": "TODO(review): when to use del."
+        },
+        {
+          "name": "ins",
+          "whenToUse": "TODO(review): when to use ins."
+        }
+      ]
+    },
+    {
+      "name": "asChild",
+      "type": "boolean",
+      "description": "Render the child element instead of a new one, merging props. Only for wrapping an existing element such as a link."
+    }
+  ]
+}

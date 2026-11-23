@@ -1,0 +1,222 @@
+{
+  "id": "canary.data-table",
+  "code": {
+    "package": "@harnessio/ui",
+    "export": "DataTable",
+    "import": "import { DataTable } from '@harnessio/ui/components'"
+  },
+  "props": [
+    {
+      "name": "data",
+      "type": "object",
+      "description": "TODO(designer): describe what this prop is for and how to choose its value.",
+      "default": "[]",
+      "required": true
+    },
+    {
+      "name": "columns",
+      "type": "object",
+      "description": "TODO(designer): describe what this prop is for and how to choose its value.",
+      "required": true
+    },
+    {
+      "name": "size",
+      "type": "enum",
+      "description": "TODO(designer): describe what this prop is for and how to choose its value.",
+      "values": [
+        {
+          "name": "normal",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "relaxed",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "compact",
+          "whenToUse": "TODO(designer): when to pick this value."
+        }
+      ],
+      "default": "normal"
+    },
+    {
+      "name": "variant",
+      "type": "enum",
+      "description": "TODO(designer): describe what this prop is for and how to choose its value.",
+      "values": [
+        {
+          "name": "default",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "transparent",
+          "whenToUse": "TODO(designer): when to pick this value."
+        }
+      ],
+      "default": "default"
+    },
+    {
+      "name": "paginationProps",
+      "type": "object",
+      "description": "TODO(designer): describe what this prop is for and how to choose its value."
+    },
+    {
+      "name": "getRowClassName",
+      "type": "function",
+      "description": "TODO(designer): describe what this prop is for and how to choose its value."
+    },
+    {
+      "name": "onRowClick",
+      "type": "function",
+      "description": "TODO(designer): describe what this prop is for and how to choose its value."
+    },
+    {
+      "name": "disableHighlightOnHover",
+      "type": "boolean",
+      "description": "TODO(designer): describe what this prop is for and how to choose its value.",
+      "default": "false"
+    },
+    {
+      "name": "className",
+      "type": "string",
+      "description": "TODO(designer): describe what this prop is for and how to choose its value."
+    },
+    {
+      "name": "currentSorting",
+      "type": "object",
+      "description": "TODO(designer): describe what this prop is for and how to choose its value."
+    },
+    {
+      "name": "manualSorting",
+      "type": "boolean",
+      "description": "See {@link https://tanstack.com/table/latest/docs/api/features/sorting#manualsorting React Table docs}. Unless disabled, you must sort the data yourself (such as on the server side).",
+      "default": "true"
+    },
+    {
+      "name": "currentRowSelection",
+      "type": "object",
+      "description": "TODO(designer): describe what this prop is for and how to choose its value."
+    },
+    {
+      "name": "columnPinning",
+      "type": "object",
+      "description": "TODO(designer): describe what this prop is for and how to choose its value.",
+      "default": "{ left: [], right: [] }"
+    },
+    {
+      "name": "visibleColumns",
+      "type": "object",
+      "description": "Array of column IDs to be visible"
+    },
+    {
+      "name": "getRowId",
+      "type": "function",
+      "description": "TODO(designer): describe what this prop is for and how to choose its value."
+    },
+    {
+      "name": "onSortingChange",
+      "type": "function",
+      "description": "Callback for when sorting changes. Use this for server-side sorting."
+    },
+    {
+      "name": "enableRowSelection",
+      "type": "boolean",
+      "description": "Enable row selection",
+      "default": "false"
+    },
+    {
+      "name": "defaultRowSelection",
+      "type": "object",
+      "description": "Default row selection state"
+    },
+    {
+      "name": "onRowSelectionChange",
+      "type": "function",
+      "description": "Callback for when row selection changes"
+    },
+    {
+      "name": "enableExpanding",
+      "type": "boolean",
+      "description": "Enable expandable rows",
+      "default": "false"
+    },
+    {
+      "name": "getRowCanExpand",
+      "type": "function",
+      "description": "Function to determine if a row can be expanded"
+    },
+    {
+      "name": "getRowCanSelect",
+      "type": "function",
+      "description": "Function to determine if a row can be selected"
+    },
+    {
+      "name": "getIsRowDisabled",
+      "type": "function",
+      "description": "Function to determine if a row is disabled. Disabled rows have reduced opacity, show a not-allowed cursor, and cannot be clicked, selected, or expanded."
+    },
+    {
+      "name": "getRowLink",
+      "type": "function",
+      "description": "Function to generate a navigation link for a row. When provided, the row renders as a link navigating to the returned URL."
+    },
+    {
+      "name": "initiallyExpandAllRows",
+      "type": "boolean",
+      "description": "When true, all rows are expanded initially. Defaults to false (all collapsed). Overridden by `currentExpanded` when provided.",
+      "default": "false"
+    },
+    {
+      "name": "currentExpanded",
+      "type": "object",
+      "description": "Current expanded rows state"
+    },
+    {
+      "name": "onExpandedChange",
+      "type": "function",
+      "description": "Callback for when expanded state changes"
+    },
+    {
+      "name": "renderSubComponent",
+      "type": "node",
+      "description": "Render function for expanded row content (detail-panel mode). Ignored when `getSubRows` is provided (tree mode)."
+    },
+    {
+      "name": "getSubRows",
+      "type": "function",
+      "description": "Extract child rows from a data item to enable tree/nested row mode. When provided, expanded rows render their children as indented table rows sharing the same column structure, instead of a detail-panel sub-component."
+    },
+    {
+      "name": "enableColumnResizing",
+      "type": "boolean",
+      "description": "Enable column resizing. Defaults to false. Opt individual columns out with `ColumnDef.enableResizing`, and set initial/min/max widths with `size`, `minSize`, and `maxSize`. Only leaf columns expose resize handles.",
+      "default": "false"
+    },
+    {
+      "name": "stickyHeader",
+      "type": "boolean",
+      "description": "Opt-in sticky headers. Renders the table inside a single scroll viewport so header cells stick to the top while the body scrolls. Offsets support up to two stacked header rows (grouped headers).",
+      "default": "false"
+    },
+    {
+      "name": "maxHeight",
+      "type": "string",
+      "description": "Maximum height of the table's scroll viewport. Only applies when `stickyHeader` is enabled."
+    },
+    {
+      "name": "rowPinning",
+      "type": "object",
+      "description": "Opt-in row pinning state (TanStack `RowPinningState`). Only bottom-pinned rows are rendered: they appear in a `<tfoot>` whose cells stick to the bottom of the scroll viewport (`stickyHeader` is required for sticking). Pin rows by appending them to `data` and listing their `getRowId` ids in `rowPinning.bottom`. Only a single bottom-pinned row is supported — if multiple ids are passed, only the last (bottom-most) row is rendered; without accumulated offsets multiple rows would overlap at `bottom: 0`. `keepPinnedRows` is left at its default (`true`), so pinned rows survive pagination and filtering."
+    },
+    {
+      "name": "onRowPinningChange",
+      "type": "function",
+      "description": "Callback for when row pinning changes."
+    },
+    {
+      "name": "enableRowPinning",
+      "type": "object",
+      "description": "Whether rows can be pinned. See TanStack `enableRowPinning`."
+    }
+  ]
+}

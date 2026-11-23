@@ -15,6 +15,16 @@ Components that have a guide, grouped by purpose. Open only the one you need. A 
 
 - [Layout](./layout/SKILL.md): Two or more elements need space between them. Not for components that arrange their own children, or for positioning and scroll containers.
 
+## Typography
+
+- [Text](./text/SKILL.md): Any visible copy that needs a type style. For a state or attribute label, use StatusBadge or Tag; for anything clickable, use Button.
+
+## Data display
+
+- [Table](./table/SKILL.md): TODO(designer): when to use Table. For X, use Y.
+- [DataTable](./data-table/SKILL.md): TODO(designer): when to use DataTable. For X, use Y.
+- [DataTable.ColumnFilter](./data-table-column-filter/SKILL.md): TODO(designer): when to use DataTable.ColumnFilter. For X, use Y.
+
 ## Overlays
 
 - [Drawer](./drawer/SKILL.md): Create, edit or inspect one entity without leaving the list. For confirming one decision, use Dialog; for several steps or its own URL, use a page.

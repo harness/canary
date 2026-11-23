@@ -1,0 +1,11 @@
+{
+  "export": "StackedList",
+  "source": "/Users/kathryngrantier/projects/canary/packages/ui/src/components/stacked-list.tsx",
+  "slug": "stacked-list",
+  "parts": [
+    "Root",
+    "Header",
+    "Item",
+    "Field"
+  ]
+}

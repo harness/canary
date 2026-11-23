@@ -1,0 +1,128 @@
+{
+  "id": "canary.textarea",
+  "code": {
+    "package": "@harnessio/ui",
+    "export": "Textarea",
+    "import": "import { Textarea } from '@harnessio/ui/components'"
+  },
+  "props": [
+    {
+      "name": "theme",
+      "type": "enum",
+      "description": "TODO(designer): describe what this prop is for and how to choose its value.",
+      "values": [
+        {
+          "name": "warning",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "default",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "danger",
+          "whenToUse": "TODO(designer): when to pick this value."
+        }
+      ],
+      "default": "default"
+    },
+    {
+      "name": "size",
+      "type": "enum",
+      "description": "TODO(designer): describe what this prop is for and how to choose its value.",
+      "values": [
+        {
+          "name": "md",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "sm",
+          "whenToUse": "TODO(designer): when to pick this value."
+        }
+      ],
+      "default": "md"
+    },
+    {
+      "name": "resizable",
+      "type": "boolean",
+      "description": "TODO(designer): describe what this prop is for and how to choose its value.",
+      "default": "false"
+    },
+    {
+      "name": "maxCharacters",
+      "type": "number",
+      "description": "TODO(designer): describe what this prop is for and how to choose its value."
+    },
+    {
+      "name": "autoResize",
+      "type": "boolean",
+      "description": "TODO(designer): describe what this prop is for and how to choose its value.",
+      "default": "false"
+    },
+    {
+      "name": "inputGroupClassName",
+      "type": "string",
+      "description": "TODO(designer): describe what this prop is for and how to choose its value."
+    },
+    {
+      "name": "label",
+      "type": "string",
+      "description": "TODO(designer): describe what this prop is for and how to choose its value."
+    },
+    {
+      "name": "wrapperClassName",
+      "type": "string",
+      "description": "TODO(designer): describe what this prop is for and how to choose its value."
+    },
+    {
+      "name": "caption",
+      "type": "string",
+      "description": "TODO(designer): describe what this prop is for and how to choose its value."
+    },
+    {
+      "name": "error",
+      "type": "string",
+      "description": "TODO(designer): describe what this prop is for and how to choose its value."
+    },
+    {
+      "name": "warning",
+      "type": "string",
+      "description": "TODO(designer): describe what this prop is for and how to choose its value."
+    },
+    {
+      "name": "labelSuffix",
+      "type": "node",
+      "description": "TODO(designer): describe what this prop is for and how to choose its value."
+    },
+    {
+      "name": "orientation",
+      "type": "enum",
+      "description": "TODO(designer): describe what this prop is for and how to choose its value.",
+      "values": [
+        {
+          "name": "vertical",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "horizontal",
+          "whenToUse": "TODO(designer): when to pick this value."
+        }
+      ]
+    },
+    {
+      "name": "optional",
+      "type": "boolean",
+      "description": "TODO(designer): describe what this prop is for and how to choose its value."
+    },
+    {
+      "name": "tooltipProps",
+      "type": "object",
+      "description": "TODO(designer): describe what this prop is for and how to choose its value."
+    },
+    {
+      "name": "tooltipContent",
+      "type": "string",
+      "description": "TODO(designer): describe what this prop is for and how to choose its value."
+    }
+  ]
+}

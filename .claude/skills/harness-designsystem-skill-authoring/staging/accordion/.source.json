@@ -1,0 +1,11 @@
+{
+  "export": "Accordion",
+  "source": "/Users/kathryngrantier/projects/canary/packages/ui/src/components/accordion/accordion.tsx",
+  "slug": "accordion",
+  "parts": [
+    "Root",
+    "Item",
+    "Trigger",
+    "Content"
+  ]
+}

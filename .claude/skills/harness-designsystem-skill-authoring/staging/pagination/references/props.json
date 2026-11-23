@@ -1,0 +1,90 @@
+{
+  "id": "canary.pagination",
+  "code": {
+    "package": "@harnessio/ui",
+    "export": "Pagination",
+    "import": "import { Pagination } from '@harnessio/ui/components'"
+  },
+  "props": [
+    {
+      "name": "className",
+      "type": "string",
+      "description": "TODO(designer): describe what this prop is for and how to choose its value."
+    },
+    {
+      "name": "onPageSizeChange",
+      "type": "function",
+      "description": "TODO(designer): describe what this prop is for and how to choose its value."
+    },
+    {
+      "name": "pageSizeOptions",
+      "type": "object",
+      "description": "TODO(designer): describe what this prop is for and how to choose its value."
+    },
+    {
+      "name": "goToPage",
+      "type": "function",
+      "description": "TODO(designer): describe what this prop is for and how to choose its value."
+    },
+    {
+      "name": "getPageLink",
+      "type": "function",
+      "description": "TODO(designer): describe what this prop is for and how to choose its value."
+    },
+    {
+      "name": "totalItems",
+      "type": "number",
+      "description": "TODO(designer): describe what this prop is for and how to choose its value."
+    },
+    {
+      "name": "pageSize",
+      "type": "number",
+      "description": "TODO(designer): describe what this prop is for and how to choose its value."
+    },
+    {
+      "name": "currentPage",
+      "type": "number",
+      "description": "TODO(designer): describe what this prop is for and how to choose its value."
+    },
+    {
+      "name": "showPageNumbers",
+      "type": "boolean",
+      "description": "TODO(designer): describe what this prop is for and how to choose its value."
+    },
+    {
+      "name": "indeterminate",
+      "type": "boolean",
+      "description": "TODO(designer): describe what this prop is for and how to choose its value."
+    },
+    {
+      "name": "hasPrevious",
+      "type": "boolean",
+      "description": "TODO(designer): describe what this prop is for and how to choose its value."
+    },
+    {
+      "name": "hasNext",
+      "type": "boolean",
+      "description": "TODO(designer): describe what this prop is for and how to choose its value."
+    },
+    {
+      "name": "getPrevPageLink",
+      "type": "function",
+      "description": "TODO(designer): describe what this prop is for and how to choose its value."
+    },
+    {
+      "name": "getNextPageLink",
+      "type": "function",
+      "description": "TODO(designer): describe what this prop is for and how to choose its value."
+    },
+    {
+      "name": "onPrevious",
+      "type": "function",
+      "description": "TODO(designer): describe what this prop is for and how to choose its value."
+    },
+    {
+      "name": "onNext",
+      "type": "function",
+      "description": "TODO(designer): describe what this prop is for and how to choose its value."
+    }
+  ]
+}

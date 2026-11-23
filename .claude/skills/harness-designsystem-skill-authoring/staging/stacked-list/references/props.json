@@ -1,0 +1,255 @@
+{
+  "id": "canary.stacked-list",
+  "code": {
+    "package": "@harnessio/ui",
+    "export": "StackedList",
+    "import": "import { StackedList } from '@harnessio/ui/components'"
+  },
+  "props": [
+    {
+      "name": "border",
+      "type": "boolean",
+      "description": "Set on StackedList.Root. TODO(designer): describe what this prop is for and how to choose its value."
+    },
+    {
+      "name": "rounded",
+      "type": "enum",
+      "description": "Set on StackedList.Root. TODO(designer): describe what this prop is for and how to choose its value.",
+      "values": [
+        {
+          "name": "top",
+          "whenToUse": "TODO(designer): when to pick this value."
+        }
+      ]
+    },
+    {
+      "name": "paginationProps",
+      "type": "object",
+      "description": "Set on StackedList.Root. TODO(designer): describe what this prop is for and how to choose its value."
+    },
+    {
+      "name": "onClick",
+      "type": "function",
+      "description": "Set on StackedList.Header or StackedList.Item. TODO(designer): describe what this prop is for and how to choose its value."
+    },
+    {
+      "name": "paddingX",
+      "type": "enum",
+      "description": "Set on StackedList.Header or StackedList.Item. TODO(designer): describe what this prop is for and how to choose its value.",
+      "values": [
+        {
+          "name": "4xs",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "3xs",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "2xs",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "xs",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "sm",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "md",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "lg",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "xl",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "2xl",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "3xl",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "4xl",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "0",
+          "whenToUse": "TODO(designer): when to pick this value."
+        }
+      ],
+      "default": "md"
+    },
+    {
+      "name": "paddingY",
+      "type": "enum",
+      "description": "Set on StackedList.Header or StackedList.Item. TODO(designer): describe what this prop is for and how to choose its value.",
+      "values": [
+        {
+          "name": "4xs",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "3xs",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "2xs",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "xs",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "sm",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "md",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "lg",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "xl",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "2xl",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "3xl",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "4xl",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "0",
+          "whenToUse": "TODO(designer): when to pick this value."
+        }
+      ],
+      "default": "md"
+    },
+    {
+      "name": "thumbnail",
+      "type": "node",
+      "description": "Set on StackedList.Header or StackedList.Item. TODO(designer): describe what this prop is for and how to choose its value."
+    },
+    {
+      "name": "actions",
+      "type": "node",
+      "description": "Set on StackedList.Header or StackedList.Item. TODO(designer): describe what this prop is for and how to choose its value."
+    },
+    {
+      "name": "asChild",
+      "type": "boolean",
+      "description": "Set on StackedList.Header or StackedList.Item. TODO(designer): describe what this prop is for and how to choose its value."
+    },
+    {
+      "name": "to",
+      "type": "string",
+      "description": "Set on StackedList.Header or StackedList.Item. TODO(designer): describe what this prop is for and how to choose its value."
+    },
+    {
+      "name": "linkProps",
+      "type": "object",
+      "description": "Set on StackedList.Header or StackedList.Item. TODO(designer): describe what this prop is for and how to choose its value."
+    },
+    {
+      "name": "disableHover",
+      "type": "boolean",
+      "description": "Set on StackedList.Item. TODO(designer): describe what this prop is for and how to choose its value.",
+      "default": "false"
+    },
+    {
+      "name": "tooltipProps",
+      "type": "object",
+      "description": "Set on StackedList.Item. TODO(designer): describe what this prop is for and how to choose its value."
+    },
+    {
+      "name": "title",
+      "type": "node",
+      "description": "Set on StackedList.Field. TODO(designer): describe what this prop is for and how to choose its value."
+    },
+    {
+      "name": "description",
+      "type": "node",
+      "description": "Set on StackedList.Field. TODO(designer): describe what this prop is for and how to choose its value."
+    },
+    {
+      "name": "titleColor",
+      "type": "enum",
+      "description": "Set on StackedList.Field. TODO(designer): describe what this prop is for and how to choose its value.",
+      "values": [
+        {
+          "name": "disabled",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "inherit",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "foreground-1",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "foreground-2",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "foreground-3",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "foreground-4",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "success",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "warning",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "merged",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "danger",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "brand",
+          "whenToUse": "TODO(designer): when to pick this value."
+        }
+      ]
+    },
+    {
+      "name": "disableTruncate",
+      "type": "boolean",
+      "description": "Set on StackedList.Field. TODO(designer): describe what this prop is for and how to choose its value."
+    },
+    {
+      "name": "right",
+      "type": "boolean",
+      "description": "Set on StackedList.Field. TODO(designer): describe what this prop is for and how to choose its value."
+    }
+  ]
+}

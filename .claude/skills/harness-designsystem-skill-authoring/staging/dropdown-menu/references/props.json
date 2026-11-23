@@ -1,0 +1,213 @@
+{
+  "id": "canary.dropdown-menu",
+  "code": {
+    "package": "@harnessio/ui",
+    "export": "DropdownMenu",
+    "import": "import { DropdownMenu } from '@harnessio/ui/components'"
+  },
+  "props": [
+    {
+      "name": "isSubContent",
+      "type": "boolean",
+      "description": "Set on DropdownMenu.Content. TODO(designer): describe what this prop is for and how to choose its value."
+    },
+    {
+      "name": "scrollAreaProps",
+      "type": "object",
+      "description": "Set on DropdownMenu.Content. TODO(designer): describe what this prop is for and how to choose its value."
+    },
+    {
+      "name": "onOpenAutoFocus",
+      "type": "function",
+      "description": "Set on DropdownMenu.Content. TODO(designer): describe what this prop is for and how to choose its value."
+    },
+    {
+      "name": "prefix",
+      "type": "node",
+      "description": "Set on DropdownMenu.Item. TODO(designer): describe what this prop is for and how to choose its value."
+    },
+    {
+      "name": "subContentProps",
+      "type": "object",
+      "description": "Set on DropdownMenu.Item or DropdownMenu.CheckboxItem or DropdownMenu.AvatarItem or DropdownMenu.LogoItem or DropdownMenu.IconItem or DropdownMenu.IndicatorItem. TODO(designer): describe what this prop is for and how to choose its value."
+    },
+    {
+      "name": "subMenuProps",
+      "type": "node",
+      "description": "Set on DropdownMenu.Item or DropdownMenu.CheckboxItem or DropdownMenu.AvatarItem or DropdownMenu.LogoItem or DropdownMenu.IconItem or DropdownMenu.IndicatorItem. TODO(designer): describe what this prop is for and how to choose its value."
+    },
+    {
+      "name": "label",
+      "type": "node",
+      "description": "Set on DropdownMenu.Item or DropdownMenu.CheckboxItem or DropdownMenu.RadioItem or DropdownMenu.AvatarItem or DropdownMenu.LogoItem or DropdownMenu.IconItem or DropdownMenu.IndicatorItem. TODO(designer): describe what this prop is for and how to choose its value."
+    },
+    {
+      "name": "title",
+      "type": "node",
+      "description": "Set on DropdownMenu.Item or DropdownMenu.CheckboxItem or DropdownMenu.RadioItem or DropdownMenu.AvatarItem or DropdownMenu.LogoItem or DropdownMenu.IconItem or DropdownMenu.IndicatorItem. TODO(designer): describe what this prop is for and how to choose its value."
+    },
+    {
+      "name": "className",
+      "type": "string",
+      "description": "Set on DropdownMenu.Item or DropdownMenu.CheckboxItem or DropdownMenu.RadioItem or DropdownMenu.AvatarItem or DropdownMenu.LogoItem or DropdownMenu.IconItem or DropdownMenu.IndicatorItem. TODO(designer): describe what this prop is for and how to choose its value."
+    },
+    {
+      "name": "description",
+      "type": "node",
+      "description": "Set on DropdownMenu.Item or DropdownMenu.CheckboxItem or DropdownMenu.RadioItem or DropdownMenu.AvatarItem or DropdownMenu.LogoItem or DropdownMenu.IconItem or DropdownMenu.IndicatorItem. TODO(designer): describe what this prop is for and how to choose its value."
+    },
+    {
+      "name": "shortcut",
+      "type": "string",
+      "description": "Set on DropdownMenu.Item or DropdownMenu.CheckboxItem or DropdownMenu.RadioItem or DropdownMenu.AvatarItem or DropdownMenu.LogoItem or DropdownMenu.IconItem or DropdownMenu.IndicatorItem. TODO(designer): describe what this prop is for and how to choose its value."
+    },
+    {
+      "name": "checkmark",
+      "type": "boolean",
+      "description": "Set on DropdownMenu.Item or DropdownMenu.CheckboxItem or DropdownMenu.RadioItem or DropdownMenu.AvatarItem or DropdownMenu.LogoItem or DropdownMenu.IconItem or DropdownMenu.IndicatorItem. TODO(designer): describe what this prop is for and how to choose its value."
+    },
+    {
+      "name": "tag",
+      "type": "object",
+      "description": "Set on DropdownMenu.Item or DropdownMenu.CheckboxItem or DropdownMenu.RadioItem or DropdownMenu.AvatarItem or DropdownMenu.LogoItem or DropdownMenu.IconItem or DropdownMenu.IndicatorItem. TODO(designer): describe what this prop is for and how to choose its value."
+    },
+    {
+      "name": "src",
+      "type": "string",
+      "description": "Set on DropdownMenu.AvatarItem. TODO(designer): describe what this prop is for and how to choose its value."
+    },
+    {
+      "name": "name",
+      "type": "string",
+      "description": "Set on DropdownMenu.AvatarItem. TODO(designer): describe what this prop is for and how to choose its value."
+    },
+    {
+      "name": "rounded",
+      "type": "boolean",
+      "description": "Set on DropdownMenu.AvatarItem. TODO(designer): describe what this prop is for and how to choose its value.",
+      "default": "true"
+    },
+    {
+      "name": "isGroup",
+      "type": "boolean",
+      "description": "Set on DropdownMenu.AvatarItem. TODO(designer): describe what this prop is for and how to choose its value."
+    },
+    {
+      "name": "logo",
+      "type": "string",
+      "description": "Set on DropdownMenu.LogoItem. TODO(designer): describe what this prop is for and how to choose its value.",
+      "required": true
+    },
+    {
+      "name": "icon",
+      "type": "string",
+      "description": "Set on DropdownMenu.IconItem. TODO(designer): describe what this prop is for and how to choose its value.",
+      "required": true
+    },
+    {
+      "name": "iconClassName",
+      "type": "string",
+      "description": "Set on DropdownMenu.IconItem. TODO(designer): describe what this prop is for and how to choose its value."
+    },
+    {
+      "name": "iconSize",
+      "type": "enum",
+      "description": "Set on DropdownMenu.IconItem. TODO(designer): describe what this prop is for and how to choose its value.",
+      "values": [
+        {
+          "name": "2xs",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "xs",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "sm",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "md",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "lg",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "xl",
+          "whenToUse": "TODO(designer): when to pick this value."
+        }
+      ]
+    },
+    {
+      "name": "color",
+      "type": "enum",
+      "description": "Set on DropdownMenu.IndicatorItem. TODO(designer): describe what this prop is for and how to choose its value.",
+      "values": [
+        {
+          "name": "gray",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "green",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "red",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "yellow",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "blue",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "purple",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "brown",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "cyan",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "indigo",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "lime",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "mint",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "orange",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "pink",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "violet",
+          "whenToUse": "TODO(designer): when to pick this value."
+        }
+      ],
+      "required": true
+    },
+    {
+      "name": "pulse",
+      "type": "boolean",
+      "description": "Set on DropdownMenu.IndicatorItem. TODO(designer): describe what this prop is for and how to choose its value."
+    }
+  ]
+}

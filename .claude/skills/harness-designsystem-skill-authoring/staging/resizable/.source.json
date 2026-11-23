@@ -1,0 +1,10 @@
+{
+  "export": "Resizable",
+  "source": "/Users/kathryngrantier/projects/canary/packages/ui/src/components/resizable.tsx",
+  "slug": "resizable",
+  "parts": [
+    "PanelGroup",
+    "Panel",
+    "Handle"
+  ]
+}

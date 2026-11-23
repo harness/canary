@@ -1,0 +1,11 @@
+{
+  "export": "Alert",
+  "source": "/Users/kathryngrantier/projects/canary/packages/ui/src/components/alert/index.ts",
+  "slug": "alert",
+  "parts": [
+    "Root",
+    "Title",
+    "Description",
+    "Link"
+  ]
+}

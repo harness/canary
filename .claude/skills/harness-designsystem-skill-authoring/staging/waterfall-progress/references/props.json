@@ -1,0 +1,78 @@
+{
+  "id": "canary.waterfall-progress",
+  "code": {
+    "package": "@harnessio/ui",
+    "export": "WaterfallProgress",
+    "import": "import { WaterfallProgress } from '@harnessio/ui/components'"
+  },
+  "props": [
+    {
+      "name": "value",
+      "type": "number",
+      "description": "TODO(designer): describe what this prop is for and how to choose its value.",
+      "required": true
+    },
+    {
+      "name": "startOffset",
+      "type": "number",
+      "description": "TODO(designer): describe what this prop is for and how to choose its value.",
+      "default": "0"
+    },
+    {
+      "name": "inProgress",
+      "type": "boolean",
+      "description": "TODO(designer): describe what this prop is for and how to choose its value.",
+      "default": "false"
+    },
+    {
+      "name": "className",
+      "type": "string",
+      "description": "TODO(designer): describe what this prop is for and how to choose its value.",
+      "default": ""
+    },
+    {
+      "name": "theme",
+      "type": "enum",
+      "description": "TODO(designer): describe what this prop is for and how to choose its value.",
+      "values": [
+        {
+          "name": "muted",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "info",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "danger",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "success",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "warning",
+          "whenToUse": "TODO(designer): when to pick this value."
+        }
+      ],
+      "default": "muted"
+    },
+    {
+      "name": "label",
+      "type": "string",
+      "description": "TODO(designer): describe what this prop is for and how to choose its value.",
+      "default": ""
+    },
+    {
+      "name": "tooltipContent",
+      "type": "node",
+      "description": "TODO(designer): describe what this prop is for and how to choose its value."
+    },
+    {
+      "name": "tooltipProps",
+      "type": "node",
+      "description": "TODO(designer): describe what this prop is for and how to choose its value."
+    }
+  ]
+}

@@ -1,0 +1,115 @@
+{
+  "id": "canary.card-select-root",
+  "code": {
+    "package": "@harnessio/ui",
+    "export": "CardSelect.Root",
+    "import": "import { CardSelect } from '@harnessio/ui/components'"
+  },
+  "props": [
+    {
+      "name": "className",
+      "type": "string",
+      "description": "Set on CardSelect.Root. TODO(designer): describe what this prop is for and how to choose its value."
+    },
+    {
+      "name": "type",
+      "type": "enum",
+      "description": "Set on CardSelect.Root. TODO(designer): describe what this prop is for and how to choose its value.",
+      "values": [
+        {
+          "name": "single",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "multiple",
+          "whenToUse": "TODO(designer): when to pick this value."
+        }
+      ],
+      "required": true
+    },
+    {
+      "name": "name",
+      "type": "string",
+      "description": "Set on CardSelect.Root. TODO(designer): describe what this prop is for and how to choose its value."
+    },
+    {
+      "name": "value",
+      "type": "string",
+      "description": "Set on CardSelect.Root. TODO(designer): describe what this prop is for and how to choose its value."
+    },
+    {
+      "name": "defaultValue",
+      "type": "string",
+      "description": "Set on CardSelect.Root. TODO(designer): describe what this prop is for and how to choose its value."
+    },
+    {
+      "name": "onValueChange",
+      "type": "function",
+      "description": "Set on CardSelect.Root. TODO(designer): describe what this prop is for and how to choose its value."
+    },
+    {
+      "name": "disabled",
+      "type": "boolean",
+      "description": "Set on CardSelect.Root. TODO(designer): describe what this prop is for and how to choose its value."
+    },
+    {
+      "name": "deselectable",
+      "type": "boolean",
+      "description": "Set on CardSelect.Root. Single-select only. When true, re-clicking the selected item clears it (`onValueChange(null)`). Off by default so `type=\"single\"` stays radio-sticky for existing consumers. No-op for `type=\"multiple\"`, which already toggles."
+    },
+    {
+      "name": "rows",
+      "type": "number",
+      "description": "Set on CardSelect.Root. TODO(designer): describe what this prop is for and how to choose its value."
+    },
+    {
+      "name": "cols",
+      "type": "number",
+      "description": "Set on CardSelect.Root. TODO(designer): describe what this prop is for and how to choose its value."
+    },
+    {
+      "name": "layout",
+      "type": "enum",
+      "description": "Set on CardSelect.Root. TODO(designer): describe what this prop is for and how to choose its value.",
+      "values": [
+        {
+          "name": "vertical",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "horizontal",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "grid",
+          "whenToUse": "TODO(designer): when to pick this value."
+        }
+      ],
+      "default": "vertical"
+    },
+    {
+      "name": "gap",
+      "type": "enum",
+      "description": "Set on CardSelect.Root. TODO(designer): describe what this prop is for and how to choose its value.",
+      "values": [
+        {
+          "name": "xs",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "sm",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "md",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "lg",
+          "whenToUse": "TODO(designer): when to pick this value."
+        }
+      ],
+      "default": "md"
+    }
+  ]
+}

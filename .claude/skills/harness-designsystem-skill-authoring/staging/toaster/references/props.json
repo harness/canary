@@ -1,0 +1,9 @@
+{
+  "id": "canary.toaster",
+  "code": {
+    "package": "@harnessio/ui",
+    "export": "Toaster",
+    "import": "import { Toaster } from '@harnessio/ui/components'"
+  },
+  "props": []
+}

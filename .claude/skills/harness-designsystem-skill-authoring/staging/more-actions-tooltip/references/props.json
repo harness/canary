@@ -1,0 +1,148 @@
+{
+  "id": "canary.more-actions-tooltip",
+  "code": {
+    "package": "@harnessio/ui",
+    "export": "MoreActionsTooltip",
+    "import": "import { MoreActionsTooltip } from '@harnessio/ui/components'"
+  },
+  "props": [
+    {
+      "name": "theme",
+      "type": "enum",
+      "description": "TODO(designer): describe what this prop is for and how to choose its value.",
+      "values": [
+        {
+          "name": "default",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "success",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "danger",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "warning",
+          "whenToUse": "TODO(designer): when to pick this value."
+        }
+      ]
+    },
+    {
+      "name": "actions",
+      "type": "object",
+      "description": "TODO(designer): describe what this prop is for and how to choose its value.",
+      "required": true
+    },
+    {
+      "name": "isInTable",
+      "type": "boolean",
+      "description": "TODO(designer): describe what this prop is for and how to choose its value."
+    },
+    {
+      "name": "iconName",
+      "type": "string",
+      "description": "TODO(designer): describe what this prop is for and how to choose its value.",
+      "default": "more-vert"
+    },
+    {
+      "name": "sideOffset",
+      "type": "number",
+      "description": "TODO(designer): describe what this prop is for and how to choose its value.",
+      "default": "2"
+    },
+    {
+      "name": "alignOffset",
+      "type": "number",
+      "description": "TODO(designer): describe what this prop is for and how to choose its value.",
+      "default": "0"
+    },
+    {
+      "name": "className",
+      "type": "string",
+      "description": "TODO(designer): describe what this prop is for and how to choose its value."
+    },
+    {
+      "name": "buttonVariant",
+      "type": "enum",
+      "description": "TODO(designer): describe what this prop is for and how to choose its value.",
+      "values": [
+        {
+          "name": "primary",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "secondary",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "outline",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "ai",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "ghost",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "link",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "transparent",
+          "whenToUse": "TODO(designer): when to pick this value."
+        }
+      ],
+      "default": "ghost"
+    },
+    {
+      "name": "buttonSize",
+      "type": "enum",
+      "description": "TODO(designer): describe what this prop is for and how to choose its value.",
+      "values": [
+        {
+          "name": "md",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "sm",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "xs",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "2xs",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "3xs",
+          "whenToUse": "TODO(designer): when to pick this value."
+        }
+      ],
+      "default": "md"
+    },
+    {
+      "name": "disabled",
+      "type": "boolean",
+      "description": "TODO(designer): describe what this prop is for and how to choose its value.",
+      "default": "false"
+    },
+    {
+      "name": "label",
+      "type": "string",
+      "description": "Accessible name and tooltip for the trigger button. Defaults to \"Show more actions\".",
+      "default": "Show more actions"
+    },
+    {
+      "name": "onOpenChange",
+      "type": "function",
+      "description": "Called when the menu opens or closes. Useful for deferred work like RBAC checks (UUI-2039)."
+    }
+  ]
+}

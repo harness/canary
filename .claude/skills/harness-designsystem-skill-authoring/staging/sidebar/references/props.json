@@ -1,0 +1,331 @@
+{
+  "id": "canary.sidebar",
+  "code": {
+    "package": "@harnessio/ui",
+    "export": "Sidebar",
+    "import": "import { Sidebar } from '@harnessio/ui/components'"
+  },
+  "props": [
+    {
+      "name": "side",
+      "type": "enum",
+      "description": "Set on Sidebar.Root. TODO(designer): describe what this prop is for and how to choose its value.",
+      "values": [
+        {
+          "name": "left",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "right",
+          "whenToUse": "TODO(designer): when to pick this value."
+        }
+      ]
+    },
+    {
+      "name": "direction",
+      "type": "enum",
+      "description": "Set on Sidebar.Content. TODO(designer): describe what this prop is for and how to choose its value.",
+      "values": [
+        {
+          "name": "ltr",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "rtl",
+          "whenToUse": "TODO(designer): when to pick this value."
+        }
+      ]
+    },
+    {
+      "name": "className",
+      "type": "string",
+      "description": "Set on Sidebar.Content. TODO(designer): describe what this prop is for and how to choose its value."
+    },
+    {
+      "name": "classNameContent",
+      "type": "string",
+      "description": "Set on Sidebar.Content. TODO(designer): describe what this prop is for and how to choose its value."
+    },
+    {
+      "name": "preserveScrollPosition",
+      "type": "boolean",
+      "description": "Set on Sidebar.Content. TODO(designer): describe what this prop is for and how to choose its value."
+    },
+    {
+      "name": "storageKey",
+      "type": "string",
+      "description": "Set on Sidebar.Content. TODO(designer): describe what this prop is for and how to choose its value."
+    },
+    {
+      "name": "onScrollTop",
+      "type": "function",
+      "description": "Set on Sidebar.Content. TODO(designer): describe what this prop is for and how to choose its value."
+    },
+    {
+      "name": "onScrollBottom",
+      "type": "function",
+      "description": "Set on Sidebar.Content. TODO(designer): describe what this prop is for and how to choose its value."
+    },
+    {
+      "name": "onScrollLeft",
+      "type": "function",
+      "description": "Set on Sidebar.Content. TODO(designer): describe what this prop is for and how to choose its value."
+    },
+    {
+      "name": "onScrollRight",
+      "type": "function",
+      "description": "Set on Sidebar.Content. TODO(designer): describe what this prop is for and how to choose its value."
+    },
+    {
+      "name": "rootMargin",
+      "type": "string",
+      "description": "Set on Sidebar.Content. TODO(designer): describe what this prop is for and how to choose its value."
+    },
+    {
+      "name": "threshold",
+      "type": "object",
+      "description": "Set on Sidebar.Content. TODO(designer): describe what this prop is for and how to choose its value."
+    },
+    {
+      "name": "contentClassName",
+      "type": "string",
+      "description": "Set on Sidebar.Content. TODO(designer): describe what this prop is for and how to choose its value."
+    },
+    {
+      "name": "label",
+      "type": "string",
+      "description": "Set on Sidebar.Group. TODO(designer): describe what this prop is for and how to choose its value."
+    },
+    {
+      "name": "actionIcon",
+      "type": "string",
+      "description": "Set on Sidebar.Group. TODO(designer): describe what this prop is for and how to choose its value."
+    },
+    {
+      "name": "onActionClick",
+      "type": "function",
+      "description": "Set on Sidebar.Group. TODO(designer): describe what this prop is for and how to choose its value."
+    },
+    {
+      "name": "defaultSubmenuOpen",
+      "type": "boolean",
+      "description": "Set on Sidebar.Item. TODO(designer): describe what this prop is for and how to choose its value."
+    },
+    {
+      "name": "badge",
+      "type": "string",
+      "description": "Set on Sidebar.Item. TODO(designer): describe what this prop is for and how to choose its value."
+    },
+    {
+      "name": "actionMenuItems",
+      "type": "object",
+      "description": "Set on Sidebar.Item. TODO(designer): describe what this prop is for and how to choose its value."
+    },
+    {
+      "name": "dropdownMenuContent",
+      "type": "node",
+      "description": "Set on Sidebar.Item. TODO(designer): describe what this prop is for and how to choose its value."
+    },
+    {
+      "name": "withRightIndicator",
+      "type": "boolean",
+      "description": "Set on Sidebar.Item. TODO(designer): describe what this prop is for and how to choose its value."
+    },
+    {
+      "name": "title",
+      "type": "string",
+      "description": "Set on Sidebar.Item or Sidebar.MenuSubItem. TODO(designer): describe what this prop is for and how to choose its value.",
+      "required": true
+    },
+    {
+      "name": "description",
+      "type": "string",
+      "description": "Set on Sidebar.Item. TODO(designer): describe what this prop is for and how to choose its value."
+    },
+    {
+      "name": "active",
+      "type": "boolean",
+      "description": "Set on Sidebar.Item or Sidebar.MenuSubItem. TODO(designer): describe what this prop is for and how to choose its value."
+    },
+    {
+      "name": "actionButtons",
+      "type": "object",
+      "description": "Set on Sidebar.Item. TODO(designer): describe what this prop is for and how to choose its value."
+    },
+    {
+      "name": "draggable",
+      "type": "boolean",
+      "description": "Set on Sidebar.Item. TODO(designer): describe what this prop is for and how to choose its value."
+    },
+    {
+      "name": "dragAttributes",
+      "type": "object",
+      "description": "Set on Sidebar.Item. TODO(designer): describe what this prop is for and how to choose its value."
+    },
+    {
+      "name": "dragListeners",
+      "type": "object",
+      "description": "Set on Sidebar.Item. TODO(designer): describe what this prop is for and how to choose its value."
+    },
+    {
+      "name": "subMenuOpen",
+      "type": "boolean",
+      "description": "Set on Sidebar.Item. TODO(designer): describe what this prop is for and how to choose its value."
+    },
+    {
+      "name": "onSubmenuChange",
+      "type": "function",
+      "description": "Set on Sidebar.Item. TODO(designer): describe what this prop is for and how to choose its value."
+    },
+    {
+      "name": "icon",
+      "type": "string",
+      "description": "Set on Sidebar.Item. TODO(designer): describe what this prop is for and how to choose its value."
+    },
+    {
+      "name": "logo",
+      "type": "string",
+      "description": "Set on Sidebar.Item. TODO(designer): describe what this prop is for and how to choose its value."
+    },
+    {
+      "name": "onHoverIn",
+      "type": "function",
+      "description": "Set on Sidebar.Item. TODO(designer): describe what this prop is for and how to choose its value."
+    },
+    {
+      "name": "onHoverOut",
+      "type": "function",
+      "description": "Set on Sidebar.Item. TODO(designer): describe what this prop is for and how to choose its value."
+    },
+    {
+      "name": "hideIcon",
+      "type": "boolean",
+      "description": "Set on Sidebar.MenuSkeleton. TODO(designer): describe what this prop is for and how to choose its value."
+    },
+    {
+      "name": "defaultOpen",
+      "type": "boolean",
+      "description": "Set on Sidebar.Provider. TODO(designer): describe what this prop is for and how to choose its value."
+    },
+    {
+      "name": "open",
+      "type": "boolean",
+      "description": "Set on Sidebar.Provider or Sidebar.Rail. TODO(designer): describe what this prop is for and how to choose its value."
+    },
+    {
+      "name": "onOpenChange",
+      "type": "function",
+      "description": "Set on Sidebar.Provider. TODO(designer): describe what this prop is for and how to choose its value."
+    },
+    {
+      "name": "animate",
+      "type": "boolean",
+      "description": "Set on Sidebar.Rail. TODO(designer): describe what this prop is for and how to choose its value."
+    },
+    {
+      "name": "onClick",
+      "type": "function",
+      "description": "Set on Sidebar.Trigger. TODO(designer): describe what this prop is for and how to choose its value."
+    },
+    {
+      "name": "theme",
+      "type": "enum",
+      "description": "Set on Sidebar.Trigger. TODO(designer): describe what this prop is for and how to choose its value.",
+      "values": [
+        {
+          "name": "default",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "success",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "danger",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "warning",
+          "whenToUse": "TODO(designer): when to pick this value."
+        }
+      ]
+    },
+    {
+      "name": "asChild",
+      "type": "boolean",
+      "description": "Set on Sidebar.Trigger. TODO(designer): describe what this prop is for and how to choose its value."
+    },
+    {
+      "name": "loading",
+      "type": "boolean",
+      "description": "Set on Sidebar.Trigger. TODO(designer): describe what this prop is for and how to choose its value."
+    },
+    {
+      "name": "size",
+      "type": "enum",
+      "description": "Set on Sidebar.Trigger. TODO(designer): describe what this prop is for and how to choose its value.",
+      "values": [
+        {
+          "name": "md",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "sm",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "xs",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "2xs",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "3xs",
+          "whenToUse": "TODO(designer): when to pick this value."
+        }
+      ]
+    },
+    {
+      "name": "variant",
+      "type": "enum",
+      "description": "Set on Sidebar.Trigger. TODO(designer): describe what this prop is for and how to choose its value.",
+      "values": [
+        {
+          "name": "link",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "ai",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "primary",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "secondary",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "outline",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "ghost",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "transparent",
+          "whenToUse": "TODO(designer): when to pick this value."
+        }
+      ]
+    },
+    {
+      "name": "rounded",
+      "type": "boolean",
+      "description": "Set on Sidebar.Trigger. TODO(designer): describe what this prop is for and how to choose its value."
+    }
+  ]
+}

@@ -1,0 +1,122 @@
+{
+  "id": "canary.page",
+  "code": {
+    "package": "@harnessio/ui",
+    "export": "Page",
+    "import": "import { Page } from '@harnessio/ui/components'"
+  },
+  "props": [
+    {
+      "name": "scrollable",
+      "type": "boolean",
+      "description": "Set on Page.Root. TODO(designer): describe what this prop is for and how to choose its value."
+    },
+    {
+      "name": "maxWidth",
+      "type": "enum",
+      "description": "Set on Page.Root. TODO(designer): describe what this prop is for and how to choose its value.",
+      "values": [
+        {
+          "name": "full",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "page",
+          "whenToUse": "TODO(designer): when to pick this value."
+        }
+      ]
+    },
+    {
+      "name": "mainClassName",
+      "type": "string",
+      "description": "Set on Page.Root. TODO(designer): describe what this prop is for and how to choose its value."
+    },
+    {
+      "name": "contentClassName",
+      "type": "string",
+      "description": "Set on Page.Root. TODO(designer): describe what this prop is for and how to choose its value."
+    },
+    {
+      "name": "backLink",
+      "type": "object",
+      "description": "Set on Page.Header. TODO(designer): describe what this prop is for and how to choose its value."
+    },
+    {
+      "name": "logoName",
+      "type": "string",
+      "description": "Set on Page.Header. TODO(designer): describe what this prop is for and how to choose its value."
+    },
+    {
+      "name": "title",
+      "type": "node",
+      "description": "Set on Page.Header. TODO(designer): describe what this prop is for and how to choose its value.",
+      "required": true
+    },
+    {
+      "name": "iconName",
+      "type": "string",
+      "description": "Set on Page.Header. TODO(designer): describe what this prop is for and how to choose its value."
+    },
+    {
+      "name": "iconSize",
+      "type": "enum",
+      "description": "Set on Page.Header. TODO(designer): describe what this prop is for and how to choose its value.",
+      "values": [
+        {
+          "name": "2xs",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "xs",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "sm",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "md",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "lg",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "xl",
+          "whenToUse": "TODO(designer): when to pick this value."
+        }
+      ]
+    },
+    {
+      "name": "description",
+      "type": "node",
+      "description": "Set on Page.Header. TODO(designer): describe what this prop is for and how to choose its value."
+    },
+    {
+      "name": "favoriteProps",
+      "type": "object",
+      "description": "Set on Page.Header. TODO(designer): describe what this prop is for and how to choose its value."
+    },
+    {
+      "name": "isLoading",
+      "type": "boolean",
+      "description": "Set on Page.Header. TODO(designer): describe what this prop is for and how to choose its value."
+    },
+    {
+      "name": "actions",
+      "type": "node",
+      "description": "Set on Page.Header. TODO(designer): describe what this prop is for and how to choose its value."
+    },
+    {
+      "name": "headerActions",
+      "type": "node",
+      "description": "Set on Page.Header. TODO(designer): describe what this prop is for and how to choose its value."
+    },
+    {
+      "name": "className",
+      "type": "string",
+      "description": "Set on Page.Content. TODO(designer): describe what this prop is for and how to choose its value."
+    }
+  ]
+}

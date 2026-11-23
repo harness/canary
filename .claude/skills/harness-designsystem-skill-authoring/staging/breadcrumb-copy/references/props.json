@@ -1,0 +1,159 @@
+{
+  "id": "canary.breadcrumb-copy",
+  "code": {
+    "package": "@harnessio/ui",
+    "export": "Breadcrumb.Copy",
+    "import": "import { Breadcrumb } from '@harnessio/ui/components'"
+  },
+  "props": [
+    {
+      "name": "name",
+      "type": "string",
+      "description": "Set on Breadcrumb.Copy. TODO(designer): describe what this prop is for and how to choose its value.",
+      "required": true
+    },
+    {
+      "name": "className",
+      "type": "string",
+      "description": "Set on Breadcrumb.Copy. TODO(designer): describe what this prop is for and how to choose its value."
+    },
+    {
+      "name": "buttonVariant",
+      "type": "enum",
+      "description": "Set on Breadcrumb.Copy. TODO(designer): describe what this prop is for and how to choose its value.",
+      "values": [
+        {
+          "name": "link",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "ai",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "secondary",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "primary",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "outline",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "ghost",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "transparent",
+          "whenToUse": "TODO(designer): when to pick this value."
+        }
+      ]
+    },
+    {
+      "name": "size",
+      "type": "enum",
+      "description": "Set on Breadcrumb.Copy. TODO(designer): describe what this prop is for and how to choose its value.",
+      "values": [
+        {
+          "name": "sm",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "xs",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "md",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "2xs",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "3xs",
+          "whenToUse": "TODO(designer): when to pick this value."
+        }
+      ],
+      "default": "sm"
+    },
+    {
+      "name": "color",
+      "type": "enum",
+      "description": "Set on Breadcrumb.Copy. TODO(designer): describe what this prop is for and how to choose its value.",
+      "values": [
+        {
+          "name": "success",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "danger",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "warning",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "inherit",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "info",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "neutral",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "merged",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "risk",
+          "whenToUse": "TODO(designer): when to pick this value."
+        }
+      ]
+    },
+    {
+      "name": "onClick",
+      "type": "function",
+      "description": "Set on Breadcrumb.Copy. TODO(designer): describe what this prop is for and how to choose its value."
+    },
+    {
+      "name": "iconSize",
+      "type": "enum",
+      "description": "Set on Breadcrumb.Copy. TODO(designer): describe what this prop is for and how to choose its value.",
+      "values": [
+        {
+          "name": "sm",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "xs",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "md",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "2xs",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "lg",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "xl",
+          "whenToUse": "TODO(designer): when to pick this value."
+        }
+      ]
+    }
+  ]
+}

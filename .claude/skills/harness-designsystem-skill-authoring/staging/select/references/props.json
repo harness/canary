@@ -1,0 +1,217 @@
+{
+  "id": "canary.select",
+  "code": {
+    "package": "@harnessio/ui",
+    "export": "Select",
+    "import": "import { Select } from '@harnessio/ui/components'"
+  },
+  "props": [
+    {
+      "name": "options",
+      "type": "object",
+      "description": "TODO(designer): describe what this prop is for and how to choose its value.",
+      "required": true
+    },
+    {
+      "name": "value",
+      "type": "string",
+      "description": "TODO(designer): describe what this prop is for and how to choose its value."
+    },
+    {
+      "name": "defaultValue",
+      "type": "string",
+      "description": "TODO(designer): describe what this prop is for and how to choose its value."
+    },
+    {
+      "name": "onChange",
+      "type": "function",
+      "description": "TODO(designer): describe what this prop is for and how to choose its value."
+    },
+    {
+      "name": "onClear",
+      "type": "function",
+      "description": "TODO(designer): describe what this prop is for and how to choose its value."
+    },
+    {
+      "name": "onOpen",
+      "type": "function",
+      "description": "TODO(designer): describe what this prop is for and how to choose its value."
+    },
+    {
+      "name": "onScrollEnd",
+      "type": "function",
+      "description": "TODO(designer): describe what this prop is for and how to choose its value."
+    },
+    {
+      "name": "isLoading",
+      "type": "boolean",
+      "description": "TODO(designer): describe what this prop is for and how to choose its value."
+    },
+    {
+      "name": "theme",
+      "type": "enum",
+      "description": "TODO(designer): describe what this prop is for and how to choose its value.",
+      "values": [
+        {
+          "name": "default",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "danger",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "warning",
+          "whenToUse": "TODO(designer): when to pick this value."
+        }
+      ],
+      "default": "default"
+    },
+    {
+      "name": "size",
+      "type": "enum",
+      "description": "TODO(designer): describe what this prop is for and how to choose its value.",
+      "values": [
+        {
+          "name": "md",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "sm",
+          "whenToUse": "TODO(designer): when to pick this value."
+        }
+      ],
+      "default": "md"
+    },
+    {
+      "name": "allowSearch",
+      "type": "boolean",
+      "description": "TODO(designer): describe what this prop is for and how to choose its value."
+    },
+    {
+      "name": "onSearch",
+      "type": "function",
+      "description": "TODO(designer): describe what this prop is for and how to choose its value."
+    },
+    {
+      "name": "searchValue",
+      "type": "string",
+      "description": "TODO(designer): describe what this prop is for and how to choose its value."
+    },
+    {
+      "name": "optionRenderer",
+      "type": "function",
+      "description": "TODO(designer): describe what this prop is for and how to choose its value."
+    },
+    {
+      "name": "header",
+      "type": "node",
+      "description": "TODO(designer): describe what this prop is for and how to choose its value."
+    },
+    {
+      "name": "footer",
+      "type": "node",
+      "description": "TODO(designer): describe what this prop is for and how to choose its value."
+    },
+    {
+      "name": "contentWidth",
+      "type": "enum",
+      "description": "TODO(designer): describe what this prop is for and how to choose its value.",
+      "values": [
+        {
+          "name": "auto",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "triggerWidth",
+          "whenToUse": "TODO(designer): when to pick this value."
+        }
+      ]
+    },
+    {
+      "name": "contentClassName",
+      "type": "string",
+      "description": "TODO(designer): describe what this prop is for and how to choose its value."
+    },
+    {
+      "name": "prefix",
+      "type": "node",
+      "description": "TODO(designer): describe what this prop is for and how to choose its value."
+    },
+    {
+      "name": "suffix",
+      "type": "node",
+      "description": "TODO(designer): describe what this prop is for and how to choose its value."
+    },
+    {
+      "name": "triggerClassName",
+      "type": "string",
+      "description": "TODO(designer): describe what this prop is for and how to choose its value."
+    },
+    {
+      "name": "clearable",
+      "type": "boolean",
+      "description": "TODO(designer): describe what this prop is for and how to choose its value."
+    },
+    {
+      "name": "label",
+      "type": "string",
+      "description": "TODO(designer): describe what this prop is for and how to choose its value."
+    },
+    {
+      "name": "wrapperClassName",
+      "type": "string",
+      "description": "TODO(designer): describe what this prop is for and how to choose its value."
+    },
+    {
+      "name": "caption",
+      "type": "string",
+      "description": "TODO(designer): describe what this prop is for and how to choose its value."
+    },
+    {
+      "name": "error",
+      "type": "string",
+      "description": "TODO(designer): describe what this prop is for and how to choose its value."
+    },
+    {
+      "name": "warning",
+      "type": "string",
+      "description": "TODO(designer): describe what this prop is for and how to choose its value."
+    },
+    {
+      "name": "labelSuffix",
+      "type": "node",
+      "description": "TODO(designer): describe what this prop is for and how to choose its value."
+    },
+    {
+      "name": "orientation",
+      "type": "enum",
+      "description": "TODO(designer): describe what this prop is for and how to choose its value.",
+      "values": [
+        {
+          "name": "vertical",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "horizontal",
+          "whenToUse": "TODO(designer): when to pick this value."
+        }
+      ]
+    },
+    {
+      "name": "optional",
+      "type": "boolean",
+      "description": "TODO(designer): describe what this prop is for and how to choose its value."
+    },
+    {
+      "name": "tooltipProps",
+      "type": "object",
+      "description": "TODO(designer): describe what this prop is for and how to choose its value."
+    },
+    {
+      "name": "tooltipContent",
+      "type": "string",
+      "description": "TODO(designer): describe what this prop is for and how to choose its value."
+    }
+  ]
+}

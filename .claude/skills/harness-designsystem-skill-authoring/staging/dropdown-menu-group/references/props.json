@@ -1,0 +1,15 @@
+{
+  "id": "canary.dropdown-menu",
+  "code": {
+    "package": "@harnessio/ui",
+    "export": "DropdownMenu",
+    "import": "import { DropdownMenu } from '@harnessio/ui/components'"
+  },
+  "props": [
+    {
+      "name": "label",
+      "type": "string",
+      "description": "Set on DropdownMenu.Group or DropdownMenu.RadioGroup. TODO(designer): describe what this prop is for and how to choose its value."
+    }
+  ]
+}

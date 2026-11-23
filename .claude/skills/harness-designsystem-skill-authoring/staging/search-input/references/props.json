@@ -1,0 +1,129 @@
+{
+  "id": "canary.search-input",
+  "code": {
+    "package": "@harnessio/ui",
+    "export": "SearchInput",
+    "import": "import { SearchInput } from '@harnessio/ui/components'"
+  },
+  "props": [
+    {
+      "name": "searchValue",
+      "type": "string",
+      "description": "TODO(designer): describe what this prop is for and how to choose its value."
+    },
+    {
+      "name": "onChange",
+      "type": "function",
+      "description": "TODO(designer): describe what this prop is for and how to choose its value."
+    },
+    {
+      "name": "debounce",
+      "type": "object",
+      "description": "TODO(designer): describe what this prop is for and how to choose its value.",
+      "default": "true"
+    },
+    {
+      "name": "onEnter",
+      "type": "function",
+      "description": "TODO(designer): describe what this prop is for and how to choose its value."
+    },
+    {
+      "name": "onPrev",
+      "type": "function",
+      "description": "TODO(designer): describe what this prop is for and how to choose its value."
+    },
+    {
+      "name": "onNext",
+      "type": "function",
+      "description": "TODO(designer): describe what this prop is for and how to choose its value."
+    },
+    {
+      "name": "onKeyDown",
+      "type": "function",
+      "description": "TODO(designer): describe what this prop is for and how to choose its value."
+    },
+    {
+      "name": "showPrevNextButtons",
+      "type": "boolean",
+      "description": "TODO(designer): describe what this prop is for and how to choose its value."
+    },
+    {
+      "name": "counter",
+      "type": "string",
+      "description": "TODO(designer): describe what this prop is for and how to choose its value."
+    },
+    {
+      "name": "size",
+      "type": "enum",
+      "description": "TODO(designer): describe what this prop is for and how to choose its value.",
+      "values": [
+        {
+          "name": "md",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "sm",
+          "whenToUse": "TODO(designer): when to pick this value."
+        }
+      ]
+    },
+    {
+      "name": "prefix",
+      "type": "node",
+      "description": "TODO(designer): describe what this prop is for and how to choose its value."
+    },
+    {
+      "name": "suffix",
+      "type": "node",
+      "description": "TODO(designer): describe what this prop is for and how to choose its value."
+    },
+    {
+      "name": "className",
+      "type": "string",
+      "description": "TODO(designer): describe what this prop is for and how to choose its value."
+    },
+    {
+      "name": "theme",
+      "type": "enum",
+      "description": "TODO(designer): describe what this prop is for and how to choose its value.",
+      "values": [
+        {
+          "name": "default",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "danger",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "warning",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "success",
+          "whenToUse": "TODO(designer): when to pick this value."
+        }
+      ]
+    },
+    {
+      "name": "inputContainerClassName",
+      "type": "string",
+      "description": "TODO(designer): describe what this prop is for and how to choose its value."
+    },
+    {
+      "name": "prefixClassName",
+      "type": "string",
+      "description": "TODO(designer): describe what this prop is for and how to choose its value."
+    },
+    {
+      "name": "suffixClassName",
+      "type": "string",
+      "description": "TODO(designer): describe what this prop is for and how to choose its value."
+    },
+    {
+      "name": "leadingSuffix",
+      "type": "node",
+      "description": "TODO(designer): describe what this prop is for and how to choose its value."
+    }
+  ]
+}

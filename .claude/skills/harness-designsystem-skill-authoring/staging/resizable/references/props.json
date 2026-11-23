@@ -1,0 +1,15 @@
+{
+  "id": "canary.resizable",
+  "code": {
+    "package": "@harnessio/ui",
+    "export": "Resizable",
+    "import": "import { Resizable } from '@harnessio/ui/components'"
+  },
+  "props": [
+    {
+      "name": "withHandle",
+      "type": "boolean",
+      "description": "Set on Resizable.Handle. TODO(designer): describe what this prop is for and how to choose its value."
+    }
+  ]
+}

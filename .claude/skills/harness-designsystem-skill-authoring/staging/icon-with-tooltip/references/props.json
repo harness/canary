@@ -1,0 +1,56 @@
+{
+  "id": "canary.icon-with-tooltip",
+  "code": {
+    "package": "@harnessio/ui",
+    "export": "IconWithTooltip",
+    "import": "import { IconWithTooltip } from '@harnessio/ui/components'"
+  },
+  "props": [
+    {
+      "name": "className",
+      "type": "string",
+      "description": "TODO(designer): describe what this prop is for and how to choose its value."
+    },
+    {
+      "name": "disabled",
+      "type": "boolean",
+      "description": "If disabled, the tooltip will not be shown"
+    },
+    {
+      "name": "iconProps",
+      "type": "object",
+      "description": "TODO(designer): describe what this prop is for and how to choose its value."
+    },
+    {
+      "name": "footer",
+      "type": "node",
+      "description": "TODO(designer): describe what this prop is for and how to choose its value."
+    },
+    {
+      "name": "title",
+      "type": "string",
+      "description": "TODO(designer): describe what this prop is for and how to choose its value."
+    },
+    {
+      "name": "content",
+      "type": "node",
+      "description": "TODO(designer): describe what this prop is for and how to choose its value.",
+      "required": true
+    },
+    {
+      "name": "hideArrow",
+      "type": "boolean",
+      "description": "TODO(designer): describe what this prop is for and how to choose its value."
+    },
+    {
+      "name": "delay",
+      "type": "number",
+      "description": "TODO(designer): describe what this prop is for and how to choose its value."
+    },
+    {
+      "name": "open",
+      "type": "boolean",
+      "description": "TODO(designer): describe what this prop is for and how to choose its value."
+    }
+  ]
+}

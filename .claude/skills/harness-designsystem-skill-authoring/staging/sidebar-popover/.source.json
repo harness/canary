@@ -1,0 +1,9 @@
+{
+  "export": "Sidebar",
+  "source": "/Users/kathryngrantier/projects/canary/packages/ui/src/components/sidebar/index.ts",
+  "slug": "sidebar-popover",
+  "parts": [
+    "Popover",
+    "ToggleMenuButton"
+  ]
+}

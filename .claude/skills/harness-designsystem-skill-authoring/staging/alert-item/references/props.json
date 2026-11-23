@@ -1,0 +1,129 @@
+{
+  "id": "canary.alert-item",
+  "code": {
+    "package": "@harnessio/ui",
+    "export": "AlertItem",
+    "import": "import { AlertItem } from '@harnessio/ui/components'"
+  },
+  "props": [
+    {
+      "name": "theme",
+      "type": "enum",
+      "description": "Set on AlertItem. TODO(designer): describe what this prop is for and how to choose its value.",
+      "values": [
+        {
+          "name": "info",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "success",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "warning",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "danger",
+          "whenToUse": "TODO(designer): when to pick this value."
+        }
+      ],
+      "required": true
+    },
+    {
+      "name": "read",
+      "type": "boolean",
+      "description": "Set on AlertItem. TODO(designer): describe what this prop is for and how to choose its value."
+    },
+    {
+      "name": "timestamp",
+      "type": "string",
+      "description": "Set on AlertItem. TODO(designer): describe what this prop is for and how to choose its value."
+    },
+    {
+      "name": "to",
+      "type": "string",
+      "description": "Set on AlertItem. TODO(designer): describe what this prop is for and how to choose its value."
+    },
+    {
+      "name": "linkProps",
+      "type": "object",
+      "description": "Set on AlertItem. TODO(designer): describe what this prop is for and how to choose its value."
+    },
+    {
+      "name": "onClick",
+      "type": "function",
+      "description": "Set on AlertItem. TODO(designer): describe what this prop is for and how to choose its value."
+    },
+    {
+      "name": "clickable",
+      "type": "boolean",
+      "description": "Set on AlertItem. TODO(designer): describe what this prop is for and how to choose its value."
+    },
+    {
+      "name": "className",
+      "type": "string",
+      "description": "Set on AlertItem.Title or AlertItem.Description. TODO(designer): describe what this prop is for and how to choose its value."
+    },
+    {
+      "name": "external",
+      "type": "boolean",
+      "description": "Set on AlertItem.Link. TODO(designer): describe what this prop is for and how to choose its value."
+    },
+    {
+      "name": "prefixIcon",
+      "type": "string",
+      "description": "Set on AlertItem.Link. If true, the 'chevron-left' icon will be displayed before the link text. If a string, that string will be used as the icon name."
+    },
+    {
+      "name": "suffixIcon",
+      "type": "string",
+      "description": "Set on AlertItem.Link. If true, the 'arrow-to-top-right' icon will be displayed before the link text. If a string, that string will be used as the icon name."
+    },
+    {
+      "name": "disabled",
+      "type": "boolean",
+      "description": "Set on AlertItem.Link. If true, the link will be disabled and not clickable. The default value is false."
+    },
+    {
+      "name": "noHoverUnderline",
+      "type": "boolean",
+      "description": "Set on AlertItem.Link. If true, the underline on hover will be disabled. The default value is false."
+    },
+    {
+      "name": "variant",
+      "type": "enum",
+      "description": "Set on AlertItem.Link. TODO(designer): describe what this prop is for and how to choose its value.",
+      "values": [
+        {
+          "name": "default",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "secondary",
+          "whenToUse": "TODO(designer): when to pick this value."
+        }
+      ]
+    },
+    {
+      "name": "size",
+      "type": "enum",
+      "description": "Set on AlertItem.Link. TODO(designer): describe what this prop is for and how to choose its value.",
+      "values": [
+        {
+          "name": "md",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "sm",
+          "whenToUse": "TODO(designer): when to pick this value."
+        }
+      ]
+    },
+    {
+      "name": "asChild",
+      "type": "boolean",
+      "description": "Set on AlertItem.Link. TODO(designer): describe what this prop is for and how to choose its value."
+    }
+  ]
+}

@@ -1,0 +1,31 @@
+{
+  "id": "canary.loading-bar",
+  "code": {
+    "package": "@harnessio/ui",
+    "export": "LoadingBar",
+    "import": "import { LoadingBar } from '@harnessio/ui/components'"
+  },
+  "props": [
+    {
+      "name": "progress",
+      "type": "number",
+      "description": "Controlled mode: progress in the range 0..1. When `progress` or `visible` is provided the bar ignores the controller and renders exactly what it is given."
+    },
+    {
+      "name": "visible",
+      "type": "boolean",
+      "description": "Controlled mode: whether the bar is shown. Defaults to `progress > 0` when only `progress` is given."
+    },
+    {
+      "name": "controller",
+      "type": "object",
+      "description": "Controller to follow. Defaults to the shared `loadingBar`."
+    },
+    {
+      "name": "inline",
+      "type": "boolean",
+      "description": "Render inline inside a relatively positioned parent instead of fixed to the top of the viewport.",
+      "default": "false"
+    }
+  ]
+}

@@ -1,0 +1,22 @@
+{
+  "export": "DropdownMenu",
+  "source": "/Users/kathryngrantier/projects/canary/packages/ui/src/components/dropdown-menu.tsx",
+  "slug": "dropdown-menu",
+  "parts": [
+    "Root",
+    "Trigger",
+    "Content",
+    "Item",
+    "CheckboxItem",
+    "RadioItem",
+    "AvatarItem",
+    "LogoItem",
+    "IconItem",
+    "IndicatorItem",
+    "Separator",
+    "Header",
+    "Footer",
+    "Spinner",
+    "Slot"
+  ]
+}

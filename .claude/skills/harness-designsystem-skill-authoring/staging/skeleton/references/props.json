@@ -1,0 +1,172 @@
+{
+  "id": "canary.skeleton",
+  "code": {
+    "package": "@harnessio/ui",
+    "export": "Skeleton",
+    "import": "import { Skeleton } from '@harnessio/ui/components'"
+  },
+  "props": [
+    {
+      "name": "size",
+      "type": "enum",
+      "description": "Set on Skeleton.Avatar or Skeleton.Logo. TODO(designer): describe what this prop is for and how to choose its value.",
+      "values": [
+        {
+          "name": "xs",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "sm",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "md",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "lg",
+          "whenToUse": "TODO(designer): when to pick this value."
+        }
+      ],
+      "required": true
+    },
+    {
+      "name": "rounded",
+      "type": "boolean",
+      "description": "Set on Skeleton.Avatar. TODO(designer): describe what this prop is for and how to choose its value."
+    },
+    {
+      "name": "className",
+      "type": "string",
+      "description": "Set on Skeleton.Avatar or Skeleton.Logo or Skeleton.List or Skeleton.Table or Skeleton.Typography. TODO(designer): describe what this prop is for and how to choose its value."
+    },
+    {
+      "name": "linesCount",
+      "type": "number",
+      "description": "Set on Skeleton.List. TODO(designer): describe what this prop is for and how to choose its value."
+    },
+    {
+      "name": "hasActions",
+      "type": "boolean",
+      "description": "Set on Skeleton.List. TODO(designer): describe what this prop is for and how to choose its value."
+    },
+    {
+      "name": "classNames",
+      "type": "object",
+      "description": "Set on Skeleton.List. TODO(designer): describe what this prop is for and how to choose its value."
+    },
+    {
+      "name": "onlyItems",
+      "type": "boolean",
+      "description": "Set on Skeleton.List. TODO(designer): describe what this prop is for and how to choose its value."
+    },
+    {
+      "name": "classNameHeader",
+      "type": "string",
+      "description": "Set on Skeleton.Table. TODO(designer): describe what this prop is for and how to choose its value."
+    },
+    {
+      "name": "classNameBody",
+      "type": "string",
+      "description": "Set on Skeleton.Table. TODO(designer): describe what this prop is for and how to choose its value."
+    },
+    {
+      "name": "countRows",
+      "type": "number",
+      "description": "Set on Skeleton.Table. TODO(designer): describe what this prop is for and how to choose its value.",
+      "default": "12"
+    },
+    {
+      "name": "countColumns",
+      "type": "number",
+      "description": "Set on Skeleton.Table. TODO(designer): describe what this prop is for and how to choose its value.",
+      "default": "5"
+    },
+    {
+      "name": "hideHeader",
+      "type": "boolean",
+      "description": "Set on Skeleton.Table. TODO(designer): describe what this prop is for and how to choose its value.",
+      "default": "false"
+    },
+    {
+      "name": "variant",
+      "type": "enum",
+      "description": "Set on Skeleton.Typography. TODO(designer): describe what this prop is for and how to choose its value.",
+      "values": [
+        {
+          "name": "body-normal",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "heading-hero",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "heading-section",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "heading-default",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "heading-subsection",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "heading-base",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "heading-small",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "body-single-line-normal",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "body-strong",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "body-single-line-strong",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "body-code",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "body-code-strong",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "caption-normal",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "caption-strong",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "caption-code",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "caption-code-strong",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "caption-single-line-normal",
+          "whenToUse": "TODO(designer): when to pick this value."
+        }
+      ]
+    },
+    {
+      "name": "wrapperClassName",
+      "type": "string",
+      "description": "Set on Skeleton.Typography. TODO(designer): describe what this prop is for and how to choose its value."
+    }
+  ]
+}

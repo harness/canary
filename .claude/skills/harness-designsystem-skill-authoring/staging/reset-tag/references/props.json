@@ -1,0 +1,174 @@
+{
+  "id": "canary.reset-tag",
+  "code": {
+    "package": "@harnessio/ui",
+    "export": "ResetTag",
+    "import": "import { ResetTag } from '@harnessio/ui/components'"
+  },
+  "props": [
+    {
+      "name": "onReset",
+      "type": "function",
+      "description": "TODO(designer): describe what this prop is for and how to choose its value.",
+      "required": true
+    },
+    {
+      "name": "actionIcon",
+      "type": "string",
+      "description": "TODO(designer): describe what this prop is for and how to choose its value."
+    },
+    {
+      "name": "onActionClick",
+      "type": "string",
+      "description": "TODO(designer): describe what this prop is for and how to choose its value."
+    },
+    {
+      "name": "title",
+      "type": "string",
+      "description": "TODO(designer): describe what this prop is for and how to choose its value."
+    },
+    {
+      "name": "variant",
+      "type": "enum",
+      "description": "TODO(designer): describe what this prop is for and how to choose its value.",
+      "values": [
+        {
+          "name": "outline",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "secondary",
+          "whenToUse": "TODO(designer): when to pick this value."
+        }
+      ]
+    },
+    {
+      "name": "size",
+      "type": "enum",
+      "description": "TODO(designer): describe what this prop is for and how to choose its value.",
+      "values": [
+        {
+          "name": "md",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "sm",
+          "whenToUse": "TODO(designer): when to pick this value."
+        }
+      ]
+    },
+    {
+      "name": "theme",
+      "type": "enum",
+      "description": "TODO(designer): describe what this prop is for and how to choose its value.",
+      "values": [
+        {
+          "name": "gray",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "blue",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "brown",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "cyan",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "green",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "forest-green",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "indigo",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "lime",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "mint",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "orange",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "pink",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "purple",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "red",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "violet",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "yellow",
+          "whenToUse": "TODO(designer): when to pick this value."
+        }
+      ]
+    },
+    {
+      "name": "rounded",
+      "type": "boolean",
+      "description": "TODO(designer): describe what this prop is for and how to choose its value."
+    },
+    {
+      "name": "icon",
+      "type": "string",
+      "description": "TODO(designer): describe what this prop is for and how to choose its value."
+    },
+    {
+      "name": "iconProps",
+      "type": "object",
+      "description": "TODO(designer): describe what this prop is for and how to choose its value."
+    },
+    {
+      "name": "label",
+      "type": "string",
+      "description": "TODO(designer): describe what this prop is for and how to choose its value."
+    },
+    {
+      "name": "value",
+      "type": "string",
+      "description": "TODO(designer): describe what this prop is for and how to choose its value.",
+      "required": true
+    },
+    {
+      "name": "disabled",
+      "type": "boolean",
+      "description": "TODO(designer): describe what this prop is for and how to choose its value."
+    },
+    {
+      "name": "enableHover",
+      "type": "boolean",
+      "description": "TODO(designer): describe what this prop is for and how to choose its value."
+    },
+    {
+      "name": "labelClassName",
+      "type": "string",
+      "description": "TODO(designer): describe what this prop is for and how to choose its value."
+    },
+    {
+      "name": "valueClassName",
+      "type": "string",
+      "description": "TODO(designer): describe what this prop is for and how to choose its value."
+    }
+  ]
+}

@@ -1,0 +1,9 @@
+{
+  "id": "canary.fieldset",
+  "code": {
+    "package": "@harnessio/ui",
+    "export": "Fieldset",
+    "import": "import { Fieldset } from '@harnessio/ui/components'"
+  },
+  "props": []
+}

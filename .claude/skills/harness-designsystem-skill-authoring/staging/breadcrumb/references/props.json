@@ -1,0 +1,91 @@
+{
+  "id": "canary.breadcrumb",
+  "code": {
+    "package": "@harnessio/ui",
+    "export": "Breadcrumb",
+    "import": "import { Breadcrumb } from '@harnessio/ui/components'"
+  },
+  "props": [
+    {
+      "name": "size",
+      "type": "enum",
+      "description": "Set on Breadcrumb.Root or Breadcrumb.RootInteractive. TODO(designer): describe what this prop is for and how to choose its value.",
+      "values": [
+        {
+          "name": "sm",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "xs",
+          "whenToUse": "TODO(designer): when to pick this value."
+        }
+      ],
+      "default": "sm"
+    },
+    {
+      "name": "separator",
+      "type": "node",
+      "description": "Set on Breadcrumb.Root. TODO(designer): describe what this prop is for and how to choose its value."
+    },
+    {
+      "name": "isRootOnly",
+      "type": "boolean",
+      "description": "Set on Breadcrumb.RootInteractive. Whether this is the only visible root item (no other breadcrumb items after it). - `true`: Shows the root icon (user is at root level, no navigation deeper) - `false`: Shows 'organizations' icon (user has navigated deeper) Only applies when no custom icon/src/name is provided in avatar prop.",
+      "default": "false"
+    },
+    {
+      "name": "variant",
+      "type": "enum",
+      "description": "Set on Breadcrumb.RootInteractive. Visual style of the leading icon/avatar. - `default`: rounded avatar holding the icon; root-only icon is 'account' - `plain` (opt-in): bare icon with no avatar circle; root-only icon is 'globe'; `src`/`name` render a square avatar",
+      "values": [
+        {
+          "name": "default",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "plain",
+          "whenToUse": "TODO(designer): when to pick this value."
+        }
+      ],
+      "default": "default"
+    },
+    {
+      "name": "avatar",
+      "type": "object",
+      "description": "Set on Breadcrumb.RootInteractive. Avatar props to customize the avatar appearance (src, icon, name, etc.)"
+    },
+    {
+      "name": "prefixIcon",
+      "type": "string",
+      "description": "Set on Breadcrumb.Item or Breadcrumb.Link or Breadcrumb.Page. TODO(designer): describe what this prop is for and how to choose its value."
+    },
+    {
+      "name": "asChild",
+      "type": "boolean",
+      "description": "Set on Breadcrumb.Link. TODO(designer): describe what this prop is for and how to choose its value."
+    },
+    {
+      "name": "items",
+      "type": "object",
+      "description": "Set on Breadcrumb.Ellipsis. Hidden items to show in dropdown when clicked",
+      "required": true
+    },
+    {
+      "name": "onItemSelect",
+      "type": "function",
+      "description": "Set on Breadcrumb.Ellipsis. Callback when an item is selected"
+    },
+    {
+      "name": "expandInline",
+      "type": "boolean",
+      "description": "Set on Breadcrumb.Ellipsis. Opt-in: instead of opening a dropdown, clicking the ellipsis expands the hidden items in place as regular breadcrumb links, replacing the ellipsis. The button is labelled \"Show full path\" automatically. Note: once expanded, `Ellipsis` renders a Fragment of links instead of the button, so a `ref` passed to it is `null` while expanded.",
+      "default": "false"
+    },
+    {
+      "name": "showTooltip",
+      "type": "boolean",
+      "description": "Set on Breadcrumb.Ellipsis. Opt-in: label the ellipsis button \"Show full path\" (`aria-label` + tooltip). Requires a `TooltipProvider` ancestor. Defaults to `false`, so existing dropdown ellipses are unchanged (no label, no tooltip). With `expandInline` the button is always labelled, and this only adds the tooltip.",
+      "default": "false"
+    }
+  ]
+}

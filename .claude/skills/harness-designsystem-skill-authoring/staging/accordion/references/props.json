@@ -1,0 +1,114 @@
+{
+  "id": "canary.accordion",
+  "code": {
+    "package": "@harnessio/ui",
+    "export": "Accordion",
+    "import": "import { Accordion } from '@harnessio/ui/components'"
+  },
+  "props": [
+    {
+      "name": "onValueChange",
+      "type": "function",
+      "description": "Set on Accordion.Root. The callback that fires when the state of the accordion changes."
+    },
+    {
+      "name": "size",
+      "type": "enum",
+      "description": "Set on Accordion.Root. TODO(designer): describe what this prop is for and how to choose its value.",
+      "values": [
+        {
+          "name": "sm",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "md",
+          "whenToUse": "TODO(designer): when to pick this value."
+        }
+      ],
+      "default": "sm"
+    },
+    {
+      "name": "variant",
+      "type": "enum",
+      "description": "Set on Accordion.Root. TODO(designer): describe what this prop is for and how to choose its value.",
+      "values": [
+        {
+          "name": "default",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "card",
+          "whenToUse": "TODO(designer): when to pick this value."
+        }
+      ],
+      "default": "default"
+    },
+    {
+      "name": "indicatorPosition",
+      "type": "enum",
+      "description": "Set on Accordion.Root. TODO(designer): describe what this prop is for and how to choose its value.",
+      "values": [
+        {
+          "name": "right",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "left",
+          "whenToUse": "TODO(designer): when to pick this value."
+        }
+      ],
+      "default": "right"
+    },
+    {
+      "name": "cardSize",
+      "type": "enum",
+      "description": "Set on Accordion.Root. TODO(designer): describe what this prop is for and how to choose its value.",
+      "values": [
+        {
+          "name": "sm",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "md",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "lg",
+          "whenToUse": "TODO(designer): when to pick this value."
+        }
+      ],
+      "default": "default"
+    },
+    {
+      "name": "prefix",
+      "type": "node",
+      "description": "Set on Accordion.Trigger. TODO(designer): describe what this prop is for and how to choose its value."
+    },
+    {
+      "name": "suffix",
+      "type": "node",
+      "description": "Set on Accordion.Trigger. TODO(designer): describe what this prop is for and how to choose its value."
+    },
+    {
+      "name": "indicatorProps",
+      "type": "object",
+      "description": "Set on Accordion.Trigger. TODO(designer): describe what this prop is for and how to choose its value."
+    },
+    {
+      "name": "headerClassName",
+      "type": "string",
+      "description": "Set on Accordion.Trigger. TODO(designer): describe what this prop is for and how to choose its value."
+    },
+    {
+      "name": "clickable",
+      "type": "boolean",
+      "description": "Set on Accordion.Trigger. TODO(designer): describe what this prop is for and how to choose its value.",
+      "default": "true"
+    },
+    {
+      "name": "containerClassName",
+      "type": "string",
+      "description": "Set on Accordion.Content. TODO(designer): describe what this prop is for and how to choose its value."
+    }
+  ]
+}

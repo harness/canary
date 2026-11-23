@@ -1,0 +1,20 @@
+{
+  "export": "Sidebar",
+  "source": "/Users/kathryngrantier/projects/canary/packages/ui/src/components/sidebar/index.ts",
+  "slug": "sidebar",
+  "parts": [
+    "Root",
+    "Content",
+    "Footer",
+    "Group",
+    "Header",
+    "Inset",
+    "Item",
+    "MenuSkeleton",
+    "MenuSubItem",
+    "Provider",
+    "Rail",
+    "Separator",
+    "Trigger"
+  ]
+}

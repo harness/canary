@@ -1,0 +1,51 @@
+{
+  "id": "canary.container-header",
+  "code": {
+    "package": "@harnessio/ui",
+    "export": "ContainerHeader",
+    "import": "import { ContainerHeader } from '@harnessio/ui/components'"
+  },
+  "props": [
+    {
+      "name": "title",
+      "type": "string",
+      "description": "TODO(designer): describe what this prop is for and how to choose its value.",
+      "required": true
+    },
+    {
+      "name": "caption",
+      "type": "node",
+      "description": "Optional line rendered above the title (e.g. a tagline or breadcrumb)."
+    },
+    {
+      "name": "description",
+      "type": "string",
+      "description": "TODO(designer): describe what this prop is for and how to choose its value."
+    },
+    {
+      "name": "actions",
+      "type": "node",
+      "description": "TODO(designer): describe what this prop is for and how to choose its value."
+    },
+    {
+      "name": "className",
+      "type": "string",
+      "description": "TODO(designer): describe what this prop is for and how to choose its value."
+    },
+    {
+      "name": "descriptionClassName",
+      "type": "string",
+      "description": "Applied to the description text — e.g. to clamp it to a fixed number of lines."
+    },
+    {
+      "name": "renderTitle",
+      "type": "node",
+      "description": "Optional wrapper for the title element (e.g. DrawerPrimitive.Title asChild)."
+    },
+    {
+      "name": "renderDescription",
+      "type": "node",
+      "description": "Optional wrapper for the description element (e.g. DrawerPrimitive.Description asChild)."
+    }
+  ]
+}

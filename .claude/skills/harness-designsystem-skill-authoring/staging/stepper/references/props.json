@@ -1,0 +1,77 @@
+{
+  "id": "canary.stepper-root",
+  "code": {
+    "package": "@harnessio/ui",
+    "export": "Stepper.Root",
+    "import": "import { Stepper } from '@harnessio/ui/components'"
+  },
+  "props": [
+    {
+      "name": "value",
+      "type": "string",
+      "description": "Set on Stepper.Root. TODO(designer): describe what this prop is for and how to choose its value.",
+      "required": true
+    },
+    {
+      "name": "onValueChange",
+      "type": "function",
+      "description": "Set on Stepper.Root. TODO(designer): describe what this prop is for and how to choose its value.",
+      "required": true
+    },
+    {
+      "name": "title",
+      "type": "node",
+      "description": "Set on Stepper.Root. TODO(designer): describe what this prop is for and how to choose its value."
+    },
+    {
+      "name": "onBeforeChange",
+      "type": "function",
+      "description": "Set on Stepper.Root. TODO(designer): describe what this prop is for and how to choose its value."
+    },
+    {
+      "name": "showConnectors",
+      "type": "boolean",
+      "description": "Set on Stepper.Root. TODO(designer): describe what this prop is for and how to choose its value."
+    },
+    {
+      "name": "completed",
+      "type": "boolean",
+      "description": "Set on Stepper.Root. TODO(designer): describe what this prop is for and how to choose its value."
+    },
+    {
+      "name": "orientation",
+      "type": "enum",
+      "description": "Set on Stepper.Root. Layout axis. Default 'vertical'. 'horizontal' is scoped to a flat list of top-level Steps — StepGroup/nested Steps assume vertical trunk-and-branch geometry (see stepper-group.tsx's DOM-measured connector math) and are not supported in horizontal mode. See README.md.",
+      "values": [
+        {
+          "name": "vertical",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "horizontal",
+          "whenToUse": "TODO(designer): when to pick this value."
+        }
+      ]
+    },
+    {
+      "name": "disableCompletedFade",
+      "type": "boolean",
+      "description": "Set on Stepper.Root. When true, completed steps stay at full opacity with no hover/focus restore. Omit or false keeps the default 0.6 mute. UUI-3726."
+    },
+    {
+      "name": "collapsibleNestedSteps",
+      "type": "boolean",
+      "description": "Set on Stepper.Root. When true, nested steps with panel content show a collapse chevron (SinglePaneStepper)."
+    },
+    {
+      "name": "skeletonCount",
+      "type": "number",
+      "description": "Set on Stepper.Root. TODO(designer): describe what this prop is for and how to choose its value."
+    },
+    {
+      "name": "className",
+      "type": "string",
+      "description": "Set on Stepper.Root. TODO(designer): describe what this prop is for and how to choose its value."
+    }
+  ]
+}

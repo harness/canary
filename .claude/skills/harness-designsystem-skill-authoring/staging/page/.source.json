@@ -1,0 +1,10 @@
+{
+  "export": "Page",
+  "source": "/Users/kathryngrantier/projects/canary/packages/ui/src/components/page/index.ts",
+  "slug": "page",
+  "parts": [
+    "Root",
+    "Header",
+    "Content"
+  ]
+}

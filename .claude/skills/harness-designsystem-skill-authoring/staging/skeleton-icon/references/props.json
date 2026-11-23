@@ -1,0 +1,47 @@
+{
+  "id": "canary.skeleton-icon",
+  "code": {
+    "package": "@harnessio/ui",
+    "export": "Skeleton.Icon",
+    "import": "import { Skeleton } from '@harnessio/ui/components'"
+  },
+  "props": [
+    {
+      "name": "size",
+      "type": "enum",
+      "description": "Set on Skeleton.Icon. TODO(designer): describe what this prop is for and how to choose its value.",
+      "values": [
+        {
+          "name": "xs",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "sm",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "md",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "lg",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "2xs",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "xl",
+          "whenToUse": "TODO(designer): when to pick this value."
+        }
+      ],
+      "required": true
+    },
+    {
+      "name": "className",
+      "type": "string",
+      "description": "Set on Skeleton.Icon. TODO(designer): describe what this prop is for and how to choose its value."
+    }
+  ]
+}

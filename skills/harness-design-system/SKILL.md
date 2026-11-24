@@ -23,6 +23,21 @@ Before writing code, read [rules.md](./rules.md). Then:
 - [dashboard-card-layout-pattern](./patterns/page-layouts/dashboard-card-layout-pattern.md): cards on a 12-column grid
 - [edit-drawer-pattern](./patterns/edit-drawer-pattern.md): create and edit drawer
 
+Choosing a page layout:
+
+- Standard page: the baseline, with header tabs to switch between views of the same subject.
+- Section menu: the page moves between different areas that each have their own content.
+- Main and side columns: one task is primary and supporting information stays visible beside it.
+- Dashboard card layout: the page is a set of cards or widgets that are independent of each other.
+- Resizable split: people should be able to drag the boundary between two areas to give one more room.
+
+### Modules
+
+Pages that differ from the page layouts in one product. Each builds on the layouts above and states only the differences.
+
+- [pipelines](./modules/pipelines/overview.md): execution detail, executions list and Pipeline Studio
+- [code-repository](./modules/code-repository/overview.md): repository summary and pull request pages
+
 ### Foundations
 
 - [accessibility](./foundations/accessibility.md): WCAG 2.2 rules for interactive controls, focus indicators and status meaning

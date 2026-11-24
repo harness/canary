@@ -13,7 +13,6 @@ structure and components, not wording.
 - [Anatomy](#anatomy)
 - [Actions](#actions)
 - [Header tabs](#header-tabs)
-- [Footer](#footer)
 - [Example](#example)
 - [Do's and Don'ts](#dos-and-donts)
 - [Accessibility](#accessibility)
@@ -28,13 +27,7 @@ menu](./section-menu-page-pattern.md), [main and side columns](./main-and-side-c
 [resizable split](./resizable-split-pattern.md) or [dashboard card
 layout](./dashboard-card-layout-pattern.md).
 
-Use the section menu when the page moves between different areas that each have their own
-content. Use header tabs on the standard page to switch between views of the same subject.
-Use main and side columns when one task is primary and the page also has supporting
-information that should stay visible beside it. Use the dashboard card layout when the page is
-a set of cards or widgets that are independent of each other.
-Use resizable split when people should be able to drag the boundary between two areas to give
-one more room.
+Use header tabs on the standard page to switch between views of the same subject.
 
 The app shell (the navigation sidebar and the collapsed AI chat rail) is provided by the host
 app. A page does not build it.
@@ -58,7 +51,6 @@ Every page uses `Page.HeaderV2`. There is no page without it.
    `Table.Root`, a list or a set of cards.
 4. **Toolbar** (optional) — search and filters above the content, aligned to the content
    edges.
-5. **Status footer** (optional) — only on full-height studio or editor pages. See Footer.
 
 For a list of entities inside a settings area, with its empty state, see
 [settings-list-pattern](../settings-list-pattern.md). It is the content that goes inside
@@ -79,13 +71,9 @@ Buttons in the page header apply to the entire page and all its content.
 - The accepted sets, each read from right to left, are:
   - primary action, outline action, overflow outline icon button (`...`);
   - outline action, outline action, overflow outline icon button (`...`).
-- Pipeline pages and Code Repository pages are an exception to this set. The pipeline pages
-  are the execution detail, the executions list and Pipeline Studio. The repository pages are
-  the repository summary, the pull request detail and the pull request list. So far the
-  repository pages hold fewer header actions, or none, and put their page-level buttons in a
-  toolbar in the content. This is a pattern seen so far, not a hard rule.
-- TODO(designer): state what the pipeline pages and the repository pages are allowed to hold
-  in the header.
+- Pipeline pages and code repository pages are an exception to this set. See
+  [pipeline pages](../../modules/pipelines/overview.md) and
+  [code repository pages](../../modules/code-repository/overview.md).
 - The status indicator is a [StatusBadge](../../status-badge/SKILL.md), usually with
   `variant="status"`. It sits to the left of all the action buttons.
 
@@ -93,8 +81,8 @@ Buttons in the page header apply to the entire page and all its content.
 
 Use header tabs to switch between views of the same subject. There is
 no limit on the number of tabs. The header's own tabs stay underlined
-(`tabsVariant="underlined"`, the default). Pipeline Studio is the only exception: it puts
-the tabs inline in the title row with `tabsVariant="ghost"`.
+(`tabsVariant="underlined"`, the default). The one exception is on
+[Pipeline Studio](../../modules/pipelines/overview.md#pipeline-studio).
 - Each tab takes `label` and `value`, and optionally `icon`, `counter`, `badge`, `disabled`
   and `exact`.
 - Without `contentTabs`, the tabs navigate between routes. With `contentTabs`, they switch
@@ -104,26 +92,6 @@ the tabs inline in the title row with `tabsVariant="ghost"`.
 - If the page already has header tabs and needs a second set, build the second set as a
   separate [Tabs](../../tabs/SKILL.md) in the page content, with `variant="ghost"` on
   `Tabs.List`.
-
-## Footer
-
-There is no footer component in `@harnessio/ui`: `Page` exports only `Root`,
-`Header`, `HeaderV2` and `Content`.
-- Use a footer only on full-height studio or editor pages, such as the pipeline studio and
-  the chaos experiment studio. Do not add one to list, overview or form pages.
-- The footer holds status, not actions: problem counts, last edited time and author, or the
-  current branch. Put the most important status on the left and metadata on the right.
-- Keep primary actions in the header. Create and edit flows open a drawer (see
-  [edit-drawer-pattern](../edit-drawer-pattern.md)), so a page never needs a footer for Cancel
-  and Save.
-- The canvas fills the height and scrolls inside itself above the footer. Never the footer,
-  and never the whole page.
-- The reference is the Pipeline Studio footer, `UnifiedPipelineStudioFooter` in
-  `@harnessio/views`: a bar below the canvas with a top border, problem counts and the branch
-  on the left, and the last edited time and author on the right. Other studio and editor pages
-  follow its structure.
-- TODO(designer): a stated recipe for building the footer from `@harnessio/ui/components`
-  within `rules.md`, or a `Page` footer component. Until then, follow the reference.
 
 ## Example
 
@@ -192,8 +160,6 @@ import {
 - ✅ Set `scrollable` on `Page.Root` unless the page is a full-height studio.
 - ✅ Put actions that apply to the whole page in the header, at most three, from right to left.
 - ✅ Put filters and search in a toolbar above the content, not inside it.
-- ❌ Do not put actions in a footer.
-- ❌ Do not add a footer to a list, overview or form page.
 - TODO(designer): further rules. The portal doc states only the ones above.
 
 ## Accessibility
@@ -206,7 +172,6 @@ import {
 
 ## Known gaps
 
-- No footer component (see Footer).
 - Loading: show a [Skeleton](../../skeleton/SKILL.md) in the content area. The header stays.
 - Empty: show [NoData](../../no-data/SKILL.md) in the content area. See
   [settings-list-pattern](../settings-list-pattern.md) for an example.

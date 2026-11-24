@@ -10,7 +10,7 @@ Set these up once before your first icon or logo:
 
 - [ ] **Figma access:** view access to the HDS Icons 3.0 file, and permission to create branches in it.
 - [ ] **HDS Icon & Logo Lint plugin:** installed from the Harness Figma org plugins (Plugins, then Harness org).
-- [ ] **Claude Code or Cursor:** installed and signed in.
+- [ ] **Claude Code:** installed and signed in.
 - [ ] **Official Figma MCP:** connected in your tool. No Figma token is needed.
 - [ ] **Canary repo:** cloned locally, with `pnpm install` run once.
 - [ ] **Git access:** you can push branches to the canary repo on Harness Code.
@@ -24,7 +24,7 @@ Set these up once before your first icon or logo:
 | Build the icon/logo on a Figma branch | You (designer) | Figma |
 | Self-lint the branch | You | Lint plugin |
 | Re-lint as the gate, review by eye, merge into main | An admin: Jared, Katie, Igor or Aaron | Lint plugin |
-| Run the publish skill, open the Jira ticket and PR | You | Claude Code or Cursor |
+| Run the publish skill, open the Jira ticket and PR | You | Claude Code |
 | Review and approve the PR | A canary code reviewer | Harness Code |
 | Merge the PR | You | Harness Code |
 
@@ -76,7 +76,7 @@ Run this before you ask for review.
 
 You need Claude Code open in the canary repo, with the official **Figma MCP** connected.
 
-1. Start Claude Code (or Cursor's agent) in your canary checkout.
+1. Start Claude Code in your canary checkout.
 2. Ask it, for example: *"Publish the `<name>` icon to canary"* (or *"publish the `<name>` logo"*). Give it the Figma link to the component on main if you have one.
 3. For a logo, have the brand hex ready. It is in the component description in Figma.
 4. The skill then does the following without you:
@@ -144,10 +144,6 @@ Use this if the plugin is not available to you or will not run. The command line
 
 Ask an admin to run the publish skill for you from Part 4. You still build and lint the component yourself, and you still approve the drafted ticket and PR with them.
 
-### C. Using Cursor instead of Claude Code
-
-The skill works in Cursor. Enable the official Figma MCP, and make sure the agent can read `.claude/skills/publish-ds-icon-logo/SKILL.md`. Everything else is the same.
-
-### D. Publishing before the branch is merged (maintainers only)
+### C. Publishing before the branch is merged (maintainers only)
 
 If the component must ship before its Figma branch can merge into main, a maintainer can use the bridge route in `.claude/skills/publish-ds-icon-logo/SKILL.md` (Route A). It reads the branch instead of main and needs a plugin page dump. Do not use it as a shortcut around admin review.

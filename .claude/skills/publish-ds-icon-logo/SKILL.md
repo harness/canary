@@ -18,7 +18,7 @@ is needed. If the component is not on main yet, stop and ask an admin to merge t
 For the human steps end to end (Figma branch, lint plugin, admin review, approvals, merge), see
 `references/designer-guide.md`. This file is the agent runbook; keep the two consistent.
 
-## Portability (Claude Code, Cursor, any agent that reads SKILL.md)
+## Portability (Claude Code, any agent that reads SKILL.md)
 
 This skill is plain Markdown plus Node scripts, so it does not depend on one tool. Everything the scripts
 do is `node` and `git`, run from the repo. The only tool-specific parts are the MCP calls, so read the
@@ -34,9 +34,9 @@ prefixed differently per client, for example `mcp__figma__get_metadata` vs `get_
 
 Rules that hold in every client:
 - Run scripts from the paths shown (repo-relative, `.claude/skills/publish-ds-icon-logo/scripts/...`); do not
-  copy them into a client-specific folder. If your client only scans its own skills folder (for example
-  `.cursor/skills/`), point it at this folder with a symlink or a one-line skill that says "follow
-  `.claude/skills/publish-ds-icon-logo/SKILL.md`". `.cursor/` is gitignored in canary, so do not commit that copy.
+  copy them into a client-specific folder. If your client only scans its own skills folder, point it at
+  this folder with a symlink or a one-line skill that says "follow
+  `.claude/skills/publish-ds-icon-logo/SKILL.md`".
 - Ask for the approval at the checkpoint **in chat** and wait for a plain yes. Do not rely on a
   client-specific question or plan tool.
 - If a needed MCP is not connected, stop and say which one; never ask for a PAT while Route M or A works.

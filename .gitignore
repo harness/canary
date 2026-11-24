@@ -39,9 +39,6 @@ storybook-static/
 
 yaml-editor-test/
 
-#cursor
-.cursor
-
 #graphify
 graphify-out/
 

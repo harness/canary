@@ -17,7 +17,7 @@ import PageTabsToc from "@/components/page-tabs-toc.astro";
 
 <TabItem label="Overview">
 
-A wide main column next to a narrower side column for secondary details. The main column carries the primary task and the side column carries metadata that supports it. In product code this is `SandboxLayout.Columns` with two `SandboxLayout.Column` children.
+A wide main column next to a narrower side column for secondary details. The main column carries the primary task and the side column carries metadata that supports it. In product code this is `SandboxLayout.Columns` with two `SandboxLayout.Column` children. It suits any page with that shape, and it leans toward the Code Repository and pull request pages: a repository summary, or a pull request conversation beside its reviewers and labels.
 
 ## Example: repository summary
 
@@ -237,9 +237,9 @@ A pull request conversation. The main column holds the merge status, the discuss
         ]}
       />
     </Tabs.Root>
-    <SandboxLayout.Columns columnWidths="minmax(calc(100% - 334px), 1fr) 334px" className="mt-cn-xl">
-      <SandboxLayout.Column>
-        <div className="flex flex-col gap-cn-lg pr-cn-xl">
+    <SandboxLayout.Columns columnWidths="minmax(calc(100% - 334px), 1fr) 334px" className="mt-cn-xl gap-cn-xl">
+      <SandboxLayout.Column className="min-w-0">
+        <div className="flex flex-col gap-cn-lg">
           <div className="flex items-center justify-between gap-cn-md rounded-cn-3 border p-cn-md">
             <div className="flex items-center gap-cn-sm">
               <StatusBadge variant="outline" theme="success" size="sm">Open</StatusBadge>
@@ -316,14 +316,13 @@ A pull request conversation. The main column holds the merge status, the discuss
 1. **Page header.** Breadcrumb, title, description and underlined tabs, shared with the other page layouts.
 2. **Main column.** Takes the remaining width (`1fr`) and holds the primary content: files, a conversation or a form. Give it `min-w-0` so long content can shrink instead of overflowing.
 3. **Side column.** A fixed width, 272px for a summary and 334px for a richer panel with reviewers and labels. It holds metadata and quick actions, never the primary task.
-4. **Gap.** Leave a gap of 24px (`xl`) between the columns, or pad the main column on its right.
+4. **Gap.** Put `gap-cn-xl` on `SandboxLayout.Columns` for the space between the columns.
 
 ## Guidelines
 
 - Use `columnWidths="1fr 272px"` or `columnWidths="minmax(calc(100% - 334px), 1fr) 334px"` so only the main column flexes.
 - Keep the side column short. If it is longer than the main column, move some of it into the main column or into a tab.
 - Order the side column by importance, and separate groups with a divider.
-- Below the tablet breakpoint, stack the side column under the main column.
 - For a layout whose columns resize, use [resizable split](/patterns/page-layouts/resizable-split/).
 
 </TabItem>

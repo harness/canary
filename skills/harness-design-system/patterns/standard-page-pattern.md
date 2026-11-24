@@ -12,13 +12,16 @@ structure and components, not wording.
 actions) above one content area, such as a list, an overview or a form. It is the baseline the
 other page layouts start from.
 
-**Do not use when:** the page needs a different structure. The neighbouring layouts are page
-with section menu, main and side columns, resizable split and dashboard card layout.
-TODO(designer): none of these has a pattern file in this package yet; add a link for each once
-it exists, and state the question that separates each one from the standard page.
+**Do not use when:** the page needs a different structure: [page with section
+menu](./section-menu-page-pattern.md), [main and side columns](./main-and-side-columns-pattern.md),
+[resizable split](./resizable-split-pattern.md) or [dashboard card
+layout](./dashboard-card-layout-pattern.md).
+TODO(designer): state the question that separates each one from the standard page.
 
 The app shell (the navigation sidebar and the collapsed AI chat rail) is provided by the host
 app. A page does not build it.
+
+Every page uses `Page.HeaderV2`. There is no page without it.
 
 **Anatomy, top to bottom:**
 
@@ -31,7 +34,7 @@ app. A page does not build it.
    - `breadcrumbs`: a `Breadcrumb.Root`.
    - `title`: a string renders as the page's `h1`.
    - `description` (optional): one short line under the title.
-   - `actions` (optional): the page's primary action, at the end of the title row.
+   - `actions` (optional): the page's actions, at the end of the title row. See Actions.
    - `tabs` (optional): see Header tabs.
 3. **`Page.Content`** — the content area. It fills the width under the header and holds a
    `Table.Root`, a list or a set of cards.
@@ -39,11 +42,29 @@ app. A page does not build it.
    edges.
 5. **Status footer** (optional) — only on full-height studio or editor pages. See Footer.
 
+For a list of entities inside a settings area, with its empty state, see
+[settings-list-pattern](./settings-list-pattern.md). It is the content that goes inside
+`Page.Content`.
+
 Stack the toolbar and the content with `Layout.Vertical gap="md"`. Do not add margin utilities
 between them.
 
-**Actions.** Keep one primary action per page, as a `Button` at the end of the title row, such
-as "Create pipeline". Secondary actions go in a menu next to it. Create and edit flows open a
+**Actions.** Buttons in the page header apply to the entire page and all its content.
+- The header holds at most three action components, in any combination, ordered from right to
+  left. An optional status indicator, such as "Unsaved changes", can sit with them and does not
+  count toward the three.
+- The primary action, the rightmost, can be a [split button](../split-button/SKILL.md).
+- An outline action to the left of the primary can also be a split button: a dropdown menu
+  button with a downward chevron.
+- The accepted sets, each read from right to left, are:
+  - primary action, outline action, overflow outline icon button (`...`);
+  - outline action, outline action, overflow outline icon button (`...`).
+- Pipeline Studio, Code Repository and the pages related to them are an exception to this
+  limit. TODO(designer): state what they are allowed to hold, and which pages count as related.
+- TODO(designer): which component renders the status indicator, and where it sits relative to
+  the buttons.
+
+Create and edit flows open a
 drawer (see [edit-drawer-pattern](./edit-drawer-pattern.md)), so a page never needs a footer
 for Cancel and Save.
 
@@ -133,7 +154,7 @@ import {
 ## Do's and Don'ts
 
 - ✅ Set `scrollable` on `Page.Root` unless the page is a full-height studio.
-- ✅ Keep one primary action per page, in the header.
+- ✅ Put actions that apply to the whole page in the header, at most three, from right to left.
 - ✅ Put filters and search in a toolbar above the content, not inside it.
 - ❌ Do not put actions in a footer.
 - ❌ Do not add a footer to a list, overview or form page.

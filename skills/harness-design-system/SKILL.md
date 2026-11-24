@@ -16,6 +16,7 @@ Before writing code, read [rules.md](./rules.md). Then:
 ### Patterns
 
 - [page-layout](./patterns/page-layout.md): settings list page
+- [standard-page-pattern](./patterns/standard-page-pattern.md): standard page with header, tabs and content
 - [edit-drawer-pattern](./patterns/edit-drawer-pattern.md): create and edit drawer
 
 ### Foundations

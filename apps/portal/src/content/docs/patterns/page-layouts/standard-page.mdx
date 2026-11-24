@@ -365,9 +365,9 @@ Full-height studio pages, such as the chaos experiment studio, end with a thin s
 ## Guidelines
 
 - Set `scrollable` on `Page.Root` so the whole page scrolls and the header sticks to the top.
-- Use `maxWidth` on the content to switch between a centered page width and full width. Tables and dashboards usually use full width; forms and reading content use the page width.
+- Set `maxWidth` on `Page.Root` to switch between full width (`'full'`, the default) and a centered page width (`'page'`). Tables and dashboards usually use full width; forms and reading content use the page width.
 - Studio-style pages override the scrolling so the content fills the height and scrolls inside itself.
-- Use header tabs for two or three related areas. For four or more sections of one subject, use the [page with section menu](/patterns/page-layouts/page-with-section-menu/).
+- Use header tabs to switch between related areas of the same subject. There is no limit on the number of tabs. Header tabs use the underlined variant by default.
 - Keep one primary action per page.
 
 ### Footer

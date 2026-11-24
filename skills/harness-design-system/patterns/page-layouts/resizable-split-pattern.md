@@ -23,7 +23,7 @@ adjust the space between them.
 2. **`Resizable.Panel`** — each takes `defaultSize` and `minSize` as percentages. The sizes in
    one group add up to 100.
 3. **`Resizable.Handle`** — between the panels. `withHandle` shows a grip so the drag target is
-   easy to find. See the [Resizable guide](../resizable/SKILL.md).
+   easy to find. See the [Resizable guide](../../resizable/SKILL.md).
 4. **Panel content** — each panel fills its area and scrolls on its own, so long content
    scrolls inside the panel and not the page.
 
@@ -35,9 +35,9 @@ adjust the space between them.
   already separates the panels.
 - Give each panel its own header with a title and actions, so the split reads as two tools.
 - Split only when both panels are useful at the same time.
-- TODO(designer): how a consumer makes panels scroll independently and gives the group a
-  height within `rules.md` (no arbitrary values, no `style`). The portal doc uses `min-h-0`,
-  `overflow-auto` and `min-h-[600px]`.
+- Make a panel scroll on its own with `min-h-0 overflow-auto` on `Resizable.Panel`.
+- The group needs a height, otherwise the panels collapse. How tall it is, is the consumer's
+  choice.
 
 ```tsx
 import { Breadcrumb, Layout, Page, Resizable, Text } from '@harnessio/ui/components'
@@ -95,4 +95,4 @@ import { Breadcrumb, Layout, Page, Resizable, Text } from '@harnessio/ui/compone
 - `Resizable.Panel` and `PanelGroup` props come from `react-resizable-panels`, not from the
   design system's own props file (the Resizable guide lists only `withHandle`).
 
-Inherits everything in [rules.md](../rules.md).
+Inherits everything in [rules.md](../../rules.md).

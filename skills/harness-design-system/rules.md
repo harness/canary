@@ -24,6 +24,12 @@ Drawer width comes from `size`; spacing comes from `Layout` `gap` props or real 
 spacing aliases. See `spacing.md`. (`no-arbitrary-values`) Every `cn-*` class must exist in
 the shipped stylesheet. (`known-cn-classes`)
 
+**Layout classes.** In a page layout, `className` may hold `cn-*` spacing aliases and these
+structural utilities, which carry no visual value: `min-w-0`, `min-h-0`, `overflow-auto`,
+`mx-auto`, `h-full` and `flex-1`. Sizes a page layout needs, such as a content width, a grid
+span or a row height, are the consumer's choice within the page-layout structure, and still
+follow the no-arbitrary-values and no-inline-style rules above.
+
 **Inline style.** No `style` attribute. (`no-inline-style`)
 
 **Raw elements.** Do not hand-build `<input>`, `<textarea>`, `<select>`, `<label>`,

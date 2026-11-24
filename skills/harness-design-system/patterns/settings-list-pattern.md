@@ -10,7 +10,7 @@ structure and components, not wording.
 
 This pattern is the content of a page, not the page frame. Every page has a `Page.HeaderV2`, so
 the title, breadcrumbs, tabs and the page actions come from the header of a
-[standard page](./standard-page-pattern.md). This pattern goes inside its `Page.Content` and
+[standard page](./page-layouts/standard-page-pattern.md). This pattern goes inside its `Page.Content` and
 does not repeat the title as a heading.
 
 **Use when:** a settings area lists entities of one kind (for example flag sets, API keys,
@@ -23,13 +23,13 @@ webhooks) and the user can create more.
    - If it applies to the whole page, pass it to `Page.HeaderV2` `actions`.
    - If the page has a section menu and it creates something in the selected section, place it
      at the top right of the section content, above the list.
-   See [section-menu-page-pattern](./section-menu-page-pattern.md).
+   See [section-menu-page-pattern](./page-layouts/section-menu-page-pattern.md).
 2. **List** — `Table.Root` with `Table.Header` / `Table.Row` / `Table.Head` and
    `Table.Body` / `Table.Row` / `Table.Cell`. Use `DataTable` instead when the list needs
    sorting, selection, or column visibility.
 3. **Empty state** — when there are no rows, render `NoData` in place of the table, not
    inside it. Pass `title`, `description` (an array of strings), and `primaryButton` with the
-   same action as the header button.
+   same action as the create button.
 
 ```tsx
 <Page.Root scrollable>
@@ -70,4 +70,4 @@ webhooks) and the user can create more.
 </Page.Root>
 ```
 
-Both patterns inherit everything in [rules.md](../rules.md).
+Inherits everything in [rules.md](../rules.md).

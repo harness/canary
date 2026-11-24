@@ -16,11 +16,11 @@ Before writing code, read [rules.md](./rules.md). Then:
 ### Patterns
 
 - [settings-list-pattern](./patterns/settings-list-pattern.md): list of entities inside a settings page
-- [standard-page-pattern](./patterns/standard-page-pattern.md): standard page with header, tabs and content
-- [section-menu-page-pattern](./patterns/section-menu-page-pattern.md): page with a section menu
-- [main-and-side-columns-pattern](./patterns/main-and-side-columns-pattern.md): main column beside a side column
-- [resizable-split-pattern](./patterns/resizable-split-pattern.md): two resizable panels
-- [dashboard-card-layout-pattern](./patterns/dashboard-card-layout-pattern.md): cards on a 12-column grid
+- [standard-page-pattern](./patterns/page-layouts/standard-page-pattern.md): standard page with header, tabs and content
+- [section-menu-page-pattern](./patterns/page-layouts/section-menu-page-pattern.md): page with a section menu
+- [main-and-side-columns-pattern](./patterns/page-layouts/main-and-side-columns-pattern.md): main column beside a side column
+- [resizable-split-pattern](./patterns/page-layouts/resizable-split-pattern.md): two resizable panels
+- [dashboard-card-layout-pattern](./patterns/page-layouts/dashboard-card-layout-pattern.md): cards on a 12-column grid
 - [edit-drawer-pattern](./patterns/edit-drawer-pattern.md): create and edit drawer
 
 ### Foundations

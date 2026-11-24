@@ -12,11 +12,12 @@ structure and components, not wording.
 repository or webhook settings. A vertical menu of grouped links sits on the left and the
 selected section on the right.
 
-**Do not use when:** the page has one content area (use the [standard page](./standard-page-pattern.md)).
+**Do not use when:** the page has one content area (use the
+[standard page](./standard-page-pattern.md)).
+
 Neither the section menu nor header tabs is limited by count: use as many sections or tabs as
-the area needs.
-TODO(designer): state the question that decides between header tabs and a section menu. The
-portal doc's "four or more" threshold is not a rule.
+the area needs. Tabs switch between views of the same subject. A section menu moves between different areas
+that each have their own content.
 
 **Anatomy, top to bottom:**
 
@@ -46,10 +47,8 @@ It needs the host's router context for its links.
 - Keep link labels short enough for one line: they are truncated, not wrapped.
 - Keep destructive actions in their own section at the bottom, separated from regular
   settings.
-- Section content has a maximum width so forms stay readable. Empty space to its right is
-  intentional: do not stretch fields to fill the page.
-- TODO(designer): how a consumer sets that maximum width within `rules.md` (no arbitrary
-  values, no `style`). The portal example uses 640px.
+- A maximum width for the section content is optional. The design system sets none, so
+  whether to set one, and how wide, is the consumer's choice.
 - TODO(designer): how this layout combines with header tabs. The portal shows the tabs
   switching top-level areas and the section menu navigating within the selected tab.
 
@@ -104,19 +103,23 @@ import { ContentLayoutWithSidebar } from '@harnessio/views'
 - ✅ Put destructive actions in the last section.
 - ✅ Place an action in the header only if it applies to the whole page, and in the section
   content if it applies to that section.
-- ❌ Do not stretch form fields across the whole content area.
 - ❌ Do not write long menu labels.
 - TODO(designer): further rules. The portal doc states only the ones above.
 
 ## Accessibility
 
-- TODO(designer): menu keyboard behaviour, current-page announcement, and what a consumer must
-  provide.
+- The menu items are links rendered with the host router's `NavLink`, so they use the browser's
+  normal link keyboard behaviour. How the active link is announced depends on the host router.
+- TODO(designer): whether the menu needs a stated landmark or label. `ContentLayoutWithSidebar`
+  adds none.
 
 ## Known gaps
 
 - `ContentLayoutWithSidebar` lives in `@harnessio/views`, outside the package this skill
   documents.
-- TODO(designer): empty and loading states for the section content.
+- Loading: the menu does not wait for data, so it stays in place. Show a
+  [Skeleton](../../skeleton/SKILL.md) in the section content, such as `Skeleton.Form` or
+  `Skeleton.List`.
+- Empty: show [NoData](../../no-data/SKILL.md) in the section content.
 
-Inherits everything in [rules.md](../rules.md).
+Inherits everything in [rules.md](../../rules.md).

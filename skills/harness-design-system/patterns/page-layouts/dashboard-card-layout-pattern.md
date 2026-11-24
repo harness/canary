@@ -31,10 +31,10 @@ chart sizes.
 - Use `gap="sm"` between cards so the grid reads as one surface.
 - Keep page actions in the header, not inside cards. Card menus are for actions on that card.
 - Put filters that apply to the whole page in the filter bar. Do not repeat them inside cards.
-- Show empty and error states inside the card, so one failed card does not break the page.
-- TODO(designer): how a consumer makes a card span columns and sets a minimum row height
-  within `rules.md` (no arbitrary values, no `style`). The portal doc uses `gridAutoRows` and
-  per-card column spans.
+- Show loading, empty and error states inside the card, so one failed card does not break the
+  page. Loading uses a [Skeleton](../../skeleton/SKILL.md).
+- Each card's span and the row height are the consumer's choice. Any span is allowed as long
+  as the cards sit on the 12-column grid.
 
 ```tsx
 import { Breadcrumb, Button, Card, Layout, Page, Text } from '@harnessio/ui/components'
@@ -56,14 +56,14 @@ import { Breadcrumb, Button, Card, Layout, Page, Text } from '@harnessio/ui/comp
     }
     title="Dashboard"
     description="Pipeline health over the last 14 days."
-    actions={<Button variant="secondary">Refresh</Button>}
+    actions={<Button variant="outline">Refresh</Button>}
   />
   <Page.Content>
     <Layout.Grid columns={12} gap="sm">
       <Card.Root>
-        <Card.Title>Executions</Card.Title>
+        <Card.Title>Card title</Card.Title>
         <Card.Content>
-          <Text variant="heading-section">1,284</Text>
+          <Text color="foreground-3">Card content</Text>
         </Card.Content>
       </Card.Root>
     </Layout.Grid>
@@ -89,4 +89,4 @@ import { Breadcrumb, Button, Card, Layout, Page, Text } from '@harnessio/ui/comp
 - Card contents for metrics and charts are not covered here.
 - TODO(designer): link the metrics and charts pattern once it exists.
 
-Inherits everything in [rules.md](../rules.md).
+Inherits everything in [rules.md](../../rules.md).

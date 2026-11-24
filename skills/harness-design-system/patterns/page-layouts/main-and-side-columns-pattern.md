@@ -108,4 +108,4 @@ import {
 
 - TODO(designer): empty and loading states for each column.
 
-Inherits everything in [rules.md](../rules.md).
+Inherits everything in [rules.md](../../rules.md).

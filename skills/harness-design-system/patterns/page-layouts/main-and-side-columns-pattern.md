@@ -19,16 +19,7 @@ structure and components, not wording.
 
 **Use when:** one task is primary and supporting information sits beside it: a main area
 that carries the work, and a narrow side column that describes it. The layout is not limited to
-one product area. Use it for any page with that shape.
-
-The Code Repository and pull request pages are the reference cases, and this layout leans
-toward pages that look like them:
-- a repository summary: files and README beside a summary;
-- a pull request conversation: discussion beside reviewers, labels and assignees.
-
-When you build a page that is not one of these, match the anatomy below, not the product
-area. TODO(designer): name the other pages that already use this layout, so consumers can
-check their own against them.
+one product area. Match the anatomy below, not the product area.
 
 **Do not use when:** both areas hold working content and people should control the balance
 (use [resizable split](./resizable-split-pattern.md)), or the page has one content area (use the

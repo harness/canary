@@ -52,10 +52,6 @@ Every page uses `Page.HeaderV2`. There is no page without it.
 4. **Toolbar** (optional) — search and filters above the content, aligned to the content
    edges.
 
-For a list of entities inside a settings area, with its empty state, see
-[settings-list-pattern](../settings-list-pattern.md). It is the content that goes inside
-`Page.Content`.
-
 Stack the toolbar and the content with `Layout.Vertical gap="md"`. Do not add margin utilities
 between them.
 

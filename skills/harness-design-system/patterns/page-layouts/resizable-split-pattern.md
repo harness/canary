@@ -28,7 +28,7 @@ adjust the space between them.
 
 1. **`Resizable.PanelGroup`** — `direction="horizontal"` for side-by-side panels. It needs a
    height (a fixed height, a minimum height, or a parent that fills the height), otherwise the
-   panels collapse.
+   panels collapse. How tall it is, is the consumer's choice.
 2. **`Resizable.Panel`** — each takes `defaultSize` and `minSize` as percentages. The sizes in
    one group add up to 100.
 3. **`Resizable.Handle`** — between the panels. `withHandle` shows a grip so the drag target is
@@ -43,10 +43,7 @@ adjust the space between them.
 - Use `withHandle` when the group is framed or dense. Use the plain handle when a border
   already separates the panels.
 - Give each panel its own header with a title and actions, so the split reads as two tools.
-- Split only when both panels are useful at the same time.
 - Make a panel scroll on its own with `min-h-0 overflow-auto` on `Resizable.Panel`.
-- The group needs a height, otherwise the panels collapse. How tall it is, is the consumer's
-  choice.
 
 ## Example
 

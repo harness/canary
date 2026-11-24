@@ -11,7 +11,6 @@ structure and components, not wording.
 **Contents**
 
 - [Anatomy](#anatomy)
-- [Scope](#scope)
 - [Guidelines](#guidelines)
 - [Example](#example)
 - [Do's and Don'ts](#dos-and-donts)
@@ -27,16 +26,9 @@ as billing. Cards sit on a 12-column grid.
 ## Anatomy
 
 1. **Page header** — `Page.HeaderV2` with breadcrumbs, title, description and the page actions
-   (such as Refresh). Add tabs when the page has several areas.
+   (such as Refresh).
 2. **Filter bar** (optional) — time range and scope filters that apply to every card.
 3. **Card grid** — `Layout.Grid columns={12} gap="sm"`. Cards span whole numbers of columns.
-
-## Scope
-
-This pattern covers the page structure: the header, the filter bar and the grid.
-What goes inside a card is out of scope. Cards that show metrics, charts or graphs will have
-their own pattern, so this file gives no guidance on card headers, subtitles, KPI cards or
-chart sizes.
 
 ## Guidelines
 - Spans of 3, 4, 6, 8 and 12 cover almost every layout.
@@ -100,7 +92,7 @@ import { Breadcrumb, Button, Card, Layout, Page, Text } from '@harnessio/ui/comp
 
 ## Known gaps
 
-- Card contents for metrics and charts are not covered here.
+- Card contents (headers, subtitles, KPI cards, charts and graphs) are not covered here.
 - TODO(designer): link the metrics and charts pattern once it exists.
 
 Inherits everything in [rules.md](../../rules.md).

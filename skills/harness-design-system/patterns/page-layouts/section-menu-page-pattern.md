@@ -25,9 +25,9 @@ selected section on the right.
 **Do not use when:** the page has one content area (use the
 [standard page](./standard-page-pattern.md)).
 
-Neither the section menu nor header tabs is limited by count: use as many sections or tabs as
-the area needs. Tabs switch between views of the same subject. A section menu moves between different areas
-that each have their own content.
+The section menu is not limited by count: use as many sections as the area needs. Tabs switch
+between views of the same subject. A section menu moves between different areas that each
+have their own content.
 
 ## Anatomy
 

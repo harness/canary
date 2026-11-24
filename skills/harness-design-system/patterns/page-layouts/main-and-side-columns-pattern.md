@@ -8,6 +8,15 @@ structure and components, not wording.
 
 # Main and side columns
 
+**Contents**
+
+- [Anatomy](#anatomy)
+- [Guidelines](#guidelines)
+- [Example](#example)
+- [Do's and Don'ts](#dos-and-donts)
+- [Accessibility](#accessibility)
+- [Known gaps](#known-gaps)
+
 **Use when:** one task is primary and supporting information sits beside it: a main area
 that carries the work, and a narrow side column that describes it. The layout is not limited to
 one product area. Use it for any page with that shape.
@@ -25,7 +34,7 @@ check their own against them.
 (use [resizable split](./resizable-split-pattern.md)), or the page has one content area (use the
 [standard page](./standard-page-pattern.md)).
 
-**Anatomy, top to bottom:**
+## Anatomy
 
 1. **Page header** — `Page.HeaderV2` with breadcrumbs, title, description and tabs, as in the
    [standard page](./standard-page-pattern.md).
@@ -39,12 +48,14 @@ The columns are `SandboxLayout.Columns` with two `SandboxLayout.Column` children
 main column flexes, so set the widths with `columnWidths`: `"1fr 272px"`, or
 `"minmax(calc(100% - 334px), 1fr) 334px"` for the wider side column.
 
-**Guidelines.**
+## Guidelines
 - Keep the side column short. If it is longer than the main column, move some of it into the
   main column or into a tab.
 - Order the side column by importance and separate its groups with a divider.
 - Put `gap-cn-xl` on `SandboxLayout.Columns` for the space between the columns, and `min-w-0`
   on the main column so long content shrinks instead of overflowing.
+
+## Example
 
 ```tsx
 import {

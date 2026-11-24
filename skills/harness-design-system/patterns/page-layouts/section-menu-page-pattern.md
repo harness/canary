@@ -8,6 +8,16 @@ structure and components, not wording.
 
 # Page with section menu
 
+**Contents**
+
+- [Anatomy](#anatomy)
+- [Actions](#actions)
+- [Guidelines](#guidelines)
+- [Example](#example)
+- [Do's and Don'ts](#dos-and-donts)
+- [Accessibility](#accessibility)
+- [Known gaps](#known-gaps)
+
 **Use when:** one area has several related sections and the person moves between them, such as
 repository or webhook settings. A vertical menu of grouped links sits on the left and the
 selected section on the right.
@@ -19,7 +29,7 @@ Neither the section menu nor header tabs is limited by count: use as many sectio
 the area needs. Tabs switch between views of the same subject. A section menu moves between different areas
 that each have their own content.
 
-**Anatomy, top to bottom:**
+## Anatomy
 
 1. **Page header** — `Page.HeaderV2` with breadcrumbs, title and description, as in the
    [standard page](./standard-page-pattern.md).
@@ -36,14 +46,16 @@ The menu is `ContentLayoutWithSidebar`, exported from `@harnessio/views`, not fr
 `showBackButton`, `backButtonLabel` and `backButtonTo`, and renders `children` beside the menu.
 It needs the host's router context for its links.
 
-**Actions.** Where a button sits says what it applies to.
+## Actions
+
+Where a button sits says what it applies to.
 - Buttons in the page header apply to the entire page and all its content.
 - Buttons in the section content, when a section menu is present, apply only to that section's
   content. Place them at the top right of the section content.
 - A page can have both: page-level actions in the header and section actions in the section
   content.
 
-**Guidelines.**
+## Guidelines
 - Keep link labels short enough for one line: they are truncated, not wrapped.
 - Keep destructive actions in their own section at the bottom, separated from regular
   settings.
@@ -51,6 +63,8 @@ It needs the host's router context for its links.
   whether to set one, and how wide, is the consumer's choice.
 - TODO(designer): how this layout combines with header tabs. The portal shows the tabs
   switching top-level areas and the section menu navigating within the selected tab.
+
+## Example
 
 ```tsx
 import { Breadcrumb, Layout, Page, Text } from '@harnessio/ui/components'

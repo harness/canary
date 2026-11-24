@@ -1,0 +1,71 @@
+Page-level patterns compose existing components. They add no new components and no new
+tokens. Every name below is a real export from `@harnessio/ui/components` unless a line says
+otherwise; check its props in the component's `references/props.json` where one exists,
+otherwise in the installed package's `dist/components.d.ts`.
+
+Labels, copy, routing, and data fetching are the consuming app's decision. This file fixes
+structure and components, not wording.
+
+# {{Title}}
+
+**Contents**
+
+- [Anatomy](#anatomy)
+- [Example](#example)
+- [Do's and Don'ts](#dos-and-donts)
+- [Accessibility](#accessibility)
+- [Known gaps](#known-gaps)
+
+<!-- Add a Contents entry for every extra `##` section you add (Actions, Header tabs, Footer, Guidelines, ...). The lint checks that each link matches a heading. -->
+
+**Use when:** TODO(designer): the situation this layout is for, with one or two examples of real pages.
+
+**Do not use when:** TODO(designer): the situation → use the [other layout](./other-layout-pattern.md).
+
+<!-- SEPARATING TEST: one sentence that tells this layout apart from its neighbours (for example: tabs switch views of the same subject; a section menu moves between different areas). -->
+TODO(designer): the question that separates this layout from the nearest other layout.
+
+## Anatomy
+
+<!-- Top to bottom, or left to right. Name the real component for each area and say what the area holds. State only what the designer stated. -->
+
+1. **TODO(designer)**: area name — the component and what it holds.
+
+<!-- OPTIONAL SECTIONS. Keep only those the designer has rules for; delete the rest.
+## Actions       where a button sits says what it applies to
+## Header tabs   how tabs combine with this layout
+## Footer        only if the layout has one
+## Guidelines    sizing and spacing that are the consumer's choice, and the structural classes allowed (see rules.md "Layout classes")
+-->
+
+## Example
+
+<!-- Must obey rules.md: no arbitrary values, no `style`, no raw elements, only real `cn-*` classes and the structural utilities rules.md lists. -->
+
+```tsx
+import { Page } from '@harnessio/ui/components'
+
+TODO(designer)
+```
+
+## Do's and Don'ts
+
+<!-- Lightweight, never blocking. Never invent a rule the designer did not state. -->
+
+- ✅ TODO(designer)
+- ❌ TODO(designer)
+
+## Accessibility
+
+<!-- Verify against the component source before writing a claim (landmarks, roles, heading level, keyboard behaviour). Link to the component guide for behaviour it already owns. -->
+
+- TODO(designer)
+
+## Known gaps
+
+<!-- What the layout cannot do yet. Loading is a Skeleton and empty is NoData unless the designer says otherwise. -->
+
+- Loading: TODO(designer)
+- Empty: TODO(designer)
+
+Inherits everything in [rules.md](../../rules.md).

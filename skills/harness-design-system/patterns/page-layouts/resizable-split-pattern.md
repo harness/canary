@@ -8,6 +8,15 @@ structure and components, not wording.
 
 # Resizable split
 
+**Contents**
+
+- [Anatomy](#anatomy)
+- [Guidelines](#guidelines)
+- [Example](#example)
+- [Do's and Don'ts](#dos-and-donts)
+- [Accessibility](#accessibility)
+- [Known gaps](#known-gaps)
+
 **Use when:** two panels both hold working content and the right balance depends on the task,
 such as an editor beside its results or a request beside its response. People drag a handle to
 adjust the space between them.
@@ -15,7 +24,7 @@ adjust the space between them.
 **Do not use when:** one area is primary and the other is supporting detail (use
 [main and side columns](./main-and-side-columns-pattern.md)).
 
-**Anatomy:**
+## Anatomy
 
 1. **`Resizable.PanelGroup`** — `direction="horizontal"` for side-by-side panels. It needs a
    height (a fixed height, a minimum height, or a parent that fills the height), otherwise the
@@ -27,7 +36,7 @@ adjust the space between them.
 4. **Panel content** — each panel fills its area and scrolls on its own, so long content
    scrolls inside the panel and not the page.
 
-**Guidelines.**
+## Guidelines
 - Set `minSize` on every panel, typically 25 to 35, so neither can be dragged shut.
 - Give the panel people work in most the larger share: 55 / 45 for a builder and its output,
   40 / 60 for an editor beside results.
@@ -38,6 +47,8 @@ adjust the space between them.
 - Make a panel scroll on its own with `min-h-0 overflow-auto` on `Resizable.Panel`.
 - The group needs a height, otherwise the panels collapse. How tall it is, is the consumer's
   choice.
+
+## Example
 
 ```tsx
 import { Breadcrumb, Layout, Page, Resizable, Text } from '@harnessio/ui/components'

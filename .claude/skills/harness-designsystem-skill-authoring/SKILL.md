@@ -20,6 +20,18 @@ Run from this skill's folder. Writes into `staging/<slug>/` here, never into the
 4. **Cross-exam**: `../../../node_modules/.bin/tsx scripts/lint.ts staging/<slug>`. It re-derives props from source and fails on any prop, value, default or required flag that disagrees, on ✅ examples that break `rules.md` or use invalid values, and on missing sections. Add `--strict` to also fail on leftover TODO markers.
 5. **Report** what a human still has to decide, then stop. Do not copy to canary.
 
+## Page-level patterns (page layouts)
+
+Not component guides: no scaffold, no `props.json`. Hand-written from `templates/page-layout-pattern.md.tmpl`,
+copied to `canary/skills/harness-design-system/patterns/page-layouts/<name>-pattern.md`.
+Interview the designer one section at a time and never invent a rule they did not state. Verify
+accessibility claims against the component source. Patterns carry nothing about Figma.
+
+Lint: `../../../node_modules/.bin/tsx scripts/lint-pattern.ts <pattern.md> [...] [--strict]`.
+Checks the shared preamble and required sections, that the Contents list matches the `##` headings both ways,
+that relative links resolve, that the tsx example obeys `rules.md` (and warns on classes outside `cn-*` and the
+structural utilities), that Figma is not mentioned, and leftover TODOs (`--strict` fails on them).
+
 ## Limits (v1)
 - Call-signature components (`Text`, `Tag`, `Button`) work directly. Compound components work with dotted exports: `--export Table --parts Root,Header,Row,...` (scaffold) or `--export DataTable.ColumnFilter`. Parts merge into one flat props.json, each description starting "Set on <Part>."; same-named props with different types across parts fail, so split those into separate guides.
 - Canary's root is three levels up from this folder, or `$CANARY_ROOT`. Tooling (`tsx`, `typescript`) comes from canary's `node_modules`.

@@ -8,25 +8,37 @@ structure and components, not wording.
 
 # Dashboard card layout
 
+**Contents**
+
+- [Anatomy](#anatomy)
+- [Scope](#scope)
+- [Guidelines](#guidelines)
+- [Example](#example)
+- [Do's and Don'ts](#dos-and-donts)
+- [Accessibility](#accessibility)
+- [Known gaps](#known-gaps)
+
 **Use when:** the page is a set of cards: a dashboard, an analytics page or a summary page such
 as billing. Cards sit on a 12-column grid.
 
 **Do not use when:** the page is one list or one form (use the
 [standard page](./standard-page-pattern.md)).
 
-**Anatomy, top to bottom:**
+## Anatomy
 
 1. **Page header** — `Page.HeaderV2` with breadcrumbs, title, description and the page actions
    (such as Refresh). Add tabs when the page has several areas.
 2. **Filter bar** (optional) — time range and scope filters that apply to every card.
 3. **Card grid** — `Layout.Grid columns={12} gap="sm"`. Cards span whole numbers of columns.
 
-**Scope.** This pattern covers the page structure: the header, the filter bar and the grid.
+## Scope
+
+This pattern covers the page structure: the header, the filter bar and the grid.
 What goes inside a card is out of scope. Cards that show metrics, charts or graphs will have
 their own pattern, so this file gives no guidance on card headers, subtitles, KPI cards or
 chart sizes.
 
-**Guidelines.**
+## Guidelines
 - Spans of 3, 4, 6, 8 and 12 cover almost every layout.
 - Use `gap="sm"` between cards so the grid reads as one surface.
 - Keep page actions in the header, not inside cards. Card menus are for actions on that card.
@@ -35,6 +47,8 @@ chart sizes.
   page. Loading uses a [Skeleton](../../skeleton/SKILL.md).
 - Each card's span and the row height are the consumer's choice. Any span is allowed as long
   as the cards sit on the 12-column grid.
+
+## Example
 
 ```tsx
 import { Breadcrumb, Button, Card, Layout, Page, Text } from '@harnessio/ui/components'

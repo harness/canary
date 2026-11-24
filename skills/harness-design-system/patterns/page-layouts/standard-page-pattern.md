@@ -8,6 +8,17 @@ structure and components, not wording.
 
 # Standard page
 
+**Contents**
+
+- [Anatomy](#anatomy)
+- [Actions](#actions)
+- [Header tabs](#header-tabs)
+- [Footer](#footer)
+- [Example](#example)
+- [Do's and Don'ts](#dos-and-donts)
+- [Accessibility](#accessibility)
+- [Known gaps](#known-gaps)
+
 **Use when:** building a page that has no special layout need: a header (breadcrumbs, title,
 actions) above one content area, such as a list, an overview or a form. It is the baseline the
 other page layouts start from.
@@ -30,7 +41,7 @@ app. A page does not build it.
 
 Every page uses `Page.HeaderV2`. There is no page without it.
 
-**Anatomy, top to bottom:**
+## Anatomy
 
 1. **`Page.Root`** — wraps the page. Props: `scrollable`, `maxWidth`.
    - Set `scrollable` so the whole page scrolls and the header sticks to the top.
@@ -56,7 +67,9 @@ For a list of entities inside a settings area, with its empty state, see
 Stack the toolbar and the content with `Layout.Vertical gap="md"`. Do not add margin utilities
 between them.
 
-**Actions.** Buttons in the page header apply to the entire page and all its content.
+## Actions
+
+Buttons in the page header apply to the entire page and all its content.
 - The header holds at most three action components, in any combination, ordered from right to
   left. An optional status indicator, such as "Unsaved changes", can sit with them and does not
   count toward the three.
@@ -76,7 +89,9 @@ between them.
 - The status indicator is a [StatusBadge](../../status-badge/SKILL.md), usually with
   `variant="status"`. It sits to the left of all the action buttons.
 
-**Header tabs.** Use header tabs to switch between views of the same subject. There is
+## Header tabs
+
+Use header tabs to switch between views of the same subject. There is
 no limit on the number of tabs. The header's own tabs stay underlined
 (`tabsVariant="underlined"`, the default). Pipeline Studio is the only exception: it puts
 the tabs inline in the title row with `tabsVariant="ghost"`.
@@ -90,7 +105,9 @@ the tabs inline in the title row with `tabsVariant="ghost"`.
   separate [Tabs](../../tabs/SKILL.md) in the page content, with `variant="ghost"` on
   `Tabs.List`.
 
-**Footer.** There is no footer component in `@harnessio/ui`: `Page` exports only `Root`,
+## Footer
+
+There is no footer component in `@harnessio/ui`: `Page` exports only `Root`,
 `Header`, `HeaderV2` and `Content`.
 - Use a footer only on full-height studio or editor pages, such as the pipeline studio and
   the chaos experiment studio. Do not add one to list, overview or form pages.
@@ -107,6 +124,8 @@ the tabs inline in the title row with `tabsVariant="ghost"`.
   follow its structure.
 - TODO(designer): a stated recipe for building the footer from `@harnessio/ui/components`
   within `rules.md`, or a `Page` footer component. Until then, follow the reference.
+
+## Example
 
 ```tsx
 import {

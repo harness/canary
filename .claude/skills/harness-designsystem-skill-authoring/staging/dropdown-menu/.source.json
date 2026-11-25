@@ -17,6 +17,9 @@
     "Header",
     "Footer",
     "Spinner",
-    "Slot"
+    "Slot",
+    "Group",
+    "RadioGroup",
+    "NoOptions"
   ]
 }

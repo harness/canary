@@ -6,6 +6,7 @@
     "Root",
     "NavRoot",
     "List",
-    "Content"
+    "Content",
+    "Trigger"
   ]
 }

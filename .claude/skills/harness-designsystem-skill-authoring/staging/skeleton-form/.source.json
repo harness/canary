@@ -1,8 +1,0 @@
-{
-  "export": "Skeleton",
-  "source": "/Users/kathryngrantier/projects/canary/packages/ui/src/components/skeletons/index.ts",
-  "slug": "skeleton-form",
-  "parts": [
-    "Form"
-  ]
-}

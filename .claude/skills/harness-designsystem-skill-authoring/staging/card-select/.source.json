@@ -3,6 +3,9 @@
   "source": "/Users/kathryngrantier/projects/canary/packages/ui/src/components/card-select.tsx",
   "slug": "card-select",
   "parts": [
-    "Root"
+    "Root",
+    "Item",
+    "Title",
+    "Description"
   ]
 }

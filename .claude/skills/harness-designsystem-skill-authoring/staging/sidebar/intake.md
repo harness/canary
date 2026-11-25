@@ -5,7 +5,7 @@ only by writing `n/a`. Claude turns your answers into `pattern.md` and the `when
 `whenToNotUse` text in `props.json`, and a cross-exam step checks every claim against the real
 component props before anything is published. Nothing you write goes live unreviewed.
 
-Component: **Sidebar**   Props available: side, direction, className, classNameContent, preserveScrollPosition, storageKey, onScrollTop, onScrollBottom, onScrollLeft, onScrollRight, rootMargin, threshold, contentClassName, label, actionIcon, onActionClick, defaultSubmenuOpen, badge, actionMenuItems, dropdownMenuContent, withRightIndicator, title, description, active, actionButtons, draggable, dragAttributes, dragListeners, subMenuOpen, onSubmenuChange, icon, logo, onHoverIn, onHoverOut, hideIcon, defaultOpen, open, onOpenChange, animate, onClick, theme, asChild, loading, size, variant, rounded
+Component: **Sidebar**   Props available: side, direction, className, classNameContent, preserveScrollPosition, storageKey, onScrollTop, onScrollBottom, onScrollLeft, onScrollRight, rootMargin, threshold, contentClassName, label, actionIcon, onActionClick, defaultSubmenuOpen, badge, actionMenuItems, dropdownMenuContent, withRightIndicator, title, title, description, active, actionButtons, draggable, dragAttributes, dragListeners, subMenuOpen, onSubmenuChange, icon, logo, onHoverIn, onHoverOut, hideIcon, defaultOpen, open, onOpenChange, animate, onClick, theme, theme, asChild, loading, size, variant, rounded, linkProps, hideArrow, noMaxWidth, content
 
 ## 1. Purpose
 In one or two sentences, what is Sidebar for? What does the person using the product get from it?
@@ -30,6 +30,7 @@ misleading, deprecated or only for special cases. Props to cover:
 - `side`: left, right
 - `direction`: ltr, rtl
 - `theme`: default, success, danger, warning
+- `theme`: default, themed
 - `size`: md, sm, xs, 2xs, 3xs
 - `variant`: link, ai, primary, secondary, outline, ghost, transparent
 

@@ -37,10 +37,7 @@ Components that have a guide, grouped by purpose. Open only the one you need. A 
 
 - [Drawer](./drawer/SKILL.md): Create, edit or inspect one entity without leaving the list. For confirming one decision, use Dialog; for several steps or its own URL, use a page.
 - [AlertDialog](./alert-dialog/SKILL.md): TODO(designer): when to use AlertDialog. For X, use Y.
-- [Dialog](./dialog-close/SKILL.md): TODO(designer): when to use Dialog. For X, use Y.
 - [Dialog](./dialog/SKILL.md): TODO(designer): when to use Dialog. For X, use Y.
-- [DropdownMenu](./dropdown-menu-group/SKILL.md): TODO(designer): when to use DropdownMenu. For X, use Y.
-- [DropdownMenu](./dropdown-menu-no-options/SKILL.md): TODO(designer): when to use DropdownMenu. For X, use Y.
 - [DropdownMenu](./dropdown-menu/SKILL.md): TODO(designer): when to use DropdownMenu. For X, use Y.
 - [IconWithTooltip](./icon-with-tooltip/SKILL.md): TODO(designer): when to use IconWithTooltip. For X, use Y.
 - [MoreActionsTooltip](./more-actions-tooltip/SKILL.md): TODO(designer): when to use MoreActionsTooltip. For X, use Y.
@@ -50,8 +47,6 @@ Components that have a guide, grouped by purpose. Open only the one you need. A 
 - [Alert](./alert/SKILL.md): TODO(designer): when to use Alert. For X, use Y.
 - [AlertItem](./alert-item/SKILL.md): TODO(designer): when to use AlertItem. For X, use Y.
 - [LoadingBar](./loading-bar/SKILL.md): TODO(designer): when to use LoadingBar. For X, use Y.
-- [Skeleton](./skeleton-form/SKILL.md): TODO(designer): when to use Skeleton. For X, use Y.
-- [Skeleton](./skeleton-icon/SKILL.md): TODO(designer): when to use Skeleton. For X, use Y.
 - [Skeleton](./skeleton/SKILL.md): TODO(designer): when to use Skeleton. For X, use Y.
 - [Toaster](./toaster/SKILL.md): TODO(designer): when to use Toaster. For X, use Y.
 - [WaterfallProgress](./waterfall-progress/SKILL.md): TODO(designer): when to use WaterfallProgress. For X, use Y.
@@ -95,26 +90,19 @@ Components that have a guide, grouped by purpose. Open only the one you need. A 
 - [ResetTag](./reset-tag/SKILL.md): TODO(designer): when to use ResetTag. For X, use Y.
 
 ## Navigation
-- [Breadcrumb](./breadcrumb-copy/SKILL.md): TODO(designer): when to use Breadcrumb. For X, use Y.
-- [Breadcrumb](./breadcrumb-header-link/SKILL.md): TODO(designer): when to use Breadcrumb. For X, use Y.
 - [Breadcrumb](./breadcrumb/SKILL.md): TODO(designer): when to use Breadcrumb. For X, use Y.
 - [Command](./command/SKILL.md): TODO(designer): when to use Command. For X, use Y.
 - [Pagination](./pagination/SKILL.md): TODO(designer): when to use Pagination. For X, use Y.
-- [Sidebar](./sidebar-popover/SKILL.md): TODO(designer): when to use Sidebar. For X, use Y.
 - [Sidebar](./sidebar/SKILL.md): TODO(designer): when to use Sidebar. For X, use Y.
-- [Stepper](./stepper-step/SKILL.md): TODO(designer): when to use Stepper. For X, use Y.
 - [Stepper](./stepper/SKILL.md): TODO(designer): when to use Stepper. For X, use Y.
-- [Tabs](./tabs-trigger/SKILL.md): TODO(designer): when to use Tabs. For X, use Y.
 - [Tabs](./tabs/SKILL.md): TODO(designer): when to use Tabs. For X, use Y.
 
 ## Forms
-- [CardSelect](./card-select-item/SKILL.md): TODO(designer): when to use CardSelect. For X, use Y.
 - [CardSelect](./card-select/SKILL.md): TODO(designer): when to use CardSelect. For X, use Y.
 - [Fieldset](./fieldset/SKILL.md): TODO(designer): when to use Fieldset. For X, use Y.
 - [InputOTP](./input-otp/SKILL.md): TODO(designer): when to use InputOTP. For X, use Y.
 - [Label](./label/SKILL.md): TODO(designer): when to use Label. For X, use Y.
 - [NumberInput](./number-input/SKILL.md): TODO(designer): when to use NumberInput. For X, use Y.
-- [Radio](./radio-item/SKILL.md): TODO(designer): when to use Radio. For X, use Y.
 - [Radio](./radio/SKILL.md): TODO(designer): when to use Radio. For X, use Y.
 - [SearchInput](./search-input/SKILL.md): TODO(designer): when to use SearchInput. For X, use Y.
 - [Select](./select/SKILL.md): TODO(designer): when to use Select. For X, use Y.

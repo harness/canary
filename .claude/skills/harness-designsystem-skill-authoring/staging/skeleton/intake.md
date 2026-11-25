@@ -5,7 +5,7 @@ only by writing `n/a`. Claude turns your answers into `pattern.md` and the `when
 `whenToNotUse` text in `props.json`, and a cross-exam step checks every claim against the real
 component props before anything is published. Nothing you write goes live unreviewed.
 
-Component: **Skeleton**   Props available: size, rounded, className, linesCount, hasActions, classNames, onlyItems, classNameHeader, classNameBody, countRows, countColumns, hideHeader, variant, wrapperClassName
+Component: **Skeleton**   Props available: size, size, rounded, className, linesCount, linesCount, hasActions, classNames, onlyItems, classNameHeader, classNameBody, countRows, countColumns, hideHeader, variant, wrapperClassName, itemProps
 
 ## 1. Purpose
 In one or two sentences, what is Skeleton for? What does the person using the product get from it?
@@ -28,6 +28,8 @@ Give 2 to 4 real examples where the choice is not obvious (for example "Account 
 For each prop with a fixed set of values, how should someone choose? Flag any value that is
 misleading, deprecated or only for special cases. Props to cover:
 - `size`: xs, sm, md, lg
+- `size`: xs, sm, md, lg, 2xs, xl
+- `linesCount`: 1, 5, 2, 3, 4, 6, 7, 8, 9
 - `variant`: body-normal, heading-hero, heading-section, heading-default, heading-subsection, heading-base, heading-small, body-single-line-normal, body-strong, body-single-line-strong, body-code, body-code-strong, caption-normal, caption-strong, caption-code, caption-code-strong, caption-single-line-normal
 
 **Answer (one line per value; "any" if no guidance):**

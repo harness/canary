@@ -31,6 +31,34 @@
       "default": "sm"
     },
     {
+      "name": "size",
+      "type": "enum",
+      "description": "Set on Dialog.Close. TODO(designer): describe what this prop is for and how to choose its value.",
+      "values": [
+        {
+          "name": "sm",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "md",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "xs",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "2xs",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "3xs",
+          "whenToUse": "TODO(designer): when to pick this value."
+        }
+      ],
+      "default": "sm"
+    },
+    {
       "name": "hideClose",
       "type": "boolean",
       "description": "Set on Dialog.Content. TODO(designer): describe what this prop is for and how to choose its value."
@@ -66,6 +94,30 @@
       "default": "default"
     },
     {
+      "name": "theme",
+      "type": "enum",
+      "description": "Set on Dialog.Close. TODO(designer): describe what this prop is for and how to choose its value.",
+      "values": [
+        {
+          "name": "default",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "success",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "danger",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "warning",
+          "whenToUse": "TODO(designer): when to pick this value."
+        }
+      ],
+      "default": "default"
+    },
+    {
       "name": "className",
       "type": "string",
       "description": "Set on Dialog.Body. TODO(designer): describe what this prop is for and how to choose its value."
@@ -79,6 +131,71 @@
       "name": "scrollable",
       "type": "boolean",
       "description": "Set on Dialog.Body. TODO(designer): describe what this prop is for and how to choose its value."
+    },
+    {
+      "name": "variant",
+      "type": "enum",
+      "description": "Set on Dialog.Close. TODO(designer): describe what this prop is for and how to choose its value.",
+      "values": [
+        {
+          "name": "link",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "primary",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "secondary",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "outline",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "ai",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "ghost",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "transparent",
+          "whenToUse": "TODO(designer): when to pick this value."
+        }
+      ]
+    },
+    {
+      "name": "rounded",
+      "type": "boolean",
+      "description": "Set on Dialog.Close. TODO(designer): describe what this prop is for and how to choose its value."
+    },
+    {
+      "name": "asChild",
+      "type": "boolean",
+      "description": "Set on Dialog.Close. TODO(designer): describe what this prop is for and how to choose its value."
+    },
+    {
+      "name": "loading",
+      "type": "boolean",
+      "description": "Set on Dialog.Close. TODO(designer): describe what this prop is for and how to choose its value."
+    },
+    {
+      "name": "onClick",
+      "type": "function",
+      "description": "Set on Dialog.Close. TODO(designer): describe what this prop is for and how to choose its value."
+    },
+    {
+      "name": "iconOnly",
+      "type": "boolean",
+      "description": "Set on Dialog.Close. TODO(designer): describe what this prop is for and how to choose its value."
+    },
+    {
+      "name": "tooltipProps",
+      "type": "object",
+      "description": "Set on Dialog.Close. TODO(designer): describe what this prop is for and how to choose its value."
     }
   ]
 }

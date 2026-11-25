@@ -3,6 +3,7 @@
   "source": "/Users/kathryngrantier/projects/canary/packages/ui/src/components/radio.tsx",
   "slug": "radio",
   "parts": [
-    "Root"
+    "Root",
+    "Item"
   ]
 }

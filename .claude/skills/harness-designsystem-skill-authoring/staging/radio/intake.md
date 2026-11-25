@@ -5,7 +5,7 @@ only by writing `n/a`. Claude turns your answers into `pattern.md` and the `when
 `whenToNotUse` text in `props.json`, and a cross-exam step checks every claim against the real
 component props before anything is published. Nothing you write goes live unreviewed.
 
-Component: **Radio**   Props available: error, label, caption, optional, tooltipProps, tooltipContent, wrapperClassName, labelSuffix
+Component: **Radio**   Props available: error, label, label, caption, caption, optional, tooltipProps, tooltipContent, wrapperClassName, labelSuffix
 
 ## 1. Purpose
 In one or two sentences, what is Radio for? What does the person using the product get from it?

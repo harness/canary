@@ -5,7 +5,7 @@ only by writing `n/a`. Claude turns your answers into `pattern.md` and the `when
 `whenToNotUse` text in `props.json`, and a cross-exam step checks every claim against the real
 component props before anything is published. Nothing you write goes live unreviewed.
 
-Component: **CardSelect**   Props available: className, type, name, value, defaultValue, onValueChange, disabled, deselectable, rows, cols, layout, gap
+Component: **CardSelect**   Props available: className, type, name, value, value, defaultValue, onValueChange, disabled, deselectable, rows, cols, layout, gap, icon, logo, glow, comingSoon
 
 ## 1. Purpose
 In one or two sentences, what is CardSelect for? What does the person using the product get from it?

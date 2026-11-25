@@ -1,8 +1,8 @@
 {
-  "id": "canary.card-select-root",
+  "id": "canary.card-select",
   "code": {
     "package": "@harnessio/ui",
-    "export": "CardSelect.Root",
+    "export": "CardSelect",
     "import": "import { CardSelect } from '@harnessio/ui/components'"
   },
   "props": [
@@ -38,6 +38,12 @@
       "description": "Set on CardSelect.Root. TODO(designer): describe what this prop is for and how to choose its value."
     },
     {
+      "name": "value",
+      "type": "object",
+      "description": "Set on CardSelect.Item. TODO(designer): describe what this prop is for and how to choose its value.",
+      "required": true
+    },
+    {
       "name": "defaultValue",
       "type": "string",
       "description": "Set on CardSelect.Root. TODO(designer): describe what this prop is for and how to choose its value."
@@ -50,7 +56,7 @@
     {
       "name": "disabled",
       "type": "boolean",
-      "description": "Set on CardSelect.Root. TODO(designer): describe what this prop is for and how to choose its value."
+      "description": "Set on CardSelect.Root or CardSelect.Item. TODO(designer): describe what this prop is for and how to choose its value."
     },
     {
       "name": "deselectable",
@@ -110,6 +116,28 @@
         }
       ],
       "default": "md"
+    },
+    {
+      "name": "icon",
+      "type": "string",
+      "description": "Set on CardSelect.Item. TODO(designer): describe what this prop is for and how to choose its value."
+    },
+    {
+      "name": "logo",
+      "type": "string",
+      "description": "Set on CardSelect.Item. TODO(designer): describe what this prop is for and how to choose its value."
+    },
+    {
+      "name": "glow",
+      "type": "boolean",
+      "description": "Set on CardSelect.Item. Renders a selected-state glow ring in addition to the standard checked border.",
+      "default": "false"
+    },
+    {
+      "name": "comingSoon",
+      "type": "boolean",
+      "description": "Set on CardSelect.Item. Forces disabled + renders a \"Coming Soon\" badge (see status-badge.tsx theme=\"info\"). Overrides `disabled`.",
+      "default": "false"
     }
   ]
 }

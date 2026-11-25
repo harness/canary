@@ -1,8 +1,8 @@
 {
-  "id": "canary.radio-root",
+  "id": "canary.radio",
   "code": {
     "package": "@harnessio/ui",
-    "export": "Radio.Root",
+    "export": "Radio",
     "import": "import { Radio } from '@harnessio/ui/components'"
   },
   "props": [
@@ -18,9 +18,19 @@
       "description": "Set on Radio.Root. TODO(designer): describe what this prop is for and how to choose its value."
     },
     {
+      "name": "label",
+      "type": "node",
+      "description": "Set on Radio.Item. TODO(designer): describe what this prop is for and how to choose its value."
+    },
+    {
       "name": "caption",
       "type": "string",
       "description": "Set on Radio.Root. TODO(designer): describe what this prop is for and how to choose its value."
+    },
+    {
+      "name": "caption",
+      "type": "node",
+      "description": "Set on Radio.Item. TODO(designer): describe what this prop is for and how to choose its value."
     },
     {
       "name": "optional",

@@ -5,7 +5,7 @@ only by writing `n/a`. Claude turns your answers into `pattern.md` and the `when
 `whenToNotUse` text in `props.json`, and a cross-exam step checks every claim against the real
 component props before anything is published. Nothing you write goes live unreviewed.
 
-Component: **Breadcrumb**   Props available: size, separator, isRootOnly, variant, avatar, prefixIcon, asChild, items, onItemSelect, expandInline, showTooltip
+Component: **Breadcrumb**   Props available: size, size, size, separator, isRootOnly, variant, variant, avatar, prefixIcon, asChild, items, onItemSelect, expandInline, showTooltip, name, className, buttonVariant, color, onClick, iconSize, external, suffixIcon, disabled, noHoverUnderline, isLast
 
 ## 1. Purpose
 In one or two sentences, what is Breadcrumb for? What does the person using the product get from it?
@@ -28,7 +28,13 @@ Give 2 to 4 real examples where the choice is not obvious (for example "Account 
 For each prop with a fixed set of values, how should someone choose? Flag any value that is
 misleading, deprecated or only for special cases. Props to cover:
 - `size`: sm, xs
+- `size`: sm, xs, md, 2xs, 3xs
+- `size`: sm, md
 - `variant`: default, plain
+- `variant`: default, secondary
+- `buttonVariant`: link, ai, secondary, primary, outline, ghost, transparent
+- `color`: success, danger, warning, inherit, info, neutral, merged, risk
+- `iconSize`: sm, xs, md, 2xs, lg, xl
 
 **Answer (one line per value; "any" if no guidance):**
 

@@ -138,9 +138,14 @@
       "required": true
     },
     {
+      "name": "title",
+      "type": "string",
+      "description": "Set on Sidebar.Popover or Sidebar.ToggleMenuButton. TODO(designer): describe what this prop is for and how to choose its value."
+    },
+    {
       "name": "description",
       "type": "string",
-      "description": "Set on Sidebar.Item. TODO(designer): describe what this prop is for and how to choose its value."
+      "description": "Set on Sidebar.Item or Sidebar.Popover. TODO(designer): describe what this prop is for and how to choose its value."
     },
     {
       "name": "active",
@@ -225,7 +230,7 @@
     {
       "name": "onClick",
       "type": "function",
-      "description": "Set on Sidebar.Trigger. TODO(designer): describe what this prop is for and how to choose its value."
+      "description": "Set on Sidebar.Trigger or Sidebar.ToggleMenuButton. TODO(designer): describe what this prop is for and how to choose its value."
     },
     {
       "name": "theme",
@@ -246,6 +251,21 @@
         },
         {
           "name": "warning",
+          "whenToUse": "TODO(designer): when to pick this value."
+        }
+      ]
+    },
+    {
+      "name": "theme",
+      "type": "enum",
+      "description": "Set on Sidebar.Popover. Theme variant of the popover - 'default': High-contrast appearance with fixed colors - 'themed': Follows the current theme's color palette",
+      "values": [
+        {
+          "name": "default",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "themed",
           "whenToUse": "TODO(designer): when to pick this value."
         }
       ]
@@ -326,6 +346,27 @@
       "name": "rounded",
       "type": "boolean",
       "description": "Set on Sidebar.Trigger. TODO(designer): describe what this prop is for and how to choose its value."
+    },
+    {
+      "name": "linkProps",
+      "type": "object",
+      "description": "Set on Sidebar.Popover. TODO(designer): describe what this prop is for and how to choose its value."
+    },
+    {
+      "name": "hideArrow",
+      "type": "boolean",
+      "description": "Set on Sidebar.Popover. TODO(designer): describe what this prop is for and how to choose its value."
+    },
+    {
+      "name": "noMaxWidth",
+      "type": "boolean",
+      "description": "Set on Sidebar.Popover. TODO(designer): describe what this prop is for and how to choose its value."
+    },
+    {
+      "name": "content",
+      "type": "node",
+      "description": "Set on Sidebar.Popover. The popover panel content",
+      "required": true
     }
   ]
 }

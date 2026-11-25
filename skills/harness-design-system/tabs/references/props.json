@@ -14,7 +14,13 @@
     {
       "name": "value",
       "type": "string",
-      "description": "Set on Tabs.Root or Tabs.NavRoot. TODO(designer): describe what this prop is for and how to choose its value."
+      "description": "Set on Tabs.Root or Tabs.NavRoot. The selected tab. TODO(designer): describe how to choose its value."
+    },
+    {
+      "name": "value",
+      "type": "string",
+      "description": "Set on Tabs.Trigger. With Tabs.Root it matches a Tabs.Content value. With Tabs.NavRoot it is the route the trigger goes to. TODO(designer): describe how to choose its value.",
+      "required": true
     },
     {
       "name": "defaultValue",
@@ -24,7 +30,7 @@
     {
       "name": "className",
       "type": "string",
-      "description": "Set on Tabs.Root or Tabs.NavRoot. TODO(designer): describe what this prop is for and how to choose its value."
+      "description": "Set on Tabs.Root, Tabs.NavRoot or Tabs.Trigger. TODO(designer): describe what this prop is for and how to choose its value."
     },
     {
       "name": "orientation",
@@ -70,6 +76,31 @@
         }
       ],
       "default": "underlined"
+    },
+    {
+      "name": "icon",
+      "type": "string",
+      "description": "Set on Tabs.Trigger. Don't set both icon and logo on the same trigger; pick one. TODO(designer): describe how to choose its value."
+    },
+    {
+      "name": "logo",
+      "type": "string",
+      "description": "Set on Tabs.Trigger. Don't set both icon and logo on the same trigger; pick one. TODO(designer): describe how to choose its value."
+    },
+    {
+      "name": "counter",
+      "type": "number",
+      "description": "Set on Tabs.Trigger. TODO(designer): describe what this prop is for and how to choose its value."
+    },
+    {
+      "name": "badge",
+      "type": "string",
+      "description": "Set on Tabs.Trigger. TODO(designer): describe what this prop is for and how to choose its value."
+    },
+    {
+      "name": "disabled",
+      "type": "boolean",
+      "description": "Set on Tabs.Trigger. TODO(designer): describe what this prop is for and how to choose its value."
     }
   ]
 }

@@ -5,7 +5,7 @@ only by writing `n/a`. Claude turns your answers into `pattern.md` and the `when
 `whenToNotUse` text in `props.json`, and a cross-exam step checks every claim against the real
 component props before anything is published. Nothing you write goes live unreviewed.
 
-Component: **Dialog**   Props available: size, hideClose, icon, logo, theme, className, classNameContent, scrollable
+Component: **Dialog**   Props available: size, size, hideClose, icon, logo, theme, theme, className, classNameContent, scrollable, variant, rounded, asChild, loading, onClick, iconOnly, tooltipProps
 
 ## 1. Purpose
 In one or two sentences, what is Dialog for? What does the person using the product get from it?
@@ -28,7 +28,10 @@ Give 2 to 4 real examples where the choice is not obvious (for example "Account 
 For each prop with a fixed set of values, how should someone choose? Flag any value that is
 misleading, deprecated or only for special cases. Props to cover:
 - `size`: sm, md, lg, max
+- `size`: sm, md, xs, 2xs, 3xs
 - `theme`: default, danger, warning
+- `theme`: default, success, danger, warning
+- `variant`: link, primary, secondary, outline, ai, ghost, transparent
 
 **Answer (one line per value; "any" if no guidance):**
 

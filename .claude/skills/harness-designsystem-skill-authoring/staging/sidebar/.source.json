@@ -15,6 +15,8 @@
     "Provider",
     "Rail",
     "Separator",
-    "Trigger"
+    "Trigger",
+    "Popover",
+    "ToggleMenuButton"
   ]
 }

@@ -5,7 +5,7 @@ only by writing `n/a`. Claude turns your answers into `pattern.md` and the `when
 `whenToNotUse` text in `props.json`, and a cross-exam step checks every claim against the real
 component props before anything is published. Nothing you write goes live unreviewed.
 
-Component: **DropdownMenu**   Props available: isSubContent, scrollAreaProps, onOpenAutoFocus, prefix, subContentProps, subMenuProps, label, title, className, description, shortcut, checkmark, tag, src, name, rounded, isGroup, logo, icon, iconClassName, iconSize, color, pulse
+Component: **DropdownMenu**   Props available: isSubContent, scrollAreaProps, onOpenAutoFocus, prefix, subContentProps, subMenuProps, label, label, title, className, description, shortcut, checkmark, tag, src, name, rounded, isGroup, logo, icon, iconClassName, iconSize, color, color, pulse, asChild, align, as, wrap, variant, truncate, lineClamp
 
 ## 1. Purpose
 In one or two sentences, what is DropdownMenu for? What does the person using the product get from it?
@@ -29,6 +29,12 @@ For each prop with a fixed set of values, how should someone choose? Flag any va
 misleading, deprecated or only for special cases. Props to cover:
 - `iconSize`: 2xs, xs, sm, md, lg, xl
 - `color`: gray, green, red, yellow, blue, purple, brown, cyan, indigo, lime, mint, orange, pink, violet
+- `color`: disabled, inherit, foreground-1, foreground-2, foreground-3, foreground-4, success, warning, merged, danger, brand
+- `align`: left, center, right
+- `as`: div, h2, h3, label, li, p, span, abbr, address, blockquote, caption, cite, code, dd, del, dt, em, figcaption, h1, h4, h5, h6, ins, kbd, legend, pre, samp, strong, time, var
+- `wrap`: wrap, nowrap, pretty, balance
+- `variant`: body-normal, heading-hero, heading-section, heading-default, heading-subsection, heading-base, heading-small, body-single-line-normal, body-strong, body-single-line-strong, body-code, body-code-strong, caption-normal, caption-strong, caption-code, caption-code-strong, caption-single-line-normal
+- `lineClamp`: default, 4, 1, 2, 3, 5, 6
 
 **Answer (one line per value; "any" if no guidance):**
 

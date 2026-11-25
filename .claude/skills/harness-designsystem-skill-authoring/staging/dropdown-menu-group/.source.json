@@ -1,9 +1,0 @@
-{
-  "export": "DropdownMenu",
-  "source": "/Users/kathryngrantier/projects/canary/packages/ui/src/components/dropdown-menu.tsx",
-  "slug": "dropdown-menu-group",
-  "parts": [
-    "Group",
-    "RadioGroup"
-  ]
-}

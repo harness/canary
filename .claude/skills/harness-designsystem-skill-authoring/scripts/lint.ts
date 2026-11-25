@@ -43,11 +43,22 @@ const spec = srcMeta.parts ? srcMeta.parts.map((p: string) => (p === '.' ? srcMe
 const truth = JSON.parse(
   execFileSync(path.join(process.env.CANARY_ROOT ?? path.resolve(root, '../../..'), 'node_modules/.bin/tsx'), [path.join(root, 'scripts/extract-props.ts'), spec, srcMeta.source, ...(srcMeta.includeFrom?.length ? ['--include-from', srcMeta.includeFrom.join(',')] : [])], { encoding: 'utf8' })
 )
-const truthByName = new Map<string, any>(truth.props.map((p: any) => [p.name, p]))
+const truthByName = new Map<string, any[]>()
+for (const p of truth.props) truthByName.set(p.name, [...(truthByName.get(p.name) ?? []), p])
 const docByName = new Map<string, any>(doc.props.map((p: any) => [p.name, p]))
+// The same name can be a different prop on different parts (Tabs value). Match a documented entry to the source entry whose parts its description names.
+const matched = new Set<any>()
+const pickTruth = (p: any) => {
+  const c = (truthByName.get(p.name) ?? []).filter(x => !matched.has(x))
+  if (c.length <= 1) return c[0]
+  const score = (x: any) => (x.parts ?? []).filter((part: string) => p.description?.includes(part)).length - (x.parts ?? []).filter((part: string) => !p.description?.includes(part)).length
+  return c.sort((x, y) => score(y) - score(x))[0]
+}
 // Props documented but not in source (e.g. inherited HTML attrs like className/title) are allowed only if not enum-typed.
-for (const [n, p] of docByName) {
-  const t = truthByName.get(n)
+for (const p of doc.props) {
+  const n = p.name
+  const t = pickTruth(p)
+  if (t) matched.add(t)
   // Compound: the description must say which part(s) the prop is set on.
   if (t?.parts) for (const part of t.parts) if (!p.description?.includes(part)) warn('props.json', `${n}: description does not mention ${part}`)
   if (!t) { warn('props.json', `prop "${n}" not an own prop in source (inherited attribute?)`); continue }
@@ -61,7 +72,7 @@ for (const [n, p] of docByName) {
   for (const v of dv) if (!sv.has(v)) err('props.json', `${n}: value "${v}" does not exist in source`)
   for (const v of sv) if (!dv.has(v)) err('props.json', `${n}: source value "${v}" missing from guide`)
 }
-for (const n of truthByName.keys()) if (!docByName.has(n)) err('props.json', `source prop "${n}" missing from guide`)
+for (const [n, list] of truthByName) for (const t of list) if (!matched.has(t)) err('props.json', `source prop "${n}"${t.parts ? ` (${t.parts.join(', ')})` : ''} missing from guide`)
 
 // 3. pattern.md structure
 for (const h of ['Overview', 'Decision Framework', "Do's and Don'ts", 'Examples', 'Accessibility', 'Known Gaps'])

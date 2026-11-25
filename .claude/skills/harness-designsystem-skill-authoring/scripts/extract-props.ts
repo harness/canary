@@ -116,23 +116,21 @@ const extractOne = (spec: string): any[] => {
 }
 
 const specs = exportName.split(',')
-const byName = new Map<string, any>()
+const byName = new Map<string, any[]>()
 for (const spec of specs)
   for (const prop of extractOne(spec)) {
-    const prev = byName.get(prop.name)
-    if (prev) {
-      // Same name on two parts is one prop only if it is the same prop. Otherwise one flat list cannot describe both.
-      // A default set on only one side is not a conflict: a wrapper that spreads props into a part declares none, and the part's applies.
-      const sig = (x: any) => JSON.stringify([x.type, !!x.required, (x.values ?? []).map((v: any) => v.name)])
-      const bothDefaults = prev.default != null && prop.default != null && prev.default !== prop.default
-      if (sig(prev) !== sig(prop) || bothDefaults)
-        throw new Error(`prop "${prop.name}" differs between ${prev.parts.join(', ')} and ${spec}; extract those parts into separate guides`)
-      prev.default ??= prop.default
-      prev.parts.push(spec)
-    }
-    else byName.set(prop.name, { ...prop, ...(specs.length > 1 || spec.includes('.') ? { parts: [spec] } : {}) })
+    const list = byName.get(prop.name) ?? []
+    // Same name on two parts is one prop only if it is the same prop. Otherwise each distinct prop keeps its own entry, tagged with its parts.
+    // A default set on only one side is not a conflict: a wrapper that spreads props into a part declares none, and the part's applies.
+    const sig = (x: any) => JSON.stringify([x.type, !!x.required, (x.values ?? []).map((v: any) => v.name)])
+    const same = list.find(prev => sig(prev) === sig(prop) && !(prev.default != null && prop.default != null && prev.default !== prop.default))
+    if (same) {
+      same.default ??= prop.default
+      same.parts.push(spec)
+    } else list.push({ ...prop, ...(specs.length > 1 || spec.includes('.') ? { parts: [spec] } : {}) })
+    byName.set(prop.name, list)
   }
-const props = [...byName.values()]
+const props = [...byName.values()].flat()
 const rootName = exportName.split(',')[0].split('.')[0]
 // A single part (DataTable.ColumnFilter) is its own guide: it keeps its full name and id, and imports from the root.
 const fullName = specs.length === 1 ? exportName : rootName

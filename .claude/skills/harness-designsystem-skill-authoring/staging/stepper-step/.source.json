@@ -1,9 +1,0 @@
-{
-  "export": "Stepper",
-  "source": "/Users/kathryngrantier/projects/canary/packages/ui/src/components/stepper/index.ts",
-  "slug": "stepper-step",
-  "parts": [
-    "StepGroup",
-    "Step"
-  ]
-}

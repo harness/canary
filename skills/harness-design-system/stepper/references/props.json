@@ -1,15 +1,15 @@
 {
-  "id": "canary.stepper-root",
+  "id": "canary.stepper",
   "code": {
     "package": "@harnessio/ui",
-    "export": "Stepper.Root",
+    "export": "Stepper",
     "import": "import { Stepper } from '@harnessio/ui/components'"
   },
   "props": [
     {
       "name": "value",
       "type": "string",
-      "description": "Set on Stepper.Root. TODO(designer): describe what this prop is for and how to choose its value.",
+      "description": "Set on Stepper.Root or Stepper.StepGroup or Stepper.Step. TODO(designer): describe what this prop is for and how to choose its value.",
       "required": true
     },
     {
@@ -22,6 +22,12 @@
       "name": "title",
       "type": "node",
       "description": "Set on Stepper.Root. TODO(designer): describe what this prop is for and how to choose its value."
+    },
+    {
+      "name": "title",
+      "type": "node",
+      "description": "Set on Stepper.StepGroup or Stepper.Step. TODO(designer): describe what this prop is for and how to choose its value.",
+      "required": true
     },
     {
       "name": "onBeforeChange",
@@ -71,7 +77,94 @@
     {
       "name": "className",
       "type": "string",
-      "description": "Set on Stepper.Root. TODO(designer): describe what this prop is for and how to choose its value."
+      "description": "Set on Stepper.Root or Stepper.StepGroup or Stepper.Step. TODO(designer): describe what this prop is for and how to choose its value."
+    },
+    {
+      "name": "description",
+      "type": "node",
+      "description": "Set on Stepper.StepGroup or Stepper.Step. TODO(designer): describe what this prop is for and how to choose its value."
+    },
+    {
+      "name": "state",
+      "type": "enum",
+      "description": "Set on Stepper.StepGroup or Stepper.Step. TODO(designer): describe what this prop is for and how to choose its value.",
+      "values": [
+        {
+          "name": "completed",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "active",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "upcoming",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "skipped",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "error",
+          "whenToUse": "TODO(designer): when to pick this value."
+        }
+      ]
+    },
+    {
+      "name": "loading",
+      "type": "boolean",
+      "description": "Set on Stepper.StepGroup. TODO(designer): describe what this prop is for and how to choose its value."
+    },
+    {
+      "name": "blocking",
+      "type": "boolean",
+      "description": "Set on Stepper.StepGroup. TODO(designer): describe what this prop is for and how to choose its value."
+    },
+    {
+      "name": "hasNestedSteps",
+      "type": "boolean",
+      "description": "Set on Stepper.StepGroup. TODO(designer): describe what this prop is for and how to choose its value."
+    },
+    {
+      "name": "disabled",
+      "type": "boolean",
+      "description": "Set on Stepper.StepGroup or Stepper.Step. TODO(designer): describe what this prop is for and how to choose its value."
+    },
+    {
+      "name": "showStepBadge",
+      "type": "boolean",
+      "description": "Set on Stepper.StepGroup or Stepper.Step. When true, renders a \"Step {n}/{total}\" pill badge next to the group title. Default false — purely opt-in, no rendering change for existing consumers that don't pass it."
+    },
+    {
+      "name": "totalStepsOverride",
+      "type": "number",
+      "description": "Set on Stepper.StepGroup or Stepper.Step. Lets a non-flat-mode consumer supply the flow's real step-group count instead of the currently-registered count (see StepperStepProps.totalStepsOverride for the flat-mode analog)."
+    },
+    {
+      "name": "stepNumberOverride",
+      "type": "number",
+      "description": "Set on Stepper.StepGroup. Overrides the \"Step {n}/{total}\" badge numerator (ctx.orderedSteps.indexOf(value) + 1) for non-flat-mode groups. THIS group's raw registration index also counts off-path mutually-exclusive sibling groups registered before it, inflating the numerator past its real path-order position once an off-path sibling renders ahead of an on-path active group (e.g. \"Step 5/4\"). Omit to fall back to the raw registration index."
+    },
+    {
+      "name": "hideStepNumber",
+      "type": "boolean",
+      "description": "Set on Stepper.StepGroup. When true, this group has no meaningful step-number identity on this run — e.g. an off-path mutually-exclusive sibling group that was never walked (doesn't occur in today's real flows, where StepGroups are fixed and only Steps within a group branch, but the types still allow it). Suppresses the \"Step n/total\" badge pill, replaces the indicator circle's number with a neutral placeholder, and drops the \"Step n of m: \" prefix from the aria-label — leaving just the title. Has no effect when showStepBadge is false, since in that case stepNumber is already the plain raw registration index for every group with no override scale to collide with in the first place."
+    },
+    {
+      "name": "visualCompleted",
+      "type": "boolean",
+      "description": "Set on Stepper.Step. Presentation-only: render this step's icon/color as 'completed' regardless of `state`. Does NOT affect accordion-open behavior, which always reflects the real `state`."
+    },
+    {
+      "name": "contentOnly",
+      "type": "boolean",
+      "description": "Set on Stepper.Step. When true, render only the branch wire and panel — no step label row (single-pane accordion cards)."
+    },
+    {
+      "name": "headerActions",
+      "type": "node",
+      "description": "Set on Stepper.Step. Optional controls rendered in the collapsible step header, immediately left of the expand/collapse caret (e.g. SinglePaneStepper's Restart). Ignored when the step is not collapsible."
     }
   ]
 }

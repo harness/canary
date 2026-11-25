@@ -35,13 +35,24 @@ TODO(designer): what Tabs is, in one or two sentences.
 
 | Question | Answer | Component |
 | -------- | ------ | --------- |
-| TODO(designer) | Yes | Tabs |
+| Do the tabs switch a view inside the same page, with local state? | Yes | `Tabs.Root` |
+| Does each tab represent a distinct route? | Yes | `Tabs.NavRoot`, router-aware |
 
 ### Ambiguous cases
 
 - TODO(designer): real-world case → **Component** — reason
 
-<!-- Add component-specific sections here (e.g. a vocabulary table, a default trap). SOURCE: intake §4. Delete this comment if none. -->
+### Routes or in-page views
+
+When tabs represent distinct routes rather than in-page view switches, wire them through the router-aware tabs (`Tabs.NavRoot`) rather than local state. Each `Tabs.Trigger` then renders a link, and its `value` is the route it goes to. Use `Tabs.Root` only for switching views inside one page.
+
+### Overflow
+
+Tabs overflow by scrolling horizontally with fade indicators rather than wrapping or truncating. Don't build a custom overflow treatment.
+
+### Icon or logo
+
+Don't set both an `icon` and a `logo` on the same tab trigger. Pick one.
 
 ---
 
@@ -49,11 +60,15 @@ TODO(designer): what Tabs is, in one or two sentences.
 
 ### ✅ Do
 
-- TODO(designer)
+- Wire tabs that represent distinct routes through `Tabs.NavRoot`.
+- Let overflowing tabs scroll with the fade indicators.
+- Pick either an `icon` or a `logo` for a tab trigger.
 
 ### ❌ Don't
 
-- TODO(designer)
+- Don't drive route tabs with local state.
+- Don't wrap or truncate overflowing tabs, and don't build a custom overflow treatment.
+- Don't set both an `icon` and a `logo` on the same tab trigger.
 
 ---
 
@@ -64,7 +79,23 @@ TODO(designer): what Tabs is, in one or two sentences.
 <!-- Every prop and value used here is checked against props.json by the lint. Examples must obey rules.md. -->
 
 ```tsx
-TODO(designer)
+// Distinct routes: router-aware tabs, each value is a route
+<Tabs.NavRoot>
+  <Tabs.List>
+    <Tabs.Trigger value="/pipelines">Pipelines</Tabs.Trigger>
+    <Tabs.Trigger value="/executions">Executions</Tabs.Trigger>
+  </Tabs.List>
+</Tabs.NavRoot>
+
+// In-page view switch: local state
+<Tabs.Root defaultValue="overview">
+  <Tabs.List>
+    <Tabs.Trigger value="overview">Overview</Tabs.Trigger>
+    <Tabs.Trigger value="details">Details</Tabs.Trigger>
+  </Tabs.List>
+  <Tabs.Content value="overview">...</Tabs.Content>
+  <Tabs.Content value="details">...</Tabs.Content>
+</Tabs.Root>
 ```
 
 ### ❌ Incorrect
@@ -72,7 +103,15 @@ TODO(designer)
 <!-- Exempt from rules.md checks: these show what NOT to do. Say why under each. -->
 
 ```tsx
-TODO(designer)
+// ❌ Both an icon and a logo on one trigger: pick one
+<Tabs.Trigger value="github" icon="..." logo="...">GitHub</Tabs.Trigger>
+
+// ❌ Route tabs driven by local state: use Tabs.NavRoot
+<Tabs.Root defaultValue="/pipelines">
+  <Tabs.List>
+    <Tabs.Trigger value="/pipelines">Pipelines</Tabs.Trigger>
+  </Tabs.List>
+</Tabs.Root>
 ```
 
 ---

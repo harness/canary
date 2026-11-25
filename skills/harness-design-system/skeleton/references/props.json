@@ -31,6 +31,38 @@
       "required": true
     },
     {
+      "name": "size",
+      "type": "enum",
+      "description": "Set on Skeleton.Icon. TODO(designer): describe what this prop is for and how to choose its value.",
+      "values": [
+        {
+          "name": "xs",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "sm",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "md",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "lg",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "2xs",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "xl",
+          "whenToUse": "TODO(designer): when to pick this value."
+        }
+      ],
+      "required": true
+    },
+    {
       "name": "rounded",
       "type": "boolean",
       "description": "Set on Skeleton.Avatar. TODO(designer): describe what this prop is for and how to choose its value."
@@ -38,12 +70,55 @@
     {
       "name": "className",
       "type": "string",
-      "description": "Set on Skeleton.Avatar or Skeleton.Logo or Skeleton.List or Skeleton.Table or Skeleton.Typography. TODO(designer): describe what this prop is for and how to choose its value."
+      "description": "Set on Skeleton.Avatar or Skeleton.Logo or Skeleton.List or Skeleton.Table or Skeleton.Typography or Skeleton.Form or Skeleton.Icon. TODO(designer): describe what this prop is for and how to choose its value."
     },
     {
       "name": "linesCount",
       "type": "number",
       "description": "Set on Skeleton.List. TODO(designer): describe what this prop is for and how to choose its value."
+    },
+    {
+      "name": "linesCount",
+      "type": "enum",
+      "description": "Set on Skeleton.Form. TODO(designer): describe what this prop is for and how to choose its value.",
+      "values": [
+        {
+          "name": "1",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "5",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "2",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "3",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "4",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "6",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "7",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "8",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "9",
+          "whenToUse": "TODO(designer): when to pick this value."
+        }
+      ]
     },
     {
       "name": "hasActions",
@@ -167,6 +242,11 @@
       "name": "wrapperClassName",
       "type": "string",
       "description": "Set on Skeleton.Typography. TODO(designer): describe what this prop is for and how to choose its value."
+    },
+    {
+      "name": "itemProps",
+      "type": "object",
+      "description": "Set on Skeleton.Form. TODO(designer): describe what this prop is for and how to choose its value."
     }
   ]
 }

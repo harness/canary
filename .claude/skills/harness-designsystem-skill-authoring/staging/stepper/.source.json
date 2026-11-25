@@ -3,6 +3,8 @@
   "source": "/Users/kathryngrantier/projects/canary/packages/ui/src/components/stepper/index.ts",
   "slug": "stepper",
   "parts": [
-    "Root"
+    "Root",
+    "StepGroup",
+    "Step"
   ]
 }

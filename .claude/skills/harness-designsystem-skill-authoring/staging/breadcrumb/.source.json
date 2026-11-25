@@ -10,6 +10,8 @@
     "Link",
     "Page",
     "Separator",
-    "Ellipsis"
+    "Ellipsis",
+    "Copy",
+    "HeaderLink"
   ]
 }

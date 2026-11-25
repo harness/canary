@@ -23,6 +23,50 @@
       "default": "sm"
     },
     {
+      "name": "size",
+      "type": "enum",
+      "description": "Set on Breadcrumb.Copy. TODO(designer): describe what this prop is for and how to choose its value.",
+      "values": [
+        {
+          "name": "sm",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "xs",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "md",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "2xs",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "3xs",
+          "whenToUse": "TODO(designer): when to pick this value."
+        }
+      ],
+      "default": "sm"
+    },
+    {
+      "name": "size",
+      "type": "enum",
+      "description": "Set on Breadcrumb.HeaderLink. TODO(designer): describe what this prop is for and how to choose its value.",
+      "values": [
+        {
+          "name": "sm",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "md",
+          "whenToUse": "TODO(designer): when to pick this value."
+        }
+      ],
+      "default": "sm"
+    },
+    {
       "name": "separator",
       "type": "node",
       "description": "Set on Breadcrumb.Root. TODO(designer): describe what this prop is for and how to choose its value."
@@ -50,6 +94,21 @@
       "default": "default"
     },
     {
+      "name": "variant",
+      "type": "enum",
+      "description": "Set on Breadcrumb.HeaderLink. TODO(designer): describe what this prop is for and how to choose its value.",
+      "values": [
+        {
+          "name": "default",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "secondary",
+          "whenToUse": "TODO(designer): when to pick this value."
+        }
+      ]
+    },
+    {
       "name": "avatar",
       "type": "object",
       "description": "Set on Breadcrumb.RootInteractive. Avatar props to customize the avatar appearance (src, icon, name, etc.)"
@@ -57,7 +116,7 @@
     {
       "name": "prefixIcon",
       "type": "string",
-      "description": "Set on Breadcrumb.Item or Breadcrumb.Link or Breadcrumb.Page. TODO(designer): describe what this prop is for and how to choose its value."
+      "description": "Set on Breadcrumb.Item or Breadcrumb.Link or Breadcrumb.Page or Breadcrumb.HeaderLink. TODO(designer): describe what this prop is for and how to choose its value."
     },
     {
       "name": "asChild",
@@ -86,6 +145,152 @@
       "type": "boolean",
       "description": "Set on Breadcrumb.Ellipsis. Opt-in: label the ellipsis button \"Show full path\" (`aria-label` + tooltip). Requires a `TooltipProvider` ancestor. Defaults to `false`, so existing dropdown ellipses are unchanged (no label, no tooltip). With `expandInline` the button is always labelled, and this only adds the tooltip.",
       "default": "false"
+    },
+    {
+      "name": "name",
+      "type": "string",
+      "description": "Set on Breadcrumb.Copy. TODO(designer): describe what this prop is for and how to choose its value.",
+      "required": true
+    },
+    {
+      "name": "className",
+      "type": "string",
+      "description": "Set on Breadcrumb.Copy. TODO(designer): describe what this prop is for and how to choose its value."
+    },
+    {
+      "name": "buttonVariant",
+      "type": "enum",
+      "description": "Set on Breadcrumb.Copy. TODO(designer): describe what this prop is for and how to choose its value.",
+      "values": [
+        {
+          "name": "link",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "ai",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "secondary",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "primary",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "outline",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "ghost",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "transparent",
+          "whenToUse": "TODO(designer): when to pick this value."
+        }
+      ]
+    },
+    {
+      "name": "color",
+      "type": "enum",
+      "description": "Set on Breadcrumb.Copy. TODO(designer): describe what this prop is for and how to choose its value.",
+      "values": [
+        {
+          "name": "success",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "danger",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "warning",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "inherit",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "info",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "neutral",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "merged",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "risk",
+          "whenToUse": "TODO(designer): when to pick this value."
+        }
+      ]
+    },
+    {
+      "name": "onClick",
+      "type": "function",
+      "description": "Set on Breadcrumb.Copy. TODO(designer): describe what this prop is for and how to choose its value."
+    },
+    {
+      "name": "iconSize",
+      "type": "enum",
+      "description": "Set on Breadcrumb.Copy. TODO(designer): describe what this prop is for and how to choose its value.",
+      "values": [
+        {
+          "name": "sm",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "xs",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "md",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "2xs",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "lg",
+          "whenToUse": "TODO(designer): when to pick this value."
+        },
+        {
+          "name": "xl",
+          "whenToUse": "TODO(designer): when to pick this value."
+        }
+      ]
+    },
+    {
+      "name": "external",
+      "type": "boolean",
+      "description": "Set on Breadcrumb.HeaderLink. TODO(designer): describe what this prop is for and how to choose its value."
+    },
+    {
+      "name": "suffixIcon",
+      "type": "string",
+      "description": "Set on Breadcrumb.HeaderLink. If true, the 'arrow-to-top-right' icon will be displayed before the link text. If a string, that string will be used as the icon name."
+    },
+    {
+      "name": "disabled",
+      "type": "boolean",
+      "description": "Set on Breadcrumb.HeaderLink. If true, the link will be disabled and not clickable. The default value is false."
+    },
+    {
+      "name": "noHoverUnderline",
+      "type": "boolean",
+      "description": "Set on Breadcrumb.HeaderLink. If true, the underline on hover will be disabled. The default value is false."
+    },
+    {
+      "name": "isLast",
+      "type": "boolean",
+      "description": "Set on Breadcrumb.HeaderLink. TODO(designer): describe what this prop is for and how to choose its value."
     }
   ]
 }

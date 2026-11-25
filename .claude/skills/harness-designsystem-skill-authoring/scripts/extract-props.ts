@@ -68,7 +68,7 @@ const extractOne = (spec: string): any[] => {
   // Destructuring defaults: only inside the exported component's own declaration (not sibling components in the file).
   const walkBindings = (n: import('typescript').Node) => {
     if (ts.isBindingElement(n) && n.initializer && ts.isIdentifier(n.name))
-      defaults[n.name.text] ??= n.initializer.getText().replace(/^['"]|['"]$/g, '')
+      defaults[n.name.text] = n.initializer.getText().replace(/^['"]|['"]$/g, '')
     ts.forEachChild(n, walkBindings)
   }
   dsf.forEachChild(function find(n) {

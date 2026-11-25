@@ -1,9 +1,9 @@
 ---
 name: accordion
-description: TODO(designer): one-line summary of Accordion and its main options
+description: Expandable and collapsible sections that disclose related content progressively
 metadata:
   category: Data display
-  use-when: 'TODO(designer): when to use Accordion. For X, use Y.'
+  use-when: 'Related, secondary or optional content, or grouped settings, that people can open as needed. For content that must stay visible, critical messages, or navigation between views, do not use an accordion.'
 ---
 
 # Accordion Component

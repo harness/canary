@@ -28,7 +28,7 @@ Components that have a guide, grouped by purpose. Open only the one you need. A 
 - [Table](./table/SKILL.md): TODO(designer): when to use Table. For X, use Y.
 - [DataTable](./data-table/SKILL.md): TODO(designer): when to use DataTable. For X, use Y.
 - [DataTable.ColumnFilter](./data-table-column-filter/SKILL.md): TODO(designer): when to use DataTable.ColumnFilter. For X, use Y.
-- [Accordion](./accordion/SKILL.md): TODO(designer): when to use Accordion. For X, use Y.
+- [Accordion](./accordion/SKILL.md): Related, secondary or optional content, or grouped settings, that people can open as needed. For content that must stay visible, critical messages, or navigation between views, do not use an accordion.
 - [Card](./card/SKILL.md): TODO(designer): when to use Card. For X, use Y.
 - [Carousel](./carousel/SKILL.md): TODO(designer): when to use Carousel. For X, use Y.
 - [StackedList](./stacked-list/SKILL.md): TODO(designer): when to use StackedList. For X, use Y.

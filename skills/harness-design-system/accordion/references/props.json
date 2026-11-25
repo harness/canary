@@ -12,6 +12,33 @@
       "description": "Set on Accordion.Root. The callback that fires when the state of the accordion changes."
     },
     {
+      "name": "type",
+      "type": "string",
+      "description": "Set on Accordion.Root. Required. 'single' keeps one section open at a time; 'multiple' lets several stay open. Use 'single' only when the workflow needs focused interaction.",
+      "required": true
+    },
+    {
+      "name": "collapsible",
+      "type": "boolean",
+      "description": "Set on Accordion.Root, only with type='single'. When true, the open section can be closed again. Without it, one section always stays open."
+    },
+    {
+      "name": "value",
+      "type": "string",
+      "description": "Set on Accordion.Root and Accordion.Item. On Accordion.Item it is required and names the section, unique within the accordion. On Accordion.Root it is the controlled open section: a string for type='single', a string array for type='multiple'."
+    },
+    {
+      "name": "defaultValue",
+      "type": "string",
+      "description": "Set on Accordion.Root. The section or sections open on first render when the accordion is not controlled: a string for type='single', a string array for type='multiple'. Use it to set the default state."
+    },
+    {
+      "name": "disabled",
+      "type": "boolean",
+      "description": "Set on Accordion.Root (all sections) or Accordion.Item (one section). A disabled section cannot be opened or closed, so explain why in visible text.",
+      "default": false
+    },
+    {
       "name": "size",
       "type": "enum",
       "description": "Set on Accordion.Root. TODO(designer): describe what this prop is for and how to choose its value.",
@@ -30,15 +57,15 @@
     {
       "name": "variant",
       "type": "enum",
-      "description": "Set on Accordion.Root. TODO(designer): describe what this prop is for and how to choose its value.",
+      "description": "Set on Accordion.Root. The visual style of the sections. Use the default unless there is a reason not to.",
       "values": [
         {
           "name": "default",
-          "whenToUse": "TODO(designer): when to pick this value."
+          "whenToUse": "The default. Use it unless there is a reason not to."
         },
         {
           "name": "card",
-          "whenToUse": "TODO(designer): when to pick this value."
+          "whenToUse": "Not the default. Use it only when the default does not work; otherwise keep the default variant."
         }
       ],
       "default": "default"
@@ -46,15 +73,15 @@
     {
       "name": "indicatorPosition",
       "type": "enum",
-      "description": "Set on Accordion.Root. TODO(designer): describe what this prop is for and how to choose its value.",
+      "description": "Set on Accordion.Root. Which side of the trigger the expand indicator sits on. Prefer the right side; it is the default.",
       "values": [
         {
           "name": "right",
-          "whenToUse": "TODO(designer): when to pick this value."
+          "whenToUse": "The default and the preferred position. Use it unless there is a reason not to."
         },
         {
           "name": "left",
-          "whenToUse": "TODO(designer): when to pick this value."
+          "whenToUse": "Not the default. Use it only when the right side is not workable; otherwise keep the indicator on the right."
         }
       ],
       "default": "right"
@@ -77,7 +104,7 @@
           "whenToUse": "TODO(designer): when to pick this value."
         }
       ],
-      "default": "default"
+      "default": "md"
     },
     {
       "name": "prefix",

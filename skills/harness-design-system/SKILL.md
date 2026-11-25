@@ -22,6 +22,15 @@ Before writing code, read [rules.md](./rules.md). Then:
 - [resizable-split-pattern](./patterns/page-layouts/resizable-split-pattern.md): two resizable panels
 - [dashboard-card-layout-pattern](./patterns/page-layouts/dashboard-card-layout-pattern.md): cards on a 12-column grid
 - [edit-drawer-pattern](./patterns/edit-drawer-pattern.md): create and edit drawer
+- [ai-chat-pattern](./patterns/ai-chat/ai-chat-pattern.md): AI chat panel with header, conversation and composer
+- [ai-entry-points-pattern](./patterns/ai-chat/ai-entry-points-pattern.md): header toggle, scope tags and other ways into the AI chat
+- [ai-suggestions-pattern](./patterns/ai-chat/ai-suggestions-pattern.md): AI-proposed changes reviewed as a diff with Apply, Edit and Discard
+
+Choosing an AI chat pattern:
+
+- AI chat: the panel itself, with header, conversation and composer.
+- AI entry points: how the user gets into the chat, scoped to a page or item.
+- AI suggestions: the AI proposes a change to something saved and the user reviews it.
 
 Choosing a page layout:
 

@@ -274,6 +274,7 @@ import Heart from './icons/heart.svg'
 import HelpCircleSolid from './icons/help-circle-solid.svg'
 import HelpCircle from './icons/help-circle.svg'
 import Hygiene from './icons/hygiene.svg'
+import Impersonate from './icons/impersonate.svg'
 import Import from './icons/import.svg'
 import IncidentsSolid from './icons/incidents-solid.svg'
 import Incidents from './icons/incidents.svg'
@@ -823,6 +824,7 @@ export const IconNameMapV2 = {
   'help-circle-solid': HelpCircleSolid,
   'help-circle': HelpCircle,
   hygiene: Hygiene,
+  impersonate: Impersonate,
   import: Import,
   'incidents-solid': IncidentsSolid,
   incidents: Incidents,

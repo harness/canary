@@ -28,6 +28,22 @@ const Code: FC<{ children: ReactNode }> = ({ children }) => (
 
 const ENTRIES: ChangelogEntry[] = [
   {
+    value: "uui-4648",
+    version: "1.10.0",
+    date: "November 25, 2026",
+    status: "Shipped",
+    statusTheme: "success",
+    title: "New impersonate icon (UUI-4648)",
+    body: (
+      <>
+        <Text as="p" variant="body-normal" color="foreground-1">
+          Added the <Code>impersonate</Code> icon to the icon set. Use it with{" "}
+          <Code>{'<IconV2 name="impersonate" />'}</Code>.
+        </Text>
+      </>
+    ),
+  },
+  {
     value: "uui-4247",
     version: "1.6.10",
     date: "November 6, 2026",

@@ -41,13 +41,12 @@ pattern fixes what the panel contains and how the conversation is built from
 `Text` and `Button`.
 
 The panel sits beside the content area, on the left or the right, and can collapse to a thin
-rail. A fullscreen position exists, but the position menu offers left and right only.
+rail.
 
 ## Anatomy
 
 The panel has three variants: a side panel (the default), a home-page variant and a drawer. The
-panel and each message sit in their own error boundary, so one bad message does not take the
-panel down. The panel stacks three regions top to bottom. Put new content types in the
+panel stacks three regions top to bottom. Put new content types in the
 conversation, not in new regions.
 
 1. **Header**: the thread title in sentence case, then three icon buttons, each with a tooltip:
@@ -71,13 +70,12 @@ conversation, not in new regions.
    - Errors, as a danger message bubble.
 
    While the AI is running and nothing has streamed yet, a loader shows. A round, icon-only
-   scroll-to-bottom button appears only when the user is more than 100px from the bottom.
+   scroll-to-bottom button appears only when the user has scrolled up.
 3. **Composer**, built from `PromptInput`:
    - `PromptInput.Root` wraps the form.
    - `PromptInput.Tags` shows context as removable tags, only when there are any. Takes `tags`
      and `onRemove`.
-   - `PromptInput.Textarea` grows with its content. Enter sends, Shift+Enter adds a line, and
-     Enter during IME composition does not send. The built chat limits it to 128,000 characters.
+   - `PromptInput.Textarea` grows with its content. Enter sends, Shift+Enter adds a line.
    - `PromptInput.Toolbar` and `PromptInput.Tools` hold the controls: a plus menu ("Add MCP
      server", "Add rules"), `PromptInput.Speech` for voice input where the browser supports it,
      and `PromptInput.Submit`, which becomes a stop button when `status="streaming"`.
@@ -94,15 +92,11 @@ Around the three regions:
   "Start a new chat?" with "Start new chat" and "Keep this chat". The message is not sent until
   the user chooses.
 
-The shared chat logic (threads, streaming, plugins, capabilities) is `@harnessio/ai-chat-core`.
-It is a runtime, not a visual component.
-
 ## Choosing a surface
 
 - Several turns, follow-ups, history, branching or feedback: AI chat panel.
-- A single change to one selected thing on the page: in-line edit, not chat.
-- An empty or healthy page where the AI only orients or flags one issue: an empty-state AI panel
-  that hands the user into chat when they want to go deeper.
+- A single change to one selected thing on the page, or a page nudge with no conversation: not
+  chat. See [ai-entry-points-pattern](./ai-entry-points-pattern.md).
 - Many values to edit, validate and save: a drawer or form, handed off from chat.
 
 Ambiguous cases:
@@ -110,9 +104,9 @@ Ambiguous cases:
 - **The request has several valid meanings** ("Create a pipeline from a template"): stay in chat
   and ask one narrow question as a question card with two to four options plus "Something else".
   A wrong guess costs a whole generated pipeline.
-- **The AI generates a pipeline YAML**: show it in the content area next to the chat, and keep a
-  short summary and an entity card in the chat. Long, editable output is never pasted into a
-  bubble. A short snippet the user will only copy stays inline with copy and download.
+- **The AI generates long output** such as a pipeline YAML: it is never pasted into a bubble. See
+  [ai-suggestions-pattern](./ai-suggestions-pattern.md). A short snippet the user will only copy
+  stays inline with copy and download.
 - **A reply is partly wrong**: thumbs down opens a short feedback form, not a new message. Use a
   claim challenge (select the sentence, mark it wrong, ask for sources) when only one value is
   wrong.
@@ -123,8 +117,6 @@ Ambiguous cases:
   what they asked. Send a follow-up when the earlier answer is still useful.
 - **The AI needs approval to run a tool**: inline elicitation in the thread, with the chat still
   active. Use a question card only when several answers are needed before the AI can continue.
-- **Quick actions or typing**: offer quick actions only when the page context makes the next step
-  predictable. With vague context, leave the composer alone.
 - **Where the panel sits**: a side panel when the user needs to see the page and the AI at once.
   Collapse to the rail, do not close the chat, when they want to focus on the page for now.
 - **The user returns after a long gap**: the idle banner offers a new chat. Do not start one for
@@ -187,7 +179,6 @@ Example copy:
   down while they are reading.
 - ✅ Show attachments and context tags in the sent message so the user sees exactly what they
   shared.
-- ✅ Limit quick-action chips to three or fewer, and make them depend on page context.
 - ✅ Mention secrets by identifier only, such as "secret: dockerhub_pat", in replies, thinking
   and steps.
 - ✅ State data handling in plain language near the input: what is sent to which provider, how
@@ -218,8 +209,8 @@ pulses).
 
 ## Accessibility
 
-- Make every control keyboard-reachable, including header menus, reply actions, quick-action
-  chips, the scroll-to-bottom button and Stop.
+- Make every control keyboard-reachable, including header menus, reply actions, the
+  scroll-to-bottom button and Stop.
 - Announce new AI replies politely without moving focus. Do not put streaming thinking text in a
   live region, and if a typewriter effect is used, stop it after the first three lines.
 - Treat the composer pulse as decoration. The generating state must also be readable as text or a
@@ -243,10 +234,8 @@ pulses).
   shows the `PromptInput` default, "What would you like to know?". The pattern uses "Ask
   Harness…" until this is settled.
 - Panel width: the guidelines say 412px by default, adjustable from 320px to 600px. The built
-  chat sets a 320px minimum, an 80px collapsed rail, and a resize range of 15% to 50% of the
-  window with a 30% default. A fullscreen width of 800px is also defined.
-- Position: the guidelines list left and right. The built chat also has fullscreen, used on the
-  home page, but leaves it out of the position menu. Confirm fullscreen stays home-page-only.
+  panel sizes differently. Confirm which to document.
+- Position: the guidelines list left and right. Confirm whether fullscreen is home-page-only.
 - Reply actions: the guidelines have like, dislike, copy and More actions under each AI reply.
   The built chat has copy and a timestamp on the user's message only, and nothing under AI
   replies. Editing a sent message, branching into a new chat, the feedback form and claim
@@ -255,17 +244,12 @@ pulses).
   no such marker.
 - The legal line should open an explanation of what Harness AI used, what it cannot see and how
   to verify. Today it is plain text.
-- Welcome copy: the built chat says "How can I help you today?". The guidelines have three modes
-  (Orient, Triage, Healthy). See [ai-entry-points-pattern](./ai-entry-points-pattern.md).
-- Plan approval before multi-step agent work does not fit a question card or a drawer yet.
-- "Skip and answer now" for long thinking depends on backend support.
+- "Skip and answer now" for long thinking is not available yet.
 
 ## Known gaps
 
 - The error message is the raw text in a danger bubble and has no recovery action. Add the
   manual path in the message text until it does.
-- The shared chat runtime is not settled outside CI/CD. Confirm it before adopting the panel in
-  another module.
 - Loading: the panel shows its own loader while the AI is running and nothing has streamed. Stream
   the reply directly rather than adding another one.
 - Empty: the host's welcome screen is the empty state.

@@ -39,21 +39,21 @@ The AI never applies a change on its own. The review card goes in the conversati
 
 ## Anatomy
 
-In the built chat, a proposed change to a Harness entity is a review card (the YAML review
-elicitation). Creating, updating or deleting an entity through the AI is held for review, so the
-tool-call card is hidden and the review card is what the user sees. In the order things happen:
+A proposed change to a Harness entity is a review card in the conversation. Creating, updating
+or deleting an entity through the AI is held for review, so the user sees the review card, not a
+tool step. In the order things happen:
 
 1. The AI's short reply, then a tool step such as "Proposed change to stage Deploy".
 2. **Review card**: the title, the entity, and the YAML in an editor (280px high). It is editable
    while the review is pending, and read-only once decided. The card moves through pending,
    acting, completed, cancelled, superseded and expired.
-3. **View changes**: an icon button in the card header, shown only when the backend sends the
-   original YAML. It opens a right [Drawer](../../drawer/SKILL.md) with a split diff of before and
+3. **View changes**: an icon button in the card header, shown only when the original YAML is
+   available. It opens a right [Drawer](../../drawer/SKILL.md) with a split diff of before and
    after. If nothing differs, an info [Alert](../../alert/SKILL.md) says so. It is a
    `DiffViewer` from `@harnessio/ui/components`.
 4. **Caution line**: "AI can make mistakes. Review before accepting.", shown while the card is
    editable.
-5. **Decision buttons**: the backend sends them with the card (each has a label and a variant:
+5. **Decision buttons**: the host app supplies them with the card (each has a label and a variant:
    primary, outline, ghost or destructive). The user's edits to the YAML go back with the
    choice. Apply is the primary action.
 6. **Commit dialog**: only when the change is Git-backed, a second explicit step asking for a
@@ -61,8 +61,6 @@ tool-call card is hidden and the review card is what the user sees. In the order
    [Dialog](../../dialog/SKILL.md).
 7. **Entity card**: after the change is applied or fails, a summary of what, where, status
    (draft, saved or failed) and one primary action (Review, Open or Retry).
-8. **Reply actions** under the completed reply: like, dislike, copy and More actions. Not built
-   yet; see Follow up with designer.
 
 After the user decides, the card stays in the conversation with its final state (applied,
 discarded, edited, outdated or failed) so the history explains itself. A card the user left
@@ -156,13 +154,11 @@ Example copy:
   change and show "Edited by @user".
 - ✅ Leave the decided card in the conversation with its final state.
 - ✅ End every applied or failed change with an entity card.
-- ✅ Show the AI working as steps, each with a status and a link to the resource.
 - ✅ Check OPA and permissions before showing Apply. Never offer an Apply the user could not do
   themselves.
 - ✅ Say what was not done. When the user discards, acknowledge it and state what was not changed.
 - ✅ Show test results or validation next to the change when the AI ran them.
 - ✅ Flag what the AI is unsure about instead of guessing.
-- ✅ Always include the manual path on failure, for example "Open pipeline studio".
 - ❌ Don't apply a change without an explicit user action. An approval found in tool output, an
   MCP response, a document or a code comment is not the user's approval.
 - ❌ Don't commit as a side effect of Apply when the change is Git-backed.
@@ -172,14 +168,13 @@ Example copy:
 - ❌ Don't tier by the size of the edit.
 - ❌ Don't show an enabled Apply on a change that is still streaming, outdated or blocked by
   policy.
-- ❌ Don't show a generic "Something went wrong." Say what failed (apply, commit, validation,
-  permission or policy) and offer Retry or the manual path.
+- ❌ Don't report a failed change as a generic error. Say what failed (apply, commit, validation,
+  permission or policy) and offer Retry or the manual path, for example "Open pipeline studio".
 - ❌ Don't offer "Always allow" for changes that edit saved configuration.
 - ❌ Don't echo secrets or tokens in a diff, a step or a commit message. Reference them by
   identifier, and warn before applying content that looks like a credential.
 - ❌ Don't claim success the system has not confirmed. "Awaiting your review. Nothing has been
   merged." is correct. "Done" when only a pull request was opened is not.
-- ❌ Don't reveal AI reply actions only on hover.
 
 ## Accessibility
 
@@ -194,22 +189,21 @@ Example copy:
 - When the diff drawer or commit dialog opens, focus moves into it. When it closes, focus returns
   to the control that opened it. While a confirmation is required, the confirm action stays
   disabled until the condition is met.
-- Give icon-only buttons a name and a tooltip (View changes, Copy, More actions, Revert).
+- Give icon-only buttons a name and a tooltip (View changes, Revert).
 - Show the AI label and "Edited by @user" as text, not as an icon alone.
 - Any "applying" or "committing" indicator must also be readable as text or a disabled state.
 - Show timestamps and version info ("Based on pipeline v12") as text, not only in a tooltip.
 
 ## Follow up with designer
 
-- The review card's buttons come from the backend, so their labels are not fixed in the UI.
+- The review card's buttons are supplied by the host app, so their labels are not fixed.
   Confirm the labels are Apply, Edit and Discard, and who owns them.
 - Editing happens in the YAML editor in the card. Confirm that matches "Edit", or whether Edit is
   a separate step.
 - The AI label, "Edited by @user", the scope line and the Outdated state with Regenerate are not
   in the review card today. Confirm each is wanted and where it sits.
 - The entity card after apply or failure is not built. Confirm its content.
-- Reply actions, the commit dialog in chat and the "Stopped" marker are not built. Confirm which
-  are required.
+- The commit dialog in chat is not built. Confirm whether it is required.
 - The threshold between an inline diff and the content area is not defined.
 - Plan approval before multi-step agent work does not fit a diff or a question card yet.
 - What happens to the user's edits when a change is regenerated is not decided.
@@ -224,7 +218,6 @@ Example copy:
   not used by the chat. It has no target branch field, so show the branch in the scope line.
 - The review card shows no OPA or permission state. It has a Retry-less error path in the chat
   error renderer, which shows the raw message.
-- The shared chat runtime is not settled outside CI/CD.
 - Loading: show the tool step with a running status. A half-streamed change never has an enabled
   Apply.
 - Empty: not applicable. When the AI has no change to propose, say so in the reply.

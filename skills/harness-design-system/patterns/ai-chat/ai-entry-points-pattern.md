@@ -58,8 +58,8 @@ Every entry point ends in the same chat panel, described in
    pipeline errors"). Each sends its prompt. Keep to three or fewer.
 5. **Inline AI entry** (optional): a secondary [Button](../../button/SKILL.md) with an AI icon and
    text on one entity, such as a failed run. It opens chat already scoped to that entity.
-6. **Suggestion card** (optional): a suggested full question inside the conversation. The chat
-   renders suggestions as a greeting followed by one full-width outline button per suggestion.
+6. **Suggestion card** (optional): a suggested full question inside the conversation, shown as a
+   greeting followed by one full-width outline button per suggestion.
 
 Nothing replaces the header toggle. An entry point may prefill the composer but does not send
 for the user.
@@ -146,7 +146,6 @@ Example copy:
 - ✅ Keep a non-AI path. The user can still do the task without opening chat.
 - ✅ Reserve the AI icon and glow for real AI entry points, AI-generated content and active
   generation.
-- ✅ Remember the user's panel position and width.
 - ✅ Keep pre-filled context short and say why each piece is there.
 - ✅ Move focus to the chat input when chat opens.
 - ✅ Provide keyboard shortcuts to focus the chat input, stop generation and toggle the panel.
@@ -169,15 +168,13 @@ Example copy:
   reader user knows whether the panel is open. Put the shortcut in the tooltip once the keys are
   decided. See [Toggle](../../toggle/SKILL.md).
 - Make every entry point keyboard-reachable in a logical order: toggle, inline entries, chips,
-  context tag and its remove button, reply actions.
+  context tag and its remove button.
 - Move focus into the chat input when an entry point opens the panel, and return it to the
   control that opened it when the panel closes.
 - Name the remove button on every context tag, for example "Remove All pipelines".
 - Announce a welcome message politely without moving focus away from the page.
 - Never rely on the glow or colour alone to show that an entry is AI, active or selected. Use the
   icon and text too. For reduced motion, replace the glow pulse with a static border colour.
-- The "Harness AI can make mistakes. Check answers." line should open an explanation of what
-  Harness AI used, what it cannot see and how to verify.
 - Give each quick-action chip a clear text label. An icon alone is not enough.
 
 ## Follow up with designer
@@ -195,19 +192,15 @@ Example copy:
 - The minimized state is undecided, including what the toggle shows when the AI has a Triage
   message while the panel is collapsed.
 - The welcome screen and a conversational agent overlap. The rule above is a workaround.
-- Starting a Worker Agent from a product page, and its trigger types, are not documented.
 - Keyboard shortcut keys are not decided.
 - "In-line edit" means two things: editing the user's own sent message, and a launcher on an
   entity. This pattern uses "inline AI entry" for the launcher.
 
 ## Known gaps
 
-- The suggestion card is a renderer inside the conversation. It reads the user name as a fixed
-  "there" until a name is supplied.
+- The suggestion card greets the user without a name until one is supplied.
 - Scoping and prefill are not defined beyond "opens chat already scoped". "Prefill, do not send"
   is a design call, not a confirmed behaviour.
-- The shared chat runtime is not settled outside CI/CD. Confirm it before adopting an entry point
-  in another module.
 - Loading: show a [Skeleton](../../skeleton/SKILL.md) in the page area, not in the panel. The
   panel shows its own loader.
 - Empty: the welcome screen is the empty state.

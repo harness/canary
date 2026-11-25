@@ -1,6 +1,12 @@
 const tablePinnedLayeredBackground =
   'linear-gradient(var(--cn-table-pinned-overlay), var(--cn-table-pinned-overlay)), var(--cn-table-pinned-base)'
 
+/**
+ * Inner (clipping) radius of the container. Derived from `--cn-table-radius`, so a
+ * custom radius must be set via that token, not a raw `border-radius`.
+ */
+const tableInnerRadius = 'calc(var(--cn-table-radius) - var(--cn-table-border))'
+
 export default {
   '.cn-table-v2': {
     '@apply w-full': '',
@@ -152,17 +158,41 @@ export default {
         backgroundColor: 'var(--cn-state-selected)'
       },
 
+      /**
+       * The outline is drawn with inset box-shadows on the cells, not a `<tr>` border:
+       * collapsed borders can't be rounded, so the last row's outline was clipped by
+       * the container's corners. A cell shadow follows the cell's border-radius.
+       * Left/right edges are only set on the first/last cell (0 offset paints nothing).
+       */
       '&.cn-table-row-active': {
-        '@apply border-cn-brand': '',
-        borderWidth: '1px',
+        // Avoids doubling up with the outline
+        borderBottomWidth: '0',
 
         '.cn-table-v2-cell': {
-          '@apply bg-cn-brand-secondary': ''
+          '@apply bg-cn-brand-secondary': '',
+          boxShadow:
+            [
+              'inset 0 1px 0 0 var(--cn-border-brand)',
+              'inset 0 var(--cn-row-active-bottom, -1px) 0 0 var(--cn-border-brand)',
+              'inset var(--cn-row-active-left, 0) 0 0 0 var(--cn-border-brand)',
+              'inset var(--cn-row-active-right, 0) 0 0 0 var(--cn-border-brand)'
+            ].join(', ') + ' !important',
+
+          '&:first-child': { '--cn-row-active-left': '1px' },
+          '&:last-child': { '--cn-row-active-right': '-1px' }
         }
       },
 
       '&:has(+ .cn-table-row-active)': {
         '@apply border-b-0': ''
+      },
+
+      /**
+       * Consecutive active rows share one divider. The next row's top outline is kept
+       * (not this row's bottom) so its cell background can't paint over the line.
+       */
+      '&.cn-table-row-active:has(+ .cn-table-row-active)': {
+        '--cn-row-active-bottom': '0'
       },
 
       '&:where([data-disabled=true])': {
@@ -406,6 +436,20 @@ export default {
 
     '&.cn-table-v2-highlight-hover tbody > tr.cn-table-v2-spacer-row:hover > td': {
       backgroundColor: 'var(--cn-bg-1)'
+    }
+  },
+
+  /**
+   * Round the last row's bottom corners to match the container's clipping.
+   * Only matches when the row touches the container's bottom edge: no pagination
+   * below the table and no footer after the body.
+   */
+  '.cn-table-v2-container > :last-child .cn-table-v2-body:last-child > .cn-table-v2-row:last-child': {
+    '> .cn-table-v2-cell:first-child': {
+      borderBottomLeftRadius: tableInnerRadius
+    },
+    '> .cn-table-v2-cell:last-child': {
+      borderBottomRightRadius: tableInnerRadius
     }
   },
 

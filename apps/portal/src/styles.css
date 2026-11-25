@@ -97,7 +97,8 @@ code:not(.expressive-code code) {
 }
 
 .cn-table-v2-container {
-  border-radius: var(--cn-rounded-6) !important;
+  /* Set via the token, not `border-radius`, so the last row's corners stay in sync */
+  --cn-table-radius: var(--cn-rounded-6);
   overflow: hidden !important;
 }
 

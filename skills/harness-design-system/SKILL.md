@@ -22,6 +22,7 @@ Before writing code, read [rules.md](./rules.md). Then:
 - [resizable-split-pattern](./patterns/page-layouts/resizable-split-pattern.md): two resizable panels
 - [dashboard-card-layout-pattern](./patterns/page-layouts/dashboard-card-layout-pattern.md): cards on a 12-column grid
 - [edit-drawer-pattern](./patterns/edit-drawer-pattern.md): create and edit drawer
+- [destructive-confirm-pattern](./patterns/destructive-confirm-pattern.md): confirmation dialog before a delete or other irreversible action
 - [ai-chat-pattern](./patterns/ai-chat/ai-chat-pattern.md): AI chat panel with header, conversation and composer
 - [ai-entry-points-pattern](./patterns/ai-chat/ai-entry-points-pattern.md): header toggle, scope tags and other ways into the AI chat
 - [ai-suggestions-pattern](./patterns/ai-chat/ai-suggestions-pattern.md): AI-proposed changes reviewed as a diff with Apply, Edit and Discard

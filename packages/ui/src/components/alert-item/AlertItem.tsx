@@ -30,10 +30,14 @@ export const alertItemVariants = cva('cn-alert-item', {
     },
     read: {
       true: '',
-      false: 'cn-alert-item-unread bg-[var(--cn-set-brand-outline-bg)]'
+      false: 'cn-alert-item-unread'
+    },
+    selected: {
+      true: 'bg-[var(--cn-set-brand-outline-bg)]',
+      false: ''
     },
     clickable: {
-      true: 'hover:bg-cn-hover cursor-pointer duration-150 ease-in-out',
+      true: 'cursor-pointer duration-150 ease-in-out hover:bg-cn-hover',
       false: ''
     }
   },
@@ -45,6 +49,7 @@ export const alertItemVariants = cva('cn-alert-item', {
 
 export interface AlertItemProps extends Omit<ComponentProps<'div'>, 'ref'>, VariantProps<typeof alertItemVariants> {
   theme: AlertItemTheme
+  selected?: boolean
   read?: boolean
   timestamp?: string | number | null
   to?: string
@@ -74,7 +79,7 @@ function partitionChildren(children: ReactNode) {
 }
 
 export const AlertItemComp = forwardRef<HTMLDivElement, AlertItemProps>(
-  ({ className, children, theme, read = true, timestamp, to, linkProps, onClick, ...props }, ref) => {
+  ({ className, children, theme, read = true, selected = false, timestamp, to, linkProps, onClick, ...props }, ref) => {
     const { title, description, link } = partitionChildren(children)
 
     const withLink = Boolean(to)
@@ -96,7 +101,7 @@ export const AlertItemComp = forwardRef<HTMLDivElement, AlertItemProps>(
     return (
       <Layout.Horizontal
         ref={ref}
-        className={cn(alertItemVariants({ theme, read, clickable: isClickable }), className)}
+        className={cn(alertItemVariants({ theme, read, clickable: isClickable, selected }), className)}
         {...props}
       >
         {to && (
@@ -116,7 +121,7 @@ export const AlertItemComp = forwardRef<HTMLDivElement, AlertItemProps>(
             onClick={() => onClick?.()}
           />
         )}
-        <Layout.Horizontal align="start" gap="2xs" className="pl-cn-xl pr-cn-md py-cn-md flex-1 truncate">
+        <Layout.Horizontal align="baseline" gap="2xs" className="flex-1 truncate py-cn-md pl-cn-xl pr-cn-md">
           <Layout.Vertical gap="2xs" className="min-w-0 flex-1">
             {title}
             {description}
